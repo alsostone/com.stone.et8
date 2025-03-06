@@ -68,10 +68,6 @@ namespace YIUIFramework.Editor
                 new TreeMenuItem<UIMacroModule>(this, m_OdinMenuTree,
                     "宏设置", EditorIcons.SettingsCog));
 
-            m_AllMenuItem.Add(
-                new TreeMenuItem<UIETScriptModule>(this, m_OdinMenuTree,
-                    "ET生成", EditorIcons.SettingsCog));
-
             m_OdinMenuTree.Add("全局设置", this, EditorIcons.SettingsCog);
 
             return m_OdinMenuTree;
