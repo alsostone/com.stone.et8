@@ -11,21 +11,21 @@ namespace ET.Client
     [FriendOf(typeof(YIUIComponent))]
     [FriendOf(typeof(YIUIWindowComponent))]
     [FriendOf(typeof(YIUIPanelComponent))]
-    [EntitySystemOf(typeof(LoginPanelComponent))]
-    public static partial class LoginPanelComponentSystem
+    [EntitySystemOf(typeof(LSLobbyPanelComponent))]
+    public static partial class LSLobbyPanelComponentSystem
     {
         [EntitySystem]
-        private static void Awake(this LoginPanelComponent self)
+        private static void Awake(this LSLobbyPanelComponent self)
         {
         }
 
         [EntitySystem]
-        private static void YIUIBind(this LoginPanelComponent self)
+        private static void YIUIBind(this LSLobbyPanelComponent self)
         {
             self.UIBind();
         }
         
-        private static void UIBind(this LoginPanelComponent self)
+        private static void UIBind(this LSLobbyPanelComponent self)
         {
             self.u_UIBase = self.GetParent<YIUIComponent>();
             self.u_UIWindow = self.UIBase.GetComponent<YIUIWindowComponent>();
@@ -37,12 +37,12 @@ namespace ET.Client
             self.UIPanel.Priority = 0;
             self.UIPanel.CachePanelTime = 10;
 
-            self.u_EventLogin = self.UIBase.EventTable.FindEvent<UITaskEventP0>("u_EventLogin");
-            self.u_EventLoginHandle = self.u_EventLogin.Add(self.OnEventLoginAction);
-            self.u_EventAccount = self.UIBase.EventTable.FindEvent<UIEventP1<string>>("u_EventAccount");
-            self.u_EventAccountHandle = self.u_EventAccount.Add(self.OnEventAccountAction);
-            self.u_EventPassword = self.UIBase.EventTable.FindEvent<UIEventP1<string>>("u_EventPassword");
-            self.u_EventPasswordHandle = self.u_EventPassword.Add(self.OnEventPasswordAction);
+            self.u_EventReplay = self.UIBase.EventTable.FindEvent<UIEventP0>("u_EventReplay");
+            self.u_EventReplayHandle = self.u_EventReplay.Add(self.OnEventReplayAction);
+            self.u_EventEnterMap = self.UIBase.EventTable.FindEvent<UIEventP0>("u_EventEnterMap");
+            self.u_EventEnterMapHandle = self.u_EventEnterMap.Add(self.OnEventEnterMapAction);
+            self.u_EventReplayPath = self.UIBase.EventTable.FindEvent<UIEventP1<string>>("u_EventReplayPath");
+            self.u_EventReplayPathHandle = self.u_EventReplayPath.Add(self.OnEventReplayPathAction);
 
         }
     }

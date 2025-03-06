@@ -5,15 +5,23 @@ using System.Collections.Generic;
 
 namespace ET.Client
 {
-
+    /// <summary>
+    /// 由YIUI工具自动创建 请勿修改
+    /// 当前Panel所有可用view枚举
+    /// </summary>
+    public enum ELSRoomPanelViewEnum
+    {
+        ReplayView = 1,
+        PlayView = 2,
+    }
     /// <summary>
     /// 由YIUI工具自动创建 请勿修改
     /// </summary>
     [YIUI(EUICodeType.Panel, EPanelLayer.Panel)]
-    public partial class LoginPanelComponent: Entity, IDestroy, IAwake, IYIUIBind, IYIUIInitialize, IYIUIOpen
+    public partial class LSRoomPanelComponent: Entity, IDestroy, IAwake, IYIUIBind, IYIUIInitialize, IYIUIOpen
     {
-        public const string PkgName = "Login";
-        public const string ResName = "LoginPanel";
+        public const string PkgName = "LSRoom";
+        public const string ResName = "LSRoomPanel";
 
         public EntityRef<YIUIComponent> u_UIBase;
         public YIUIComponent UIBase => u_UIBase;
@@ -21,12 +29,6 @@ namespace ET.Client
         public YIUIWindowComponent UIWindow => u_UIWindow;
         public EntityRef<YIUIPanelComponent> u_UIPanel;
         public YIUIPanelComponent UIPanel => u_UIPanel;
-        public UITaskEventP0 u_EventLogin;
-        public UITaskEventHandleP0 u_EventLoginHandle;
-        public UIEventP1<string> u_EventAccount;
-        public UIEventHandleP1<string> u_EventAccountHandle;
-        public UIEventP1<string> u_EventPassword;
-        public UIEventHandleP1<string> u_EventPasswordHandle;
 
     }
 }

@@ -11,21 +11,21 @@ namespace ET.Client
     [FriendOf(typeof(YIUIComponent))]
     [FriendOf(typeof(YIUIWindowComponent))]
     [FriendOf(typeof(YIUIPanelComponent))]
-    [EntitySystemOf(typeof(LoginPanelComponent))]
-    public static partial class LoginPanelComponentSystem
+    [EntitySystemOf(typeof(LSRoomPanelComponent))]
+    public static partial class LSRoomPanelComponentSystem
     {
         [EntitySystem]
-        private static void Awake(this LoginPanelComponent self)
+        private static void Awake(this LSRoomPanelComponent self)
         {
         }
 
         [EntitySystem]
-        private static void YIUIBind(this LoginPanelComponent self)
+        private static void YIUIBind(this LSRoomPanelComponent self)
         {
             self.UIBind();
         }
         
-        private static void UIBind(this LoginPanelComponent self)
+        private static void UIBind(this LSRoomPanelComponent self)
         {
             self.u_UIBase = self.GetParent<YIUIComponent>();
             self.u_UIWindow = self.UIBase.GetComponent<YIUIWindowComponent>();
@@ -37,12 +37,6 @@ namespace ET.Client
             self.UIPanel.Priority = 0;
             self.UIPanel.CachePanelTime = 10;
 
-            self.u_EventLogin = self.UIBase.EventTable.FindEvent<UITaskEventP0>("u_EventLogin");
-            self.u_EventLoginHandle = self.u_EventLogin.Add(self.OnEventLoginAction);
-            self.u_EventAccount = self.UIBase.EventTable.FindEvent<UIEventP1<string>>("u_EventAccount");
-            self.u_EventAccountHandle = self.u_EventAccount.Add(self.OnEventAccountAction);
-            self.u_EventPassword = self.UIBase.EventTable.FindEvent<UIEventP1<string>>("u_EventPassword");
-            self.u_EventPasswordHandle = self.u_EventPassword.Add(self.OnEventPasswordAction);
 
         }
     }
