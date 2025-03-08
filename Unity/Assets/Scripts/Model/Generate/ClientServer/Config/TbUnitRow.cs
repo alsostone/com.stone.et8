@@ -23,12 +23,12 @@ namespace ET
             Height = _buf.ReadInt();
             Weight = _buf.ReadInt();
             AI = _buf.ReadInt();
-            this.TbAIRef = null;
+            AI_Ref = null;
 
             PostInit();
         }
 
-        public static TbUnitRow DeserializeUnitConfig(ByteBuf _buf)
+        public static TbUnitRow DeserializeTbUnitRow(ByteBuf _buf)
         {
             return new TbUnitRow(_buf);
         }
@@ -68,10 +68,10 @@ namespace ET
         /// </summary>
         public readonly int AI;
 
-        public TbAIRow TbAIRef { get; private set; }
+        public TbAIRow AI_Ref { get; private set; }
 
 
-        public const int __ID__ = -568528378;
+        public const int __ID__ = -1127482552;
         public override int GetTypeId() => __ID__;
 
         public  void ResolveRef()
@@ -82,7 +82,7 @@ namespace ET
             
             
             
-            this.TbAIRef = TbAI.Instance.GetOrDefault(AI);
+            AI_Ref = TbAI.Instance.GetOrDefault(AI);
         }
 
         public override string ToString()

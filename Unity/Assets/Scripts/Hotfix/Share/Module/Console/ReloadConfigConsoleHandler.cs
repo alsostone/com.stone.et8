@@ -11,12 +11,12 @@ namespace ET
             {
                 case ConsoleMode.ReloadConfig:
                     contex.Parent.RemoveComponent<ModeContex>();
-                    Log.Console("C must have config name, like: C UnitConfig");
+                    Log.Console("C must have config name, like: C TbUnit");
                     break;
                 default:
                     string[] ss = content.Split(" ");
                     string configName = ss[1];
-                    string category = $"{configName}Category";
+                    string category = $"{configName}";
                     Type type = CodeTypes.Instance.GetType($"ET.{category}");
                     if (type == null)
                     {

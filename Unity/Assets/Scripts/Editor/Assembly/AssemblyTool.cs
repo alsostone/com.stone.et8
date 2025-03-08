@@ -200,8 +200,8 @@ namespace ET
         static void EnableUnityServer()
         {
             EnableAsmdef("Assets/Scripts/Model/Generate/Client/Ignore.asmdef");
-            EnableAsmdef("Assets/Scripts/Model/Generate/Server/Ignore.asmdef");
-            DisableAsmdef("Assets/Scripts/Model/Generate/ClientServer/Ignore.asmdef");
+            DisableAsmdef("Assets/Scripts/Model/Generate/Server/Ignore.asmdef");
+            EnableAsmdef("Assets/Scripts/Model/Generate/ClientServer/Ignore.asmdef");
 
             DisableAsmdef("Assets/Scripts/Model/Client/Ignore.asmdef");
             DisableAsmdef("Assets/Scripts/Model/Server/Ignore.asmdef");
