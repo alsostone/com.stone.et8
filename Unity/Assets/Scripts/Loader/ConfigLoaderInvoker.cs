@@ -29,7 +29,7 @@ namespace ET
 
                 List<string> startConfigs = new()
                 {
-                    "StartMachineConfigCategory", "StartProcessConfigCategory", "StartSceneConfigCategory", "StartZoneConfigCategory"
+                    "TbStartMachine", "TbStartProcess", "TbStartScene", "TbStartZone"
                 };
                 foreach (Type configType in configTypes)
                 {
@@ -77,7 +77,7 @@ namespace ET
 
             List<string> startConfigs = new()
             {
-                "StartMachineConfigCategory", "StartProcessConfigCategory", "StartSceneConfigCategory", "StartZoneConfigCategory"
+                "TbStartMachine", "TbStartProcess", "TbStartScene", "TbStartZone"
             };
 
             string configName = args.ConfigName;

@@ -12,21 +12,23 @@ using Luban;
 namespace ET
 {
     [EnableClass]
-    public sealed partial class StartZoneConfig : BeanBase
+    public sealed partial class TbAIRow : BeanBase
     {
-        public StartZoneConfig(ByteBuf _buf)
+        public TbAIRow(ByteBuf _buf)
         {
             Id = _buf.ReadInt();
-            DBConnection = _buf.ReadString();
-            DBName = _buf.ReadString();
+            AIConfigId = _buf.ReadInt();
+            Order = _buf.ReadInt();
+            Name = _buf.ReadString();
             Desc = _buf.ReadString();
+            {int __n0 = System.Math.Min(_buf.ReadSize(), _buf.Size);NodeParams = new int[__n0];for(var __index0 = 0 ; __index0 < __n0 ; __index0++) { int __e0;__e0 = _buf.ReadInt(); NodeParams[__index0] = __e0;}}
 
             PostInit();
         }
 
-        public static StartZoneConfig DeserializeStartZoneConfig(ByteBuf _buf)
+        public static TbAIRow DeserializeAIConfig(ByteBuf _buf)
         {
-            return new StartZoneConfig(_buf);
+            return new TbAIRow(_buf);
         }
 
         /// <summary>
@@ -35,26 +37,38 @@ namespace ET
         public readonly int Id;
 
         /// <summary>
-        /// 数据库地址
+        /// 所属ai
         /// </summary>
-        public readonly string DBConnection;
+        public readonly int AIConfigId;
 
         /// <summary>
-        /// 数据库名
+        /// 此ai中的顺序
         /// </summary>
-        public readonly string DBName;
+        public readonly int Order;
 
         /// <summary>
-        /// 说明
+        /// 节点名字
+        /// </summary>
+        public readonly string Name;
+
+        /// <summary>
+        /// 描述
         /// </summary>
         public readonly string Desc;
 
+        /// <summary>
+        /// 节点参数
+        /// </summary>
+        public readonly int[] NodeParams;
 
-        public const int __ID__ = -457316368;
+
+        public const int __ID__ = -294143606;
         public override int GetTypeId() => __ID__;
 
         public  void ResolveRef()
         {
+            
+            
             
             
             
@@ -65,9 +79,11 @@ namespace ET
         {
             return "{ "
             + "Id:" + Id + ","
-            + "DBConnection:" + DBConnection + ","
-            + "DBName:" + DBName + ","
+            + "AIConfigId:" + AIConfigId + ","
+            + "Order:" + Order + ","
+            + "Name:" + Name + ","
             + "Desc:" + Desc + ","
+            + "NodeParams:" + Luban.StringUtil.CollectionToString(NodeParams) + ","
             + "}";
         }
 

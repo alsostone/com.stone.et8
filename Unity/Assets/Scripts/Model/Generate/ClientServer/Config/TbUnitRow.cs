@@ -12,9 +12,9 @@ using Luban;
 namespace ET
 {
     [EnableClass]
-    public sealed partial class UnitConfig : BeanBase
+    public sealed partial class TbUnitRow : BeanBase
     {
-        public UnitConfig(ByteBuf _buf)
+        public TbUnitRow(ByteBuf _buf)
         {
             Id = _buf.ReadInt();
             Type = _buf.ReadInt();
@@ -23,14 +23,14 @@ namespace ET
             Height = _buf.ReadInt();
             Weight = _buf.ReadInt();
             AI = _buf.ReadInt();
-            AI_Ref = null;
+            this.TbAIRef = null;
 
             PostInit();
         }
 
-        public static UnitConfig DeserializeUnitConfig(ByteBuf _buf)
+        public static TbUnitRow DeserializeUnitConfig(ByteBuf _buf)
         {
-            return new UnitConfig(_buf);
+            return new TbUnitRow(_buf);
         }
 
         /// <summary>
@@ -68,7 +68,7 @@ namespace ET
         /// </summary>
         public readonly int AI;
 
-        public AIConfig AI_Ref { get; private set; }
+        public TbAIRow TbAIRef { get; private set; }
 
 
         public const int __ID__ = -568528378;
@@ -82,7 +82,7 @@ namespace ET
             
             
             
-            AI_Ref = AIConfigCategory.Instance.GetOrDefault(AI);
+            this.TbAIRef = TbAI.Instance.GetOrDefault(AI);
         }
 
         public override string ToString()

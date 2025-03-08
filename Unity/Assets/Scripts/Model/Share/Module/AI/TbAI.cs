@@ -2,11 +2,11 @@ using System.Collections.Generic;
 
 namespace ET
 {
-    public partial class AIConfigCategory
+    public partial class TbAI
     {
-        public Dictionary<int, SortedDictionary<int, AIConfig>> AIConfigs = new();
+        public Dictionary<int, SortedDictionary<int, TbAIRow>> AIConfigs = new();
 
-        public SortedDictionary<int, AIConfig> GetAI(int aiConfigId)
+        public SortedDictionary<int, TbAIRow> GetAI(int aiConfigId)
         {
             return this.AIConfigs[aiConfigId];
         }
@@ -15,10 +15,10 @@ namespace ET
         {
             foreach (var kv in this.DataMap)
             {
-                SortedDictionary<int, AIConfig> aiNodeConfig;
+                SortedDictionary<int, TbAIRow> aiNodeConfig;
                 if (!this.AIConfigs.TryGetValue(kv.Value.AIConfigId, out aiNodeConfig))
                 {
-                    aiNodeConfig = new SortedDictionary<int, AIConfig>();
+                    aiNodeConfig = new SortedDictionary<int, TbAIRow>();
                     this.AIConfigs.Add(kv.Value.AIConfigId, aiNodeConfig);
                 }
 

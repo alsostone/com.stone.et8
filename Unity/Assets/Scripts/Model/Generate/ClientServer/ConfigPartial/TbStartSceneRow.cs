@@ -3,45 +3,45 @@ using System.Net;
 
 namespace ET
 {
-    public partial class StartSceneConfigCategory
+    public partial class TbStartScene
     {
-        public MultiMap<int, StartSceneConfig> Gates = new();
+        public MultiMap<int, TbStartSceneRow> Gates = new();
 
-        public MultiMap<int, StartSceneConfig> ProcessScenes = new();
+        public MultiMap<int, TbStartSceneRow> ProcessScenes = new();
 
-        public Dictionary<long, Dictionary<string, StartSceneConfig>> ClientScenesByName = new();
+        public Dictionary<long, Dictionary<string, TbStartSceneRow>> ClientScenesByName = new();
 
-        public StartSceneConfig LocationConfig;
+        public TbStartSceneRow LocationRow;
 
-        public List<StartSceneConfig> Realms = new();
+        public List<TbStartSceneRow> Realms = new();
 
-        public List<StartSceneConfig> Routers = new();
+        public List<TbStartSceneRow> Routers = new();
 
-        public List<StartSceneConfig> Maps = new();
+        public List<TbStartSceneRow> Maps = new();
 
-        public StartSceneConfig Match;
+        public TbStartSceneRow Match;
 
-        public StartSceneConfig Benchmark;
+        public TbStartSceneRow Benchmark;
 
-        public List<StartSceneConfig> GetByProcess(int process)
+        public List<TbStartSceneRow> GetByProcess(int process)
         {
             return this.ProcessScenes[process];
         }
 
-        public StartSceneConfig GetBySceneName(int zone, string name)
+        public TbStartSceneRow GetBySceneName(int zone, string name)
         {
             return this.ClientScenesByName[zone][name];
         }
 
         partial void PostInit()
         {
-            foreach (StartSceneConfig startSceneConfig in this.DataList)
+            foreach (TbStartSceneRow startSceneConfig in this.DataList)
             {
                 this.ProcessScenes.Add(startSceneConfig.Process, startSceneConfig);
 
                 if (!this.ClientScenesByName.ContainsKey(startSceneConfig.Zone))
                 {
-                    this.ClientScenesByName.Add(startSceneConfig.Zone, new Dictionary<string, StartSceneConfig>());
+                    this.ClientScenesByName.Add(startSceneConfig.Zone, new Dictionary<string, TbStartSceneRow>());
                 }
 
                 this.ClientScenesByName[startSceneConfig.Zone].Add(startSceneConfig.Name, startSceneConfig);
@@ -55,7 +55,7 @@ namespace ET
                         this.Gates.Add(startSceneConfig.Zone, startSceneConfig);
                         break;
                     case SceneType.Location:
-                        this.LocationConfig = startSceneConfig;
+                        this.LocationRow = startSceneConfig;
                         break;
                     case SceneType.Router:
                         this.Routers.Add(startSceneConfig);
@@ -74,25 +74,25 @@ namespace ET
         }
     }
 
-    public partial class StartSceneConfig
+    public partial class TbStartSceneRow
     {
         public ActorId ActorId;
 
         public SceneType Type;
 
-        public StartProcessConfig StartProcessConfig
+        public TbStartProcessRow TbStartProcessRow
         {
             get
             {
-                return StartProcessConfigCategory.Instance.Get(this.Process);
+                return TbStartProcess.Instance.Get(this.Process);
             }
         }
 
-        public StartZoneConfig StartZoneConfig
+        public TbStartZoneRow TbStartZoneRow
         {
             get
             {
-                return StartZoneConfigCategory.Instance.Get(this.Zone);
+                return TbStartZone.Instance.Get(this.Zone);
             }
         }
 
@@ -105,7 +105,7 @@ namespace ET
             {
                 if (innerIPPort == null)
                 {
-                    this.innerIPPort = NetworkHelper.ToIPEndPoint($"{this.StartProcessConfig.InnerIP}:{this.Port}");
+                    this.innerIPPort = NetworkHelper.ToIPEndPoint($"{this.TbStartProcessRow.InnerIP}:{this.Port}");
                 }
 
                 return this.innerIPPort;
@@ -121,7 +121,7 @@ namespace ET
             {
                 if (this.outerIPPort == null)
                 {
-                    this.outerIPPort = NetworkHelper.ToIPEndPoint($"{this.StartProcessConfig.OuterIP}:{this.Port}");
+                    this.outerIPPort = NetworkHelper.ToIPEndPoint($"{this.TbStartProcessRow.OuterIP}:{this.Port}");
                 }
 
                 return this.outerIPPort;

@@ -13,20 +13,20 @@ using System.Collections.Generic;
 namespace ET
 {
     [Config]
-    public partial class StartSceneConfigCategory : Singleton<StartSceneConfigCategory>, IConfig
+    public partial class TbStartProcess : Singleton<TbStartProcess>, IConfig
     {
-        private readonly Dictionary<int, StartSceneConfig> _dataMap;
-        private readonly List<StartSceneConfig> _dataList;
+        private readonly Dictionary<int, TbStartProcessRow> _dataMap;
+        private readonly List<TbStartProcessRow> _dataList;
 
-        public StartSceneConfigCategory(ByteBuf _buf)
+        public TbStartProcess(ByteBuf _buf)
         {
-            _dataMap = new Dictionary<int, StartSceneConfig>();
-            _dataList = new List<StartSceneConfig>();
+            _dataMap = new Dictionary<int, TbStartProcessRow>();
+            _dataList = new List<TbStartProcessRow>();
 
             for (int n = _buf.ReadSize(); n > 0; --n)
             {
-                StartSceneConfig _v;
-                _v = StartSceneConfig.DeserializeStartSceneConfig(_buf);
+                TbStartProcessRow _v;
+                _v = TbStartProcessRow.DeserializeStartProcessConfig(_buf);
                 _dataList.Add(_v);
                 _dataMap.Add(_v.Id, _v);
             }
@@ -34,11 +34,11 @@ namespace ET
             PostInit();
         }
 
-        public Dictionary<int, StartSceneConfig> DataMap => _dataMap;
-        public List<StartSceneConfig> DataList => _dataList;
+        public Dictionary<int, TbStartProcessRow> DataMap => _dataMap;
+        public List<TbStartProcessRow> DataList => _dataList;
 
-        public StartSceneConfig GetOrDefault(int key) => _dataMap.GetValueOrDefault(key);
-        public StartSceneConfig Get(int key)
+        public TbStartProcessRow GetOrDefault(int key) => _dataMap.GetValueOrDefault(key);
+        public TbStartProcessRow Get(int key)
         {
             if (_dataMap.TryGetValue(key,out var v))
             {

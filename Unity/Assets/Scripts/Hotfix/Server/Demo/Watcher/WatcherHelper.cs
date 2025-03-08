@@ -6,26 +6,26 @@ namespace ET.Server
 {
     public static partial class WatcherHelper
     {
-        public static StartMachineConfig GetThisMachineConfig()
+        public static TbStartMachineRow GetThisMachineConfig()
         {
             string[] localIP = NetworkHelper.GetAddressIPs();
-            StartMachineConfig startMachineConfig = null;
-            foreach (StartMachineConfig config in StartMachineConfigCategory.Instance.DataList)
+            TbStartMachineRow tbStartMachineRow = null;
+            foreach (TbStartMachineRow config in TbStartMachine.Instance.DataList)
             {
                 if (!WatcherHelper.IsThisMachine(config.InnerIP, localIP))
                 {
                     continue;
                 }
-                startMachineConfig = config;
+                tbStartMachineRow = config;
                 break;
             }
 
-            if (startMachineConfig == null)
+            if (tbStartMachineRow == null)
             {
                 throw new Exception("not found this machine ip config!");
             }
 
-            return startMachineConfig;
+            return tbStartMachineRow;
         }
         
         public static bool IsThisMachine(string ip, string[] localIPs)
@@ -39,10 +39,10 @@ namespace ET.Server
         
         public static System.Diagnostics.Process StartProcess(int processId, int createScenes = 0)
         {
-            StartProcessConfig startProcessConfig = StartProcessConfigCategory.Instance.Get(processId);
+            TbStartProcessRow tbStartProcessRow = TbStartProcess.Instance.Get(processId);
             const string exe = "dotnet";
             string arguments = $"App.dll" + 
-                    $" --Process={startProcessConfig.Id}" +
+                    $" --Process={tbStartProcessRow.Id}" +
                     $" --AppType=Server" +  
                     $" --StartConfig={Options.Instance.StartConfig}" +
                     $" --Develop={Options.Instance.Develop}" +

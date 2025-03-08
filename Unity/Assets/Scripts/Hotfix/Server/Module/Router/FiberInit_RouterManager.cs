@@ -8,8 +8,8 @@ namespace ET.Server
         public override async ETTask Handle(FiberInit fiberInit)
         {
             Scene root = fiberInit.Fiber.Root;
-            StartSceneConfig startSceneConfig = StartSceneConfigCategory.Instance.Get((int)root.Id);
-            root.AddComponent<HttpComponent, string>($"http://*:{startSceneConfig.Port}/");
+            TbStartSceneRow tbStartSceneRow = TbStartScene.Instance.Get((int)root.Id);
+            root.AddComponent<HttpComponent, string>($"http://*:{tbStartSceneRow.Port}/");
 
             await ETTask.CompletedTask;
         }

@@ -22,7 +22,7 @@ namespace ET.Server
             }
             
             // 申请一个房间
-            StartSceneConfig startSceneConfig = RandomGenerator.RandomArray(StartSceneConfigCategory.Instance.Maps);
+            TbStartSceneRow tbStartSceneRow = RandomGenerator.RandomArray(TbStartScene.Instance.Maps);
             Match2Map_GetRoom match2MapGetRoom = Match2Map_GetRoom.Create();
             foreach (long id in self.waitMatchPlayers)
             {
@@ -33,7 +33,7 @@ namespace ET.Server
 
             Scene root = self.Root();
             Map2Match_GetRoom map2MatchGetRoom = await root.GetComponent<MessageSender>().Call(
-                startSceneConfig.ActorId, match2MapGetRoom) as Map2Match_GetRoom;
+                tbStartSceneRow.ActorId, match2MapGetRoom) as Map2Match_GetRoom;
 
             Match2G_NotifyMatchSuccess match2GNotifyMatchSuccess = Match2G_NotifyMatchSuccess.Create();
             match2GNotifyMatchSuccess.ActorId = map2MatchGetRoom.ActorId;

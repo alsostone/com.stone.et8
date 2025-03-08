@@ -13,20 +13,20 @@ using System.Collections.Generic;
 namespace ET
 {
     [Config]
-    public partial class AIConfigCategory : Singleton<AIConfigCategory>, IConfig
+    public partial class TbStartScene : Singleton<TbStartScene>, IConfig
     {
-        private readonly Dictionary<int, AIConfig> _dataMap;
-        private readonly List<AIConfig> _dataList;
+        private readonly Dictionary<int, TbStartSceneRow> _dataMap;
+        private readonly List<TbStartSceneRow> _dataList;
 
-        public AIConfigCategory(ByteBuf _buf)
+        public TbStartScene(ByteBuf _buf)
         {
-            _dataMap = new Dictionary<int, AIConfig>();
-            _dataList = new List<AIConfig>();
+            _dataMap = new Dictionary<int, TbStartSceneRow>();
+            _dataList = new List<TbStartSceneRow>();
 
             for (int n = _buf.ReadSize(); n > 0; --n)
             {
-                AIConfig _v;
-                _v = AIConfig.DeserializeAIConfig(_buf);
+                TbStartSceneRow _v;
+                _v = TbStartSceneRow.DeserializeStartSceneConfig(_buf);
                 _dataList.Add(_v);
                 _dataMap.Add(_v.Id, _v);
             }
@@ -34,11 +34,11 @@ namespace ET
             PostInit();
         }
 
-        public Dictionary<int, AIConfig> DataMap => _dataMap;
-        public List<AIConfig> DataList => _dataList;
+        public Dictionary<int, TbStartSceneRow> DataMap => _dataMap;
+        public List<TbStartSceneRow> DataList => _dataList;
 
-        public AIConfig GetOrDefault(int key) => _dataMap.GetValueOrDefault(key);
-        public AIConfig Get(int key)
+        public TbStartSceneRow GetOrDefault(int key) => _dataMap.GetValueOrDefault(key);
+        public TbStartSceneRow Get(int key)
         {
             if (_dataMap.TryGetValue(key,out var v))
             {

@@ -13,20 +13,20 @@ using System.Collections.Generic;
 namespace ET
 {
     [Config]
-    public partial class StartZoneConfigCategory : Singleton<StartZoneConfigCategory>, IConfig
+    public partial class TbStartMachine : Singleton<TbStartMachine>, IConfig
     {
-        private readonly Dictionary<int, StartZoneConfig> _dataMap;
-        private readonly List<StartZoneConfig> _dataList;
+        private readonly Dictionary<int, TbStartMachineRow> _dataMap;
+        private readonly List<TbStartMachineRow> _dataList;
 
-        public StartZoneConfigCategory(ByteBuf _buf)
+        public TbStartMachine(ByteBuf _buf)
         {
-            _dataMap = new Dictionary<int, StartZoneConfig>();
-            _dataList = new List<StartZoneConfig>();
+            _dataMap = new Dictionary<int, TbStartMachineRow>();
+            _dataList = new List<TbStartMachineRow>();
 
             for (int n = _buf.ReadSize(); n > 0; --n)
             {
-                StartZoneConfig _v;
-                _v = StartZoneConfig.DeserializeStartZoneConfig(_buf);
+                TbStartMachineRow _v;
+                _v = TbStartMachineRow.DeserializeStartMachineConfig(_buf);
                 _dataList.Add(_v);
                 _dataMap.Add(_v.Id, _v);
             }
@@ -34,11 +34,11 @@ namespace ET
             PostInit();
         }
 
-        public Dictionary<int, StartZoneConfig> DataMap => _dataMap;
-        public List<StartZoneConfig> DataList => _dataList;
+        public Dictionary<int, TbStartMachineRow> DataMap => _dataMap;
+        public List<TbStartMachineRow> DataList => _dataList;
 
-        public StartZoneConfig GetOrDefault(int key) => _dataMap.GetValueOrDefault(key);
-        public StartZoneConfig Get(int key)
+        public TbStartMachineRow GetOrDefault(int key) => _dataMap.GetValueOrDefault(key);
+        public TbStartMachineRow Get(int key)
         {
             if (_dataMap.TryGetValue(key,out var v))
             {

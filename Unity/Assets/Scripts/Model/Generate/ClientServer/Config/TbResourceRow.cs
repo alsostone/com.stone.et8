@@ -12,9 +12,9 @@ using Luban;
 namespace ET
 {
     [EnableClass]
-    public sealed partial class ResourceConfig : BeanBase
+    public sealed partial class TbResourceRow : BeanBase
     {
-        public ResourceConfig(ByteBuf _buf)
+        public TbResourceRow(ByteBuf _buf)
         {
             Id = _buf.ReadInt();
             Url = _buf.ReadString();
@@ -22,9 +22,9 @@ namespace ET
             PostInit();
         }
 
-        public static ResourceConfig DeserializeResourceConfig(ByteBuf _buf)
+        public static TbResourceRow DeserializeResourceConfig(ByteBuf _buf)
         {
-            return new ResourceConfig(_buf);
+            return new TbResourceRow(_buf);
         }
 
         /// <summary>

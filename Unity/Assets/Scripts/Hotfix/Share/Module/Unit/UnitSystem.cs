@@ -9,9 +9,9 @@ namespace ET
             self.ConfigId = configId;
         }
 
-        public static UnitConfig Config(this Unit self)
+        public static TbUnitRow Config(this Unit self)
         {
-            return UnitConfigCategory.Instance.Get(self.ConfigId);
+            return TbUnit.Instance.Get(self.ConfigId);
         }
         
         public static UnitType Type(this Unit self)

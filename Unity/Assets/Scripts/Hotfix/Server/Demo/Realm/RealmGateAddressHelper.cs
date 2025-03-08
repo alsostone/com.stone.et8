@@ -5,11 +5,11 @@ namespace ET.Server
 {
 	public static partial class RealmGateAddressHelper
 	{
-		public static StartSceneConfig GetGate(int zone, string account)
+		public static TbStartSceneRow GetGate(int zone, string account)
 		{
 			ulong hash = (ulong)account.GetLongHashCode();
 			
-			List<StartSceneConfig> zoneGates = StartSceneConfigCategory.Instance.Gates[zone];
+			List<TbStartSceneRow> zoneGates = TbStartScene.Instance.Gates[zone];
 			
 			return zoneGates[(int)(hash % (ulong)zoneGates.Count)];
 		}

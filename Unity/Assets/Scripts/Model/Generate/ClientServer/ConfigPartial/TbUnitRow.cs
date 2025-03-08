@@ -4,7 +4,7 @@ namespace ET
     //扩展案例
     //注意按照ET的 3个模式规则 如果这个扩展在其他地方也需要 那么是要同步的
     //也就是说可能有多份
-    public sealed partial class UnitConfig
+    public sealed partial class TbUnitRow
     {
         //案例字段 使用get set 属性
         public int TestInt { get; private set; }

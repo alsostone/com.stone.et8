@@ -12,24 +12,21 @@ using System.Collections.Generic;
 
 namespace ET
 {
-    /// <summary>
-    /// 资源配置
-    /// </summary>
     [Config]
-    public partial class ResourceConfigCategory : Singleton<ResourceConfigCategory>, IConfig
+    public partial class TbAI : Singleton<TbAI>, IConfig
     {
-        private readonly Dictionary<int, ResourceConfig> _dataMap;
-        private readonly List<ResourceConfig> _dataList;
+        private readonly Dictionary<int, TbAIRow> _dataMap;
+        private readonly List<TbAIRow> _dataList;
 
-        public ResourceConfigCategory(ByteBuf _buf)
+        public TbAI(ByteBuf _buf)
         {
-            _dataMap = new Dictionary<int, ResourceConfig>();
-            _dataList = new List<ResourceConfig>();
+            _dataMap = new Dictionary<int, TbAIRow>();
+            _dataList = new List<TbAIRow>();
 
             for (int n = _buf.ReadSize(); n > 0; --n)
             {
-                ResourceConfig _v;
-                _v = ResourceConfig.DeserializeResourceConfig(_buf);
+                TbAIRow _v;
+                _v = TbAIRow.DeserializeAIConfig(_buf);
                 _dataList.Add(_v);
                 _dataMap.Add(_v.Id, _v);
             }
@@ -37,11 +34,11 @@ namespace ET
             PostInit();
         }
 
-        public Dictionary<int, ResourceConfig> DataMap => _dataMap;
-        public List<ResourceConfig> DataList => _dataList;
+        public Dictionary<int, TbAIRow> DataMap => _dataMap;
+        public List<TbAIRow> DataList => _dataList;
 
-        public ResourceConfig GetOrDefault(int key) => _dataMap.GetValueOrDefault(key);
-        public ResourceConfig Get(int key)
+        public TbAIRow GetOrDefault(int key) => _dataMap.GetValueOrDefault(key);
+        public TbAIRow Get(int key)
         {
             if (_dataMap.TryGetValue(key,out var v))
             {

@@ -13,8 +13,8 @@ namespace ET.Server
             root.AddComponent<CoroutineLockComponent>();
             root.AddComponent<ProcessInnerSender>();
             root.AddComponent<MessageSender>();
-            StartSceneConfig startSceneConfig = StartSceneConfigCategory.Instance.Get(root.Fiber.Id);
-            root.AddComponent<NetComponent, IPEndPoint, NetworkProtocol>(startSceneConfig.InnerIPPort, NetworkProtocol.UDP);
+            TbStartSceneRow tbStartSceneRow = TbStartScene.Instance.Get(root.Fiber.Id);
+            root.AddComponent<NetComponent, IPEndPoint, NetworkProtocol>(tbStartSceneRow.InnerIPPort, NetworkProtocol.UDP);
 
             await ETTask.CompletedTask;
         }

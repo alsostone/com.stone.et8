@@ -13,20 +13,20 @@ using System.Collections.Generic;
 namespace ET
 {
     [Config]
-    public partial class StartProcessConfigCategory : Singleton<StartProcessConfigCategory>, IConfig
+    public partial class TbUnit : Singleton<TbUnit>, IConfig
     {
-        private readonly Dictionary<int, StartProcessConfig> _dataMap;
-        private readonly List<StartProcessConfig> _dataList;
+        private readonly Dictionary<int, TbUnitRow> _dataMap;
+        private readonly List<TbUnitRow> _dataList;
 
-        public StartProcessConfigCategory(ByteBuf _buf)
+        public TbUnit(ByteBuf _buf)
         {
-            _dataMap = new Dictionary<int, StartProcessConfig>();
-            _dataList = new List<StartProcessConfig>();
+            _dataMap = new Dictionary<int, TbUnitRow>();
+            _dataList = new List<TbUnitRow>();
 
             for (int n = _buf.ReadSize(); n > 0; --n)
             {
-                StartProcessConfig _v;
-                _v = StartProcessConfig.DeserializeStartProcessConfig(_buf);
+                TbUnitRow _v;
+                _v = TbUnitRow.DeserializeUnitConfig(_buf);
                 _dataList.Add(_v);
                 _dataMap.Add(_v.Id, _v);
             }
@@ -34,11 +34,11 @@ namespace ET
             PostInit();
         }
 
-        public Dictionary<int, StartProcessConfig> DataMap => _dataMap;
-        public List<StartProcessConfig> DataList => _dataList;
+        public Dictionary<int, TbUnitRow> DataMap => _dataMap;
+        public List<TbUnitRow> DataList => _dataList;
 
-        public StartProcessConfig GetOrDefault(int key) => _dataMap.GetValueOrDefault(key);
-        public StartProcessConfig Get(int key)
+        public TbUnitRow GetOrDefault(int key) => _dataMap.GetValueOrDefault(key);
+        public TbUnitRow Get(int key)
         {
             if (_dataMap.TryGetValue(key,out var v))
             {

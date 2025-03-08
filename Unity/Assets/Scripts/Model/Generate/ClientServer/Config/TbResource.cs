@@ -12,21 +12,24 @@ using System.Collections.Generic;
 
 namespace ET
 {
+    /// <summary>
+    /// 资源配置
+    /// </summary>
     [Config]
-    public partial class StartMachineConfigCategory : Singleton<StartMachineConfigCategory>, IConfig
+    public partial class TbResource : Singleton<TbResource>, IConfig
     {
-        private readonly Dictionary<int, StartMachineConfig> _dataMap;
-        private readonly List<StartMachineConfig> _dataList;
+        private readonly Dictionary<int, TbResourceRow> _dataMap;
+        private readonly List<TbResourceRow> _dataList;
 
-        public StartMachineConfigCategory(ByteBuf _buf)
+        public TbResource(ByteBuf _buf)
         {
-            _dataMap = new Dictionary<int, StartMachineConfig>();
-            _dataList = new List<StartMachineConfig>();
+            _dataMap = new Dictionary<int, TbResourceRow>();
+            _dataList = new List<TbResourceRow>();
 
             for (int n = _buf.ReadSize(); n > 0; --n)
             {
-                StartMachineConfig _v;
-                _v = StartMachineConfig.DeserializeStartMachineConfig(_buf);
+                TbResourceRow _v;
+                _v = TbResourceRow.DeserializeResourceConfig(_buf);
                 _dataList.Add(_v);
                 _dataMap.Add(_v.Id, _v);
             }
@@ -34,11 +37,11 @@ namespace ET
             PostInit();
         }
 
-        public Dictionary<int, StartMachineConfig> DataMap => _dataMap;
-        public List<StartMachineConfig> DataList => _dataList;
+        public Dictionary<int, TbResourceRow> DataMap => _dataMap;
+        public List<TbResourceRow> DataList => _dataList;
 
-        public StartMachineConfig GetOrDefault(int key) => _dataMap.GetValueOrDefault(key);
-        public StartMachineConfig Get(int key)
+        public TbResourceRow GetOrDefault(int key) => _dataMap.GetValueOrDefault(key);
+        public TbResourceRow Get(int key)
         {
             if (_dataMap.TryGetValue(key,out var v))
             {

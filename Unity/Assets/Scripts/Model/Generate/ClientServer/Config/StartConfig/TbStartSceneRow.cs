@@ -12,9 +12,9 @@ using Luban;
 namespace ET
 {
     [EnableClass]
-    public sealed partial class StartSceneConfig : BeanBase
+    public sealed partial class TbStartSceneRow : BeanBase
     {
-        public StartSceneConfig(ByteBuf _buf)
+        public TbStartSceneRow(ByteBuf _buf)
         {
             Id = _buf.ReadInt();
             Process = _buf.ReadInt();
@@ -26,9 +26,9 @@ namespace ET
             PostInit();
         }
 
-        public static StartSceneConfig DeserializeStartSceneConfig(ByteBuf _buf)
+        public static TbStartSceneRow DeserializeStartSceneConfig(ByteBuf _buf)
         {
-            return new StartSceneConfig(_buf);
+            return new TbStartSceneRow(_buf);
         }
 
         /// <summary>

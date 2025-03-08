@@ -7,11 +7,11 @@
 		{
 			Player player = session.GetComponent<SessionPlayerComponent>().Player;
 
-			StartSceneConfig startSceneConfig = StartSceneConfigCategory.Instance.Match;
+			TbStartSceneRow tbStartSceneRow = TbStartScene.Instance.Match;
 
 			G2Match_Match g2MatchMatch = G2Match_Match.Create();
 			g2MatchMatch.Id = player.Id;
-			await session.Root().GetComponent<MessageSender>().Call(startSceneConfig.ActorId, g2MatchMatch);
+			await session.Root().GetComponent<MessageSender>().Call(tbStartSceneRow.ActorId, g2MatchMatch);
 		}
 	}
 }

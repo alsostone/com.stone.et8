@@ -12,43 +12,50 @@ using Luban;
 namespace ET
 {
     [EnableClass]
-    public sealed partial class StartProcessConfig : BeanBase
+    public sealed partial class TbStartMachineRow : BeanBase
     {
-        public StartProcessConfig(ByteBuf _buf)
+        public TbStartMachineRow(ByteBuf _buf)
         {
             Id = _buf.ReadInt();
-            MachineId = _buf.ReadInt();
-            Port = _buf.ReadInt();
+            InnerIP = _buf.ReadString();
+            OuterIP = _buf.ReadString();
+            WatcherPort = _buf.ReadString();
 
             PostInit();
         }
 
-        public static StartProcessConfig DeserializeStartProcessConfig(ByteBuf _buf)
+        public static TbStartMachineRow DeserializeStartMachineConfig(ByteBuf _buf)
         {
-            return new StartProcessConfig(_buf);
+            return new TbStartMachineRow(_buf);
         }
 
         /// <summary>
-        /// Id
+        /// 这是id
         /// </summary>
         public readonly int Id;
 
         /// <summary>
-        /// 所属机器
+        /// 内网地址
         /// </summary>
-        public readonly int MachineId;
+        public readonly string InnerIP;
 
         /// <summary>
-        /// 内网端口
+        /// 外网地址
         /// </summary>
-        public readonly int Port;
+        public readonly string OuterIP;
+
+        /// <summary>
+        /// 守护进程端口
+        /// </summary>
+        public readonly string WatcherPort;
 
 
-        public const int __ID__ = 2140444015;
+        public const int __ID__ = 1628109127;
         public override int GetTypeId() => __ID__;
 
         public  void ResolveRef()
         {
+            
             
             
             
@@ -58,8 +65,9 @@ namespace ET
         {
             return "{ "
             + "Id:" + Id + ","
-            + "MachineId:" + MachineId + ","
-            + "Port:" + Port + ","
+            + "InnerIP:" + InnerIP + ","
+            + "OuterIP:" + OuterIP + ","
+            + "WatcherPort:" + WatcherPort + ","
             + "}";
         }
 

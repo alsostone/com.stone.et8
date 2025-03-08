@@ -18,8 +18,8 @@ namespace ET.Server
             root.AddComponent<LocationProxyComponent>();
             root.AddComponent<MessageLocationSenderComponent>();
 
-            StartSceneConfig startSceneConfig = StartSceneConfigCategory.Instance.Get((int)root.Id);
-            root.AddComponent<NetComponent, IPEndPoint, NetworkProtocol>(startSceneConfig.InnerIPPort, NetworkProtocol.UDP);
+            TbStartSceneRow tbStartSceneRow = TbStartScene.Instance.Get((int)root.Id);
+            root.AddComponent<NetComponent, IPEndPoint, NetworkProtocol>(tbStartSceneRow.InnerIPPort, NetworkProtocol.UDP);
             await ETTask.CompletedTask;
         }
     }

@@ -13,20 +13,20 @@ using System.Collections.Generic;
 namespace ET
 {
     [Config]
-    public partial class UnitConfigCategory : Singleton<UnitConfigCategory>, IConfig
+    public partial class TbStartZone : Singleton<TbStartZone>, IConfig
     {
-        private readonly Dictionary<int, UnitConfig> _dataMap;
-        private readonly List<UnitConfig> _dataList;
+        private readonly Dictionary<int, TbStartZoneRow> _dataMap;
+        private readonly List<TbStartZoneRow> _dataList;
 
-        public UnitConfigCategory(ByteBuf _buf)
+        public TbStartZone(ByteBuf _buf)
         {
-            _dataMap = new Dictionary<int, UnitConfig>();
-            _dataList = new List<UnitConfig>();
+            _dataMap = new Dictionary<int, TbStartZoneRow>();
+            _dataList = new List<TbStartZoneRow>();
 
             for (int n = _buf.ReadSize(); n > 0; --n)
             {
-                UnitConfig _v;
-                _v = UnitConfig.DeserializeUnitConfig(_buf);
+                TbStartZoneRow _v;
+                _v = TbStartZoneRow.DeserializeStartZoneConfig(_buf);
                 _dataList.Add(_v);
                 _dataMap.Add(_v.Id, _v);
             }
@@ -34,11 +34,11 @@ namespace ET
             PostInit();
         }
 
-        public Dictionary<int, UnitConfig> DataMap => _dataMap;
-        public List<UnitConfig> DataList => _dataList;
+        public Dictionary<int, TbStartZoneRow> DataMap => _dataMap;
+        public List<TbStartZoneRow> DataList => _dataList;
 
-        public UnitConfig GetOrDefault(int key) => _dataMap.GetValueOrDefault(key);
-        public UnitConfig Get(int key)
+        public TbStartZoneRow GetOrDefault(int key) => _dataMap.GetValueOrDefault(key);
+        public TbStartZoneRow Get(int key)
         {
             if (_dataMap.TryGetValue(key,out var v))
             {

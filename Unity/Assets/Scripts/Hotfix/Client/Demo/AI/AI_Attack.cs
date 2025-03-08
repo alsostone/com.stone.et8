@@ -2,7 +2,7 @@ namespace ET.Client
 {
     public class AI_Attack: AAIHandler
     {
-        public override int Check(AIComponent aiComponent, AIConfig aiConfig)
+        public override int Check(AIComponent aiComponent, TbAIRow tbAIRow)
         {
             long sec = TimeInfo.Instance.ClientNow() / 1000 % 15;
             if (sec >= 10)
@@ -12,7 +12,7 @@ namespace ET.Client
             return 1;
         }
 
-        public override async ETTask Execute(AIComponent aiComponent, AIConfig aiConfig, ETCancellationToken cancellationToken)
+        public override async ETTask Execute(AIComponent aiComponent, TbAIRow tbAIRow, ETCancellationToken cancellationToken)
         {
             Fiber fiber = aiComponent.Fiber();
 
