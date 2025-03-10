@@ -1,0 +1,30 @@
+[
+  {
+    "Id": 1,
+    "name": "人体弹板的轨迹",
+    "hor_speed": 60000,
+    "ver_speed": 0,
+    "toward_type": 2
+  },
+  {
+    "Id": 2,
+    "name": "防御塔子弹轨迹",
+    "hor_speed": 50000,
+    "ver_speed": 0,
+    "toward_type": 2
+  },
+  {
+    "Id": 3,
+    "name": "远程兵子弹轨迹",
+    "hor_speed": 30000,
+    "ver_speed": 0,
+    "toward_type": 2
+  },
+  {
+    "Id": 8000,
+    "name": "蓄力抛射轨迹",
+    "hor_speed": 60000,
+    "ver_speed": 0,
+    "toward_type": 2
+  }
+]

@@ -1,0 +1,462 @@
+[
+  {
+    "Id": 10,
+    "name": "全局增加复活间隔1级",
+    "group_id": 1,
+    "success_conds": [],
+    "failure_conds": [],
+    "action_type": 1,
+    "action_param": [
+      9
+    ]
+  },
+  {
+    "Id": 20,
+    "name": "全局增加复活间隔2级",
+    "group_id": 2,
+    "success_conds": [],
+    "failure_conds": [],
+    "action_type": 1,
+    "action_param": [
+      9
+    ]
+  },
+  {
+    "Id": 30,
+    "name": "全局增加复活间隔3级",
+    "group_id": 3,
+    "success_conds": [],
+    "failure_conds": [],
+    "action_type": 1,
+    "action_param": [
+      9
+    ]
+  },
+  {
+    "Id": 40,
+    "name": "全局增加复活间隔4级",
+    "group_id": 4,
+    "success_conds": [],
+    "failure_conds": [],
+    "action_type": 1,
+    "action_param": [
+      9
+    ]
+  },
+  {
+    "Id": 1010,
+    "name": "全局加快小水塔速度1级",
+    "group_id": 101,
+    "success_conds": [],
+    "failure_conds": [],
+    "action_type": 1,
+    "action_param": [
+      8
+    ]
+  },
+  {
+    "Id": 1020,
+    "name": "全局加快小水塔速度2级",
+    "group_id": 102,
+    "success_conds": [],
+    "failure_conds": [],
+    "action_type": 1,
+    "action_param": [
+      8
+    ]
+  },
+  {
+    "Id": 1030,
+    "name": "全局加快小水塔速度3级",
+    "group_id": 103,
+    "success_conds": [],
+    "failure_conds": [],
+    "action_type": 1,
+    "action_param": [
+      8
+    ]
+  },
+  {
+    "Id": 2010,
+    "name": "全局加快大水塔速度1级",
+    "group_id": 201,
+    "success_conds": [],
+    "failure_conds": [],
+    "action_type": 1,
+    "action_param": [
+      8
+    ]
+  },
+  {
+    "Id": 2020,
+    "name": "全局加快大水塔速度2级",
+    "group_id": 202,
+    "success_conds": [],
+    "failure_conds": [],
+    "action_type": 1,
+    "action_param": [
+      8
+    ]
+  },
+  {
+    "Id": 2030,
+    "name": "全局加快大水塔速度3级",
+    "group_id": 203,
+    "success_conds": [],
+    "failure_conds": [],
+    "action_type": 1,
+    "action_param": [
+      8
+    ]
+  },
+  {
+    "Id": 3010,
+    "name": "全局增加种子箱攻速1级",
+    "group_id": 301,
+    "success_conds": [],
+    "failure_conds": [],
+    "action_type": 1,
+    "action_param": [
+      8
+    ]
+  },
+  {
+    "Id": 3020,
+    "name": "全局增加种子箱攻速2级",
+    "group_id": 302,
+    "success_conds": [],
+    "failure_conds": [],
+    "action_type": 1,
+    "action_param": [
+      8
+    ]
+  },
+  {
+    "Id": 3030,
+    "name": "全局增加种子箱攻速3级",
+    "group_id": 303,
+    "success_conds": [],
+    "failure_conds": [],
+    "action_type": 1,
+    "action_param": [
+      8
+    ]
+  },
+  {
+    "Id": 3040,
+    "name": "全局增加种子箱攻速4级",
+    "group_id": 304,
+    "success_conds": [],
+    "failure_conds": [],
+    "action_type": 1,
+    "action_param": [
+      8
+    ]
+  },
+  {
+    "Id": 100000010,
+    "name": "英雄1000普攻",
+    "group_id": 10000001,
+    "success_conds": [],
+    "failure_conds": [],
+    "action_type": 4,
+    "action_param": []
+  },
+  {
+    "Id": 100001010,
+    "name": "英雄1000，植物加Buff",
+    "group_id": 10000101,
+    "success_conds": [],
+    "failure_conds": [],
+    "action_type": 5,
+    "action_param": [
+      10000101
+    ]
+  },
+  {
+    "Id": 100001011,
+    "name": "英雄1000，植物加速成长",
+    "group_id": 100001011,
+    "success_conds": [],
+    "failure_conds": [],
+    "action_type": 1,
+    "action_param": [
+      5
+    ]
+  },
+  {
+    "Id": 100002010,
+    "name": "英雄1000，建筑和士兵加Buff",
+    "group_id": 10000201,
+    "success_conds": [],
+    "failure_conds": [],
+    "action_type": 5,
+    "action_param": [
+      10000201
+    ]
+  },
+  {
+    "Id": 100002011,
+    "name": "英雄1000，建筑和士兵攻速增加",
+    "group_id": 100002011,
+    "success_conds": [],
+    "failure_conds": [],
+    "action_type": 1,
+    "action_param": [
+      8
+    ]
+  },
+  {
+    "Id": 300000010,
+    "name": "大水井生产水",
+    "group_id": 30000001,
+    "success_conds": [],
+    "failure_conds": [],
+    "action_type": 2,
+    "action_param": [
+      2
+    ]
+  },
+  {
+    "Id": 300100010,
+    "name": "小水井生产水",
+    "group_id": 30010001,
+    "success_conds": [],
+    "failure_conds": [],
+    "action_type": 2,
+    "action_param": [
+      2
+    ]
+  },
+  {
+    "Id": 300101010,
+    "name": "小水井塔死亡增加大水井塔产水",
+    "group_id": 30010101,
+    "success_conds": [],
+    "failure_conds": [],
+    "action_type": 1,
+    "action_param": [
+      8
+    ]
+  },
+  {
+    "Id": 310000010,
+    "name": "防御塔子弹",
+    "group_id": 31000001,
+    "success_conds": [],
+    "failure_conds": [],
+    "action_type": 6,
+    "action_param": [
+      31000001
+    ]
+  },
+  {
+    "Id": 310000011,
+    "name": "防御塔子弹效果",
+    "group_id": 310000011,
+    "success_conds": [],
+    "failure_conds": [],
+    "action_type": 12,
+    "action_param": [
+      31000002
+    ]
+  },
+  {
+    "Id": 310000012,
+    "name": "防御塔子弹效果",
+    "group_id": 310000012,
+    "success_conds": [],
+    "failure_conds": [],
+    "action_type": 4,
+    "action_param": []
+  },
+  {
+    "Id": 320000010,
+    "name": "兵营A召唤",
+    "group_id": 32000001,
+    "success_conds": [],
+    "failure_conds": [],
+    "action_type": 10,
+    "action_param": [
+      4100
+    ]
+  },
+  {
+    "Id": 330000010,
+    "name": "种子台随机生成种子",
+    "group_id": 33000001,
+    "success_conds": [],
+    "failure_conds": [],
+    "action_type": 8,
+    "action_param": [
+      1
+    ]
+  },
+  {
+    "Id": 390000010,
+    "name": "野怪营地召唤",
+    "group_id": 39000001,
+    "success_conds": [],
+    "failure_conds": [],
+    "action_type": 10,
+    "action_param": [
+      4900
+    ]
+  },
+  {
+    "Id": 400000010,
+    "name": "普通攻击植物-普攻",
+    "group_id": 40000001,
+    "success_conds": [],
+    "failure_conds": [],
+    "action_type": 4,
+    "action_param": []
+  },
+  {
+    "Id": 400001010,
+    "name": "普通攻击植物-死亡自爆",
+    "group_id": 40000101,
+    "success_conds": [],
+    "failure_conds": [],
+    "action_type": 4,
+    "action_param": [
+      15000
+    ]
+  },
+  {
+    "Id": 400100010,
+    "name": "高级攻击植物-普攻",
+    "group_id": 40010001,
+    "success_conds": [],
+    "failure_conds": [],
+    "action_type": 4,
+    "action_param": []
+  },
+  {
+    "Id": 400200010,
+    "name": "远程攻击植物-普攻",
+    "group_id": 40020001,
+    "success_conds": [],
+    "failure_conds": [],
+    "action_type": 6,
+    "action_param": [
+      40020001
+    ]
+  },
+  {
+    "Id": 400200011,
+    "name": "远程攻击植物-普攻子弹索敌",
+    "group_id": 400200011,
+    "success_conds": [],
+    "failure_conds": [],
+    "action_type": 12,
+    "action_param": [
+      40020002
+    ]
+  },
+  {
+    "Id": 400200012,
+    "name": "远程攻击植物-普攻子弹效果",
+    "group_id": 400200012,
+    "success_conds": [],
+    "failure_conds": [],
+    "action_type": 4,
+    "action_param": []
+  },
+  {
+    "Id": 410000010,
+    "name": "兵营攻击植物-普攻",
+    "group_id": 41000001,
+    "success_conds": [],
+    "failure_conds": [],
+    "action_type": 4,
+    "action_param": []
+  },
+  {
+    "Id": 490000010,
+    "name": "中立怪子弹",
+    "group_id": 49000001,
+    "success_conds": [],
+    "failure_conds": [],
+    "action_type": 6,
+    "action_param": [
+      49000001
+    ]
+  },
+  {
+    "Id": 490000011,
+    "name": "中立怪子弹效果",
+    "group_id": 490000011,
+    "success_conds": [],
+    "failure_conds": [],
+    "action_type": 4,
+    "action_param": []
+  },
+  {
+    "Id": 920000010,
+    "name": "使用血瓶",
+    "group_id": 92000001,
+    "success_conds": [],
+    "failure_conds": [],
+    "action_type": 2,
+    "action_param": [
+      1
+    ]
+  },
+  {
+    "Id": 920100010,
+    "name": "使用水瓶",
+    "group_id": 92010001,
+    "success_conds": [],
+    "failure_conds": [],
+    "action_type": 2,
+    "action_param": [
+      2
+    ]
+  },
+  {
+    "Id": 920200010,
+    "name": "随机生成水滴Buff",
+    "group_id": 92020001,
+    "success_conds": [],
+    "failure_conds": [],
+    "action_type": 5,
+    "action_param": [
+      92020001
+    ]
+  },
+  {
+    "Id": 920200011,
+    "name": "随机生成水滴",
+    "group_id": 920200011,
+    "success_conds": [],
+    "failure_conds": [],
+    "action_type": 13,
+    "action_param": [
+      9000,
+      8
+    ]
+  },
+  {
+    "Id": 920200020,
+    "name": "干旱降低水塔速度Buff",
+    "group_id": 92020002,
+    "success_conds": [],
+    "failure_conds": [],
+    "action_type": 5,
+    "action_param": [
+      92020002
+    ]
+  },
+  {
+    "Id": 920200021,
+    "name": "干旱降低水塔速度",
+    "group_id": 920200021,
+    "success_conds": [],
+    "failure_conds": [],
+    "action_type": 1,
+    "action_param": [
+      8
+    ]
+  }
+]
