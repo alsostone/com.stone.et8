@@ -74,7 +74,7 @@ namespace ET
         /// <summary>
         /// 刷新代码模式
         /// </summary>
-        static void RefreshCodeMode()
+        public static void RefreshCodeMode()
         {
             CodeMode codeMode = CodeMode.ClientServer;
             GlobalConfig globalConfig = Resources.Load<GlobalConfig>("GlobalConfig");
@@ -123,7 +123,7 @@ namespace ET
         /// <summary>
         /// 编译成dll
         /// </summary>
-        static bool CompileDlls()
+        public static bool CompileDlls()
         {
             // 运行时编译需要先设置为UnitySynchronizationContext, 编译完再还原为CurrentContext
             SynchronizationContext lastSynchronizationContext = Application.isPlaying ? SynchronizationContext.Current : null;
@@ -161,7 +161,7 @@ namespace ET
         /// <summary>
         /// 将dll文件复制到加载目录
         /// </summary>
-        static void CopyHotUpdateDlls()
+        public static void CopyHotUpdateDlls()
         {
             FileHelper.CleanDirectory(Define.CodeDir);
             foreach (string dllName in DllNames)
