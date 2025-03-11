@@ -8,12 +8,12 @@
         "HybridCLR.Runtime",
         "HybridCLR.Editor",
         "YooAsset",
+        "YooAsset.Editor",
         "Unity.Mathematics",
         "Unity.Model",
         "Unity.ModelView",
         "Unity.Hotfix",
-        "Unity.HotfixView",
-        "ToolbarExtension.Editor"
+        "Unity.HotfixView"
     ],
     "includePlatforms": [
         "Editor"
