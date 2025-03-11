@@ -224,7 +224,6 @@ namespace ET
                 return;
             }
             Log.Info("build success");
-            EditorUtility.OpenWithDefaultApp(pathName);
         }
     
         private static bool YooAssetScriptableBuild(BuildTarget buildTarget, EBuildMode buildMode)
