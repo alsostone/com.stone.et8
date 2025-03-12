@@ -131,7 +131,12 @@ namespace ET
         public static void MenuExportExcelClient()
         {
             ToolsEditor.ExcelExporter(CodeMode.Client);
-            FileHelper.CleanDirectory(ExcelConfigPath);
+            if (Directory.Exists(ExcelConfigPath)) {
+                FileHelper.CleanDirectory(ExcelConfigPath);
+            }
+            else {
+                Directory.CreateDirectory(ExcelConfigPath);
+            }
             FileHelper.CopyDirectory("../Config/Excel/c", ExcelConfigPath);
             AssetDatabase.Refresh();
         }
@@ -149,7 +154,12 @@ namespace ET
         public static void MenuExportExcelAll()
         {
             ToolsEditor.ExcelAllExporter();
-            FileHelper.CleanDirectory(ExcelConfigPath);
+            if (Directory.Exists(ExcelConfigPath)) {
+                FileHelper.CleanDirectory(ExcelConfigPath);
+            }
+            else {
+                Directory.CreateDirectory(ExcelConfigPath);
+            }
             FileHelper.CopyDirectory("../Config/Excel/c", ExcelConfigPath);
             AssetDatabase.Refresh();
         }
