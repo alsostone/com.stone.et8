@@ -74,7 +74,7 @@ namespace ET
         /// <summary>
         /// 刷新代码模式
         /// </summary>
-        public static void RefreshCodeMode()
+        static void RefreshCodeMode()
         {
             CodeMode codeMode = CodeMode.ClientServer;
             GlobalConfig globalConfig = Resources.Load<GlobalConfig>("GlobalConfig");
@@ -178,7 +178,7 @@ namespace ET
         /// <summary>
         /// 启用纯客户端模式
         /// </summary>
-        static void EnableUnityClient()
+        public static void EnableUnityClient()
         {
             DisableAsmdef("Assets/Scripts/Model/Generate/Client/Ignore.asmdef");
             EnableAsmdef("Assets/Scripts/Model/Generate/Server/Ignore.asmdef");

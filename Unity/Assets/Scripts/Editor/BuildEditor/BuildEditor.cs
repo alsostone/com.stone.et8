@@ -116,12 +116,6 @@ namespace ET
                 return;
             }
 
-            if (GUILayout.Button("ExcelExporter"))
-            {
-                ToolsEditor.ExcelExporter();
-                return;
-            }
-
             if (GUILayout.Button("Proto2CS"))
             {
                 ToolsEditor.Proto2CS();
@@ -130,83 +124,114 @@ namespace ET
 
             GUILayout.Space(5);
         }
-    
+        
+        #region luban export
+        private const string ExcelConfigPath = "../Unity/Assets/Bundles/Config";
+        [MenuItem("ET/Excel/Exprot Client", false, 101)]
+        public static void MenuExportExcelClient()
+        {
+            ToolsEditor.ExcelExporter(CodeMode.Client);
+            FileHelper.CleanDirectory(ExcelConfigPath);
+            FileHelper.CopyDirectory("../Config/Excel/c", ExcelConfigPath);
+            AssetDatabase.Refresh();
+        }
+        [MenuItem("ET/Excel/Exprot Server", false, 102)]
+        public static void MenuExportExcelServer()
+        {
+            ToolsEditor.ExcelExporter(CodeMode.Server);
+        }
+        [MenuItem("ET/Excel/Exprot ClientServer", false, 103)]
+        public static void MenuExportExcelClientServer()
+        {
+            ToolsEditor.ExcelExporter(CodeMode.ClientServer);
+        }
+        [MenuItem("ET/Excel/Exprot All", false, 201)]
+        public static void MenuExportExcelAll()
+        {
+            ToolsEditor.ExcelAllExporter();
+            FileHelper.CleanDirectory(ExcelConfigPath);
+            FileHelper.CopyDirectory("../Config/Excel/c", ExcelConfigPath);
+            AssetDatabase.Refresh();
+        }
+        #endregion
+        
         #region build package 
         [MenuItem("ET/Build/Android", false, 101)]
         public static void MenuAndroidIncrementalBuild()
         {
-            AutomationBuild(BuildTarget.Android, true);
+            AutomationBuild(BuildTarget.Android, EPlayMode.HostPlayMode);
         }
-        [MenuItem("ET/Build/Android(Release)", false, 102)]
-        public static void MenuAndroidIncrementalBuildRelease()
+        [MenuItem("ET/Build/Android (OfflinePlayMode)", false, 102)]
+        public static void MenuAndroidIncrementalBuildOffline()
         {
-            AutomationBuild(BuildTarget.Android, false);
+            AutomationBuild(BuildTarget.Android, EPlayMode.OfflinePlayMode);
         }
         [MenuItem("ET/Build/IOS", false, 201)]
         public static void MenuIOSIncrementalBuild()
         {
-            AutomationBuild(BuildTarget.iOS, true);
+            AutomationBuild(BuildTarget.iOS, EPlayMode.HostPlayMode);
         }
-        [MenuItem("ET/Build/IOS(Release)", false, 202)]
-        public static void MenuIOSIncrementalBuildRelease()
+        [MenuItem("ET/Build/IOS (OfflinePlayMode)", false, 202)]
+        public static void MenuIOSIncrementalBuildOffline()
         {
-            AutomationBuild(BuildTarget.iOS, false);
+            AutomationBuild(BuildTarget.iOS, EPlayMode.OfflinePlayMode);
         }
-        
         [MenuItem("ET/Build/Windows", false, 301)]
         public static void MenuWindowsIncrementalBuild()
         {
-            AutomationBuild(BuildTarget.StandaloneWindows64, true);
+            AutomationBuild(BuildTarget.StandaloneWindows64, EPlayMode.HostPlayMode);
         }
-        [MenuItem("ET/Build/Windows(Release)", false, 302)]
-        public static void MenuWindowsIncrementalBuildRelease()
+        [MenuItem("ET/Build/Windows (OfflinePlayMode)", false, 302)]
+        public static void MenuWindowsIncrementalBuildOffline()
         {
-            AutomationBuild(BuildTarget.StandaloneWindows64, false);
+            AutomationBuild(BuildTarget.StandaloneWindows64, EPlayMode.OfflinePlayMode);
         }
         [MenuItem("ET/Build/OSX", false, 401)]
         public static void MenuOSXIncrementalBuild()
         {
-            AutomationBuild(BuildTarget.StandaloneOSX, true);
+            AutomationBuild(BuildTarget.StandaloneOSX, EPlayMode.HostPlayMode);
         }
-        [MenuItem("ET/Build/OSX(Release)", false, 402)]
-        public static void MenuOSXIncrementalBuildRelease()
+        [MenuItem("ET/Build/OSX (OfflinePlayMode)", false, 402)]
+        public static void MenuOSXIncrementalBuildOffline()
         {
-            AutomationBuild(BuildTarget.StandaloneOSX, false);
+            AutomationBuild(BuildTarget.StandaloneOSX, EPlayMode.OfflinePlayMode);
         }
         #endregion
     
-        private static void AutomationBuild(BuildTarget buildTarget, bool development = false, BuildOptions buildOptions = BuildOptions.None)
+        private static void AutomationBuild(BuildTarget buildTarget, EPlayMode playMode, BuildOptions buildOptions = BuildOptions.None)
         {
-            var globalConfig = AssetDatabase.LoadAssetAtPath<GlobalConfig>("Assets/Resources/GlobalConfig.asset");
-            if (globalConfig.CodeMode != CodeMode.Client) {
-                Log.Error("build package CodeMode must be CodeMode.Client, please select Client");
-                return;
-            }
-            
             if (EditorUserBuildSettings.activeBuildTarget != buildTarget) {
                 BuildTargetGroup targetGroup = BuildPipeline.GetBuildTargetGroup(buildTarget);
                 Log.Info($"switch buid target {EditorUserBuildSettings.activeBuildTarget} to {buildTarget}");
                 EditorUserBuildSettings.SwitchActiveBuildTarget(targetGroup, buildTarget);
             }
             
-            EditorUserBuildSettings.development = development;
-    
-            // 强行设置成Client模式 并拷贝热更DLL到YooAsset打包目录
+            // 强制设置成Client模式 & 指定PlayMode
+            var globalConfig = AssetDatabase.LoadAssetAtPath<GlobalConfig>("Assets/Resources/GlobalConfig.asset");
+            globalConfig.CodeMode = CodeMode.Client;
+            globalConfig.EPlayMode = playMode;
+            EditorUtility.SetDirty(globalConfig);
+            AssetDatabase.SaveAssets();
+            AssemblyTool.EnableUnityClient();
+
+            // 编译热更DLL并拷贝到YooAsset打包目录
             AssetDatabase.Refresh(ImportAssetOptions.ForceUpdate);
-            AssemblyTool.RefreshCodeMode();
             if (!AssemblyTool.CompileDlls())
                 return;
             AssemblyTool.CopyHotUpdateDlls();
             BuildHelper.ReGenerateProjectFiles();
-            AssetDatabase.Refresh();
+            AssetDatabase.Refresh(ImportAssetOptions.ForceUpdate);
             
-            // HybridCLR的前置编译和AOT拷贝
+            // HybridCLR相关生成并拷贝到YooAsset打包目录
             if (Define.EnableIL2CPP)
             {
                 PrebuildCommand.GenerateAll();
                 HybridCLREditor.CopyAotDll();
             }
             AssetDatabase.Refresh();
+            
+            // 导出Excel配置并拷贝到YooAsset打包目录
+            MenuExportExcelClient();
     
             // YooAsset Assetbundle打包
             if (!YooAssetScriptableBuild(buildTarget, EBuildMode.IncrementalBuild))
