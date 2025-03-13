@@ -27,7 +27,10 @@ namespace ET
             if (!Define.IsEditor)
             {
                 this.dlls = await ResourcesComponent.Instance.LoadAllAssetsAsync<TextAsset>($"Unity.Model.dll");
-                this.aotDlls = await ResourcesComponent.Instance.LoadAllAssetsAsync<TextAsset>($"mscorlib.dll");
+                if (Define.EnableIL2CPP)
+                {
+                    this.aotDlls = await ResourcesComponent.Instance.LoadAllAssetsAsync<TextAsset>($"mscorlib.dll");
+                }
             }
         }
 
