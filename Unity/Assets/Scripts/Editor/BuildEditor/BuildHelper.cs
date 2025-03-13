@@ -17,50 +17,6 @@ namespace ET
             Unity.CodeEditor.CodeEditor.CurrentEditor.SyncAll();
         }
 
-#if ENABLE_VIEW
-        [MenuItem("ET/ChangeDefine/Remove ENABLE_VIEW", false, ETMenuItemPriority.ChangeDefine)]
-        public static void RemoveEnableView()
-        {
-            EnableDefineSymbols("ENABLE_VIEW", false);
-        }
-#else
-        [MenuItem("ET/ChangeDefine/Add ENABLE_VIEW", false, ETMenuItemPriority.ChangeDefine)]
-        public static void AddEnableView()
-        {
-            EnableDefineSymbols("ENABLE_VIEW", true);
-        }
-#endif
-        public static void EnableDefineSymbols(string symbols, bool enable)
-        {
-            Debug.Log($"EnableDefineSymbols {symbols} {enable}");
-            string defines = PlayerSettings.GetScriptingDefineSymbolsForGroup(EditorUserBuildSettings.selectedBuildTargetGroup);
-            var ss = defines.Split(';').ToList();
-            if (enable)
-            {
-                if (ss.Contains(symbols))
-                {
-                    return;
-                }
-
-                ss.Add(symbols);
-            }
-            else
-            {
-                if (!ss.Contains(symbols))
-                {
-                    return;
-                }
-
-                ss.Remove(symbols);
-            }
-
-            Debug.Log($"EnableDefineSymbols {symbols} {enable}");
-            defines = string.Join(";", ss);
-            PlayerSettings.SetScriptingDefineSymbolsForGroup(EditorUserBuildSettings.selectedBuildTargetGroup, defines);
-            AssetDatabase.SaveAssets();
-            AssetDatabase.Refresh();
-        }
-
         public static void Build(PlatformType type, BuildOptions buildOptions)
         {
             BuildTarget buildTarget = BuildTarget.StandaloneWindows;

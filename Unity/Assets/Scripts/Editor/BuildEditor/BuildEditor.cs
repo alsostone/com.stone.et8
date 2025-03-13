@@ -1,5 +1,6 @@
 ﻿using System;
 using System.IO;
+using HybridCLR.Editor;
 using HybridCLR.Editor.Commands;
 using UnityEditor;
 using UnityEngine;
@@ -166,56 +167,55 @@ namespace ET
         #endregion
         
         #region build package 
-        [MenuItem("ET/Build/Android", false, 101)]
+        [MenuItem("ET/Build/Android (Offline)", false, 101)]
         public static void MenuAndroidIncrementalBuild()
-        {
-            AutomationBuild(BuildTarget.Android, EPlayMode.HostPlayMode);
-        }
-        [MenuItem("ET/Build/Android (OfflinePlayMode)", false, 102)]
-        public static void MenuAndroidIncrementalBuildOffline()
         {
             AutomationBuild(BuildTarget.Android, EPlayMode.OfflinePlayMode);
         }
-        [MenuItem("ET/Build/IOS", false, 201)]
-        public static void MenuIOSIncrementalBuild()
+        [MenuItem("ET/Build/Android (Host, HybridCLR)", false, 102)]
+        public static void MenuAndroidIncrementalBuildHost()
         {
-            AutomationBuild(BuildTarget.iOS, EPlayMode.HostPlayMode);
+            AutomationBuild(BuildTarget.Android, EPlayMode.HostPlayMode, true);
         }
-        [MenuItem("ET/Build/IOS (OfflinePlayMode)", false, 202)]
-        public static void MenuIOSIncrementalBuildOffline()
+        [MenuItem("ET/Build/IOS (Offline)", false, 201)]
+        public static void MenuIOSIncrementalBuild()
         {
             AutomationBuild(BuildTarget.iOS, EPlayMode.OfflinePlayMode);
         }
-        [MenuItem("ET/Build/Windows", false, 301)]
-        public static void MenuWindowsIncrementalBuild()
+        [MenuItem("ET/Build/IOS (Host, HybridCLR)", false, 202)]
+        public static void MenuIOSIncrementalBuildHost()
         {
-            AutomationBuild(BuildTarget.StandaloneWindows64, EPlayMode.HostPlayMode);
+            AutomationBuild(BuildTarget.iOS, EPlayMode.HostPlayMode, true);
         }
-        [MenuItem("ET/Build/Windows (OfflinePlayMode)", false, 302)]
-        public static void MenuWindowsIncrementalBuildOffline()
+        [MenuItem("ET/Build/Windows (Offline)", false, 301)]
+        public static void MenuWindowsIncrementalBuild()
         {
             AutomationBuild(BuildTarget.StandaloneWindows64, EPlayMode.OfflinePlayMode);
         }
-        [MenuItem("ET/Build/OSX", false, 401)]
-        public static void MenuOSXIncrementalBuild()
+        [MenuItem("ET/Build/Windows (Host, HybridCLR)", false, 302)]
+        public static void MenuWindowsIncrementalBuildHost()
         {
-            AutomationBuild(BuildTarget.StandaloneOSX, EPlayMode.HostPlayMode);
+            AutomationBuild(BuildTarget.StandaloneWindows64, EPlayMode.HostPlayMode, true);
         }
-        [MenuItem("ET/Build/OSX (OfflinePlayMode)", false, 402)]
-        public static void MenuOSXIncrementalBuildOffline()
+        [MenuItem("ET/Build/OSX (Offline)", false, 401)]
+        public static void MenuOSXIncrementalBuild()
         {
             AutomationBuild(BuildTarget.StandaloneOSX, EPlayMode.OfflinePlayMode);
         }
-        #endregion
-    
-        private static void AutomationBuild(BuildTarget buildTarget, EPlayMode playMode, BuildOptions buildOptions = BuildOptions.None)
+        [MenuItem("ET/Build/OSX (Host, HybridCLR)", false, 402)]
+        public static void MenuOSXIncrementalBuildHost()
         {
-            if (EditorUserBuildSettings.activeBuildTarget != buildTarget) {
-                BuildTargetGroup targetGroup = BuildPipeline.GetBuildTargetGroup(buildTarget);
-                Log.Info($"switch buid target {EditorUserBuildSettings.activeBuildTarget} to {buildTarget}");
-                EditorUserBuildSettings.SwitchActiveBuildTarget(targetGroup, buildTarget);
-            }
-            
+            AutomationBuild(BuildTarget.StandaloneOSX, EPlayMode.HostPlayMode, true);
+        }
+        #endregion
+        
+        private const string InitScene = "Assets/Scenes/Init.unity";
+        private static void AutomationBuild(BuildTarget buildTarget, EPlayMode playMode, bool enableHybridCLR = false)
+        {
+            var buildOptions = BuildOptions.None;
+            UnityEditor.SceneManagement.EditorSceneManager.OpenScene(InitScene);
+            CheckAndSwitchBuildTarget(buildTarget);
+
             // 强制设置成Client模式 & 指定PlayMode
             var globalConfig = AssetDatabase.LoadAssetAtPath<GlobalConfig>("Assets/Resources/GlobalConfig.asset");
             globalConfig.CodeMode = CodeMode.Client;
@@ -231,26 +231,25 @@ namespace ET
             AssemblyTool.CopyHotUpdateDlls();
             BuildHelper.ReGenerateProjectFiles();
             AssetDatabase.Refresh(ImportAssetOptions.ForceUpdate);
-            
+
             // HybridCLR相关生成并拷贝到YooAsset打包目录
-            if (Define.EnableIL2CPP)
+            if (enableHybridCLR)
             {
                 PrebuildCommand.GenerateAll();
                 HybridCLREditor.CopyAotDll();
             }
-            AssetDatabase.Refresh();
-            
+
             // 导出Excel配置并拷贝到YooAsset打包目录
             MenuExportExcelClient();
-    
+
             // YooAsset Assetbundle打包
             if (!YooAssetScriptableBuild(buildTarget, EBuildMode.IncrementalBuild))
                 return;
             AssetDatabase.Refresh();
     
             string pathName = GetBuildName(buildTarget, buildOptions);
-            string[] scenes = { "Assets/Scenes/Init.unity" };
-    
+            string[] scenes = { InitScene };
+
             Log.Info("build start");
             BuildReport report = BuildPipeline.BuildPlayer(scenes, pathName, buildTarget, buildOptions);
             if (report.summary.result != BuildResult.Succeeded)
@@ -260,7 +259,34 @@ namespace ET
             }
             Log.Info("build success");
         }
-    
+        
+        private static void CheckAndSwitchBuildTarget(BuildTarget buildTarget)
+        {
+            Debug.LogFormat($"check and switch build target: {buildTarget}");
+            if (EditorUserBuildSettings.activeBuildTarget != buildTarget) {
+                BuildTargetGroup targetGroup = BuildPipeline.GetBuildTargetGroup(buildTarget);
+                Log.Info($"switch buid target {EditorUserBuildSettings.activeBuildTarget} to {buildTarget}");
+                EditorUserBuildSettings.SwitchActiveBuildTarget(targetGroup, buildTarget);
+            }
+        }
+
+        private static void TryResumeMacroIL2Cpp(bool isIL2CppChanged, bool enableHybridCLR)
+        {
+            if (isIL2CppChanged)
+            {
+                if (enableHybridCLR)
+                {
+                    MacroUtil.RemoveDefineSymbols(EMacroDefine.ENABLE_IL2CPP);
+                    SettingsUtil.Enable = false;
+                }
+                else
+                {
+                    MacroUtil.AddDefineSymbols(EMacroDefine.ENABLE_IL2CPP);
+                    SettingsUtil.Enable = true;
+                }
+            }
+        }
+
         private static bool YooAssetScriptableBuild(BuildTarget buildTarget, EBuildMode buildMode)
         {
             var packages = AssetBundleCollectorSettingData.Setting.Packages;

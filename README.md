@@ -17,14 +17,12 @@
 7. BuildPipeline.BuildPlayer 出包
 
 ```csharp
-private static void AutomationBuild(BuildTarget buildTarget, EPlayMode playMode, BuildOptions buildOptions = BuildOptions.None)
+private static void AutomationBuild(BuildTarget buildTarget, EPlayMode playMode, bool enableHybridCLR = false)
 {
-    if (EditorUserBuildSettings.activeBuildTarget != buildTarget) {
-        BuildTargetGroup targetGroup = BuildPipeline.GetBuildTargetGroup(buildTarget);
-        Log.Info($"switch buid target {EditorUserBuildSettings.activeBuildTarget} to {buildTarget}");
-        EditorUserBuildSettings.SwitchActiveBuildTarget(targetGroup, buildTarget);
-    }
-    
+    var buildOptions = BuildOptions.None;
+    UnityEditor.SceneManagement.EditorSceneManager.OpenScene(InitScene);
+    CheckAndSwitchBuildTarget(buildTarget);
+
     // 强制设置成Client模式 & 指定PlayMode
     var globalConfig = AssetDatabase.LoadAssetAtPath<GlobalConfig>("Assets/Resources/GlobalConfig.asset");
     globalConfig.CodeMode = CodeMode.Client;
@@ -40,15 +38,14 @@ private static void AutomationBuild(BuildTarget buildTarget, EPlayMode playMode,
     AssemblyTool.CopyHotUpdateDlls();
     BuildHelper.ReGenerateProjectFiles();
     AssetDatabase.Refresh(ImportAssetOptions.ForceUpdate);
-    
+
     // HybridCLR相关生成并拷贝到YooAsset打包目录
-    if (Define.EnableIL2CPP)
+    if (enableHybridCLR)
     {
         PrebuildCommand.GenerateAll();
         HybridCLREditor.CopyAotDll();
     }
-    AssetDatabase.Refresh();
-    
+
     // 导出Excel配置并拷贝到YooAsset打包目录
     MenuExportExcelClient();
 
@@ -58,7 +55,7 @@ private static void AutomationBuild(BuildTarget buildTarget, EPlayMode playMode,
     AssetDatabase.Refresh();
 
     string pathName = GetBuildName(buildTarget, buildOptions);
-    string[] scenes = { "Assets/Scenes/Init.unity" };
+    string[] scenes = { InitScene };
 
     Log.Info("build start");
     BuildReport report = BuildPipeline.BuildPlayer(scenes, pathName, buildTarget, buildOptions);
