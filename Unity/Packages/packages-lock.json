@@ -7,13 +7,6 @@
       "dependencies": {},
       "hash": "51da1d4c433504f3171fff66217035b89c45d823"
     },
-    "com.cysharp.memorypack": {
-      "version": "https://github.com/Cysharp/MemoryPack.git?path=src/MemoryPack.Unity/Assets/Plugins/MemoryPack#1.10.0",
-      "depth": 0,
-      "source": "git",
-      "dependencies": {},
-      "hash": "2554e81f0315ddf835026940ccc4ba8175edfda3"
-    },
     "com.tuyoogame.yooasset": {
       "version": "2.1.1",
       "depth": 0,
