@@ -10,9 +10,9 @@
 namespace ET
 {
     /// <summary>
-    /// BUFF操作类型
+    /// 效果类型
     /// </summary>
-    public enum ESkillBuffActionType
+    public enum ESkillEffectType
     {
         NONE = 0,
 
