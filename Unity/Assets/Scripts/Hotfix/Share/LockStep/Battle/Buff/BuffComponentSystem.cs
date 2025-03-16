@@ -1,0 +1,68 @@
+﻿using System.Collections.Generic;
+
+namespace ET
+{
+    [EntitySystemOf(typeof(BuffComponent))]
+    [FriendOf(typeof(BuffComponent))]
+    [FriendOf(typeof(Buff))]
+    public static partial class BuffComponentSystem
+    {
+        [EntitySystem]
+        private static void Awake(this BuffComponent self)
+        {
+            
+        }
+        
+        [EntitySystem]
+        private static void Destroy(this BuffComponent self)
+        {
+            foreach (var valuePair in self.IdBuffMap)
+            {
+                Buff buff = valuePair.Value;
+                buff?.Dispose();
+            }
+            self.IdBuffMap.Clear();
+        }
+        
+        public static void AddBuff(this BuffComponent self, int buffId)
+        {
+            if (self.IdBuffMap.TryGetValue(buffId, out EntityRef<Buff> buffRef))
+            {
+                // 若buffId已存在，则增加层数，且重新计时
+                var buff = (Buff)buffRef;
+                if (buff.TbBuffRow.MaxLayer > 0 && buff.TbBuffRow.MaxLayer > buff.LayerCount)
+                    buff.LayerCount++;
+                buff.StartTime = TimeInfo.Instance.ServerNow();
+            }
+            else
+            {
+                // 若buffId不存在，则添加新的buff
+                var buff = self.AddChild<Buff, int>(buffId);
+                buff.LayerCount = 1;
+                buff.StartTime = TimeInfo.Instance.ServerNow();
+                self.IdBuffMap.Add(buffId, buff);
+            }
+        }
+        
+        public static void RemoveBuff(this BuffComponent self, int buffId, bool removeLayer = false)
+        {
+            if (self.IdBuffMap.TryGetValue(buffId, out EntityRef<Buff> buffRef))
+            {
+                var buff = (Buff)buffRef;
+                if (removeLayer)
+                {
+                    // 若为移除层数，则减少层数，且重新计时
+                    buff.LayerCount--;
+                    if (buff.LayerCount > 0)
+                    {
+                        buff.StartTime = TimeInfo.Instance.ServerNow();
+                        return;
+                    }
+                }
+                buff.Dispose();
+                self.IdBuffMap.Remove(buffId);
+            }
+        }
+        
+    }
+}
