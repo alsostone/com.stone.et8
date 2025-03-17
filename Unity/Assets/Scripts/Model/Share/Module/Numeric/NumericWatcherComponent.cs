@@ -21,7 +21,7 @@ namespace ET
     [Code]
     public class NumericWatcherComponent : Singleton<NumericWatcherComponent>, ISingletonAwake
     {
-        private readonly Dictionary<int, List<NumericWatcherInfo>> allWatchers = new();
+        private readonly Dictionary<NumericType, List<NumericWatcherInfo>> allWatchers = new();
         
         public void Awake()
         {

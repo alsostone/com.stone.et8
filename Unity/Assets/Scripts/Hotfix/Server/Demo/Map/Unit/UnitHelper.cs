@@ -32,9 +32,9 @@ namespace ET.Server
                 }
             }
 
-            foreach ((int key, long value) in nc.NumericDic)
+            foreach ((NumericType key, long value) in nc.NumericDic)
             {
-                unitInfo.KV.Add(key, value);
+                unitInfo.KV.Add((int)key, value);
             }
 
             return unitInfo;

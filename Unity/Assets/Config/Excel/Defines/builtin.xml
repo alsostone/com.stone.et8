@@ -1,2 +1,52 @@
 <module name="">
+    <enum name="NumericType" comment="属性类型" unique="TRUE">
+        <var name="Hp" alias="血量" value="1"/>
+        <var name="Mp" alias="蓝量" value="2"/>
+
+
+        <var name="Max" alias="分割二级属性" value="10000" comment="大于10000的属性为二级属性"/>
+        
+        <var name="MaxHp" alias="生命值" value="1001"/>
+        <var name="MaxHpBase" alias="生命值B" value="10011"/>
+        <var name="MaxHpBaseAdd" alias="生命值BD" value="10012"/>
+        <var name="MaxHpBasePct" alias="生命值BP" value="10013"/>
+        <var name="MaxHpFinalAdd" alias="生命值FD" value="10014"/>
+        <var name="MaxHpFinalPct" alias="生命值FP" value="10015"/>
+
+        <var name="MaxMp" alias="魔法值" value="1002"/>
+        <var name="MaxMpBase" alias="魔法值B" value="10021"/>
+        <var name="MaxMpBaseAdd" alias="魔法值BD" value="10022"/>
+        <var name="MaxMpBasePct" alias="魔法值BP" value="10023"/>
+        <var name="MaxMpFinalAdd" alias="魔法值FD" value="10024"/>
+        <var name="MaxMpFinalPct" alias="魔法值FP" value="10025"/>
+
+        <var name="Atk" alias="攻击力" value="1003"/>
+        <var name="AtkBase" alias="攻击力B" value="10031"/>
+        <var name="AtkBaseAdd" alias="攻击力BD" value="10032"/>
+        <var name="AtkBasePct" alias="攻击力BP" value="10033"/>
+        <var name="AtkFinalAdd" alias="攻击力FD" value="10034"/>
+        <var name="AtkFinalPct" alias="攻击力FP" value="10035"/>
+        
+        <var name="Def" alias="防御力" value="1004"/>
+        <var name="DefBase" alias="防御力B" value="10041"/>
+        <var name="DefBaseAdd" alias="防御力BD" value="10042"/>
+        <var name="DefBasePct" alias="防御力BP" value="10043"/>
+        <var name="DefFinalAdd" alias="防御力FD" value="10044"/>
+        <var name="DefFinalPct" alias="防御力FP" value="10045"/>
+        
+        <var name="Speed" alias="速度" value="1005"/>
+        <var name="SpeedBase" alias="速度B" value="10051"/>
+        <var name="SpeedBaseAdd" alias="速度BD" value="10052"/>
+        <var name="SpeedBasePct" alias="速度BP" value="10053"/>
+        <var name="SpeedFinalAdd" alias="速度FD" value="10054"/>
+        <var name="SpeedFinalPct" alias="速度FP" value="10055"/>
+        
+        <var name="AOI" alias="AOI值" value="1006"/>
+        <var name="AOIBase" alias="AOI值B" value="10061"/>
+        <var name="AOIBaseAdd" alias="AOI值BD" value="10062"/>
+        <var name="AOIBasePct" alias="AOI值BP" value="10063"/>
+        <var name="AOIFinalAdd" alias="AOI值FD" value="10064"/>
+        <var name="AOIFinalPct" alias="AOI值FP" value="10065"/>
+    </enum>
+    
 </module>
