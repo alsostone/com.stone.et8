@@ -89,9 +89,9 @@ namespace ET
         
         private static void DoDamage(int[] param, LSUnit owner, LSUnit target)
         {
-            // var damage = owner.Get<Entity>().ComProperty.GetPropertyValue(kPropertyType.Attack);
-            // if (param.Count > 0) { damage *= param[0] * FP.EN4; }
-            // target.Get<Entity>()?.ComBeHit.BeDamage(owner, damage);
+            var damage = owner.GetComponent<NumericComponent>().GetByKey(NumericType.Atk);
+            if (param.Length > 0) { damage += (damage * param[0]) / 10000; }
+            target.GetComponent<BeHitComponent>()?.BeDamage(owner, damage);
         }
         
         private static void DoResearch(int[] param, LSUnit owner, LSUnit target, EntityRef<Entity> carrier)

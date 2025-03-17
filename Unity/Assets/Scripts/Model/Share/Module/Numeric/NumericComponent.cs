@@ -97,7 +97,7 @@ namespace ET
         public long New;
     }
 
-    [ComponentOf(typeof (Unit))]
+    [ComponentOf]
     public class NumericComponent: Entity, IAwake, ITransfer
     {
         [BsonDictionaryOptions(DictionaryRepresentation.ArrayOfArrays)]
@@ -105,14 +105,8 @@ namespace ET
 
         public long this[NumericType numericType]
         {
-            get
-            {
-                return this.GetByKey(numericType);
-            }
-            set
-            {
-                this.Insert(numericType, value);
-            }
+            get => this.GetByKey(numericType);
+            set => this.Insert(numericType, value);
         }
     }
 }
