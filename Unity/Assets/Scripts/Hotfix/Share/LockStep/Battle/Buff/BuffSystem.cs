@@ -13,13 +13,13 @@ namespace ET
             self.StartTime = TimeInfo.Instance.ServerNow();
             self.IntervalTime = self.StartTime + self.TbBuffRow.Interval;
             self.LayerCount = 1;
-            //EffectExecutor.Execute(self.TbBuffRow.EnterEffect, self, self.Owner);
+            EffectExecutor.Execute(self.TbBuffRow.EnterEffect, self.Caster, self.Owner);
         }
 
         [EntitySystem]
         private static void Destroy(this Buff self)
         {
-            //EffectExecutor.Execute(self.TbBuffRow.FinishEffect, self, self.Owner);
+            EffectExecutor.Execute(self.TbBuffRow.FinishEffect, self.Caster, self.Owner);
         }
         
         [LSEntitySystem]
@@ -33,7 +33,7 @@ namespace ET
 
             if (TimeInfo.Instance.ServerNow() > self.IntervalTime)
             {
-                //EffectExecutor.Execute(self.TbBuffRow.IntervalEffect, self, self.Owner);
+                EffectExecutor.Execute(self.TbBuffRow.IntervalEffect, self.Caster, self.Owner);
                 self.IntervalTime = TimeInfo.Instance.ServerNow() + self.TbBuffRow.Interval;
             }
         }

@@ -6,12 +6,14 @@ namespace ET
     public class Buff : LSEntity, IAwake<int>, IDestroy, ILSUpdate
     {
         [BsonIgnore]
-        public Unit Owner => this.GetParent<BuffComponent>().Owner;
+        public LSUnit Owner => this.GetParent<BuffComponent>().Owner;
 
         public int BuffId;
         public long StartTime;
         public long IntervalTime;
         public uint LayerCount;
+        
+        public EntityRef<LSUnit> Caster;
         
         [BsonIgnore]
         public TbSkillBuffRow TbBuffRow => this.tbBuffRow ??= TbSkillBuff.Instance.Get(BuffId);
