@@ -8,7 +8,7 @@ namespace ET
     public class BuffComponent : LSEntity, IAwake, IDestroy
     {
         [BsonIgnore]
-        public Unit Owner => this.GetParent<Unit>();
+        public LSUnit Owner => this.GetParent<LSUnit>();
         
         [BsonDictionaryOptions(DictionaryRepresentation.ArrayOfArrays)]
         public SortedDictionary<int, EntityRef<Buff>> IdBuffMap = new();

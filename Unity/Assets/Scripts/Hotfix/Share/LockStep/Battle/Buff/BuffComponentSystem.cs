@@ -24,7 +24,15 @@ namespace ET
             self.IdBuffMap.Clear();
         }
         
-        public static void AddBuff(this BuffComponent self, int buffId)
+        public static void AddBuffs(this BuffComponent self, int[] buffIds, LSUnit owner)
+        {
+            foreach (int buffId in buffIds)
+            {
+                self.AddBuff(buffId, owner);
+            }
+        }
+        
+        public static void AddBuff(this BuffComponent self, int buffId, LSUnit owner)
         {
             if (self.IdBuffMap.TryGetValue(buffId, out EntityRef<Buff> buffRef))
             {
