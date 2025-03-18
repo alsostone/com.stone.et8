@@ -70,9 +70,23 @@ namespace ET
             ++this.Frame;
         }
 
-        public void RegisterSystem(LSEntity entity)
+        public void RegisterSystem(LSEntity component)
         {
-            this.updater.Add(entity);
+            Type type = component.GetType();
+
+            TypeSystems.OneTypeSystems oneTypeSystems = LSEntitySystemSingleton.Instance.TypeSystems.GetOneTypeSystems(type);
+            if (oneTypeSystems == null)
+            {
+                return;
+            }
+            for (int i = 0; i < oneTypeSystems.QueueFlag.Length; ++i)
+            {
+                if (!oneTypeSystems.QueueFlag[i])
+                {
+                    continue;
+                }
+                this.updater.Add(component);
+            }
         }
         
         public new K AddComponent<K>(bool isFromPool = false) where K : LSEntity, IAwake, new()

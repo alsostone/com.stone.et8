@@ -42,12 +42,12 @@ namespace ET
                 //ExpGetHelper.ExpGetDead(attacker, entity);
                 
                 // 血量值空触发技能
-                // var comSkill = self.Owner.GetComponent<SkillComponent>();
-                // if (comSkill != null)
-                // {
-                //     comSkill.ForceAllDone();
-                //     comSkill.TryCastSkill(ESkillType.Dead, 0);
-                // }
+                var comSkill = self.Owner.GetComponent<SkillComponent>();
+                if (comSkill != null)
+                {
+                    comSkill.ForceAllDone();
+                    //comSkill.TryCastSkill(ESkillType.Dead, 0);
+                }
             
                 // 血量值空则死亡
                 var comDeath = self.Owner.GetComponent<DeathComponent>();

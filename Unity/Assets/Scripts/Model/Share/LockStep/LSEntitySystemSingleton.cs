@@ -14,7 +14,7 @@ namespace ET
     [Code]
     public class LSEntitySystemSingleton: Singleton<LSEntitySystemSingleton>, ISingletonAwake
     {
-        private TypeSystems TypeSystems { get; set; }
+        public TypeSystems TypeSystems { get; set; }
         
         private readonly DoubleMap<Type, long> lsEntityTypeLongHashCode = new();
         
@@ -63,11 +63,6 @@ namespace ET
             return this.lsEntityTypeLongHashCode.GetValueByKey(type);
         }
         
-        public TypeSystems.OneTypeSystems GetOneTypeSystems(Type type)
-        {
-            return this.TypeSystems.GetOneTypeSystems(type);
-        }
-        
         public void LSRollback(Entity entity)
         {
             if (entity is not ILSRollback)
@@ -75,7 +70,7 @@ namespace ET
                 return;
             }
             
-            List<SystemObject> iLSRollbackSystems = this.TypeSystems.GetSystems(entity.GetType(), typeof (ILSRollbackSystem));
+            List<SystemObject> iLSRollbackSystems = TypeSystems.GetSystems(entity.GetType(), typeof (ILSRollbackSystem));
             if (iLSRollbackSystems == null)
             {
                 return;

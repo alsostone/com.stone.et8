@@ -64,6 +64,29 @@ namespace ET
                     new NumbericChange() { Unit = self.GetParent<Unit>(), New = value, Old = oldValue, NumericType = numericType });
             }
         }
+        
+        public static void Add(this NumericComponent self, NumericType numericType, long value, bool isPublicEvent = true)
+        {
+            if (0 == value)
+            {
+                return;
+            }
+
+            long oldValue = self.GetByKey(numericType);
+            self.NumericDic[numericType] = oldValue + value;
+
+            if (numericType >= NumericType.Max)
+            {
+                self.Update(numericType, isPublicEvent);
+                return;
+            }
+
+            if (isPublicEvent)
+            {
+                EventSystem.Instance.Publish(self.Scene(),
+                    new NumbericChange() { Unit = self.GetParent<Unit>(), New = value, Old = oldValue, NumericType = numericType });
+            }
+        }
 
         public static long GetByKey(this NumericComponent self, NumericType key)
         {

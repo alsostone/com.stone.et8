@@ -56,17 +56,8 @@ namespace ET
 
         protected override void RegisterSystem()
         {
-            LSWorld lsWorld = (LSWorld)this.IScene;
-            TypeSystems.OneTypeSystems oneTypeSystems = LSEntitySystemSingleton.Instance.GetOneTypeSystems(this.GetType());
-            if (oneTypeSystems == null)
-            {
-                return;
-            }
-
-            if (oneTypeSystems.QueueFlag[LSQueneUpdateIndex.LSUpdate])
-            {
-                lsWorld.RegisterSystem(this);
-            }
+            LSWorld lsWorld = this.iScene as LSWorld;
+            lsWorld.RegisterSystem(this);
         }
     }
 }

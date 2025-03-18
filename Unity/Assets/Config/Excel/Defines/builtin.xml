@@ -47,6 +47,14 @@
         <var name="AOIBasePct" alias="AOI值BP" value="10063"/>
         <var name="AOIFinalAdd" alias="AOI值FD" value="10064"/>
         <var name="AOIFinalPct" alias="AOI值FP" value="10065"/>
+        
+        <var name="AtkSpeed" alias="攻速" value="1007"/>
+        <var name="AtkSpeedBase" alias="攻速B" value="10071"/>
+        <var name="AtkSpeedBaseAdd" alias="攻速BD" value="10072"/>
+        <var name="AtkSpeedBasePct" alias="攻速BP" value="10073"/>
+        <var name="AtkSpeedFinalAdd" alias="攻速FD" value="10074"/>
+        <var name="AtkSpeedFinalPct" alias="攻速FP" value="10075"/>
+        
     </enum>
     
 </module>
