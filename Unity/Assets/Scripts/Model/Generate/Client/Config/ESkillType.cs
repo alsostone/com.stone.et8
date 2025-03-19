@@ -17,27 +17,22 @@ namespace ET
         /// <summary>
         /// 普通攻击
         /// </summary>
-        NORMAL = 1,
+        Normal = 1,
 
         /// <summary>
         /// 主动技能
         /// </summary>
-        ACTIVE = 2,
+        Active = 2,
 
         /// <summary>
-        /// 被动技能
+        /// 死亡技能
         /// </summary>
-        PASSIVE = 3,
+        Dead = 3,
 
         /// <summary>
-        /// 武器技能
+        /// 反击技能
         /// </summary>
-        WEAPON = 4,
-
-        /// <summary>
-        /// 坐骑技能
-        /// </summary>
-        MOUNT = 5,
+        Counter = 4,
 
     }
 }

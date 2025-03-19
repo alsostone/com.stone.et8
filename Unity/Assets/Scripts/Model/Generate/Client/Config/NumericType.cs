@@ -209,5 +209,35 @@ namespace ET
         /// </summary>
         AOIFinalPct = 10065,
 
+        /// <summary>
+        /// 攻速
+        /// </summary>
+        AtkSpeed = 1007,
+
+        /// <summary>
+        /// 攻速B
+        /// </summary>
+        AtkSpeedBase = 10071,
+
+        /// <summary>
+        /// 攻速BD
+        /// </summary>
+        AtkSpeedBaseAdd = 10072,
+
+        /// <summary>
+        /// 攻速BP
+        /// </summary>
+        AtkSpeedBasePct = 10073,
+
+        /// <summary>
+        /// 攻速FD
+        /// </summary>
+        AtkSpeedFinalAdd = 10074,
+
+        /// <summary>
+        /// 攻速FP
+        /// </summary>
+        AtkSpeedFinalPct = 10075,
+
     }
 }

@@ -30,7 +30,7 @@ namespace ET
         public static bool IsInCd(this Skill self)
         {
             // 普通攻击的CD由攻速计算
-            if (self.TbSkillRow.SkillType == ESkillType.NORMAL) {
+            if (self.TbSkillRow.SkillType == ESkillType.Normal) {
                 var atkSpeed = self.Owner.GetComponent<NumericComponent>().GetByKey(NumericType.AtkSpeed);
                 return self.CastTime + (BattleConst.AtkSpeedFactor / atkSpeed) > TimeInfo.Instance.ServerNow();
             }

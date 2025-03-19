@@ -46,7 +46,7 @@ namespace ET
                 if (comSkill != null)
                 {
                     comSkill.ForceAllDone();
-                    //comSkill.TryCastSkill(ESkillType.Dead, 0);
+                    comSkill.TryCastSkill(ESkillType.Dead);
                 }
             
                 // 血量值空则死亡
