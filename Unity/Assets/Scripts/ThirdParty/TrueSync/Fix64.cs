@@ -16,6 +16,7 @@ namespace TrueSync {
 		public const int NUM_BITS = 64;
 		public const int FRACTIONAL_PLACES = 32;
 		public const long ONE = 1L << FRACTIONAL_PLACES;
+		public const long TWO = 2L << FRACTIONAL_PLACES;
 		public const long TEN = 10L << FRACTIONAL_PLACES;
 		public const long HALF = 1L << (FRACTIONAL_PLACES - 1);
 		public const long PI_TIMES_2 = 0x6487ED511;
@@ -25,12 +26,14 @@ namespace TrueSync {
         public const long LOG2MAX = 0x1F00000000;
         public const long LOG2MIN = -0x2000000000;
         public const int LUT_SIZE = (int)(PI_OVER_2 >> 15);
+        public const long E_RAW = 0x2B7E15162;
 
         // Precision of this type is 2^-32, that is 2,3283064365386962890625E-10
-        public static readonly decimal Precision = (decimal)(new FP(1L));//0.00000000023283064365386962890625m;
+        public static readonly FP Precision = new FP(1L);//0.00000000023283064365386962890625m;
         public static readonly FP MaxValue = new FP(MAX_VALUE-1);
         public static readonly FP MinValue = new FP(MIN_VALUE+2);
         public static readonly FP One = new FP(ONE);
+        public static readonly FP Two = new FP(TWO);
 		public static readonly FP Ten = new FP(TEN);
         public static readonly FP Half = new FP(HALF);
 
@@ -64,9 +67,11 @@ namespace TrueSync {
 
 		public static readonly FP LutInterval = (FP)(LUT_SIZE - 1) / PiOver2;
 
+        public static readonly FP E = new FP(E_RAW);
         public static readonly FP Log2Max = new FP(LOG2MAX);
         public static readonly FP Log2Min = new FP(LOG2MIN);
         public static readonly FP Ln2 = new FP(LN2);
+        public static readonly FP Sqr2 = TSMath.Sqrt(Two);
 
         /// <summary>
         /// Returns a number indicating the sign of a Fix64 number.
@@ -140,7 +145,7 @@ namespace TrueSync {
             if (fractionalPart < 0x80000000) {
                 return integralPart;
             }
-            if (fractionalPart > 0x80000000) {
+            if (fractionalPart >= 0x80000000) {
                 return integralPart + One;
             }
             // if number is halfway between two values, round to the nearest even number
@@ -884,6 +889,11 @@ namespace TrueSync {
         public static FP FromFloat(float value) {
             return (FP)value;
         }
+        
+        public static FP FromInt(int value)
+        {
+            return (FP)value;
+        }
 
         public static bool IsInfinity(FP value) {
             return value == NegativeInfinity || value == PositiveInfinity;
@@ -952,8 +962,8 @@ namespace TrueSync {
         internal static void GenerateSinLut() {
             using (var writer = new StreamWriter("Fix64SinLut.cs")) {
                 writer.Write(
-@"namespace FixMath.NET {
-    partial struct Fix64 {
+@"namespace TrueSync {
+    partial struct FP {
         public static readonly long[] SinLut = new[] {");
                 int lineCounter = 0;
                 for (int i = 0; i < LUT_SIZE; ++i) {
@@ -977,8 +987,8 @@ namespace TrueSync {
         internal static void GenerateTanLut() {
             using (var writer = new StreamWriter("Fix64TanLut.cs")) {
                 writer.Write(
-@"namespace FixMath.NET {
-    partial struct Fix64 {
+@"namespace TrueSync {
+    partial struct FP {
         public static readonly long[] TanLut = new[] {");
                 int lineCounter = 0;
                 for (int i = 0; i < LUT_SIZE; ++i) {
@@ -1017,6 +1027,40 @@ namespace TrueSync {
 
         public FP(int value) {
             _serializedValue = value * ONE;
+        }
+        
+        public static FP Mix(int integer, int numerator, int denominator)
+        {
+            return (FP)integer + (FP)numerator / (FP)denominator;
+        }
+
+        public static FP Ratio(int numerator, int denominator)
+        {
+            return (FP)numerator / (FP)denominator;
+        }
+
+        public bool FloatEqual(FP value)
+        {
+            if ((this + Epsilon) >= value && (this - Epsilon) <= value)
+                return true;
+            return false;
+        }
+        
+        public bool FloatLessEqual(FP value)
+        {
+            return (this - Epsilon) <= value;
+        }
+        
+        public bool FloatGreaterEqual(FP value)
+        {
+            return (this + Epsilon) >= value;
+        }
+        
+        public bool FloatEqual(FP value, FP epsilon)
+        {
+            if ((this + epsilon) >= value && (this - epsilon) <= value)
+                return true;
+            return false;
         }
     }
 }

@@ -78,7 +78,7 @@ namespace TrueSync {
         /**
          *  @brief Returns a {@link FP} between a min value [inclusive] and a max value [inclusive].
          **/
-        public FP Next(float minValue, float maxValue) {
+        public FP Next(FP minValue, FP maxValue) {
             int minValueInt = (int)(minValue * 1000), maxValueInt = (int)(maxValue * 1000);
 
             if (minValueInt > maxValueInt) {
@@ -101,7 +101,7 @@ namespace TrueSync {
         /**
          *  @brief Returns a {@link FP} between a min value [inclusive] and a max value [inclusive].
          **/
-        public FP Range(float minValue, float maxValue) {
+        public FP Range(FP minValue, FP maxValue) {
             return this.Next(minValue, maxValue);
         }
 

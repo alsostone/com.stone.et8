@@ -1,4 +1,6 @@
-﻿namespace ET
+﻿using TrueSync;
+
+namespace ET
 {
     public static partial class LSUnitFactory
     {
@@ -12,6 +14,18 @@
 
 			lsUnit.AddComponent<LSInputComponent>();
             return lsUnit;
+        }
+        
+        public static LSUnit CreateBullet(LSWorld lsWorld, int bulletId, TSVector position, TSQuaternion rotation, LSUnit caster, LSUnit target)
+        {
+	        LSUnitComponent lsUnitComponent = lsWorld.GetComponent<LSUnitComponent>();
+	        LSUnit lsUnit = lsUnitComponent.AddChild<LSUnit>();
+			
+	        lsUnit.Position = position;
+	        lsUnit.Rotation = rotation;
+
+	        lsUnit.AddComponent<BulletComponent, int, LSUnit, LSUnit>(bulletId, caster, target);
+	        return lsUnit;
         }
     }
 }

@@ -21,7 +21,7 @@ namespace TrueSync
 {
 #if !DISABLE_FP_SIN_COS_TAN
     /// <summary>
-    /// 3x3 Matrix.
+    /// 4x4 Matrix.
     /// </summary>
     public struct TSMatrix4x4
     {
@@ -152,6 +152,54 @@ namespace TrueSync
             this.M44 = m44;
         }
 
+        public static bool IsIdentity(TSMatrix4x4 matrix)
+        {
+            return matrix == InternalIdentity;
+        }
+
+        /// <summary>
+        ///   <para>Transforms a position by this matrix (generic).</para>
+        /// </summary>
+        /// <param name="point"></param>
+        public static TSVector MultiplyPoint(TSMatrix4x4 matrix, TSVector point)
+        {
+            TSVector vector3;
+            vector3.x = matrix.M11 * point.x + matrix.M12 * point.y + matrix.M13 * point.z + matrix.M14;
+            vector3.y = matrix.M21 * point.x + matrix.M22 * point.y + matrix.M23 * point.z + matrix.M24;
+            vector3.z = matrix.M31 * point.x + matrix.M32 * point.y + matrix.M33 * point.z + matrix.M34;
+            FP num = 1 / (matrix.M41 * point.x + matrix.M42 * point.y + matrix.M43 * point.z + matrix.M44);
+            vector3.x *= num;
+            vector3.y *= num;
+            vector3.z *= num;
+            return vector3;
+        }
+        
+        /// <summary>
+        ///   <para>Transforms a position by this matrix (fast).</para>
+        /// </summary>
+        /// <param name="point"></param>
+        public static TSVector MultiplyPoint3x4(TSMatrix4x4 matrix, TSVector point)
+        {
+            TSVector vector3;
+            vector3.x = matrix.M11 * point.x + matrix.M12 * point.y + matrix.M13 * point.z + matrix.M14;
+            vector3.y = matrix.M21 * point.x + matrix.M22 * point.y + matrix.M23 * point.z + matrix.M24;
+            vector3.z = matrix.M31 * point.x + matrix.M32 * point.y + matrix.M33 * point.z + matrix.M34;
+            return vector3;
+        }
+        
+        /// <summary>
+        ///   <para>Transforms a direction by this matrix.</para>
+        /// </summary>
+        /// <param name="vector"></param>
+        public static TSVector MultiplyVector(TSMatrix4x4 matrix, TSVector vector)
+        {
+            TSVector vector3;
+            vector3.x = matrix.M11 * vector.x + matrix.M12 * vector.y + matrix.M13 * vector.z;
+            vector3.y = matrix.M21 * vector.x + matrix.M22 * vector.y + matrix.M23 * vector.z;
+            vector3.z = matrix.M31 * vector.x + matrix.M32 * vector.y + matrix.M33 * vector.z;
+            return vector3;
+        }
+        
         /// <summary>
         /// Multiply two matrices. Notice: matrix multiplication is not commutative.
         /// </summary>
@@ -530,6 +578,14 @@ namespace TrueSync
             TSMatrix4x4.Rotate(ref quaternion, out result);
             return result;
         }
+        
+        public static TSMatrix4x4 Rotate(TSVector euler)
+        {
+            TSMatrix4x4 result;
+            TSQuaternion quaternion = TSQuaternion.Euler(euler.x, euler.y, euler.z);
+            TSMatrix4x4.Rotate(ref quaternion, out result);
+            return result;
+        }
 
         /// <summary>
         /// Creates a JMatrix representing an orientation from a quaternion.
@@ -609,6 +665,14 @@ namespace TrueSync
         }
 
 
+        public static TSVector operator * (TSMatrix4x4 lhs, TSVector rhs) {
+            return new TSVector(
+                                lhs.M11 * rhs.x + lhs.M12 * rhs.y + lhs.M13 * rhs.z + lhs.M14,
+                                lhs.M21 * rhs.x + lhs.M22 * rhs.y + lhs.M23 * rhs.z + lhs.M24,
+                                lhs.M31 * rhs.x + lhs.M32 * rhs.y + lhs.M33 * rhs.z + lhs.M34
+                               );
+        }
+        
         /// <summary>
         /// Multiplies two matrices.
         /// </summary>
@@ -789,6 +853,15 @@ namespace TrueSync
         public static TSMatrix4x4 Translate(TSVector translation)
         {
             return Translate(translation.x, translation.y, translation.z);
+        }
+        
+        public static TSMatrix4x4 Translate (TSMatrix4x4 matrix, TSVector delta) {
+            return new TSMatrix4x4(
+                                   matrix.M11, matrix.M12, matrix.M13, matrix.M14 + delta.x,
+                                   matrix.M21, matrix.M22, matrix.M23, matrix.M24 + delta.y,
+                                   matrix.M31, matrix.M32, matrix.M33, matrix.M34 + delta.z,
+                                   matrix.M41, matrix.M42, matrix.M43, matrix.M44
+                                  );
         }
 
         /// <summary>
@@ -1138,7 +1211,7 @@ namespace TrueSync
             //     [ zx-cosa*zx-sina*y zy-cosa*zy+sina*x   zz+cosa*(1-zz)  ]
             //
             FP x = axis.x, y = axis.y, z = axis.z;
-            FP sa = TSMath.Sin(angle), ca = TSMath.Cos(angle);
+            FP sa = TSMath.Sin(angle*FP.Deg2Rad), ca = TSMath.Cos(angle*FP.Deg2Rad);
             FP xx = x * x, yy = y * y, zz = z * z;
             FP xy = x * y, xz = x * z, yz = y * z;
 

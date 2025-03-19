@@ -82,6 +82,11 @@ namespace TrueSync
         /// (FP.MaxValue,FP.MaxValue,FP.MaxValue);
         /// </summary>
         public static readonly TSVector MaxValue;
+        /// <summary>
+        /// A vector with components 
+        /// (FP.NaN,FP.NaN,FP.NaN);
+        /// </summary>
+        public static readonly TSVector NaN;
         #endregion
 
         #region Private static constructor
@@ -97,6 +102,7 @@ namespace TrueSync
             forward = new TSVector(0, 0, 1);
             MinValue = new TSVector(FP.MinValue);
             MaxValue = new TSVector(FP.MaxValue);
+            NaN = new TSVector(FP.NaN);
             Arbitrary = new TSVector(1, 1, 1);
             InternalZero = zero;
         }
@@ -316,6 +322,10 @@ namespace TrueSync
 			return FP.Sqrt ((v1.x - v2.x) * (v1.x - v2.x) + (v1.y - v2.y) * (v1.y - v2.y) + (v1.z - v2.z) * (v1.z - v2.z));
 		}
 
+        public static FP SqrDistance(TSVector v1, TSVector v2) {
+            return (v1.x - v2.x) * (v1.x - v2.x) + (v1.y - v2.y) * (v1.y - v2.y) + (v1.z - v2.z) * (v1.z - v2.z);
+        }
+        
         /// <summary>
         /// Gets a vector with the maximum x,y and z values of both vectors.
         /// </summary>
@@ -841,6 +851,25 @@ namespace TrueSync
             return new TSVector4(this.x, this.y, this.z, FP.One);
         }
 
+        public TSVector Rotation(FP angle)
+        {
+            var euler = TSQuaternion.Euler(FP.Zero, angle, FP.Zero);
+            return euler * this;
+        }
+        
+        public static TSVector operator -(TSVector value)
+        {
+            value.x = -value.x;
+            value.y = -value.y;
+            value.z = -value.z;
+            return value;
+        }
+        
+        public static TSVector Angle2Dir(FP angle)
+        {
+            var euler = TSQuaternion.Euler(FP.Zero, angle, FP.Zero);
+            return euler * TSVector.forward;
+        }
     }
 
 }

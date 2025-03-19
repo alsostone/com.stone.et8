@@ -564,6 +564,15 @@ namespace TrueSync
             TSMatrix result; TSMatrix.Multiply(ref value1, ref value2, out result);
             return result;
         }
+        public static TSVector operator * (TSMatrix matrix, TSVector vector)
+        {
+            TSVector result;
+            result.x = matrix.M11 * vector.x + matrix.M12 * vector.y + matrix.M13 * vector.z;
+            result.y = matrix.M21 * vector.x + matrix.M22 * vector.y + matrix.M23 * vector.z;
+            result.z = matrix.M31 * vector.x + matrix.M32 * vector.y + matrix.M33 * vector.z;
+
+            return result;
+        }
         #endregion
 
 

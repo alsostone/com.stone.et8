@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using TrueSync;
 
 namespace ET
 {
@@ -70,21 +71,18 @@ namespace ET
         }
         private static void AddBullet(int[] param, LSUnit owner, LSUnit target)
         {
-            // var transformOwner = owner.Get<Entity>().ComTransform;
-            // var transformTarget = target.Get<Entity>().ComTransform;
-            //
-            // var position = FPVector.zero;
-            // if (param.Count >= 4) {
-            //     position = new FPVector(param[1], param[2], param[3]) * FP.EN4;
-            // }else if (param.Count >= 3) {
-            //     position = new FPVector(param[1], param[2], 0) * FP.EN4;
-            // }else if (param.Count >= 2) {
-            //     position = new FPVector(param[1], 0, 0) * FP.EN4;
-            // }
-            // position = position.Rotation(transformOwner.Angle);
-            //
-            // var rotation = FPQuaternion.LookRotation(transformTarget.Position - transformOwner.Position).eulerAngles;
-            // BattleWorld.Instance.EntityMgr.CreateBullet(param[0], transformOwner.Position + position, rotation, owner, target);
+            var position = TSVector.zero;
+            if (param.Length >= 4) {
+                position = new TSVector(param[1], param[2], param[3]) * FP.EN4;
+            }else if (param.Length >= 3) {
+                position = new TSVector(param[1], param[2], 0) * FP.EN4;
+            }else if (param.Length >= 2) {
+                position = new TSVector(param[1], 0, 0) * FP.EN4;
+            }
+            position = position.Rotation(owner.Rotation.eulerAngles.y);
+            
+            var rotation = TSQuaternion.LookRotation(target.Position - owner.Position);
+            LSUnitFactory.CreateBullet(owner.Room().LSWorld, param[0], owner.Position + position, rotation, owner, target);
         }
         
         private static void DoDamage(int[] param, LSUnit owner, LSUnit target)

@@ -75,22 +75,10 @@ namespace TrueSync
         public TSVector eulerAngles {
             get {
                 TSVector result = new TSVector();
-
-                FP ysqr = y * y;
-                FP t0 = -2.0f * (ysqr + z * z) + 1.0f;
-                FP t1 = +2.0f * (x * y - w * z);
-                FP t2 = -2.0f * (x * z + w * y);
-                FP t3 = +2.0f * (y * z - w * x);
-                FP t4 = -2.0f * (x * x + ysqr) + 1.0f;
-
-                t2 = t2 > 1.0f ? 1.0f : t2;
-                t2 = t2 < -1.0f ? -1.0f : t2;
-
-                result.x = FP.Atan2(t3, t4) * FP.Rad2Deg;
-                result.y = FP.Asin(t2) * FP.Rad2Deg;
-                result.z = FP.Atan2(t1, t0) * FP.Rad2Deg;
-
-                return result * -1;
+                result.x = FP.Asin(2 * (w * x - y * z));                                          // Pitch
+                result.y = FP.Atan2(2 * w * y + 2 * z * x, 1 - 2 * (x * x + y * y));       // Yaw
+                result.z = FP.Atan2(2 * w * z + 2 * x * y, 1 - 2 * (z * z + x * x));       // Roll
+                return result * FP.Rad2Deg;
             }
         }
 
@@ -134,7 +122,7 @@ namespace TrueSync
 
             FP dot = Dot(from, to);
 
-            if (dot < 0.0f) {
+            if (dot < FP.Zero) {
                 to = Multiply(to, -1);
                 dot = -dot;
             }
@@ -147,7 +135,7 @@ namespace TrueSync
         public static TSQuaternion RotateTowards(TSQuaternion from, TSQuaternion to, FP maxDegreesDelta) {
             FP dot = Dot(from, to);
 
-            if (dot < 0.0f) {
+            if (dot < FP.Zero) {
                 to = Multiply(to, -1);
                 dot = -dot;
             }
@@ -494,9 +482,9 @@ namespace TrueSync
          *  @brief Rotates a {@link TSVector} by the {@link TSQuanternion}.
          **/
         public static TSVector operator *(TSQuaternion quat, TSVector vec) {
-            FP num = quat.x * 2f;
-            FP num2 = quat.y * 2f;
-            FP num3 = quat.z * 2f;
+            FP num = quat.x * 2;
+            FP num2 = quat.y * 2;
+            FP num3 = quat.z * 2;
             FP num4 = quat.x * num;
             FP num5 = quat.y * num2;
             FP num6 = quat.z * num3;
@@ -508,9 +496,9 @@ namespace TrueSync
             FP num12 = quat.w * num3;
 
             TSVector result;
-            result.x = (1f - (num5 + num6)) * vec.x + (num7 - num12) * vec.y + (num8 + num11) * vec.z;
-            result.y = (num7 + num12) * vec.x + (1f - (num4 + num6)) * vec.y + (num9 - num10) * vec.z;
-            result.z = (num8 - num11) * vec.x + (num9 + num10) * vec.y + (1f - (num4 + num5)) * vec.z;
+            result.x = (1 - (num5 + num6)) * vec.x + (num7 - num12) * vec.y + (num8 + num11) * vec.z;
+            result.y = (num7 + num12) * vec.x + (1 - (num4 + num6)) * vec.y + (num9 - num10) * vec.z;
+            result.z = (num8 - num11) * vec.x + (num9 + num10) * vec.y + (1 - (num4 + num5)) * vec.z;
 
             return result;
         }

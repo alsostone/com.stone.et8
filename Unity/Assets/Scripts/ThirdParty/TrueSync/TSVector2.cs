@@ -130,8 +130,8 @@ namespace TrueSync {
         public static void Reflect(ref TSVector2 vector, ref TSVector2 normal, out TSVector2 result)
         {
             FP dot = Dot(vector, normal);
-            result.x = vector.x - ((2f*dot)*normal.x);
-            result.y = vector.y - ((2f*dot)*normal.y);
+            result.x = vector.x - ((2*dot)*normal.x);
+            result.y = vector.y - ((2*dot)*normal.y);
         }
 
         public static TSVector2 Reflect(TSVector2 vector, TSVector2 normal)
@@ -315,11 +315,28 @@ namespace TrueSync {
             result.y = TSMath.Hermite(value1.y, tangent1.y, value2.y, tangent2.y, amount);
         }
 
+        public static TSVector2 Abs(TSVector2 other) {
+            return new TSVector2(FP.Abs(other.x), FP.Abs(other.y));
+        }
+
+        /// <summary>
+        /// Gets the squared length of the vector.
+        /// </summary>
+        /// <returns>Returns the squared length of the vector.</returns>
+        public FP sqrMagnitude {
+            get { 
+                return ((this.x * this.x) + (this.y * this.y));
+            }
+        }
+
+        /// <summary>
+        /// Gets the length of the vector.
+        /// </summary>
+        /// <returns>Returns the length of the vector.</returns>
         public FP magnitude {
             get {
-                FP result;
-                DistanceSquared(ref this, ref zeroVector, out result);
-                return FP.Sqrt(result);
+                var num = (this.x * this.x) + (this.y * this.y);
+                return FP.Sqrt(num);
             }
         }
 
@@ -436,31 +453,33 @@ namespace TrueSync {
 
         public void Normalize()
         {
-            Normalize(ref this, out this);
+            FP num2 = (this.x * this.x) + (this.y * this.y);
+            FP num = FP.One / FP.Sqrt(num2);
+            this.x *= num;
+            this.y *= num;
         }
 
         public static TSVector2 Normalize(TSVector2 value)
         {
-            Normalize(ref value, out value);
-            return value;
+            TSVector2 result;
+            Normalize(ref value, out result);
+            return result;
         }
 
         public TSVector2 normalized {
             get {
                 TSVector2 result;
                 TSVector2.Normalize(ref this, out result);
-
                 return result;
             }
         }
 
         public static void Normalize(ref TSVector2 value, out TSVector2 result)
         {
-            FP factor;
-            DistanceSquared(ref value, ref zeroVector, out factor);
-            factor = 1f/(FP) FP.Sqrt(factor);
-            result.x = value.x*factor;
-            result.y = value.y*factor;
+            FP num2 = (value.x * value.x) + (value.y * value.y);
+            FP num = FP.One / FP.Sqrt(num2);
+            result.x = value.x*num;
+            result.y = value.y*num;
         }
 
         public static TSVector2 SmoothStep(TSVector2 value1, TSVector2 value2, FP amount)

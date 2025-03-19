@@ -227,7 +227,7 @@ namespace TrueSync {
         /// Returns the smallest integral value that is greater than or equal to the specified number.
         /// </summary>
         public static FP Ceiling(FP value) {
-            return value;
+            return FP.Ceiling(value);
         }
 
         /// <summary>
@@ -263,10 +263,10 @@ namespace TrueSync {
             // Internally using FPs not to lose precission
             FP amountSquared = amount * amount;
             FP amountCubed = amountSquared * amount;
-            return (FP)(0.5 * (2.0 * value2 +
+            return (FP.Half * (2 * value2 +
                                  (value3 - value1) * amount +
-                                 (2.0 * value1 - 5.0 * value2 + 4.0 * value3 - value4) * amountSquared +
-                                 (3.0 * value2 - value1 - 3.0 * value3 + value4) * amountCubed));
+                                 (2 * value1 - 5 * value2 + 4 * value3 - value4) * amountSquared +
+                                 (3 * value2 - value1 - 3 * value3 + value4) * amountCubed));
         }
 
         public static FP Distance(FP value1, FP value2) {
@@ -280,9 +280,9 @@ namespace TrueSync {
             FP sCubed = s * s * s;
             FP sSquared = s * s;
 
-            if (amount == 0f)
+            if (amount == FP.Zero)
                 result = value1;
-            else if (amount == 1f)
+            else if (amount == 1)
                 result = value2;
             else
                 result = (2 * v1 - 2 * v2 + t2 + t1) * sCubed +
@@ -306,8 +306,8 @@ namespace TrueSync {
             // It is expected that 0 < amount < 1
             // If amount < 0, return value1
             // If amount > 1, return value2
-            FP result = Clamp(amount, 0f, 1f);
-            result = Hermite(value1, 0f, value2, 0f, result);
+            FP result = Clamp(amount, 0, 1);
+            result = Hermite(value1, 0, value2, 0, result);
             return result;
         }
 
@@ -434,6 +434,11 @@ namespace TrueSync {
         {
             return FP.FastMul(Log2(x), FP.Ln2);
         }
+        
+        public static FP Exp(FP value)
+        {
+            return Pow(FP.E, value);
+        }
 
         /// <summary>
         /// Returns a specified number raised to the specified power.
@@ -493,7 +498,7 @@ namespace TrueSync {
             return num;
         }
 
-        public static FP MoveTowardsAngle(FP current, FP target, float maxDelta)
+        public static FP MoveTowardsAngle(FP current, FP target, FP maxDelta)
         {
             target = current + DeltaAngle(current, target);
             return MoveTowards(current, target, maxDelta);
