@@ -12,7 +12,9 @@ namespace ET
 	        lsUnit.Position = unitInfo.Position;
 	        lsUnit.Rotation = unitInfo.Rotation;
 
+	        lsUnit.AddComponent<TypeComponent, EUnitType>(EUnitType.Hero);
 			lsUnit.AddComponent<LSInputComponent>();
+			EventSystem.Instance.Publish(lsWorld.Scene(), new LSUnitCreate() {LSUnit = lsUnit});
             return lsUnit;
         }
         
@@ -24,7 +26,9 @@ namespace ET
 	        lsUnit.Position = position;
 	        lsUnit.Rotation = rotation;
 
+	        lsUnit.AddComponent<TypeComponent, EUnitType>(EUnitType.Bullet);
 	        lsUnit.AddComponent<BulletComponent, int, LSUnit, LSUnit>(bulletId, caster, target);
+	        EventSystem.Instance.Publish(lsWorld.Scene(), new LSUnitCreate() {LSUnit = lsUnit});
 	        return lsUnit;
         }
     }

@@ -15,37 +15,37 @@ namespace ET
     [System.Flags]
     public enum EUnitType
     {
-        NONE = 0,
+        None = 0,
 
         /// <summary>
         /// 英雄
         /// </summary>
-        HERO = 1,
-
-        /// <summary>
-        /// 建筑
-        /// </summary>
-        BUILDING = 2,
+        Hero = 1,
 
         /// <summary>
         /// 士兵
         /// </summary>
-        SOLDIER = 4,
+        Soldier = 2,
 
         /// <summary>
-        /// 植物
+        /// 建筑
         /// </summary>
-        PLANT = 8,
+        Building = 4,
+
+        /// <summary>
+        /// 子弹
+        /// </summary>
+        Bullet = 8,
 
         /// <summary>
         /// 掉落
         /// </summary>
-        DROP = 16,
+        Drop = 16,
 
         /// <summary>
         /// 全局
         /// </summary>
-        GLOBAL = 32,
+        Global = 32,
 
     }
 }

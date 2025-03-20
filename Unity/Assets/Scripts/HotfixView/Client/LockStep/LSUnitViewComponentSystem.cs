@@ -21,20 +21,12 @@ namespace ET.Client
         {
             Room room = self.Room();
             LSUnitComponent lsUnitComponent = room.LSWorld.GetComponent<LSUnitComponent>();
-            Scene root = self.Root();
-            foreach (long playerId in room.PlayerIds)
+            foreach (var pair in lsUnitComponent.Children)
             {
-                LSUnit lsUnit = lsUnitComponent.GetChild<LSUnit>(playerId);
-                string assetsName = $"Assets/Bundles/Unit/Unit.prefab";
-                GameObject bundleGameObject = await room.GetComponent<ResourcesLoaderComponent>().LoadAssetAsync<GameObject>(assetsName);
-                GameObject prefab = bundleGameObject.Get<GameObject>("Skeleton");
-
-                GlobalComponent globalComponent = root.GetComponent<GlobalComponent>();
-                GameObject unitGo = UnityEngine.Object.Instantiate(prefab, globalComponent.Unit, true);
-                unitGo.transform.position = lsUnit.Position.ToVector();
-
-                LSUnitView lsUnitView = self.AddChildWithId<LSUnitView, GameObject>(lsUnit.Id, unitGo);
-                lsUnitView.AddComponent<LSAnimatorComponent>();
+                LSUnit lsUnit = pair.Value as LSUnit;
+                if (lsUnit == null)
+                    continue;
+                await LSUnitViewFactory.CreateLSUnitViewAsync(self.Scene(), lsUnit);
             }
         }
     }
