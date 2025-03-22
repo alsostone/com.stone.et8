@@ -49,12 +49,6 @@
     </ItemGroup>
     
     <ItemGroup>
-      <None Update="Template.txt">
-        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-      </None>
-    </ItemGroup>
-    
-    <ItemGroup>
       <ProjectReference Include="..\..\DotNet\Core\DotNet.Core.csproj" />
       <ProjectReference Include="..\..\DotNet\ThirdParty\DotNet.ThirdParty.csproj" />
     </ItemGroup>

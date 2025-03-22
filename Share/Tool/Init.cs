@@ -1,11 +1,14 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Reflection;
-using System.Threading;
 using CommandLine;
 
 namespace ET.Server
 {
+    public class ToolOptions : Singleton<ToolOptions>
+    {
+        [Option("FuncName", Required = false, Default = "Proto2CS")]
+        public string FuncName { get; set; }
+    }
+    
     internal static class Init
     {
         private static int Main(string[] args)
@@ -18,41 +21,24 @@ namespace ET.Server
             try
             {
                 // 命令行参数
-                Parser.Default.ParseArguments<Options>(args)
+                Parser.Default.ParseArguments<ToolOptions>(args)
                     .WithNotParsed(error => throw new Exception($"命令行格式错误! {error}"))
                     .WithParsed((o)=>World.Instance.AddSingleton(o));
-                
-                World.Instance.AddSingleton<Logger>().Log = new NLogger(Options.Instance.AppType.ToString(), Options.Instance.Process, 0);
-                
-                World.Instance.AddSingleton<CodeTypes, Assembly[]>(new[] { typeof (Init).Assembly });
-                World.Instance.AddSingleton<EventSystem>();
-                
-                // 强制调用一下mongo，避免mongo库被裁剪
-                MongoHelper.ToJson(1);
-                
-                ETTask.ExceptionHandler += Log.Error;
-                
-                Log.Info($"server start........................ ");
-				
-                switch (Options.Instance.AppType)
+
+                switch (ToolOptions.Instance.FuncName)
                 {
-                    case AppType.ExcelExporter:
-                    {
-                        Options.Instance.Console = 1;
-                        ExcelExporter.Export();
+                    case "Proto2CS":
+                        InnerProto2CS.Proto2CS();
+                        Console.WriteLine("proto2cs succeed!");
                         return 0;
-                    }
-                    case AppType.Proto2CS:
-                    {
-                        Options.Instance.Console = 1;
-                        Proto2CS.Export();
-                        return 0;
-                    }
+                    default:
+                        Log.Error($"未找到方法: {ToolOptions.Instance.FuncName}");
+                        return 1;
                 }
             }
             catch (Exception e)
             {
-                Log.Console(e.ToString());
+                Console.WriteLine(e.ToString());
             }
             return 1;
         }

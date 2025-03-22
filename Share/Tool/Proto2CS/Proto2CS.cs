@@ -12,23 +12,14 @@ namespace ET
         public int Opcode;
     }
 
-    public static class Proto2CS
-    {
-        public static void Export()
-        {
-            InnerProto2CS.Proto2CS();
-            Log.Console("proto2cs succeed!");
-        }
-    }
-
     public static partial class InnerProto2CS
     {
         private const string protoDir = "../Unity/Assets/Config/Proto";
         private const string clientMessagePath = "../Unity/Assets/Scripts/Model/Generate/Client/Message/";
         private const string serverMessagePath = "../Unity/Assets/Scripts/Model/Generate/Server/Message/";
         private const string clientServerMessagePath = "../Unity/Assets/Scripts/Model/Generate/ClientServer/Message/";
-        private static readonly char[] splitChars = [' ', '\t'];
-        private static readonly List<OpcodeInfo> msgOpcode = [];
+        private static readonly char[] splitChars = {' ', '\t'};
+        private static readonly List<OpcodeInfo> msgOpcode = new();
 
         public static void Proto2CS()
         {
@@ -114,7 +105,7 @@ namespace ET
 
                     string parentClass = "";
                     msgName = newline.Split(splitChars, StringSplitOptions.RemoveEmptyEntries)[1];
-                    string[] ss = newline.Split(["//"], StringSplitOptions.RemoveEmptyEntries);
+                    string[] ss = newline.Split("//", StringSplitOptions.RemoveEmptyEntries);
                     if (ss.Length == 2)
                     {
                         parentClass = ss[1].Trim();

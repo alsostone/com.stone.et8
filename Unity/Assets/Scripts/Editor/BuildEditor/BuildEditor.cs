@@ -116,13 +116,6 @@ namespace ET
                 BuildHelper.Build(this.platformType, this.buildOptions);
                 return;
             }
-
-            if (GUILayout.Button("Proto2CS"))
-            {
-                ToolsEditor.Proto2CS();
-                return;
-            }
-
             GUILayout.Space(5);
         }
         
@@ -166,6 +159,15 @@ namespace ET
         }
         #endregion
         
+        #region proto export
+        [MenuItem("ET/Proto2CS", false, 102)]
+        public static void Proto2CS()
+        {
+            ToolsEditor.Proto2CS();
+            AssetDatabase.Refresh();
+        }
+        #endregion
+
         #region build package 
         [MenuItem("ET/Build/Android (Offline)", false, 101)]
         public static void MenuAndroidIncrementalBuild()

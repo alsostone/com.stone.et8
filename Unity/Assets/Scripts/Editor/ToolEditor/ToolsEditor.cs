@@ -59,7 +59,7 @@ namespace ET
 #else
             const string tools = ".\\Tool.exe";
 #endif
-            ShellHelper.Run($"{tools} --AppType=Proto2CS --Console=1", "../Bin/");
+            ShellHelper.Run($"{tools} --FuncName=Proto2CS", "../Bin/");
         }
     }
 }
