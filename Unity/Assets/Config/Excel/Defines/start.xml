@@ -26,23 +26,23 @@
     </bean>
 
 
-    <table name="TbStartMachine" value="TbStartMachineRow" input="Benchmark/StartMachine.xlsx" output="Benchmark/TbStartMachine" mode="" readSchemaFromFile="false" group="s"/>
-    <table name="TbStartProcess" value="TbStartProcessRow" input="Benchmark/StartProcess.xlsx" output="Benchmark/TbStartProcess" mode="" readSchemaFromFile="false" group="s"/>
-    <table name="TbStartScene" value="TbStartSceneRow" input="Benchmark/StartScene.xlsx" output="Benchmark/TbStartScene" mode="" readSchemaFromFile="false" group="s"/>
-    <table name="TbStartZone" value="TbStartZoneRow" input="Benchmark/StartZone.xlsx" output="Benchmark/TbStartZone" mode="" readSchemaFromFile="false" group="s"/>
+    <table name="TbStartMachine" value="TbStartMachineRow" input="Benchmark/StartMachine.xlsx" output="StartConfig/Benchmark/TbStartMachine" mode="" readSchemaFromFile="false" group="s"/>
+    <table name="TbStartProcess" value="TbStartProcessRow" input="Benchmark/StartProcess.xlsx" output="StartConfig/Benchmark/TbStartProcess" mode="" readSchemaFromFile="false" group="s"/>
+    <table name="TbStartScene" value="TbStartSceneRow" input="Benchmark/StartScene.xlsx" output="StartConfig/Benchmark/TbStartScene" mode="" readSchemaFromFile="false" group="s"/>
+    <table name="TbStartZone" value="TbStartZoneRow" input="Benchmark/StartZone.xlsx" output="StartConfig/Benchmark/TbStartZone" mode="" readSchemaFromFile="false" group="s"/>
 
-    <table name="TbStartMachine2" comment="IgnoreConfigAttribute" value="TbStartMachineRow" input="Localhost/StartMachine.xlsx" output="Localhost/TbStartMachine" mode="" readSchemaFromFile="false" group="s"/>
-    <table name="TbStartProcess2" comment="IgnoreConfigAttribute" value="TbStartProcessRow" input="Localhost/StartProcess.xlsx" output="Localhost/TbStartProcess" mode="" readSchemaFromFile="false" group="s"/>
-    <table name="TbStartScene2" comment="IgnoreConfigAttribute" value="TbStartSceneRow" input="Localhost/StartScene.xlsx" output="Localhost/TbStartScene" mode="" readSchemaFromFile="false" group="s"/>
-    <table name="TbStartZone2" comment="IgnoreConfigAttribute" value="TbStartZoneRow" input="Localhost/StartZone.xlsx" output="Localhost/TbStartZone" mode="" readSchemaFromFile="false" group="s"/>
+    <table name="TbStartMachine2" comment="IgnoreConfigAttribute" value="TbStartMachineRow" input="Localhost/StartMachine.xlsx" output="StartConfig/Localhost/TbStartMachine" mode="" readSchemaFromFile="false" group="s"/>
+    <table name="TbStartProcess2" comment="IgnoreConfigAttribute" value="TbStartProcessRow" input="Localhost/StartProcess.xlsx" output="StartConfig/Localhost/TbStartProcess" mode="" readSchemaFromFile="false" group="s"/>
+    <table name="TbStartScene2" comment="IgnoreConfigAttribute" value="TbStartSceneRow" input="Localhost/StartScene.xlsx" output="StartConfig/Localhost/TbStartScene" mode="" readSchemaFromFile="false" group="s"/>
+    <table name="TbStartZone2" comment="IgnoreConfigAttribute" value="TbStartZoneRow" input="Localhost/StartZone.xlsx" output="StartConfig/Localhost/TbStartZone" mode="" readSchemaFromFile="false" group="s"/>
 
-    <table name="TbStartMachine3" comment="IgnoreConfigAttribute" value="TbStartMachineRow" input="Release/StartMachine.xlsx" output="Release/TbStartMachine" mode="" readSchemaFromFile="false" group="s"/>
-    <table name="TbStartProcess3" comment="IgnoreConfigAttribute" value="TbStartProcessRow" input="Release/StartProcess.xlsx" output="Release/TbStartProcess" mode="" readSchemaFromFile="false" group="s"/>
-    <table name="TbStartScene3" comment="IgnoreConfigAttribute" value="TbStartSceneRow" input="Release/StartScene.xlsx" output="Release/TbStartScene" mode="" readSchemaFromFile="false" group="s"/>
-    <table name="TbStartZone3" comment="IgnoreConfigAttribute" value="TbStartZoneRow" input="Release/StartZone.xlsx" output="Release/TbStartZone" mode="" readSchemaFromFile="false" group="s"/>
+    <table name="TbStartMachine3" comment="IgnoreConfigAttribute" value="TbStartMachineRow" input="Release/StartMachine.xlsx" output="StartConfig/Release/TbStartMachine" mode="" readSchemaFromFile="false" group="s"/>
+    <table name="TbStartProcess3" comment="IgnoreConfigAttribute" value="TbStartProcessRow" input="Release/StartProcess.xlsx" output="StartConfig/Release/TbStartProcess" mode="" readSchemaFromFile="false" group="s"/>
+    <table name="TbStartScene3" comment="IgnoreConfigAttribute" value="TbStartSceneRow" input="Release/StartScene.xlsx" output="StartConfig/Release/TbStartScene" mode="" readSchemaFromFile="false" group="s"/>
+    <table name="TbStartZone3" comment="IgnoreConfigAttribute" value="TbStartZoneRow" input="Release/StartZone.xlsx" output="StartConfig/Release/TbStartZone" mode="" readSchemaFromFile="false" group="s"/>
 
-    <table name="TbStartMachine4" comment="IgnoreConfigAttribute" value="TbStartMachineRow" input="RouterTest/StartMachine.xlsx" output="RouterTest/TbStartMachine" mode="" readSchemaFromFile="false" group="s"/>
-    <table name="TbStartProcess4" comment="IgnoreConfigAttribute" value="TbStartProcessRow" input="RouterTest/StartProcess.xlsx" output="RouterTest/TbStartProcess" mode="" readSchemaFromFile="false" group="s"/>
-    <table name="TbStartScene4" comment="IgnoreConfigAttribute" value="TbStartSceneRow" input="RouterTest/StartScene.xlsx" output="RouterTest/TbStartScene" mode="" readSchemaFromFile="false" group="s"/>
-    <table name="TbStartZone4" comment="IgnoreConfigAttribute" value="TbStartZoneRow" input="RouterTest/StartZone.xlsx" output="RouterTest/TbStartZone" mode="" readSchemaFromFile="false" group="s"/>    
+    <table name="TbStartMachine4" comment="IgnoreConfigAttribute" value="TbStartMachineRow" input="RouterTest/StartMachine.xlsx" output="StartConfig/RouterTest/TbStartMachine" mode="" readSchemaFromFile="false" group="s"/>
+    <table name="TbStartProcess4" comment="IgnoreConfigAttribute" value="TbStartProcessRow" input="RouterTest/StartProcess.xlsx" output="StartConfig/RouterTest/TbStartProcess" mode="" readSchemaFromFile="false" group="s"/>
+    <table name="TbStartScene4" comment="IgnoreConfigAttribute" value="TbStartSceneRow" input="RouterTest/StartScene.xlsx" output="StartConfig/RouterTest/TbStartScene" mode="" readSchemaFromFile="false" group="s"/>
+    <table name="TbStartZone4" comment="IgnoreConfigAttribute" value="TbStartZoneRow" input="RouterTest/StartZone.xlsx" output="StartConfig/RouterTest/TbStartZone" mode="" readSchemaFromFile="false" group="s"/>    
 </module>
