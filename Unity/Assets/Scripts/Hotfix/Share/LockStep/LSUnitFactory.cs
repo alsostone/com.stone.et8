@@ -14,7 +14,7 @@ namespace ET
 
 	        lsUnit.AddComponent<TypeComponent, EUnitType>(EUnitType.Hero);
 			lsUnit.AddComponent<LSInputComponent>();
-			EventSystem.Instance.Publish(lsWorld.Scene(), new LSUnitCreate() {LSUnit = lsUnit});
+			EventSystem.Instance.Publish(lsWorld, new LSUnitCreate() {LSUnit = lsUnit});
             return lsUnit;
         }
         
@@ -28,7 +28,7 @@ namespace ET
 
 	        lsUnit.AddComponent<TypeComponent, EUnitType>(EUnitType.Bullet);
 	        lsUnit.AddComponent<BulletComponent, int, LSUnit, LSUnit>(bulletId, caster, target);
-	        EventSystem.Instance.Publish(lsWorld.Scene(), new LSUnitCreate() {LSUnit = lsUnit});
+	        EventSystem.Instance.Publish(lsWorld, new LSUnitCreate() {LSUnit = lsUnit});
 	        return lsUnit;
         }
     }

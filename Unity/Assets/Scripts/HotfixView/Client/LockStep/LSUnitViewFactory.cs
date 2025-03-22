@@ -4,31 +4,30 @@ namespace ET.Client
 {
     public static class LSUnitViewFactory
     {
-        public static async ETTask CreateLSUnitViewAsync(Scene scene, LSUnit lsUnit)
+        public static async ETTask CreateLSUnitViewAsync(Room room, LSWorld lsWorld, LSUnit lsUnit)
         {
             var type = lsUnit.GetComponent<TypeComponent>().GetUnitType();
             switch (type)
             {
                 case EUnitType.Hero:
-                    await CreateHeroViewAsync(scene, lsUnit);
+                    await CreateHeroViewAsync(room, lsWorld, lsUnit);
                     break;
                 case EUnitType.Bullet:
-                    await CreateBulletViewAsync(scene, lsUnit);
+                    await CreateBulletViewAsync(room, lsWorld, lsUnit);
                     break;
             }
         }
 
-        private static async ETTask CreateBulletViewAsync(Scene scene, LSUnit lsUnit)
+        private static async ETTask CreateBulletViewAsync(Room room, LSWorld lsWorld, LSUnit lsUnit)
         {
             throw new System.NotImplementedException();
         }
 
-        private static async ETTask CreateHeroViewAsync(Scene scene, LSUnit lsUnit)
+        private static async ETTask CreateHeroViewAsync(Room room, LSWorld lsWorld, LSUnit lsUnit)
         {
-            Scene root = scene.Root();
-            Room room = scene.Room();
+            Scene root = lsWorld.Root();
             string assetsName = $"Assets/Bundles/Unit/Unit.prefab";
-            GameObject bundleGameObject = await room.GetComponent<ResourcesLoaderComponent>().LoadAssetAsync<GameObject>(assetsName);
+            GameObject bundleGameObject = await root.GetComponent<ResourcesLoaderComponent>().LoadAssetAsync<GameObject>(assetsName);
             GameObject prefab = bundleGameObject.Get<GameObject>("Skeleton");
 
             GlobalComponent globalComponent = root.GetComponent<GlobalComponent>();

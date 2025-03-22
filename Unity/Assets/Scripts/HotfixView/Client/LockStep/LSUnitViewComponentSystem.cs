@@ -26,7 +26,7 @@ namespace ET.Client
                 LSUnit lsUnit = pair.Value as LSUnit;
                 if (lsUnit == null)
                     continue;
-                await LSUnitViewFactory.CreateLSUnitViewAsync(self.Scene(), lsUnit);
+                await LSUnitViewFactory.CreateLSUnitViewAsync(room, room.LSWorld, lsUnit);
             }
         }
     }

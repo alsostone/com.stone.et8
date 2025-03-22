@@ -1,13 +1,14 @@
 namespace ET.Client
 {
-    [Event(SceneType.LockStep)]
-    public class LSUnitCreateEvent: AEvent<Scene, LSUnitCreate>
+    [Event(SceneType.LockStepClient)]
+    public class LSUnitCreateEvent: AEvent<LSWorld, LSUnitCreate>
     {
-        protected override async ETTask Run(Scene scene, LSUnitCreate args)
+        protected override async ETTask Run(LSWorld lsWorld, LSUnitCreate args)
         {
-            if (scene.Room().GetComponent<LSUnitViewComponent>() ==null)
+            var room = lsWorld.GetParent<Room>();
+            if (room.GetComponent<LSUnitViewComponent>() == null)
                 return;
-            await LSUnitViewFactory.CreateLSUnitViewAsync(scene, args.LSUnit);
+            await LSUnitViewFactory.CreateLSUnitViewAsync(room, lsWorld, args.LSUnit);
         }
     }
 }
