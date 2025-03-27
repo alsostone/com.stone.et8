@@ -4,6 +4,10 @@ namespace ET
     {
         public LSUnit LSUnit;
     }
-
+    
+    public struct LSUnitRemove
+    {
+        public long Id;
+    }
 }
 

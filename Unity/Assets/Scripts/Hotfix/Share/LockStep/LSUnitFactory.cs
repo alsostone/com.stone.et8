@@ -14,6 +14,7 @@ namespace ET
 
 	        lsUnit.AddComponent<TypeComponent, EUnitType>(EUnitType.Hero);
 			lsUnit.AddComponent<LSInputComponent>();
+			lsUnit.AddComponent<SkillComponent, int[]>(new int[1] {10000001});
 			EventSystem.Instance.Publish(lsWorld, new LSUnitCreate() {LSUnit = lsUnit});
             return lsUnit;
         }

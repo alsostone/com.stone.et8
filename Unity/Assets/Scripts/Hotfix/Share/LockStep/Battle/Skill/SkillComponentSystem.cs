@@ -7,7 +7,7 @@ namespace ET
     public static partial class SkillComponentSystem
     {
         [EntitySystem]
-        private static void Awake(this SkillComponent self, List<int> skillIds)
+        private static void Awake(this SkillComponent self, int[] skillIds)
         {
             foreach (int skillId in skillIds)
             {

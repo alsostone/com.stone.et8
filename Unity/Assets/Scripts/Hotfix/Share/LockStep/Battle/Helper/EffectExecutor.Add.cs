@@ -82,7 +82,7 @@ namespace ET
             position = position.Rotation(owner.Rotation.eulerAngles.y);
             
             var rotation = TSQuaternion.LookRotation(target.Position - owner.Position);
-            LSUnitFactory.CreateBullet(owner.Room().LSWorld, param[0], owner.Position + position, rotation, owner, target);
+            LSUnitFactory.CreateBullet(owner.GetParent<LSWorld>(), param[0], owner.Position + position, rotation, owner, target);
         }
         
         private static void DoDamage(int[] param, LSUnit owner, LSUnit target)

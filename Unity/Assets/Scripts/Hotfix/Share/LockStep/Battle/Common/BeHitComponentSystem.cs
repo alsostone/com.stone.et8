@@ -55,6 +55,7 @@ namespace ET
                     comDeath.DoDeath();
                 }
                 else {
+                    EventSystem.Instance.Publish(self.Owner.GetParent<LSWorld>(), new LSUnitRemove() { Id = self.Owner.Id });
                     self.Owner.Dispose();
                 }
             }

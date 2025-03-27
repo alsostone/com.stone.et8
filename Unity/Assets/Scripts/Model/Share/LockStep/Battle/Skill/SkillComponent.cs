@@ -5,7 +5,7 @@ using MongoDB.Bson.Serialization.Options;
 namespace ET
 {
     [ComponentOf(typeof(LSUnit))]
-    public class SkillComponent : LSEntity, IAwake<List<int>>, IDestroy
+    public class SkillComponent : LSEntity, IAwake<int[]>, IDestroy
     {
         [BsonIgnore]
         public LSUnit Owner => this.GetParent<LSUnit>();

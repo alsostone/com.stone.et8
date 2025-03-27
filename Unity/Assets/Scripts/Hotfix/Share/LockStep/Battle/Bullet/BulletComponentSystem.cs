@@ -38,6 +38,7 @@ namespace ET
             if (reach) {
                 EffectExecutor.Execute(self.TbBulletRow.EffectGroupId, self.Caster, self.Target, self.Owner);
             }
+            EventSystem.Instance.Publish(self.Owner.GetParent<LSWorld>(), new LSUnitRemove() { Id = self.Owner.Id });
             self.Owner.Dispose();
         }
     }
