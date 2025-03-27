@@ -36,7 +36,7 @@ namespace ET.Server
 
             room.AddComponent<LSServerUpdater>();
 
-            RoomMessageHelper.BroadCast(room, room2CStart);
+            RoomMessageHelper.Broadcast(room, room2CStart);
         }
     }
 }

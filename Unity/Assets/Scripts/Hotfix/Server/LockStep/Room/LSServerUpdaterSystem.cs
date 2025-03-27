@@ -32,7 +32,7 @@ namespace ET.Server
             OneFrameInputs sendInput = OneFrameInputs.Create();
             oneFrameInputs.CopyTo(sendInput);
 
-            RoomMessageHelper.BroadCast(room, sendInput);
+            RoomMessageHelper.Broadcast(room, sendInput);
 
             room.Update(oneFrameInputs);
         }

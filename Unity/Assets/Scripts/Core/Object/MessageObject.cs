@@ -1,5 +1,6 @@
 ﻿using System;
 using System.ComponentModel;
+using MemoryPack;
 using MongoDB.Bson.Serialization.Attributes;
 
 namespace ET
@@ -12,6 +13,7 @@ namespace ET
         }
 
         [BsonIgnore]
+        [MemoryPackIgnore]
         public bool IsFromPool { get; set; }
     }
 }
