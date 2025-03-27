@@ -25,15 +25,9 @@ namespace ET.Client
             while (true)
             {
                 if (timeNow < room.FixedTimeCounter.FrameTime(room.PredictionFrame + 1))
-                {
                     return;
-                }
-
-                // 最多只预测5帧
-                if (room.PredictionFrame - room.AuthorityFrame > 5)
-                {
+                if (room.PredictionFrame - room.AuthorityFrame > BattleConst.PredictionFrameMaxCount)
                     return;
-                }
 
                 ++room.PredictionFrame;
                 OneFrameInputs oneFrameInputs = self.GetOneFrameMessages(room.PredictionFrame);
