@@ -23,14 +23,9 @@ namespace ET.Client
             while (true)
             {
                 if (room.AuthorityFrame + 1 >= room.Replay.FrameInputs.Count)
-                {
                     break;
-                }
-
                 if (timeNow < room.FixedTimeCounter.FrameTime(room.AuthorityFrame + 1))
-                {
                     break;
-                }
 
                 ++room.AuthorityFrame;
 

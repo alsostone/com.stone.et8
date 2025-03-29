@@ -19,7 +19,6 @@ namespace ET.Server
             Room room = self.GetParent<Room>();
             long timeNow = TimeInfo.Instance.ServerFrameTime();
 
-
             int frame = room.AuthorityFrame + 1;
             if (timeNow < room.FixedTimeCounter.FrameTime(frame))
             {

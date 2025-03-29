@@ -11,7 +11,6 @@ namespace ET.Server
             using FrameMessage _ = message;  // 让消息回到池中
             
             Room room = root.GetComponent<Room>();
-            FrameBuffer frameBuffer = room.FrameBuffer;
             if (message.Frame % (1000 / LSConstValue.UpdateInterval) == 0)
             {
                 long nowFrameTime = room.FixedTimeCounter.FrameTime(message.Frame);
@@ -21,27 +20,26 @@ namespace ET.Server
                 room2CAdjustUpdateTime.DiffTime = diffTime;
                 room.Root().GetComponent<MessageLocationSenderComponent>().Get(LocationType.GateSession).Send(message.PlayerId, room2CAdjustUpdateTime);
             }
-
-            if (message.Frame < room.AuthorityFrame)  // 小于AuthorityFrame，丢弃
+            
+            if (message.Frame > room.AuthorityFrame + BattleConst.PredictionFrameMaxCount)
             {
-                Log.Warning($"FrameMessage < AuthorityFrame discard: {message}");
-                return;
-            }
-
-            if (message.Frame > room.AuthorityFrame + 10)  // 大于AuthorityFrame + 10，丢弃
-            {
-                Log.Warning($"FrameMessage > AuthorityFrame + 10 discard: {message}");
+                Log.Warning($"FrameMessage > AuthorityFrame + PredictionFrameMaxCount discard: {message}");
                 return;
             }
             
-            OneFrameInputs oneFrameInputs = frameBuffer.FrameInputs(message.Frame);
-            if (oneFrameInputs == null)
+            // 晚到的消息放在最近帧数据中 防止因丢操作影响手感
+            int frame = Math.Max(room.AuthorityFrame + 1, message.Frame);
+            OneFrameInputs oneFrameInputs = room.FrameBuffer.FrameInputs(frame);
+            if (oneFrameInputs.Inputs.TryGetValue(message.PlayerId, out LSInput value))
             {
-                Log.Error($"FrameMessageHandler get frame is null: {message.Frame}, max frame: {frameBuffer.MaxFrame}");
-                return;
+                value.V = message.Input.V;                  // 遥杆使用最新的 直接覆盖
+                value.Button |= message.Input.Button;       // 32位代表32个按钮的按下状态 合并他们
+                oneFrameInputs.Inputs[message.PlayerId] = value;
             }
-            oneFrameInputs.Inputs[message.PlayerId] = message.Input;
-
+            else
+            {
+                oneFrameInputs.Inputs[message.PlayerId] = message.Input;
+            }
             await ETTask.CompletedTask;
         }
     }
