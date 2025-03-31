@@ -25,9 +25,9 @@ namespace ET.Client
             while (true)
             {
                 if (timeNow < room.FixedTimeCounter.FrameTime(room.PredictionFrame + 1))
-                    return;
+                    break;
                 if (room.PredictionFrame - room.AuthorityFrame > BattleConst.PredictionFrameMaxCount)
-                    return;
+                    break;
 
                 ++room.PredictionFrame;
                 OneFrameInputs oneFrameInputs = self.GetOneFrameMessages(room.PredictionFrame);
@@ -44,9 +44,16 @@ namespace ET.Client
                 
                 long timeNow2 = TimeInfo.Instance.ServerNow();
                 if (timeNow2 - timeNow > 5)
-                {
                     break;
-                }
+            }
+
+            // 操作只要生效即清除 LSOperaComponentSystem会在下次需要生效前设置就绪
+            // LSOperaComponentSystem的Update帧率一定大于等于该处生效的频率且保证触发在前 所以不会有空挡产生
+            // 由于是生效后才清除 也不会出现操作被丢失的情况
+            // 即使出现卡顿导致一次操作生效多次的情况 也是符合直觉的
+            if (i > 0)
+            {
+                self.Input = new LSInput();
             }
         }
 

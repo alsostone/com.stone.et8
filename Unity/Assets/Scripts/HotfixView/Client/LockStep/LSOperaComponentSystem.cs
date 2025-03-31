@@ -19,7 +19,6 @@ namespace ET.Client
             TSVector2 v = new TSVector2(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"));
             lsClientUpdater.Input.V = v.normalized;
             
-            lsClientUpdater.Input.Button = 0;
             if (Input.GetKeyDown(KeyCode.J))
             {
                 lsClientUpdater.Input.Button |= LSConstButtonValue.Attack;
