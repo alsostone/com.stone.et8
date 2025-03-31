@@ -1,4 +1,3 @@
-using TrueSync;
 
 namespace ET.Client
 {

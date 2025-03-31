@@ -8,37 +8,30 @@ namespace ET.Client
     public static partial class LSOperaComponentSystem
     {
         [EntitySystem]
-        private static void Awake(this ET.LSOperaComponent self)
+        private static void Awake(this LSOperaComponent self)
         {
-
         }
         
         [EntitySystem]
         private static void Update(this LSOperaComponent self)
         {
-            TSVector2 v = new();
-            if (Input.GetKey(KeyCode.W))
-            {
-                v.y += 1;
-            }
-
-            if (Input.GetKey(KeyCode.A))
-            {
-                v.x -= 1;
-            }
-
-            if (Input.GetKey(KeyCode.S))
-            {
-                v.y -= 1;
-            }
-
-            if (Input.GetKey(KeyCode.D))
-            {
-                v.x += 1;
-            }
-
             LSClientUpdater lsClientUpdater = self.GetParent<Room>().GetComponent<LSClientUpdater>();
+            TSVector2 v = new TSVector2(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"));
             lsClientUpdater.Input.V = v.normalized;
+            
+            lsClientUpdater.Input.Button = 0;
+            if (Input.GetKeyDown(KeyCode.J))
+            {
+                lsClientUpdater.Input.Button |= LSConstButtonValue.Attack;
+            }
+            if (Input.GetKeyDown(KeyCode.K))
+            {
+                lsClientUpdater.Input.Button |= LSConstButtonValue.Skill1;
+            }
+            if (Input.GetKeyDown(KeyCode.Space))
+            {
+                lsClientUpdater.Input.Button |= LSConstButtonValue.Jump;
+            }
         }
 
     }

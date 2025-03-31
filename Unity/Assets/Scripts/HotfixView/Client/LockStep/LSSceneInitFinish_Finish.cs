@@ -14,6 +14,11 @@ namespace ET.Client
             if (!room.IsReplay)
             {
                 room.AddComponent<LSOperaComponent>();
+                room.AddComponent<LSClientUpdater>();
+            }
+            else
+            {
+                room.AddComponent<LSReplayUpdater>();
             }
             await YIUIMgrComponent.Inst.ClosePanelAsync<LSLobbyPanelComponent>();
             await ETTask.CompletedTask;
