@@ -31,7 +31,7 @@ namespace ET
         {
             // 普通攻击的CD由攻速计算
             if (self.TbSkillRow.SkillType == ESkillType.Normal) {
-                var atkSpeed = self.Owner.GetComponent<NumericComponent>().GetByKey(NumericType.AtkSpeed);
+                var atkSpeed = self.Owner.GetComponent<PropComponent>().GetByKey(NumericType.AtkSpeed);
                 return self.CastTime + (BattleConst.AtkSpeedFactor / atkSpeed) > TimeInfo.Instance.ServerNow();
             }
             return self.CastTime + self.TbSkillRow.CdTime > TimeInfo.Instance.ServerNow();
@@ -97,7 +97,7 @@ namespace ET
             switch (tbRow.ConsumeType) {
                 case EConsumeType.PROPERTY:
                     if (tbRow.ConsumeParam.Length != 2) { return; }
-                    self.Owner.GetComponent<NumericComponent>().Add((NumericType)tbRow.ConsumeParam[0], -tbRow.ConsumeParam[1]);
+                    self.Owner.GetComponent<PropComponent>().Add((NumericType)tbRow.ConsumeParam[0], -tbRow.ConsumeParam[1]);
                     break;
             }
         }

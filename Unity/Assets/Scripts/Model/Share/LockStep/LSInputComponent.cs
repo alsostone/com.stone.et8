@@ -1,4 +1,5 @@
 using MemoryPack;
+using MongoDB.Bson.Serialization.Attributes;
 
 namespace ET
 {
@@ -6,6 +7,10 @@ namespace ET
     [MemoryPackable]
     public partial class LSInputComponent: LSEntity, ILSUpdate, IAwake, ISerializeToEntity
     {
+        [BsonIgnore]
+        [MemoryPackIgnore]
+        public LSUnit Owner => this.GetParent<LSUnit>();
+        
         public LSInput LSInput { get; set; }
     }
 }

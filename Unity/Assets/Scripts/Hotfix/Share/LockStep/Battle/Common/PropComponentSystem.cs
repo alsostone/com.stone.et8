@@ -1,48 +1,49 @@
 ﻿using System.Collections.Generic;
+using MemoryPack;
 using MongoDB.Bson.Serialization.Attributes;
 using MongoDB.Bson.Serialization.Options;
 
 namespace ET
 {
-    [FriendOf(typeof (NumericComponent))]
-    public static class NumericComponentSystem
+    [FriendOf(typeof(PropComponent))]
+    public static class PropComponentSystem
     {
-        public static float GetAsFloat(this NumericComponent self, NumericType numericType)
+        public static float GetAsFloat(this PropComponent self, NumericType numericType)
         {
             return (float)self.GetByKey(numericType) / 10000;
         }
 
-        public static int GetAsInt(this NumericComponent self, NumericType numericType)
+        public static int GetAsInt(this PropComponent self, NumericType numericType)
         {
             return (int)self.GetByKey(numericType);
         }
 
-        public static long GetAsLong(this NumericComponent self, NumericType numericType)
+        public static long GetAsLong(this PropComponent self, NumericType numericType)
         {
             return self.GetByKey(numericType);
         }
 
-        public static void Set(this NumericComponent self, NumericType nt, float value)
+        public static void Set(this PropComponent self, NumericType nt, float value)
         {
-            self[nt] = (long)(value * 10000);
+            self.Insert(nt, (long)(value * 10000));
         }
 
-        public static void Set(this NumericComponent self, NumericType nt, int value)
+        public static void Set(this PropComponent self, NumericType nt, int value)
         {
-            self[nt] = value;
+            self.Insert(nt, value);
         }
 
-        public static void Set(this NumericComponent self, NumericType nt, long value)
+        public static void Set(this PropComponent self, NumericType nt, long value)
         {
-            self[nt] = value;
+            self.Insert(nt, value);
         }
 
-        public static void SetNoEvent(this NumericComponent self, NumericType numericType, long value)
+        public static void SetNoEvent(this PropComponent self, NumericType numericType, long value)
         {
             self.Insert(numericType, value, false);
         }
 
-        public static void Insert(this NumericComponent self, NumericType numericType, long value, bool isPublicEvent = true)
+        public static void Insert(this PropComponent self, NumericType numericType, long value, bool isPublicEvent = true)
         {
             long oldValue = self.GetByKey(numericType);
             if (oldValue == value)
@@ -60,12 +61,12 @@ namespace ET
 
             if (isPublicEvent)
             {
-                EventSystem.Instance.Publish(self.Scene(),
-                    new NumbericChange() { Unit = self.GetParent<Unit>(), New = value, Old = oldValue, NumericType = numericType });
+                EventSystem.Instance.Publish(self.Owner.GetParent<LSWorld>(),
+                    new LSPropChange() { Unit = self.Owner, New = value, Old = oldValue, NumericType = numericType });
             }
         }
         
-        public static void Add(this NumericComponent self, NumericType numericType, long value, bool isPublicEvent = true)
+        public static void Add(this PropComponent self, NumericType numericType, long value, bool isPublicEvent = true)
         {
             if (0 == value)
             {
@@ -84,19 +85,19 @@ namespace ET
 
             if (isPublicEvent)
             {
-                EventSystem.Instance.Publish(self.Scene(),
-                    new NumbericChange() { Unit = self.GetParent<Unit>(), New = value, Old = oldValue, NumericType = numericType });
+                EventSystem.Instance.Publish(self.Owner.GetParent<LSWorld>(),
+                    new LSPropChange() { Unit = self.Owner, New = value, Old = oldValue, NumericType = numericType });
             }
         }
 
-        public static long GetByKey(this NumericComponent self, NumericType key)
+        public static long GetByKey(this PropComponent self, NumericType key)
         {
             long value = 0;
             self.NumericDic.TryGetValue(key, out value);
             return value;
         }
 
-        public static void Update(this NumericComponent self, NumericType numericType, bool isPublicEvent)
+        public static void Update(this PropComponent self, NumericType numericType, bool isPublicEvent)
         {
             int final = (int)numericType / 10;
             var bas = (NumericType)(final * 10 + 1);
@@ -113,24 +114,4 @@ namespace ET
         }
     }
     
-    public struct NumbericChange
-    {
-        public Unit Unit;
-        public NumericType NumericType;
-        public long Old;
-        public long New;
-    }
-
-    [ComponentOf(typeof(Unit))]
-    public class NumericComponent: Entity, IAwake, ITransfer
-    {
-        [BsonDictionaryOptions(DictionaryRepresentation.ArrayOfArrays)]
-        public Dictionary<NumericType, long> NumericDic = new Dictionary<NumericType, long>();
-
-        public long this[NumericType numericType]
-        {
-            get => this.GetByKey(numericType);
-            set => this.Insert(numericType, value);
-        }
-    }
 }

@@ -31,12 +31,12 @@ namespace ET
 
         private static void DeductHp(this BeHitComponent self, LSUnit attacker, long value)
         {
-            var component = self.Owner.GetComponent<NumericComponent>();
-            var hp = component[NumericType.Hp];
+            var component = self.Owner.GetComponent<PropComponent>();
+            var hp = component.GetByKey(NumericType.Hp);
             if (hp <= 0) { return; }
 
             var current = hp - value;
-            component[NumericType.Hp] = current;
+            component.Set(NumericType.Hp, current);
             if (current <= 0) {
                 // 死亡经验分配
                 //ExpGetHelper.ExpGetDead(attacker, entity);
