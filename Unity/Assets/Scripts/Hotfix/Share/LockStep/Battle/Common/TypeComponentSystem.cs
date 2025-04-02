@@ -1,7 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Runtime.Remoting;
-
-namespace ET
+﻿namespace ET
 {
     [EntitySystemOf(typeof(TypeComponent))]
     [FriendOf(typeof(TypeComponent))]

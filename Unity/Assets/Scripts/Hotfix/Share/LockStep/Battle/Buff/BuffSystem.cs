@@ -1,5 +1,4 @@
-﻿
-namespace ET
+﻿namespace ET
 {
     [LSEntitySystemOf(typeof(Buff))]
     [EntitySystemOf(typeof(Buff))]
@@ -13,13 +12,18 @@ namespace ET
             self.StartTime = TimeInfo.Instance.ServerNow();
             self.IntervalTime = self.StartTime + self.TbBuffRow.Interval;
             self.LayerCount = 1;
-            EffectExecutor.Execute(self.TbBuffRow.EnterEffect, self.Caster, self.Owner);
+            
+            LSUnitComponent unitComponent = self.Owner.GetParent<LSWorld>().GetComponent<LSUnitComponent>();
+            LSUnit caster = unitComponent.GetChild<LSUnit>(self.Caster);
+            EffectExecutor.Execute(self.TbBuffRow.EnterEffect, caster, self.Owner);
         }
 
         [EntitySystem]
         private static void Destroy(this Buff self)
         {
-            EffectExecutor.Execute(self.TbBuffRow.FinishEffect, self.Caster, self.Owner);
+            LSUnitComponent unitComponent = self.Owner.GetParent<LSWorld>().GetComponent<LSUnitComponent>();
+            LSUnit caster = unitComponent.GetChild<LSUnit>(self.Caster);
+            EffectExecutor.Execute(self.TbBuffRow.FinishEffect, caster, self.Owner);
         }
         
         [LSEntitySystem]
@@ -33,7 +37,9 @@ namespace ET
 
             if (TimeInfo.Instance.ServerNow() > self.IntervalTime)
             {
-                EffectExecutor.Execute(self.TbBuffRow.IntervalEffect, self.Caster, self.Owner);
+                LSUnitComponent unitComponent = self.Owner.GetParent<LSWorld>().GetComponent<LSUnitComponent>();
+                LSUnit caster = unitComponent.GetChild<LSUnit>(self.Caster);
+                EffectExecutor.Execute(self.TbBuffRow.IntervalEffect, caster, self.Owner);
                 self.IntervalTime = TimeInfo.Instance.ServerNow() + self.TbBuffRow.Interval;
             }
         }

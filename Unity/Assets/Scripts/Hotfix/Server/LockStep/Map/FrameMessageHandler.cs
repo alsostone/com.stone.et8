@@ -21,7 +21,7 @@ namespace ET.Server
                 room.Root().GetComponent<MessageLocationSenderComponent>().Get(LocationType.GateSession).Send(message.PlayerId, room2CAdjustUpdateTime);
             }
             
-            if (message.Frame > room.AuthorityFrame + BattleConst.PredictionFrameMaxCount)
+            if (message.Frame > room.AuthorityFrame + LSConstValue.PredictionFrameMaxCount)
             {
                 Log.Warning($"FrameMessage > AuthorityFrame + PredictionFrameMaxCount discard: {message}");
                 return;

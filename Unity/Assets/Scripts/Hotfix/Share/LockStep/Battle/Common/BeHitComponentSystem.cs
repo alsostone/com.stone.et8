@@ -1,7 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Runtime.Remoting;
-
-namespace ET
+﻿namespace ET
 {
     [EntitySystemOf(typeof(BeHitComponent))]
     [FriendOf(typeof(BeHitComponent))]
@@ -25,7 +22,7 @@ namespace ET
             // ...
             
             // 记录进攻者 & 掉血
-            self.AddAttacker(attacker);
+            self.AddAttacker(attacker.Id);
             self.DeductHp(attacker, damage);
         }
 
@@ -53,15 +50,14 @@ namespace ET
                 var comDeath = self.Owner.GetComponent<DeathComponent>();
                 if (comDeath != null) {
                     comDeath.DoDeath();
-                }
-                else {
+                } else {
                     EventSystem.Instance.Publish(self.Owner.GetParent<LSWorld>(), new LSUnitRemove() { Id = self.Owner.Id });
                     self.Owner.Dispose();
                 }
             }
         }
         
-        private static void AddAttacker(this BeHitComponent self, LSUnit attacker)
+        public static void AddAttacker(this BeHitComponent self, long attacker)
         {
             if (!self.Attackers.Contains(attacker)) {
                 self.Attackers.Add(attacker);

@@ -13,9 +13,15 @@ namespace ET
 	        lsUnit.Rotation = unitInfo.Rotation;
 
 	        lsUnit.AddComponent<TypeComponent, EUnitType>(EUnitType.Hero);
-	        lsUnit.AddComponent<PropComponent>().Set(NumericType.Speed, 60000);
+	        PropComponent propComponent = lsUnit.AddComponent<PropComponent>();
+			propComponent.Set(NumericType.SpeedBase, 60000);
+			propComponent.Set(NumericType.AtkSpeedBase, 5000);
 			lsUnit.AddComponent<LSInputComponent>();
-			lsUnit.AddComponent<SkillComponent, int[]>(new int[1] {10000001});
+			lsUnit.AddComponent<DeathComponent, bool>(false);
+			lsUnit.AddComponent<BuffComponent>();
+			lsUnit.AddComponent<BeHitComponent>();
+			lsUnit.AddComponent<SkillComponent, int[]>(new int[] {10000001});
+			
 			EventSystem.Instance.Publish(lsWorld, new LSUnitCreate() {LSUnit = lsUnit});
             return lsUnit;
         }

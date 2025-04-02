@@ -1,9 +1,4 @@
-﻿using System.Collections.Generic;
-using MemoryPack;
-using MongoDB.Bson.Serialization.Attributes;
-using MongoDB.Bson.Serialization.Options;
-
-namespace ET
+﻿namespace ET
 {
     [FriendOf(typeof(PropComponent))]
     public static class PropComponentSystem
@@ -62,7 +57,7 @@ namespace ET
             if (isPublicEvent)
             {
                 EventSystem.Instance.Publish(self.Owner.GetParent<LSWorld>(),
-                    new LSPropChange() { Unit = self.Owner, New = value, Old = oldValue, NumericType = numericType });
+                    new PropChange() { Unit = self.Owner, New = value, Old = oldValue, NumericType = numericType });
             }
         }
         
@@ -86,7 +81,7 @@ namespace ET
             if (isPublicEvent)
             {
                 EventSystem.Instance.Publish(self.Owner.GetParent<LSWorld>(),
-                    new LSPropChange() { Unit = self.Owner, New = value, Old = oldValue, NumericType = numericType });
+                    new PropChange() { Unit = self.Owner, New = value, Old = oldValue, NumericType = numericType });
             }
         }
 

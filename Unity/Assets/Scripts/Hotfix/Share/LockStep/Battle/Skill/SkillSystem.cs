@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-
-namespace ET
+﻿namespace ET
 {
     [LSEntitySystemOf(typeof(Skill))]
     [EntitySystemOf(typeof(Skill))]
@@ -32,7 +29,7 @@ namespace ET
             // 普通攻击的CD由攻速计算
             if (self.TbSkillRow.SkillType == ESkillType.Normal) {
                 var atkSpeed = self.Owner.GetComponent<PropComponent>().GetByKey(NumericType.AtkSpeed);
-                return self.CastTime + (BattleConst.AtkSpeedFactor / atkSpeed) > TimeInfo.Instance.ServerNow();
+                return self.CastTime + (LSConstValue.PrecisionMulMillsecond / atkSpeed) > TimeInfo.Instance.ServerNow();
             }
             return self.CastTime + self.TbSkillRow.CdTime > TimeInfo.Instance.ServerNow();
         }
@@ -62,8 +59,8 @@ namespace ET
             if (!self.CheckReady()) { return false; }
             if (!self.TbSkillRow.SearchRealTime && self.SearchTargets() == 0) { return false; }
             
-            if (BattleConst.Probability > self.TbSkillRow.Probability) {
-                if (self.GetRandom().Range(0, BattleConst.Probability) >= self.TbSkillRow.Probability) {
+            if (LSConstValue.Probability > self.TbSkillRow.Probability) {
+                if (self.GetRandom().Range(0, LSConstValue.Probability) >= self.TbSkillRow.Probability) {
                     return false;
                 }
             }
@@ -130,7 +127,7 @@ namespace ET
                     if (TimeInfo.Instance.ServerNow() - self.CastTime >= point)
                     {
                         self.CurrentPoint = index + 1;
-                        if (self.TbSkillRow.SearchRealTime && self.SearchTargets() == 0) { continue; } 
+                        if (self.TbSkillRow.SearchRealTime && self.SearchTargets() == 0) { break; } 
                         
                         if (index == 0) { self.OnCastSuccess(); }
                         EffectExecutor.Execute(self.TbSkillRow.EffectGroupId, self.Owner, self.SearchUnits);
@@ -141,7 +138,7 @@ namespace ET
                 // 技能持续时间完毕 把未触发的点全部触发
                 for (var index = self.CurrentPoint; index < self.TbSkillRow.TriggerArray.Length; index++)
                 {
-                    if (self.TbSkillRow.SearchRealTime && self.SearchTargets() == 0) { continue; } 
+                    if (self.TbSkillRow.SearchRealTime && self.SearchTargets() == 0) { break; } 
                     
                     if (index == 0) { self.OnCastSuccess(); }
                     EffectExecutor.Execute(self.TbSkillRow.EffectGroupId, self.Owner, self.SearchUnits);

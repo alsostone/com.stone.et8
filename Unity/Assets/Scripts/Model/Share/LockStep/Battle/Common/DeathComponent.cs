@@ -1,13 +1,14 @@
-﻿using System.Collections.Generic;
+﻿using MemoryPack;
 using MongoDB.Bson.Serialization.Attributes;
-using MongoDB.Bson.Serialization.Options;
 
 namespace ET
 {
     [ComponentOf(typeof(LSUnit))]
-    public class DeathComponent : LSEntity, IAwake<bool>, IDestroy
+    [MemoryPackable]
+    public partial class DeathComponent : LSEntity, IAwake<bool>, IDestroy, ISerializeToEntity
     {
         [BsonIgnore]
+        [MemoryPackIgnore]
         public LSUnit Owner => this.GetParent<LSUnit>();
 
         public bool Dead;

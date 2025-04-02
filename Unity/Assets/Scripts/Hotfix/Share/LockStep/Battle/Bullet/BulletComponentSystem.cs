@@ -1,9 +1,4 @@
-﻿
-using System;
-using System.Collections.Generic;
-using Unity.Mathematics;
-
-namespace ET
+﻿namespace ET
 {
     [LSEntitySystemOf(typeof(BulletComponent))]
     [EntitySystemOf(typeof(BulletComponent))]
@@ -15,8 +10,8 @@ namespace ET
         {
             self.BulletId = bulletId;
             self.ElapseTime = TimeInfo.Instance.ServerNow() + self.TbBulletRow.Life;
-            self.Caster = caster;
-            self.Target = target;
+            self.Caster = caster.Id;
+            self.Target = target.Id;
         }
         
         [EntitySystem]
@@ -35,10 +30,14 @@ namespace ET
         
         private static void OnReachTarget(this BulletComponent self, bool reach)
         {
+            LSWorld world = self.Owner.GetParent<LSWorld>();
             if (reach) {
-                EffectExecutor.Execute(self.TbBulletRow.EffectGroupId, self.Caster, self.Target, self.Owner);
+                LSUnitComponent unitComponent = world.GetComponent<LSUnitComponent>();
+                LSUnit caster = unitComponent.GetChild<LSUnit>(self.Caster);
+                LSUnit target = unitComponent.GetChild<LSUnit>(self.Target);
+                EffectExecutor.Execute(self.TbBulletRow.EffectGroupId, caster, target, self.Owner);
             }
-            EventSystem.Instance.Publish(self.Owner.GetParent<LSWorld>(), new LSUnitRemove() { Id = self.Owner.Id });
+            EventSystem.Instance.Publish(world, new LSUnitRemove() { Id = self.Owner.Id });
             self.Owner.Dispose();
         }
     }

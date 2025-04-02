@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-
-namespace ET
+﻿namespace ET
 {
     [EntitySystemOf(typeof(BuffComponent))]
     [FriendOf(typeof(BuffComponent))]
@@ -18,7 +16,7 @@ namespace ET
         {
             foreach (var valuePair in self.IdBuffMap)
             {
-                Buff buff = valuePair.Value;
+                Buff buff = self.GetChild<Buff>(valuePair.Value);
                 buff?.Dispose();
             }
             self.IdBuffMap.Clear();
@@ -34,10 +32,10 @@ namespace ET
         
         public static void AddBuff(this BuffComponent self, int buffId, LSUnit owner)
         {
-            if (self.IdBuffMap.TryGetValue(buffId, out EntityRef<Buff> buffRef))
+            if (self.IdBuffMap.TryGetValue(buffId, out long eid))
             {
                 // 若buffId已存在，则增加层数，且重新计时
-                var buff = (Buff)buffRef;
+                var buff = self.GetChild<Buff>(eid);
                 if (buff.TbBuffRow.MaxLayer > 0 && buff.TbBuffRow.MaxLayer > buff.LayerCount)
                     buff.LayerCount++;
                 buff.StartTime = TimeInfo.Instance.ServerNow();
@@ -48,15 +46,15 @@ namespace ET
                 var buff = self.AddChild<Buff, int>(buffId);
                 buff.LayerCount = 1;
                 buff.StartTime = TimeInfo.Instance.ServerNow();
-                self.IdBuffMap.Add(buffId, buff);
+                self.IdBuffMap.Add(buffId, buff.Id);
             }
         }
         
         public static void RemoveBuff(this BuffComponent self, int buffId, bool removeLayer = false)
         {
-            if (self.IdBuffMap.TryGetValue(buffId, out EntityRef<Buff> buffRef))
+            if (self.IdBuffMap.TryGetValue(buffId, out long eid))
             {
-                var buff = (Buff)buffRef;
+                var buff = self.GetChild<Buff>(eid);
                 if (removeLayer)
                 {
                     // 若为移除层数，则减少层数，且重新计时

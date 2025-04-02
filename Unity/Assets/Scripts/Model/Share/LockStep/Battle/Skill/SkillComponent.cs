@@ -1,13 +1,16 @@
 ﻿using System.Collections.Generic;
+using MemoryPack;
 using MongoDB.Bson.Serialization.Attributes;
 using MongoDB.Bson.Serialization.Options;
 
 namespace ET
 {
     [ComponentOf(typeof(LSUnit))]
-    public class SkillComponent : LSEntity, IAwake<int[]>, IDestroy
+    [MemoryPackable]
+    public partial class SkillComponent : LSEntity, IAwake<int[]>, IDestroy, ISerializeToEntity
     {
         [BsonIgnore]
+        [MemoryPackIgnore]
         public LSUnit Owner => this.GetParent<LSUnit>();
 
         [BsonDictionaryOptions(DictionaryRepresentation.ArrayOfArrays)]

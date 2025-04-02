@@ -5,7 +5,7 @@ using MongoDB.Bson.Serialization.Options;
 
 namespace ET
 {
-    public struct LSPropChange
+    public struct PropChange
     {
         public LSUnit Unit;
         public NumericType NumericType;
@@ -15,7 +15,7 @@ namespace ET
 
     [ComponentOf(typeof(LSUnit))]
     [MemoryPackable]
-    public partial class PropComponent: LSEntity, IAwake, ITransfer
+    public partial class PropComponent: LSEntity, IAwake, ISerializeToEntity
     {
         [BsonIgnore]
         [MemoryPackIgnore]

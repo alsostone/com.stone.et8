@@ -1,11 +1,14 @@
-﻿using MongoDB.Bson.Serialization.Attributes;
+﻿using MemoryPack;
+using MongoDB.Bson.Serialization.Attributes;
 
 namespace ET
 {
     [ChildOf(typeof(BuffComponent))]
-    public class Buff : LSEntity, IAwake<int>, IDestroy, ILSUpdate
+    [MemoryPackable]
+    public partial class Buff : LSEntity, IAwake<int>, IDestroy, ILSUpdate, ISerializeToEntity
     {
         [BsonIgnore]
+        [MemoryPackIgnore]
         public LSUnit Owner => this.GetParent<BuffComponent>().Owner;
 
         public int BuffId;
@@ -13,11 +16,13 @@ namespace ET
         public long IntervalTime;
         public uint LayerCount;
         
-        public EntityRef<LSUnit> Caster;
+        public long Caster;
         
         [BsonIgnore]
+        [MemoryPackIgnore]
         public TbSkillBuffRow TbBuffRow => this.tbBuffRow ??= TbSkillBuff.Instance.Get(BuffId);
         [BsonIgnore]
+        [MemoryPackIgnore]
         private TbSkillBuffRow tbBuffRow;
     }
 }

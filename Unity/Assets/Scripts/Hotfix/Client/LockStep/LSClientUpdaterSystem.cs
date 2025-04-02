@@ -26,7 +26,7 @@ namespace ET.Client
             {
                 if (timeNow < room.FixedTimeCounter.FrameTime(room.PredictionFrame + 1))
                     break;
-                if (room.PredictionFrame - room.AuthorityFrame > BattleConst.PredictionFrameMaxCount)
+                if (room.PredictionFrame - room.AuthorityFrame > LSConstValue.PredictionFrameMaxCount)
                     break;
 
                 ++room.PredictionFrame;
