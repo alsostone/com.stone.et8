@@ -56,5 +56,10 @@
         <var name="AtkSpeedFinalPct" alias="攻速FP" value="10075"/>
         
     </enum>
-    
+    <enum name="TeamType" comment="队伍类型" unique="TRUE">
+        <var name="None" alias="" value="0"/>
+        <var name="TeamA" alias="队伍A" value="1"/>
+        <var name="TeamB" alias="队伍B" value="2"/>
+        <var name="Max" alias="MAX" value="3"/>
+    </enum>
 </module>

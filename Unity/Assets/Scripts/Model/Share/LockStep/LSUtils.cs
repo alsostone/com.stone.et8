@@ -11,6 +11,12 @@ namespace ET
             return entity.Parent.Parent as LSUnit;
         }
         
+        public static LSUnit LSUnit(this LSEntity entity, long id)
+        {
+            LSUnitComponent unitComponent = entity.LSWorld().GetComponent<LSUnitComponent>();
+            return unitComponent.GetChild<LSUnit>(id);
+        }
+        
         public static LSWorld LSWorld(this LSEntity entity)
         {
             return entity.IScene as LSWorld;

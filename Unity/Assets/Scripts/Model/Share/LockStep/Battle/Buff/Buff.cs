@@ -17,9 +17,9 @@ namespace ET
         
         [BsonIgnore]
         [MemoryPackIgnore]
-        public TbSkillBuffRow TbBuffRow => this.tbBuffRow ??= TbSkillBuff.Instance.Get(BuffId);
+        public TbBuffRow TbBuffRow => this.tbBuffRow ??= TbBuff.Instance.Get(BuffId);
         [BsonIgnore]
         [MemoryPackIgnore]
-        private TbSkillBuffRow tbBuffRow;
+        private TbBuffRow tbBuffRow;
     }
 }

@@ -9,6 +9,11 @@ namespace ET
     [MemoryPackable]
     public partial class LSUnit: LSEntity, IAwake, ISerializeToEntity
     {
+        public bool Active
+        {
+            get;
+            set;
+        }
         public TSVector Position
         {
             get;

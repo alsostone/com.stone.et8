@@ -14,37 +14,37 @@ namespace ET
     /// </summary>
     public enum ESearchTargetTeam
     {
-        NONE = 0,
+        None = 0,
 
         /// <summary>
         /// 自己
         /// </summary>
-        SINGLE_SELF = 1,
+        SingleSelf = 1,
 
         /// <summary>
         /// 己方队伍
         /// </summary>
-        SELF = 2,
+        Self = 2,
 
         /// <summary>
         /// 敌方队伍
         /// </summary>
-        ENEMY = 3,
+        Enemy = 3,
 
         /// <summary>
         /// 非敌队伍
         /// </summary>
-        NOT_ENEMY = 4,
+        NotEnemy = 4,
 
         /// <summary>
         /// 反击
         /// </summary>
-        COUNTER = 5,
+        Counter = 5,
 
         /// <summary>
         /// 全体
         /// </summary>
-        ALL = 6,
+        All = 6,
 
     }
 }

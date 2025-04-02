@@ -15,9 +15,9 @@ namespace ET
         
         [BsonIgnore]
         [MemoryPackIgnore]
-        public TbSkillBulletRow TbBulletRow => this.tbBulletRow ?? TbSkillBullet.Instance.Get(BulletId);
+        public TbBulletRow TbBulletRow => this.tbBulletRow ?? TbBullet.Instance.Get(BulletId);
         [BsonIgnore]
         [MemoryPackIgnore]
-        private TbSkillBulletRow tbBulletRow;
+        private TbBulletRow tbBulletRow;
     }
 }

@@ -6,7 +6,7 @@ namespace ET
     {
         public static void Execute(int groupId, LSUnit owner, List<SearchUnit> targets)
         {
-            var resEffects = TbSkillEffect.Instance.GetGroupEffects(groupId);
+            var resEffects = TbEffect.Instance.GetGroupEffects(groupId);
             if (resEffects == null) {
                 return;
             }
@@ -20,7 +20,7 @@ namespace ET
         
         public static void Execute(int groupId, LSUnit owner, LSUnit target)
         {
-            var resEffects = TbSkillEffect.Instance.GetGroupEffects(groupId);
+            var resEffects = TbEffect.Instance.GetGroupEffects(groupId);
             if (resEffects == null) {
                 return;
             }
@@ -31,7 +31,7 @@ namespace ET
         
         public static void Execute(int groupId, LSUnit owner, LSUnit target, Entity carrier)
         {
-            var resEffects = TbSkillEffect.Instance.GetGroupEffects(groupId);
+            var resEffects = TbEffect.Instance.GetGroupEffects(groupId);
             if (resEffects == null) {
                 return;
             }
@@ -42,7 +42,7 @@ namespace ET
         
         public static void ReverseExecute(int groupId, LSUnit owner, LSUnit target)
         {
-            var resEffects = TbSkillEffect.Instance.GetGroupEffects(groupId);
+            var resEffects = TbEffect.Instance.GetGroupEffects(groupId);
             if (resEffects == null) {
                 return;
             }
@@ -51,7 +51,7 @@ namespace ET
             }
         }
 
-        private static void Execute(TbSkillEffectRow res, LSUnit owner, LSUnit target, Entity carrier)
+        private static void Execute(TbEffectRow res, LSUnit owner, LSUnit target, Entity carrier)
         {
             if (target == null) {
                 return;
@@ -96,7 +96,7 @@ namespace ET
             }
         }
         
-        private static void ReverseExecute(TbSkillEffectRow tbEffectRow, LSUnit owner, LSUnit target)
+        private static void ReverseExecute(TbEffectRow tbEffectRow, LSUnit owner, LSUnit target)
         {
             switch (tbEffectRow.ActionType) {
                 case ESkillEffectType.CHANGE_PROPERTY:

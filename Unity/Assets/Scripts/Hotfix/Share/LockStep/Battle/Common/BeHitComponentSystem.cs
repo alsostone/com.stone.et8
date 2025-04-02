@@ -1,4 +1,7 @@
-﻿namespace ET
+﻿using System.Collections.Generic;
+using TrueSync;
+
+namespace ET
 {
     [EntitySystemOf(typeof(BeHitComponent))]
     [FriendOf(typeof(BeHitComponent))]
@@ -57,12 +60,31 @@
             }
         }
         
-        public static void AddAttacker(this BeHitComponent self, long attacker)
+        private static void AddAttacker(this BeHitComponent self, long attacker)
         {
             if (!self.Attackers.Contains(attacker)) {
                 self.Attackers.Add(attacker);
             }
         }
 
+        internal static void GetCounterAttack(this BeHitComponent self, TSVector center, FP sqrRange, List<SearchUnit> results)
+        {
+            for (var i = self.Attackers.Count - 1; i >= 0; i--)
+            {
+                var target = self.LSUnit(self.Attackers[i]);
+                if (target == null) {
+                    self.Attackers.RemoveAt(i);
+                }
+                else if (target.Active) {
+                    var dis = (target.Position - center).sqrMagnitude;
+                    if (sqrRange >= dis) {
+                        var distance = ObjectPool.Instance.Fetch<SearchUnit>();
+                        distance.Target = target;
+                        distance.Distance = dis;
+                        results.Add(distance);
+                    }
+                }
+            }
+        }
     }
 }

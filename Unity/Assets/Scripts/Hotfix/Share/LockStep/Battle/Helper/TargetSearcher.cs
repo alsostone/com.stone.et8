@@ -1,4 +1,6 @@
+using System;
 using System.Collections.Generic;
+using TrueSync;
 
 namespace ET
 {
@@ -6,71 +8,70 @@ namespace ET
     {
         public static void Search(int id, LSUnit owner, List<SearchUnit> results)
         {
-            // ResSearchTarget res = Table.Instance.GetResSearchTarget(id);
-            // if (res == null) { return; }
-            //
-            // if (res.team == kSearchTargetTeam.SingleSelf) {
-            //     // TODO if (owner.ComBeHit != null)
-            //     {
-            //         var distance = BattleClassPoolMgr.Instance.Get<EntityDistance>();
-            //         distance.Target = owner;
-            //         results.Add(distance);
-            //     }
-            //     return;
-            // }
-            //
-            // var range = res.range * FP.EN4;
-            // var center = FPVector.zero;
-            // if (owner.ComTeam != null)
-            // { 
-            //     center = owner.ComTransform.Position;
-            // }
-            // var teamSelf = TeamFlag.None;
-            // if (owner.ComTeam != null)
-            // { 
-            //     teamSelf = owner.ComTeam.TeamFlag;
-            // }
-            //
-            // switch (res.team) {
-            //     case kSearchTargetTeam.All:
-            //         BattleWorld.Instance.EntityMgr.GetAllAttackTargets(results);
-            //         break;
-            //     case kSearchTargetTeam.Self:
-            //         BattleWorld.Instance.EntityMgr.GetAttackTargets(teamSelf, center, range, results);
-            //         break;
-            //     case kSearchTargetTeam.Enemy:
-            //         for (var i = TeamFlag.None; i < TeamFlag.Max; i++) {
-            //             if (i != teamSelf)
-            //                 BattleWorld.Instance.EntityMgr.GetAttackTargets(i, center, range, results);
-            //         }
-            //         break;
-            //     case kSearchTargetTeam.NotEnemy:
-            //         BattleWorld.Instance.EntityMgr.GetAttackTargets(teamSelf, center, range, results);
-            //         BattleWorld.Instance.EntityMgr.GetAttackTargets(TeamFlag.None, center, range, results);
-            //         break;
-            //     case kSearchTargetTeam.Counter:
-            //         owner.ComBeHit?.GetCounterAttack(center, range * range, results);
-            //         break;
-            //     default: throw new ArgumentOutOfRangeException();
-            // }
-            //
-            // //FilterDirection(results, owner);
-            // FilterWithType(res.type, results);
-            // FilterWithTableId(res.table_id, results);
-            // FilterWithPriority(res.priority, results);
-            // FilterCount(res.count, results);
+            TbSearchRow res = TbSearch.Instance.Get(id);
+            if (res == null) { return; }
+            
+            if (res.Team == ESearchTargetTeam.SingleSelf) {
+                if (owner.GetComponent<BeHitComponent>() != null)
+                {
+                    SearchUnit distance = ObjectPool.Instance.Fetch<SearchUnit>();
+                    distance.Target = owner;
+                    results.Add(distance);
+                }
+                return;
+            }
+            
+            FP range = res.Range * FP.EN4;
+            TSVector center = TSVector.zero;
+            TeamType teamSelf = TeamType.None;
+            
+            TeamComponent teamComponent = owner.GetComponent<TeamComponent>();
+            if (teamComponent != null)
+            { 
+                center = owner.Position;
+                teamSelf = teamComponent.GetTeamType();
+            }
+            
+            switch (res.Team) {
+                case ESearchTargetTeam.All:
+                    owner.LSWorld().GetAllAttackTargets(results);
+                    break;
+                case ESearchTargetTeam.Self:
+                    owner.LSWorld().GetAttackTargets(teamSelf, center, range, results);
+                    break;
+                case ESearchTargetTeam.Enemy:
+                    for (TeamType i = TeamType.None; i < TeamType.Max; i++) {
+                        if (i != teamSelf)
+                            owner.LSWorld().GetAttackTargets(i, center, range, results);
+                    }
+                    break;
+                case ESearchTargetTeam.NotEnemy:
+                    owner.LSWorld().GetAttackTargets(teamSelf, center, range, results);
+                    owner.LSWorld().GetAttackTargets(TeamType.None, center, range, results);
+                    break;
+                case ESearchTargetTeam.Counter:
+                    owner.GetComponent<BeHitComponent>()?.GetCounterAttack(center, range * range, results);
+                    break;
+                default: throw new ArgumentOutOfRangeException();
+            }
+            
+            FilterDirection(results, owner);
+            FilterWithType(res.Type, results);
+            FilterWithTableId(res.TableId, results);
+            FilterWithPriority(res.Priority, results);
+            FilterCount(res.Count, results);
         }
         
-        private static void FilterDirection(List<Entity> results, Entity owner)
+        private static void FilterDirection(List<SearchUnit> results, LSUnit owner)
         {
-            // var dir = owner.ComTransform.Forward;
-            // var center = owner.ComTransform.Position;
-            // for (var idx = results.Count - 1; idx >= 0; idx--) {
-            //     if (FPVector.Dot(dir, results[idx].ComTransform.Position - center) < 0) {
-            //         BattleClassPoolMgr.Instance.Return(results[idx]);
-            //         results.RemoveAt(idx);
-            //     }
-            // }
+            var dir = owner.Forward;
+            var center = owner.Position;
+            for (var idx = results.Count - 1; idx >= 0; idx--) {
+                if (TSVector.Dot(dir, results[idx].Target.Position - center) < 0) {
+                    ObjectPool.Instance.Recycle(results[idx]);
+                    results.RemoveAt(idx);
+                }
+            }
         }
         
         private static void FilterCount(int count, List<SearchUnit> results)
@@ -81,20 +82,20 @@ namespace ET
             }
         }
 
-        public static void FilterWithType(int type, List<SearchUnit> results)
+        private static void FilterWithType(EUnitType type, List<SearchUnit> results)
         {
-            // if (type == 0) { return; }
-            // for (var idx = results.Count - 1; idx >= 0; idx--) {
-            //     if (((int)results[idx].Target.ComType.Type & type) == 0){
-            //         ObjectPool.Instance.Recycle(results[idx]);
-            //         results.RemoveAt(idx);
-            //     }
-            // }
+            if (type == 0) { return; }
+            for (var idx = results.Count - 1; idx >= 0; idx--) {
+                if ((results[idx].Target.GetComponent<TypeComponent>().GetUnitType() & type) == 0){
+                    ObjectPool.Instance.Recycle(results[idx]);
+                    results.RemoveAt(idx);
+                }
+            }
         }
 
-        private static void FilterWithTableId(List<int> ids, List<SearchUnit> results)
+        private static void FilterWithTableId(int[] ids, List<SearchUnit> results)
         {
-            if (ids.Count == 0) { return; }
+            if (ids.Length == 0) { return; }
             for (var idx = results.Count - 1; idx >= 0; idx--) {
                 var target = results[idx].Target;
                 // switch (target.ComType.Type) {
@@ -132,6 +133,39 @@ namespace ET
                     break;
             }
         }
-
+        
+        private static void GetAllAttackTargets(this LSWorld world, List<SearchUnit> results)
+        {
+            // for (TeamType i = 0; i <= TeamType.TeamB; i++)
+            // {
+            //     if (mTeamPropertyMapping.TryGetValue((TeamFlag)i, out var targets)) {
+            //         foreach (var target in targets) {
+            //             if (target.ComActive.Active) {
+            //                 var distance = BattleClassPoolMgr.Instance.Get<EntityDistance>();
+            //                 distance.Target = target;
+            //                 results.Add(distance);
+            //             }
+            //         }
+            //     }
+            // }
+        }
+        
+        private static void GetAttackTargets(this LSWorld world, TeamType teamFlag, TSVector center, FP range, List<SearchUnit> results)
+        {
+            // if (mTeamPropertyMapping.TryGetValue(teamFlag, out var targets)) {
+            //     foreach (var target in targets) {
+            //         if (target.ComActive.Active) {
+            //             var dis = (target.ComTransform.Position - center).sqrMagnitude;
+            //             var sqrRange = GetAttackSqrRange(target, range);
+            //             if (sqrRange >= dis) {
+            //                 var distance = BattleClassPoolMgr.Instance.Get<EntityDistance>();
+            //                 distance.Target = target;
+            //                 distance.Distance = dis;
+            //                 results.Add(distance);
+            //             }
+            //         }
+            //     }
+            // }
+        }
     }
 }

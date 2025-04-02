@@ -13,18 +13,13 @@
             self.IntervalFrame = self.StartFrame + self.TbBuffRow.Interval.Convert2Frame();
             self.EndFrame = self.StartFrame + self.TbBuffRow.Duration.Convert2Frame();
             self.LayerCount = 1;
-            
-            LSUnitComponent unitComponent = self.LSWorld().GetComponent<LSUnitComponent>();
-            LSUnit caster = unitComponent.GetChild<LSUnit>(self.Caster);
-            EffectExecutor.Execute(self.TbBuffRow.EnterEffect, caster, self.LSOwner());
+            EffectExecutor.Execute(self.TbBuffRow.EnterEffect, self.LSUnit(self.Caster), self.LSOwner());
         }
 
         [EntitySystem]
         private static void Destroy(this Buff self)
         {
-            LSUnitComponent unitComponent = self.LSWorld().GetComponent<LSUnitComponent>();
-            LSUnit caster = unitComponent.GetChild<LSUnit>(self.Caster);
-            EffectExecutor.Execute(self.TbBuffRow.FinishEffect, caster, self.LSOwner());
+            EffectExecutor.Execute(self.TbBuffRow.FinishEffect, self.LSUnit(self.Caster), self.LSOwner());
         }
         
         [LSEntitySystem]
@@ -38,9 +33,7 @@
 
             if (self.LSWorld().Frame > self.IntervalFrame)
             {
-                LSUnitComponent unitComponent = self.LSWorld().GetComponent<LSUnitComponent>();
-                LSUnit caster = unitComponent.GetChild<LSUnit>(self.Caster);
-                EffectExecutor.Execute(self.TbBuffRow.IntervalEffect, caster, self.LSOwner());
+                EffectExecutor.Execute(self.TbBuffRow.IntervalEffect, self.LSUnit(self.Caster), self.LSOwner());
                 self.IntervalFrame = self.LSWorld().Frame + self.TbBuffRow.Interval.Convert2Frame();
             }
         }
