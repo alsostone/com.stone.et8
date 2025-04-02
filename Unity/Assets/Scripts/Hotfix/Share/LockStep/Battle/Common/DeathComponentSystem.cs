@@ -31,8 +31,8 @@
             // BattleWorld.Instance.BattleEventMgr.DispatchEvent((int)BattleEventType.EntityDeath, entity);
 
             if (self.IsDeadRelease) {
-                EventSystem.Instance.Publish(self.Owner.GetParent<LSWorld>(), new LSUnitRemove() { Id = self.Owner.Id });
-                self.Owner.Dispose();
+                EventSystem.Instance.Publish(self.LSWorld(), new LSUnitRemove() { Id = self.LSOwner().Id });
+                self.LSOwner().Dispose();
             }
         }
         

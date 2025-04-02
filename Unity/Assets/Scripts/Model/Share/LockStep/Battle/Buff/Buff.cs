@@ -7,10 +7,6 @@ namespace ET
     [MemoryPackable]
     public partial class Buff : LSEntity, IAwake<int>, IDestroy, ILSUpdate, ISerializeToEntity
     {
-        [BsonIgnore]
-        [MemoryPackIgnore]
-        public LSUnit Owner => this.GetParent<BuffComponent>().Owner;
-
         public int BuffId;
         public long StartTime;
         public long IntervalTime;

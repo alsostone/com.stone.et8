@@ -17,7 +17,7 @@ namespace ET
         [LSEntitySystem]
         private static void LSUpdate(this LSInputComponent self)
         {
-            LSUnit unit = self.Owner;
+            LSUnit unit = self.LSOwner();
             PropComponent numericComponent = unit.GetComponent<PropComponent>();
             FP speed = numericComponent.GetByKey(NumericType.Speed) / LSConstValue.PropPrecision;
             TSVector2 v2 = self.LSInput.V * speed * LSConstValue.UpdateInterval / 1000;

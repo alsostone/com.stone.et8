@@ -7,10 +7,6 @@ namespace ET
     [MemoryPackable]
     public partial class BulletComponent : LSEntity, IAwake<int, LSUnit, LSUnit>, IDestroy, ILSUpdate, ISerializeToEntity
     {
-        [BsonIgnore]
-        [MemoryPackIgnore]
-        public LSUnit Owner => this.GetParent<LSUnit>();
-
         public int BulletId;
         public long ElapseTime;
         

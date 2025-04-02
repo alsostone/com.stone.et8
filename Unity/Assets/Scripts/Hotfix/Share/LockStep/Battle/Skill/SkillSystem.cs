@@ -28,7 +28,7 @@
         {
             // 普通攻击的CD由攻速计算
             if (self.TbSkillRow.SkillType == ESkillType.Normal) {
-                var atkSpeed = self.Owner.GetComponent<PropComponent>().GetByKey(NumericType.AtkSpeed);
+                var atkSpeed = self.LSOwner().GetComponent<PropComponent>().GetByKey(NumericType.AtkSpeed);
                 return self.CastTime + (LSConstValue.PrecisionMulMillsecond / atkSpeed) > TimeInfo.Instance.ServerNow();
             }
             return self.CastTime + self.TbSkillRow.CdTime > TimeInfo.Instance.ServerNow();
@@ -50,7 +50,7 @@
                 ObjectPool.Instance.Recycle(target);
             }
             self.SearchUnits.Clear();
-            TargetSearcher.Search(self.TbSkillRow.SearchTarget, self.Owner, self.SearchUnits);
+            TargetSearcher.Search(self.TbSkillRow.SearchTarget, self.LSOwner(), self.SearchUnits);
             return self.SearchUnits.Count;
         }
         
@@ -94,7 +94,7 @@
             switch (tbRow.ConsumeType) {
                 case EConsumeType.PROPERTY:
                     if (tbRow.ConsumeParam.Length != 2) { return; }
-                    self.Owner.GetComponent<PropComponent>().Add((NumericType)tbRow.ConsumeParam[0], -tbRow.ConsumeParam[1]);
+                    self.LSOwner().GetComponent<PropComponent>().Add((NumericType)tbRow.ConsumeParam[0], -tbRow.ConsumeParam[1]);
                     break;
             }
         }
@@ -130,7 +130,7 @@
                         if (self.TbSkillRow.SearchRealTime && self.SearchTargets() == 0) { break; } 
                         
                         if (index == 0) { self.OnCastSuccess(); }
-                        EffectExecutor.Execute(self.TbSkillRow.EffectGroupId, self.Owner, self.SearchUnits);
+                        EffectExecutor.Execute(self.TbSkillRow.EffectGroupId, self.LSOwner(), self.SearchUnits);
                     }
                 }
             }
@@ -141,7 +141,7 @@
                     if (self.TbSkillRow.SearchRealTime && self.SearchTargets() == 0) { break; } 
                     
                     if (index == 0) { self.OnCastSuccess(); }
-                    EffectExecutor.Execute(self.TbSkillRow.EffectGroupId, self.Owner, self.SearchUnits);
+                    EffectExecutor.Execute(self.TbSkillRow.EffectGroupId, self.LSOwner(), self.SearchUnits);
                 }
                 self.OnCastDone();
             }

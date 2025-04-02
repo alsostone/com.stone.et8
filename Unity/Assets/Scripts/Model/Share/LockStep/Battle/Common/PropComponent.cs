@@ -17,10 +17,6 @@ namespace ET
     [MemoryPackable]
     public partial class PropComponent: LSEntity, IAwake, ISerializeToEntity
     {
-        [BsonIgnore]
-        [MemoryPackIgnore]
-        public LSUnit Owner => this.GetParent<LSUnit>();
-        
         [BsonDictionaryOptions(DictionaryRepresentation.ArrayOfArrays)]
         public Dictionary<NumericType, long> NumericDic = new Dictionary<NumericType, long>();
     }

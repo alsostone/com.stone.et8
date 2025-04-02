@@ -56,8 +56,8 @@
 
             if (isPublicEvent)
             {
-                EventSystem.Instance.Publish(self.Owner.GetParent<LSWorld>(),
-                    new PropChange() { Unit = self.Owner, New = value, Old = oldValue, NumericType = numericType });
+                EventSystem.Instance.Publish(self.LSWorld(),
+                    new PropChange() { Unit = self.LSOwner(), New = value, Old = oldValue, NumericType = numericType });
             }
         }
         
@@ -80,8 +80,8 @@
 
             if (isPublicEvent)
             {
-                EventSystem.Instance.Publish(self.Owner.GetParent<LSWorld>(),
-                    new PropChange() { Unit = self.Owner, New = value, Old = oldValue, NumericType = numericType });
+                EventSystem.Instance.Publish(self.LSWorld(),
+                    new PropChange() { Unit = self.LSOwner(), New = value, Old = oldValue, NumericType = numericType });
             }
         }
 

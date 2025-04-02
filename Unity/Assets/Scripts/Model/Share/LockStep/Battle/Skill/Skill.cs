@@ -8,10 +8,6 @@ namespace ET
     [MemoryPackable]
     public partial class Skill : LSEntity, IAwake<int, bool>, IDestroy, ILSUpdate, ISerializeToEntity
     {
-        [BsonIgnore]
-        [MemoryPackIgnore]
-        public LSUnit Owner => this.GetParent<SkillComponent>().Owner;
-
         public int SkillId;
         public int Duration;
         public long CastTime;

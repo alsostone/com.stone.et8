@@ -8,10 +8,6 @@ namespace ET
     [MemoryPackable]
     public partial class BeHitComponent : LSEntity, IAwake, IDestroy, ISerializeToEntity
     {
-        [BsonIgnore]
-        [MemoryPackIgnore]
-        public LSUnit Owner => this.GetParent<LSUnit>();
-        
         public List<long> Attackers = new();
     }
 }

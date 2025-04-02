@@ -13,17 +13,17 @@
             self.IntervalTime = self.StartTime + self.TbBuffRow.Interval;
             self.LayerCount = 1;
             
-            LSUnitComponent unitComponent = self.Owner.GetParent<LSWorld>().GetComponent<LSUnitComponent>();
+            LSUnitComponent unitComponent = self.LSWorld().GetComponent<LSUnitComponent>();
             LSUnit caster = unitComponent.GetChild<LSUnit>(self.Caster);
-            EffectExecutor.Execute(self.TbBuffRow.EnterEffect, caster, self.Owner);
+            EffectExecutor.Execute(self.TbBuffRow.EnterEffect, caster, self.LSOwner());
         }
 
         [EntitySystem]
         private static void Destroy(this Buff self)
         {
-            LSUnitComponent unitComponent = self.Owner.GetParent<LSWorld>().GetComponent<LSUnitComponent>();
+            LSUnitComponent unitComponent = self.LSWorld().GetComponent<LSUnitComponent>();
             LSUnit caster = unitComponent.GetChild<LSUnit>(self.Caster);
-            EffectExecutor.Execute(self.TbBuffRow.FinishEffect, caster, self.Owner);
+            EffectExecutor.Execute(self.TbBuffRow.FinishEffect, caster, self.LSOwner());
         }
         
         [LSEntitySystem]
@@ -37,9 +37,9 @@
 
             if (TimeInfo.Instance.ServerNow() > self.IntervalTime)
             {
-                LSUnitComponent unitComponent = self.Owner.GetParent<LSWorld>().GetComponent<LSUnitComponent>();
+                LSUnitComponent unitComponent = self.LSWorld().GetComponent<LSUnitComponent>();
                 LSUnit caster = unitComponent.GetChild<LSUnit>(self.Caster);
-                EffectExecutor.Execute(self.TbBuffRow.IntervalEffect, caster, self.Owner);
+                EffectExecutor.Execute(self.TbBuffRow.IntervalEffect, caster, self.LSOwner());
                 self.IntervalTime = TimeInfo.Instance.ServerNow() + self.TbBuffRow.Interval;
             }
         }

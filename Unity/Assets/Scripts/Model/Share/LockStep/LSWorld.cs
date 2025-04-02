@@ -6,24 +6,6 @@ using TrueSync;
 
 namespace ET
 {
-    public static class LSWorldSystem
-    {
-        public static LSWorld LSWorld(this LSEntity entity)
-        {
-            return entity.IScene as LSWorld;
-        }
-
-        public static long GetId(this LSEntity entity)
-        {
-            return entity.LSWorld().GetId();
-        }
-        
-        public static TSRandom GetRandom(this LSEntity entity)
-        {
-            return entity.LSWorld().Random;
-        }
-    }
-
     [EnableMethod]
     [ChildOf]
     [MemoryPackable]

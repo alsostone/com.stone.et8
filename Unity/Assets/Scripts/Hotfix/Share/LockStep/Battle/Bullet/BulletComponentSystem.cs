@@ -30,15 +30,14 @@
         
         private static void OnReachTarget(this BulletComponent self, bool reach)
         {
-            LSWorld world = self.Owner.GetParent<LSWorld>();
             if (reach) {
-                LSUnitComponent unitComponent = world.GetComponent<LSUnitComponent>();
+                LSUnitComponent unitComponent = self.LSWorld().GetComponent<LSUnitComponent>();
                 LSUnit caster = unitComponent.GetChild<LSUnit>(self.Caster);
                 LSUnit target = unitComponent.GetChild<LSUnit>(self.Target);
-                EffectExecutor.Execute(self.TbBulletRow.EffectGroupId, caster, target, self.Owner);
+                EffectExecutor.Execute(self.TbBulletRow.EffectGroupId, caster, target, self.LSOwner());
             }
-            EventSystem.Instance.Publish(world, new LSUnitRemove() { Id = self.Owner.Id });
-            self.Owner.Dispose();
+            EventSystem.Instance.Publish(self.LSWorld(), new LSUnitRemove() { Id = self.LSOwner().Id });
+            self.LSOwner().Dispose();
         }
     }
 }

@@ -9,10 +9,6 @@ namespace ET
     [MemoryPackable]
     public partial class BuffComponent : LSEntity, IAwake, IDestroy, ISerializeToEntity
     {
-        [BsonIgnore]
-        [MemoryPackIgnore]
-        public LSUnit Owner => this.GetParent<LSUnit>();
-        
         [BsonDictionaryOptions(DictionaryRepresentation.ArrayOfArrays)]
         public SortedDictionary<int, long> IdBuffMap = new();
     }

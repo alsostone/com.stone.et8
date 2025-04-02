@@ -28,7 +28,7 @@
 
         private static void DeductHp(this BeHitComponent self, LSUnit attacker, long value)
         {
-            var component = self.Owner.GetComponent<PropComponent>();
+            var component = self.LSOwner().GetComponent<PropComponent>();
             var hp = component.GetByKey(NumericType.Hp);
             if (hp <= 0) { return; }
 
@@ -39,7 +39,7 @@
                 //ExpGetHelper.ExpGetDead(attacker, entity);
                 
                 // 血量值空触发技能
-                var comSkill = self.Owner.GetComponent<SkillComponent>();
+                var comSkill = self.LSOwner().GetComponent<SkillComponent>();
                 if (comSkill != null)
                 {
                     comSkill.ForceAllDone();
@@ -47,12 +47,12 @@
                 }
             
                 // 血量值空则死亡
-                var comDeath = self.Owner.GetComponent<DeathComponent>();
+                var comDeath = self.LSOwner().GetComponent<DeathComponent>();
                 if (comDeath != null) {
                     comDeath.DoDeath();
                 } else {
-                    EventSystem.Instance.Publish(self.Owner.GetParent<LSWorld>(), new LSUnitRemove() { Id = self.Owner.Id });
-                    self.Owner.Dispose();
+                    EventSystem.Instance.Publish(self.LSWorld(), new LSUnitRemove() { Id = self.LSOwner().Id });
+                    self.LSOwner().Dispose();
                 }
             }
         }
