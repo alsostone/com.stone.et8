@@ -10,7 +10,7 @@
         {
             self.SkillId = skillId;
             self.IsOnlyOnce = isOnlyOnce;
-            self.Duration = self.TbSkillRow.DurationPre + self.TbSkillRow.Duration + self.TbSkillRow.DurationAfter;
+            self.DurationFrame = (self.TbSkillRow.DurationPre + self.TbSkillRow.Duration + self.TbSkillRow.DurationAfter).Convert2Frame();
         }
 
         [EntitySystem]
@@ -28,10 +28,10 @@
         {
             // 普通攻击的CD由攻速计算
             if (self.TbSkillRow.SkillType == ESkillType.Normal) {
-                var atkSpeed = self.LSOwner().GetComponent<PropComponent>().GetByKey(NumericType.AtkSpeed);
-                return self.CastTime + (LSConstValue.PrecisionMulMillsecond / atkSpeed) > TimeInfo.Instance.ServerNow();
+                int atkSpeed = (int)self.LSOwner().GetComponent<PropComponent>().GetByKey(NumericType.AtkSpeed);
+                return self.CastFrame + (LSConstValue.PrecisionMulMillsecond / atkSpeed).Convert2Frame() > self.LSWorld().Frame;
             }
-            return self.CastTime + self.TbSkillRow.CdTime > TimeInfo.Instance.ServerNow();
+            return self.CastFrame + self.TbSkillRow.CdTime.Convert2Frame() > self.LSWorld().Frame;
         }
         
         private static bool CheckReady(this Skill self)
@@ -70,7 +70,7 @@
             //     mEntity.ComState?.ChangeState(StateType.Skill, ResSkill.id_key);
             // }
             
-            self.CastTime = TimeInfo.Instance.ServerNow();
+            self.CastFrame = self.LSWorld().Frame;
             self.StepRunning();
             return true;
         }
@@ -118,13 +118,13 @@
         
         private static void StepRunning(this Skill self)
         {
-            if (self.CastTime + self.Duration > TimeInfo.Instance.ServerNow())
+            if (self.CastFrame + self.DurationFrame > self.LSWorld().Frame)
             {
                 // 到达效果触发点后触发效果
                 for (var index = self.CurrentPoint; index < self.TbSkillRow.TriggerArray.Length; index++)
                 {
-                    var point = self.TbSkillRow.TriggerArray[index];
-                    if (TimeInfo.Instance.ServerNow() - self.CastTime >= point)
+                    var frame = self.TbSkillRow.TriggerArray[index].Convert2Frame();
+                    if (self.LSWorld().Frame - self.CastFrame >= frame)
                     {
                         self.CurrentPoint = index + 1;
                         if (self.TbSkillRow.SearchRealTime && self.SearchTargets() == 0) { break; } 

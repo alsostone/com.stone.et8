@@ -25,5 +25,10 @@ namespace ET
         {
             return entity.LSWorld().Random;
         }
+        
+        public static int Convert2Frame(this int time)
+        {
+            return (time / LSConstValue.UpdateInterval);
+        }
     }
 }

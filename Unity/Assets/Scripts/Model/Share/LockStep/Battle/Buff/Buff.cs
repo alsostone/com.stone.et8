@@ -8,11 +8,12 @@ namespace ET
     public partial class Buff : LSEntity, IAwake<int>, IDestroy, ILSUpdate, ISerializeToEntity
     {
         public int BuffId;
-        public long StartTime;
-        public long IntervalTime;
         public uint LayerCount;
         
         public long Caster;
+        public int StartFrame;
+        public int IntervalFrame;
+        public int EndFrame;
         
         [BsonIgnore]
         [MemoryPackIgnore]

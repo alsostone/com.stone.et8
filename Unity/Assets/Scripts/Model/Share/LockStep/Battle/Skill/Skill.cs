@@ -9,10 +9,11 @@ namespace ET
     public partial class Skill : LSEntity, IAwake<int, bool>, IDestroy, ILSUpdate, ISerializeToEntity
     {
         public int SkillId;
-        public int Duration;
-        public long CastTime;
-        public int CurrentPoint;
         public bool IsOnlyOnce;
+        
+        public int CastFrame;
+        public int DurationFrame;
+        public int CurrentPoint;
         
         [BsonIgnore]
         [MemoryPackIgnore]

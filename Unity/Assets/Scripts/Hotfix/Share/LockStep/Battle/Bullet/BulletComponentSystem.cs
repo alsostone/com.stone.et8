@@ -9,7 +9,7 @@
         private static void Awake(this BulletComponent self, int bulletId, LSUnit caster, LSUnit target)
         {
             self.BulletId = bulletId;
-            self.ElapseTime = TimeInfo.Instance.ServerNow() + self.TbBulletRow.Life;
+            self.ElapseFrame = self.LSWorld().Frame + self.TbBulletRow.Life.Convert2Frame();
             self.Caster = caster.Id;
             self.Target = target.Id;
         }
@@ -22,7 +22,7 @@
         [LSEntitySystem]
         private static void LSUpdate(this BulletComponent self)
         {
-            if (TimeInfo.Instance.ServerNow() > self.ElapseTime)
+            if (self.LSWorld().Frame > self.ElapseFrame)
             {
                 self.OnReachTarget(false);
             }

@@ -38,14 +38,14 @@
                 var buff = self.GetChild<Buff>(eid);
                 if (buff.TbBuffRow.MaxLayer > 0 && buff.TbBuffRow.MaxLayer > buff.LayerCount)
                     buff.LayerCount++;
-                buff.StartTime = TimeInfo.Instance.ServerNow();
+                buff.ResetEndFrame();
             }
             else
             {
                 // 若buffId不存在，则添加新的buff
                 var buff = self.AddChild<Buff, int>(buffId);
                 buff.LayerCount = 1;
-                buff.StartTime = TimeInfo.Instance.ServerNow();
+                buff.ResetEndFrame();
                 self.IdBuffMap.Add(buffId, buff.Id);
             }
         }
@@ -61,7 +61,7 @@
                     buff.LayerCount--;
                     if (buff.LayerCount > 0)
                     {
-                        buff.StartTime = TimeInfo.Instance.ServerNow();
+                        buff.ResetEndFrame();
                         return;
                     }
                 }

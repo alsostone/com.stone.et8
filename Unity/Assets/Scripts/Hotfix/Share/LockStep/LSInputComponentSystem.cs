@@ -28,6 +28,19 @@ namespace ET
                 unit.Forward = unit.Position - oldPos;
             }
             
+            if ((self.LSInput.Button & LSConstButtonValue.Jump) > 0)
+            {
+                //unit.GetComponent<LSJumpComponent>().Jump();
+            }
+            else if ((self.LSInput.Button & LSConstButtonValue.Attack) > 0)
+            {
+                unit.GetComponent<SkillComponent>().TryCastSkill(ESkillType.Normal);
+            }
+            else if ((self.LSInput.Button & LSConstButtonValue.Skill1) > 0)
+            {
+                unit.GetComponent<SkillComponent>().TryCastSkill(ESkillType.Active);
+            }
+
         }
     }
 }

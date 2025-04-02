@@ -8,10 +8,10 @@ namespace ET
     public partial class BulletComponent : LSEntity, IAwake<int, LSUnit, LSUnit>, IDestroy, ILSUpdate, ISerializeToEntity
     {
         public int BulletId;
-        public long ElapseTime;
         
         public long Caster;
         public long Target;
+        public int ElapseFrame;
         
         [BsonIgnore]
         [MemoryPackIgnore]
