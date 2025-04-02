@@ -13,6 +13,7 @@ namespace ET
 	        lsUnit.Rotation = unitInfo.Rotation;
 
 	        lsUnit.AddComponent<TypeComponent, EUnitType>(EUnitType.Hero);
+	        lsUnit.AddComponent<TeamComponent, TeamType>(TeamType.TeamA);
 	        PropComponent propComponent = lsUnit.AddComponent<PropComponent>();
 			propComponent.Set(NumericType.SpeedBase, 60000);
 			propComponent.Set(NumericType.AtkSpeedBase, 5000);

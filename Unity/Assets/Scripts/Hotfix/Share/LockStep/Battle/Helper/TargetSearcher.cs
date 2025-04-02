@@ -62,11 +62,11 @@ namespace ET
             FilterCount(res.Count, results);
         }
         
-        private static void FilterDirection(List<SearchUnit> results, LSUnit owner)
+        private static void FilterDirection(IList<SearchUnit> results, LSUnit owner)
         {
             var dir = owner.Forward;
             var center = owner.Position;
-            for (var idx = results.Count - 1; idx >= 0; idx--) {
+            for (int idx = results.Count - 1; idx >= 0; idx--) {
                 if (TSVector.Dot(dir, results[idx].Target.Position - center) < 0) {
                     ObjectPool.Instance.Recycle(results[idx]);
                     results.RemoveAt(idx);
@@ -74,29 +74,31 @@ namespace ET
             }
         }
         
-        private static void FilterCount(int count, List<SearchUnit> results)
+        private static void FilterCount(int count, IList<SearchUnit> results)
         {
-            for (var idx = results.Count - 1; idx >= count; idx--) {
+            for (int idx = results.Count - 1; idx >= count; idx--) {
                 ObjectPool.Instance.Recycle(results[idx]);
                 results.RemoveAt(idx);
             }
         }
 
-        private static void FilterWithType(EUnitType type, List<SearchUnit> results)
+        private static void FilterWithType(EUnitType type, IList<SearchUnit> results)
         {
-            if (type == 0) { return; }
-            for (var idx = results.Count - 1; idx >= 0; idx--) {
-                if ((results[idx].Target.GetComponent<TypeComponent>().GetUnitType() & type) == 0){
+            if (type == EUnitType.None) { return; }
+            for (int idx = results.Count - 1; idx >= 0; idx--)
+            {
+                TypeComponent typeComponent = results[idx].Target.GetComponent<TypeComponent>();
+                if (typeComponent == null || (typeComponent.GetUnitType() & type) == 0){
                     ObjectPool.Instance.Recycle(results[idx]);
                     results.RemoveAt(idx);
                 }
             }
         }
 
-        private static void FilterWithTableId(int[] ids, List<SearchUnit> results)
+        private static void FilterWithTableId(IReadOnlyCollection<int> ids, IList<SearchUnit> results)
         {
-            if (ids.Length == 0) { return; }
-            for (var idx = results.Count - 1; idx >= 0; idx--) {
+            if (ids.Count == 0) { return; }
+            for (int idx = results.Count - 1; idx >= 0; idx--) {
                 var target = results[idx].Target;
                 // switch (target.ComType.Type) {
                 //     case EntityType.Building:
@@ -122,7 +124,7 @@ namespace ET
             }
         }
         
-        public static void FilterWithPriority(ESearchTargetPriority priority, List<SearchUnit> results)
+        private static void FilterWithPriority(ESearchTargetPriority priority, List<SearchUnit> results)
         {
             switch (priority) {
                 case ESearchTargetPriority.MAX_DISTANCE:
