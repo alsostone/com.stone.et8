@@ -14,17 +14,17 @@ namespace ET
     /// </summary>
     public enum ESearchTargetPriority
     {
-        NONE = 0,
+        None = 0,
 
         /// <summary>
         /// 最近距离
         /// </summary>
-        MIN_DISTANCE = 1,
+        MinDistance = 1,
 
         /// <summary>
         /// 最远距离
         /// </summary>
-        MAX_DISTANCE = 2,
+        MaxDistance = 2,
 
     }
 }

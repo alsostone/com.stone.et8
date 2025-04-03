@@ -13,23 +13,23 @@ using System.Collections.Generic;
 namespace ET
 {
     /// <summary>
-    /// 技能相关资源表
+    /// 随即掉落包
     /// </summary>
     [Config]
-    public partial class TbSkillResource : Singleton<TbSkillResource>, IConfig
+    public partial class TbRandomBag : Singleton<TbRandomBag>, IConfig
     {
-        private readonly Dictionary<int, TbSkillResourceRow> _dataMap;
-        private readonly List<TbSkillResourceRow> _dataList;
+        private readonly Dictionary<int, TbRandomBagRow> _dataMap;
+        private readonly List<TbRandomBagRow> _dataList;
 
-        public TbSkillResource(ByteBuf _buf)
+        public TbRandomBag(ByteBuf _buf)
         {
-            _dataMap = new Dictionary<int, TbSkillResourceRow>();
-            _dataList = new List<TbSkillResourceRow>();
+            _dataMap = new Dictionary<int, TbRandomBagRow>();
+            _dataList = new List<TbRandomBagRow>();
 
             for (int n = _buf.ReadSize(); n > 0; --n)
             {
-                TbSkillResourceRow _v;
-                _v = TbSkillResourceRow.DeserializeTbSkillResourceRow(_buf);
+                TbRandomBagRow _v;
+                _v = TbRandomBagRow.DeserializeTbRandomBagRow(_buf);
                 _dataList.Add(_v);
                 _dataMap.Add(_v.Id, _v);
             }
@@ -37,11 +37,11 @@ namespace ET
             PostInit();
         }
 
-        public Dictionary<int, TbSkillResourceRow> DataMap => _dataMap;
-        public List<TbSkillResourceRow> DataList => _dataList;
+        public Dictionary<int, TbRandomBagRow> DataMap => _dataMap;
+        public List<TbRandomBagRow> DataList => _dataList;
 
-        public TbSkillResourceRow GetOrDefault(int key) => _dataMap.GetValueOrDefault(key);
-        public TbSkillResourceRow Get(int key)
+        public TbRandomBagRow GetOrDefault(int key) => _dataMap.GetValueOrDefault(key);
+        public TbRandomBagRow Get(int key)
         {
             if (_dataMap.TryGetValue(key,out var v))
             {

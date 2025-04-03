@@ -127,10 +127,10 @@ namespace ET
         private static void FilterWithPriority(ESearchTargetPriority priority, List<SearchUnit> results)
         {
             switch (priority) {
-                case ESearchTargetPriority.MAX_DISTANCE:
+                case ESearchTargetPriority.MaxDistance:
                     results.Sort((x, y) => -x.Distance.CompareTo(y.Distance));
                     break;
-                case ESearchTargetPriority.MIN_DISTANCE:
+                case ESearchTargetPriority.MinDistance:
                     results.Sort((x, y) => x.Distance.CompareTo(y.Distance));
                     break;
             }

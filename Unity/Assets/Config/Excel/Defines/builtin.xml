@@ -3,8 +3,10 @@
         <var name="Hp" alias="血量" value="1"/>
         <var name="Mp" alias="蓝量" value="2"/>
 
-
-        <var name="Max" alias="分割二级属性" value="10000" comment="大于10000的属性为二级属性"/>
+        <!-- 1~999：实时属性 比如：当前血量、当前蓝量 -->
+        <!-- 1000~9999：5个养成属性的计算结果，任意1个相关的养成属性变化时根据公式计算并覆盖它 -->
+        <!-- 10000~99999：配置表、养成系统中真正做运算、配置的属性 -->
+        <var name="Max" alias="分隔属性" value="10000" comment="属性ID区间：10000~99999"/>
         
         <var name="MaxHp" alias="生命值" value="1001"/>
         <var name="MaxHpBase" alias="生命值B" value="10011"/>
@@ -62,4 +64,5 @@
         <var name="TeamB" alias="队伍B" value="2"/>
         <var name="Max" alias="MAX" value="3"/>
     </enum>
+    
 </module>

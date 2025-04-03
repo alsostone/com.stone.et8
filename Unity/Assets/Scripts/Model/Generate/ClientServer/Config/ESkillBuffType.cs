@@ -14,18 +14,15 @@ namespace ET
     /// </summary>
     public enum ESkillBuffType
     {
-        /// <summary>
-        /// 其他
-        /// </summary>
         NONE = 0,
 
         /// <summary>
-        /// 满足所有条件
+        /// 增益
         /// </summary>
         BUFF = 1,
 
         /// <summary>
-        /// 满足任一条件
+        /// 减益
         /// </summary>
         DEBUFF = 2,
 
