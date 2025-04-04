@@ -1,95 +1,343 @@
 [
   {
-    "Id": 1
+    "Id": 1,
+    "is_random_one": true,
+    "items": [
+      {
+        "id": 1,
+        "weight": 1000,
+        "count": 3
+      }
+    ]
   },
   {
-    "Id": 2
+    "Id": 2,
+    "is_random_one": false,
+    "items": [
+      {
+        "id": 7,
+        "weight": 2000,
+        "count": 1
+      }
+    ]
   },
   {
-    "Id": 3
+    "Id": 3,
+    "is_random_one": false,
+    "items": [
+      {
+        "id": 7,
+        "weight": 3000,
+        "count": 1
+      }
+    ]
   },
   {
-    "Id": 4
+    "Id": 4,
+    "is_random_one": false,
+    "items": [
+      {
+        "id": 7,
+        "weight": 4000,
+        "count": 1
+      }
+    ]
   },
   {
-    "Id": 5
+    "Id": 5,
+    "is_random_one": false,
+    "items": [
+      {
+        "id": 7,
+        "weight": 5000,
+        "count": 1
+      }
+    ]
   },
   {
-    "Id": 6
+    "Id": 6,
+    "is_random_one": false,
+    "items": [
+      {
+        "id": 7,
+        "weight": 5000,
+        "count": 1
+      }
+    ]
   },
   {
-    "Id": 7
+    "Id": 7,
+    "is_random_one": false,
+    "items": [
+      {
+        "id": 8,
+        "weight": 2000,
+        "count": 1
+      }
+    ]
   },
   {
-    "Id": 8
+    "Id": 8,
+    "is_random_one": false,
+    "items": [
+      {
+        "id": 8,
+        "weight": 3000,
+        "count": 1
+      }
+    ]
   },
   {
-    "Id": 9
+    "Id": 9,
+    "is_random_one": false,
+    "items": [
+      {
+        "id": 8,
+        "weight": 4000,
+        "count": 1
+      }
+    ]
   },
   {
-    "Id": 10
+    "Id": 10,
+    "is_random_one": false,
+    "items": [
+      {
+        "id": 8,
+        "weight": 5000,
+        "count": 1
+      }
+    ]
   },
   {
-    "Id": 11
+    "Id": 11,
+    "is_random_one": false,
+    "items": [
+      {
+        "id": 8,
+        "weight": 5000,
+        "count": 1
+      }
+    ]
   },
   {
-    "Id": 12
+    "Id": 12,
+    "is_random_one": false,
+    "items": [
+      {
+        "id": 9,
+        "weight": 2000,
+        "count": 1
+      }
+    ]
   },
   {
-    "Id": 13
+    "Id": 13,
+    "is_random_one": false,
+    "items": [
+      {
+        "id": 9,
+        "weight": 3000,
+        "count": 1
+      }
+    ]
   },
   {
-    "Id": 14
+    "Id": 14,
+    "is_random_one": false,
+    "items": [
+      {
+        "id": 9,
+        "weight": 4000,
+        "count": 1
+      }
+    ]
   },
   {
-    "Id": 15
+    "Id": 15,
+    "is_random_one": false,
+    "items": [
+      {
+        "id": 9,
+        "weight": 5000,
+        "count": 1
+      }
+    ]
   },
   {
-    "Id": 16
+    "Id": 16,
+    "is_random_one": false,
+    "items": [
+      {
+        "id": 9,
+        "weight": 5000,
+        "count": 1
+      }
+    ]
   },
   {
-    "Id": 17
+    "Id": 17,
+    "is_random_one": false,
+    "items": [
+      {
+        "id": 10,
+        "weight": 2000,
+        "count": 1
+      }
+    ]
   },
   {
-    "Id": 18
+    "Id": 18,
+    "is_random_one": false,
+    "items": [
+      {
+        "id": 10,
+        "weight": 3000,
+        "count": 1
+      }
+    ]
   },
   {
-    "Id": 19
+    "Id": 19,
+    "is_random_one": false,
+    "items": [
+      {
+        "id": 10,
+        "weight": 4000,
+        "count": 1
+      }
+    ]
   },
   {
-    "Id": 20
+    "Id": 20,
+    "is_random_one": false,
+    "items": [
+      {
+        "id": 10,
+        "weight": 5000,
+        "count": 1
+      }
+    ]
   },
   {
-    "Id": 21
+    "Id": 21,
+    "is_random_one": false,
+    "items": [
+      {
+        "id": 10,
+        "weight": 5000,
+        "count": 1
+      }
+    ]
   },
   {
-    "Id": 22
+    "Id": 22,
+    "is_random_one": false,
+    "items": [
+      {
+        "id": 11,
+        "weight": 2000,
+        "count": 1
+      }
+    ]
   },
   {
-    "Id": 23
+    "Id": 23,
+    "is_random_one": false,
+    "items": [
+      {
+        "id": 11,
+        "weight": 3000,
+        "count": 1
+      }
+    ]
   },
   {
-    "Id": 24
+    "Id": 24,
+    "is_random_one": false,
+    "items": [
+      {
+        "id": 11,
+        "weight": 4000,
+        "count": 1
+      }
+    ]
   },
   {
-    "Id": 25
+    "Id": 25,
+    "is_random_one": false,
+    "items": [
+      {
+        "id": 11,
+        "weight": 5000,
+        "count": 1
+      }
+    ]
   },
   {
-    "Id": 26
+    "Id": 26,
+    "is_random_one": false,
+    "items": [
+      {
+        "id": 11,
+        "weight": 5000,
+        "count": 1
+      }
+    ]
   },
   {
-    "Id": 27
+    "Id": 27,
+    "is_random_one": false,
+    "items": [
+      {
+        "id": 12,
+        "weight": 2000,
+        "count": 1
+      }
+    ]
   },
   {
-    "Id": 28
+    "Id": 28,
+    "is_random_one": false,
+    "items": [
+      {
+        "id": 12,
+        "weight": 3000,
+        "count": 1
+      }
+    ]
   },
   {
-    "Id": 29
+    "Id": 29,
+    "is_random_one": false,
+    "items": [
+      {
+        "id": 12,
+        "weight": 4000,
+        "count": 1
+      }
+    ]
   },
   {
-    "Id": 30
+    "Id": 30,
+    "is_random_one": false,
+    "items": [
+      {
+        "id": 12,
+        "weight": 5000,
+        "count": 1
+      }
+    ]
   },
   {
-    "Id": 31
+    "Id": 31,
+    "is_random_one": false,
+    "items": [
+      {
+        "id": 12,
+        "weight": 5000,
+        "count": 1
+      }
+    ]
   }
 ]

@@ -1,38 +1,146 @@
 [
   {
-    "Id": 1
+    "Id": 1,
+    "items": [
+      {
+        "id": 9100,
+        "weight": 500,
+        "type": 16,
+        "count_min": 1,
+        "count_max": 1
+      }
+    ]
   },
   {
-    "Id": 2
+    "Id": 2,
+    "items": [
+      {
+        "id": 9100,
+        "weight": 500,
+        "type": 16,
+        "count_min": 1,
+        "count_max": 1
+      }
+    ]
   },
   {
-    "Id": 3
+    "Id": 3,
+    "items": [
+      {
+        "id": 9100,
+        "weight": 500,
+        "type": 16,
+        "count_min": 1,
+        "count_max": 1
+      }
+    ]
   },
   {
-    "Id": 4
+    "Id": 4,
+    "items": [
+      {
+        "id": 9100,
+        "weight": 500,
+        "type": 16,
+        "count_min": 1,
+        "count_max": 1
+      }
+    ]
   },
   {
-    "Id": 5
+    "Id": 5,
+    "items": [
+      {
+        "id": 9100,
+        "weight": 500,
+        "type": 16,
+        "count_min": 1,
+        "count_max": 1
+      }
+    ]
   },
   {
-    "Id": 6
+    "Id": 6,
+    "items": [
+      {
+        "id": 9100,
+        "weight": 500,
+        "type": 16,
+        "count_min": 1,
+        "count_max": 1
+      }
+    ]
   },
   {
-    "Id": 7
+    "Id": 7,
+    "items": [
+      {
+        "id": 9100,
+        "weight": 1000,
+        "type": 16,
+        "count_min": 1,
+        "count_max": 1
+      }
+    ]
   },
   {
-    "Id": 8
+    "Id": 8,
+    "items": [
+      {
+        "id": 9101,
+        "weight": 1000,
+        "type": 16,
+        "count_min": 1,
+        "count_max": 1
+      }
+    ]
   },
   {
-    "Id": 9
+    "Id": 9,
+    "items": [
+      {
+        "id": 9102,
+        "weight": 1000,
+        "type": 16,
+        "count_min": 1,
+        "count_max": 1
+      }
+    ]
   },
   {
-    "Id": 10
+    "Id": 10,
+    "items": [
+      {
+        "id": 9103,
+        "weight": 1000,
+        "type": 16,
+        "count_min": 1,
+        "count_max": 1
+      }
+    ]
   },
   {
-    "Id": 11
+    "Id": 11,
+    "items": [
+      {
+        "id": 9104,
+        "weight": 1000,
+        "type": 16,
+        "count_min": 1,
+        "count_max": 1
+      }
+    ]
   },
   {
-    "Id": 12
+    "Id": 12,
+    "items": [
+      {
+        "id": 9105,
+        "weight": 1000,
+        "type": 16,
+        "count_min": 1,
+        "count_max": 1
+      }
+    ]
   }
 ]

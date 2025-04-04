@@ -17,6 +17,7 @@ namespace ET
         public TbRandomSetRow(ByteBuf _buf)
         {
             Id = _buf.ReadInt();
+            {int __n0 = System.Math.Min(_buf.ReadSize(), _buf.Size);Items = new ItemRandomSet[__n0];for(var __index0 = 0 ; __index0 < __n0 ; __index0++) { ItemRandomSet __e0;__e0 = ItemRandomSet.DeserializeItemRandomSet(_buf); Items[__index0] = __e0;}}
 
             PostInit();
         }
@@ -31,6 +32,8 @@ namespace ET
         /// </summary>
         public readonly int Id;
 
+        public readonly ItemRandomSet[] Items;
+
 
         public const int __ID__ = 1389919849;
         public override int GetTypeId() => __ID__;
@@ -38,12 +41,14 @@ namespace ET
         public  void ResolveRef()
         {
             
+            foreach (var _e in Items) { _e?.ResolveRef(); }
         }
 
         public override string ToString()
         {
             return "{ "
             + "Id:" + Id + ","
+            + "items:" + Luban.StringUtil.CollectionToString(Items) + ","
             + "}";
         }
 

@@ -17,6 +17,8 @@ namespace ET
         public TbRandomBagRow(ByteBuf _buf)
         {
             Id = _buf.ReadInt();
+            IsRandomOne = _buf.ReadBool();
+            {int __n0 = System.Math.Min(_buf.ReadSize(), _buf.Size);Items = new ItemRandomBag[__n0];for(var __index0 = 0 ; __index0 < __n0 ; __index0++) { ItemRandomBag __e0;__e0 = ItemRandomBag.DeserializeItemRandomBag(_buf); Items[__index0] = __e0;}}
 
             PostInit();
         }
@@ -31,6 +33,13 @@ namespace ET
         /// </summary>
         public readonly int Id;
 
+        /// <summary>
+        /// 是否单个包
+        /// </summary>
+        public readonly bool IsRandomOne;
+
+        public readonly ItemRandomBag[] Items;
+
 
         public const int __ID__ = 899142915;
         public override int GetTypeId() => __ID__;
@@ -38,12 +47,16 @@ namespace ET
         public  void ResolveRef()
         {
             
+            
+            foreach (var _e in Items) { _e?.ResolveRef(); }
         }
 
         public override string ToString()
         {
             return "{ "
             + "Id:" + Id + ","
+            + "isRandomOne:" + IsRandomOne + ","
+            + "items:" + Luban.StringUtil.CollectionToString(Items) + ","
             + "}";
         }
 

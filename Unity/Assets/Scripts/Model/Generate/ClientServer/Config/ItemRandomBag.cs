@@ -11,52 +11,58 @@ using Luban;
 
 namespace ET
 {
+    /// <summary>
+    /// 掉落包Item
+    /// </summary>
     [EnableClass]
-    public sealed partial class TbRandomBagRow : BeanBase
+    public sealed partial class ItemRandomBag : BeanBase
     {
-        public TbRandomBagRow(ByteBuf _buf)
+        public ItemRandomBag(ByteBuf _buf)
         {
             Id = _buf.ReadInt();
-            IsRandomOne = _buf.ReadBool();
-            {int __n0 = System.Math.Min(_buf.ReadSize(), _buf.Size);Items = new ItemRandomBag[__n0];for(var __index0 = 0 ; __index0 < __n0 ; __index0++) { ItemRandomBag __e0;__e0 = ItemRandomBag.DeserializeItemRandomBag(_buf); Items[__index0] = __e0;}}
+            Weight = _buf.ReadInt();
+            Count = _buf.ReadInt();
 
             PostInit();
         }
 
-        public static TbRandomBagRow DeserializeTbRandomBagRow(ByteBuf _buf)
+        public static ItemRandomBag DeserializeItemRandomBag(ByteBuf _buf)
         {
-            return new TbRandomBagRow(_buf);
+            return new ItemRandomBag(_buf);
         }
 
         /// <summary>
-        /// ID
+        /// 掉落组ID
         /// </summary>
         public readonly int Id;
 
         /// <summary>
-        /// 是否单个包
+        /// 权重
         /// </summary>
-        public readonly bool IsRandomOne;
+        public readonly int Weight;
 
-        public readonly ItemRandomBag[] Items;
+        /// <summary>
+        /// 数量
+        /// </summary>
+        public readonly int Count;
 
 
-        public const int __ID__ = 899142915;
+        public const int __ID__ = -2022056366;
         public override int GetTypeId() => __ID__;
 
         public  void ResolveRef()
         {
             
             
-            foreach (var _e in Items) { _e?.ResolveRef(); }
+            
         }
 
         public override string ToString()
         {
             return "{ "
-            + "Id:" + Id + ","
-            + "isRandomOne:" + IsRandomOne + ","
-            + "items:" + Luban.StringUtil.CollectionToString(Items) + ","
+            + "id:" + Id + ","
+            + "weight:" + Weight + ","
+            + "count:" + Count + ","
             + "}";
         }
 
