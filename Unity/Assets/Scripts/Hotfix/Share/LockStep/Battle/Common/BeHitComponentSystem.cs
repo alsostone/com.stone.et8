@@ -10,7 +10,9 @@ namespace ET
         [EntitySystem]
         private static void Awake(this BeHitComponent self)
         {
-            
+            LSTargetsComponent component = self.LSWorld().GetComponent<LSTargetsComponent>();
+            TeamType teamType = self.LSOwner().GetComponent<TeamComponent>().GetTeamType();
+            component.AddTarget(teamType, self.LSOwner());
         }
         
         [EntitySystem]

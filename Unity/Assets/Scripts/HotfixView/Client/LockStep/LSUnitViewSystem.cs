@@ -44,10 +44,9 @@ namespace ET.Client
                 self.Position = unit.Position.ToVector();
                 self.Rotation = unit.Rotation.ToQuaternion();
             }
-
-
-            LSInput input = unit.GetComponent<LSInputComponent>().LSInput;
-            if (input.V != TSVector2.zero)
+            
+            LSInputComponent component = unit.GetComponent<LSInputComponent>();
+            if (component != null && component.LSInput.V != TSVector2.zero)
             {
                 self.GetComponent<LSAnimatorComponent>().SetFloatValue("Speed", speed2);
             }
@@ -56,7 +55,7 @@ namespace ET.Client
                 self.GetComponent<LSAnimatorComponent>().SetFloatValue("Speed", 0);
             }
             self.t += Time.deltaTime;
-            self.Transform.rotation = Quaternion.Lerp(self.Transform.rotation, self.Rotation, self.t / 1f);
+            self.Transform.rotation = Quaternion.Lerp(self.Transform.rotation, self.Rotation, Math.Clamp(self.t / 1f, 0, .99f));
             self.Transform.position = Vector3.Lerp(self.Transform.position, self.Position, self.t / self.totalTime);
         }
 

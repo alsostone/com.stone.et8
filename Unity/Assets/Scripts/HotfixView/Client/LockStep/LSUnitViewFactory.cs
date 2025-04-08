@@ -12,6 +12,9 @@ namespace ET.Client
                 case EUnitType.Hero:
                     await CreateHeroViewAsync(room, lsWorld, lsUnit);
                     break;
+                case EUnitType.Soldier:
+                    await CreateHeroViewAsync(room, lsWorld, lsUnit);
+                    break;
                 case EUnitType.Bullet:
                     await CreateBulletViewAsync(room, lsWorld, lsUnit);
                     break;

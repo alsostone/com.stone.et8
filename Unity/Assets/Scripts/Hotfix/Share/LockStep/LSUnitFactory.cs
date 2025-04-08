@@ -4,27 +4,57 @@ namespace ET
 {
     public static partial class LSUnitFactory
     {
-        public static LSUnit Init(LSWorld lsWorld, LockStepUnitInfo unitInfo)
+        public static LSUnit CreateHero(LSWorld lsWorld, int id, TSVector position, TSQuaternion rotation, long playerId)
         {
+	        TbHeroRow row = TbHero.Instance.Get(id);
 	        LSUnitComponent lsUnitComponent = lsWorld.GetComponent<LSUnitComponent>();
-	        LSUnit lsUnit = lsUnitComponent.AddChildWithId<LSUnit>(unitInfo.PlayerId);
+	        LSUnit lsUnit = lsUnitComponent.AddChildWithId<LSUnit>(playerId);
 			
-	        lsUnit.Position = unitInfo.Position;
-	        lsUnit.Rotation = unitInfo.Rotation;
+	        lsUnit.Position = position;
+	        lsUnit.Rotation = rotation;
 
 	        lsUnit.AddComponent<TypeComponent, EUnitType>(EUnitType.Hero);
 	        lsUnit.AddComponent<TeamComponent, TeamType>(TeamType.TeamA);
+	        
 	        PropComponent propComponent = lsUnit.AddComponent<PropComponent>();
-			propComponent.Set(NumericType.SpeedBase, 60000);
-			propComponent.Set(NumericType.AtkSpeedBase, 5000);
-			lsUnit.AddComponent<LSInputComponent>();
+	        foreach (var prop in row.Props) {
+		        propComponent.Set(prop.Key, prop.Value);
+	        }
+			
 			lsUnit.AddComponent<DeathComponent, bool>(false);
 			lsUnit.AddComponent<BuffComponent>();
 			lsUnit.AddComponent<BeHitComponent>();
-			lsUnit.AddComponent<SkillComponent, int[]>(new int[] {10000001});
+			lsUnit.AddComponent<SkillComponent, int[]>(row.Skills);
 			
+			lsUnit.AddComponent<LSInputComponent>();
 			EventSystem.Instance.Publish(lsWorld, new LSUnitCreate() {LSUnit = lsUnit});
             return lsUnit;
+        }
+        
+        public static LSUnit CreateSoldier(LSWorld lsWorld, int id, TSVector position, TSQuaternion rotation, TeamType teamType)
+        {
+	        TbSoldierRow row = TbSoldier.Instance.Get(id, 1);
+	        LSUnitComponent lsUnitComponent = lsWorld.GetComponent<LSUnitComponent>();
+	        LSUnit lsUnit = lsUnitComponent.AddChild<LSUnit>();
+			
+	        lsUnit.Position = position;
+	        lsUnit.Rotation = rotation;
+
+	        lsUnit.AddComponent<TypeComponent, EUnitType>(EUnitType.Soldier);
+	        lsUnit.AddComponent<TeamComponent, TeamType>(teamType);
+	        
+	        PropComponent propComponent = lsUnit.AddComponent<PropComponent>();
+	        foreach (var prop in row.Props) {
+		        propComponent.Set(prop.Key, prop.Value);
+	        }
+
+	        lsUnit.AddComponent<DeathComponent, bool>(false);
+	        lsUnit.AddComponent<BuffComponent>();
+	        lsUnit.AddComponent<BeHitComponent>();
+	        lsUnit.AddComponent<SkillComponent, int[]>(row.Skills);
+			
+	        EventSystem.Instance.Publish(lsWorld, new LSUnitCreate() {LSUnit = lsUnit});
+	        return lsUnit;
         }
         
         public static LSUnit CreateBullet(LSWorld lsWorld, int bulletId, TSVector position, TSQuaternion rotation, LSUnit caster, LSUnit target)

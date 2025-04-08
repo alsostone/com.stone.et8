@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using TrueSync;
 
 namespace ET
 {
@@ -23,11 +24,18 @@ namespace ET
             LSWorld lsWorld = self.LSWorld;
             lsWorld.Frame = frame + 1;
             lsWorld.AddComponent<LSUnitComponent>();
+            lsWorld.AddComponent<LSTargetsComponent>();
             for (int i = 0; i < unitInfos.Count; ++i)
             {
                 LockStepUnitInfo unitInfo = unitInfos[i];
-                LSUnitFactory.Init(lsWorld, unitInfo);
+                LSUnitFactory.CreateHero(lsWorld, 1001, unitInfo.Position, unitInfo.Rotation, unitInfo.PlayerId);
                 self.PlayerIds.Add(unitInfo.PlayerId);
+            }
+            
+            for (int i = 0; i < 10; ++i)
+            {
+                LSUnitFactory.CreateSoldier(lsWorld, 4000, new TSVector(1, 0, 1) * i, TSQuaternion.identity, TeamType.TeamA);
+                LSUnitFactory.CreateSoldier(lsWorld, 4000, new TSVector(1, 0, 1) * i + new TSVector(2, 0, 0), TSQuaternion.identity, TeamType.TeamB);
             }
         }
 
