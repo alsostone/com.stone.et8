@@ -6,10 +6,11 @@ namespace ET
 {
     [ChildOf(typeof(SkillComponent))]
     [MemoryPackable]
-    public partial class Skill : LSEntity, IAwake<int, bool>, IDestroy, ILSUpdate, ISerializeToEntity
+    public partial class Skill : LSEntity, IAwake<int, bool>, IDestroy, ISerializeToEntity
     {
         public int SkillId;
         public bool IsOnlyOnce;
+        public bool IsRunning;
         
         public int CastFrame;
         public int DurationFrame;

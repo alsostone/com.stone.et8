@@ -16,6 +16,16 @@ namespace ET.Client
             self.Transform = go.transform;
 
         }
+        
+        [EntitySystem]
+        private static void Destroy(this LSUnitView self)
+        {
+            if (self.GameObject != null)
+            {
+                UnityEngine.Object.Destroy(self.GameObject);
+                self.GameObject = null;
+            }
+        }
 
         [LSEntitySystem]
         private static void LSRollback(this LSUnitView self)

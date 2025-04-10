@@ -9,14 +9,13 @@ namespace ET
     [MemoryPackable]
     public partial class LSUnit: LSEntity, IAwake, ISerializeToEntity
     {
-        public int TableId;
-        public bool Active;
+        public int TableId { get; set; }
+
+        public bool Active { get; set; }
+        public bool DeadMark { get; set; }
+        public bool Dead { get; set; }
         
-        public TSVector Position
-        {
-            get;
-            set;
-        }
+        public TSVector Position { get; set; }
 
         [MemoryPackIgnore]
         [BsonIgnore]

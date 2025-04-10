@@ -3,7 +3,7 @@ using MongoDB.Bson.Serialization.Attributes;
 
 namespace ET
 {
-    [ChildOf(typeof(LSUnit))]
+    [ComponentOf(typeof(LSUnit))]
     [MemoryPackable]
     public partial class BuildingComponent : LSEntity, IAwake<int, int>, IDestroy, ILSUpdate, ISerializeToEntity
     {
