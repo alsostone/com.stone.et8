@@ -1,12 +1,10 @@
-using System;
 using System.Collections.Generic;
-using ET.Client;
 using TrueSync;
 
 namespace ET
 {
     [EntitySystemOf(typeof(LSTargetsComponent))]
-    [FriendOf(typeof(ET.LSTargetsComponent))]
+    [FriendOf(typeof(LSTargetsComponent))]
     public static partial class LSTargetsComponentSystem
     {
         [EntitySystem]
@@ -45,6 +43,39 @@ namespace ET
                 self.TeamLSUnitsMap[teamType] = lsUnits;
             }
             lsUnits.Add(lsUnit);
+        }
+        
+        public static void GetAllAttackTargets(this LSTargetsComponent self, List<SearchUnit> results)
+        {
+            for (TeamType i = TeamType.None; i < TeamType.Max; i++)
+            {
+                if (self.TeamLSUnitsMap.TryGetValue(i, out var targets))
+                {
+                    foreach (LSUnit target in targets)
+                    {
+                        if (target.Active) {
+                            results.Add(new SearchUnit() { Target = target });
+                        }
+                    }
+                }
+            }
+        }
+        
+        public static void GetAttackTargets(this LSTargetsComponent self, TeamType teamFlag, TSVector center, FP range, List<SearchUnit> results)
+        {
+            if (self.TeamLSUnitsMap.TryGetValue(teamFlag, out var targets))
+            {
+                foreach (LSUnit target in targets)
+                {
+                    if (target.Active) {
+                        var dis = (target.Position - center).sqrMagnitude;
+                        var sqrRange = target.GetAttackSqrRange(range);
+                        if (sqrRange >= dis) {
+                            results.Add(new SearchUnit() { Target = target, Distance = dis });
+                        }
+                    }
+                }
+            }
         }
     }
 }

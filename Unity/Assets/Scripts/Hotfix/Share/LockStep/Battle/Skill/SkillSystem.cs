@@ -46,9 +46,6 @@
 
         private static int SearchTargets(this Skill self)
         {
-            foreach (var target in self.SearchUnits) {
-                ObjectPool.Instance.Recycle(target);
-            }
             self.SearchUnits.Clear();
             TargetSearcher.Search(self.TbSkillRow.SearchTarget, self.LSOwner(), self.SearchUnits);
             return self.SearchUnits.Count;
@@ -78,10 +75,6 @@
         public static void ForceDone(this Skill self)
         {
             self.CurrentPoint = 0;
-            
-            foreach (var target in self.SearchUnits) {
-                ObjectPool.Instance.Recycle(target);
-            }
             self.SearchUnits.Clear();
             if (self.IsOnlyOnce) {
                 self.Dispose();
@@ -102,10 +95,6 @@
         private static void OnCastDone(this Skill self)
         {
             self.CurrentPoint = 0;
-            
-            foreach (var target in self.SearchUnits) {
-                ObjectPool.Instance.Recycle(target);
-            }
             self.SearchUnits.Clear();
 
             // if (!string.IsNullOrEmpty(ResSkill.ani_name)) {

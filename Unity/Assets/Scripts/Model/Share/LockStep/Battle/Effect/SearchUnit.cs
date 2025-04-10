@@ -2,11 +2,9 @@ using TrueSync;
 
 namespace ET
 {
-    public class SearchUnit : Object, IPool
+    public struct SearchUnit
     {
         public LSUnit Target;
         public FP Distance;
-        
-        public bool IsFromPool { get; set; }
     }
 }

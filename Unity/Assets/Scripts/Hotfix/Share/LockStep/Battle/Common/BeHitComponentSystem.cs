@@ -80,10 +80,7 @@ namespace ET
                 else if (target.Active) {
                     var dis = (target.Position - center).sqrMagnitude;
                     if (sqrRange >= dis) {
-                        var distance = ObjectPool.Instance.Fetch<SearchUnit>();
-                        distance.Target = target;
-                        distance.Distance = dis;
-                        results.Add(distance);
+                        results.Add(new SearchUnit() { Target = target, Distance = dis });
                     }
                 }
             }

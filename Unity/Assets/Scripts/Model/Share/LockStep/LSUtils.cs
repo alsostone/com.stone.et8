@@ -36,5 +36,10 @@ namespace ET
         {
             return (time / LSConstValue.UpdateInterval);
         }
+
+        public static FP GetAttackSqrRange(this LSUnit unit, FP range)
+        {
+            return range * range;
+        }
     }
 }
