@@ -5,17 +5,17 @@
     {
         public static float GetAsFloat(this PropComponent self, NumericType numericType)
         {
-            return (float)self.GetByKey(numericType) / 10000;
+            return (float)self.Get(numericType) / 10000;
         }
 
         public static int GetAsInt(this PropComponent self, NumericType numericType)
         {
-            return (int)self.GetByKey(numericType);
+            return (int)self.Get(numericType);
         }
 
         public static long GetAsLong(this PropComponent self, NumericType numericType)
         {
-            return self.GetByKey(numericType);
+            return self.Get(numericType);
         }
 
         public static void Set(this PropComponent self, NumericType nt, float value)
@@ -40,7 +40,7 @@
 
         public static void Insert(this PropComponent self, NumericType numericType, long value, bool isPublicEvent = true)
         {
-            long oldValue = self.GetByKey(numericType);
+            long oldValue = self.Get(numericType);
             if (oldValue == value)
             {
                 return;
@@ -68,7 +68,7 @@
                 return;
             }
 
-            long oldValue = self.GetByKey(numericType);
+            long oldValue = self.Get(numericType);
             value = oldValue + value;
             self.NumericDic[numericType] = value;
 
@@ -85,11 +85,16 @@
             }
         }
 
-        public static long GetByKey(this PropComponent self, NumericType key)
+        public static long Get(this PropComponent self, NumericType key)
         {
             long value = 0;
             self.NumericDic.TryGetValue(key, out value);
             return value;
+        }
+        
+        public static bool Contains(this PropComponent self, NumericType key)
+        {
+            return self.NumericDic.ContainsKey(key);
         }
 
         public static void Update(this PropComponent self, NumericType numericType, bool isPublicEvent)
@@ -103,7 +108,7 @@
 
             // 一个数值可能会多种情况影响，比如速度,加个buff可能增加速度绝对值100，也有些buff增加10%速度，所以一个值可以由5个值进行控制其最终结果
             // final = (((base + add) * (100 + pct) / 100) + finalAdd) * (100 + finalPct) / 100;
-            long result = (long)(((self.GetByKey(bas) + self.GetByKey(add)) * (100 + self.GetAsFloat(pct)) / 100f + self.GetByKey(finalAdd)) *
+            long result = (long)(((self.Get(bas) + self.Get(add)) * (100 + self.GetAsFloat(pct)) / 100f + self.Get(finalAdd)) *
                 (100 + self.GetAsFloat(finalPct)) / 100f);
             self.Insert((NumericType)final, result, isPublicEvent);
         }

@@ -4,6 +4,7 @@ namespace ET
 {
     [EntitySystemOf(typeof(SkillComponent))]
     [FriendOf(typeof(SkillComponent))]
+    [FriendOf(typeof(Skill))]
     public static partial class SkillComponentSystem
     {
         [EntitySystem]
@@ -22,13 +23,40 @@ namespace ET
             self.TypeSkillsMap.Clear();
         }
 
+        [EntitySystem]
+        private static void LSUpdate(this SkillComponent self)
+        {
+            for (int index = self.mRunningSkills.Count - 1; index >= 0; index--)
+            {
+                long id = self.mRunningSkills[index];
+                Skill skill = self.GetChild<Skill>(id);
+                if (skill == null)
+                {
+                    self.mRunningSkills.RemoveAt(index);
+                }
+                else
+                {
+                    skill.StepRunning();
+                    if (!skill.IsRunning)
+                    {
+                        self.mRunningSkills.RemoveAt(index);
+                    }
+                }
+            }
+        }
+
+        public static bool HasRunningSkill(this SkillComponent self)
+        {
+            return self.mRunningSkills.Count > 0;
+        }
+
         public static Skill AddSkill(this SkillComponent self, int skillId, bool isOnlyOnce = false)
         {
             if (!self.IdSkillMap.TryGetValue(skillId, out long eid))
             {
                 Skill skill = self.AddChild<Skill, int, bool>(skillId, isOnlyOnce);
                 self.IdSkillMap.Add(skillId, skill.Id);
-                
+
                 TbSkillRow tbSkillRow = TbSkill.Instance.Get(skillId);
                 if (!self.TypeSkillsMap.TryGetValue(tbSkillRow.SkillType, out List<long> skills))
                 {
@@ -44,41 +72,52 @@ namespace ET
         public static void ForceAllDone(this SkillComponent self)
         {
             // 技能移除不会维护该数组 获取不到技能也不会有问题
-            foreach (var id in self.mRunningSkills) {
-                var skill = self.GetChild<Skill>(id);
+            for (int index = self.mRunningSkills.Count - 1; index >= 0; index--)
+            {
+                long id = self.mRunningSkills[index];
+                Skill skill = self.GetChild<Skill>(id);
                 skill?.ForceDone();
             }
             self.mRunningSkills.Clear();
         }
 
-        public static void TryCastSkill(this SkillComponent self, ESkillType type)
+        public static bool TryCastSkill(this SkillComponent self, ESkillType type)
         {
+            if (self.LSOwner().DeadMark) { return false; }
             // if (!Enable) { return; }
             // if (entity.ComStatus.HasStatus(kStatusType.RestrictSkill)) { return; }
-            
+
             if (self.TypeSkillsMap.TryGetValue(type, out List<long> skillIds))
             {
-                for (var i = skillIds.Count - 1; i >= 0; i--) {
-                    var skill = self.GetChild<Skill>(skillIds[i]);
-                    if (skill.TryCast()) {
-                        self.mRunningSkills.Add(skill.Id);
-                        break;
+                for (int i = skillIds.Count - 1; i >= 0; i--)
+                {
+                    Skill skill = self.GetChild<Skill>(skillIds[i]);
+                    if (skill.TryCast())
+                    {
+                        if (skill.IsRunning)
+                            self.mRunningSkills.Add(skill.Id);
+                        return true;
                     }
                 }
             }
+            return false;
         }
-        
+
         public static bool TryCastSkill(this SkillComponent self, ESkillType type, int index)
         {
+            if (self.LSOwner().DeadMark) { return false; }
             // if (!Enable) { return false; }
             // if (entity.ComStatus.HasStatus(kStatusType.RestrictSkill)) { return false; }
 
             if (self.TypeSkillsMap.TryGetValue(type, out List<long> skillIds))
             {
-                if (skillIds.Count > index) {
-                    var skill = self.GetChild<Skill>(skillIds[index]);
-                    if (skill.TryCast()) {
-                        self.mRunningSkills.Add(skill.Id);
+                if (skillIds.Count > index)
+                {
+                    Skill skill = self.GetChild<Skill>(skillIds[index]);
+                    if (skill.TryCast())
+                    {
+                        if (skill.IsRunning)
+                            self.mRunningSkills.Add(skill.Id);
                         return true;
                     }
                 }
@@ -88,13 +127,16 @@ namespace ET
 
         public static bool CastAttachSkill(this SkillComponent self, int id)
         {
+            if (self.LSOwner().DeadMark) { return false; }
             // if (!Enable) { return false; }
             // if (entity.ComStatus.HasStatus(kStatusType.RestrictSkill)) { return false; }
 
-            var skill = self.AddSkill(id, true);
+            Skill skill = self.AddSkill(id, true);
             if (skill == null) { return false; }
-            if (skill.TryCast()) {
-                self.mRunningSkills.Add(skill.Id);
+            if (skill.TryCast())
+            {
+                if (skill.IsRunning)
+                    self.mRunningSkills.Add(skill.Id);
                 return true;
             }
             skill.Dispose();

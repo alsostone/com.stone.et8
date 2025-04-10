@@ -18,17 +18,11 @@
         {
         }
         
-        [LSEntitySystem]
-        private static void LSUpdate(this Skill self)
-        {
-            self.StepRunning();
-        }
-
         public static bool IsInCd(this Skill self)
         {
             // 普通攻击的CD由攻速计算
             if (self.TbSkillRow.SkillType == ESkillType.Normal) {
-                int atkSpeed = (int)self.LSOwner().GetComponent<PropComponent>().GetByKey(NumericType.AtkSpeed);
+                int atkSpeed = (int)self.LSOwner().GetComponent<PropComponent>().Get(NumericType.AtkSpeed);
                 return self.CastFrame + (LSConstValue.PrecisionMulMillsecond / atkSpeed).Convert2Frame() > self.LSWorld().Frame;
             }
             return self.CastFrame + self.TbSkillRow.CdTime.Convert2Frame() > self.LSWorld().Frame;
@@ -36,7 +30,7 @@
         
         private static bool CheckReady(this Skill self)
         {
-            if (self.IsInCd()) { return false; }
+            if (self.IsRunning || self.IsInCd()) { return false; }
             
             // if (!ConditionCheck.CheckCondition(mEntity.Handle, ResSkill)) {
             //     return false;
@@ -67,6 +61,7 @@
             //     mEntity.ComState?.ChangeState(StateType.Skill, ResSkill.id_key);
             // }
             
+            self.IsRunning = true;
             self.CastFrame = self.LSWorld().Frame;
             self.StepRunning();
             return true;
@@ -74,8 +69,10 @@
         
         public static void ForceDone(this Skill self)
         {
+            self.IsRunning = false;
             self.CurrentPoint = 0;
             self.SearchUnits.Clear();
+            
             if (self.IsOnlyOnce) {
                 self.Dispose();
             }
@@ -94,6 +91,7 @@
 
         private static void OnCastDone(this Skill self)
         {
+            self.IsRunning = false;
             self.CurrentPoint = 0;
             self.SearchUnits.Clear();
 
@@ -104,8 +102,8 @@
                 self.Dispose();
             }
         }
-        
-        private static void StepRunning(this Skill self)
+
+        public static void StepRunning(this Skill self)
         {
             if (self.CastFrame + self.DurationFrame > self.LSWorld().Frame)
             {

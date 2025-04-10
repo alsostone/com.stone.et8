@@ -19,7 +19,7 @@ namespace ET
         {
             LSUnit unit = self.LSOwner();
             PropComponent numericComponent = unit.GetComponent<PropComponent>();
-            FP speed = numericComponent.GetByKey(NumericType.Speed) / LSConstValue.PropPrecision;
+            FP speed = numericComponent.Get(NumericType.Speed) / LSConstValue.PropPrecision;
             TSVector2 v2 = self.LSInput.V * speed * LSConstValue.UpdateInterval / 1000;
             if (v2.LengthSquared() > FP.EN4)
             {

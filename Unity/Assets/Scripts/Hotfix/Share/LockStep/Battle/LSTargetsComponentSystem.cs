@@ -47,12 +47,17 @@ namespace ET
         
         public static void GetAllAttackTargets(this LSTargetsComponent self, List<SearchUnit> results)
         {
-            for (TeamType i = TeamType.None; i < TeamType.Max; i++)
+            for (TeamType team = TeamType.None; team < TeamType.Max; team++)
             {
-                if (self.TeamLSUnitsMap.TryGetValue(i, out var targets))
+                if (self.TeamLSUnitsMap.TryGetValue(team, out var targets))
                 {
-                    foreach (LSUnit target in targets)
+                    for(int i = targets.Count - 1; i >= 0; i--)
                     {
+                        LSUnit target = targets[i];
+                        if (target == null || target.DeadMark) {
+                            targets.RemoveAt(i);
+                            continue;
+                        }
                         if (target.Active) {
                             results.Add(new SearchUnit() { Target = target });
                         }
@@ -65,9 +70,15 @@ namespace ET
         {
             if (self.TeamLSUnitsMap.TryGetValue(teamFlag, out var targets))
             {
-                foreach (LSUnit target in targets)
+                for(int i = targets.Count - 1; i >= 0; i--)
                 {
-                    if (target.Active) {
+                    LSUnit target = targets[i];
+                    if (target == null || target.DeadMark) {
+                        targets.RemoveAt(i);
+                        continue;
+                    }
+                    if (target.Active)
+                    {
                         var dis = (target.Position - center).sqrMagnitude;
                         var sqrRange = target.GetAttackSqrRange(range);
                         if (sqrRange >= dis) {

@@ -17,9 +17,9 @@
         
         public static void DoDeath(this DeathComponent self)
         {
-            if (self.Dead) { return; }
-            self.Dead = true;
-            
+            // 死亡经验分配
+            //ExpGetHelper.ExpGetDead(attacker, entity);
+
             // entity.ComDeathDrop?.DoDrop();
             //
             // entity.ComActive?.SetActive(false);
@@ -30,11 +30,11 @@
             // entity.ComContainer?.DeathContent();
             // BattleWorld.Instance.BattleEventMgr.DispatchEvent((int)BattleEventType.EntityDeath, entity);
 
-            if (self.IsDeadRelease) {
+            if (self.IsDeadRelease)
+            {
                 EventSystem.Instance.Publish(self.LSWorld(), new LSUnitRemove() { Id = self.LSOwner().Id });
                 self.LSOwner().Dispose();
             }
         }
-        
     }
 }

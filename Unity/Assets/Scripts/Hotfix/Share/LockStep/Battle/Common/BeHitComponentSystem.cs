@@ -4,6 +4,7 @@ using TrueSync;
 namespace ET
 {
     [EntitySystemOf(typeof(BeHitComponent))]
+    [LSEntitySystemOf(typeof(BeHitComponent))]
     [FriendOf(typeof(BeHitComponent))]
     public static partial class BeHitComponentSystem
     {
@@ -21,8 +22,32 @@ namespace ET
             self.Attackers.Clear();
         }
         
+        [LSEntitySystem]
+        private static void LSUpdate(this BeHitComponent self)
+        {
+            LSUnit lsUnit = self.LSOwner();
+            if (lsUnit.DeadMark && !lsUnit.Dead)
+            {
+                // 释放死亡技能时还没有真正死亡
+                SkillComponent skillComponent = self.LSOwner().GetComponent<SkillComponent>();
+                if (skillComponent != null && skillComponent.HasRunningSkill())
+                    return;
+
+                self.LSOwner().Dead = true;
+                DeathComponent deathComponent = self.LSOwner().GetComponent<DeathComponent>();
+                if (deathComponent != null)
+                    deathComponent.DoDeath();
+                else
+                {
+                    EventSystem.Instance.Publish(self.LSWorld(), new LSUnitRemove() { Id = self.LSOwner().Id });
+                    self.LSOwner().Dispose();
+                }
+            }
+        }
+        
         public static void BeDamage(this BeHitComponent self, LSUnit attacker, long damage)
         {
+            if (self.LSOwner().DeadMark) { return; }
             // 处理是否免疫、格挡、闪避等
             // ...
             
@@ -33,32 +58,22 @@ namespace ET
 
         private static void DeductHp(this BeHitComponent self, LSUnit attacker, long value)
         {
-            var component = self.LSOwner().GetComponent<PropComponent>();
-            var hp = component.GetByKey(NumericType.Hp);
+            PropComponent component = self.LSOwner().GetComponent<PropComponent>();
+            long hp = component.Get(NumericType.Hp);
             if (hp <= 0) { return; }
 
-            var current = hp - value;
+            long current = hp - value;
             component.Set(NumericType.Hp, current);
-            if (current <= 0) {
-                // 死亡经验分配
-                //ExpGetHelper.ExpGetDead(attacker, entity);
-                
-                // 血量值空触发技能
-                var comSkill = self.LSOwner().GetComponent<SkillComponent>();
+            if (current <= 0)
+            {
+                // 血量值空触发死亡技能
+                SkillComponent comSkill = self.LSOwner().GetComponent<SkillComponent>();
                 if (comSkill != null)
                 {
                     comSkill.ForceAllDone();
                     comSkill.TryCastSkill(ESkillType.Dead);
                 }
-            
-                // 血量值空则死亡
-                var comDeath = self.LSOwner().GetComponent<DeathComponent>();
-                if (comDeath != null) {
-                    comDeath.DoDeath();
-                } else {
-                    EventSystem.Instance.Publish(self.LSWorld(), new LSUnitRemove() { Id = self.LSOwner().Id });
-                    self.LSOwner().Dispose();
-                }
+                self.LSOwner().DeadMark = true;
             }
         }
         

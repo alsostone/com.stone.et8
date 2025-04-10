@@ -19,8 +19,9 @@ namespace ET
 	        
 	        PropComponent propComponent = lsUnit.AddComponent<PropComponent>();
 	        foreach (var prop in row.Props) {
-		        propComponent.Set(prop.Key, prop.Value);
+		        propComponent.SetNoEvent(prop.Key, prop.Value);
 	        }
+	        EnsureRuntimeProp(propComponent);
 			
 			lsUnit.AddComponent<DeathComponent, bool>(false);
 			lsUnit.AddComponent<BuffComponent>();
@@ -47,10 +48,11 @@ namespace ET
 	        
 	        PropComponent propComponent = lsUnit.AddComponent<PropComponent>();
 	        foreach (var prop in row.Props) {
-		        propComponent.Set(prop.Key, prop.Value);
+		        propComponent.SetNoEvent(prop.Key, prop.Value);
 	        }
+	        EnsureRuntimeProp(propComponent);
 
-	        lsUnit.AddComponent<DeathComponent, bool>(false);
+	        lsUnit.AddComponent<DeathComponent, bool>(true);
 	        lsUnit.AddComponent<BuffComponent>();
 	        lsUnit.AddComponent<BeHitComponent>();
 	        lsUnit.AddComponent<SkillComponent, int[]>(row.Skills);
@@ -74,8 +76,9 @@ namespace ET
 	        
 	        PropComponent propComponent = lsUnit.AddComponent<PropComponent>();
 	        foreach (var prop in row.Props) {
-		        propComponent.Set(prop.Key, prop.Value);
+		        propComponent.SetNoEvent(prop.Key, prop.Value);
 	        }
+	        EnsureRuntimeProp(propComponent);
 
 	        lsUnit.AddComponent<DeathComponent, bool>(false);
 	        lsUnit.AddComponent<BuffComponent>();
@@ -99,5 +102,16 @@ namespace ET
 	        EventSystem.Instance.Publish(lsWorld, new LSUnitCreate() {LSUnit = lsUnit});
 	        return lsUnit;
         }
+        
+        // 确保实时属性存在
+        private static void EnsureRuntimeProp(PropComponent propComponent)
+		{
+			if (!propComponent.Contains(NumericType.Hp)) {
+				propComponent.Set(NumericType.Hp, propComponent.Get(NumericType.MaxHp));
+			}
+			if (!propComponent.Contains(NumericType.Mp)) {
+				propComponent.Set(NumericType.Mp, propComponent.Get(NumericType.MaxMp));
+			}
+		}
     }
 }
