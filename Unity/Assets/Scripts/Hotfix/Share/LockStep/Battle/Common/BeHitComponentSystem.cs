@@ -64,6 +64,7 @@ namespace ET
 
             long current = hp - value;
             component.Set(NumericType.Hp, current);
+            EventSystem.Instance.Publish(self.LSWorld(), new LSUnitFloating() { Id = self.LSOwner().Id, Value = value, Type = FloatingType.Damage});
             if (current <= 0)
             {
                 // 血量值空触发死亡技能

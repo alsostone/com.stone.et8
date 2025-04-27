@@ -9,6 +9,7 @@ namespace ET
         
         public const int Probability = 10000;           // 概率配置以万分比
         public const int PropPrecision = 10000;         // 数值配置以10000倍 以整形替代浮点表示
+        public const float PropPrecision2 = 0.0001f;         // 数值配置以10000倍 以整形替代浮点表示
         
         public const int PredictionFrameMaxCount = 15;  // 预测帧最大值
         public const int SaveLSWorldFrameCount = 60 * FrameCountPerSecond;
