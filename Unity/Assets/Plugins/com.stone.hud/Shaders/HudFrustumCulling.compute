@@ -1,0 +1,33 @@
+#pragma kernel FrustumCulling
+
+struct InstanceData
+{
+    int visible;
+    float3 position;
+    int index;
+    float progress;
+};
+
+matrix _VPMatrix;
+StructuredBuffer<InstanceData> _instanceBuffer;
+AppendStructuredBuffer<uint> _visibleBuffer;
+
+bool InFrustum(float4 clipPos)
+{
+    float3 absPos = abs(clipPos.xyz);
+    return absPos.x < clipPos.w && absPos.y < clipPos.w && absPos.z < clipPos.w;
+}
+
+[numthreads(64,1,1)]
+void FrustumCulling (uint3 id : SV_DispatchThreadID)
+{
+    InstanceData instance = _instanceBuffer[id.x];
+    if(instance.visible == 0)
+        return;
+    float4 posWS = float4(instance.position, 1.0);
+    float4 clipPos = mul(_VPMatrix, posWS);
+    if(!InFrustum(clipPos))
+        return;
+    
+    _visibleBuffer.Append(id.x);
+}
