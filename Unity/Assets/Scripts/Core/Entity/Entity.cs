@@ -818,6 +818,23 @@ namespace ET
 
             return component as K;
         }
+        
+        public K AddComponentWithId<K, P1, P2, P3, P4>(long id, P1 p1, P2 p2, P3 p3, P4 p4, bool isFromPool = false) where K : Entity, IAwake<P1, P2, P3, P4>, new()
+        {
+            Type type = typeof (K);
+            if (this.components != null && this.components.ContainsKey(this.GetLongHashCode(type)))
+            {
+                throw new Exception($"entity already has component: {type.FullName}");
+            }
+
+            Entity component = Create(type, isFromPool);
+            component.Id = id;
+            component.ComponentParent = this;
+            EntitySystemSingleton entitySystemSingleton = EntitySystemSingleton.Instance;
+            entitySystemSingleton.Awake(component, p1, p2, p3, p4);
+
+            return component as K;
+        }
 
         public K AddComponent<K>(bool isFromPool = false) where K : Entity, IAwake, new()
         {
@@ -837,6 +854,11 @@ namespace ET
         public K AddComponent<K, P1, P2, P3>(P1 p1, P2 p2, P3 p3, bool isFromPool = false) where K : Entity, IAwake<P1, P2, P3>, new()
         {
             return this.AddComponentWithId<K, P1, P2, P3>(this.Id, p1, p2, p3, isFromPool);
+        }
+        
+        public K AddComponent<K, P1, P2, P3, P4>(P1 p1, P2 p2, P3 p3, P4 p4, bool isFromPool = false) where K : Entity, IAwake<P1, P2, P3, P4>, new()
+        {
+            return this.AddComponentWithId<K, P1, P2, P3, P4>(this.Id, p1, p2, p3, p4, isFromPool);
         }
 
         public Entity AddChild(Entity entity)

@@ -12,7 +12,8 @@
         "Unity.ModelView",
         "YooAsset",
         "Unity.TextMeshPro",
-        "YIUIFramework"
+        "YIUIFramework",
+        "com.stone.hud"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],

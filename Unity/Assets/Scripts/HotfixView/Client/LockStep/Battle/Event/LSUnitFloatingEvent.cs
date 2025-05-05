@@ -3,7 +3,8 @@ using UnityEngine;
 namespace ET.Client
 {
     [Event(SceneType.LockStepClient)]
-    public class LSUnitFloatingEvent: AEvent<LSWorld, LSUnitFloating>
+    [FriendOf(typeof(LSUnitView))]
+    public class LSUnitFloatingEvent : AEvent<LSWorld, LSUnitFloating>
     {
         protected override async ETTask Run(LSWorld lsWorld, LSUnitFloating args)
         {

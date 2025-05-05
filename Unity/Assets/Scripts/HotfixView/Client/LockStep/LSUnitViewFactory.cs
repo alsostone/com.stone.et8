@@ -28,6 +28,8 @@ namespace ET.Client
 
         private static async ETTask CreateHeroViewAsync(Room room, LSWorld lsWorld, LSUnit lsUnit)
         {
+            Vector3 position = lsUnit.Position.ToVector();
+            
             Scene root = lsWorld.Root();
             string assetsName = $"Assets/Bundles/Unit/Unit.prefab";
             GameObject bundleGameObject = await root.GetComponent<ResourcesLoaderComponent>().LoadAssetAsync<GameObject>(assetsName);
@@ -35,10 +37,15 @@ namespace ET.Client
 
             GlobalComponent globalComponent = root.GetComponent<GlobalComponent>();
             GameObject unitGo = UnityEngine.Object.Instantiate(prefab, globalComponent.Unit, true);
-            unitGo.transform.position = lsUnit.Position.ToVector();
+            unitGo.transform.position = position;
 
             LSUnitView lsUnitView = room.GetComponent<LSUnitViewComponent>().AddChildWithId<LSUnitView, GameObject>(lsUnit.Id, unitGo);
             lsUnitView.AddComponent<LSAnimatorComponent>();
+
+            var propComponent = lsUnit.GetComponent<PropComponent>();
+            float hp = propComponent.GetAsFloat(NumericType.Hp);
+            float hpMax = propComponent.GetAsFloat(NumericType.MaxHp);
+            lsUnitView.AddComponent<LSHudComponent, Vector3, Transform, float, float>(Vector3.up * 1.75f, unitGo.transform, hp, hpMax);
         }
     }
 }

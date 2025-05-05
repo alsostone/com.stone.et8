@@ -7,7 +7,7 @@ namespace ET
 {
     public struct PropChange
     {
-        public LSUnit Unit;
+        public long Id;
         public NumericType NumericType;
         public long Old;
         public long New;
