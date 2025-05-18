@@ -45,7 +45,7 @@ namespace ET
             }
         }
         
-        public static void BeDamage(this BeHitComponent self, LSUnit attacker, long damage)
+        public static void BeDamage(this BeHitComponent self, LSUnit attacker, FP damage)
         {
             if (self.LSOwner().DeadMark) { return; }
             // 处理是否免疫、格挡、闪避等
@@ -56,13 +56,13 @@ namespace ET
             self.DeductHp(attacker, damage);
         }
 
-        private static void DeductHp(this BeHitComponent self, LSUnit attacker, long value)
+        private static void DeductHp(this BeHitComponent self, LSUnit attacker, FP value)
         {
             PropComponent component = self.LSOwner().GetComponent<PropComponent>();
-            long hp = component.Get(NumericType.Hp);
+            FP hp = component.Get(NumericType.Hp);
             if (hp <= 0) { return; }
 
-            long current = hp - value;
+            FP current = hp - value;
             component.Set(NumericType.Hp, current);
             EventSystem.Instance.Publish(self.LSWorld(), new LSUnitFloating() { Id = self.LSOwner().Id, Value = value, Type = FloatingType.Damage});
             if (current <= 0)

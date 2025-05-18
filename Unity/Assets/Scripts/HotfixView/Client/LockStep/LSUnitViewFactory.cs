@@ -43,8 +43,8 @@ namespace ET.Client
             lsUnitView.AddComponent<LSAnimatorComponent>();
 
             var propComponent = lsUnit.GetComponent<PropComponent>();
-            float hp = propComponent.GetAsFloat(NumericType.Hp);
-            float hpMax = propComponent.GetAsFloat(NumericType.MaxHp);
+            float hp = propComponent.Get(NumericType.Hp).AsFloat();
+            float hpMax = propComponent.Get(NumericType.MaxHp).AsFloat();
             lsUnitView.AddComponent<LSHudComponent, Vector3, Transform, float, float>(Vector3.up * 1.75f, unitGo.transform, hp, hpMax);
         }
     }

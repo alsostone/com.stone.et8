@@ -19,8 +19,7 @@ namespace ET
         {
             LSUnit unit = self.LSOwner();
             PropComponent numericComponent = unit.GetComponent<PropComponent>();
-            FP speed = numericComponent.Get(NumericType.Speed) / LSConstValue.PropPrecision;
-            TSVector2 v2 = self.LSInput.V * speed * LSConstValue.UpdateInterval / 1000;
+            TSVector2 v2 = self.LSInput.V * numericComponent.Get(NumericType.Speed) * LSConstValue.UpdateInterval / LSConstValue.Milliseconds;
             if (v2.LengthSquared() > FP.EN4)
             {
                 TSVector oldPos = unit.Position;

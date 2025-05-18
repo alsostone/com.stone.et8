@@ -86,7 +86,7 @@ namespace ET
         private static void DoDamage(int[] param, LSUnit owner, LSUnit target)
         {
             var damage = owner.GetComponent<PropComponent>().Get(NumericType.Atk);
-            if (param.Length > 0) { damage += (damage * param[0]) / LSConstValue.PropPrecision; }
+            if (param.Length > 0) { damage += damage * (param[0] * FP.EN4); }
             target.GetComponent<BeHitComponent>()?.BeDamage(owner, damage);
         }
         

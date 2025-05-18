@@ -2,6 +2,7 @@
 using MemoryPack;
 using MongoDB.Bson.Serialization.Attributes;
 using MongoDB.Bson.Serialization.Options;
+using TrueSync;
 
 namespace ET
 {
@@ -9,8 +10,8 @@ namespace ET
     {
         public long Id;
         public NumericType NumericType;
-        public long Old;
-        public long New;
+        public FP Old;
+        public FP New;
     }
 
     [ComponentOf(typeof(LSUnit))]
@@ -18,6 +19,6 @@ namespace ET
     public partial class PropComponent: LSEntity, IAwake, ISerializeToEntity
     {
         [BsonDictionaryOptions(DictionaryRepresentation.ArrayOfArrays)]
-        public Dictionary<NumericType, long> NumericDic = new Dictionary<NumericType, long>();
+        public Dictionary<NumericType, FP> NumericDic = new Dictionary<NumericType, FP>();
     }
 }

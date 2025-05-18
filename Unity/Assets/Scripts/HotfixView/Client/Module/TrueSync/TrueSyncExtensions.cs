@@ -8,19 +8,19 @@ using UnityEngine;
 public static class TrueSyncExtensions {
 
     public static TSVector ToTSVector(this Vector3 vector) {
-        return new TSVector(vector.x, vector.y, vector.z);
+        return new TSVector((FP)vector.x, (FP)vector.y, (FP)vector.z);
     }
 
     public static TSVector2 ToTSVector2(this Vector3 vector) {
-        return new TSVector2(vector.x, vector.y);
+        return new TSVector2((FP)vector.x, (FP)vector.y);
     }
 
     public static TSVector ToTSVector(this Vector2 vector) {
-        return new TSVector(vector.x, vector.y, 0);
+        return new TSVector((FP)vector.x, (FP)vector.y, 0);
     }
 
     public static TSVector2 ToTSVector2(this Vector2 vector) {
-        return new TSVector2(vector.x, vector.y);
+        return new TSVector2((FP)vector.x, (FP)vector.y);
     }
 
     public static Vector3 Abs(this Vector3 vector) {
@@ -28,7 +28,7 @@ public static class TrueSyncExtensions {
 	}
 
     public static TSQuaternion ToTSQuaternion(this Quaternion rot) {
-        return new TSQuaternion(rot.x, rot.y, rot.z, rot.w);
+        return new TSQuaternion((FP)rot.x, (FP)rot.y, (FP)rot.z, (FP)rot.w);
     }
 
     public static Quaternion ToQuaternion(this TSQuaternion rot) {

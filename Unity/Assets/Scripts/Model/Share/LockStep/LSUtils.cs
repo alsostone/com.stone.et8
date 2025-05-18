@@ -32,9 +32,9 @@ namespace ET
             return entity.LSWorld().Random;
         }
         
-        public static int Convert2Frame(this int time)
+        public static int Convert2Frame(this int milliseconds)
         {
-            return (time / LSConstValue.UpdateInterval);
+            return (milliseconds / LSConstValue.UpdateInterval);
         }
 
         public static FP GetAttackSqrRange(this LSUnit unit, FP range)

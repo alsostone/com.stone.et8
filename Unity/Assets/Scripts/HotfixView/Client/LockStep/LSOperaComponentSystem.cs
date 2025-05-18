@@ -16,7 +16,7 @@ namespace ET.Client
         private static void Update(this LSOperaComponent self)
         {
             LSClientUpdater lsClientUpdater = self.GetParent<Room>().GetComponent<LSClientUpdater>();
-            TSVector2 v = new TSVector2(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"));
+            TSVector2 v = new TSVector2((FP)Input.GetAxis("Horizontal"), (FP)Input.GetAxis("Vertical"));
             lsClientUpdater.Input.V = v.normalized;
             
             if (Input.GetKeyDown(KeyCode.J))

@@ -22,8 +22,8 @@
         {
             // 普通攻击的CD由攻速计算
             if (self.TbSkillRow.SkillType == ESkillType.Normal) {
-                int atkSpeed = (int)self.LSOwner().GetComponent<PropComponent>().Get(NumericType.AtkSpeed);
-                return self.CastFrame + (LSConstValue.PrecisionMulMillsecond / atkSpeed).Convert2Frame() > self.LSWorld().Frame;
+                var atkSpeed = self.LSOwner().GetComponent<PropComponent>().Get(NumericType.AtkSpeed);
+                return self.CastFrame + ((int)(LSConstValue.Milliseconds / atkSpeed)).Convert2Frame() > self.LSWorld().Frame;
             }
             return self.CastFrame + self.TbSkillRow.CdTime.Convert2Frame() > self.LSWorld().Frame;
         }

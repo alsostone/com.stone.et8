@@ -16,13 +16,13 @@ namespace ET.Client
             switch (args.Type)
             {
                 case FloatingType.Damage:
-                    FloatingTextSpawner.instance.FloatingDamageNumber(args.Value * LSConstValue.PropPrecision2, position);
+                    FloatingTextSpawner.instance.FloatingDamageNumber(args.Value.AsFloat(), position);
                     break;
                 case FloatingType.Heal:
-                    FloatingTextSpawner.instance.FloatingHealNumber(args.Value * LSConstValue.PropPrecision2, position);
+                    FloatingTextSpawner.instance.FloatingHealNumber(args.Value.AsFloat(), position);
                     break;
                 case FloatingType.Exp:
-                    FloatingTextSpawner.instance.FloatingExpNumber(args.Value * LSConstValue.PropPrecision2, position, view.Transform);
+                    FloatingTextSpawner.instance.FloatingExpNumber(args.Value.AsFloat(), position, view.Transform);
                     break;
                 default:
                     var value = (int)args.Value - (int)FloatingType.Dodge;

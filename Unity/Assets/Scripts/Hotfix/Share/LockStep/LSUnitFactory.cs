@@ -19,7 +19,7 @@ namespace ET
 	        
 	        PropComponent propComponent = lsUnit.AddComponent<PropComponent>();
 	        foreach (var prop in row.Props) {
-		        propComponent.SetNoEvent(prop.Key, prop.Value);
+		        propComponent.Set(prop.Key, prop.Value * FP.EN4, false);
 	        }
 	        EnsureRuntimeProp(propComponent);
 			
@@ -48,7 +48,7 @@ namespace ET
 	        
 	        PropComponent propComponent = lsUnit.AddComponent<PropComponent>();
 	        foreach (var prop in row.Props) {
-		        propComponent.SetNoEvent(prop.Key, prop.Value);
+		        propComponent.Set(prop.Key, prop.Value * FP.EN4, false);
 	        }
 	        EnsureRuntimeProp(propComponent);
 
@@ -76,7 +76,7 @@ namespace ET
 	        
 	        PropComponent propComponent = lsUnit.AddComponent<PropComponent>();
 	        foreach (var prop in row.Props) {
-		        propComponent.SetNoEvent(prop.Key, prop.Value);
+		        propComponent.Set(prop.Key, prop.Value * FP.EN4, false);
 	        }
 	        EnsureRuntimeProp(propComponent);
 

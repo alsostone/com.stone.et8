@@ -20,10 +20,10 @@ namespace ET.Client
             switch (args.NumericType)
             {
                 case NumericType.Hp:
-                    hudComponent.SetHp(args.New * LSConstValue.PropPrecision2);
+                    hudComponent.SetHp(args.New.AsFloat());
                     break;
                 case NumericType.MaxHp:
-                    hudComponent.SetMaxHp(args.New * LSConstValue.PropPrecision2);
+                    hudComponent.SetMaxHp(args.New.AsFloat());
                     break;
             }
             await ETTask.CompletedTask;

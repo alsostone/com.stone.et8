@@ -1,3 +1,5 @@
+using TrueSync;
+
 namespace ET
 {
     public struct LSUnitCreate
@@ -23,7 +25,7 @@ namespace ET
     public struct LSUnitFloating
     {
         public long Id;
-        public long Value;
+        public FP Value;
         public FloatingType Type;
     }
 }
