@@ -101,15 +101,14 @@ Shader "ST/HudIndirectInstancing"
 
 			fixed4 frag(v2f i) : SV_Target
 			{
-				float factor = step(i.color.a, 1);
-				
 				float3 uv = float3(i.uv.xy, i.param.x);
 				fixed4 color1 = UNITY_SAMPLE_TEX2DARRAY(_FontTex, uv);
+				color1.a = lerp(color1.a, 0, step(i.param.x, 0));
 				
 				float t = step(i.param.y, i.uv.x);
 				fixed4 color2 = lerp(i.color, _Color, t);
 				
-				fixed4 col = lerp(color2, color1, factor);
+				fixed4 col = lerp(color2, color1, step(i.color.a, 1.001));
                 clip(col.a - 0.01);
 				return col;
 			}
