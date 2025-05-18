@@ -22,10 +22,8 @@ namespace ET.Client
             Scene root = room.Root();
 
             int i = 0;
-            while (true)
+            while (timeNow >= room.FixedTimeCounter.FrameTime(room.PredictionFrame + 1))
             {
-                if (timeNow < room.FixedTimeCounter.FrameTime(room.PredictionFrame + 1))
-                    break;
                 if (room.PredictionFrame - room.AuthorityFrame > LSConstValue.PredictionFrameMaxCount)
                     break;
 
