@@ -54,7 +54,7 @@ MonoBehaviour:
   enable3DGame: 1
   faceCameraView: 1
   lookAtCamera: 0
-  renderThroughWalls: 0
+  renderThroughWalls: 1
   consistentScreenSize: 1
   distanceScalingSettings:
     baseDistance: 15
