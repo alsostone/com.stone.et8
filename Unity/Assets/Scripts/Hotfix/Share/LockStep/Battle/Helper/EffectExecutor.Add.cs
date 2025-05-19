@@ -10,12 +10,13 @@ namespace ET
         }
         private static void AddProperty(int[] param, LSUnit owner, LSUnit target)
         {
-            // if (param.Count != 3) { return; }
-            // var propType = (kPropertyType)param[0];
-            // var propOpType = (kPropertyOpType)param[1];
-            // var value = new FP(param[2]) * FP.EN4;
-            //
-            // target.Get<Entity>().ComProperty.AddPropertyValue(propType, propOpType, value);
+            for (int i = 0; i < param.Length - 1; i+=2)
+            {
+                if (param[i] == 0) { continue; }
+                NumericType type = (NumericType)param[i];
+                FP value = param[i + 1] * FP.EN4;
+                target.GetComponent<PropComponent>().Add(type, value);
+            }
         }
         private static void AddDynamicProperty(int[] param, LSUnit owner, LSUnit target)
         {

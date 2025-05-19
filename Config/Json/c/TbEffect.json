@@ -1,159 +1,5 @@
 [
   {
-    "Id": 10,
-    "name": "全局增加复活间隔1级",
-    "group_id": 1,
-    "success_conds": [],
-    "failure_conds": [],
-    "action_type": 1,
-    "action_param": [
-      9
-    ]
-  },
-  {
-    "Id": 20,
-    "name": "全局增加复活间隔2级",
-    "group_id": 2,
-    "success_conds": [],
-    "failure_conds": [],
-    "action_type": 1,
-    "action_param": [
-      9
-    ]
-  },
-  {
-    "Id": 30,
-    "name": "全局增加复活间隔3级",
-    "group_id": 3,
-    "success_conds": [],
-    "failure_conds": [],
-    "action_type": 1,
-    "action_param": [
-      9
-    ]
-  },
-  {
-    "Id": 40,
-    "name": "全局增加复活间隔4级",
-    "group_id": 4,
-    "success_conds": [],
-    "failure_conds": [],
-    "action_type": 1,
-    "action_param": [
-      9
-    ]
-  },
-  {
-    "Id": 1010,
-    "name": "全局加快小水塔速度1级",
-    "group_id": 101,
-    "success_conds": [],
-    "failure_conds": [],
-    "action_type": 1,
-    "action_param": [
-      8
-    ]
-  },
-  {
-    "Id": 1020,
-    "name": "全局加快小水塔速度2级",
-    "group_id": 102,
-    "success_conds": [],
-    "failure_conds": [],
-    "action_type": 1,
-    "action_param": [
-      8
-    ]
-  },
-  {
-    "Id": 1030,
-    "name": "全局加快小水塔速度3级",
-    "group_id": 103,
-    "success_conds": [],
-    "failure_conds": [],
-    "action_type": 1,
-    "action_param": [
-      8
-    ]
-  },
-  {
-    "Id": 2010,
-    "name": "全局加快大水塔速度1级",
-    "group_id": 201,
-    "success_conds": [],
-    "failure_conds": [],
-    "action_type": 1,
-    "action_param": [
-      8
-    ]
-  },
-  {
-    "Id": 2020,
-    "name": "全局加快大水塔速度2级",
-    "group_id": 202,
-    "success_conds": [],
-    "failure_conds": [],
-    "action_type": 1,
-    "action_param": [
-      8
-    ]
-  },
-  {
-    "Id": 2030,
-    "name": "全局加快大水塔速度3级",
-    "group_id": 203,
-    "success_conds": [],
-    "failure_conds": [],
-    "action_type": 1,
-    "action_param": [
-      8
-    ]
-  },
-  {
-    "Id": 3010,
-    "name": "全局增加种子箱攻速1级",
-    "group_id": 301,
-    "success_conds": [],
-    "failure_conds": [],
-    "action_type": 1,
-    "action_param": [
-      8
-    ]
-  },
-  {
-    "Id": 3020,
-    "name": "全局增加种子箱攻速2级",
-    "group_id": 302,
-    "success_conds": [],
-    "failure_conds": [],
-    "action_type": 1,
-    "action_param": [
-      8
-    ]
-  },
-  {
-    "Id": 3030,
-    "name": "全局增加种子箱攻速3级",
-    "group_id": 303,
-    "success_conds": [],
-    "failure_conds": [],
-    "action_type": 1,
-    "action_param": [
-      8
-    ]
-  },
-  {
-    "Id": 3040,
-    "name": "全局增加种子箱攻速4级",
-    "group_id": 304,
-    "success_conds": [],
-    "failure_conds": [],
-    "action_type": 1,
-    "action_param": [
-      8
-    ]
-  },
-  {
     "Id": 100000010,
     "name": "英雄1000普攻",
     "group_id": 10000001,
@@ -175,13 +21,13 @@
   },
   {
     "Id": 100001011,
-    "name": "英雄1000，植物加速成长",
+    "name": "英雄1000，攻速加成50%",
     "group_id": 100001011,
     "success_conds": [],
     "failure_conds": [],
     "action_type": 1,
     "action_param": [
-      5
+      10073
     ]
   },
   {
@@ -193,17 +39,6 @@
     "action_type": 5,
     "action_param": [
       10000201
-    ]
-  },
-  {
-    "Id": 100002011,
-    "name": "英雄1000，建筑和士兵攻速增加",
-    "group_id": 100002011,
-    "success_conds": [],
-    "failure_conds": [],
-    "action_type": 1,
-    "action_param": [
-      8
     ]
   },
   {
@@ -230,13 +65,13 @@
   },
   {
     "Id": 300101010,
-    "name": "小水井塔死亡增加大水井塔产水",
+    "name": "移速加成50%",
     "group_id": 30010101,
     "success_conds": [],
     "failure_conds": [],
     "action_type": 1,
     "action_param": [
-      8
+      10053
     ]
   },
   {
@@ -433,30 +268,7 @@
     "failure_conds": [],
     "action_type": 13,
     "action_param": [
-      9000,
-      8
-    ]
-  },
-  {
-    "Id": 920200020,
-    "name": "干旱降低水塔速度Buff",
-    "group_id": 92020002,
-    "success_conds": [],
-    "failure_conds": [],
-    "action_type": 5,
-    "action_param": [
-      92020002
-    ]
-  },
-  {
-    "Id": 920200021,
-    "name": "干旱降低水塔速度",
-    "group_id": 920200021,
-    "success_conds": [],
-    "failure_conds": [],
-    "action_type": 1,
-    "action_param": [
-      8
+      9000
     ]
   }
 ]

@@ -89,6 +89,12 @@ public static void ExcelAllExporter()
 #endif
 }
 ```
+## 插件目录
+项目中用到了以下插件，部分为付费插件，如商用请在Unity商店购买。此处只做学习研究使用，如有侵权请联系删除。
+
+1. 伤害飘字使用DamageNumbersPro [Unity商店地址](https://assetstore.unity.com/packages/2d/gui/damage-numbers-pro-186447)
+2. 血条HUD是用com.stone.hud [GitHub地址](https://github.com/alsostone/com.stone.hud)
+
 # Reference
 1. ET [ET8.1](https://github.com/egametang/ET/tree/release8.1)
 2. YIUI [YIUI-ET8.1](https://github.com/LiShengYang-yiyi/YIUI/tree/YIUI-ET8.1)
