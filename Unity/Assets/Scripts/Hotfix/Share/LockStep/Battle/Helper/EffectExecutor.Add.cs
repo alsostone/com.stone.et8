@@ -18,46 +18,30 @@ namespace ET
                 target.GetComponent<PropComponent>().Add(type, value);
             }
         }
-        private static void AddDynamicProperty(int[] param, LSUnit owner, LSUnit target)
+        private static void AddRealProperty(int[] param, LSUnit owner, LSUnit target)
         {
-            // if (param.Count < 3) { return; }
-            // var targetEntity = target.Get<Entity>();
-            //
-            // var propType = (kPropertyType)param[0];
-            // var propOpType = (kPropertyOpType)param[1];
-            // var value = new FP(param[2]) * FP.EN4;
-            // var createWater = param.Count > 3 && param[3] > 0;
-            //
-            // if (propOpType == kPropertyOpType.P || propOpType == kPropertyOpType.Bp)
-            // {
-            //     switch (propType)
-            //     {
-            //         case kPropertyType.Hp:
-            //             value *= targetEntity.ComProperty.GetPropertyValue(kPropertyType.HpMax);
-            //             break;
-            //         case kPropertyType.Water:
-            //             value *= targetEntity.ComProperty.GetPropertyValue(kPropertyType.WaterMax);
-            //             break;
-            //     }
-            // }
-            //
-            // var change = targetEntity.ComProperty.AddDynamicPropertyValue(propType, value);
-            // // 产水
-            // if (change && propType == kPropertyType.Water && createWater)
-            // {
-            //     var position = BattleRandom.Range(targetEntity.ComTransform.Bound, FP.EN1 * 2);
-            //     position.y = FP.EN1 * 3;
-            //     var waterDrop = BattleWorld.Instance.EntityMgr.CreateDrop(9000, targetEntity.ComTeam.TeamFlag, position, FPVector.zero);
-            //     targetEntity.ComContainer.PutContent(waterDrop.Handle, target);
-            // }
+            if (param.Length < 2) { return; }
+            
+            NumericType type = (NumericType)param[0];
+            NumericType typeMax = (NumericType)(param[0] + LSConstValue.PropRuntime2MaxOffset);
+            
+            PropComponent propComponent = target.GetComponent<PropComponent>();
+            FP runtimeValue = propComponent.Get(type);
+            FP maxValue = propComponent.Get(typeMax);
+            
+            FP value = param[1] * FP.EN4;
+            FP newValue = TSMath.Min(runtimeValue + value, maxValue);
+            propComponent.Set(type, newValue);
         }
         private static void SubProperty(int[] param, LSUnit owner, LSUnit target)
         {
-            // if (param.Count != 3) { return; }
-            // var propType = (kPropertyType)param[0];
-            // var propOpType = (kPropertyOpType)param[1];
-            // var value = new FP(param[2]) * FP.EN4;
-            // target.Get<Entity>().ComProperty.AddPropertyValue(propType, propOpType, -value);
+            for (int i = 0; i < param.Length - 1; i+=2)
+            {
+                if (param[i] == 0) { continue; }
+                NumericType type = (NumericType)param[i];
+                FP value = param[i + 1] * FP.EN4;
+                target.GetComponent<PropComponent>().Add(type, -value);
+            }
         }
         private static void ChangeState(int[] param, LSUnit owner, LSUnit target)
         {

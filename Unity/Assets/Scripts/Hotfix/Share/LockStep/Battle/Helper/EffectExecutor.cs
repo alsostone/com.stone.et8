@@ -60,11 +60,11 @@ namespace ET
                 case ESkillEffectType.ADD_BUFF:
                     AddBuff(res.ActionParam, owner, target);
                     break;
-                case ESkillEffectType.CHANGE_PROPERTY:
+                case ESkillEffectType.ChangeProperty:
                     AddProperty(res.ActionParam, owner, target);
                     break;
-                case ESkillEffectType.CHANGE_PROPERTY_DYNAMIC:
-                    AddDynamicProperty(res.ActionParam, owner, target);
+                case ESkillEffectType.ChangePropertyReal:
+                    AddRealProperty(res.ActionParam, owner, target);
                     break;
                 case ESkillEffectType.CHANGE_STATE:
                     ChangeState(res.ActionParam, owner, target);
@@ -99,7 +99,7 @@ namespace ET
         private static void ReverseExecute(TbEffectRow tbEffectRow, LSUnit owner, LSUnit target)
         {
             switch (tbEffectRow.ActionType) {
-                case ESkillEffectType.CHANGE_PROPERTY:
+                case ESkillEffectType.ChangeProperty:
                     SubProperty(tbEffectRow.ActionParam, owner, target);
                     break;
             }

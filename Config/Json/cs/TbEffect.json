@@ -43,18 +43,18 @@
   },
   {
     "Id": 300000010,
-    "name": "大水井生产水",
+    "name": "大水井恢复血量",
     "group_id": 30000001,
     "success_conds": [],
     "failure_conds": [],
     "action_type": 2,
     "action_param": [
-      2
+      1
     ]
   },
   {
     "Id": 300100010,
-    "name": "小水井生产水",
+    "name": "小水井恢复蓝量",
     "group_id": 30010001,
     "success_conds": [],
     "failure_conds": [],
@@ -240,7 +240,7 @@
   },
   {
     "Id": 920100010,
-    "name": "使用水瓶",
+    "name": "使用蓝瓶",
     "group_id": 92010001,
     "success_conds": [],
     "failure_conds": [],

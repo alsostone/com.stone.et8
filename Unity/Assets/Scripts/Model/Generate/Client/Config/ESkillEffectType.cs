@@ -19,12 +19,12 @@ namespace ET
         /// <summary>
         /// 属性改变
         /// </summary>
-        CHANGE_PROPERTY = 1,
+        ChangeProperty = 1,
 
         /// <summary>
-        /// 动态属性改变
+        /// 实时属性改变
         /// </summary>
-        CHANGE_PROPERTY_DYNAMIC = 2,
+        ChangePropertyReal = 2,
 
         /// <summary>
         /// 状态改变
