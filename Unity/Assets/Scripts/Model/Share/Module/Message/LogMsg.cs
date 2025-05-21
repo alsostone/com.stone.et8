@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Diagnostics;
 
 namespace ET
 {
@@ -10,12 +11,17 @@ namespace ET
             OuterMessage.G2C_Ping, 
             OuterMessage.C2G_Benchmark, 
             OuterMessage.G2C_Benchmark,
+            LockStepOuter.FrameMessage,
+            LockStepOuter.OneFrameInputs,
+            LockStepOuter.C2Room_CheckHash,
+            LockStepOuter.Room2C_AdjustUpdateTime,
         };
 
         public void Awake()
         {
         }
 
+        [Conditional("DEBUG")]
         public void Debug(Fiber fiber, object msg)
         {
             ushort opcode = OpcodeType.Instance.GetOpcode(msg.GetType());

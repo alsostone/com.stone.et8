@@ -14,7 +14,7 @@ namespace ET
     /// </summary>
     public enum ESkillEffectType
     {
-        NONE = 0,
+        None = 0,
 
         /// <summary>
         /// 属性改变
@@ -27,14 +27,14 @@ namespace ET
         ChangePropertyReal = 2,
 
         /// <summary>
-        /// 状态改变
+        /// 攻击力百分比+固定值
         /// </summary>
-        CHANGE_STATE = 3,
+        Healing = 3,
 
         /// <summary>
-        /// 普通攻击
+        /// 攻击力百分比+固定值
         /// </summary>
-        ATTACK = 4,
+        Damage = 4,
 
         /// <summary>
         /// 添加Buff

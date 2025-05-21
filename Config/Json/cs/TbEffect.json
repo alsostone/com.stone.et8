@@ -140,7 +140,7 @@
   },
   {
     "Id": 400000010,
-    "name": "普通攻击植物-普攻",
+    "name": "伤害植物-普攻",
     "group_id": 40000001,
     "success_conds": [],
     "failure_conds": [],
@@ -149,7 +149,7 @@
   },
   {
     "Id": 400001010,
-    "name": "普通攻击植物-死亡自爆",
+    "name": "伤害植物-死亡自爆",
     "group_id": 40000101,
     "success_conds": [],
     "failure_conds": [],

@@ -18,21 +18,6 @@ namespace ET
                 target.GetComponent<PropComponent>().Add(type, value);
             }
         }
-        private static void AddRealProperty(int[] param, LSUnit owner, LSUnit target)
-        {
-            if (param.Length < 2) { return; }
-            
-            NumericType type = (NumericType)param[0];
-            NumericType typeMax = (NumericType)(param[0] + LSConstValue.PropRuntime2MaxOffset);
-            
-            PropComponent propComponent = target.GetComponent<PropComponent>();
-            FP runtimeValue = propComponent.Get(type);
-            FP maxValue = propComponent.Get(typeMax);
-            
-            FP value = param[1] * FP.EN4;
-            FP newValue = TSMath.Min(runtimeValue + value, maxValue);
-            propComponent.Set(type, newValue);
-        }
         private static void SubProperty(int[] param, LSUnit owner, LSUnit target)
         {
             for (int i = 0; i < param.Length - 1; i+=2)
@@ -42,6 +27,13 @@ namespace ET
                 FP value = param[i + 1] * FP.EN4;
                 target.GetComponent<PropComponent>().Add(type, -value);
             }
+        }
+        private static void AddRealProperty(int[] param, LSUnit owner, LSUnit target)
+        {
+            if (param.Length < 2) { return; }
+            NumericType type = (NumericType)param[0];
+            PropComponent propComponent = target.GetComponent<PropComponent>();
+            propComponent.AddRealProp(type, param[1] * FP.EN4);
         }
         private static void ChangeState(int[] param, LSUnit owner, LSUnit target)
         {
@@ -68,10 +60,29 @@ namespace ET
             LSUnitFactory.CreateBullet(owner.GetParent<LSWorld>(), param[0], owner.Position + position, rotation, owner, target);
         }
         
+        private static void DoHealing(int[] param, LSUnit owner, LSUnit target)
+        {
+            FP attack = owner.GetComponent<PropComponent>().Get(NumericType.Atk);
+            if (param.Length > 0)
+            {
+                attack *= param[0] * FP.EN4;
+            }
+            attack += param.Length > 1 ? param[1] * FP.EN4 : 0;
+            target.GetComponent<BeHitComponent>()?.BeHealing(owner, attack);
+        }
+
         private static void DoDamage(int[] param, LSUnit owner, LSUnit target)
         {
-            var damage = owner.GetComponent<PropComponent>().Get(NumericType.Atk);
-            if (param.Length > 0) { damage += damage * (param[0] * FP.EN4); }
+            FP attack = owner.GetComponent<PropComponent>().Get(NumericType.Atk);
+            if (param.Length > 0)
+            {
+                attack *= param[0] * FP.EN4;
+            }
+            attack += param.Length > 1 ? param[1] * FP.EN4 : 0;
+            
+            // 多人合作时伤害使用攻-防，以使得攻防属性变化敏感度最高。 最低1点
+            FP defense = target.GetComponent<PropComponent>().Get(NumericType.Def);
+            FP damage = TSMath.Max(attack - defense, FP.One);
             target.GetComponent<BeHitComponent>()?.BeDamage(owner, damage);
         }
         

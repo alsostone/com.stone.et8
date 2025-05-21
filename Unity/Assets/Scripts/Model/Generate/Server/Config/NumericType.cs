@@ -239,5 +239,245 @@ namespace ET
         /// </summary>
         AtkSpeedFinalPct = 10075,
 
+        /// <summary>
+        /// 攻击距离
+        /// </summary>
+        AtkRange = 1008,
+
+        /// <summary>
+        /// 攻击距离B
+        /// </summary>
+        AtkRangeBase = 10081,
+
+        /// <summary>
+        /// 攻击距离BD
+        /// </summary>
+        AtkRangeBaseAdd = 10082,
+
+        /// <summary>
+        /// 攻击距离BP
+        /// </summary>
+        AtkRangeBasePct = 10083,
+
+        /// <summary>
+        /// 攻击距离FD
+        /// </summary>
+        AtkRangeFinalAdd = 10084,
+
+        /// <summary>
+        /// 攻击距离FP
+        /// </summary>
+        AtkRangeFinalPct = 10085,
+
+        /// <summary>
+        /// 暴击率
+        /// </summary>
+        CriticalRate = 1009,
+
+        /// <summary>
+        /// 暴击率B
+        /// </summary>
+        CriticalRateBase = 10091,
+
+        /// <summary>
+        /// 暴击率BD
+        /// </summary>
+        CriticalRateBaseAdd = 10092,
+
+        /// <summary>
+        /// 暴击率BP
+        /// </summary>
+        CriticalRateBasePct = 10093,
+
+        /// <summary>
+        /// 暴击率FD
+        /// </summary>
+        CriticalRateFinalAdd = 10094,
+
+        /// <summary>
+        /// 暴击率FP
+        /// </summary>
+        CriticalRateFinalPct = 10095,
+
+        /// <summary>
+        /// 暴击伤害比例
+        /// </summary>
+        CriticalDamagePercent = 1010,
+
+        /// <summary>
+        /// 暴击伤害比例B
+        /// </summary>
+        CriticalDamagePercentBase = 10101,
+
+        /// <summary>
+        /// 暴击伤害比例BD
+        /// </summary>
+        CriticalDamagePercentBaseAdd = 10102,
+
+        /// <summary>
+        /// 暴击伤害比例BP
+        /// </summary>
+        CriticalDamagePercentBasePct = 10103,
+
+        /// <summary>
+        /// 暴击伤害比例FD
+        /// </summary>
+        CriticalDamagePercentFinalAdd = 10104,
+
+        /// <summary>
+        /// 暴击伤害比例FP
+        /// </summary>
+        CriticalDamagePercentFinalPct = 10105,
+
+        /// <summary>
+        /// 反弹伤害比例
+        /// </summary>
+        ReboundDamagePercent = 1011,
+
+        /// <summary>
+        /// 反弹伤害比例B
+        /// </summary>
+        ReboundDamagePercentBaseRate = 10111,
+
+        /// <summary>
+        /// 反弹伤害比例BD
+        /// </summary>
+        ReboundDamagePercentBaseAddRate = 10112,
+
+        /// <summary>
+        /// 反弹伤害比例BP
+        /// </summary>
+        ReboundDamagePercentBasePctRate = 10113,
+
+        /// <summary>
+        /// 反弹伤害比例FD
+        /// </summary>
+        ReboundDamagePercentFinalAddRate = 10114,
+
+        /// <summary>
+        /// 反弹伤害比例FP
+        /// </summary>
+        ReboundDamagePercentFinalPctRate = 10115,
+
+        /// <summary>
+        /// 格挡率
+        /// </summary>
+        BlockRate = 1012,
+
+        /// <summary>
+        /// 格挡率B
+        /// </summary>
+        BlockRateBase = 10121,
+
+        /// <summary>
+        /// 格挡率BD
+        /// </summary>
+        BlockRateBaseAdd = 10122,
+
+        /// <summary>
+        /// 格挡率BP
+        /// </summary>
+        BlockRateBasePct = 10123,
+
+        /// <summary>
+        /// 格挡率FD
+        /// </summary>
+        BlockRateFinalAdd = 10124,
+
+        /// <summary>
+        /// 格挡率FP
+        /// </summary>
+        BlockRateFinalPct = 10125,
+
+        /// <summary>
+        /// 格挡伤害比例
+        /// </summary>
+        BlockDamagePercent = 1013,
+
+        /// <summary>
+        /// 格挡伤害比例B
+        /// </summary>
+        BlockDamagePercentBase = 10131,
+
+        /// <summary>
+        /// 格挡伤害比例BD
+        /// </summary>
+        BlockDamagePercentBaseAdd = 10132,
+
+        /// <summary>
+        /// 格挡伤害比例BP
+        /// </summary>
+        BlockDamagePercentBasePct = 10133,
+
+        /// <summary>
+        /// 格挡伤害比例FD
+        /// </summary>
+        BlockDamagePercentFinalAdd = 10134,
+
+        /// <summary>
+        /// 格挡伤害比例FP
+        /// </summary>
+        BlockDamagePercentFinalPct = 10135,
+
+        /// <summary>
+        /// 闪避率
+        /// </summary>
+        EvasionRate = 1014,
+
+        /// <summary>
+        /// 闪避率B
+        /// </summary>
+        EvasionRateBase = 10141,
+
+        /// <summary>
+        /// 闪避率BD
+        /// </summary>
+        EvasionRateBaseAdd = 10142,
+
+        /// <summary>
+        /// 闪避率BP
+        /// </summary>
+        EvasionRateBasePct = 10143,
+
+        /// <summary>
+        /// 闪避率FD
+        /// </summary>
+        EvasionRateFinalAdd = 10144,
+
+        /// <summary>
+        /// 闪避率FP
+        /// </summary>
+        EvasionRateFinalPct = 10145,
+
+        /// <summary>
+        /// 反击率
+        /// </summary>
+        CounterRate = 1015,
+
+        /// <summary>
+        /// 反击率B
+        /// </summary>
+        CounterRateBase = 10151,
+
+        /// <summary>
+        /// 反击率BD
+        /// </summary>
+        CounterRateBaseAdd = 10152,
+
+        /// <summary>
+        /// 反击率BP
+        /// </summary>
+        CounterRateBasePct = 10153,
+
+        /// <summary>
+        /// 反击率FD
+        /// </summary>
+        CounterRateFinalAdd = 10154,
+
+        /// <summary>
+        /// 反击率FP
+        /// </summary>
+        CounterRateFinalPct = 10155,
+
     }
 }

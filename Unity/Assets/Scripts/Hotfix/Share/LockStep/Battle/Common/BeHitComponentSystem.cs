@@ -45,6 +45,14 @@ namespace ET
             }
         }
         
+        public static void BeHealing(this BeHitComponent self, LSUnit attacker, FP value)
+        {
+            if (self.LSOwner().DeadMark) { return; }
+            PropComponent component = self.LSOwner().GetComponent<PropComponent>();
+            component.AddRealProp(NumericType.Hp, value);
+            EventSystem.Instance.Publish(self.LSWorld(), new LSUnitFloating() { Id = self.LSOwner().Id, Value = value, Type = FloatingType.Heal});
+        }
+
         public static void BeDamage(this BeHitComponent self, LSUnit attacker, FP damage)
         {
             if (self.LSOwner().DeadMark) { return; }

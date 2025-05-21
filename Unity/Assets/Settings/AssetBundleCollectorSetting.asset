@@ -56,7 +56,7 @@ MonoBehaviour:
       ActiveRuleName: EnableGroup
       Collectors:
       - CollectPath: Assets/Bundles/Config
-        CollectorGUID: ff3acf49577de0f44b9e1e1afc6f131e
+        CollectorGUID: 
         CollectorType: 0
         AddressRuleName: AddressByFileName
         PackRuleName: PackDirectory

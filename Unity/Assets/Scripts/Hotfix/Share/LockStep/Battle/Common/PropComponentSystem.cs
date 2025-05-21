@@ -5,6 +5,14 @@ namespace ET
     [FriendOf(typeof(PropComponent))]
     public static class PropComponentSystem
     {
+        public static void AddRealProp(this PropComponent self, NumericType numericType, FP value)
+        {
+            FP runtimeValue = self.Get(numericType);
+            FP maxValue = self.Get(numericType + LSConstValue.PropRuntime2MaxOffset);
+            value = TSMath.Min(runtimeValue + value, maxValue);
+            self.Set(numericType, value);
+        }
+        
         public static void Set(this PropComponent self, NumericType numericType, FP value, bool isPublicEvent = true)
         {
             FP oldValue = self.Get(numericType);

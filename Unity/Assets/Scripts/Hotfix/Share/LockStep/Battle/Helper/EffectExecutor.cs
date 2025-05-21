@@ -66,16 +66,19 @@ namespace ET
                 case ESkillEffectType.ChangePropertyReal:
                     AddRealProperty(res.ActionParam, owner, target);
                     break;
-                case ESkillEffectType.CHANGE_STATE:
-                    ChangeState(res.ActionParam, owner, target);
-                    break;
+                // case ESkillEffectType.CHANGE_STATE:
+                //     ChangeState(res.ActionParam, owner, target);
+                //    break;
                 case ESkillEffectType.ADD_RESTRICT:
                     AddRestrict(res.ActionParam, owner, target);
                     break;
                 case ESkillEffectType.ADD_BULLET:
                     AddBullet(res.ActionParam, owner, target);
                     break;
-                case ESkillEffectType.ATTACK:
+                case ESkillEffectType.Healing:
+                    DoHealing(res.ActionParam, owner, target);
+                    break;
+                case ESkillEffectType.Damage:
                     DoDamage(res.ActionParam, owner, target);
                     break;
                 case ESkillEffectType.RESEARCH:

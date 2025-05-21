@@ -7,55 +7,111 @@
         <!-- 1000~9999：5个养成属性的计算结果，任意1个相关的养成属性变化时根据公式计算并覆盖它 -->
         <!-- 10000~99999：配置表、养成系统中真正做运算、配置的属性 -->
         <var name="Max" alias="分隔属性" value="10000" comment="属性ID区间：10000~99999"/>
-        
+        <!-- 血量最大值 -->
         <var name="MaxHp" alias="生命值" value="1001"/>
         <var name="MaxHpBase" alias="生命值B" value="10011"/>
         <var name="MaxHpBaseAdd" alias="生命值BD" value="10012"/>
         <var name="MaxHpBasePct" alias="生命值BP" value="10013"/>
         <var name="MaxHpFinalAdd" alias="生命值FD" value="10014"/>
         <var name="MaxHpFinalPct" alias="生命值FP" value="10015"/>
-
+        <!-- 蓝量最大值 -->
         <var name="MaxMp" alias="魔法值" value="1002"/>
         <var name="MaxMpBase" alias="魔法值B" value="10021"/>
         <var name="MaxMpBaseAdd" alias="魔法值BD" value="10022"/>
         <var name="MaxMpBasePct" alias="魔法值BP" value="10023"/>
         <var name="MaxMpFinalAdd" alias="魔法值FD" value="10024"/>
         <var name="MaxMpFinalPct" alias="魔法值FP" value="10025"/>
-
+        <!-- 攻击 -->
         <var name="Atk" alias="攻击力" value="1003"/>
         <var name="AtkBase" alias="攻击力B" value="10031"/>
         <var name="AtkBaseAdd" alias="攻击力BD" value="10032"/>
         <var name="AtkBasePct" alias="攻击力BP" value="10033"/>
         <var name="AtkFinalAdd" alias="攻击力FD" value="10034"/>
         <var name="AtkFinalPct" alias="攻击力FP" value="10035"/>
-        
+        <!-- 防御 -->
         <var name="Def" alias="防御力" value="1004"/>
         <var name="DefBase" alias="防御力B" value="10041"/>
         <var name="DefBaseAdd" alias="防御力BD" value="10042"/>
         <var name="DefBasePct" alias="防御力BP" value="10043"/>
         <var name="DefFinalAdd" alias="防御力FD" value="10044"/>
         <var name="DefFinalPct" alias="防御力FP" value="10045"/>
-        
+        <!-- 移动速度 -->
         <var name="Speed" alias="速度" value="1005"/>
         <var name="SpeedBase" alias="速度B" value="10051"/>
         <var name="SpeedBaseAdd" alias="速度BD" value="10052"/>
         <var name="SpeedBasePct" alias="速度BP" value="10053"/>
         <var name="SpeedFinalAdd" alias="速度FD" value="10054"/>
         <var name="SpeedFinalPct" alias="速度FP" value="10055"/>
-        
+        <!-- 视野距离 -->
         <var name="AOI" alias="AOI值" value="1006"/>
         <var name="AOIBase" alias="AOI值B" value="10061"/>
         <var name="AOIBaseAdd" alias="AOI值BD" value="10062"/>
         <var name="AOIBasePct" alias="AOI值BP" value="10063"/>
         <var name="AOIFinalAdd" alias="AOI值FD" value="10064"/>
         <var name="AOIFinalPct" alias="AOI值FP" value="10065"/>
-        
+        <!-- 攻击速度 -->
         <var name="AtkSpeed" alias="攻速" value="1007"/>
         <var name="AtkSpeedBase" alias="攻速B" value="10071"/>
         <var name="AtkSpeedBaseAdd" alias="攻速BD" value="10072"/>
         <var name="AtkSpeedBasePct" alias="攻速BP" value="10073"/>
         <var name="AtkSpeedFinalAdd" alias="攻速FD" value="10074"/>
         <var name="AtkSpeedFinalPct" alias="攻速FP" value="10075"/>
+        <!-- 攻击距离 -->
+        <var name="AtkRange" alias="攻击距离" value="1008"/>
+        <var name="AtkRangeBase" alias="攻击距离B" value="10081"/>
+        <var name="AtkRangeBaseAdd" alias="攻击距离BD" value="10082"/>
+        <var name="AtkRangeBasePct" alias="攻击距离BP" value="10083"/>
+        <var name="AtkRangeFinalAdd" alias="攻击距离FD" value="10084"/>
+        <var name="AtkRangeFinalPct" alias="攻击距离FP" value="10085"/>
+        <!-- 暴击率 -->
+        <var name="CriticalRate" alias="暴击率" value="1009"/>
+        <var name="CriticalRateBase" alias="暴击率B" value="10091"/>
+        <var name="CriticalRateBaseAdd" alias="暴击率BD" value="10092"/>
+        <var name="CriticalRateBasePct" alias="暴击率BP" value="10093"/>
+        <var name="CriticalRateFinalAdd" alias="暴击率FD" value="10094"/>
+        <var name="CriticalRateFinalPct" alias="暴击率FP" value="10095"/>
+        <!-- 暴击伤害 -->
+        <var name="CriticalDamagePercent" alias="暴击伤害比例" value="1010"/>
+        <var name="CriticalDamagePercentBase" alias="暴击伤害比例B" value="10101"/>
+        <var name="CriticalDamagePercentBaseAdd" alias="暴击伤害比例BD" value="10102"/>
+        <var name="CriticalDamagePercentBasePct" alias="暴击伤害比例BP" value="10103"/>
+        <var name="CriticalDamagePercentFinalAdd" alias="暴击伤害比例FD" value="10104"/>
+        <var name="CriticalDamagePercentFinalPct" alias="暴击伤害比例FP" value="10105"/>
+        <!-- 反弹伤害 -->
+        <var name="ReboundDamagePercent" alias="反弹伤害比例" value="1011"/>
+        <var name="ReboundDamagePercentBaseRate" alias="反弹伤害比例B" value="10111"/>
+        <var name="ReboundDamagePercentBaseAddRate" alias="反弹伤害比例BD" value="10112"/>
+        <var name="ReboundDamagePercentBasePctRate" alias="反弹伤害比例BP" value="10113"/>
+        <var name="ReboundDamagePercentFinalAddRate" alias="反弹伤害比例FD" value="10114"/>
+        <var name="ReboundDamagePercentFinalPctRate" alias="反弹伤害比例FP" value="10115"/>
+        <!-- 格挡率 -->
+        <var name="BlockRate" alias="格挡率" value="1012"/>
+        <var name="BlockRateBase" alias="格挡率B" value="10121"/>
+        <var name="BlockRateBaseAdd" alias="格挡率BD" value="10122"/>
+        <var name="BlockRateBasePct" alias="格挡率BP" value="10123"/>
+        <var name="BlockRateFinalAdd" alias="格挡率FD" value="10124"/>
+        <var name="BlockRateFinalPct" alias="格挡率FP" value="10125"/>
+        <!-- 格挡伤害 -->
+        <var name="BlockDamagePercent" alias="格挡伤害比例" value="1013"/>
+        <var name="BlockDamagePercentBase" alias="格挡伤害比例B" value="10131"/>
+        <var name="BlockDamagePercentBaseAdd" alias="格挡伤害比例BD" value="10132"/>
+        <var name="BlockDamagePercentBasePct" alias="格挡伤害比例BP" value="10133"/>
+        <var name="BlockDamagePercentFinalAdd" alias="格挡伤害比例FD" value="10134"/>
+        <var name="BlockDamagePercentFinalPct" alias="格挡伤害比例FP" value="10135"/>
+        <!-- 闪避率 -->
+        <var name="EvasionRate" alias="闪避率" value="1014"/>
+        <var name="EvasionRateBase" alias="闪避率B" value="10141"/>
+        <var name="EvasionRateBaseAdd" alias="闪避率BD" value="10142"/>
+        <var name="EvasionRateBasePct" alias="闪避率BP" value="10143"/>
+        <var name="EvasionRateFinalAdd" alias="闪避率FD" value="10144"/>
+        <var name="EvasionRateFinalPct" alias="闪避率FP" value="10145"/>
+        <!-- 反击率 -->
+        <var name="CounterRate" alias="反击率" value="1015"/>
+        <var name="CounterRateBase" alias="反击率B" value="10151"/>
+        <var name="CounterRateBaseAdd" alias="反击率BD" value="10152"/>
+        <var name="CounterRateBasePct" alias="反击率BP" value="10153"/>
+        <var name="CounterRateFinalAdd" alias="反击率FD" value="10154"/>
+        <var name="CounterRateFinalPct" alias="反击率FP" value="10155"/>
         
     </enum>
     <enum name="TeamType" comment="队伍类型" unique="TRUE">
