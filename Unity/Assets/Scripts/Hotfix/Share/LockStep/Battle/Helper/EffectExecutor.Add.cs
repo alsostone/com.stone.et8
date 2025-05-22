@@ -79,11 +79,7 @@ namespace ET
                 attack *= param[0] * FP.EN4;
             }
             attack += param.Length > 1 ? param[1] * FP.EN4 : 0;
-            
-            // 多人合作时伤害使用攻-防，以使得攻防属性变化敏感度最高。 最低1点
-            FP defense = target.GetComponent<PropComponent>().Get(NumericType.Def);
-            FP damage = TSMath.Max(attack - defense, FP.One);
-            target.GetComponent<BeHitComponent>()?.BeDamage(owner, damage);
+            target.GetComponent<BeHitComponent>()?.BeDamage(owner, attack);
         }
         
         private static void DoResearch(int[] param, LSUnit owner, LSUnit target, EntityRef<Entity> carrier)

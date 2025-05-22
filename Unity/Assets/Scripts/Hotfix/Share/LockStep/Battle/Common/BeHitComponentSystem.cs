@@ -48,6 +48,7 @@ namespace ET
         public static void BeHealing(this BeHitComponent self, LSUnit attacker, FP value)
         {
             if (self.LSOwner().DeadMark) { return; }
+            
             PropComponent component = self.LSOwner().GetComponent<PropComponent>();
             component.AddRealProp(NumericType.Hp, value);
             EventSystem.Instance.Publish(self.LSWorld(), new LSUnitFloating() { Id = self.LSOwner().Id, Value = value, Type = FloatingType.Heal});
@@ -56,6 +57,23 @@ namespace ET
         public static void BeDamage(this BeHitComponent self, LSUnit attacker, FP damage)
         {
             if (self.LSOwner().DeadMark) { return; }
+            
+            PropComponent component = self.LSOwner().GetComponent<PropComponent>();
+            FP evasion = component.Get(NumericType.EvasionRate);
+            if (evasion > 0)
+            {
+                FP random = (FP)self.LSWorld().Random.Next(0, LSConstValue.Probability) / LSConstValue.Probability;
+                if (random < evasion)
+                {
+                    EventSystem.Instance.Publish(self.LSWorld(), new LSUnitFloating() { Id = self.LSOwner().Id, Value = damage, Type = FloatingType.Miss});
+                    return;
+                }
+            }
+            
+            // 多人合作时伤害使用攻-防，以使得攻防属性变化敏感度最高。 最低1点
+            FP defense = component.Get(NumericType.Def);
+            damage = TSMath.Max(damage - defense, FP.One);
+            
             // 处理是否免疫、格挡、闪避等
             // ...
             
