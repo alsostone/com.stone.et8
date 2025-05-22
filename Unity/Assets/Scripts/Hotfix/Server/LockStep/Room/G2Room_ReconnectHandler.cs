@@ -13,10 +13,11 @@ namespace ET.Server
             foreach (long playerId in room.PlayerIds)
             {
                 LSUnit lsUnit = lsUnitComponent.GetChild<LSUnit>(playerId);
+                TransformComponent transformComponent = lsUnit.GetComponent<TransformComponent>();
                 LockStepUnitInfo lockStepUnitInfo = LockStepUnitInfo.Create();
                 lockStepUnitInfo.PlayerId = playerId;
-                lockStepUnitInfo.Position = lsUnit.Position;
-                lockStepUnitInfo.Rotation = lsUnit.Rotation;
+                lockStepUnitInfo.Position = transformComponent.Position;
+                lockStepUnitInfo.Rotation = transformComponent.Rotation;
                 response.UnitInfos.Add(lockStepUnitInfo);    
             }
 

@@ -66,9 +66,6 @@ namespace ET
                 case ESkillEffectType.ChangePropertyReal:
                     AddRealProperty(res.ActionParam, owner, target);
                     break;
-                // case ESkillEffectType.CHANGE_STATE:
-                //     ChangeState(res.ActionParam, owner, target);
-                //    break;
                 case ESkillEffectType.ADD_RESTRICT:
                     AddRestrict(res.ActionParam, owner, target);
                     break;
@@ -104,6 +101,9 @@ namespace ET
             switch (tbEffectRow.ActionType) {
                 case ESkillEffectType.ChangeProperty:
                     SubProperty(tbEffectRow.ActionParam, owner, target);
+                    break;
+                case ESkillEffectType.ADD_RESTRICT:
+                    RemoveRestrict(tbEffectRow.ActionParam, owner, target);
                     break;
             }
         }

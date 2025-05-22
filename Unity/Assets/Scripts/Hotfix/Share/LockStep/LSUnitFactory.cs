@@ -10,10 +10,10 @@ namespace ET
 	        LSUnitComponent lsUnitComponent = lsWorld.GetComponent<LSUnitComponent>();
 	        LSUnit lsUnit = lsUnitComponent.AddChildWithId<LSUnit>(playerId);
 	        lsUnit.Active = true;
-	        lsUnit.Position = position;
-	        lsUnit.Rotation = rotation;
 
+	        lsUnit.AddComponent<TransformComponent, TSVector, TSQuaternion>(position, rotation);
 	        lsUnit.AddComponent<TypeComponent, EUnitType>(EUnitType.Hero);
+	        lsUnit.AddComponent<FlagComponent>();
 	        lsUnit.AddComponent<TeamComponent, TeamType>(TeamType.TeamA);
 	        lsUnit.AddComponent<HeroComponent, int>(tableId);
 	        
@@ -39,10 +39,10 @@ namespace ET
 	        LSUnitComponent lsUnitComponent = lsWorld.GetComponent<LSUnitComponent>();
 	        LSUnit lsUnit = lsUnitComponent.AddChild<LSUnit>();
 	        lsUnit.Active = true;
-	        lsUnit.Position = position;
-	        lsUnit.Rotation = rotation;
 
+	        lsUnit.AddComponent<TransformComponent, TSVector, TSQuaternion>(position, rotation);
 	        lsUnit.AddComponent<TypeComponent, EUnitType>(EUnitType.Soldier);
+	        lsUnit.AddComponent<FlagComponent>();
 	        lsUnit.AddComponent<TeamComponent, TeamType>(teamType);
 	        lsUnit.AddComponent<SoldierComponent, int, int>(tableId, 1);
 	        
@@ -67,10 +67,10 @@ namespace ET
 	        LSUnitComponent lsUnitComponent = lsWorld.GetComponent<LSUnitComponent>();
 	        LSUnit lsUnit = lsUnitComponent.AddChild<LSUnit>();
 	        lsUnit.Active = true;
-	        lsUnit.Position = position;
-	        lsUnit.Rotation = rotation;
 
+	        lsUnit.AddComponent<TransformComponent, TSVector, TSQuaternion>(position, rotation);
 	        lsUnit.AddComponent<TypeComponent, EUnitType>(EUnitType.Building);
+	        lsUnit.AddComponent<FlagComponent>();
 	        lsUnit.AddComponent<TeamComponent, TeamType>(teamType);
 	        lsUnit.AddComponent<BuildingComponent, int, int>(tableId, 1);
 	        
@@ -94,9 +94,7 @@ namespace ET
 	        LSUnitComponent lsUnitComponent = lsWorld.GetComponent<LSUnitComponent>();
 	        LSUnit lsUnit = lsUnitComponent.AddChild<LSUnit>();
 			
-	        lsUnit.Position = position;
-	        lsUnit.Rotation = rotation;
-
+	        lsUnit.AddComponent<TransformComponent, TSVector, TSQuaternion>(position, rotation);
 	        lsUnit.AddComponent<TypeComponent, EUnitType>(EUnitType.Bullet);
 	        lsUnit.AddComponent<BulletComponent, int, LSUnit, LSUnit>(bulletId, caster, target);
 	        EventSystem.Instance.Publish(lsWorld, new LSUnitCreate() {LSUnit = lsUnit});

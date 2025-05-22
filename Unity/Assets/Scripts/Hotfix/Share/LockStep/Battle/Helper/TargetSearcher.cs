@@ -25,7 +25,7 @@ namespace ET
             TeamComponent teamComponent = owner.GetComponent<TeamComponent>();
             if (teamComponent != null)
             { 
-                center = owner.Position;
+                center = owner.GetComponent<TransformComponent>().Position;
                 teamSelf = teamComponent.GetTeamType();
             }
             
@@ -62,10 +62,10 @@ namespace ET
         
         private static void FilterDirection(IList<SearchUnit> results, LSUnit owner)
         {
-            var dir = owner.Forward;
-            var center = owner.Position;
+            var dir = owner.GetComponent<TransformComponent>().Forward;
+            var center = owner.GetComponent<TransformComponent>().Position;
             for (int idx = results.Count - 1; idx >= 0; idx--) {
-                if (TSVector.Dot(dir, results[idx].Target.Position - center) < 0) {
+                if (TSVector.Dot(dir, results[idx].Target.GetComponent<TransformComponent>().Position - center) < 0) {
                     results.RemoveAt(idx);
                 }
             }

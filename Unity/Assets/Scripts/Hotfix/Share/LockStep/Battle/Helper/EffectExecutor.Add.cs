@@ -8,6 +8,7 @@ namespace ET
         {
             target.GetComponent<BuffComponent>().AddBuffs(param, owner);
         }
+        
         private static void AddProperty(int[] param, LSUnit owner, LSUnit target)
         {
             for (int i = 0; i < param.Length - 1; i+=2)
@@ -28,6 +29,7 @@ namespace ET
                 target.GetComponent<PropComponent>().Add(type, -value);
             }
         }
+        
         private static void AddRealProperty(int[] param, LSUnit owner, LSUnit target)
         {
             if (param.Length < 2) { return; }
@@ -35,17 +37,25 @@ namespace ET
             PropComponent propComponent = target.GetComponent<PropComponent>();
             propComponent.AddRealProp(type, param[1] * FP.EN4);
         }
-        private static void ChangeState(int[] param, LSUnit owner, LSUnit target)
-        {
-        }
+        
         private static void AddRestrict(int[] param, LSUnit owner, LSUnit target)
         {
-            // foreach (var i in param) {
-            //     target.Get<Entity>()?.ComStatus.AddStatus((kStatusType)i);
-            // }
+            if (param.Length == 0) { return; }
+            FlagComponent flagComponent = target.GetComponent<FlagComponent>();
+            flagComponent.AddRestrict(param[0]);
         }
+        private static void RemoveRestrict(int[] param, LSUnit owner, LSUnit target)
+        {
+            if (param.Length == 0) { return; }
+            FlagComponent flagComponent = target.GetComponent<FlagComponent>();
+            flagComponent.RemoveRestrict(param[0]);
+        }
+        
         private static void AddBullet(int[] param, LSUnit owner, LSUnit target)
         {
+            var ownerTransform = owner.GetComponent<TransformComponent>();
+            var targetTransform = target.GetComponent<TransformComponent>();
+            
             var position = TSVector.zero;
             if (param.Length >= 4) {
                 position = new TSVector(param[1], param[2], param[3]) * FP.EN4;
@@ -54,10 +64,10 @@ namespace ET
             }else if (param.Length >= 2) {
                 position = new TSVector(param[1], 0, 0) * FP.EN4;
             }
-            position = position.Rotation(owner.Rotation.eulerAngles.y);
+            position = position.Rotation(ownerTransform.Rotation.eulerAngles.y);
             
-            var rotation = TSQuaternion.LookRotation(target.Position - owner.Position);
-            LSUnitFactory.CreateBullet(owner.GetParent<LSWorld>(), param[0], owner.Position + position, rotation, owner, target);
+            var rotation = TSQuaternion.LookRotation(targetTransform.Position - ownerTransform.Position);
+            LSUnitFactory.CreateBullet(owner.GetParent<LSWorld>(), param[0], ownerTransform.Position + position, rotation, owner, target);
         }
         
         private static void DoHealing(int[] param, LSUnit owner, LSUnit target)

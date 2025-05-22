@@ -14,21 +14,5 @@ namespace ET
         public bool Active { get; set; }
         public bool DeadMark { get; set; }
         public bool Dead { get; set; }
-        
-        public TSVector Position { get; set; }
-
-        [MemoryPackIgnore]
-        [BsonIgnore]
-        public TSVector Forward
-        {
-            get => this.Rotation * TSVector.forward;
-            set => this.Rotation = TSQuaternion.LookRotation(value, TSVector.up);
-        }
-        
-        public TSQuaternion Rotation
-        {
-            get;
-            set;
-        }
     }
 }

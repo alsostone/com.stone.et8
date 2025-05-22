@@ -85,8 +85,8 @@ namespace ET
         {
             if (self.LSOwner().DeadMark) { return false; }
             // if (!Enable) { return; }
-            // if (entity.ComStatus.HasStatus(kStatusType.RestrictSkill)) { return; }
-
+            if (self.CheckRestrict(type)) { return false; }
+            
             if (self.TypeSkillsMap.TryGetValue(type, out List<long> skillIds))
             {
                 for (int i = skillIds.Count - 1; i >= 0; i--)
@@ -107,7 +107,7 @@ namespace ET
         {
             if (self.LSOwner().DeadMark) { return false; }
             // if (!Enable) { return false; }
-            // if (entity.ComStatus.HasStatus(kStatusType.RestrictSkill)) { return false; }
+            if (self.CheckRestrict(type)) { return false; }
 
             if (self.TypeSkillsMap.TryGetValue(type, out List<long> skillIds))
             {
@@ -129,7 +129,7 @@ namespace ET
         {
             if (self.LSOwner().DeadMark) { return false; }
             // if (!Enable) { return false; }
-            // if (entity.ComStatus.HasStatus(kStatusType.RestrictSkill)) { return false; }
+            if (self.CheckRestrict(ESkillType.Active)) { return false; }
 
             Skill skill = self.AddSkill(id, true);
             if (skill == null) { return false; }
@@ -140,6 +140,19 @@ namespace ET
                 return true;
             }
             skill.Dispose();
+            return false;
+        }
+
+        private static bool CheckRestrict(this SkillComponent self, ESkillType type)
+        {
+            var flagComponent = self.LSOwner().GetComponent<FlagComponent>();
+            switch (type)
+            {
+                case ESkillType.Normal:
+                    return flagComponent.HasRestrict(FlagRestrict.NotAttack);
+                default:
+                    return flagComponent.HasRestrict(FlagRestrict.NotSkill);
+            }
             return false;
         }
 

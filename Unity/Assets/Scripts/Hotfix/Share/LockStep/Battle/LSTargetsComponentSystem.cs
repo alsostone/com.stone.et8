@@ -79,7 +79,7 @@ namespace ET
                     }
                     if (target.Active)
                     {
-                        var dis = (target.Position - center).sqrMagnitude;
+                        var dis = (target.GetComponent<TransformComponent>().Position - center).sqrMagnitude;
                         var sqrRange = target.GetAttackSqrRange(range);
                         if (sqrRange >= dis) {
                             results.Add(new SearchUnit() { Target = target, Distance = dis });

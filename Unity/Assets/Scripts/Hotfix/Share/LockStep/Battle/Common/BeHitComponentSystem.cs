@@ -151,7 +151,7 @@ namespace ET
                     self.Attackers.RemoveAt(i);
                 }
                 else if (target.Active) {
-                    var dis = (target.Position - center).sqrMagnitude;
+                    var dis = (target.GetComponent<TransformComponent>().Position - center).sqrMagnitude;
                     if (sqrRange >= dis) {
                         results.Add(new SearchUnit() { Target = target, Distance = dis });
                     }

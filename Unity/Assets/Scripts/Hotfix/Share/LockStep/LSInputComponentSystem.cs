@@ -18,15 +18,9 @@ namespace ET
         private static void LSUpdate(this LSInputComponent self)
         {
             LSUnit unit = self.LSOwner();
-            PropComponent numericComponent = unit.GetComponent<PropComponent>();
-            TSVector2 v2 = self.LSInput.V * numericComponent.Get(NumericType.Speed) * LSConstValue.UpdateInterval / LSConstValue.Milliseconds;
-            if (v2.LengthSquared() > FP.EN4)
-            {
-                TSVector oldPos = unit.Position;
-                unit.Position += new TSVector(v2.x, 0, v2.y);
-                unit.Forward = unit.Position - oldPos;
-            }
-            
+            TransformComponent numericComponent = unit.GetComponent<TransformComponent>();
+            numericComponent.Move(self.LSInput.V);
+
             if ((self.LSInput.Button & LSConstButtonValue.Jump) > 0)
             {
                 //unit.GetComponent<LSJumpComponent>().Jump();

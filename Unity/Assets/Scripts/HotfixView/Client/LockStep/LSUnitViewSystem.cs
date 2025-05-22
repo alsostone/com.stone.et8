@@ -41,8 +41,9 @@ namespace ET.Client
         private static void Update(this LSUnitView self)
         {
             LSUnit unit = self.GetUnit();
+            TransformComponent transformComponent = unit.GetComponent<TransformComponent>();
 
-            Vector3 unitPos = unit.Position.ToVector();
+            Vector3 unitPos = transformComponent.Position.ToVector();
             const float speed = 6f;
             float speed2 = speed;// * self.Room().SpeedMultiply;
 
@@ -51,8 +52,8 @@ namespace ET.Client
                 float distance = (unitPos - self.Position).magnitude;
                 self.totalTime = distance / speed2;
                 self.t = 0;
-                self.Position = unit.Position.ToVector();
-                self.Rotation = unit.Rotation.ToQuaternion();
+                self.Position = transformComponent.Position.ToVector();
+                self.Rotation = transformComponent.Rotation.ToQuaternion();
             }
             
             LSInputComponent component = unit.GetComponent<LSInputComponent>();
