@@ -58,6 +58,7 @@ namespace ET
         {
             if (self.LSOwner().DeadMark) { return; }
             
+            // 1. 优先处理闪避
             PropComponent component = self.LSOwner().GetComponent<PropComponent>();
             FP evasion = component.Get(NumericType.EvasionRate);
             if (evasion > 0)
@@ -70,13 +71,44 @@ namespace ET
                 }
             }
             
-            // 多人合作时伤害使用攻-防，以使得攻防属性变化敏感度最高。 最低1点
+            // 2. 计算暴击伤害
+            bool isCritical = false;
+            FP critRate = component.Get(NumericType.CriticalRate);
+            if (critRate > 0)
+            {
+                FP random = (FP)self.LSWorld().Random.Next(0, LSConstValue.Probability) / LSConstValue.Probability;
+                if (random < critRate)
+                {
+                    isCritical = true;
+                    damage *= component.Get(NumericType.CriticalDamagePercent);
+                }
+            }
+            
+            // 3. 攻防计算 多人合作时伤害使用攻-防，以使得攻防属性变化敏感度最高。 最低1点
             FP defense = component.Get(NumericType.Def);
             damage = TSMath.Max(damage - defense, FP.One);
             
-            // 处理是否免疫、格挡、闪避等
-            // ...
+            // 4. 计算格挡减伤
+            bool isBlock = false;
+            FP blockRate = component.Get(NumericType.BlockRate);
+            if (blockRate > 0)
+            {
+                FP random = (FP)self.LSWorld().Random.Next(0, LSConstValue.Probability) / LSConstValue.Probability;
+                if (random < blockRate)
+                {
+                    isBlock = true;
+                    damage *= component.Get(NumericType.BlockDamagePercent);
+                }
+            }
             
+            if (isCritical) {
+                EventSystem.Instance.Publish(self.LSWorld(), new LSUnitFloating() { Id = self.LSOwner().Id, Value = damage, Type = FloatingType.Damage });
+            } else if (isBlock) {
+                EventSystem.Instance.Publish(self.LSWorld(), new LSUnitFloating() { Id = self.LSOwner().Id, Value = damage, Type = FloatingType.Block });
+            } else {
+                EventSystem.Instance.Publish(self.LSWorld(), new LSUnitFloating() { Id = self.LSOwner().Id, Value = damage, Type = FloatingType.Damage });
+            }
+
             // 记录进攻者 & 掉血
             self.AddAttacker(attacker.Id);
             self.DeductHp(attacker, damage);
@@ -86,12 +118,11 @@ namespace ET
         {
             PropComponent component = self.LSOwner().GetComponent<PropComponent>();
             FP hp = component.Get(NumericType.Hp);
-            if (hp <= 0) { return; }
+            if (hp <= FP.EN1) { return; }
 
             FP current = hp - value;
             component.Set(NumericType.Hp, current);
-            EventSystem.Instance.Publish(self.LSWorld(), new LSUnitFloating() { Id = self.LSOwner().Id, Value = value, Type = FloatingType.Damage});
-            if (current <= 0)
+            if (current <= FP.EN1)
             {
                 // 血量值空触发死亡技能
                 SkillComponent comSkill = self.LSOwner().GetComponent<SkillComponent>();
