@@ -8,6 +8,8 @@
 3.  ET/Excel/XXX 一键导出Luban配置表
 
 ## 打包自动流程
+ps: 首次打包需手动安装HybridCLR HybridCLR/Installer
+    如果打包失败，多试几次，依旧报错再尝试解决。`一键打包只是流程整合，便于了解打包流程，并不能避免流程中某节点报错`。
 1. 切换目标平台
 2. 若当前不是Client`GlobalConfig中CodeMode`模式 则强制设置成Client模式
 3. 编译热更DLL 并拷贝到YooAsset打包目录
