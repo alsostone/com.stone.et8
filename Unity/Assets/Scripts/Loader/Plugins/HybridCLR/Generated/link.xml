@@ -5,6 +5,8 @@
     <type fullname="MemoryPack.Formatters.DictionaryFormatter`2" preserve="all" />
     <type fullname="MemoryPack.Formatters.ListFormatter" preserve="all" />
     <type fullname="MemoryPack.Formatters.ListFormatter`1" preserve="all" />
+    <type fullname="MemoryPack.Formatters.SortedDictionaryFormatter`2" preserve="all" />
+    <type fullname="MemoryPack.Formatters.UnmanagedFormatter`1" preserve="all" />
     <type fullname="MemoryPack.GenerateType" preserve="all" />
     <type fullname="MemoryPack.IMemoryPackFormatterRegister" preserve="all" />
     <type fullname="MemoryPack.IMemoryPackable`1" preserve="all" />
@@ -75,6 +77,8 @@
     <type fullname="ET.AwakeSystem`1" preserve="all" />
     <type fullname="ET.AwakeSystem`2" preserve="all" />
     <type fullname="ET.AwakeSystem`3" preserve="all" />
+    <type fullname="ET.AwakeSystem`4" preserve="all" />
+    <type fullname="ET.AwakeSystem`5" preserve="all" />
     <type fullname="ET.BaseAttribute" preserve="all" />
     <type fullname="ET.ByteHelper" preserve="all" />
     <type fullname="ET.ChannelType" preserve="all" />
@@ -88,6 +92,7 @@
     <type fullname="ET.CoroutineLock" preserve="all" />
     <type fullname="ET.CoroutineLockComponent" preserve="all" />
     <type fullname="ET.CoroutineLockComponentSystem" preserve="all" />
+    <type fullname="ET.DeserializeSystem`1" preserve="all" />
     <type fullname="ET.DestroySystem`1" preserve="all" />
     <type fullname="ET.DisposeObject" preserve="all" />
     <type fullname="ET.DoubleMap`2" preserve="all" />
@@ -113,7 +118,9 @@
     <type fullname="ET.IAwake`1" preserve="all" />
     <type fullname="ET.IAwake`2" preserve="all" />
     <type fullname="ET.IAwake`3" preserve="all" />
+    <type fullname="ET.IAwake`4" preserve="all" />
     <type fullname="ET.IConfig" preserve="all" />
+    <type fullname="ET.IDeserialize" preserve="all" />
     <type fullname="ET.IDestroy" preserve="all" />
     <type fullname="ET.IKcpTransport" preserve="all" />
     <type fullname="ET.ILateUpdate" preserve="all" />
@@ -192,6 +199,7 @@
     <type fullname="ET.CodeLoader" preserve="all" />
     <type fullname="ET.GlobalComponent" preserve="all" />
     <type fullname="ET.GlobalConfig" preserve="all" />
+    <type fullname="FloatingTextSpawner" preserve="all" />
     <type fullname="ReferenceCollector" preserve="all" />
   </assembly>
   <assembly fullname="Unity.Mathematics">
@@ -230,6 +238,7 @@
     <type fullname="Luban.ByteBuf" preserve="all" />
     <type fullname="Luban.StringUtil" preserve="all" />
     <type fullname="TrueSync.FP" preserve="all" />
+    <type fullname="TrueSync.TSMath" preserve="all" />
     <type fullname="TrueSync.TSMatrix" preserve="all" />
     <type fullname="TrueSync.TSQuaternion" preserve="all" />
     <type fullname="TrueSync.TSRandom" preserve="all" />
@@ -360,11 +369,15 @@
     <type fullname="YooAsset.UnloadSceneOperation" preserve="all" />
     <type fullname="YooAsset.YooAssets" preserve="all" />
   </assembly>
+  <assembly fullname="com.stone.hud">
+    <type fullname="ST.HUD.HudRenderer" preserve="all" />
+  </assembly>
   <assembly fullname="mscorlib">
     <type fullname="System.Action" preserve="all" />
     <type fullname="System.Action`1" preserve="all" />
     <type fullname="System.Action`2" preserve="all" />
     <type fullname="System.Activator" preserve="all" />
+    <type fullname="System.ArgumentOutOfRangeException" preserve="all" />
     <type fullname="System.Array" preserve="all" />
     <type fullname="System.Attribute" preserve="all" />
     <type fullname="System.AttributeTargets" preserve="all" />
@@ -378,6 +391,8 @@
     <type fullname="System.Collections.Generic.Dictionary`2/KeyCollection/Enumerator" preserve="all" />
     <type fullname="System.Collections.Generic.Dictionary`2/ValueCollection" preserve="all" />
     <type fullname="System.Collections.Generic.Dictionary`2/ValueCollection/Enumerator" preserve="all" />
+    <type fullname="System.Collections.Generic.ICollection`1" preserve="all" />
+    <type fullname="System.Collections.Generic.IDictionary`2" preserve="all" />
     <type fullname="System.Collections.Generic.IEnumerable`1" preserve="all" />
     <type fullname="System.Collections.Generic.IList`1" preserve="all" />
     <type fullname="System.Collections.Generic.IReadOnlyDictionary`2" preserve="all" />
@@ -385,7 +400,9 @@
     <type fullname="System.Collections.Generic.List`1" preserve="all" />
     <type fullname="System.Collections.Generic.List`1/Enumerator" preserve="all" />
     <type fullname="System.Collections.IEnumerator" preserve="all" />
+    <type fullname="System.Comparison`1" preserve="all" />
     <type fullname="System.Console" preserve="all" />
+    <type fullname="System.Diagnostics.ConditionalAttribute" preserve="all" />
     <type fullname="System.Diagnostics.DebuggableAttribute" preserve="all" />
     <type fullname="System.Diagnostics.DebuggableAttribute/DebuggingModes" preserve="all" />
     <type fullname="System.Diagnostics.DebuggerDisplayAttribute" preserve="all" />
@@ -438,6 +455,7 @@
     <type fullname="System.Threading.Tasks.Task" preserve="all" />
     <type fullname="System.Threading.Tasks.TaskFactory" preserve="all" />
     <type fullname="System.Threading.Tasks.Task`1" preserve="all" />
+    <type fullname="System.Tuple`3" preserve="all" />
     <type fullname="System.Type" preserve="all" />
     <type fullname="System.UInt16" preserve="all" />
     <type fullname="System.UInt32" preserve="all" />

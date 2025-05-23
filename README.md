@@ -19,54 +19,67 @@ ps: 首次打包需手动安装HybridCLR HybridCLR/Installer
 7. BuildPipeline.BuildPlayer 出包
 
 ```csharp
-private static void AutomationBuild(BuildTarget buildTarget, EPlayMode playMode, bool enableHybridCLR = false)
+private static void AutomationBuild(BuildTarget buildTarget, EPlayMode playMode)
 {
-    var buildOptions = BuildOptions.None;
     UnityEditor.SceneManagement.EditorSceneManager.OpenScene(InitScene);
     CheckAndSwitchBuildTarget(buildTarget);
-
-    // 强制设置成Client模式 & 指定PlayMode
+    
+    // 1.导出Excel配置并拷贝到YooAsset打包目录
+    Log.Info("build step(1/6)[ExportExcel] start");
+    MenuExportExcelClient();
+    Log.Info("build step(1/6)[ExportExcel] success");
+    
+    // 2.强制设置成Client模式 & 指定PlayMode
+    Log.Info("build step(2/6)[SetClient] start");
     var globalConfig = AssetDatabase.LoadAssetAtPath<GlobalConfig>("Assets/Resources/GlobalConfig.asset");
     globalConfig.CodeMode = CodeMode.Client;
     globalConfig.EPlayMode = playMode;
     EditorUtility.SetDirty(globalConfig);
     AssetDatabase.SaveAssets();
     AssemblyTool.EnableUnityClient();
-
-    // 编译热更DLL并拷贝到YooAsset打包目录
+    Log.Info("build step(2/6)[SetClient] success");
+    
+    // 3.编译热更DLL并拷贝到YooAsset打包目录
+    Log.Info($"build step(3/6)[CompileDlls] start");
     AssetDatabase.Refresh(ImportAssetOptions.ForceUpdate);
     if (!AssemblyTool.CompileDlls())
         return;
     AssemblyTool.CopyHotUpdateDlls();
     BuildHelper.ReGenerateProjectFiles();
-    AssetDatabase.Refresh(ImportAssetOptions.ForceUpdate);
-
-    // HybridCLR相关生成并拷贝到YooAsset打包目录
-    if (enableHybridCLR)
+    Log.Info("build step(3/6)[CompileDlls] success");
+    
+    // 4.HybridCLR相关生成并拷贝到YooAsset打包目录
+    Log.Info($"build step(4/6)[HybridCLR] start");
+    SettingsUtil.Enable = MacroUtil.HasDefineSymbol(EMacroDefine.ENABLE_IL2CPP);
+    if (SettingsUtil.Enable)
     {
         PrebuildCommand.GenerateAll();
         HybridCLREditor.CopyAotDll();
     }
+    Log.Info($"build step(4/6)[HybridCLR] success");
 
-    // 导出Excel配置并拷贝到YooAsset打包目录
-    MenuExportExcelClient();
-
-    // YooAsset Assetbundle打包
+    // 5.YooAsset Assetbundle打包
+    Log.Info($"build step(5/6)[YooAsset] start");
     if (!YooAssetScriptableBuild(buildTarget, EBuildMode.IncrementalBuild))
         return;
-    AssetDatabase.Refresh();
+    Log.Info($"build step(5/6)[YooAsset] success");
 
+    // 6.1获取HybridCLR的BuildOptions 防止因为BuildOptions不一致导致包运行异常
+    Type type = typeof(StripAOTDllCommand);
+    MethodInfo method = type.GetMethod("GetBuildPlayerOptions", BindingFlags.Static | BindingFlags.NonPublic);
+    BuildOptions buildOptions = (BuildOptions)method.Invoke(null, new object[1] { buildTarget });
+    
+    // 6.2所有资源就绪开始打包
+    Log.Info($"build step(6/6)[BuildPlayer] start");
     string pathName = GetBuildName(buildTarget, buildOptions);
     string[] scenes = { InitScene };
-
-    Log.Info("build start");
     BuildReport report = BuildPipeline.BuildPlayer(scenes, pathName, buildTarget, buildOptions);
     if (report.summary.result != BuildResult.Succeeded)
     {
-        Log.Error($"build not success: {report.summary.result}");
+        Log.Info($"build step(6/6)[BuildPlayer] fail.");
         return;
     }
-    Log.Info("build success");
+    Log.Info($"build step(6/6)[BuildPlayer] success");
 }
 ```
 

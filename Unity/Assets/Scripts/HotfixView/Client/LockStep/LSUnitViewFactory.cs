@@ -23,7 +23,7 @@ namespace ET.Client
 
         private static async ETTask CreateBulletViewAsync(Room room, LSWorld lsWorld, LSUnit lsUnit)
         {
-            throw new System.NotImplementedException();
+            await ETTask.CompletedTask;
         }
 
         private static async ETTask CreateHeroViewAsync(Room room, LSWorld lsWorld, LSUnit lsUnit)

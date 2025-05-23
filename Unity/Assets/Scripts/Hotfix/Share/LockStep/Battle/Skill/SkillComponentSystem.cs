@@ -153,7 +153,6 @@ namespace ET
                 default:
                     return flagComponent.HasRestrict(FlagRestrict.NotSkill);
             }
-            return false;
         }
 
     }
