@@ -862,7 +862,7 @@ PlayerSettings:
   webGLMemoryGeometricGrowthCap: 96
   webGLPowerPreference: 2
   scriptingDefineSymbols:
-    Android: UNITY;ENABLE_VIEW;TextMeshPro;ODIN_INSPECTOR;ODIN_INSPECTOR_3;ODIN_INSPECTOR_3_1
+    Android: UNITY;ENABLE_VIEW;TextMeshPro;ODIN_INSPECTOR;ODIN_INSPECTOR_3;ODIN_INSPECTOR_3_1;ENABLE_IL2CPP;ENABLE_DEBUG
     EmbeddedLinux: TextMeshPro
     GameCoreXboxOne: TextMeshPro
     Nintendo Switch: TextMeshPro
@@ -871,7 +871,7 @@ PlayerSettings:
     QNX: TextMeshPro
     Server: UNITY;ENABLE_VIEW
     Stadia: TextMeshPro
-    Standalone: UNITY;ENABLE_VIEW;ODIN_INSPECTOR;ODIN_INSPECTOR_3;ODIN_INSPECTOR_3_1;TextMeshPro
+    Standalone: UNITY;ENABLE_VIEW;ODIN_INSPECTOR;ODIN_INSPECTOR_3;ODIN_INSPECTOR_3_1;TextMeshPro;ENABLE_IL2CPP;ENABLE_DEBUG
     VisionOS: TextMeshPro
     WebGL: UNITY;ENABLE_VIEW;TextMeshPro
     XboxOne: TextMeshPro
