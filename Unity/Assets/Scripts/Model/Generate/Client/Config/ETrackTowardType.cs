@@ -12,19 +12,24 @@ namespace ET
     /// <summary>
     /// 朝向类型
     /// </summary>
-    public enum ESkillTrackTowardType
+    public enum ETrackTowardType
     {
-        NONE = 0,
+        None = 0,
 
         /// <summary>
         /// 固定朝向
         /// </summary>
-        DIRECTION = 1,
+        Direction = 1,
 
         /// <summary>
         /// 固定位置
         /// </summary>
-        POSITION = 2,
+        Position = 2,
+
+        /// <summary>
+        /// 跟随目标
+        /// </summary>
+        Target = 3,
 
     }
 }

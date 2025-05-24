@@ -21,6 +21,7 @@ namespace ET
             Life = _buf.ReadInt();
             EffectGroupId = _buf.ReadInt();
             TrackId = _buf.ReadInt();
+            TrackId_Ref = null;
             EffectId = _buf.ReadInt();
             FinishEffectId = _buf.ReadInt();
 
@@ -57,6 +58,8 @@ namespace ET
         /// </summary>
         public readonly int TrackId;
 
+        public TbTrackRow TrackId_Ref { get; private set; }
+
         /// <summary>
         /// 特效ID
         /// </summary>
@@ -77,7 +80,7 @@ namespace ET
             
             
             
-            
+            TrackId_Ref = TbTrack.Instance.GetOrDefault(TrackId);
             
             
         }

@@ -67,7 +67,7 @@ namespace ET
             position = position.Rotation(ownerTransform.Rotation.eulerAngles.y);
             
             var rotation = TSQuaternion.LookRotation(targetTransform.Position - ownerTransform.Position);
-            LSUnitFactory.CreateBullet(owner.GetParent<LSWorld>(), param[0], ownerTransform.Position + position, rotation, owner, target);
+            LSUnitFactory.CreateBullet(owner.LSWorld(), param[0], ownerTransform.Position + position, rotation, owner, target);
         }
         
         private static void DoHealing(int[] param, LSUnit owner, LSUnit target)

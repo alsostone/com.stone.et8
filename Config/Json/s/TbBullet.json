@@ -4,7 +4,7 @@
     "name": "英雄1000子弹",
     "life": 10000,
     "effect_group_id": 100002011,
-    "track_id": 2,
+    "track_id": 1002,
     "effect_id": 10,
     "finish_effect_id": 0
   },
@@ -13,7 +13,7 @@
     "name": "防御塔子弹",
     "life": 10000,
     "effect_group_id": 310000011,
-    "track_id": 2,
+    "track_id": 1002,
     "effect_id": 10,
     "finish_effect_id": 0
   },
@@ -22,7 +22,7 @@
     "name": "远程植物子弹",
     "life": 20000,
     "effect_group_id": 400200011,
-    "track_id": 3,
+    "track_id": 1002,
     "effect_id": 11,
     "finish_effect_id": 0
   },
@@ -31,7 +31,7 @@
     "name": "中立怪子弹",
     "life": 10000,
     "effect_group_id": 490000011,
-    "track_id": 3,
+    "track_id": 1002,
     "effect_id": 10,
     "finish_effect_id": 0
   }

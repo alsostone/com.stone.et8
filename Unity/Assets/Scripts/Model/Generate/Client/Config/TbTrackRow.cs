@@ -20,7 +20,7 @@ namespace ET
             Name = _buf.ReadString();
             HorSpeed = _buf.ReadInt();
             VerSpeed = _buf.ReadInt();
-            TowardType = (ESkillTrackTowardType)_buf.ReadInt();
+            TowardType = (ETrackTowardType)_buf.ReadInt();
 
             PostInit();
         }
@@ -46,14 +46,14 @@ namespace ET
         public readonly int HorSpeed;
 
         /// <summary>
-        /// 垂直速度
+        /// 垂直高度
         /// </summary>
         public readonly int VerSpeed;
 
         /// <summary>
         /// 朝向类型
         /// </summary>
-        public readonly ESkillTrackTowardType TowardType;
+        public readonly ETrackTowardType TowardType;
 
 
         public const int __ID__ = 970967357;
