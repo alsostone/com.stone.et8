@@ -43,7 +43,7 @@
             else
             {
                 // 若buffId不存在，则添加新的buff
-                var buff = self.AddChild<Buff, int>(buffId);
+                var buff = self.AddChild<Buff, int, LSUnit>(buffId, owner);
                 buff.LayerCount = 1;
                 buff.ResetEndFrame();
                 self.IdBuffMap.Add(buffId, buff.Id);

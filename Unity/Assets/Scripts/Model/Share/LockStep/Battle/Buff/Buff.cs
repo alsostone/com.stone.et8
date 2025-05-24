@@ -5,7 +5,7 @@ namespace ET
 {
     [ChildOf(typeof(BuffComponent))]
     [MemoryPackable]
-    public partial class Buff : LSEntity, IAwake<int>, IDestroy, ILSUpdate, ISerializeToEntity
+    public partial class Buff : LSEntity, IAwake<int, LSUnit>, IDestroy, ILSUpdate, ISerializeToEntity
     {
         public int BuffId;
         public uint LayerCount;

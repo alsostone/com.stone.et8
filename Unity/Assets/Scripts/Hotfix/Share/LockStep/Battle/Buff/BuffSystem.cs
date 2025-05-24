@@ -6,20 +6,31 @@
     public static partial class BuffSystem
     {
         [EntitySystem]
-        private static void Awake(this Buff self, int BuffId)
+        private static void Awake(this Buff self, int BuffId, LSUnit caster)
         {
             self.BuffId = BuffId;
+            self.Caster = caster.Id;
             self.StartFrame = self.LSWorld().Frame;
-            self.IntervalFrame = self.StartFrame + self.TbBuffRow.Interval.Convert2Frame();
             self.EndFrame = self.StartFrame + self.TbBuffRow.Duration.Convert2Frame();
             self.LayerCount = 1;
-            EffectExecutor.Execute(self.TbBuffRow.EnterEffect, self.LSUnit(self.Caster), self.LSOwner());
+            if (self.TbBuffRow.EnterEffect > 0) {
+                EffectExecutor.Execute(self.TbBuffRow.EnterEffect, caster, self.LSOwner());
+            }
+            if (self.TbBuffRow.IntervalEffect > 0) {
+                EffectExecutor.Execute(self.TbBuffRow.IntervalEffect, self.LSUnit(self.Caster), self.LSOwner());
+                self.IntervalFrame = self.StartFrame + self.TbBuffRow.Interval.Convert2Frame();
+            }
         }
 
         [EntitySystem]
         private static void Destroy(this Buff self)
         {
-            EffectExecutor.Execute(self.TbBuffRow.FinishEffect, self.LSUnit(self.Caster), self.LSOwner());
+            if (self.TbBuffRow.EnterEffect > 0) {
+                EffectExecutor.ReverseExecute(self.TbBuffRow.EnterEffect, self.LSUnit(self.Caster), self.LSOwner());
+            }
+            if (self.TbBuffRow.FinishEffect > 0) {
+                EffectExecutor.Execute(self.TbBuffRow.FinishEffect, self.LSUnit(self.Caster), self.LSOwner());
+            }
         }
         
         [LSEntitySystem]
@@ -31,7 +42,7 @@
                 return;
             }
 
-            if (self.LSWorld().Frame > self.IntervalFrame)
+            if (self.TbBuffRow.IntervalEffect > 0 && self.LSWorld().Frame > self.IntervalFrame)
             {
                 EffectExecutor.Execute(self.TbBuffRow.IntervalEffect, self.LSUnit(self.Caster), self.LSOwner());
                 self.IntervalFrame = self.LSWorld().Frame + self.TbBuffRow.Interval.Convert2Frame();

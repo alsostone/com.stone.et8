@@ -1,7 +1,7 @@
 [
   {
     "Id": 10000101,
-    "name": "英雄1000，植物加速成长",
+    "name": "英雄1000，攻速BUFF",
     "status_effect_type": 1,
     "can_dead_clear": true,
     "can_replace": true,
@@ -13,23 +13,6 @@
     "effect_id": 33000001,
     "scale": 0,
     "enter_effect": 100001011,
-    "interval_effect": 0,
-    "finish_effect": 0
-  },
-  {
-    "Id": 10000201,
-    "name": "英雄1000，建筑和士兵加速攻击",
-    "status_effect_type": 1,
-    "can_dead_clear": true,
-    "can_replace": true,
-    "overlap_type": 0,
-    "duration": 5000,
-    "delay": 0,
-    "interval": 0,
-    "max_layer": 0,
-    "effect_id": 0,
-    "scale": 0,
-    "enter_effect": 100002011,
     "interval_effect": 0,
     "finish_effect": 0
   },

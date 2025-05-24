@@ -1,4 +1,6 @@
-﻿namespace ET
+﻿using System;
+
+namespace ET
 {
     [LSEntitySystemOf(typeof(Skill))]
     [EntitySystemOf(typeof(Skill))]
@@ -10,6 +12,7 @@
         {
             self.SkillId = skillId;
             self.IsOnlyOnce = isOnlyOnce;
+            self.CastFrame = int.MinValue;
             self.DurationFrame = (self.TbSkillRow.DurationPre + self.TbSkillRow.Duration + self.TbSkillRow.DurationAfter).Convert2Frame();
         }
 

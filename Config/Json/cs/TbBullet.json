@@ -1,5 +1,14 @@
 [
   {
+    "Id": 10000201,
+    "name": "英雄1000子弹",
+    "life": 10000,
+    "effect_group_id": 100002011,
+    "track_id": 2,
+    "effect_id": 10,
+    "finish_effect_id": 0
+  },
+  {
     "Id": 31000001,
     "name": "防御塔子弹",
     "life": 10000,

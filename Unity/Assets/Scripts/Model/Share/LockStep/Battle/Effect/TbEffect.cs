@@ -6,9 +6,9 @@ namespace ET
     {
         private readonly Dictionary<int, List<TbEffectRow>> sGroupEffectRows = new();
 
-        public List<TbEffectRow> GetGroupEffects(int aiConfigId)
+        public List<TbEffectRow> GetGroupEffects(int groupId)
         {
-            return this.sGroupEffectRows[aiConfigId];
+            return this.sGroupEffectRows[groupId];
         }
 
         partial void PostInit()

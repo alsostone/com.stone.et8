@@ -10,7 +10,7 @@
   },
   {
     "Id": 100001010,
-    "name": "英雄1000，植物加Buff",
+    "name": "英雄1000，添加攻速BUFF",
     "group_id": 10000101,
     "success_conds": [],
     "failure_conds": [],
@@ -21,25 +21,35 @@
   },
   {
     "Id": 100001011,
-    "name": "英雄1000，攻速加成50%",
+    "name": "攻速加成50%",
     "group_id": 100001011,
     "success_conds": [],
     "failure_conds": [],
     "action_type": 1,
     "action_param": [
-      10073
+      10073,
+      5000
     ]
   },
   {
     "Id": 100002010,
-    "name": "英雄1000，建筑和士兵加Buff",
+    "name": "英雄1000，3目标子弹伤害",
     "group_id": 10000201,
     "success_conds": [],
     "failure_conds": [],
-    "action_type": 5,
+    "action_type": 6,
     "action_param": [
       10000201
     ]
+  },
+  {
+    "Id": 100002011,
+    "name": "3目标子弹效果",
+    "group_id": 100002011,
+    "success_conds": [],
+    "failure_conds": [],
+    "action_type": 4,
+    "action_param": []
   },
   {
     "Id": 300000010,
@@ -49,7 +59,8 @@
     "failure_conds": [],
     "action_type": 2,
     "action_param": [
-      1
+      1,
+      10000
     ]
   },
   {
@@ -60,7 +71,8 @@
     "failure_conds": [],
     "action_type": 2,
     "action_param": [
-      2
+      2,
+      5000
     ]
   },
   {
@@ -71,7 +83,8 @@
     "failure_conds": [],
     "action_type": 1,
     "action_param": [
-      10053
+      10053,
+      5000
     ]
   },
   {
@@ -82,7 +95,10 @@
     "failure_conds": [],
     "action_type": 6,
     "action_param": [
-      31000001
+      31000001,
+      0,
+      0,
+      0
     ]
   },
   {
@@ -93,7 +109,8 @@
     "failure_conds": [],
     "action_type": 12,
     "action_param": [
-      31000002
+      31000002,
+      31000001
     ]
   },
   {
@@ -113,7 +130,10 @@
     "failure_conds": [],
     "action_type": 10,
     "action_param": [
-      4100
+      4100,
+      0,
+      0,
+      5000
     ]
   },
   {
@@ -124,6 +144,10 @@
     "failure_conds": [],
     "action_type": 8,
     "action_param": [
+      1,
+      1,
+      1,
+      1,
       1
     ]
   },
@@ -135,7 +159,10 @@
     "failure_conds": [],
     "action_type": 10,
     "action_param": [
-      4900
+      4900,
+      0,
+      0,
+      0
     ]
   },
   {
@@ -175,7 +202,10 @@
     "failure_conds": [],
     "action_type": 6,
     "action_param": [
-      40020001
+      40020001,
+      0,
+      0,
+      0
     ]
   },
   {
@@ -186,7 +216,8 @@
     "failure_conds": [],
     "action_type": 12,
     "action_param": [
-      40020002
+      40020002,
+      400200012
     ]
   },
   {
@@ -215,7 +246,10 @@
     "failure_conds": [],
     "action_type": 6,
     "action_param": [
-      49000001
+      49000001,
+      0,
+      0,
+      0
     ]
   },
   {
@@ -235,7 +269,8 @@
     "failure_conds": [],
     "action_type": 2,
     "action_param": [
-      1
+      1,
+      5000
     ]
   },
   {
@@ -246,7 +281,8 @@
     "failure_conds": [],
     "action_type": 2,
     "action_param": [
-      2
+      2,
+      5000
     ]
   },
   {
@@ -268,7 +304,17 @@
     "failure_conds": [],
     "action_type": 13,
     "action_param": [
-      9000
+      9000,
+      2,
+      -8,
+      -4,
+      35000,
+      -8,
+      4,
+      35000,
+      8,
+      4,
+      35000
     ]
   }
 ]
