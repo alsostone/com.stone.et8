@@ -34,7 +34,7 @@ namespace ET.Client
             GameObject unitGo = UnityEngine.Object.Instantiate(prefab, globalComponent.Unit, true);
             
             LSUnitView lsUnitView = room.GetComponent<LSUnitViewComponent>().AddChildWithId<LSUnitView, GameObject>(lsUnit.Id, unitGo);
-            lsUnitView.AddComponent<LSViewTransformComponent, Transform>(unitGo.transform);
+            lsUnitView.AddComponent<LSViewTransformComponent, Transform, bool>(unitGo.transform, true);
         }
 
         private static async ETTask CreateHeroViewAsync(Room room, LSWorld lsWorld, LSUnit lsUnit)
@@ -49,7 +49,7 @@ namespace ET.Client
             
             LSUnitView lsUnitView = room.GetComponent<LSUnitViewComponent>().AddChildWithId<LSUnitView, GameObject>(lsUnit.Id, unitGo);
             lsUnitView.AddComponent<LSAnimatorComponent>();
-            lsUnitView.AddComponent<LSViewTransformComponent, Transform>(unitGo.transform);
+            lsUnitView.AddComponent<LSViewTransformComponent, Transform, bool>(unitGo.transform, false);
 
             var propComponent = lsUnit.GetComponent<PropComponent>();
             float hp = propComponent.Get(NumericType.Hp).AsFloat();

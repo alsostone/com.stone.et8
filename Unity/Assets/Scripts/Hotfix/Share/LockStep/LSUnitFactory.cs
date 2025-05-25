@@ -89,14 +89,15 @@ namespace ET
 	        return lsUnit;
         }
         
-        public static LSUnit CreateBullet(LSWorld lsWorld, int bulletId, TSVector position, TSQuaternion rotation, LSUnit caster, LSUnit target)
+        public static LSUnit CreateBullet(LSWorld lsWorld, int bulletId, TSVector position, LSUnit caster, LSUnit target)
         {
 	        LSUnitComponent lsUnitComponent = lsWorld.GetComponent<LSUnitComponent>();
 	        LSUnit lsUnit = lsUnitComponent.AddChild<LSUnit>();
 			
-	        lsUnit.AddComponent<TransformComponent, TSVector, TSQuaternion>(position, rotation);
+	        lsUnit.AddComponent<TransformComponent, TSVector, TSQuaternion>(position, TSQuaternion.identity);
 	        lsUnit.AddComponent<TypeComponent, EUnitType>(EUnitType.Bullet);
-	        lsUnit.AddComponent<BulletComponent, int, LSUnit, LSUnit>(bulletId, caster, target);
+	        BulletComponent bulletComponent = lsUnit.AddComponent<BulletComponent, int, LSUnit, LSUnit>(bulletId, caster, target);
+	        lsUnit.AddComponent<TrackComponent, int, LSUnit>(bulletComponent.TbBulletRow.TrackId, target);
 	        EventSystem.Instance.Publish(lsWorld, new LSUnitCreate() {LSUnit = lsUnit});
 	        return lsUnit;
         }

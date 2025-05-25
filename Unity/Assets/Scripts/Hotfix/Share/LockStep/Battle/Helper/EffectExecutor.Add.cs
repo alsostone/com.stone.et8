@@ -54,8 +54,6 @@ namespace ET
         private static void AddBullet(int[] param, LSUnit owner, LSUnit target)
         {
             var ownerTransform = owner.GetComponent<TransformComponent>();
-            var targetTransform = target.GetComponent<TransformComponent>();
-            
             var position = TSVector.zero;
             if (param.Length >= 4) {
                 position = new TSVector(param[1], param[2], param[3]) * FP.EN4;
@@ -65,9 +63,7 @@ namespace ET
                 position = new TSVector(param[1], 0, 0) * FP.EN4;
             }
             position = position.Rotation(ownerTransform.Rotation.eulerAngles.y);
-            
-            var rotation = TSQuaternion.LookRotation(targetTransform.Position - ownerTransform.Position);
-            LSUnitFactory.CreateBullet(owner.LSWorld(), param[0], ownerTransform.Position + position, rotation, owner, target);
+            LSUnitFactory.CreateBullet(owner.LSWorld(), param[0], ownerTransform.Position + position, owner, target);
         }
         
         private static void DoHealing(int[] param, LSUnit owner, LSUnit target)
