@@ -9,19 +9,17 @@ namespace ET.Client
     public static partial class LSViewTransformSystem
     {
         [EntitySystem]
-        private static void Awake(this LSViewTransformComponent self, Transform transform)
+        private static void Awake(this LSViewTransformComponent self, Transform transform, bool uesViewRotation)
         {
             self.Transform = transform;
+            self.IsUesViewRotation = uesViewRotation;
+            self.ResetTransfrom();
         }
         
         [LSEntitySystem]
         private static void LSRollback(this LSViewTransformComponent self)
         {
-            LSUnit unit = self.LSViewOwner().GetUnit();
-            
-            TransformComponent transformComponent = unit.GetComponent<TransformComponent>();
-            self.Transform.position = transformComponent.Position.ToVector();
-            self.Transform.rotation = transformComponent.Rotation.ToQuaternion();
+            self.ResetTransfrom();
         }
         
         [EntitySystem]
@@ -31,12 +29,32 @@ namespace ET.Client
             
             TransformComponent transformComponent = unit.GetComponent<TransformComponent>();
             self.Position = transformComponent.Position.ToVector();
-            self.Rotation = transformComponent.Rotation.ToQuaternion();
-
-            Quaternion rotation = self.Transform.rotation;
-            float angle = Mathf.Abs(Quaternion.Angle(rotation, self.Rotation));
-            self.Transform.rotation = Quaternion.Lerp(rotation, self.Rotation, Time.deltaTime / (angle / 720f));
-            self.Transform.position = Vector3.SmoothDamp(self.Transform.position, self.Position, ref self.CurrentVelocity, .125f);
+            
+            Vector3 postion = self.Transform.position;
+            self.Transform.position = Vector3.SmoothDamp(postion, self.Position, ref self.CurrentVelocity, .125f);
+            
+            // 为使得表现平滑，旋转不敏感的单位 表现层自己计算旋转
+            // 如子弹 与逻辑旋转不严格一致并不会带来严重问题，平滑更重要
+            if (self.IsUesViewRotation)
+            {
+                self.Transform.forward = postion - self.Transform.position;
+            }
+            else
+            {
+                Quaternion rotationTo = transformComponent.Rotation.ToQuaternion();
+                Quaternion rotation = self.Transform.rotation;
+                float angle = Mathf.Abs(Quaternion.Angle(rotation, rotationTo));
+                float time = 1.0f / 720 * angle;
+                self.Transform.rotation = Quaternion.Lerp(rotation, rotationTo, Time.deltaTime / time);
+            }
+        }
+        
+        private static void ResetTransfrom(this LSViewTransformComponent self)
+        {
+            LSUnit unit = self.LSViewOwner().GetUnit();
+            TransformComponent transformComponent = unit.GetComponent<TransformComponent>();
+            self.Transform.position = transformComponent.Position.ToVector();
+            self.Transform.rotation = transformComponent.Rotation.ToQuaternion();
         }
         
     }
