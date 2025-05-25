@@ -22,7 +22,8 @@ namespace ET
             EffectGroupId = _buf.ReadInt();
             TrackId = _buf.ReadInt();
             TrackId_Ref = null;
-            EffectId = _buf.ReadInt();
+            ResourceId = _buf.ReadInt();
+            ResourceId_Ref = null;
             FinishEffectId = _buf.ReadInt();
 
             PostInit();
@@ -61,9 +62,11 @@ namespace ET
         public TbTrackRow TrackId_Ref { get; private set; }
 
         /// <summary>
-        /// 特效ID
+        /// 技能资源ID
         /// </summary>
-        public readonly int EffectId;
+        public readonly int ResourceId;
+
+        public TbSkillResourceRow ResourceId_Ref { get; private set; }
 
         /// <summary>
         /// 结束特效ID
@@ -81,7 +84,7 @@ namespace ET
             
             
             TrackId_Ref = TbTrack.Instance.GetOrDefault(TrackId);
-            
+            ResourceId_Ref = TbSkillResource.Instance.GetOrDefault(ResourceId);
             
         }
 
@@ -93,7 +96,7 @@ namespace ET
             + "life:" + Life + ","
             + "effectGroupId:" + EffectGroupId + ","
             + "trackId:" + TrackId + ","
-            + "effectId:" + EffectId + ","
+            + "resourceId:" + ResourceId + ","
             + "finishEffectId:" + FinishEffectId + ","
             + "}";
         }

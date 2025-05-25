@@ -19,7 +19,9 @@ namespace ET
             Id = _buf.ReadInt();
             Name = _buf.ReadString();
             Resource = _buf.ReadInt();
+            Resource_Ref = null;
             SoundId = _buf.ReadInt();
+            SoundId_Ref = null;
             BindPointType = (EBindPointType)_buf.ReadInt();
 
             PostInit();
@@ -45,10 +47,14 @@ namespace ET
         /// </summary>
         public readonly int Resource;
 
+        public TbResourceRow Resource_Ref { get; private set; }
+
         /// <summary>
         /// 音效ID
         /// </summary>
         public readonly int SoundId;
+
+        public TbResourceRow SoundId_Ref { get; private set; }
 
         /// <summary>
         /// 挂点类型
@@ -63,8 +69,8 @@ namespace ET
         {
             
             
-            
-            
+            Resource_Ref = TbResource.Instance.GetOrDefault(Resource);
+            SoundId_Ref = TbResource.Instance.GetOrDefault(SoundId);
             
         }
 
