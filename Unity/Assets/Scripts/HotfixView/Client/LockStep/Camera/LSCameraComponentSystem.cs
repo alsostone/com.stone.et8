@@ -39,7 +39,7 @@ namespace ET.Client
 				return;
 			}
 
-			Vector3 pos = lsUnit.Transform.position;
+			Vector3 pos = lsUnit.GetComponent<LSViewTransformComponent>().Transform.position;
 			self.Transform.position = new Vector3(pos.x, pos.y + 3, pos.z - 5);
 		}
 	}

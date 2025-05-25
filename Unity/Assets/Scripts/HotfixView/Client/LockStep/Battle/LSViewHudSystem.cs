@@ -4,12 +4,12 @@ using ST.HUD;
 
 namespace ET.Client
 {
-    [EntitySystemOf(typeof(LSHudComponent))]
-    [FriendOf(typeof(LSHudComponent))]
-    public static partial class LSHudComponentSystem
+    [EntitySystemOf(typeof(LSViewHudComponent))]
+    [FriendOf(typeof(LSViewHudComponent))]
+    public static partial class LSViewHudSystem
     {
         [EntitySystem]
-        private static void Awake(this LSHudComponent self, Vector3 offset, Transform follow, float hp, float hpMax)
+        private static void Awake(this LSViewHudComponent self, Vector3 offset, Transform follow, float hp, float hpMax)
         {
             self.Offset = offset;
             self.FollowTransform = follow;
@@ -19,24 +19,24 @@ namespace ET.Client
         }
 
         [EntitySystem]
-        private static void Update(this LSHudComponent self)
+        private static void Update(this LSViewHudComponent self)
         {
             HudRenderer.Instance.SetInstancePosition(self.HudInstance, self.FollowTransform.position + self.Offset);
         }
         
         [EntitySystem]
-        private static void Destroy(this LSHudComponent self)
+        private static void Destroy(this LSViewHudComponent self)
         {
             HudRenderer.Instance.RemoveInstance(self.HudInstance);
         }
 
-        public static void SetHp(this LSHudComponent self, float hp)
+        public static void SetHp(this LSViewHudComponent self, float hp)
         {
             self.Hp = hp;
             HudRenderer.Instance.SetInstanceProgress(self.HudInstance, hp / self.MaxHp);
         }
 
-        public static void SetMaxHp(this LSHudComponent self, float maxHp)
+        public static void SetMaxHp(this LSViewHudComponent self, float maxHp)
         {
             self.MaxHp = maxHp;
             HudRenderer.Instance.SetInstanceProgress(self.HudInstance, self.Hp / maxHp);

@@ -23,7 +23,18 @@ namespace ET.Client
 
         private static async ETTask CreateBulletViewAsync(Room room, LSWorld lsWorld, LSUnit lsUnit)
         {
-            await ETTask.CompletedTask;
+            Scene root = lsWorld.Root();
+
+            BulletComponent bulletComponent = lsUnit.GetComponent<BulletComponent>();
+            TbSkillResourceRow row = TbSkillResource.Instance.Get(bulletComponent.TbBulletRow.ResourceId);
+            TbResourceRow resourceRow = TbResource.Instance.Get(row.Resource);
+            GameObject prefab = await root.GetComponent<ResourcesLoaderComponent>().LoadAssetAsync<GameObject>(resourceRow.Url);
+
+            GlobalComponent globalComponent = root.GetComponent<GlobalComponent>();
+            GameObject unitGo = UnityEngine.Object.Instantiate(prefab, globalComponent.Unit, true);
+            
+            LSUnitView lsUnitView = room.GetComponent<LSUnitViewComponent>().AddChildWithId<LSUnitView, GameObject>(lsUnit.Id, unitGo);
+            lsUnitView.AddComponent<LSViewTransformComponent, Transform>(unitGo.transform);
         }
 
         private static async ETTask CreateHeroViewAsync(Room room, LSWorld lsWorld, LSUnit lsUnit)
@@ -36,16 +47,14 @@ namespace ET.Client
             GlobalComponent globalComponent = root.GetComponent<GlobalComponent>();
             GameObject unitGo = UnityEngine.Object.Instantiate(prefab, globalComponent.Unit, true);
             
-            var transformComponent = lsUnit.GetComponent<TransformComponent>();
-            unitGo.transform.position = transformComponent.Position.ToVector();
-
             LSUnitView lsUnitView = room.GetComponent<LSUnitViewComponent>().AddChildWithId<LSUnitView, GameObject>(lsUnit.Id, unitGo);
             lsUnitView.AddComponent<LSAnimatorComponent>();
+            lsUnitView.AddComponent<LSViewTransformComponent, Transform>(unitGo.transform);
 
             var propComponent = lsUnit.GetComponent<PropComponent>();
             float hp = propComponent.Get(NumericType.Hp).AsFloat();
             float hpMax = propComponent.Get(NumericType.MaxHp).AsFloat();
-            lsUnitView.AddComponent<LSHudComponent, Vector3, Transform, float, float>(Vector3.up * 1.75f, unitGo.transform, hp, hpMax);
+            lsUnitView.AddComponent<LSViewHudComponent, Vector3, Transform, float, float>(Vector3.up * 1.75f, unitGo.transform, hp, hpMax);
         }
     }
 }

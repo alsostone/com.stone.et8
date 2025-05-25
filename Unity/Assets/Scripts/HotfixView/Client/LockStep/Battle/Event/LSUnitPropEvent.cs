@@ -14,7 +14,7 @@ namespace ET.Client
             if (comp == null)
                 return;
             var view = comp.GetChild<LSUnitView>(args.Id);
-            var hudComponent = view.GetComponent<LSHudComponent>();
+            var hudComponent = view.GetComponent<LSViewHudComponent>();
             if (hudComponent == null)
                 return;
             switch (args.NumericType)
