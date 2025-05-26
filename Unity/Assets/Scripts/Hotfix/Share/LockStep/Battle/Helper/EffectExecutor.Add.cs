@@ -51,7 +51,7 @@ namespace ET
             flagComponent.RemoveRestrict(param[0]);
         }
         
-        private static void AddBullet(int[] param, LSUnit owner, LSUnit target)
+        private static void AddBulletToTarget(int[] param, LSUnit owner, LSUnit target)
         {
             var ownerTransform = owner.GetComponent<TransformComponent>();
             var position = TSVector.zero;
@@ -64,6 +64,20 @@ namespace ET
             }
             position = position.Rotation(ownerTransform.Rotation.eulerAngles.y);
             LSUnitFactory.CreateBullet(owner.LSWorld(), param[0], ownerTransform.Position + position, owner, target);
+        }
+        private static void AddBulletToPostion(int[] param, LSUnit owner, TSVector target)
+        {
+            var ownerTransform = owner.GetComponent<TransformComponent>();
+            var position = TSVector.zero;
+            if (param.Length >= 4) {
+                position = new TSVector(param[1], param[2], param[3]) * FP.EN4;
+            }else if (param.Length >= 3) {
+                position = new TSVector(param[1], param[2], 0) * FP.EN4;
+            }else if (param.Length >= 2) {
+                position = new TSVector(param[1], 0, 0) * FP.EN4;
+            }
+            position = position.Rotation(ownerTransform.Rotation.eulerAngles.y);
+            LSUnitFactory.CreateBulletToPosition(owner.LSWorld(), param[0], ownerTransform.Position + position, owner, target);
         }
         
         private static void DoHealing(int[] param, LSUnit owner, LSUnit target)

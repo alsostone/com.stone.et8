@@ -8,17 +8,18 @@ namespace ET
 {
     [ComponentOf(typeof(LSUnit))]
     [MemoryPackable]
-    public partial class TrackComponent : LSEntity, IAwake<int, LSUnit>, ILSUpdate, ISerializeToEntity
+    public partial class TrackComponent : LSEntity, IAwake<int, LSUnit, TSVector>, ILSUpdate, ISerializeToEntity
     {
         public int TrackId;
-        public TSVector TargetPostion;
         public long Target;
-        
-        public int StartFrame;
         public FP HorSpeed;
-
-        public FP VerSpeed;
-        public FP VerAcceleration;
+        
+        public TSVector CasterPosition;
+        public TSVector TargetPostion;
+        public TSVector ControlPosition;
+        
+        public FP Duration;
+        public FP EclipseTime;
         
         [BsonIgnore]
         [MemoryPackIgnore]

@@ -9,26 +9,30 @@ namespace ET
     public static partial class TrackComponentSystem
     {
         [EntitySystem]
-        private static void Awake(this TrackComponent self, int trackId, LSUnit target)
+        private static void Awake(this TrackComponent self, int trackId, LSUnit target, TSVector targetPosition)
         {
             self.TrackId = trackId;
-            self.Target = target.Id;
-            
-            self.StartFrame = self.LSWorld().Frame;
             self.HorSpeed = self.TbTrackRow.HorSpeed * FP.EN4;
-
-            TransformComponent targetTransform = target.GetComponent<TransformComponent>();
-            self.TargetPostion = targetTransform.Position;
             
-            // 根据高度差计算竖直加速度和初速度
-            if (self.TbTrackRow.VerSpeed > 0)
-            {
-                TransformComponent ownerTransform = self.LSOwner().GetComponent<TransformComponent>();
-                FP distance = (self.TargetPostion - ownerTransform.Position).magnitude;
-                int frameCountHalf = (int)(distance / self.HorSpeed * LSConstValue.FrameCountPerSecond / 2);
-                self.VerAcceleration = (self.TbTrackRow.VerSpeed * FP.EN4) / (frameCountHalf * (frameCountHalf + 1) / 2);
-                self.VerSpeed = self.VerAcceleration * frameCountHalf;
+            TransformComponent ownerTransform = self.LSOwner().GetComponent<TransformComponent>();
+            self.CasterPosition = ownerTransform.Position;
+            if (target == null) {
+                self.Target = 0;
+                self.TargetPostion = targetPosition;
             }
+            else {
+                self.Target = target.Id;
+                self.TargetPostion = target.GetComponent<TransformComponent>().Position;
+            }
+            
+            // 起止点的中心叠加高度为控制点
+            TSVector dir = self.TargetPostion - self.CasterPosition;
+            self.ControlPosition = self.CasterPosition + dir / 2;
+            FP y = self.TbTrackRow.Height * FP.EN4 + self.ControlPosition.y;
+            self.ControlPosition = new TSVector(self.ControlPosition.x, y, self.ControlPosition.z);
+            
+            self.Duration = dir.magnitude / self.HorSpeed;
+            self.EclipseTime = FP.Zero;
             self.Tick();
         }
         
@@ -40,39 +44,34 @@ namespace ET
         
         private static void Tick(this TrackComponent self)
         {
+            self.EclipseTime += (FP)LSConstValue.UpdateInterval / LSConstValue.Milliseconds;
+            
             TransformComponent ownerTransform = self.LSOwner().GetComponent<TransformComponent>();
-            TransformComponent targetTransform = self.LSUnit(self.Target).GetComponent<TransformComponent>();
-            TSVector forwardHor = targetTransform.Position - ownerTransform.Position;
-            forwardHor.y = 0;
-            TSVector offsetHor = forwardHor.normalized * self.HorSpeed * LSConstValue.UpdateInterval / LSConstValue.Milliseconds;
-            
             TSVector position = ownerTransform.Position;
-            ownerTransform.Position = new TSVector(position.x + offsetHor.x, position.y + self.VerSpeed, position.z + offsetHor.z);
+            switch (self.TbTrackRow.TowardType)
+            {
+                case ETrackTowardType.Target:
+                {
+                    TransformComponent targetTransform = self.LSUnit(self.Target).GetComponent<TransformComponent>();
+                    ownerTransform.Position = TSBezier.GetPoint(self.CasterPosition, self.ControlPosition, targetTransform.Position, self.EclipseTime / self.Duration);
+                    break;
+                }
+                case ETrackTowardType.Direction:
+                {
+                    // 指向固定方向时 抛物线效果不生效
+                    TSVector forward = self.TargetPostion;
+                    TSVector offset = forward.normalized * self.HorSpeed * LSConstValue.UpdateInterval / LSConstValue.Milliseconds;
+                    ownerTransform.Position += offset;
+                    break;
+                }
+                case ETrackTowardType.Position:
+                {
+                    ownerTransform.Position = TSBezier.GetPoint(self.CasterPosition, self.ControlPosition, self.TargetPostion, self.EclipseTime / self.Duration);
+                    break;
+                }
+            }
             ownerTransform.Forward = ownerTransform.Position - position;
-            self.VerSpeed -= self.VerAcceleration;
-
-            
-            //
-            // ownerTransform.Move(forward);
-            //
-            // TSVector2 distance = targetTransform.Position - ownerTransform.Position;
-            // if (distance.LengthSquared() < FP.EN4)
-            // {
-            //     self.OnReachTarget(true);
-            // }
-            //
-            // var rotation = TSQuaternion.LookRotation(targetTransform.Position - ownerTransform.Position);
         }
         
-        private static void OnReachTarget(this TrackComponent self, bool reach)
-        {
-            // if (reach) {
-            //     LSUnit caster = self.LSUnit(self.Caster);
-            //     LSUnit target = self.LSUnit(self.Target);
-            //     EffectExecutor.Execute(self.TbBulletRow.EffectGroupId, caster, target, self.LSOwner());
-            // }
-            // EventSystem.Instance.Publish(self.LSWorld(), new LSUnitRemove() { Id = self.LSOwner().Id });
-            // self.LSOwner().Dispose();
-        }
     }
 }

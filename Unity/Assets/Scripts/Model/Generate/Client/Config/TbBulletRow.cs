@@ -23,7 +23,6 @@ namespace ET
             TrackId = _buf.ReadInt();
             TrackId_Ref = null;
             ResourceId = _buf.ReadInt();
-            ResourceId_Ref = null;
             FinishEffectId = _buf.ReadInt();
 
             PostInit();
@@ -66,8 +65,6 @@ namespace ET
         /// </summary>
         public readonly int ResourceId;
 
-        public TbSkillResourceRow ResourceId_Ref { get; private set; }
-
         /// <summary>
         /// 结束特效ID
         /// </summary>
@@ -84,7 +81,7 @@ namespace ET
             
             
             TrackId_Ref = TbTrack.Instance.GetOrDefault(TrackId);
-            ResourceId_Ref = TbSkillResource.Instance.GetOrDefault(ResourceId);
+            
             
         }
 

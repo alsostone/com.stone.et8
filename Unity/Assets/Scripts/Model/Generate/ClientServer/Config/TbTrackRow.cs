@@ -19,7 +19,7 @@ namespace ET
             Id = _buf.ReadInt();
             Name = _buf.ReadString();
             HorSpeed = _buf.ReadInt();
-            VerSpeed = _buf.ReadInt();
+            Height = _buf.ReadInt();
             TowardType = (ETrackTowardType)_buf.ReadInt();
 
             PostInit();
@@ -48,7 +48,7 @@ namespace ET
         /// <summary>
         /// 垂直高度
         /// </summary>
-        public readonly int VerSpeed;
+        public readonly int Height;
 
         /// <summary>
         /// 朝向类型
@@ -74,7 +74,7 @@ namespace ET
             + "Id:" + Id + ","
             + "name:" + Name + ","
             + "horSpeed:" + HorSpeed + ","
-            + "verSpeed:" + VerSpeed + ","
+            + "height:" + Height + ","
             + "towardType:" + TowardType + ","
             + "}";
         }

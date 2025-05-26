@@ -14,11 +14,6 @@
             self.Target = target.Id;
         }
         
-        [EntitySystem]
-        private static void Destroy(this BulletComponent self)
-        {
-        }
-        
         [LSEntitySystem]
         private static void LSUpdate(this BulletComponent self)
         {

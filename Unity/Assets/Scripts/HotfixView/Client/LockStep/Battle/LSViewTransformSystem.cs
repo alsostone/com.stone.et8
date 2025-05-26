@@ -37,7 +37,11 @@ namespace ET.Client
             // 如子弹 与逻辑旋转不严格一致并不会带来严重问题，平滑更重要
             if (self.IsUesViewRotation)
             {
-                self.Transform.forward = postion - self.Transform.position;
+                Vector3 dir = postion - self.Transform.position;
+                if (dir.sqrMagnitude > 0.0001f)
+                {
+                    self.Transform.forward = postion - self.Transform.position;
+                }
             }
             else
             {

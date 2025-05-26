@@ -70,7 +70,7 @@ namespace ET
                     AddRestrict(res.ActionParam, owner, target);
                     break;
                 case ESkillEffectType.ADD_BULLET:
-                    AddBullet(res.ActionParam, owner, target);
+                    AddBulletToTarget(res.ActionParam, owner, target);
                     break;
                 case ESkillEffectType.Healing:
                     DoHealing(res.ActionParam, owner, target);

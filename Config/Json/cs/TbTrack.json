@@ -3,70 +3,70 @@
     "Id": 1001,
     "name": "指向方向低速子弹",
     "hor_speed": 30000,
-    "ver_speed": 0,
+    "height": 0,
     "toward_type": 1
   },
   {
     "Id": 1002,
     "name": "固定目标低速子弹",
     "hor_speed": 30000,
-    "ver_speed": 20000,
+    "height": 40000,
     "toward_type": 2
   },
   {
     "Id": 1003,
     "name": "跟随目标低速子弹",
     "hor_speed": 30000,
-    "ver_speed": 0,
+    "height": 40000,
     "toward_type": 3
   },
   {
     "Id": 2001,
     "name": "指向方向中速子弹",
     "hor_speed": 40000,
-    "ver_speed": 0,
+    "height": 0,
     "toward_type": 1
   },
   {
     "Id": 2002,
     "name": "固定目标中速子弹",
     "hor_speed": 40000,
-    "ver_speed": 20000,
+    "height": 40000,
     "toward_type": 2
   },
   {
     "Id": 2003,
     "name": "跟随目标中速子弹",
     "hor_speed": 40000,
-    "ver_speed": 0,
+    "height": 40000,
     "toward_type": 3
   },
   {
     "Id": 3001,
     "name": "指向方向高速子弹",
     "hor_speed": 50000,
-    "ver_speed": 0,
+    "height": 0,
     "toward_type": 1
   },
   {
     "Id": 3002,
     "name": "固定目标高速子弹",
     "hor_speed": 50000,
-    "ver_speed": 20000,
+    "height": 40000,
     "toward_type": 2
   },
   {
     "Id": 3003,
     "name": "跟随目标高速子弹",
     "hor_speed": 50000,
-    "ver_speed": 0,
+    "height": 40000,
     "toward_type": 3
   },
   {
     "Id": 8000,
     "name": "蓄力抛射轨迹",
     "hor_speed": 60000,
-    "ver_speed": 0,
+    "height": 0,
     "toward_type": 2
   }
 ]
