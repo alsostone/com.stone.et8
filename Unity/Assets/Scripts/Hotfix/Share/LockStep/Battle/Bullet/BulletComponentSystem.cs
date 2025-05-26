@@ -15,6 +15,7 @@ namespace ET
             self.ElapseFrame = self.LSWorld().Frame + self.TbBulletRow.Life.Convert2Frame();
             self.Caster = caster.Id;
             self.Target = target.Id;
+            self.TargetPosition = target.GetComponent<TransformComponent>().Position;
         }
         
         [LSEntitySystem]
@@ -33,12 +34,16 @@ namespace ET
                 self.OnReachTarget(true);
                 return;
             }
+            
+            // 防止目标死亡导致取不到目标位置
+            LSUnit target = self.LSUnit(self.Target);
+            if (target != null)
+                self.TargetPosition = target.GetComponent<TransformComponent>().Position;
 
             // 子弹足够靠近目标时判定为已命中
             FP speedPerFrame = trackComponent.HorSpeed * LSConstValue.UpdateInterval / LSConstValue.Milliseconds;
-            TransformComponent transformTarget = self.LSUnit(self.Target).GetComponent<TransformComponent>();
             TransformComponent transformBullet = self.LSOwner().GetComponent<TransformComponent>();
-            if (speedPerFrame * speedPerFrame > (transformTarget.Position - transformBullet.Position).sqrMagnitude)
+            if (speedPerFrame * speedPerFrame > (self.TargetPosition - transformBullet.Position).sqrMagnitude)
             {
                 self.OnReachTarget(true);
                 return;

@@ -44,12 +44,26 @@
   },
   {
     "Id": 100002011,
-    "name": "3目标子弹效果",
+    "name": "炮弹落地重新索敌",
     "group_id": 100002011,
     "success_conds": [],
     "failure_conds": [],
+    "action_type": 12,
+    "action_param": [
+      10000202,
+      100002012
+    ]
+  },
+  {
+    "Id": 100002012,
+    "name": "爆炸伤害",
+    "group_id": 100002012,
+    "success_conds": [],
+    "failure_conds": [],
     "action_type": 4,
-    "action_param": []
+    "action_param": [
+      20000
+    ]
   },
   {
     "Id": 300000010,

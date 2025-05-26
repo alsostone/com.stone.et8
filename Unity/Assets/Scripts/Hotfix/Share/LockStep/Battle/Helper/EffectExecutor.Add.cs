@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using TrueSync;
 
 namespace ET
@@ -102,17 +103,15 @@ namespace ET
             target.GetComponent<BeHitComponent>()?.BeDamage(owner, attack);
         }
         
-        private static void DoResearch(int[] param, LSUnit owner, LSUnit target, EntityRef<Entity> carrier)
+        private static void DoResearch(int[] param, LSUnit owner, LSUnit target, LSUnit carrier)
         {
-            // if (param.Count != 2) { return; }
-            //
-            // var distances = BattleListPoolMgr.Instance.Get<List<EntityDistance>>();
-            // TargetSearcher.Search(param[0], carrier.Get<Entity>(), distances);
-            // EffectExecutor.Execute(param[1], owner, distances);
-            // foreach (var distance in distances) {
-            //     BattleClassPoolMgr.Instance.Return(distance);
-            // }
-            // BattleListPoolMgr.Instance.Return(distances);
+            if (param.Length != 2) { return; }
+            
+            var distances = ObjectPool.Instance.Fetch<List<SearchUnit>>();
+            TargetSearcher.Search(param[0], carrier, distances);
+            EffectExecutor.Execute(param[1], owner, distances);
+            distances.Clear();
+            ObjectPool.Instance.Recycle(distances);
         }
         
         private static void SummonSoldier(int[] param, LSUnit owner, LSUnit target)

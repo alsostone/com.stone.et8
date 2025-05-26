@@ -97,6 +97,7 @@ namespace ET
 			
 	        lsUnit.AddComponent<TransformComponent, TSVector, TSQuaternion>(position, TSQuaternion.identity);
 	        lsUnit.AddComponent<TypeComponent, EUnitType>(EUnitType.Bullet);
+	        lsUnit.AddComponent<TeamComponent, TeamType>(caster.GetComponent<TeamComponent>().GetTeamType());
 	        BulletComponent bulletComponent = lsUnit.AddComponent<BulletComponent, int, LSUnit, LSUnit>(bulletId, caster, target);
 
 	        lsUnit.AddComponent<TrackComponent, int, LSUnit, TSVector>(bulletComponent.TbBulletRow.TrackId, target, TSVector.zero);
@@ -112,6 +113,7 @@ namespace ET
 			
 	        lsUnit.AddComponent<TransformComponent, TSVector, TSQuaternion>(position, TSQuaternion.identity);
 	        lsUnit.AddComponent<TypeComponent, EUnitType>(EUnitType.Bullet);
+	        lsUnit.AddComponent<TeamComponent, TeamType>(caster.GetComponent<TeamComponent>().GetTeamType());
 	        BulletComponent bulletComponent = lsUnit.AddComponent<BulletComponent, int, LSUnit, LSUnit>(bulletId, caster, null);
 
 	        lsUnit.AddComponent<TrackComponent, int, LSUnit, TSVector>(bulletComponent.TbBulletRow.TrackId, null, targetPosition);

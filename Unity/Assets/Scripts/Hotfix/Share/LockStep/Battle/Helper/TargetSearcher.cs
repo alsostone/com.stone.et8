@@ -53,15 +53,16 @@ namespace ET
                 default: throw new ArgumentOutOfRangeException();
             }
             
-            FilterDirection(results, owner);
+            FilterDirection(res, results, owner);
             FilterWithType(res.Type, results);
             FilterWithTableId(res.TableId, results);
             FilterWithPriority(res.Priority, results);
             FilterCount(res.Count, results);
         }
         
-        private static void FilterDirection(IList<SearchUnit> results, LSUnit owner)
+        private static void FilterDirection(TbSearchRow res, IList<SearchUnit> results, LSUnit owner)
         {
+            if (!res.ValidForward) return;
             var dir = owner.GetComponent<TransformComponent>().Forward;
             var center = owner.GetComponent<TransformComponent>().Position;
             for (int idx = results.Count - 1; idx >= 0; idx--) {

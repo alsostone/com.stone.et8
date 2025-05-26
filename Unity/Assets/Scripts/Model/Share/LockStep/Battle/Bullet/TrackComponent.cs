@@ -14,7 +14,7 @@ namespace ET
         public long Target;
         public FP HorSpeed;
         
-        public TSVector TargetPostion;
+        public TSVector TargetPosition;
         public TSVector CasterPosition;
         public TSVector ControlPosition;
         

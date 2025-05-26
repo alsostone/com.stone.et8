@@ -29,7 +29,7 @@ namespace ET
             }
         }
         
-        public static void Execute(int groupId, LSUnit owner, LSUnit target, Entity carrier)
+        public static void Execute(int groupId, LSUnit owner, LSUnit target, LSUnit carrier)
         {
             var resEffects = TbEffect.Instance.GetGroupEffects(groupId);
             if (resEffects == null) {
@@ -51,7 +51,7 @@ namespace ET
             }
         }
 
-        private static void Execute(TbEffectRow res, LSUnit owner, LSUnit target, Entity carrier)
+        private static void Execute(TbEffectRow res, LSUnit owner, LSUnit target, LSUnit carrier)
         {
             if (target == null) {
                 return;

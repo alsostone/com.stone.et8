@@ -1,5 +1,6 @@
 ﻿using MemoryPack;
 using MongoDB.Bson.Serialization.Attributes;
+using TrueSync;
 
 namespace ET
 {
@@ -11,6 +12,7 @@ namespace ET
         
         public long Caster;
         public long Target;
+        public TSVector TargetPosition;
         public int ElapseFrame;
         
         [BsonIgnore]

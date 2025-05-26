@@ -17,6 +17,7 @@ namespace ET
         public TbSearchRow(ByteBuf _buf)
         {
             Id = _buf.ReadInt();
+            ValidForward = _buf.ReadBool();
             Range = _buf.ReadInt();
             Team = (ESearchTargetTeam)_buf.ReadInt();
             Type = (EUnitType)_buf.ReadInt();
@@ -36,6 +37,11 @@ namespace ET
         /// ID
         /// </summary>
         public readonly int Id;
+
+        /// <summary>
+        /// 是否朝向过滤
+        /// </summary>
+        public readonly bool ValidForward;
 
         /// <summary>
         /// 范围
@@ -80,12 +86,14 @@ namespace ET
             
             
             
+            
         }
 
         public override string ToString()
         {
             return "{ "
             + "Id:" + Id + ","
+            + "validForward:" + ValidForward + ","
             + "range:" + Range + ","
             + "team:" + Team + ","
             + "type:" + Type + ","

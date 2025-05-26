@@ -15,10 +15,10 @@ namespace ET
             self.HorSpeed = self.TbTrackRow.HorSpeed * FP.EN4;
             if (target == null) {
                 self.Target = 0;
-                self.TargetPostion = targetPosition;
+                self.TargetPosition = targetPosition;
             } else {
                 self.Target = target.Id;
-                self.TargetPostion = target.GetComponent<TransformComponent>().Position;
+                self.TargetPosition = target.GetComponent<TransformComponent>().Position;
             }
             
             switch (self.TbTrackRow.TowardType)
@@ -30,7 +30,7 @@ namespace ET
                     self.CasterPosition = ownerTransform.Position;
             
                     // 起止点的中心叠加高度为控制点
-                    TSVector dir = self.TargetPostion - self.CasterPosition;
+                    TSVector dir = self.TargetPosition - self.CasterPosition;
                     self.ControlPosition = self.CasterPosition + dir * (self.TbTrackRow.ControlFactor * FP.EN4);
                     FP y = (self.TbTrackRow.ControlHeight * FP.EN4) + self.ControlPosition.y;
                     self.ControlPosition = new TSVector(self.ControlPosition.x, y, self.ControlPosition.z);
@@ -57,21 +57,24 @@ namespace ET
             {
                 case ETrackTowardType.Target:
                 {
-                    TransformComponent targetTransform = self.LSUnit(self.Target).GetComponent<TransformComponent>();
-                    ownerTransform.Position = TSBezier.GetPoint(self.CasterPosition, self.ControlPosition, targetTransform.Position, self.EclipseTime / self.Duration);
+                    // 防止目标死亡导致取不到目标位置
+                    LSUnit target = self.LSUnit(self.Target);
+                    if (target != null)
+                        self.TargetPosition = target.GetComponent<TransformComponent>().Position;
+                    ownerTransform.Position = TSBezier.GetPoint(self.CasterPosition, self.ControlPosition, self.TargetPosition, self.EclipseTime / self.Duration);
                     break;
                 }
                 case ETrackTowardType.Direction:
                 {
                     // 指向固定方向时 抛物线效果不生效
-                    TSVector forward = self.TargetPostion;
+                    TSVector forward = self.TargetPosition;
                     TSVector offset = forward.normalized * self.HorSpeed * LSConstValue.UpdateInterval / LSConstValue.Milliseconds;
                     ownerTransform.Position += offset;
                     break;
                 }
                 case ETrackTowardType.Position:
                 {
-                    ownerTransform.Position = TSBezier.GetPoint(self.CasterPosition, self.ControlPosition, self.TargetPostion, self.EclipseTime / self.Duration);
+                    ownerTransform.Position = TSBezier.GetPoint(self.CasterPosition, self.ControlPosition, self.TargetPosition, self.EclipseTime / self.Duration);
                     break;
                 }
             }

@@ -94,6 +94,7 @@ namespace ET
                     }
                 }
             }
+            alreadyRand.Clear();
             ObjectPool.Instance.Recycle(alreadyRand);
         }
     }
