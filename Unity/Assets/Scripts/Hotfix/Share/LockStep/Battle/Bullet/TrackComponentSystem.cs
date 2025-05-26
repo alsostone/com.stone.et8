@@ -27,8 +27,8 @@ namespace ET
             
             // 起止点的中心叠加高度为控制点
             TSVector dir = self.TargetPostion - self.CasterPosition;
-            self.ControlPosition = self.CasterPosition + dir / 2;
-            FP y = self.TbTrackRow.Height * FP.EN4 + self.ControlPosition.y;
+            self.ControlPosition = self.CasterPosition + dir * (self.TbTrackRow.ControlFactor * FP.EN4);
+            FP y = (self.TbTrackRow.ControlHeight * FP.EN4) + self.ControlPosition.y;
             self.ControlPosition = new TSVector(self.ControlPosition.x, y, self.ControlPosition.z);
             
             self.Duration = dir.magnitude / self.HorSpeed;

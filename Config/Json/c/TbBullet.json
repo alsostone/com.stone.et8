@@ -4,7 +4,7 @@
     "name": "英雄1000子弹",
     "life": 10000,
     "effect_group_id": 100002011,
-    "track_id": 1002,
+    "track_id": 2002,
     "resource_id": 10,
     "finish_effect_id": 0
   },

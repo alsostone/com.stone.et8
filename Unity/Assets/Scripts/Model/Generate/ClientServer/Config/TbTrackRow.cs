@@ -19,7 +19,8 @@ namespace ET
             Id = _buf.ReadInt();
             Name = _buf.ReadString();
             HorSpeed = _buf.ReadInt();
-            Height = _buf.ReadInt();
+            ControlFactor = _buf.ReadInt();
+            ControlHeight = _buf.ReadInt();
             TowardType = (ETrackTowardType)_buf.ReadInt();
 
             PostInit();
@@ -46,9 +47,14 @@ namespace ET
         public readonly int HorSpeed;
 
         /// <summary>
-        /// 垂直高度
+        /// 控制点万分比
         /// </summary>
-        public readonly int Height;
+        public readonly int ControlFactor;
+
+        /// <summary>
+        /// 控制点高度
+        /// </summary>
+        public readonly int ControlHeight;
 
         /// <summary>
         /// 朝向类型
@@ -66,6 +72,7 @@ namespace ET
             
             
             
+            
         }
 
         public override string ToString()
@@ -74,7 +81,8 @@ namespace ET
             + "Id:" + Id + ","
             + "name:" + Name + ","
             + "horSpeed:" + HorSpeed + ","
-            + "height:" + Height + ","
+            + "controlFactor:" + ControlFactor + ","
+            + "controlHeight:" + ControlHeight + ","
             + "towardType:" + TowardType + ","
             + "}";
         }
