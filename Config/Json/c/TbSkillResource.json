@@ -2,14 +2,14 @@
   {
     "Id": 10,
     "name": "防御塔攻击特效",
-    "resource": 21000001,
+    "resource": 80010001,
     "sound_id": 0,
     "bind_point_type": 0
   },
   {
     "Id": 11,
     "name": "远程植物攻击特效",
-    "resource": 21000002,
+    "resource": 80010002,
     "sound_id": 0,
     "bind_point_type": 0
   }

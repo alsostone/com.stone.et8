@@ -63,7 +63,7 @@ namespace ET
         
         public static LSUnit CreateBuilding(LSWorld lsWorld, int tableId, TSVector position, TSQuaternion rotation, TeamType teamType)
         {
-	        TbSoldierRow row = TbSoldier.Instance.Get(tableId, 1);
+	        TbBuildingRow row = TbBuilding.Instance.Get(tableId, 1);
 	        LSUnitComponent lsUnitComponent = lsWorld.GetComponent<LSUnitComponent>();
 	        LSUnit lsUnit = lsUnitComponent.AddChild<LSUnit>();
 	        lsUnit.Active = true;
