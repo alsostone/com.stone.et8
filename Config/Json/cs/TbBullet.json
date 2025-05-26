@@ -12,25 +12,7 @@
     "Id": 31000001,
     "name": "防御塔子弹",
     "life": 10000,
-    "effect_group_id": 310000011,
-    "track_id": 1002,
-    "resource_id": 10,
-    "finish_effect_id": 0
-  },
-  {
-    "Id": 40020001,
-    "name": "远程植物子弹",
-    "life": 20000,
-    "effect_group_id": 400200011,
-    "track_id": 1002,
-    "resource_id": 11,
-    "finish_effect_id": 0
-  },
-  {
-    "Id": 49000001,
-    "name": "中立怪子弹",
-    "life": 10000,
-    "effect_group_id": 490000011,
+    "effect_group_id": 300100011,
     "track_id": 1002,
     "resource_id": 10,
     "finish_effect_id": 0

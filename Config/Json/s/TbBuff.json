@@ -17,6 +17,23 @@
     "finish_effect": 0
   },
   {
+    "Id": 30030001,
+    "name": "攻速加成100%",
+    "status_effect_type": 1,
+    "can_dead_clear": true,
+    "can_replace": true,
+    "overlap_type": 0,
+    "duration": 5000,
+    "delay": 0,
+    "interval": 0,
+    "max_layer": 0,
+    "effect_id": 33000001,
+    "scale": 0,
+    "enter_effect": 300300011,
+    "interval_effect": 0,
+    "finish_effect": 0
+  },
+  {
     "Id": 92020001,
     "name": "随机范围掉落",
     "status_effect_type": 0,

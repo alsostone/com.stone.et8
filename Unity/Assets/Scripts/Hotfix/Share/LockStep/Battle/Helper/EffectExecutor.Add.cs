@@ -116,22 +116,18 @@ namespace ET
         
         private static void SummonSoldier(int[] param, LSUnit owner, LSUnit target)
         {
-            // var entityTarget = target.Get<Entity>();
-            // var transformOwner = owner.Get<Entity>().ComTransform;
-            // var transformTarget = entityTarget.ComTransform;
-            //
-            // var rotation = transformTarget.Rotation;
-            // var position = FPVector.zero;
-            // if (param.Count >= 4) {
-            //     position = new FPVector(param[1], param[2], param[3]) * FP.EN4;
-            // }else if (param.Count >= 3) {
-            //     position = new FPVector(param[1], param[2], 0) * FP.EN4;
-            // }else if (param.Count >= 2) {
-            //     position = new FPVector(param[1], 0, 0) * FP.EN4;
-            // }
-            // position = position.Rotation(transformOwner.Angle);
-            //
-            // BattleWorld.Instance.EntityMgr.CreateSoldier(param[0], entityTarget.ComTeam.TeamFlag, transformOwner.Position + position, rotation);
+            var targetTransform = target.GetComponent<TransformComponent>();
+            var position = TSVector.zero;
+            if (param.Length >= 4) {
+                position = new TSVector(param[1], param[2], param[3]) * FP.EN4;
+            }else if (param.Length >= 3) {
+                position = new TSVector(param[1], param[2], 0) * FP.EN4;
+            }else if (param.Length >= 2) {
+                position = new TSVector(param[1], 0, 0) * FP.EN4;
+            }
+            position = position.Rotation(targetTransform.Rotation.eulerAngles.y);
+            TeamType team = target.GetComponent<TeamComponent>().GetTeamType();
+            LSUnitFactory.CreateSoldier(target.LSWorld(), param[0], targetTransform.Position + position, targetTransform.Rotation, team);
         }
         
         private static void GenDrop(int[] param, LSUnit owner, LSUnit target)

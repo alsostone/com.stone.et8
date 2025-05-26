@@ -125,10 +125,10 @@ namespace ET
         private static void EnsureRuntimeProp(PropComponent propComponent)
 		{
 			if (!propComponent.Contains(NumericType.Hp)) {
-				propComponent.Set(NumericType.Hp, propComponent.Get(NumericType.MaxHp));
+				propComponent.Set(NumericType.Hp, propComponent.Get(NumericType.MaxHp), false);
 			}
 			if (!propComponent.Contains(NumericType.Mp)) {
-				propComponent.Set(NumericType.Mp, propComponent.Get(NumericType.MaxMp));
+				propComponent.Set(NumericType.Mp, propComponent.Get(NumericType.MaxMp), false);
 			}
 		}
     }

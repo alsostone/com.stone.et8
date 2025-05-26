@@ -66,45 +66,9 @@
     ]
   },
   {
-    "Id": 300000010,
-    "name": "大水井恢复血量",
-    "group_id": 30000001,
-    "success_conds": [],
-    "failure_conds": [],
-    "action_type": 2,
-    "action_param": [
-      1,
-      10000
-    ]
-  },
-  {
     "Id": 300100010,
-    "name": "小水井恢复蓝量",
-    "group_id": 30010001,
-    "success_conds": [],
-    "failure_conds": [],
-    "action_type": 2,
-    "action_param": [
-      2,
-      5000
-    ]
-  },
-  {
-    "Id": 300101010,
-    "name": "移速加成50%",
-    "group_id": 30010101,
-    "success_conds": [],
-    "failure_conds": [],
-    "action_type": 1,
-    "action_param": [
-      10053,
-      5000
-    ]
-  },
-  {
-    "Id": 310000010,
     "name": "防御塔子弹",
-    "group_id": 31000001,
+    "group_id": 30010001,
     "success_conds": [],
     "failure_conds": [],
     "action_type": 6,
@@ -116,67 +80,61 @@
     ]
   },
   {
-    "Id": 310000011,
+    "Id": 300100011,
     "name": "防御塔子弹效果",
-    "group_id": 310000011,
+    "group_id": 300100011,
     "success_conds": [],
     "failure_conds": [],
     "action_type": 12,
     "action_param": [
-      31000002,
-      31000001
+      30010002,
+      300100012
     ]
   },
   {
-    "Id": 310000012,
-    "name": "防御塔子弹效果",
-    "group_id": 310000012,
+    "Id": 300100012,
+    "name": "防御塔子弹爆炸伤害",
+    "group_id": 300100012,
     "success_conds": [],
     "failure_conds": [],
     "action_type": 4,
     "action_param": []
   },
   {
-    "Id": 320000010,
+    "Id": 300200010,
     "name": "兵营A召唤",
-    "group_id": 32000001,
+    "group_id": 30020001,
     "success_conds": [],
     "failure_conds": [],
     "action_type": 10,
     "action_param": [
-      4100,
-      0,
-      0,
-      5000
-    ]
-  },
-  {
-    "Id": 330000010,
-    "name": "种子台随机生成种子",
-    "group_id": 33000001,
-    "success_conds": [],
-    "failure_conds": [],
-    "action_type": 8,
-    "action_param": [
-      1,
-      1,
-      1,
-      1,
-      1
-    ]
-  },
-  {
-    "Id": 390000010,
-    "name": "野怪营地召唤",
-    "group_id": 39000001,
-    "success_conds": [],
-    "failure_conds": [],
-    "action_type": 10,
-    "action_param": [
-      4900,
-      0,
+      4003,
+      10000,
       0,
       0
+    ]
+  },
+  {
+    "Id": 300300010,
+    "name": "添加攻速BUFF",
+    "group_id": 30030001,
+    "success_conds": [],
+    "failure_conds": [],
+    "action_type": 5,
+    "action_param": [
+      30030001
+    ]
+  },
+  {
+    "Id": 300300011,
+    "name": "攻速加成100%",
+    "group_id": 300300011,
+    "success_conds": [],
+    "failure_conds": [],
+    "action_type": 1,
+    "action_param": [
+      10073,
+      10000
     ]
   },
   {
@@ -198,82 +156,6 @@
     "action_param": [
       30000
     ]
-  },
-  {
-    "Id": 400100010,
-    "name": "高级攻击植物-普攻",
-    "group_id": 40010001,
-    "success_conds": [],
-    "failure_conds": [],
-    "action_type": 4,
-    "action_param": []
-  },
-  {
-    "Id": 400200010,
-    "name": "远程攻击植物-普攻",
-    "group_id": 40020001,
-    "success_conds": [],
-    "failure_conds": [],
-    "action_type": 6,
-    "action_param": [
-      40020001,
-      0,
-      0,
-      0
-    ]
-  },
-  {
-    "Id": 400200011,
-    "name": "远程攻击植物-普攻子弹索敌",
-    "group_id": 400200011,
-    "success_conds": [],
-    "failure_conds": [],
-    "action_type": 12,
-    "action_param": [
-      40020002,
-      400200012
-    ]
-  },
-  {
-    "Id": 400200012,
-    "name": "远程攻击植物-普攻子弹效果",
-    "group_id": 400200012,
-    "success_conds": [],
-    "failure_conds": [],
-    "action_type": 4,
-    "action_param": []
-  },
-  {
-    "Id": 410000010,
-    "name": "兵营攻击植物-普攻",
-    "group_id": 41000001,
-    "success_conds": [],
-    "failure_conds": [],
-    "action_type": 4,
-    "action_param": []
-  },
-  {
-    "Id": 490000010,
-    "name": "中立怪子弹",
-    "group_id": 49000001,
-    "success_conds": [],
-    "failure_conds": [],
-    "action_type": 6,
-    "action_param": [
-      49000001,
-      0,
-      0,
-      0
-    ]
-  },
-  {
-    "Id": 490000011,
-    "name": "中立怪子弹效果",
-    "group_id": 490000011,
-    "success_conds": [],
-    "failure_conds": [],
-    "action_type": 4,
-    "action_param": []
   },
   {
     "Id": 920000010,
