@@ -13,26 +13,31 @@ namespace ET
         {
             self.TrackId = trackId;
             self.HorSpeed = self.TbTrackRow.HorSpeed * FP.EN4;
-            
-            TransformComponent ownerTransform = self.LSOwner().GetComponent<TransformComponent>();
-            self.CasterPosition = ownerTransform.Position;
             if (target == null) {
                 self.Target = 0;
                 self.TargetPostion = targetPosition;
-            }
-            else {
+            } else {
                 self.Target = target.Id;
                 self.TargetPostion = target.GetComponent<TransformComponent>().Position;
             }
             
-            // 起止点的中心叠加高度为控制点
-            TSVector dir = self.TargetPostion - self.CasterPosition;
-            self.ControlPosition = self.CasterPosition + dir * (self.TbTrackRow.ControlFactor * FP.EN4);
-            FP y = (self.TbTrackRow.ControlHeight * FP.EN4) + self.ControlPosition.y;
-            self.ControlPosition = new TSVector(self.ControlPosition.x, y, self.ControlPosition.z);
+            switch (self.TbTrackRow.TowardType)
+            {
+                case ETrackTowardType.Target:
+                case ETrackTowardType.Position:
+                {
+                    TransformComponent ownerTransform = self.LSOwner().GetComponent<TransformComponent>();
+                    self.CasterPosition = ownerTransform.Position;
             
-            self.Duration = dir.magnitude / self.HorSpeed;
-            self.EclipseTime = FP.Zero;
+                    // 起止点的中心叠加高度为控制点
+                    TSVector dir = self.TargetPostion - self.CasterPosition;
+                    self.ControlPosition = self.CasterPosition + dir * (self.TbTrackRow.ControlFactor * FP.EN4);
+                    FP y = (self.TbTrackRow.ControlHeight * FP.EN4) + self.ControlPosition.y;
+                    self.ControlPosition = new TSVector(self.ControlPosition.x, y, self.ControlPosition.z);
+                    self.Duration = dir.magnitude / self.HorSpeed;
+                    break;
+                }
+            }
             self.Tick();
         }
         

@@ -182,7 +182,7 @@
     "failure_conds": [],
     "action_type": 4,
     "action_param": [
-      15000
+      30000
     ]
   },
   {

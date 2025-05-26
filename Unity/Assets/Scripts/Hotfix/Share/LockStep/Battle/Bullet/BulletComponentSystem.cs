@@ -1,8 +1,11 @@
-﻿namespace ET
+﻿using TrueSync;
+
+namespace ET
 {
     [LSEntitySystemOf(typeof(BulletComponent))]
     [EntitySystemOf(typeof(BulletComponent))]
     [FriendOf(typeof(BulletComponent))]
+    [FriendOf(typeof(TrackComponent))]
     public static partial class BulletComponentSystem
     {
         [EntitySystem]
@@ -20,6 +23,25 @@
             if (self.LSWorld().Frame > self.ElapseFrame)
             {
                 self.OnReachTarget(false);
+                return;
+            }
+
+            // 子弹的轨迹执行完毕后判定为已命中
+            TrackComponent trackComponent = self.LSOwner().GetComponent<TrackComponent>();
+            if (trackComponent.Duration > 0 && trackComponent.EclipseTime >= trackComponent.Duration)
+            {
+                self.OnReachTarget(true);
+                return;
+            }
+
+            // 子弹足够靠近目标时判定为已命中
+            FP speedPerFrame = trackComponent.HorSpeed * LSConstValue.UpdateInterval / LSConstValue.Milliseconds;
+            TransformComponent transformTarget = self.LSUnit(self.Target).GetComponent<TransformComponent>();
+            TransformComponent transformBullet = self.LSOwner().GetComponent<TransformComponent>();
+            if (speedPerFrame * speedPerFrame > (transformTarget.Position - transformBullet.Position).sqrMagnitude)
+            {
+                self.OnReachTarget(true);
+                return;
             }
         }
         
