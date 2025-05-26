@@ -26,6 +26,7 @@ namespace ET
         [EntitySystem]
         private static void LSUpdate(this SkillComponent self)
         {
+            self.TryCastSkill(ESkillType.Normal);
             for (int index = self.mRunningSkills.Count - 1; index >= 0; index--)
             {
                 long id = self.mRunningSkills[index];

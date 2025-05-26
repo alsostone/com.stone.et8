@@ -39,8 +39,8 @@ namespace ET
             }
             for (int i = 0; i < 10; ++i)
             {
-                LSUnitFactory.CreateBuilding(lsWorld, 3001, new TSVector(1, 0, 1) * i + new TSVector(4, 0, 0), TSQuaternion.identity, TeamType.TeamA);
-                LSUnitFactory.CreateBuilding(lsWorld, 3002, new TSVector(1, 0, 1) * i + new TSVector(6, 0, 0), TSQuaternion.identity, TeamType.TeamB);
+                LSUnitFactory.CreateBuilding(lsWorld, i == 5 ? 3003 : 3001, new TSVector(1, 0, 1) * i + new TSVector(4, 0, 0), TSQuaternion.identity, TeamType.TeamA);
+                LSUnitFactory.CreateBuilding(lsWorld, 3002, new TSVector(1, 0, 1) * i + new TSVector(10, 0, 0), TSQuaternion.identity, TeamType.TeamB);
             }
         }
 

@@ -80,7 +80,7 @@ namespace ET
 	        }
 	        EnsureRuntimeProp(propComponent);
 
-	        lsUnit.AddComponent<DeathComponent, bool>(false);
+	        lsUnit.AddComponent<DeathComponent, bool>(true);
 	        lsUnit.AddComponent<BuffComponent>();
 	        lsUnit.AddComponent<BeHitComponent>();
 	        lsUnit.AddComponent<SkillComponent, int[]>(row.Skills);
