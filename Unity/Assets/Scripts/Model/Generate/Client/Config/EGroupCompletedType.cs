@@ -17,17 +17,17 @@ namespace ET
         /// <summary>
         /// 无
         /// </summary>
-        NONE = 0,
+        None = 0,
 
         /// <summary>
         /// 满足所有条件
         /// </summary>
-        ALL = 1,
+        All = 1,
 
         /// <summary>
         /// 满足任一条件
         /// </summary>
-        ANY = 2,
+        Any = 2,
 
     }
 }

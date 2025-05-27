@@ -57,7 +57,7 @@ namespace ET
                 return;
             }
             switch (res.ActionType) {
-                case ESkillEffectType.ADD_BUFF:
+                case ESkillEffectType.AddBuff:
                     AddBuff(res.ActionParam, owner, target);
                     break;
                 case ESkillEffectType.ChangeProperty:
@@ -66,10 +66,10 @@ namespace ET
                 case ESkillEffectType.ChangePropertyReal:
                     AddRealProperty(res.ActionParam, owner, target);
                     break;
-                case ESkillEffectType.ADD_RESTRICT:
+                case ESkillEffectType.AddRestrict:
                     AddRestrict(res.ActionParam, owner, target);
                     break;
-                case ESkillEffectType.ADD_BULLET:
+                case ESkillEffectType.AddBullet:
                     AddBulletToTarget(res.ActionParam, owner, target);
                     break;
                 case ESkillEffectType.Healing:
@@ -78,20 +78,14 @@ namespace ET
                 case ESkillEffectType.Damage:
                     DoDamage(res.ActionParam, owner, target);
                     break;
-                case ESkillEffectType.RESEARCH:
+                case ESkillEffectType.Research:
                     DoResearch(res.ActionParam, owner, target, carrier);
                     break;
-                case ESkillEffectType.SUMMON_SOLDIER:
+                case ESkillEffectType.SummonSoldier:
                     SummonSoldier(res.ActionParam, owner, target);
                     break;
-                case ESkillEffectType.GEN_DROP:
+                case ESkillEffectType.GenDrop:
                     GenDrop(res.ActionParam, owner, target);
-                    break;                
-                case ESkillEffectType.ADD_SEED:
-                    AddSeed(res.ActionParam, owner, target);
-                    break;
-                case ESkillEffectType.RANDOM_GEN_DROP:
-                    RandomGenDrop(res.ActionParam, owner, target);
                     break;
             }
         }
@@ -102,7 +96,7 @@ namespace ET
                 case ESkillEffectType.ChangeProperty:
                     SubProperty(tbEffectRow.ActionParam, owner, target);
                     break;
-                case ESkillEffectType.ADD_RESTRICT:
+                case ESkillEffectType.AddRestrict:
                     RemoveRestrict(tbEffectRow.ActionParam, owner, target);
                     break;
             }

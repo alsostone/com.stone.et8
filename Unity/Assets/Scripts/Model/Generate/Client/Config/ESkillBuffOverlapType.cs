@@ -17,17 +17,17 @@ namespace ET
         /// <summary>
         /// 唯一
         /// </summary>
-        UNIQUE = 0,
+        Unique = 0,
 
         /// <summary>
         /// 分散
         /// </summary>
-        DISPERSIVE = 1,
+        Dispersive = 1,
 
         /// <summary>
         /// 集中
         /// </summary>
-        CONCENTRATED = 2,
+        Concentrated = 2,
 
     }
 }

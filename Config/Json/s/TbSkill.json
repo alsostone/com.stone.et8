@@ -1,6 +1,6 @@
 [
   {
-    "Id": 10000001,
+    "Id": 10010001,
     "level_limit": 1,
     "first_cd_time": 0,
     "cd_time": 0,
@@ -18,14 +18,14 @@
     "trigger_array": [
       333
     ],
-    "effect_group_id": 10000001,
+    "effect_group_id": 10010001,
     "release_condition_type": 0,
     "condition_id_array": [],
     "search_real_time": true,
-    "search_target": 10000001
+    "search_target": 10010001
   },
   {
-    "Id": 10000101,
+    "Id": 10010101,
     "level_limit": 3,
     "first_cd_time": 0,
     "cd_time": 5000,
@@ -43,14 +43,14 @@
     "trigger_array": [
       333
     ],
-    "effect_group_id": 10000101,
+    "effect_group_id": 10010101,
     "release_condition_type": 0,
     "condition_id_array": [],
     "search_real_time": false,
-    "search_target": 10000101
+    "search_target": 10010101
   },
   {
-    "Id": 10000201,
+    "Id": 10010201,
     "level_limit": 5,
     "first_cd_time": 0,
     "cd_time": 5000,
@@ -68,11 +68,11 @@
     "trigger_array": [
       333
     ],
-    "effect_group_id": 10000201,
+    "effect_group_id": 10010201,
     "release_condition_type": 0,
     "condition_id_array": [],
     "search_real_time": false,
-    "search_target": 10000201
+    "search_target": 10010201
   },
   {
     "Id": 30010001,
@@ -248,31 +248,6 @@
     "condition_id_array": [],
     "search_real_time": false,
     "search_target": 92010001
-  },
-  {
-    "Id": 92020001,
-    "level_limit": 0,
-    "first_cd_time": 0,
-    "cd_time": 0,
-    "probability": 10000,
-    "skill_type": 2,
-    "consume_type": 0,
-    "consume_param": [],
-    "effect_id": 0,
-    "ani_name_pre": "",
-    "ani_name": "",
-    "ani_name_after": "",
-    "duration_pre": 0,
-    "duration": 0,
-    "duration_after": 0,
-    "trigger_array": [
-      0
-    ],
-    "effect_group_id": 92020001,
-    "release_condition_type": 0,
-    "condition_id_array": [],
-    "search_real_time": false,
-    "search_target": 92020001
   },
   {
     "Id": 92020002,

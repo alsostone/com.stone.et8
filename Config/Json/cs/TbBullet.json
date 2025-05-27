@@ -1,9 +1,9 @@
 [
   {
-    "Id": 10000201,
+    "Id": 10010201,
     "name": "英雄1000子弹",
     "life": 10000,
-    "effect_group_id": 100002011,
+    "effect_group_id": 100102011,
     "track_id": 2002,
     "resource_id": 10,
     "finish_effect_id": 0

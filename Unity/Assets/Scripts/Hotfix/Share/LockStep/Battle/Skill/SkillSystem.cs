@@ -85,7 +85,7 @@ namespace ET
         {
             var tbRow = self.TbSkillRow;
             switch (tbRow.ConsumeType) {
-                case EConsumeType.PROPERTY:
+                case EConsumeType.Property:
                     if (tbRow.ConsumeParam.Length != 2) { return; }
                     self.LSOwner().GetComponent<PropComponent>().Add((NumericType)tbRow.ConsumeParam[0], -tbRow.ConsumeParam[1]);
                     break;

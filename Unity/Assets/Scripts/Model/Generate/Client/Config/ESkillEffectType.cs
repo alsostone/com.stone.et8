@@ -39,47 +39,37 @@ namespace ET
         /// <summary>
         /// 添加Buff
         /// </summary>
-        ADD_BUFF = 5,
+        AddBuff = 5,
 
         /// <summary>
         /// 添加子弹
         /// </summary>
-        ADD_BULLET = 6,
+        AddBullet = 6,
 
         /// <summary>
         /// 添加限制
         /// </summary>
-        ADD_RESTRICT = 7,
-
-        /// <summary>
-        /// 随机生成种子
-        /// </summary>
-        ADD_SEED = 8,
+        AddRestrict = 7,
 
         /// <summary>
         /// 移除Buff
         /// </summary>
-        REMOVE_BUFF = 9,
+        RemoveBuff = 9,
 
         /// <summary>
         /// 召唤士兵
         /// </summary>
-        SUMMON_SOLDIER = 10,
+        SummonSoldier = 10,
 
         /// <summary>
         /// 生产掉落
         /// </summary>
-        GEN_DROP = 11,
+        GenDrop = 11,
 
         /// <summary>
         /// 重新索敌
         /// </summary>
-        RESEARCH = 12,
-
-        /// <summary>
-        /// 掉落ID，掉落数量，[中心点坐标,size]
-        /// </summary>
-        RANDOM_GEN_DROP = 13,
+        Research = 12,
 
     }
 }

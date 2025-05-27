@@ -17,12 +17,12 @@ namespace ET
         /// <summary>
         /// 无
         /// </summary>
-        NONE = 0,
+        None = 0,
 
         /// <summary>
         /// 消耗属性
         /// </summary>
-        PROPERTY = 1,
+        Property = 1,
 
     }
 }

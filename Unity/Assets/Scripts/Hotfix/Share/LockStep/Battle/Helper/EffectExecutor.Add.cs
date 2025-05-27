@@ -138,12 +138,6 @@ namespace ET
             // entityTarget.ComContainer.PutContent(plant.Handle, entityTarget.Handle);
         }
         
-        private static void AddSeed(int[] param, LSUnit owner, LSUnit target)
-        {
-            // var entityTarget = target.Get<Entity>();
-            // entityTarget.ComSeedTable?.AddSeed(param[BattleWorld.Instance.GlobalGrowthMgr.GetGlobalGrowthLevel() - 1]);
-        }
-        
         private static void RandomGenDrop(int[] param, LSUnit owner, LSUnit target)
         {
             // if (param.Count < 5 || (param.Count - 2) % 3 != 0) {

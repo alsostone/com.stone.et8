@@ -1,6 +1,6 @@
 [
   {
-    "Id": 10000001,
+    "Id": 10010001,
     "valid_forward": true,
     "range": 15000,
     "team": 3,
@@ -10,7 +10,7 @@
     "priority": 1
   },
   {
-    "Id": 10000101,
+    "Id": 10010101,
     "valid_forward": false,
     "range": 50000,
     "team": 1,
@@ -20,7 +20,7 @@
     "priority": 0
   },
   {
-    "Id": 10000201,
+    "Id": 10010201,
     "valid_forward": false,
     "range": 50000,
     "team": 3,
@@ -30,7 +30,7 @@
     "priority": 1
   },
   {
-    "Id": 10000202,
+    "Id": 10010202,
     "valid_forward": false,
     "range": 20000,
     "team": 3,
@@ -111,16 +111,6 @@
   },
   {
     "Id": 92010001,
-    "valid_forward": false,
-    "range": 0,
-    "team": 1,
-    "type": 0,
-    "table_id": [],
-    "count": 0,
-    "priority": 0
-  },
-  {
-    "Id": 92020001,
     "valid_forward": false,
     "range": 0,
     "team": 1,

@@ -14,27 +14,27 @@ namespace ET
     /// </summary>
     public enum ESkillBuffType
     {
-        NONE = 0,
+        None = 0,
 
         /// <summary>
         /// 增益
         /// </summary>
-        BUFF = 1,
+        Buff = 1,
 
         /// <summary>
         /// 减益
         /// </summary>
-        DEBUFF = 2,
+        Debuff = 2,
 
         /// <summary>
         /// 控制
         /// </summary>
-        CONTROL = 3,
+        Control = 3,
 
         /// <summary>
         /// 减速
         /// </summary>
-        SLOW = 4,
+        Slow = 4,
 
     }
 }

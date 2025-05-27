@@ -37,6 +37,7 @@ namespace ET
             {int __n0 = System.Math.Min(_buf.ReadSize(), _buf.Size);ConditionIdArray = new int[__n0];for(var __index0 = 0 ; __index0 < __n0 ; __index0++) { int __e0;__e0 = _buf.ReadInt(); ConditionIdArray[__index0] = __e0;}}
             SearchRealTime = _buf.ReadBool();
             SearchTarget = _buf.ReadInt();
+            SearchTarget_Ref = null;
 
             PostInit();
         }
@@ -151,6 +152,8 @@ namespace ET
         /// </summary>
         public readonly int SearchTarget;
 
+        public TbSearchRow SearchTarget_Ref { get; private set; }
+
 
         public const int __ID__ = 1842940535;
         public override int GetTypeId() => __ID__;
@@ -177,7 +180,7 @@ namespace ET
             
             
             
-            
+            SearchTarget_Ref = TbSearch.Instance.GetOrDefault(SearchTarget);
         }
 
         public override string ToString()

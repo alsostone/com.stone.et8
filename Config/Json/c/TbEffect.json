@@ -1,28 +1,28 @@
 [
   {
-    "Id": 100000010,
-    "name": "英雄1000普攻",
-    "group_id": 10000001,
+    "Id": 100100010,
+    "name": "英雄普攻",
+    "group_id": 10010001,
     "success_conds": [],
     "failure_conds": [],
     "action_type": 4,
     "action_param": []
   },
   {
-    "Id": 100001010,
-    "name": "英雄1000，添加攻速BUFF",
-    "group_id": 10000101,
+    "Id": 100101010,
+    "name": "英雄添加攻速BUFF",
+    "group_id": 10010101,
     "success_conds": [],
     "failure_conds": [],
     "action_type": 5,
     "action_param": [
-      10000101
+      10010101
     ]
   },
   {
-    "Id": 100001011,
+    "Id": 100101011,
     "name": "攻速加成50%",
-    "group_id": 100001011,
+    "group_id": 100101011,
     "success_conds": [],
     "failure_conds": [],
     "action_type": 1,
@@ -32,32 +32,32 @@
     ]
   },
   {
-    "Id": 100002010,
-    "name": "英雄1000，3目标子弹伤害",
-    "group_id": 10000201,
+    "Id": 100102010,
+    "name": "英雄 3目标子弹伤害",
+    "group_id": 10010201,
     "success_conds": [],
     "failure_conds": [],
     "action_type": 6,
     "action_param": [
-      10000201
+      10010201
     ]
   },
   {
-    "Id": 100002011,
+    "Id": 100102011,
     "name": "炮弹落地重新索敌",
-    "group_id": 100002011,
+    "group_id": 100102011,
     "success_conds": [],
     "failure_conds": [],
     "action_type": 12,
     "action_param": [
-      10000202,
-      100002012
+      10010202,
+      100102012
     ]
   },
   {
-    "Id": 100002012,
+    "Id": 100102012,
     "name": "爆炸伤害",
-    "group_id": 100002012,
+    "group_id": 100102012,
     "success_conds": [],
     "failure_conds": [],
     "action_type": 4,
@@ -182,23 +182,12 @@
     ]
   },
   {
-    "Id": 920200010,
-    "name": "随机生成水滴Buff",
-    "group_id": 92020001,
-    "success_conds": [],
-    "failure_conds": [],
-    "action_type": 5,
-    "action_param": [
-      92020001
-    ]
-  },
-  {
     "Id": 920200011,
-    "name": "随机生成水滴",
+    "name": "掉落水滴",
     "group_id": 920200011,
     "success_conds": [],
     "failure_conds": [],
-    "action_type": 13,
+    "action_type": 11,
     "action_param": [
       9000,
       2,
