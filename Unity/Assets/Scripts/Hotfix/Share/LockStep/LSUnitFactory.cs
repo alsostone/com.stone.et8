@@ -89,6 +89,20 @@ namespace ET
 	        return lsUnit;
         }
         
+        public static LSUnit CreateDrop(LSWorld lsWorld, int tableId, TSVector position, TSQuaternion rotation, TeamType teamType)
+        {
+	        LSUnitComponent lsUnitComponent = lsWorld.GetComponent<LSUnitComponent>();
+	        LSUnit lsUnit = lsUnitComponent.AddChild<LSUnit>();
+	        lsUnit.Active = true;
+
+	        lsUnit.AddComponent<TransformComponent, TSVector, TSQuaternion>(position, rotation);
+	        lsUnit.AddComponent<TypeComponent, EUnitType>(EUnitType.Drop);
+	        lsUnit.AddComponent<DropComponent, int>(tableId);
+	        
+	        EventSystem.Instance.Publish(lsWorld, new LSUnitCreate() {LSUnit = lsUnit});
+	        return lsUnit;
+        }
+        
         // 创建指向目标单位的子弹
         public static LSUnit CreateBullet(LSWorld lsWorld, int bulletId, TSVector position, LSUnit caster, LSUnit target)
         {
@@ -121,6 +135,23 @@ namespace ET
 	        return lsUnit;
         }
         
+        public static void SummonUnit(LSWorld lsWorld, EUnitType type, int tableId, TSVector position, TSQuaternion rotation, TeamType teamType)
+        {
+	        switch (type)
+	        {
+		        case EUnitType.Building:
+			        CreateBuilding(lsWorld, tableId, position, rotation, teamType);
+			        break;
+		        case EUnitType.Soldier:
+			        CreateSoldier(lsWorld, tableId, position, rotation, teamType);
+			        break;
+		        case EUnitType.Drop:
+			        CreateDrop(lsWorld, tableId, position, rotation, teamType);
+			        break;
+		        default: break;
+	        }
+        }
+
         // 确保实时属性存在
         private static void EnsureRuntimeProp(PropComponent propComponent)
 		{

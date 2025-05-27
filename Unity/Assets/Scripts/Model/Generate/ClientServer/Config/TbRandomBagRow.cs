@@ -19,6 +19,7 @@ namespace ET
             Id = _buf.ReadInt();
             IsRandomOne = _buf.ReadBool();
             {int __n0 = System.Math.Min(_buf.ReadSize(), _buf.Size);Items = new ItemRandomBag[__n0];for(var __index0 = 0 ; __index0 < __n0 ; __index0++) { ItemRandomBag __e0;__e0 = ItemRandomBag.DeserializeItemRandomBag(_buf); Items[__index0] = __e0;}}
+            Xxx = _buf.ReadInt();
 
             PostInit();
         }
@@ -34,11 +35,16 @@ namespace ET
         public readonly int Id;
 
         /// <summary>
-        /// 是否单个包
+        /// 是否单包
         /// </summary>
         public readonly bool IsRandomOne;
 
         public readonly ItemRandomBag[] Items;
+
+        /// <summary>
+        /// 占位,合并字段不能最后
+        /// </summary>
+        public readonly int Xxx;
 
 
         public const int __ID__ = 899142915;
@@ -49,6 +55,7 @@ namespace ET
             
             
             foreach (var _e in Items) { _e?.ResolveRef(); }
+            
         }
 
         public override string ToString()
@@ -57,6 +64,7 @@ namespace ET
             + "Id:" + Id + ","
             + "isRandomOne:" + IsRandomOne + ","
             + "items:" + Luban.StringUtil.CollectionToString(Items) + ","
+            + "xxx:" + Xxx + ","
             + "}";
         }
 

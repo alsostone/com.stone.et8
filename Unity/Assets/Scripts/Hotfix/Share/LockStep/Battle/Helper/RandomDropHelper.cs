@@ -1,11 +1,12 @@
 using System;
 using System.Collections.Generic;
+using TrueSync;
 
 namespace ET
 {
     public static class RandomDropHelper
     {
-        public static void Random(this LSWorld lsWorld, int randomBagId, ref List<Tuple<EUnitType, int, int>> randomResults)
+        public static void Random(TSRandom random, int randomBagId, ref List<Tuple<EUnitType, int, int>> randomResults)
         {
             if (randomResults == null)
                 return;
@@ -19,7 +20,7 @@ namespace ET
             if (resRandomBag.IsRandomOne)
             {
                 if (items.Length == 1) {
-                    lsWorld.RandomSet(items[0].Id, items[0].Count, ref randomResults);
+                    RandomSet(random, items[0].Id, items[0].Count, ref randomResults);
                     return;
                 }
                 
@@ -28,11 +29,11 @@ namespace ET
                     totalWeight += itemRandomBag.Weight;
                 }
 
-                int randWeight = lsWorld.Random.Range(1, totalWeight + 1);
+                int randWeight = random.Range(1, totalWeight + 1);
                 foreach (ItemRandomBag itemRandomBag in items) {
                     randWeight -= itemRandomBag.Weight;
                     if (randWeight <= 0) {
-                        lsWorld.RandomSet(itemRandomBag.Id, itemRandomBag.Count, ref randomResults);
+                        RandomSet(random, itemRandomBag.Id, itemRandomBag.Count, ref randomResults);
                         return;
                     }
                 }
@@ -41,14 +42,21 @@ namespace ET
             {
                 foreach (ItemRandomBag itemRandomBag in items)
                 {
-                    if (lsWorld.Random.Range(1, LSConstValue.Probability + 1) <= itemRandomBag.Weight) {
-                        lsWorld.RandomSet(itemRandomBag.Id, itemRandomBag.Count, ref randomResults);
+                    if (random.Range(1, LSConstValue.Probability + 1) <= itemRandomBag.Weight) {
+                        RandomSet(random, itemRandomBag.Id, itemRandomBag.Count, ref randomResults);
                     }
                 }
             }
         }
 
-        private static void RandomSet(this LSWorld lsWorld, int randomSetId, int randomCount, ref List<Tuple<EUnitType, int, int>> randomResults)
+        /// <summary>
+        /// 随机获取N类物品（一个ItemRandomSet为一类）
+        /// </summary>
+        /// <param name="random"></param>
+        /// <param name="randomSetId"></param>
+        /// <param name="randomCount">要获取几类物品，注意：不是几个哈</param>
+        /// <param name="randomResults"></param>
+        private static void RandomSet(TSRandom random, int randomSetId, int randomCount, ref List<Tuple<EUnitType, int, int>> randomResults)
         {
             var items = TbRandomSet.Instance.Get(randomSetId).Items;
             if (items.Length <= randomCount) {
@@ -57,7 +65,7 @@ namespace ET
                 }
                 foreach (ItemRandomSet itemRandomSet in items) {
                     int count = itemRandomSet.CountMax > itemRandomSet.CountMin
-                        ? lsWorld.Random.Range(itemRandomSet.CountMin, itemRandomSet.CountMax + 1)
+                        ? random.Range(itemRandomSet.CountMin, itemRandomSet.CountMax + 1)
                         : itemRandomSet.CountMin;
                     randomResults.Add(new Tuple<EUnitType, int, int>(itemRandomSet.Type, itemRandomSet.Id, count));
                 }
@@ -77,7 +85,7 @@ namespace ET
                     totalWeight += items[j].Weight;
                 }
 
-                int randWeight = lsWorld.Random.Range(1, totalWeight + 1);
+                int randWeight = random.Range(1, totalWeight + 1);
                 for (int j = 0; j < items.Length; j++)
                 {
                     if (alreadyRand.Contains(j))
@@ -86,7 +94,7 @@ namespace ET
                     if (randWeight <= 0)
                     {
                         int count = items[j].CountMax > items[j].CountMin
-                            ? lsWorld.Random.Range(items[j].CountMin, items[j].CountMax + 1)
+                            ? random.Range(items[j].CountMin, items[j].CountMax + 1)
                             : items[j].CountMin;
                         randomResults.Add(new Tuple<EUnitType, int, int>(items[j].Type, items[j].Id, count));
                         alreadyRand.Add(j);

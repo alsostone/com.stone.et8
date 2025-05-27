@@ -53,19 +53,19 @@
   },
   {
     "Id": 50010001,
-    "Url": "Assets/Bundles/Unit/Unit.prefab"
+    "Url": "Assets/Bundles/Prefabs/Common/Cube/CubeRed.prefab"
   },
   {
     "Id": 50020001,
-    "Url": "Assets/Bundles/Unit/Unit.prefab"
+    "Url": "Assets/Bundles/Prefabs/Common/Cube/CubeBlue.prefab"
   },
   {
     "Id": 80010001,
-    "Url": "Assets/Bundles/Prefabs/Bullet/Common/BulletRed.prefab"
+    "Url": "Assets/Bundles/Prefabs/Common/Bullet/BulletRed.prefab"
   },
   {
     "Id": 80010002,
-    "Url": "Assets/Bundles/Prefabs/Bullet/Common/BulletBlue.prefab"
+    "Url": "Assets/Bundles/Prefabs/Common/Bullet/BulletBlue.prefab"
   },
   {
     "Id": 90010001,

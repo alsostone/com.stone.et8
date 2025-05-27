@@ -63,7 +63,7 @@ namespace ET
             FP evasion = component.Get(NumericType.EvasionRate);
             if (evasion > 0)
             {
-                FP random = (FP)self.LSWorld().Random.Next(0, LSConstValue.Probability) / LSConstValue.Probability;
+                FP random = (FP)self.GetRandom().Next(0, LSConstValue.Probability) / LSConstValue.Probability;
                 if (random < evasion)
                 {
                     EventSystem.Instance.Publish(self.LSWorld(), new LSUnitFloating() { Id = self.LSOwner().Id, Value = damage, Type = FloatingType.Miss});
@@ -76,7 +76,7 @@ namespace ET
             FP critRate = component.Get(NumericType.CriticalRate);
             if (critRate > 0)
             {
-                FP random = (FP)self.LSWorld().Random.Next(0, LSConstValue.Probability) / LSConstValue.Probability;
+                FP random = (FP)self.GetRandom().Next(0, LSConstValue.Probability) / LSConstValue.Probability;
                 if (random < critRate)
                 {
                     isCritical = true;
@@ -93,7 +93,7 @@ namespace ET
             FP blockRate = component.Get(NumericType.BlockRate);
             if (blockRate > 0)
             {
-                FP random = (FP)self.LSWorld().Random.Next(0, LSConstValue.Probability) / LSConstValue.Probability;
+                FP random = (FP)self.GetRandom().Next(0, LSConstValue.Probability) / LSConstValue.Probability;
                 if (random < blockRate)
                 {
                     isBlock = true;

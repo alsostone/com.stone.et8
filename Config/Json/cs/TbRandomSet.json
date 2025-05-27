@@ -10,13 +10,21 @@
         "count_max": 1
       },
       {
-        "id": 3001,
+        "id": 3002,
         "weight": 500,
         "type": 4,
         "count_min": 1,
         "count_max": 1
+      },
+      {
+        "id": 3003,
+        "weight": 2000,
+        "type": 4,
+        "count_min": 1,
+        "count_max": 1
       }
-    ]
+    ],
+    "xxx": 0
   },
   {
     "Id": 2,
@@ -29,13 +37,21 @@
         "count_max": 1
       },
       {
-        "id": 3001,
+        "id": 3002,
         "weight": 500,
         "type": 4,
         "count_min": 1,
         "count_max": 1
+      },
+      {
+        "id": 3003,
+        "weight": 2000,
+        "type": 4,
+        "count_min": 1,
+        "count_max": 1
       }
-    ]
+    ],
+    "xxx": 0
   },
   {
     "Id": 3,
@@ -48,12 +64,20 @@
         "count_max": 1
       },
       {
-        "id": 3001,
+        "id": 3002,
         "weight": 500,
         "type": 4,
         "count_min": 1,
         "count_max": 1
+      },
+      {
+        "id": 3003,
+        "weight": 2000,
+        "type": 4,
+        "count_min": 1,
+        "count_max": 1
       }
-    ]
+    ],
+    "xxx": 0
   }
 ]

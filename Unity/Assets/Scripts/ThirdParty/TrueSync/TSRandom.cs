@@ -33,7 +33,7 @@ namespace TrueSync {
         private TSRandom() {
         }
 
-        private TSRandom(int seed) {
+        public TSRandom(int seed) {
             init_genrand((uint)seed);
         }
 

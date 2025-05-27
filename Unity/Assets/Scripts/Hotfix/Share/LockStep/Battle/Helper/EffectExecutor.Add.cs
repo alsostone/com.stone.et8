@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using TrueSync;
 
@@ -116,6 +117,7 @@ namespace ET
         
         private static void SummonSoldier(int[] param, LSUnit owner, LSUnit target)
         {
+            TeamType team = target.GetComponent<TeamComponent>().GetTeamType();
             var targetTransform = target.GetComponent<TransformComponent>();
             var position = TSVector.zero;
             if (param.Length >= 4) {
@@ -126,41 +128,37 @@ namespace ET
                 position = new TSVector(param[1], 0, 0) * FP.EN4;
             }
             position = position.Rotation(targetTransform.Rotation.eulerAngles.y);
-            TeamType team = target.GetComponent<TeamComponent>().GetTeamType();
             LSUnitFactory.CreateSoldier(target.LSWorld(), param[0], targetTransform.Position + position, targetTransform.Rotation, team);
         }
         
         private static void SummonRandom(int[] param, LSUnit owner, LSUnit target)
         {
-            // var entityTarget = target.Get<Entity>();
-            // var teamFlag = entityTarget.ComTeam.TeamFlag;
-            // var plant = BattleWorld.Instance.EntityMgr.CreateDrop(param[0], teamFlag, entityTarget.ComTransform.Position, FPVector.zero);
-            // entityTarget.ComContainer.PutContent(plant.Handle, entityTarget.Handle);
+            TeamType team = target.GetComponent<TeamComponent>().GetTeamType();
+            var targetTransform = target.GetComponent<TransformComponent>();
+            var position = TSVector.zero;
+            if (param.Length >= 4) {
+                position = new TSVector(param[1], param[2], param[3]) * FP.EN4;
+            }else if (param.Length >= 3) {
+                position = new TSVector(param[1], param[2], 0) * FP.EN4;
+            }else if (param.Length >= 2) {
+                position = new TSVector(param[1], 0, 0) * FP.EN4;
+            }
+            position = position.Rotation(targetTransform.Rotation.eulerAngles.y);
+            
+            // 通过 随机包/随机集 获得要召唤的单位
+            var results = ObjectPool.Instance.Fetch<List<Tuple<EUnitType, int, int>>>();
+            RandomDropHelper.Random(target.GetRandom(), param[0], ref results);
+            foreach (var tuple in results)
+            {
+                for (var i = 0; i <= tuple.Item3; i++)
+                {
+                    LSUnitFactory.SummonUnit(target.LSWorld(), tuple.Item1, tuple.Item2, targetTransform.Position + position,
+                        targetTransform.Rotation, team);
+                }
+            }
+            results.Clear();
+            ObjectPool.Instance.Recycle(results);
         }
         
-        private static void RandomGenDrop(int[] param, LSUnit owner, LSUnit target)
-        {
-            // if (param.Count < 5 || (param.Count - 2) % 3 != 0) {
-            //     return;
-            // }
-            //
-            // int dropId = param[0];
-            // int count = param[1];
-            // var entityTarget = target.Get<Entity>();
-            // var dropBounds = BattleListPoolMgr.Instance.Get<List<FPBounds>>();
-            // for (int i = 2; i < param.Count; i+=3) {
-            //     var size = new FP(param[i + 2]) * FP.EN4;
-            //     dropBounds.Add(new FPBounds(new FPVector(param[i], FP.EN1 * 2, param[i + 1]),
-            //         new FPVector(size, FP.Zero, size)));
-            // }
-            //
-            // for (int i = 0; i < count; i++) {
-            //     int dropIndex = BattleRandom.Range(0, dropBounds.Count);
-            //     var position = BattleRandom.Range(dropBounds[dropIndex], FP.Zero);
-            //     var drop = BattleWorld.Instance.EntityMgr.CreateDrop(dropId, TeamFlag.None, position, FPVector.zero, true);
-            //     BattleWorld.Instance.EntityMgr.AddToGround(drop);
-            // }
-            // BattleListPoolMgr.Instance.Return(dropBounds);
-        }
     }
 }
