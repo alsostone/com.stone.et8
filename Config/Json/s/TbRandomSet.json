@@ -3,9 +3,16 @@
     "Id": 1,
     "items": [
       {
-        "id": 9100,
+        "id": 3001,
         "weight": 500,
-        "type": 16,
+        "type": 4,
+        "count_min": 1,
+        "count_max": 1
+      },
+      {
+        "id": 3001,
+        "weight": 500,
+        "type": 4,
         "count_min": 1,
         "count_max": 1
       }
@@ -15,9 +22,16 @@
     "Id": 2,
     "items": [
       {
-        "id": 9100,
+        "id": 3001,
         "weight": 500,
-        "type": 16,
+        "type": 4,
+        "count_min": 1,
+        "count_max": 1
+      },
+      {
+        "id": 3001,
+        "weight": 500,
+        "type": 4,
         "count_min": 1,
         "count_max": 1
       }
@@ -27,117 +41,16 @@
     "Id": 3,
     "items": [
       {
-        "id": 9100,
+        "id": 3001,
         "weight": 500,
-        "type": 16,
+        "type": 4,
         "count_min": 1,
         "count_max": 1
-      }
-    ]
-  },
-  {
-    "Id": 4,
-    "items": [
+      },
       {
-        "id": 9100,
+        "id": 3001,
         "weight": 500,
-        "type": 16,
-        "count_min": 1,
-        "count_max": 1
-      }
-    ]
-  },
-  {
-    "Id": 5,
-    "items": [
-      {
-        "id": 9100,
-        "weight": 500,
-        "type": 16,
-        "count_min": 1,
-        "count_max": 1
-      }
-    ]
-  },
-  {
-    "Id": 6,
-    "items": [
-      {
-        "id": 9100,
-        "weight": 500,
-        "type": 16,
-        "count_min": 1,
-        "count_max": 1
-      }
-    ]
-  },
-  {
-    "Id": 7,
-    "items": [
-      {
-        "id": 9100,
-        "weight": 1000,
-        "type": 16,
-        "count_min": 1,
-        "count_max": 1
-      }
-    ]
-  },
-  {
-    "Id": 8,
-    "items": [
-      {
-        "id": 9101,
-        "weight": 1000,
-        "type": 16,
-        "count_min": 1,
-        "count_max": 1
-      }
-    ]
-  },
-  {
-    "Id": 9,
-    "items": [
-      {
-        "id": 9102,
-        "weight": 1000,
-        "type": 16,
-        "count_min": 1,
-        "count_max": 1
-      }
-    ]
-  },
-  {
-    "Id": 10,
-    "items": [
-      {
-        "id": 9103,
-        "weight": 1000,
-        "type": 16,
-        "count_min": 1,
-        "count_max": 1
-      }
-    ]
-  },
-  {
-    "Id": 11,
-    "items": [
-      {
-        "id": 9104,
-        "weight": 1000,
-        "type": 16,
-        "count_min": 1,
-        "count_max": 1
-      }
-    ]
-  },
-  {
-    "Id": 12,
-    "items": [
-      {
-        "id": 9105,
-        "weight": 1000,
-        "type": 16,
+        "type": 4,
         "count_min": 1,
         "count_max": 1
       }

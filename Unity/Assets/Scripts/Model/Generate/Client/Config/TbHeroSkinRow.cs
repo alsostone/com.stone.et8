@@ -22,6 +22,7 @@ namespace ET
             Name = _buf.ReadString();
             Desc = _buf.ReadString();
             Model = _buf.ReadInt();
+            Model_Ref = null;
             {int n0 = System.Math.Min(_buf.ReadSize(), _buf.Size);Props = new System.Collections.Generic.Dictionary<NumericType, int>(n0 * 3 / 2);for(var i0 = 0 ; i0 < n0 ; i0++) { NumericType _k0;  _k0 = (NumericType)_buf.ReadInt(); int _v0;  _v0 = _buf.ReadInt();     Props.Add(_k0, _v0);}}
 
             PostInit();
@@ -59,6 +60,8 @@ namespace ET
         /// </summary>
         public readonly int Model;
 
+        public TbResourceRow Model_Ref { get; private set; }
+
         /// <summary>
         /// 属性类型
         /// </summary>
@@ -74,7 +77,7 @@ namespace ET
             HeroId_Ref = TbHero.Instance.GetOrDefault(HeroId);
             
             
-            
+            Model_Ref = TbResource.Instance.GetOrDefault(Model);
             
         }
 

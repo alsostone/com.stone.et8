@@ -2,7 +2,6 @@
   {
     "Id": 3001,
     "level": 1,
-    "model": 30010001,
     "can_be_attack": true,
     "props": [
       [
@@ -38,7 +37,6 @@
   {
     "Id": 3002,
     "level": 1,
-    "model": 30020001,
     "can_be_attack": true,
     "props": [
       [
@@ -74,7 +72,6 @@
   {
     "Id": 3003,
     "level": 1,
-    "model": 30030001,
     "can_be_attack": true,
     "props": [
       [
@@ -105,12 +102,11 @@
     "skills": [
       30030001
     ],
-    "random_bag_id": 2
+    "random_bag_id": 0
   },
   {
     "Id": 3004,
     "level": 1,
-    "model": 30030001,
     "can_be_attack": true,
     "props": [
       [

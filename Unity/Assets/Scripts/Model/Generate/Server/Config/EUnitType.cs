@@ -23,9 +23,9 @@ namespace ET
         Hero = 1,
 
         /// <summary>
-        /// 士兵
+        /// 地块
         /// </summary>
-        Soldier = 2,
+        Block = 2,
 
         /// <summary>
         /// 建筑
@@ -33,9 +33,9 @@ namespace ET
         Building = 4,
 
         /// <summary>
-        /// 子弹
+        /// 士兵
         /// </summary>
-        Bullet = 8,
+        Soldier = 8,
 
         /// <summary>
         /// 掉落
@@ -43,9 +43,14 @@ namespace ET
         Drop = 16,
 
         /// <summary>
+        /// 子弹
+        /// </summary>
+        Bullet = 32,
+
+        /// <summary>
         /// 全局
         /// </summary>
-        Global = 32,
+        Global = 64,
 
     }
 }

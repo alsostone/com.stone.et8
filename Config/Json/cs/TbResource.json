@@ -52,6 +52,14 @@
     "Url": "Assets/Bundles/Unit/Unit.prefab"
   },
   {
+    "Id": 50010001,
+    "Url": "Assets/Bundles/Unit/Unit.prefab"
+  },
+  {
+    "Id": 50020001,
+    "Url": "Assets/Bundles/Unit/Unit.prefab"
+  },
+  {
     "Id": 80010001,
     "Url": "Assets/Bundles/Prefabs/Bullet/Common/BulletRed.prefab"
   },
