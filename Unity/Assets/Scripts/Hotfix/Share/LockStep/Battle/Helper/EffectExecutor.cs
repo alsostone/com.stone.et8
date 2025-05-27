@@ -84,8 +84,8 @@ namespace ET
                 case ESkillEffectType.SummonSoldier:
                     SummonSoldier(res.ActionParam, owner, target);
                     break;
-                case ESkillEffectType.GenDrop:
-                    GenDrop(res.ActionParam, owner, target);
+                case ESkillEffectType.SummonRandom:
+                    SummonRandom(res.ActionParam, owner, target);
                     break;
             }
         }

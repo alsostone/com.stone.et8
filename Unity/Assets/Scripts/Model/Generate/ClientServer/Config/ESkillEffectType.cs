@@ -62,9 +62,9 @@ namespace ET
         SummonSoldier = 10,
 
         /// <summary>
-        /// 生产掉落
+        /// 随机召唤
         /// </summary>
-        GenDrop = 11,
+        SummonRandom = 11,
 
         /// <summary>
         /// 重新索敌

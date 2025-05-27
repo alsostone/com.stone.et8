@@ -130,7 +130,7 @@ namespace ET
             LSUnitFactory.CreateSoldier(target.LSWorld(), param[0], targetTransform.Position + position, targetTransform.Rotation, team);
         }
         
-        private static void GenDrop(int[] param, LSUnit owner, LSUnit target)
+        private static void SummonRandom(int[] param, LSUnit owner, LSUnit target)
         {
             // var entityTarget = target.Get<Entity>();
             // var teamFlag = entityTarget.ComTeam.TeamFlag;

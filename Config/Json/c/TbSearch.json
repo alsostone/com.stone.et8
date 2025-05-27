@@ -80,6 +80,16 @@
     "priority": 0
   },
   {
+    "Id": 30040001,
+    "valid_forward": false,
+    "range": 0,
+    "team": 1,
+    "type": 0,
+    "table_id": [],
+    "count": 0,
+    "priority": 0
+  },
+  {
     "Id": 40000001,
     "valid_forward": false,
     "range": 15000,
@@ -117,19 +127,6 @@
     "type": 0,
     "table_id": [],
     "count": 0,
-    "priority": 0
-  },
-  {
-    "Id": 92020002,
-    "valid_forward": false,
-    "range": 0,
-    "team": 6,
-    "type": 4,
-    "table_id": [
-      3000,
-      3001
-    ],
-    "count": 99,
     "priority": 0
   }
 ]
