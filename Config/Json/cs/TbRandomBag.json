@@ -37,5 +37,22 @@
       }
     ],
     "xxx": 0
+  },
+  {
+    "Id": 3,
+    "is_random_one": true,
+    "items": [
+      {
+        "id": 4,
+        "weight": 1000,
+        "count": 1
+      },
+      {
+        "id": 5,
+        "weight": 1000,
+        "count": 1
+      }
+    ],
+    "xxx": 0
   }
 ]

@@ -145,8 +145,8 @@
     "failure_conds": [],
     "action_type": 11,
     "action_param": [
-      1,
-      0,
+      3,
+      10000,
       0,
       0
     ]
