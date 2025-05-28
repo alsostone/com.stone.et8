@@ -1,11 +1,36 @@
-# 基于YIUI-ET8.1 
-## 包含Luban，YIUI，HybridCLR，YooAsset
-## `正在支持帧同步中的技能系统`
+## 帧同步战斗系统
+### 目标
+原子化设计、配套齐全（如调试工具、AI工具、各种插件）、客户端服务器代码共用、打通匹配到结算流程，以流行技术栈搭建。
+#### 参考《帧同步战斗架构设计Ver.2》来设计。 [文档地址](https://zhuanlan.zhihu.com/p/1911184476500897969)
+预期2025年底能完工。
 
+### 如何运行
+1. 切换到Init场景
+2. ET/Excel/XXX导表
+3. Lockstep模式 AWSD移动 J普攻 K技能。
+
+### 战斗单位
+单位配置表位置 `com.stone.et8/Unity/Assets/Config/Excel/Datas/Unit`
+1. 英雄 皮肤、名字、配置初始属性、初始技能
+2. 建筑 等级、名字、模型、初始属性、初始技能
+3. 小兵 等级、名字、模型、初始属性、初始技能
+4. 掉落物 逐步拓展中，后续再补充；
+### 技能系统
+技能配置表位置 `com.stone.et8/Unity/Assets/Config/Excel/Datas/Skill`
+1. 技能配置 释放条件检测、CD、初始CD、消耗、前摇动作、持续动作、后摇动作、效果触发点、效果组、是否实时索敌；
+2. 效果实现 伤害、添加BUFF、属性改变、添加子弹、重新索敌(炮弹落地炸一圈)、召唤士兵、随机召唤(基于随机掉落包)；
+3. BUFF系统 支持持续时间、BUFF生效效果、Dot伤害效果、BUFF结束效果；
+4. 索敌系统 支持指定范围、队伍、类型、优先级；
+5. 移动轨迹 轨迹基于贝塞尔曲线，当前支持1个控制点(配置控制点趋近起终点比例和控制点高度偏移)，支持炸弹抛射；
+### AI
+正在开发中...
+
+
+## 基于YIUI-ET8.1拓展 包含Luban，YIUI，HybridCLR，YooAsset
 ## 支持功能
 1.  移除ET的UI框架 使用YIUI框架实现所有UI
-2.  ET/Build/XXX 一键打各平台包
-3.  ET/Excel/XXX 一键导出Luban配置表
+2.  移除ET的打包流程 使用ET/Build/XXX 一键打各平台包
+3.  移除ET的导表流程 ET/Excel/XXX 一键导出Luban配置表
 
 ## 打包自动流程
 ps: 首次打包需手动安装HybridCLR HybridCLR/Installer
