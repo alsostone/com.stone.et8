@@ -19,7 +19,7 @@ public class NPBehaveExampleHelloBlackboardsAI : MonoBehaviour
     
     void Start()
     {
-        behaviorTree = new Root(
+        behaviorTree = new Root(UnityContext.GetClock(),
 
             // toggle the 'toggled' blackboard boolean flag around every 500 milliseconds
             new UpdateService(0.5f,

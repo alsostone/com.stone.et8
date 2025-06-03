@@ -53,12 +53,12 @@ namespace NPBehave
         
         protected override void StartObserving()
         {
-            this.RootNode.Blackboard.AddObserver(key, onValueChanged);
+            Blackboard.AddObserver(key, onValueChanged);
         }
 
         protected override void StopObserving()
         {
-            this.RootNode.Blackboard.RemoveObserver(key, onValueChanged);
+            Blackboard.RemoveObserver(key, onValueChanged);
         }
 
         private void onValueChanged(Blackboard.Type type, object newValue)
@@ -73,12 +73,12 @@ namespace NPBehave
                 return true;
             }
 
-            if (!this.RootNode.Blackboard.Isset(key))
+            if (!Blackboard.Isset(key))
             {
                 return op == Operator.IS_NOT_SET;
             }
 
-            T o = this.RootNode.Blackboard.Get<T>(key);
+            T o = Blackboard.Get<T>(key);
 
             switch (this.op)
             {

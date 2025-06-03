@@ -7,7 +7,7 @@ public class NPBehaveExampleHelloWorldAI : MonoBehaviour
 
     void Start()
     {
-        behaviorTree = new Root(
+        behaviorTree = new Root(UnityContext.GetClock(),
             new Action(() => Debug.Log("Hello World!"))
         );
         behaviorTree.Start();

@@ -57,12 +57,12 @@ namespace NPBehave
                 Result result = this.multiFrameFunc.Invoke(false);
                 if ( result == Result.PROGRESS )
                 {
-                    this.RootNode.Clock.AddUpdateObserver( OnUpdateFunc );
+                    Clock.AddUpdateObserver( OnUpdateFunc );
                 }
                 else if ( result == Result.BLOCKED )
                 {
                     this.bWasBlocked = true;
-                    this.RootNode.Clock.AddUpdateObserver( OnUpdateFunc );
+                    Clock.AddUpdateObserver( OnUpdateFunc );
                 }
                 else
                 {
@@ -74,12 +74,12 @@ namespace NPBehave
                 Result result = this.multiFrameFunc2.Invoke(Request.START);
                 if (result == Result.PROGRESS)
                 {
-                    this.RootNode.Clock.AddUpdateObserver(OnUpdateFunc2);
+                    Clock.AddUpdateObserver(OnUpdateFunc2);
                 }
                 else if ( result == Result.BLOCKED )
                 {
                     this.bWasBlocked = true;
-                    this.RootNode.Clock.AddUpdateObserver( OnUpdateFunc2 );
+                    Clock.AddUpdateObserver( OnUpdateFunc2 );
                 }
                 else
                 {
@@ -97,7 +97,7 @@ namespace NPBehave
             Result result = this.multiFrameFunc.Invoke(false);
             if (result != Result.PROGRESS && result != Result.BLOCKED)
             {
-                this.RootNode.Clock.RemoveUpdateObserver(OnUpdateFunc);
+                Clock.RemoveUpdateObserver(OnUpdateFunc);
                 this.Stopped(result == Result.SUCCESS);
             }
         }
@@ -116,7 +116,7 @@ namespace NPBehave
             }
             else
             {
-                this.RootNode.Clock.RemoveUpdateObserver( OnUpdateFunc2 );
+                Clock.RemoveUpdateObserver( OnUpdateFunc2 );
                 this.Stopped( result == Result.SUCCESS );
             }
         }
@@ -126,13 +126,13 @@ namespace NPBehave
             if (this.multiFrameFunc != null)
             {
                 Result result = this.multiFrameFunc.Invoke(true);
-                this.RootNode.Clock.RemoveUpdateObserver(OnUpdateFunc);
+                Clock.RemoveUpdateObserver(OnUpdateFunc);
                 this.Stopped(result == Result.SUCCESS);
             }
             else if (this.multiFrameFunc2 != null)
             {
                 Result result = this.multiFrameFunc2.Invoke(Request.CANCEL);
-                this.RootNode.Clock.RemoveUpdateObserver(OnUpdateFunc2);
+                Clock.RemoveUpdateObserver(OnUpdateFunc2);
                 this.Stopped(result == Result.SUCCESS);
             }
         }

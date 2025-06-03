@@ -71,7 +71,7 @@ public class NPBehaveExampleSwarmEnemyAI : MonoBehaviour
     private Root CreateBehaviourTree()
     {
         // Tell the behaviour tree to use the provided blackboard instead of creating a new one
-        return new Root(ownBlackboard,
+        return new Root(ownBlackboard, UnityContext.GetClock(),
 
             // Update values in the blackboards every 125 milliseconds
             new UpdateService(this.transform, 0.125f,

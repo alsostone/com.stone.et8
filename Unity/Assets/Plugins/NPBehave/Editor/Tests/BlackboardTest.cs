@@ -1,4 +1,6 @@
 ﻿using NUnit.Framework;
+using UnityEngine;
+
 namespace NPBehave
 {
 #pragma warning disable 618 // deprecation
@@ -84,10 +86,10 @@ namespace NPBehave
         [Test]
         public void NewDefaultValuesShouldBeCompatible()
         {
-            Assert.AreEqual(this.sut.Get<bool>("not-existing"), this.sut.GetBool("not-existing"));
-            Assert.AreEqual(this.sut.Get<int>("not-existing"), this.sut.GetInt("not-existing"));
+            Assert.AreEqual(this.sut.Get<bool>("not-existing"), this.sut.Get<bool>("not-existing"));
+            Assert.AreEqual(this.sut.Get<int>("not-existing"), this.sut.Get<int>("not-existing"));
             //            Assert.AreEqual(this.sut.Get<float>("not-existing"), this.sut.GetFloat("not-existing"));
-            Assert.AreEqual(this.sut.Get<UnityEngine.Vector3>("not-existing"), this.sut.GetVector3("not-existing"));
+            Assert.AreEqual(this.sut.Get<UnityEngine.Vector3>("not-existing"), this.sut.Get<Vector3>("not-existing"));
         }
 
 

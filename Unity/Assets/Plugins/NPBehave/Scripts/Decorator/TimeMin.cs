@@ -12,7 +12,6 @@ namespace NPBehave
         [MemoryPackInclude] private bool isDecorateeDone = false;
         [MemoryPackInclude] private bool isDecorateeSuccess = false;
         
-        [MemoryPackConstructor]
         public TimeMin(float limit, Node decoratee) : base("TimeMin", decoratee)
         {
             this.limit = limit;
@@ -27,6 +26,7 @@ namespace NPBehave
             this.waitOnFailure = waitOnFailure;
         }
 
+        [MemoryPackConstructor]
         public TimeMin(float limit, float randomVariation, bool waitOnFailure, Node decoratee) : base("TimeMin", decoratee)
         {
             this.limit = limit;

@@ -60,20 +60,20 @@ namespace NPBehave
         }
 
         [MemoryPackIgnore]
-        public virtual Blackboard Blackboard
+        public Blackboard Blackboard
         {
             get
             {
-                return RootNode.Blackboard;
+                return RootNode.RootBlackboard;
             }
         }
 
         [MemoryPackIgnore]
-        public virtual Clock Clock
+        public Clock Clock
         {
             get
             {
-                return RootNode.Clock;
+                return RootNode.RootClock;
             }
         }
 

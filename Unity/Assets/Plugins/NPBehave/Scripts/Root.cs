@@ -1,92 +1,84 @@
-﻿namespace NPBehave
-{
-    public class Root : Decorator
-    {
-        private Node mainNode;
+﻿using MemoryPack;
 
-        private Blackboard blackboard;
-        public override Blackboard Blackboard
+namespace NPBehave
+{
+    [MemoryPackable]
+    public partial class Root : Decorator
+    {
+        [MemoryPackInclude] private readonly Blackboard rootBlackboard;
+        [MemoryPackIgnore]
+        public Blackboard RootBlackboard
         {
             get
             {
-                return blackboard;
+                return this.rootBlackboard;
             }
         }
-
-
-        private Clock clock;
-        public override Clock Clock
+        
+        [MemoryPackInclude] private readonly Clock rootClock;
+        [MemoryPackIgnore]
+        public Clock RootClock
         {
             get
             {
-                return clock;
+                return this.rootClock;
             }
         }
 
 #if UNITY_EDITOR
-        public int TotalNumStartCalls = 0;
-        public int TotalNumStopCalls = 0;
-        public int TotalNumStoppedCalls = 0;
+        [MemoryPackIgnore] public int TotalNumStartCalls = 0;
+        [MemoryPackIgnore] public int TotalNumStopCalls = 0;
+        [MemoryPackIgnore] public int TotalNumStoppedCalls = 0;
 #endif
-
-        public Root(Node mainNode) : base("Root", mainNode)
+        
+        public Root(Clock rootClock, Node decoratee) : base("Root", decoratee)
         {
-            this.mainNode = mainNode;
-            this.clock = UnityContext.GetClock();
-            this.blackboard = new Blackboard(this.clock);
-            this.SetRoot(this);
-        }
-        public Root(Blackboard blackboard, Node mainNode) : base("Root", mainNode)
-        {
-            this.blackboard = blackboard;
-            this.mainNode = mainNode;
-            this.clock = UnityContext.GetClock();
+            this.rootBlackboard = new Blackboard(rootClock);
+            this.rootClock = rootClock;
             this.SetRoot(this);
         }
 
-        public Root(Blackboard blackboard, Clock clock, Node mainNode) : base("Root", mainNode)
+        [MemoryPackConstructor]
+        public Root(Blackboard rootBlackboard, Clock rootClock, Node decoratee) : base("Root", decoratee)
         {
-            this.blackboard = blackboard;
-            this.mainNode = mainNode;
-            this.clock = clock;
+            this.rootBlackboard = rootBlackboard;
+            this.rootClock = rootClock;
             this.SetRoot(this);
-        }
-
-        public override void SetRoot(Root rootNode)
-        {
-            base.SetRoot(rootNode);
-            this.mainNode.SetRoot(rootNode);
         }
         
+        public sealed override void SetRoot(Root rootNode)
+        {
+            base.SetRoot(rootNode);
+        }
+
         protected override void DoStart()
         {
-            this.blackboard.Enable();
-            this.mainNode.Start();
+            this.rootBlackboard.Enable();
+            this.Decoratee.Start();
         }
 
         protected override void DoStop()
         {
-            if (this.mainNode.IsActive)
+            if (this.Decoratee.IsActive)
             {
-                this.mainNode.Stop();
+                this.Decoratee.Stop();
             }
             else
             {
-                this.clock.RemoveTimer(this.mainNode.Start);
+                this.rootClock.RemoveTimer(this.Decoratee.Start);
             }
         }
-
-
+        
         protected override void DoChildStopped(Node node, bool success)
         {
             if (!IsStopRequested)
             {
                 // wait one tick, to prevent endless recursions
-                this.clock.AddTimer(0, 0, this.mainNode.Start);
+                this.rootClock.AddTimer(0, 0, this.Decoratee.Start);
             }
             else
             {
-                this.blackboard.Disable();
+                this.rootBlackboard.Disable();
                 Stopped(success);
             }
         }

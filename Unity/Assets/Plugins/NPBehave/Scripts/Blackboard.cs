@@ -1,9 +1,10 @@
-﻿using UnityEngine;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using MemoryPack;
 
 namespace NPBehave
 {
-    public class Blackboard
+    [MemoryPackable]
+    public partial class Blackboard
     {
         public enum Type
         {
@@ -34,7 +35,10 @@ namespace NPBehave
         private List<Notification> notificationsDispatch = new List<Notification>();
         private Blackboard parentBlackboard;
         private HashSet<Blackboard> children = new HashSet<Blackboard>();
-
+        
+        [MemoryPackConstructor]
+        public Blackboard() {}
+        
         public Blackboard(Blackboard parent, Clock clock)
         {
             this.clock = clock;
@@ -121,36 +125,7 @@ namespace NPBehave
                 this.clock.AddTimer(0f, 0, NotifiyObservers);
             }
         }
-
-        [System.Obsolete("Use Get<T> instead")]
-        public bool GetBool(string key)
-        {
-            return Get<bool>(key);
-        }
-
-        [System.Obsolete("Use Get<T> instead - WARNING: return value for non-existant key will be 0.0f instead of float.NaN")]
-        public float GetFloat(string key)
-        {
-            object result = Get(key);
-            if (result == null)
-            {
-                return float.NaN;
-            }
-            return (float)Get(key);
-        }
-
-        [System.Obsolete("Use Get<T> instead")]
-        public Vector3 GetVector3(string key)
-        {
-            return Get<Vector3>(key);
-        }
-
-        [System.Obsolete("Use Get<T> instead")]
-        public int GetInt(string key)
-        {
-            return Get<int>(key);
-        }
-
+        
         public T Get<T>(string key)
         {
             object result = Get(key);

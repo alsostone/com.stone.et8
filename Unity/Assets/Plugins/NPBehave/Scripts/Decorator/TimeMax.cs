@@ -10,7 +10,6 @@ namespace NPBehave
         [MemoryPackInclude] private bool waitForChildButFailOnLimitReached = false;
         [MemoryPackInclude] private bool isLimitReached = false;
      
-        [MemoryPackConstructor]
         public TimeMax(float limit, bool waitForChildButFailOnLimitReached, Node decoratee) : base("TimeMax", decoratee)
         {
             this.limit = limit;
@@ -18,6 +17,7 @@ namespace NPBehave
             this.waitForChildButFailOnLimitReached = waitForChildButFailOnLimitReached;
         }
 
+        [MemoryPackConstructor]
         public TimeMax(float limit, float randomVariation, bool waitForChildButFailOnLimitReached, Node decoratee) : base("TimeMax", decoratee)
         {
             this.limit = limit;

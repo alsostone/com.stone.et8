@@ -15,7 +15,7 @@ namespace NPBehave
         {
             foreach (string key in this.keys)
             {
-                this.RootNode.Blackboard.AddObserver(key, onValueChanged);
+                Blackboard.AddObserver(key, onValueChanged);
             }
         }
 
@@ -23,7 +23,7 @@ namespace NPBehave
         {
             foreach (string key in this.keys)
             {
-                this.RootNode.Blackboard.RemoveObserver(key, onValueChanged);
+                Blackboard.RemoveObserver(key, onValueChanged);
             }
         }
 
