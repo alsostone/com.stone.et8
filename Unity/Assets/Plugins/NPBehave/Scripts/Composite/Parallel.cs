@@ -1,52 +1,37 @@
-using UnityEngine;
-using UnityEngine.Assertions;
 using System.Collections.Generic;
+using MemoryPack;
 
 namespace NPBehave
 {
-    public class Parallel : Composite
+    [MemoryPackable]
+    public partial class Parallel : Composite
     {
         public enum Policy
         {
             ONE,
             ALL,
         }
+        
+        [MemoryPackInclude] private Policy failurePolicy;
+        [MemoryPackInclude] private Policy successPolicy;
+        [MemoryPackInclude] private int childrenCount = 0;
+        [MemoryPackInclude] private int runningCount = 0;
+        [MemoryPackInclude] private int succeededCount = 0;
+        [MemoryPackInclude] private int failedCount = 0;
+        [MemoryPackInclude] private Dictionary<Node, bool> childrenResults;
+        [MemoryPackInclude] private bool successState;
+        [MemoryPackInclude] private bool childrenAborted;
 
-        // public enum Wait
-        // {
-        //     NEVER,
-        //     ON_FAILURE,
-        //     ON_SUCCESS,
-        //     BOTH
-        // }
-
-        // private Wait waitForPendingChildrenRule;
-        private Policy failurePolicy;
-        private Policy successPolicy;
-        private int childrenCount = 0;
-        private int runningCount = 0;
-        private int succeededCount = 0;
-        private int failedCount = 0;
-        private Dictionary<Node, bool> childrenResults;
-        private bool successState;
-        private bool childrenAborted;
-
-        public Parallel(Policy successPolicy, Policy failurePolicy, /*Wait waitForPendingChildrenRule,*/ params Node[] children) : base("Parallel", children)
+        public Parallel(Policy successPolicy, Policy failurePolicy, params Node[] children) : base("Parallel", children)
         {
             this.successPolicy = successPolicy;
             this.failurePolicy = failurePolicy;
-            // this.waitForPendingChildrenRule = waitForPendingChildrenRule;
             this.childrenCount = children.Length;
             this.childrenResults = new Dictionary<Node, bool>();
         }
 
         protected override void DoStart()
         {
-            foreach (Node child in Children)
-            {
-                Assert.AreEqual(child.CurrentState, State.INACTIVE);
-            }
-
             childrenAborted = false;
             runningCount = 0;
             succeededCount = 0;
@@ -60,8 +45,6 @@ namespace NPBehave
 
         protected override void DoStop()
         {
-            Assert.IsTrue(runningCount + succeededCount + failedCount == childrenCount);
-
             foreach (Node child in this.Children)
             {
                 if (child.IsActive)
@@ -112,15 +95,12 @@ namespace NPBehave
                 }
                 else if (!this.childrenAborted)
                 {
-                    Assert.IsFalse(succeededCount == childrenCount);
-                    Assert.IsFalse(failedCount == childrenCount);
-
-                    if (failurePolicy == Policy.ONE && failedCount > 0/* && waitForPendingChildrenRule != Wait.ON_FAILURE && waitForPendingChildrenRule != Wait.BOTH*/)
+                    if (failurePolicy == Policy.ONE && failedCount > 0)
                     {
                         successState = false;
                         childrenAborted = true;
                     }
-                    else if (successPolicy == Policy.ONE && succeededCount > 0/* && waitForPendingChildrenRule != Wait.ON_SUCCESS && waitForPendingChildrenRule != Wait.BOTH*/)
+                    else if (successPolicy == Policy.ONE && succeededCount > 0)
                     {
                         successState = true;
                         childrenAborted = true;
@@ -144,7 +124,6 @@ namespace NPBehave
         {
             if (immediateRestart)
             {
-                Assert.IsFalse(abortForChild.IsActive);
                 if (childrenResults[abortForChild])
                 {
                     succeededCount--;

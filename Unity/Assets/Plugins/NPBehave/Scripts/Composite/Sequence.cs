@@ -1,12 +1,11 @@
-﻿using UnityEngine;
-using UnityEngine.Assertions;
-using System.Collections;
+﻿using MemoryPack;
 
 namespace NPBehave
 {
-    public class Sequence : Composite
+    [MemoryPackable]
+    public partial class Sequence : Composite
     {
-        private int currentIndex = -1;
+        [MemoryPackInclude] private int currentIndex = -1;
 
         public Sequence(params Node[] children) : base("Sequence", children)
         {
@@ -14,11 +13,6 @@ namespace NPBehave
 
         protected override void DoStart()
         {
-            foreach (Node child in Children)
-            {
-                Assert.AreEqual(child.CurrentState, State.INACTIVE);
-            }
-
             currentIndex = -1;
 
             ProcessChildren();
@@ -28,8 +22,7 @@ namespace NPBehave
         {
             Children[currentIndex].Stop();
         }
-
-
+        
         protected override void DoChildStopped(Node child, bool result)
         {
             if (result)
@@ -91,7 +84,7 @@ namespace NPBehave
             }
         }
 
-        override public string ToString()
+        public override string ToString()
         {
             return base.ToString() + "[" + this.currentIndex + "]";
         }

@@ -1,22 +1,23 @@
-﻿using UnityEngine.Assertions;
+﻿using MemoryPack;
 
 namespace NPBehave
 {
-    public class TimeMin : Decorator
+    [MemoryPackable]
+    public partial class TimeMin : Decorator
     {
-        private float limit = 0.0f;
-        private float randomVariation;
-        private bool waitOnFailure = false;
-        private bool isLimitReached = false;
-        private bool isDecorateeDone = false;
-        private bool isDecorateeSuccess = false;
-
+        [MemoryPackInclude] private float limit = 0.0f;
+        [MemoryPackInclude] private float randomVariation;
+        [MemoryPackInclude] private bool waitOnFailure = false;
+        [MemoryPackInclude] private bool isLimitReached = false;
+        [MemoryPackInclude] private bool isDecorateeDone = false;
+        [MemoryPackInclude] private bool isDecorateeSuccess = false;
+        
+        [MemoryPackConstructor]
         public TimeMin(float limit, Node decoratee) : base("TimeMin", decoratee)
         {
             this.limit = limit;
             this.randomVariation = this.limit * 0.05f;
             this.waitOnFailure = false;
-            Assert.IsTrue(limit > 0f, "limit has to be set");
         }
 
         public TimeMin(float limit, bool waitOnFailure, Node decoratee) : base("TimeMin", decoratee)
@@ -24,7 +25,6 @@ namespace NPBehave
             this.limit = limit;
             this.randomVariation = this.limit * 0.05f;
             this.waitOnFailure = waitOnFailure;
-            Assert.IsTrue(limit > 0f, "limit has to be set");
         }
 
         public TimeMin(float limit, float randomVariation, bool waitOnFailure, Node decoratee) : base("TimeMin", decoratee)
@@ -32,7 +32,6 @@ namespace NPBehave
             this.limit = limit;
             this.randomVariation = randomVariation;
             this.waitOnFailure = waitOnFailure;
-            Assert.IsTrue(limit > 0f, "limit has to be set");
         }
 
         protected override void DoStart()
@@ -44,7 +43,7 @@ namespace NPBehave
             Decoratee.Start();
         }
 
-        override protected void DoStop()
+        protected override void DoStop()
         {
             if (Decoratee.IsActive)
             {
@@ -70,7 +69,7 @@ namespace NPBehave
             }
             else
             {
-                Assert.IsTrue(Clock.HasTimer(TimeoutReached));
+                Clock.HasTimer(TimeoutReached);
             }
         }
 
@@ -80,10 +79,6 @@ namespace NPBehave
             if (isDecorateeDone)
             {
                 Stopped(isDecorateeSuccess);
-            }
-            else
-            {
-                Assert.IsTrue(Decoratee.IsActive);
             }
         }
     }

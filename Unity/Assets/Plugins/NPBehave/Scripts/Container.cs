@@ -1,10 +1,13 @@
+using MemoryPack;
 using UnityEngine.Assertions;
 
 namespace NPBehave
 {
     public abstract class Container : Node
     {
-        private bool collapse = false;
+        [MemoryPackInclude] protected bool collapse = false;
+        
+        [MemoryPackIgnore]
         public bool Collapse
         {
             get
@@ -17,7 +20,7 @@ namespace NPBehave
             }
         }
 
-        public Container(string name) : base(name)
+        protected Container(string name) : base(name)
         {
         }
 
@@ -31,7 +34,7 @@ namespace NPBehave
         protected abstract void DoChildStopped(Node child, bool succeeded);
 
 #if UNITY_EDITOR
-        public abstract Node[] DebugChildren
+        [MemoryPackIgnore] public abstract Node[] DebugChildren
         {
             get;
         }

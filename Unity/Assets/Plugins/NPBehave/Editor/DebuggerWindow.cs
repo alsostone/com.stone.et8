@@ -305,9 +305,21 @@ namespace NPBehave
                 bool drawLabel = !string.IsNullOrEmpty(node.Label);
                 string label = node.Label;
 
-                if (node is BlackboardCondition)
+                if (node is BlackboardCondition<bool>)
                 {
-                    BlackboardCondition nodeBlackboardCond = node as BlackboardCondition;
+                    var nodeBlackboardCond = node as BlackboardCondition<bool>;
+                    tagName = nodeBlackboardCond.Key + " " + operatorToString[nodeBlackboardCond.Operator] + " " + nodeBlackboardCond.Value;
+                    GUI.backgroundColor = new Color(0.9f, 0.9f, 0.6f);
+                }
+                else if (node is BlackboardCondition<float>)
+                {
+                    var nodeBlackboardCond = node as BlackboardCondition<float>;
+                    tagName = nodeBlackboardCond.Key + " " + operatorToString[nodeBlackboardCond.Operator] + " " + nodeBlackboardCond.Value;
+                    GUI.backgroundColor = new Color(0.9f, 0.9f, 0.6f);
+                }
+                else if (node is BlackboardCondition<int>)
+                {
+                    var nodeBlackboardCond = node as BlackboardCondition<int>;
                     tagName = nodeBlackboardCond.Key + " " + operatorToString[nodeBlackboardCond.Operator] + " " + nodeBlackboardCond.Value;
                     GUI.backgroundColor = new Color(0.9f, 0.9f, 0.6f);
                 }

@@ -1,25 +1,18 @@
-﻿using UnityEngine;
-using UnityEngine.Assertions;
-using System.Collections;
+﻿using MemoryPack;
 
 namespace NPBehave
 {
-    public class Selector : Composite
+    [MemoryPackable]
+    public partial class Selector : Composite
     {
-        private int currentIndex = -1;
+        [MemoryPackInclude] private int currentIndex = -1;
 
         public Selector(params Node[] children) : base("Selector", children)
         {
         }
-
-
+        
         protected override void DoStart()
         {
-            foreach (Node child in Children)
-            {
-                Assert.AreEqual(child.CurrentState, State.INACTIVE);
-            }
-
             currentIndex = -1;
 
             ProcessChildren();
@@ -91,7 +84,7 @@ namespace NPBehave
             }
         }
 
-        override public string ToString()
+        public override string ToString()
         {
             return base.ToString() + "[" + this.currentIndex + "]";
         }

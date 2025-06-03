@@ -1,13 +1,16 @@
-﻿using UnityEngine;
+﻿using System;
+using MemoryPack;
 
 namespace NPBehave
 {
-    public class BlackboardCondition : ObservingDecorator
+    [MemoryPackable]
+    public partial class BlackboardCondition<T> : ObservingDecorator where T : IComparable<T>
     {
-        private string key;
-        private object value;
-        private Operator op;
+        [MemoryPackInclude] private readonly string key;
+        [MemoryPackInclude] private readonly T value;
+        [MemoryPackInclude] private readonly Operator op;
 
+        [MemoryPackIgnore]
         public string Key
         {
             get
@@ -16,7 +19,8 @@ namespace NPBehave
             }
         }
 
-        public object Value
+        [MemoryPackIgnore]
+        public T Value
         {
             get
             {
@@ -24,6 +28,7 @@ namespace NPBehave
             }
         }
 
+        [MemoryPackIgnore]
         public Operator Operator
         {
             get
@@ -31,29 +36,27 @@ namespace NPBehave
                 return op;
             }
         }
-
-        public BlackboardCondition(string key, Operator op, object value, Stops stopsOnChange, Node decoratee) : base("BlackboardCondition", stopsOnChange, decoratee)
+        
+        [MemoryPackConstructor]
+        public BlackboardCondition(string key, Operator op, T value, Stops stopsOnChange, Node decoratee) : base("BlackboardCondition", stopsOnChange, decoratee)
         {
             this.op = op;
             this.key = key;
             this.value = value;
-            this.stopsOnChange = stopsOnChange;
         }
         
         public BlackboardCondition(string key, Operator op, Stops stopsOnChange, Node decoratee) : base("BlackboardCondition", stopsOnChange, decoratee)
         {
             this.op = op;
             this.key = key;
-            this.stopsOnChange = stopsOnChange;
         }
-
-
-        override protected void StartObserving()
+        
+        protected override void StartObserving()
         {
             this.RootNode.Blackboard.AddObserver(key, onValueChanged);
         }
 
-        override protected void StopObserving()
+        protected override void StopObserving()
         {
             this.RootNode.Blackboard.RemoveObserver(key, onValueChanged);
         }
@@ -63,7 +66,7 @@ namespace NPBehave
             Evaluate();
         }
 
-        override protected bool IsConditionMet()
+        protected override bool IsConditionMet()
         {
             if (op == Operator.ALWAYS_TRUE)
             {
@@ -75,79 +78,22 @@ namespace NPBehave
                 return op == Operator.IS_NOT_SET;
             }
 
-            object o = this.RootNode.Blackboard.Get(key);
+            T o = this.RootNode.Blackboard.Get<T>(key);
 
             switch (this.op)
             {
                 case Operator.IS_SET: return true;
-                case Operator.IS_EQUAL: return object.Equals(o, value);
-                case Operator.IS_NOT_EQUAL: return !object.Equals(o, value);
-
-                case Operator.IS_GREATER_OR_EQUAL:
-                    if (o is float)
-                    {
-                        return (float)o >= (float)this.value;
-                    }
-                    else if (o is int)
-                    {
-                        return (int)o >= (int)this.value;
-                    }
-                    else
-                    {
-                        Debug.LogError("Type not compareable: " + o.GetType());
-                        return false;
-                    }
-
-                case Operator.IS_GREATER:
-                    if (o is float)
-                    {
-                        return (float)o > (float)this.value;
-                    }
-                    else if (o is int)
-                    {
-                        return (int)o > (int)this.value;
-                    }
-                    else
-                    {
-                        Debug.LogError("Type not compareable: " + o.GetType());
-                        return false;
-                    }
-
-                case Operator.IS_SMALLER_OR_EQUAL:
-                    if (o is float)
-                    {
-                        return (float)o <= (float)this.value;
-                    }
-                    else if (o is int)
-                    {
-                        return (int)o <= (int)this.value;
-                    }
-                    else
-                    {
-                        Debug.LogError("Type not compareable: " + o.GetType());
-                        return false;
-                    }
-
-                case Operator.IS_SMALLER:
-                    if (o is float)
-                    {
-                        return (float)o < (float)this.value;
-                    }
-                    else if (o is int)
-                    {
-                        return (int)o < (int)this.value;
-                    }
-                    else
-                    {
-                        Debug.LogError("Type not compareable: " + o.GetType());
-                        return false;
-                    }
-
+                case Operator.IS_EQUAL: return o.CompareTo(this.value) == 0;
+                case Operator.IS_NOT_EQUAL: return o.CompareTo(this.value) != 0;
+                case Operator.IS_GREATER_OR_EQUAL: return o.CompareTo(this.value) >= 0;
+                case Operator.IS_GREATER: return o.CompareTo(this.value) > 0;
+                case Operator.IS_SMALLER_OR_EQUAL: return o.CompareTo(this.value) <= 0;
+                case Operator.IS_SMALLER: return o.CompareTo(this.value) < 0;
                 default: return false;
             }
         }
 
-        override public string ToString()
+        public override string ToString()
         {
             return "(" + this.op + ") " + this.key + " ? " + this.value;
         }

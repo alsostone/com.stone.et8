@@ -9,7 +9,7 @@
             this.succedsOnExplictStop = succedsOnExplictStop;
         }
 
-        override protected void DoStop()
+        protected override void DoStop()
         {
             this.Stopped(succedsOnExplictStop);
         }

@@ -1,9 +1,12 @@
-﻿namespace NPBehave
-{
-    public class Random : Decorator
-    {
-        private float probability;
+﻿using MemoryPack;
 
+namespace NPBehave
+{
+    [MemoryPackable]
+    public partial class Random : Decorator
+    {
+        [MemoryPackInclude] private readonly float probability;
+        
         public Random(float probability, Node decoratee) : base("Random", decoratee)
         {
             this.probability = probability;
@@ -21,7 +24,7 @@
             }
         }
 
-        override protected void DoStop()
+        protected override void DoStop()
         {
             Decoratee.Stop();
         }

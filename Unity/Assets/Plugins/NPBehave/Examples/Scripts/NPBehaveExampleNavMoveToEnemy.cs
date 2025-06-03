@@ -23,20 +23,38 @@ public class NPBehaveExampleNavMoveToEnemy : MonoBehaviour
         // start the behaviour tree
         behaviorTree.Start();
     }
+    
+    private class UpdateService : Service
+    {
+        private readonly Transform transform;
 
+        public UpdateService(Transform transform, float interval, Node decoratee) : base(interval, decoratee)
+        {
+            this.transform = transform;
+        }
+
+        protected override void OnService()
+        {
+            Transform playerTransform = GameObject.FindGameObjectWithTag("Player").transform;
+            Vector3 playerPos = playerTransform.position;
+            Blackboard["playerPos"] = playerPos;
+            Blackboard["playerDistance"] = (playerPos - transform.position).magnitude;
+        }
+    }
+    
     private Root CreateBehaviourTree()
     {
         // we always need a root node
         return new Root(
 
             // kick up our service to update the "playerDistance" and "playerPos" Blackboard values every 125 milliseconds
-            new Service(0.125f, UpdateBlackboard,
+            new UpdateService(this.transform, 0.125f,
 
                 new Selector(
 
                     // check the 'playerDistance' blackboard value.
                     // When the condition changes, we want to immediately jump in or out of this path, thus we use IMMEDIATE_RESTART
-                    new BlackboardCondition("playerDistance", Operator.IS_SMALLER, 7.5f, Stops.IMMEDIATE_RESTART,
+                    new BlackboardCondition<float>("playerDistance", Operator.IS_SMALLER, 7.5f, Stops.IMMEDIATE_RESTART,
 
                         // the player is in our range of 7.5f
                         new Sequence(
@@ -64,14 +82,6 @@ public class NPBehaveExampleNavMoveToEnemy : MonoBehaviour
                 )
             )
         );
-    }
-
-    private void UpdateBlackboard()
-    {
-        Transform playerTransform = GameObject.FindGameObjectWithTag("Player").transform;
-        Vector3 playerPos = playerTransform.position;
-        behaviorTree.Blackboard["playerPos"] = playerPos;
-        behaviorTree.Blackboard["playerDistance"] = (playerPos - transform.position).magnitude;
     }
 
     private void MoveTowards(Vector3 localPosition)

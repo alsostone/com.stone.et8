@@ -1,23 +1,21 @@
-﻿using UnityEngine.Assertions;
+﻿using MemoryPack;
 
 namespace NPBehave
 {
     public abstract class Composite : Container
     {
-        protected Node[] Children;
+        [MemoryPackInclude] protected Node[] Children;
 
-        public Composite(string name, Node[] children) : base(name)
+        protected Composite(string name, Node[] children) : base(name)
         {
             this.Children = children;
-            Assert.IsTrue(children.Length > 0, "Composite nodes (Selector, Sequence, Parallel) need at least one child!");
-
             foreach (Node node in Children)
             {
                 node.SetParent(this);
             }
         }
 
-        override public void SetRoot(Root rootNode)
+        public override void SetRoot(Root rootNode)
         {
             base.SetRoot(rootNode);
 
@@ -29,7 +27,7 @@ namespace NPBehave
 
 
 #if UNITY_EDITOR
-        public override Node[] DebugChildren
+        [MemoryPackIgnore] public override Node[] DebugChildren
         {
             get
             {

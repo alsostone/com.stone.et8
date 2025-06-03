@@ -1,15 +1,13 @@
-﻿using UnityEngine;
-using System.Collections;
-using UnityEngine.Assertions;
+﻿using MemoryPack;
 
 namespace NPBehave
 {
     public abstract class ObservingDecorator : Decorator
     {
-        protected Stops stopsOnChange;
-        private bool isObserving;
+        [MemoryPackInclude] protected Stops stopsOnChange;
+        [MemoryPackInclude] protected bool isObserving;
 
-        public ObservingDecorator(string name, Stops stopsOnChange, Node decoratee) : base(name, decoratee)
+        protected ObservingDecorator(string name, Stops stopsOnChange, Node decoratee) : base(name, decoratee)
         {
             this.stopsOnChange = stopsOnChange;
             this.isObserving = false;
@@ -36,14 +34,13 @@ namespace NPBehave
             }
         }
 
-        override protected void DoStop()
+        protected override void DoStop()
         {
             Decoratee.Stop();
         }
 
         protected override void DoChildStopped(Node child, bool result)
         {
-            Assert.AreNotEqual(this.CurrentState, State.INACTIVE);
             if (stopsOnChange == Stops.NONE || stopsOnChange == Stops.SELF)
             {
                 if (isObserving)
@@ -55,7 +52,7 @@ namespace NPBehave
             Stopped(result);
         }
 
-        override protected void DoParentCompositeStopped(Composite parentComposite)
+        protected override void DoParentCompositeStopped(Composite parentComposite)
         {
             if (isObserving)
             {
@@ -70,7 +67,6 @@ namespace NPBehave
             {
                 if (stopsOnChange == Stops.SELF || stopsOnChange == Stops.BOTH || stopsOnChange == Stops.IMMEDIATE_RESTART)
                 {
-                    // Debug.Log( this.key + " stopped self ");
                     this.Stop();
                 }
             }
@@ -78,7 +74,6 @@ namespace NPBehave
             {
                 if (stopsOnChange == Stops.LOWER_PRIORITY || stopsOnChange == Stops.BOTH || stopsOnChange == Stops.IMMEDIATE_RESTART || stopsOnChange == Stops.LOWER_PRIORITY_IMMEDIATE_RESTART)
                 {
-                    // Debug.Log( this.key + " stopped other ");
                     Container parentNode = this.ParentNode;
                     Node childNode = this;
                     while (parentNode != null && !(parentNode is Composite))
@@ -86,13 +81,6 @@ namespace NPBehave
                         childNode = parentNode;
                         parentNode = parentNode.ParentNode;
                     }
-                    Assert.IsNotNull(parentNode, "NTBtrStops is only valid when attached to a parent composite");
-                    Assert.IsNotNull(childNode);
-                    if (parentNode is Parallel)
-                    {
-                        Assert.IsTrue(stopsOnChange == Stops.IMMEDIATE_RESTART, "On Parallel Nodes all children have the same priority, thus Stops.LOWER_PRIORITY or Stops.BOTH are unsupported in this context!");
-                    }
-
                     if (stopsOnChange == Stops.IMMEDIATE_RESTART || stopsOnChange == Stops.LOWER_PRIORITY_IMMEDIATE_RESTART)
                     {
                         if (isObserving)

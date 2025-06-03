@@ -29,19 +29,58 @@ public class NPBehaveExampleSwarmEnemyAI : MonoBehaviour
         behaviorTree.Start();
     }
 
+    private class UpdateService : Service
+    {
+        private readonly Transform transform;
+
+        public UpdateService(Transform transform, float interval, Node decoratee) : base(interval, decoratee)
+        {
+            this.transform = transform;
+        }
+
+        protected override void OnService()
+        {
+            Vector3 playerLocalPos = this.transform.InverseTransformPoint(GameObject.FindGameObjectWithTag("Player").transform.position);
+
+            // update all our distances
+            Blackboard["playerLocalPos"]= playerLocalPos;
+            Blackboard["playerInRange"]= playerLocalPos.magnitude < 7.5f;
+
+            // if we are not yet engaging the player, but he is in range and there are not yet other 2 guys engaged with him
+            if (Blackboard.Get<bool>("playerInRange") && !Blackboard.Get<bool>("engaged") && Blackboard.Get<int>("numEngagedActors") < 2)
+            {
+                // increment the shared 'numEngagedActors'
+                Blackboard["numEngagedActors"]= Blackboard.Get<int>("numEngagedActors") + 1;
+
+                // set this instance to 'engaged'
+                Blackboard["engaged"]= true;
+            }
+
+            // if we were engaging the player, but he is not in the range anymore
+            if (!Blackboard.Get<bool>("playerInRange") && Blackboard.Get<bool>("engaged"))
+            {
+                // decrement the shared 'numEngagedActors'
+                Blackboard["numEngagedActors"]= Blackboard.Get<int>("numEngagedActors") - 1;
+
+                // set this instance to 'engaged'
+                Blackboard["engaged"]= false;
+            }
+        }
+    }
+
     private Root CreateBehaviourTree()
     {
         // Tell the behaviour tree to use the provided blackboard instead of creating a new one
         return new Root(ownBlackboard,
 
             // Update values in the blackboards every 125 milliseconds
-            new Service(0.125f, UpdateBlackboards,
+            new UpdateService(this.transform, 0.125f,
 
                 new Selector(
 
                     // check the 'engaged' blackboard value.
                     // When the condition changes, we want to immediately jump in or out of this path, thus we use IMMEDIATE_RESTART
-                    new BlackboardCondition("engaged", Operator.IS_EQUAL, true, Stops.IMMEDIATE_RESTART,
+                    new BlackboardCondition<bool>("engaged", Operator.IS_EQUAL, true, Stops.IMMEDIATE_RESTART,
 
                         // we are currently engaged with the player
                         new Sequence(
@@ -70,7 +109,7 @@ public class NPBehaveExampleSwarmEnemyAI : MonoBehaviour
 
                         // this time we can also use NBtrStops.BOTH, which stops the current branch if the condition changes but will traverse the 
                         // tree further the normal way (in that case, doesn't make a difference at all). 
-                        new BlackboardCondition("playerInRange", Operator.IS_EQUAL, true, Stops.BOTH,
+                        new BlackboardCondition<bool>("playerInRange", Operator.IS_EQUAL, true, Stops.BOTH,
 
                             // player is not in range, mark 'yellow'
                             new Sequence(
@@ -88,35 +127,6 @@ public class NPBehaveExampleSwarmEnemyAI : MonoBehaviour
                 )
             )
         );
-    }
-
-    private void UpdateBlackboards()
-    {
-        Vector3 playerLocalPos = this.transform.InverseTransformPoint(GameObject.FindGameObjectWithTag("Player").transform.position);
-
-        // update all our distances
-        ownBlackboard["playerLocalPos"]= playerLocalPos;
-        ownBlackboard["playerInRange"]= playerLocalPos.magnitude < 7.5f;
-
-        // if we are not yet engaging the player, but he is in range and there are not yet other 2 guys engaged with him
-        if (ownBlackboard.Get<bool>("playerInRange") && !ownBlackboard.Get<bool>("engaged") && sharedBlackboard.Get<int>("numEngagedActors") < 2)
-        {
-            // increment the shared 'numEngagedActors'
-            sharedBlackboard["numEngagedActors"]= sharedBlackboard.Get<int>("numEngagedActors") + 1;
-
-            // set this instance to 'engaged'
-            ownBlackboard["engaged"]= true;
-        }
-
-        // if we were engaging the player, but he is not in the range anymore
-        if (!ownBlackboard.Get<bool>("playerInRange") && ownBlackboard.Get<bool>("engaged"))
-        {
-            // decrement the shared 'numEngagedActors'
-            sharedBlackboard["numEngagedActors"]= sharedBlackboard.Get<int>("numEngagedActors") - 1;
-
-            // set this instance to 'engaged'
-            ownBlackboard["engaged"]= false;
-        }
     }
 
     private void MoveTowards(Vector3 localPosition)

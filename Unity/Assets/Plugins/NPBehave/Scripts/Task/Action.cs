@@ -1,5 +1,4 @@
-﻿using UnityEngine.Assertions;
-
+﻿
 namespace NPBehave
 {
     public class Action : Task
@@ -127,20 +126,14 @@ namespace NPBehave
             if (this.multiFrameFunc != null)
             {
                 Result result = this.multiFrameFunc.Invoke(true);
-                Assert.AreNotEqual(result, Result.PROGRESS, "The Task has to return Result.SUCCESS, Result.FAILED/BLOCKED after beeing cancelled!");
                 this.RootNode.Clock.RemoveUpdateObserver(OnUpdateFunc);
                 this.Stopped(result == Result.SUCCESS);
             }
             else if (this.multiFrameFunc2 != null)
             {
                 Result result = this.multiFrameFunc2.Invoke(Request.CANCEL);
-                Assert.AreNotEqual(result, Result.PROGRESS, "The Task has to return Result.SUCCESS or Result.FAILED/BLOCKED after beeing cancelled!");
                 this.RootNode.Clock.RemoveUpdateObserver(OnUpdateFunc2);
                 this.Stopped(result == Result.SUCCESS);
-            }
-            else
-            {
-                Assert.IsTrue(false, "DoStop called for a single frame action on " + this);
             }
         }
     }

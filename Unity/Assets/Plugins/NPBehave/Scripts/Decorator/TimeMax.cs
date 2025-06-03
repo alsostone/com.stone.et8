@@ -1,20 +1,21 @@
-﻿using UnityEngine.Assertions;
+﻿using MemoryPack;
 
 namespace NPBehave
 {
-    public class TimeMax : Decorator
+    [MemoryPackable]
+    public partial class TimeMax : Decorator
     {
-        private float limit = 0.0f;
-        private float randomVariation;
-        private bool waitForChildButFailOnLimitReached = false;
-        private bool isLimitReached = false;
-
+        [MemoryPackInclude] private float limit = 0.0f;
+        [MemoryPackInclude] private float randomVariation;
+        [MemoryPackInclude] private bool waitForChildButFailOnLimitReached = false;
+        [MemoryPackInclude] private bool isLimitReached = false;
+     
+        [MemoryPackConstructor]
         public TimeMax(float limit, bool waitForChildButFailOnLimitReached, Node decoratee) : base("TimeMax", decoratee)
         {
             this.limit = limit;
             this.randomVariation = limit * 0.05f;
             this.waitForChildButFailOnLimitReached = waitForChildButFailOnLimitReached;
-            Assert.IsTrue(limit > 0f, "limit has to be set");
         }
 
         public TimeMax(float limit, float randomVariation, bool waitForChildButFailOnLimitReached, Node decoratee) : base("TimeMax", decoratee)
@@ -22,7 +23,6 @@ namespace NPBehave
             this.limit = limit;
             this.randomVariation = randomVariation;
             this.waitForChildButFailOnLimitReached = waitForChildButFailOnLimitReached;
-            Assert.IsTrue(limit > 0f, "limit has to be set");
         }
 
         protected override void DoStart()
@@ -32,7 +32,7 @@ namespace NPBehave
             Decoratee.Start();
         }
 
-        override protected void DoStop()
+        protected override void DoStop()
         {
             Clock.RemoveTimer(TimeoutReached);
             if (Decoratee.IsActive)
@@ -67,7 +67,6 @@ namespace NPBehave
             else
             {
                 isLimitReached = true;
-                Assert.IsTrue(Decoratee.IsActive);
             }
         }
     }

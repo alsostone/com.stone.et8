@@ -1,32 +1,27 @@
-using System;
+using MemoryPack;
 
 namespace NPBehave
 {
-    public class Observer : Decorator
+    [MemoryPackable]
+    public partial class Observer : Decorator
     {
-        private System.Action onStart;
-        private System.Action<bool> onStop;
-
-        public Observer(System.Action onStart, System.Action<bool> onStop, Node decoratee) : base("Observer", decoratee)
-        {
-            this.onStart = onStart;
-            this.onStop = onStop;
-        }
-
+        public Observer(Node decoratee) : base("Observer", decoratee) { }
+        
         protected override void DoStart()
         {
-            this.onStart();
+            // do something
             Decoratee.Start();
         }
 
-        override protected void DoStop()
+        protected override void DoStop()
         {
+            // do something
             Decoratee.Stop();
         }
 
         protected override void DoChildStopped(Node child, bool result)
         {
-            this.onStop(result);
+            // do something
             Stopped(result);
         }
     }

@@ -1,8 +1,9 @@
-﻿using UnityEngine.Assertions;
+﻿using MemoryPack;
 
 namespace NPBehave
 {
-    public abstract class Node
+    [MemoryPackable(GenerateType.NoGenerate)]
+    public abstract partial class Node
     {
         public enum State
         {
@@ -11,16 +12,20 @@ namespace NPBehave
             STOP_REQUESTED,
         }
 
+        [MemoryPackInclude]
         protected State currentState = State.INACTIVE;
 
+        [MemoryPackIgnore]
         public State CurrentState
         {
             get { return currentState; }
         }
 
-        public Root RootNode;
+        [MemoryPackIgnore]
+        protected Root RootNode;
 
         private Container parentNode;
+        [MemoryPackIgnore]
         public Container ParentNode
         {
             get
@@ -30,7 +35,7 @@ namespace NPBehave
         }
 
         private string label;
-
+        [MemoryPackInclude]
         public string Label
         {
             get
@@ -43,8 +48,9 @@ namespace NPBehave
             }
         }
 
-        private string name;
+        private readonly string name;
 
+        [MemoryPackIgnore]
         public string Name
         {
             get
@@ -53,6 +59,7 @@ namespace NPBehave
             }
         }
 
+        [MemoryPackIgnore]
         public virtual Blackboard Blackboard
         {
             get
@@ -61,6 +68,7 @@ namespace NPBehave
             }
         }
 
+        [MemoryPackIgnore]
         public virtual Clock Clock
         {
             get
@@ -69,6 +77,7 @@ namespace NPBehave
             }
         }
 
+        [MemoryPackIgnore]
         public bool IsStopRequested
         {
             get
@@ -77,6 +86,7 @@ namespace NPBehave
             }
         }
 
+        [MemoryPackIgnore]
         public bool IsActive
         {
             get
@@ -86,7 +96,7 @@ namespace NPBehave
         }
 
 
-        public Node(string name)
+        protected Node(string name)
         {
             this.name = name;
         }
@@ -102,19 +112,16 @@ namespace NPBehave
         }
 
 #if UNITY_EDITOR
-        public float DebugLastStopRequestAt = 0.0f;
-        public float DebugLastStoppedAt = 0.0f;
-        public int DebugNumStartCalls = 0;
-        public int DebugNumStopCalls = 0;
-        public int DebugNumStoppedCalls = 0;
-        public bool DebugLastResult = false;
+        [MemoryPackIgnore] public float DebugLastStopRequestAt = 0.0f;
+        [MemoryPackIgnore] public float DebugLastStoppedAt = 0.0f;
+        [MemoryPackIgnore] public int DebugNumStartCalls = 0;
+        [MemoryPackIgnore] public int DebugNumStopCalls = 0;
+        [MemoryPackIgnore] public int DebugNumStoppedCalls = 0;
+        [MemoryPackIgnore] public bool DebugLastResult = false;
 #endif
 
         public void Start()
         {
-            // Assert.AreEqual(this.currentState, State.INACTIVE, "can only start inactive nodes, tried to start: " + this.Name + "! PATH: " + GetPath());
-            Assert.AreEqual(this.currentState, State.INACTIVE, "can only start inactive nodes");
-
 #if UNITY_EDITOR
             RootNode.TotalNumStartCalls++;
             this.DebugNumStartCalls++;
@@ -128,8 +135,6 @@ namespace NPBehave
         /// </summary>
         public void Stop()
         {
-            // Assert.AreEqual(this.currentState, State.ACTIVE, "can only stop active nodes, tried to stop " + this.Name + "! PATH: " + GetPath());
-            Assert.AreEqual(this.currentState, State.ACTIVE, "can only stop active nodes, tried to stop");
             this.currentState = State.STOP_REQUESTED;
 #if UNITY_EDITOR
             RootNode.TotalNumStopCalls++;
@@ -154,8 +159,6 @@ namespace NPBehave
         /// ANY STATE AFTER CALLING Stopped !!!!
         protected virtual void Stopped(bool success)
         {
-            // Assert.AreNotEqual(this.currentState, State.INACTIVE, "The Node " + this + " called 'Stopped' while in state INACTIVE, something is wrong! PATH: " + GetPath());
-            Assert.AreNotEqual(this.currentState, State.INACTIVE, "Called 'Stopped' while in state INACTIVE, something is wrong!");
             this.currentState = State.INACTIVE;
 #if UNITY_EDITOR
             RootNode.TotalNumStoppedCalls++;
@@ -181,22 +184,7 @@ namespace NPBehave
             /// be careful with this!
         }
 
-        // public Composite ParentComposite
-        // {
-        //     get
-        //     {
-        //         if (ParentNode != null && !(ParentNode is Composite))
-        //         {
-        //             return ParentNode.ParentComposite;
-        //         }
-        //         else
-        //         {
-        //             return ParentNode as Composite;
-        //         }
-        //     }
-        // }
-
-        override public string ToString()
+        public override string ToString()
         {
             return !string.IsNullOrEmpty(Label) ? (this.Name + "{"+Label+"}") : this.Name;
         }

@@ -16,9 +16,9 @@ namespace NPBehave
             MockNode thirdChild = new MockNode(false);
 
             // coniditions for each subtree that listen the BB for events
-            BlackboardCondition firstCondition = new BlackboardCondition( "branch1", Operator.IS_EQUAL, true, Stops.IMMEDIATE_RESTART, firstChild );
-            BlackboardCondition secondCondition = new BlackboardCondition( "branch2", Operator.IS_EQUAL, true, Stops.IMMEDIATE_RESTART, secondChild );
-            BlackboardCondition thirdCondtion = new BlackboardCondition( "branch3", Operator.IS_EQUAL, true, Stops.IMMEDIATE_RESTART, thirdChild );
+            var firstCondition = new BlackboardCondition<bool>( "branch1", Operator.IS_EQUAL, true, Stops.IMMEDIATE_RESTART, firstChild );
+            var secondCondition = new BlackboardCondition<bool>( "branch2", Operator.IS_EQUAL, true, Stops.IMMEDIATE_RESTART, secondChild );
+            var thirdCondtion = new BlackboardCondition<bool>( "branch3", Operator.IS_EQUAL, true, Stops.IMMEDIATE_RESTART, thirdChild );
 
             // set up the tree
             Selector selector = new Selector(firstCondition, secondCondition, thirdCondtion);

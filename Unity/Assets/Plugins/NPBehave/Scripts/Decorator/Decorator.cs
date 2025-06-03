@@ -1,25 +1,25 @@
-﻿namespace NPBehave
-{
+﻿using MemoryPack;
 
+namespace NPBehave
+{
     public abstract class Decorator : Container
     {
-        protected Node Decoratee;
+        [MemoryPackInclude] protected Node Decoratee;
 
-        public Decorator(string name, Node decoratee) : base(name)
+        protected Decorator(string name, Node decoratee) : base(name)
         {
             this.Decoratee = decoratee;
             this.Decoratee.SetParent(this);
         }
 
-        override public void SetRoot(Root rootNode)
+        public override void SetRoot(Root rootNode)
         {
             base.SetRoot(rootNode);
             Decoratee.SetRoot(rootNode);
         }
-
-
+        
 #if UNITY_EDITOR
-        public override Node[] DebugChildren
+        [MemoryPackIgnore] public override Node[] DebugChildren
         {
             get
             {

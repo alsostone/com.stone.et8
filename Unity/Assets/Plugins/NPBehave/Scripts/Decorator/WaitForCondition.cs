@@ -1,27 +1,21 @@
-﻿using UnityEngine.Assertions;
-using System;
+﻿using MemoryPack;
 
 namespace NPBehave
 {
-    public class WaitForCondition : Decorator
+    public abstract class WaitForCondition : Decorator
     {
-        private Func<bool> condition;
-        private float checkInterval;
-        private float checkVariance;
-
-        public WaitForCondition(Func<bool> condition, float checkInterval, float randomVariance, Node decoratee) : base("WaitForCondition", decoratee)
+        [MemoryPackInclude] protected readonly float checkInterval;
+        [MemoryPackInclude] protected readonly float checkVariance;
+        
+        protected WaitForCondition(float checkInterval, float randomVariance, Node decoratee) : base("WaitForCondition", decoratee)
         {
-            this.condition = condition;
-
             this.checkInterval = checkInterval;
             this.checkVariance = randomVariance;
-
             this.Label = "" + (checkInterval - randomVariance) + "..." + (checkInterval + randomVariance) + "s";
         }
 
-        public WaitForCondition(Func<bool> condition, Node decoratee) : base("WaitForCondition", decoratee)
+        protected WaitForCondition(Node decoratee) : base("WaitForCondition", decoratee)
         {
-            this.condition = condition;
             this.checkInterval = 0.0f;
             this.checkVariance = 0.0f;
             this.Label = "every tick";
@@ -29,9 +23,9 @@ namespace NPBehave
 
         protected override void DoStart()
         {
-            if (!condition.Invoke())
+            if (!this.IsConditionMet())
             {
-                Clock.AddTimer(checkInterval, checkVariance, -1, checkCondition);
+                Clock.AddTimer(checkInterval, checkVariance, -1, this.OnTimer);
             }
             else
             {
@@ -39,18 +33,18 @@ namespace NPBehave
             }
         }
 
-        private void checkCondition()
+        private void OnTimer()
         {
-            if (condition.Invoke())
+            if (this.IsConditionMet())
             {
-                Clock.RemoveTimer(checkCondition);
+                Clock.RemoveTimer(this.OnTimer);
                 Decoratee.Start();
             }
         }
 
-        override protected void DoStop()
+        protected override void DoStop()
         {
-            Clock.RemoveTimer(checkCondition);
+            Clock.RemoveTimer(this.OnTimer);
             if (Decoratee.IsActive)
             {
                 Decoratee.Stop();
@@ -63,8 +57,9 @@ namespace NPBehave
 
         protected override void DoChildStopped(Node child, bool result)
         {
-            Assert.AreNotEqual(this.CurrentState, State.INACTIVE);
             Stopped(result);
         }
+
+        protected abstract bool IsConditionMet();
     }
 }

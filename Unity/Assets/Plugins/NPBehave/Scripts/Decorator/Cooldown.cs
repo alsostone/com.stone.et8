@@ -1,17 +1,17 @@
-﻿using UnityEngine.Assertions;
+﻿using MemoryPack;
 
 namespace NPBehave
 {
-
-    public class Cooldown : Decorator
+    [MemoryPackable]
+    public partial class Cooldown : Decorator
     {
-        private bool startAfterDecoratee = false;
-        private bool resetOnFailiure = false;
-	    private bool failOnCooldown = false;
-        private float cooldownTime = 0.0f;
-        private float randomVariation = 0.05f;
-        private bool isReady = true;
-
+        [MemoryPackInclude] private bool startAfterDecoratee = false;
+        [MemoryPackInclude] private bool resetOnFailiure = false;
+	    [MemoryPackInclude] private bool failOnCooldown = false;
+        [MemoryPackInclude] private float cooldownTime = 0.0f;
+        [MemoryPackInclude] private float randomVariation = 0.05f;
+        [MemoryPackInclude] private bool isReady = true;
+        
         /// <summary>
         /// The Cooldown decorator ensures that the branch can not be started twice within the given cooldown time.
         /// 
@@ -29,6 +29,7 @@ namespace NPBehave
         /// <param name="resetOnFailiure">If set to <c>true</c> the timer will be reset in case the underlying node fails.</param>
         /// <param name="failOnCooldown">If currently on cooldown and this parameter is set to <c>true</c>, the decorator will immmediately fail instead of waiting for the cooldown.</param>
         /// <param name="decoratee">Decoratee node.</param>
+        [MemoryPackConstructor]
         public Cooldown(float cooldownTime, float randomVariation, bool startAfterDecoratee, bool resetOnFailiure, bool failOnCooldown, Node decoratee) : base("TimeCooldown", decoratee)
         {
         	this.startAfterDecoratee = startAfterDecoratee;
@@ -36,7 +37,6 @@ namespace NPBehave
         	this.resetOnFailiure = resetOnFailiure;
         	this.randomVariation = randomVariation;
         	this.failOnCooldown = failOnCooldown;
-        	Assert.IsTrue(cooldownTime > 0f, "cooldownTime has to be set");
         }
 
         public Cooldown(float cooldownTime, bool startAfterDecoratee, bool resetOnFailiure, bool failOnCooldown, Node decoratee) : base("TimeCooldown", decoratee)
@@ -46,7 +46,6 @@ namespace NPBehave
         	this.randomVariation = cooldownTime * 0.1f;
         	this.resetOnFailiure = resetOnFailiure;
         	this.failOnCooldown = failOnCooldown;
-        	Assert.IsTrue(cooldownTime > 0f, "cooldownTime has to be set");
         }
 
         public Cooldown(float cooldownTime, float randomVariation, bool startAfterDecoratee, bool resetOnFailiure, Node decoratee) : base("TimeCooldown", decoratee)
@@ -55,7 +54,6 @@ namespace NPBehave
         	this.cooldownTime = cooldownTime;
         	this.resetOnFailiure = resetOnFailiure;
         	this.randomVariation = randomVariation;
-        	Assert.IsTrue(cooldownTime > 0f, "cooldownTime has to be set");
         }
 
         public Cooldown(float cooldownTime, bool startAfterDecoratee, bool resetOnFailiure, Node decoratee) : base("TimeCooldown", decoratee)
@@ -64,7 +62,6 @@ namespace NPBehave
             this.cooldownTime = cooldownTime;
             this.randomVariation = cooldownTime * 0.1f;
             this.resetOnFailiure = resetOnFailiure;
-            Assert.IsTrue(cooldownTime > 0f, "cooldownTime has to be set");
         }
 
         public Cooldown(float cooldownTime, float randomVariation, Node decoratee) : base("TimeCooldown", decoratee)
@@ -73,7 +70,6 @@ namespace NPBehave
             this.cooldownTime = cooldownTime;
             this.resetOnFailiure = false;
             this.randomVariation = randomVariation;
-        	Assert.IsTrue(cooldownTime > 0f, "cooldownTime has to be set");
         }
 
         public Cooldown(float cooldownTime, Node decoratee) : base("TimeCooldown", decoratee)
@@ -82,7 +78,6 @@ namespace NPBehave
             this.cooldownTime = cooldownTime;
             this.resetOnFailiure = false;
             this.randomVariation = cooldownTime * 0.1f;
-        	Assert.IsTrue(cooldownTime > 0f, "cooldownTime has to be set");
         }
 
         protected override void DoStart()
@@ -105,7 +100,7 @@ namespace NPBehave
             }
         }
 
-        override protected void DoStop()
+        protected override void DoStop()
         {
             if (Decoratee.IsActive)
             {

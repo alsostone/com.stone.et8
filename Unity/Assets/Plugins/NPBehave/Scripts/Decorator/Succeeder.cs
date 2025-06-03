@@ -1,6 +1,9 @@
-﻿namespace NPBehave
+﻿using MemoryPack;
+
+namespace NPBehave
 {
-    public class Succeeder : Decorator
+    [MemoryPackable]
+    public partial class Succeeder : Decorator
     {
         public Succeeder(Node decoratee) : base("Succeeder", decoratee)
         {
@@ -11,7 +14,7 @@
             Decoratee.Start();
         }
 
-        override protected void DoStop()
+        protected override void DoStop()
         {
             Decoratee.Stop();
         }

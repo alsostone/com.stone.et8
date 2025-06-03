@@ -1,17 +1,17 @@
-﻿namespace NPBehave
-{
-    public class BlackboardQuery : ObservingDecorator
-    {
-        private string[] keys;
-        private System.Func<bool> query;
+﻿using MemoryPack;
 
-        public BlackboardQuery(string[] keys, Stops stopsOnChange, System.Func<bool> query, Node decoratee) : base("BlackboardQuery", stopsOnChange, decoratee)
+namespace NPBehave
+{
+    public abstract class BlackboardQuery : ObservingDecorator
+    {
+        [MemoryPackInclude] protected readonly string[] keys;
+
+        protected BlackboardQuery(string[] keys, Stops stopsOnChange, Node decoratee) : base("BlackboardQuery", stopsOnChange, decoratee)
         {
             this.keys = keys;
-            this.query = query;
         }
 
-        override protected void StartObserving()
+        protected override void StartObserving()
         {
             foreach (string key in this.keys)
             {
@@ -19,7 +19,7 @@
             }
         }
 
-        override protected void StopObserving()
+        protected override void StopObserving()
         {
             foreach (string key in this.keys)
             {
@@ -32,12 +32,7 @@
             Evaluate();
         }
 
-        protected override bool IsConditionMet()
-        {
-            return this.query();
-        }
-
-        override public string ToString()
+        public override string ToString()
         {
             string keys = "";
             foreach (string key in this.keys)

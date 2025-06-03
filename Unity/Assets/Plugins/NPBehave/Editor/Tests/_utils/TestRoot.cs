@@ -20,13 +20,13 @@
         {
         }
 
-        override protected void DoStart()
+        protected override void DoStart()
         {
             this.didFinish = false;
             base.DoStart();
         }
 
-        override protected void DoChildStopped(Node node, bool success)
+        protected override void DoChildStopped(Node node, bool success)
         {
             didFinish = true;
             wasSuccess = success;

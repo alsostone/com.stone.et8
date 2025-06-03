@@ -1,24 +1,21 @@
-﻿using UnityEngine;
-using UnityEngine.Assertions;
-using System.Collections;
-
-
+﻿using MemoryPack;
 
 namespace NPBehave
 {
-    public class RandomSelector : Composite
+    [MemoryPackable]
+    public partial class RandomSelector : Composite
     {
         static System.Random rng = new System.Random();
 
 #if UNITY_EDITOR
-        static public void DebugSetSeed( int seed )
+        public static void DebugSetSeed( int seed )
         {
             rng = new System.Random( seed );
         }
 #endif
 
-        private int currentIndex = -1;
-        private int[] randomizedOrder;
+        [MemoryPackInclude] private int currentIndex = -1;
+        [MemoryPackInclude] private int[] randomizedOrder;
 
         public RandomSelector(params Node[] children) : base("Random Selector", children)
         {
@@ -28,15 +25,9 @@ namespace NPBehave
                 randomizedOrder[i] = i;
             }
         }
-
-
+        
         protected override void DoStart()
         {
-            foreach (Node child in Children)
-            {
-                Assert.AreEqual(child.CurrentState, State.INACTIVE);
-            }
-
             currentIndex = -1;
 
             // Shuffling
@@ -44,16 +35,12 @@ namespace NPBehave
             while (n > 1)
             {
                 int k = rng.Next(n--);
-                int temp = randomizedOrder[n];
-                randomizedOrder[n] = randomizedOrder[k];
-                randomizedOrder[k] = temp;
+                (this.randomizedOrder[n], this.randomizedOrder[k]) = (this.randomizedOrder[k], this.randomizedOrder[n]);
             }
 
             ProcessChildren();
         }
-
-
-
+        
         protected override void DoStop()
         {
             Children[randomizedOrder[currentIndex]].Stop();
@@ -120,7 +107,7 @@ namespace NPBehave
             }
         }
 
-        override public string ToString()
+        public override string ToString()
         {
             return base.ToString() + "[" + this.currentIndex + "]";
         }
