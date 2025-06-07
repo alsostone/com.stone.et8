@@ -43,7 +43,7 @@ namespace NPBehave
         {
         	this.startAfterDecoratee = startAfterDecoratee;
         	this.cooldownTime = cooldownTime;
-        	this.randomVariation = cooldownTime * 0.1f;
+        	randomVariation = cooldownTime * 0.1f;
         	this.resetOnFailiure = resetOnFailiure;
         	this.failOnCooldown = failOnCooldown;
         }
@@ -60,24 +60,24 @@ namespace NPBehave
         {
             this.startAfterDecoratee = startAfterDecoratee;
             this.cooldownTime = cooldownTime;
-            this.randomVariation = cooldownTime * 0.1f;
+            randomVariation = cooldownTime * 0.1f;
             this.resetOnFailiure = resetOnFailiure;
         }
 
         public Cooldown(float cooldownTime, float randomVariation, Node decoratee) : base("TimeCooldown", decoratee)
         {
-            this.startAfterDecoratee = false;
+            startAfterDecoratee = false;
             this.cooldownTime = cooldownTime;
-            this.resetOnFailiure = false;
+            resetOnFailiure = false;
             this.randomVariation = randomVariation;
         }
 
         public Cooldown(float cooldownTime, Node decoratee) : base("TimeCooldown", decoratee)
         {
-            this.startAfterDecoratee = false;
+            startAfterDecoratee = false;
             this.cooldownTime = cooldownTime;
-            this.resetOnFailiure = false;
-            this.randomVariation = cooldownTime * 0.1f;
+            resetOnFailiure = false;
+            randomVariation = cooldownTime * 0.1f;
         }
 
         protected override void DoStart()
@@ -87,7 +87,7 @@ namespace NPBehave
                 isReady = false;
                 if (!startAfterDecoratee)
                 {
-                    Clock.AddTimer(cooldownTime, randomVariation, 0, TimeoutReached);
+                    Clock.AddTimer(cooldownTime, randomVariation, 0, Guid);
                 }
                 Decoratee.Start();
             }
@@ -105,13 +105,13 @@ namespace NPBehave
             if (Decoratee.IsActive)
             {
                 isReady = true;
-                Clock.RemoveTimer(TimeoutReached);
+                Clock.RemoveTimer(Guid);
                 Decoratee.Stop();
             }
             else
             {
                 isReady = true;
-                Clock.RemoveTimer(TimeoutReached);
+                Clock.RemoveTimer(Guid);
                 Stopped(false);
             }
         }
@@ -121,20 +121,20 @@ namespace NPBehave
             if (resetOnFailiure && !result)
             {
                 isReady = true;
-                Clock.RemoveTimer(TimeoutReached);
+                Clock.RemoveTimer(Guid);
             }
             else if (startAfterDecoratee)
             {
-                Clock.AddTimer(cooldownTime, randomVariation, 0, TimeoutReached);
+                Clock.AddTimer(cooldownTime, randomVariation, 0, Guid);
             }
             Stopped(result);
         }
 
-        private void TimeoutReached()
+        public override void OnTimerReached()
         {
             if (IsActive && !Decoratee.IsActive)
             {
-                Clock.AddTimer(cooldownTime, randomVariation, 0, TimeoutReached);
+                Clock.AddTimer(cooldownTime, randomVariation, 0, Guid);
                 Decoratee.Start();
             }
             else

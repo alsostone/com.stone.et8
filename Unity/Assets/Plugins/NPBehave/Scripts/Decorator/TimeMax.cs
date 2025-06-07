@@ -5,15 +5,15 @@ namespace NPBehave
     [MemoryPackable]
     public partial class TimeMax : Decorator
     {
-        [MemoryPackInclude] private float limit = 0.0f;
-        [MemoryPackInclude] private float randomVariation;
-        [MemoryPackInclude] private bool waitForChildButFailOnLimitReached = false;
+        [MemoryPackInclude] private readonly float limit = 0.0f;
+        [MemoryPackInclude] private readonly float randomVariation;
+        [MemoryPackInclude] private readonly bool waitForChildButFailOnLimitReached = false;
         [MemoryPackInclude] private bool isLimitReached = false;
      
         public TimeMax(float limit, bool waitForChildButFailOnLimitReached, Node decoratee) : base("TimeMax", decoratee)
         {
             this.limit = limit;
-            this.randomVariation = limit * 0.05f;
+            randomVariation = limit * 0.05f;
             this.waitForChildButFailOnLimitReached = waitForChildButFailOnLimitReached;
         }
 
@@ -27,14 +27,14 @@ namespace NPBehave
 
         protected override void DoStart()
         {
-            this.isLimitReached = false;
-            Clock.AddTimer(limit, randomVariation, 0, TimeoutReached);
+            isLimitReached = false;
+            Clock.AddTimer(limit, randomVariation, 0, Guid);
             Decoratee.Start();
         }
 
         protected override void DoStop()
         {
-            Clock.RemoveTimer(TimeoutReached);
+            Clock.RemoveTimer(Guid);
             if (Decoratee.IsActive)
             {
                 Decoratee.Stop();
@@ -47,7 +47,7 @@ namespace NPBehave
 
         protected override void DoChildStopped(Node child, bool result)
         {
-            Clock.RemoveTimer(TimeoutReached);
+            Clock.RemoveTimer(Guid);
             if (isLimitReached)
             {
                 Stopped(false);
@@ -58,7 +58,7 @@ namespace NPBehave
             }
         }
 
-        private void TimeoutReached()
+        public override void OnTimerReached()
         {
             if (!waitForChildButFailOnLimitReached)
             {

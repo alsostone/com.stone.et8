@@ -5,9 +5,9 @@ namespace NPBehave
     [MemoryPackable]
     public partial class TimeMin : Decorator
     {
-        [MemoryPackInclude] private float limit = 0.0f;
-        [MemoryPackInclude] private float randomVariation;
-        [MemoryPackInclude] private bool waitOnFailure = false;
+        [MemoryPackInclude] private readonly float limit = 0.0f;
+        [MemoryPackInclude] private readonly float randomVariation;
+        [MemoryPackInclude] private readonly bool waitOnFailure = false;
         [MemoryPackInclude] private bool isLimitReached = false;
         [MemoryPackInclude] private bool isDecorateeDone = false;
         [MemoryPackInclude] private bool isDecorateeSuccess = false;
@@ -15,14 +15,14 @@ namespace NPBehave
         public TimeMin(float limit, Node decoratee) : base("TimeMin", decoratee)
         {
             this.limit = limit;
-            this.randomVariation = this.limit * 0.05f;
-            this.waitOnFailure = false;
+            randomVariation = this.limit * 0.05f;
+            waitOnFailure = false;
         }
 
         public TimeMin(float limit, bool waitOnFailure, Node decoratee) : base("TimeMin", decoratee)
         {
             this.limit = limit;
-            this.randomVariation = this.limit * 0.05f;
+            randomVariation = this.limit * 0.05f;
             this.waitOnFailure = waitOnFailure;
         }
 
@@ -39,21 +39,20 @@ namespace NPBehave
             isDecorateeDone = false;
             isDecorateeSuccess = false;
             isLimitReached = false;
-            Clock.AddTimer(limit, randomVariation, 0, TimeoutReached);
+            Clock.AddTimer(limit, randomVariation, 0, Guid);
             Decoratee.Start();
         }
 
         protected override void DoStop()
         {
+            Clock.RemoveTimer(Guid);
             if (Decoratee.IsActive)
             {
-                Clock.RemoveTimer(TimeoutReached);
                 isLimitReached = true;
                 Decoratee.Stop();
             }
             else
             {
-                Clock.RemoveTimer(TimeoutReached);
                 Stopped(false);
             }
         }
@@ -64,16 +63,12 @@ namespace NPBehave
             isDecorateeSuccess = result;
             if (isLimitReached || (!result && !waitOnFailure))
             {
-                Clock.RemoveTimer(TimeoutReached);
+                Clock.RemoveTimer(Guid);
                 Stopped(isDecorateeSuccess);
-            }
-            else
-            {
-                Clock.HasTimer(TimeoutReached);
             }
         }
 
-        private void TimeoutReached()
+        public override void OnTimerReached()
         {
             isLimitReached = true;
             if (isDecorateeDone)

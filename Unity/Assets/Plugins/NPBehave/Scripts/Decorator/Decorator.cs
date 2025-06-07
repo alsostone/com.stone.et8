@@ -8,8 +8,8 @@ namespace NPBehave
 
         protected Decorator(string name, Node decoratee) : base(name)
         {
-            this.Decoratee = decoratee;
-            this.Decoratee.SetParent(this);
+            Decoratee = decoratee;
+            Decoratee.SetParent(this);
         }
 
         public override void SetRoot(Root rootNode)
@@ -17,7 +17,8 @@ namespace NPBehave
             base.SetRoot(rootNode);
             Decoratee.SetRoot(rootNode);
         }
-        
+
+
 #if UNITY_EDITOR
         [MemoryPackIgnore] public override Node[] DebugChildren
         {

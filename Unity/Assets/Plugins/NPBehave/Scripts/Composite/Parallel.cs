@@ -18,7 +18,7 @@ namespace NPBehave
         [MemoryPackInclude] private int runningCount = 0;
         [MemoryPackInclude] private int succeededCount = 0;
         [MemoryPackInclude] private int failedCount = 0;
-        [MemoryPackInclude] private Dictionary<Node, bool> childrenResults;
+        [MemoryPackInclude] private Dictionary<int, bool> childrenResults;
         [MemoryPackInclude] private bool successState;
         [MemoryPackInclude] private bool childrenAborted;
 
@@ -26,8 +26,8 @@ namespace NPBehave
         {
             this.successPolicy = successPolicy;
             this.failurePolicy = failurePolicy;
-            this.childrenCount = children.Length;
-            this.childrenResults = new Dictionary<Node, bool>();
+            childrenCount = children.Length;
+            childrenResults = new Dictionary<int, bool>();
         }
 
         protected override void DoStart()
@@ -36,7 +36,7 @@ namespace NPBehave
             runningCount = 0;
             succeededCount = 0;
             failedCount = 0;
-            foreach (Node child in this.Children)
+            foreach (Node child in Children)
             {
                 runningCount++;
                 child.Start();
@@ -45,7 +45,7 @@ namespace NPBehave
 
         protected override void DoStop()
         {
-            foreach (Node child in this.Children)
+            foreach (Node child in Children)
             {
                 if (child.IsActive)
                 {
@@ -65,14 +65,14 @@ namespace NPBehave
             {
                 failedCount++;
             }
-            this.childrenResults[child] = result;
+            childrenResults[child.Guid] = result;
 
             bool allChildrenStarted = runningCount + succeededCount + failedCount == childrenCount;
             if (allChildrenStarted)
             {
                 if (runningCount == 0)
                 {
-                    if (!this.childrenAborted) // if children got aborted because rule was evaluated previously, we don't want to override the successState 
+                    if (!childrenAborted) // if children got aborted because rule was evaluated previously, we don't want to override the successState 
                     {
                         if (failurePolicy == Policy.ONE && failedCount > 0)
                         {
@@ -93,7 +93,7 @@ namespace NPBehave
                     }
                     Stopped(successState);
                 }
-                else if (!this.childrenAborted)
+                else if (!childrenAborted)
                 {
                     if (failurePolicy == Policy.ONE && failedCount > 0)
                     {
@@ -108,7 +108,7 @@ namespace NPBehave
 
                     if (childrenAborted)
                     {
-                        foreach (Node currentChild in this.Children)
+                        foreach (Node currentChild in Children)
                         {
                             if (currentChild.IsActive)
                             {
@@ -124,7 +124,7 @@ namespace NPBehave
         {
             if (immediateRestart)
             {
-                if (childrenResults[abortForChild])
+                if (childrenResults[abortForChild.Guid])
                 {
                     succeededCount--;
                 }

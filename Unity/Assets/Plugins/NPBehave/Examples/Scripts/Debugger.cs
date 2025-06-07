@@ -27,7 +27,7 @@ namespace NPBehave
             {
                 if (_customStats == null)
                 {
-                    _customStats = new Blackboard(CustomGlobalStats, UnityContext.GetClock());
+                    _customStats = UnityContext.CreateBlackboard();;
                 }
                 return _customStats;
             }
@@ -35,38 +35,38 @@ namespace NPBehave
 
         public void DebugCounterInc(string key)
         {
-            if (!CustomStats.Isset(key))
+            if (!CustomStats.IsSetInt(key))
             {
-                CustomStats[key] = 0;
+                CustomStats.SetInt(key, 0);
             }
-            CustomStats[key] = CustomStats.Get<int>(key) + 1;
+            CustomStats.SetInt(key, CustomStats.GetInt(key) + 1);
         }
 
         public void DebugCounterDec(string key)
         {
-            if (!CustomStats.Isset(key))
+            if (!CustomStats.IsSetInt(key))
             {
-                CustomStats[key] = 0;
+                CustomStats.SetInt(key, 0);
             }
-            CustomStats[key] = CustomStats.Get<int>(key) - 1;
+            CustomStats.SetInt(key, CustomStats.GetInt(key) - 1);
         }
 
         public static void GlobalDebugCounterInc(string key)
         {
-            if (!CustomGlobalStats.Isset(key))
+            if (!CustomGlobalStats.IsSetInt(key))
             {
-                CustomGlobalStats[key] = 0;
+                CustomGlobalStats.SetInt(key, 0);
             }
-            CustomGlobalStats[key] = CustomGlobalStats.Get<int>(key) + 1;
+            CustomGlobalStats.SetInt(key, CustomGlobalStats.GetInt(key) + 1);
         }
 
         public static void GlobalDebugCounterDec(string key)
         {
-            if (!CustomGlobalStats.Isset(key))
+            if (!CustomGlobalStats.IsSetInt(key))
             {
-                CustomGlobalStats[key] = 0;
+                CustomGlobalStats.SetInt(key, 0);
             }
-            CustomGlobalStats[key] = CustomGlobalStats.Get<int>(key) - 1;
+            CustomGlobalStats.SetInt(key, CustomGlobalStats.GetInt(key) + 1);
         }
 
     }

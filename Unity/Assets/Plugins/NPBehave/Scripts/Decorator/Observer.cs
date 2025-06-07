@@ -5,8 +5,10 @@ namespace NPBehave
     [MemoryPackable]
     public partial class Observer : Decorator
     {
-        public Observer(Node decoratee) : base("Observer", decoratee) { }
-        
+        public Observer(Node decoratee) : base("Observer", decoratee)
+        {
+        }
+
         protected override void DoStart()
         {
             // do something
@@ -15,7 +17,6 @@ namespace NPBehave
 
         protected override void DoStop()
         {
-            // do something
             Decoratee.Stop();
         }
 

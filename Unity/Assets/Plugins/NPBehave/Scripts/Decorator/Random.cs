@@ -14,7 +14,7 @@ namespace NPBehave
 
         protected override void DoStart()
         {
-            if (UnityEngine.Random.value <= this.probability)
+            if (UnityEngine.Random.value <= probability)
             {
                 Decoratee.Start();
             }

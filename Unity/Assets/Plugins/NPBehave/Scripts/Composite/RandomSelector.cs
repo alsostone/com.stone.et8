@@ -25,7 +25,8 @@ namespace NPBehave
                 randomizedOrder[i] = i;
             }
         }
-        
+
+
         protected override void DoStart()
         {
             currentIndex = -1;
@@ -35,7 +36,7 @@ namespace NPBehave
             while (n > 1)
             {
                 int k = rng.Next(n--);
-                (this.randomizedOrder[n], this.randomizedOrder[k]) = (this.randomizedOrder[k], this.randomizedOrder[n]);
+                (randomizedOrder[n], randomizedOrder[k]) = (randomizedOrder[k], randomizedOrder[n]);
             }
 
             ProcessChildren();
@@ -109,7 +110,7 @@ namespace NPBehave
 
         public override string ToString()
         {
-            return base.ToString() + "[" + this.currentIndex + "]";
+            return base.ToString() + "[" + currentIndex + "]";
         }
     }
 }

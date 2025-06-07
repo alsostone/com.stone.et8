@@ -1,25 +1,26 @@
 ﻿using UnityEngine;
 using NPBehave;
+using NPBehave.Examples;
 
 public class NPBehaveExampleHelloBlackboardsAI : MonoBehaviour
 {
     private Root behaviorTree;
-    
+
     private class UpdateService : Service
     {
         public UpdateService(float interval, Node decoratee) : base(interval, decoratee)
         {
         }
-
+        
         protected override void OnService()
         {
-            Blackboard["foo"] = !Blackboard.Get<bool>("foo");
+            Blackboard.SetBool("foo", !Blackboard.GetBool("foo"));
         }
     }
-    
+
     void Start()
     {
-        behaviorTree = new Root(UnityContext.GetClock(),
+        behaviorTree = new Root(UnityContext.GetBehaveWorld(),
 
             // toggle the 'toggled' blackboard boolean flag around every 500 milliseconds
             new UpdateService(0.5f,
@@ -29,13 +30,13 @@ public class NPBehaveExampleHelloBlackboardsAI : MonoBehaviour
                     // Check the 'toggled' flag. Stops.IMMEDIATE_RESTART means that the Blackboard will be observed for changes 
                     // while this or any lower priority branches are executed. If the value changes, the corresponding branch will be
                     // stopped and it will be immediately jump to the branch that now matches the condition.
-                    new BlackboardCondition<bool>("foo", Operator.IS_EQUAL, true, Stops.IMMEDIATE_RESTART,
+                    new BlackboardBool("foo", Operator.IS_EQUAL, true, Stops.IMMEDIATE_RESTART,
 
                         // when 'toggled' is true, this branch will get executed.
                         new Sequence(
 
                             // print out a message ...
-                            new Action(() => Debug.Log("foo")),
+                            new ActionLog("foo"),
 
                             // ... and stay here until the `BlackboardValue`-node stops us because the toggled flag went false.
                             new WaitUntilStopped()
@@ -44,7 +45,7 @@ public class NPBehaveExampleHelloBlackboardsAI : MonoBehaviour
 
                     // when 'toggled' is false, we'll eventually land here
                     new Sequence(
-                        new Action(() => Debug.Log("bar")),
+                        new ActionLog("bar"),
                         new WaitUntilStopped()
                     )
                 )

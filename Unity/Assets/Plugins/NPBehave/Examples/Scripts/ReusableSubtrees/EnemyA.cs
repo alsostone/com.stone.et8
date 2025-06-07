@@ -10,7 +10,7 @@ namespace NPBehave.Examples.ReusableSubtrees
         void Start()
         {
             // this enemy is only able to move
-            behaviorTree = new Root(UnityContext.GetClock(),
+            behaviorTree = new Root(UnityContext.GetBehaveWorld(),
 
                 // create movement behavior from by using our common node factory
                 NodeFactory.CreateMoveSubtree("EnemyA")

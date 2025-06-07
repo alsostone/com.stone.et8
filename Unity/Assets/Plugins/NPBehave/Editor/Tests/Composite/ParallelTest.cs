@@ -290,7 +290,6 @@ namespace NPBehave
             bool bExceptionCought = false;
             try
             {
-                
                 sut.StopLowerPriorityChildrenForChild(firstChild, false);
             }
             catch(Exception)

@@ -4,15 +4,15 @@ namespace NPBehave
 {
     public abstract class ObservingDecorator : Decorator
     {
-        [MemoryPackInclude] protected Stops stopsOnChange;
+        [MemoryPackInclude] protected readonly Stops stopsOnChange;
         [MemoryPackInclude] protected bool isObserving;
 
         protected ObservingDecorator(string name, Stops stopsOnChange, Node decoratee) : base(name, decoratee)
         {
             this.stopsOnChange = stopsOnChange;
-            this.isObserving = false;
+            isObserving = false;
         }
-
+        
         protected override void DoStart()
         {
             if (stopsOnChange != Stops.NONE)
@@ -52,7 +52,7 @@ namespace NPBehave
             Stopped(result);
         }
 
-        protected override void DoParentCompositeStopped(Composite parentComposite)
+        protected override void DoParentCompositeStopped(Composite composite)
         {
             if (isObserving)
             {
@@ -67,20 +67,21 @@ namespace NPBehave
             {
                 if (stopsOnChange == Stops.SELF || stopsOnChange == Stops.BOTH || stopsOnChange == Stops.IMMEDIATE_RESTART)
                 {
-                    this.Stop();
+                    Stop();
                 }
             }
             else if (!IsActive && IsConditionMet())
             {
                 if (stopsOnChange == Stops.LOWER_PRIORITY || stopsOnChange == Stops.BOTH || stopsOnChange == Stops.IMMEDIATE_RESTART || stopsOnChange == Stops.LOWER_PRIORITY_IMMEDIATE_RESTART)
                 {
-                    Container parentNode = this.ParentNode;
+                    Container parentNode = ParentNode;
                     Node childNode = this;
                     while (parentNode != null && !(parentNode is Composite))
                     {
                         childNode = parentNode;
                         parentNode = parentNode.ParentNode;
                     }
+
                     if (stopsOnChange == Stops.IMMEDIATE_RESTART || stopsOnChange == Stops.LOWER_PRIORITY_IMMEDIATE_RESTART)
                     {
                         if (isObserving)

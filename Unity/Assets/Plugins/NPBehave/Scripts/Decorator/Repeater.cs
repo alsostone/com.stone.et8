@@ -30,13 +30,13 @@ namespace NPBehave
             }
             else
             {
-                this.Stopped(true);
+                Stopped(true);
             }
         }
 
         protected override void DoStop()
         {
-            this.Clock.RemoveTimer(restartDecoratee);
+            Clock.RemoveTimer(Guid);
             
             if (Decoratee.IsActive)
             {
@@ -58,7 +58,7 @@ namespace NPBehave
                 }
                 else
                 {
-                    this.Clock.AddTimer(0, 0, restartDecoratee);
+                    Clock.AddTimer(0, 0, Guid);
                 }
             }
             else
@@ -67,7 +67,7 @@ namespace NPBehave
             }
         }
 
-        protected void restartDecoratee()
+        public override void OnTimerReached()
         {
             Decoratee.Start();
         }

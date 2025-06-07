@@ -9,14 +9,8 @@ namespace NPBehave
         [MemoryPackIgnore]
         public bool Collapse
         {
-            get
-            {
-                return collapse;
-            }
-            set
-            {
-                collapse = value;
-            }
+            get => collapse;
+            set => collapse = value;
         }
 
         protected Container(string name) : base(name)
@@ -25,7 +19,7 @@ namespace NPBehave
 
         public void ChildStopped(Node child, bool succeeded)
         {
-            this.DoChildStopped(child, succeeded);
+            DoChildStopped(child, succeeded);
         }
 
         protected abstract void DoChildStopped(Node child, bool succeeded);

@@ -9,7 +9,7 @@ namespace NPBehave.Examples.ReusableSubtrees
         {
             // shared movement behavior, you can create any trees of any depth
             return new Cooldown(3.0f, 
-                new Action(() => Debug.Log(enemyName + " moving!"))
+                new ActionLog(enemyName + " moving!")
             );
         }
     }

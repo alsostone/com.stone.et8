@@ -4,11 +4,11 @@ namespace NPBehave
 {
     public abstract class Composite : Container
     {
-        [MemoryPackInclude] protected Node[] Children;
+        [MemoryPackInclude] protected readonly Node[] Children;
 
         protected Composite(string name, Node[] children) : base(name)
         {
-            this.Children = children;
+            Children = children;
             foreach (Node node in Children)
             {
                 node.SetParent(this);
@@ -18,20 +18,18 @@ namespace NPBehave
         public override void SetRoot(Root rootNode)
         {
             base.SetRoot(rootNode);
-
             foreach (Node node in Children)
             {
                 node.SetRoot(rootNode);
             }
         }
-
-
+        
 #if UNITY_EDITOR
         [MemoryPackIgnore] public override Node[] DebugChildren
         {
             get
             {
-                return this.Children;
+                return Children;
             }
         }
 
@@ -39,7 +37,7 @@ namespace NPBehave
         {
             foreach( Node node in DebugChildren )
             {
-                if(node.CurrentState == Node.State.ACTIVE )
+                if(node.CurrentState == State.ACTIVE )
                 {
                     return node;
                 }

@@ -10,22 +10,22 @@ namespace NPBehave
         protected WaitForCondition(float checkInterval, float randomVariance, Node decoratee) : base("WaitForCondition", decoratee)
         {
             this.checkInterval = checkInterval;
-            this.checkVariance = randomVariance;
-            this.Label = "" + (checkInterval - randomVariance) + "..." + (checkInterval + randomVariance) + "s";
+            checkVariance = randomVariance;
+            Label = "" + (checkInterval - randomVariance) + "..." + (checkInterval + randomVariance) + "s";
         }
 
         protected WaitForCondition(Node decoratee) : base("WaitForCondition", decoratee)
         {
-            this.checkInterval = 0.0f;
-            this.checkVariance = 0.0f;
-            this.Label = "every tick";
+            checkInterval = 0.0f;
+            checkVariance = 0.0f;
+            Label = "every tick";
         }
 
         protected override void DoStart()
         {
-            if (!this.IsConditionMet())
+            if (!IsConditionMet())
             {
-                Clock.AddTimer(checkInterval, checkVariance, -1, this.OnTimer);
+                Clock.AddTimer(checkInterval, checkVariance, -1, Guid);
             }
             else
             {
@@ -33,18 +33,18 @@ namespace NPBehave
             }
         }
 
-        private void OnTimer()
+        public override void OnTimerReached()
         {
-            if (this.IsConditionMet())
+            if (IsConditionMet())
             {
-                Clock.RemoveTimer(this.OnTimer);
+                Clock.RemoveTimer(Guid);
                 Decoratee.Start();
             }
         }
 
         protected override void DoStop()
         {
-            Clock.RemoveTimer(this.OnTimer);
+            Clock.RemoveTimer(Guid);
             if (Decoratee.IsActive)
             {
                 Decoratee.Stop();
@@ -59,7 +59,7 @@ namespace NPBehave
         {
             Stopped(result);
         }
-
+        
         protected abstract bool IsConditionMet();
     }
 }

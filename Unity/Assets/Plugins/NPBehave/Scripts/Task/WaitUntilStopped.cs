@@ -1,16 +1,20 @@
-﻿namespace NPBehave
+﻿using MemoryPack;
+
+namespace NPBehave
 {
-    public class WaitUntilStopped : Task
+    [MemoryPackable]
+    public partial class WaitUntilStopped : Task
     {
-        private bool sucessWhenStopped;
-        public WaitUntilStopped(bool sucessWhenStopped = false) : base("WaitUntilStopped")
+        [MemoryPackInclude] private readonly bool successWhenStopped;
+        
+        public WaitUntilStopped(bool successWhenStopped = false) : base("WaitUntilStopped")
         {
-            this.sucessWhenStopped = sucessWhenStopped;
+            this.successWhenStopped = successWhenStopped;
         }
 
         protected override void DoStop()
         {
-            this.Stopped(sucessWhenStopped);
+            Stopped(successWhenStopped);
         }
     }
 }

@@ -1,49 +1,48 @@
 ﻿using UnityEngine;
-using System.Collections.Generic;
 
 namespace NPBehave
 {
     public class UnityContext : MonoBehaviour
     {
-        private static UnityContext instance = null;
+        private static UnityContext sInstance = null;
 
-        private static UnityContext GetInstance()
+        private static UnityContext Instance
         {
-            if (instance == null)
-            {
-                GameObject gameObject = new GameObject();
-                gameObject.name = "~Context";
-                instance = (UnityContext)gameObject.AddComponent(typeof(UnityContext));
-                gameObject.isStatic = true;
+            get {
+                if (sInstance == null)
+                {
+                    GameObject gameObject = new GameObject();
+                    gameObject.name = "~Context";
+                    sInstance = (UnityContext)gameObject.AddComponent(typeof(UnityContext));
+                    gameObject.isStatic = true;
 #if !UNITY_EDITOR
             gameObject.hideFlags = HideFlags.HideAndDontSave;
 #endif
+                }
+                return sInstance;
             }
-            return instance;
         }
-
-        public static Clock GetClock()
+        
+        public static BehaveWorld GetBehaveWorld()
         {
-            return GetInstance().clock;
+            return Instance.behaveWorld;
         }
-
+        
         public static Blackboard GetSharedBlackboard(string key)
         {
-            UnityContext context = GetInstance();
-            if (!context.blackboards.ContainsKey(key))
-            {
-                context.blackboards.Add(key, new Blackboard(context.clock));
-            }
-            return context.blackboards[key];
+            return Instance.behaveWorld.GetSharedBlackboard(key);
+        }
+        
+        public static Blackboard CreateBlackboard(Blackboard parent = null)
+        {
+            return Instance.behaveWorld.CreateBlackboard(parent);
         }
 
-        private Dictionary<string, Blackboard> blackboards = new Dictionary<string, Blackboard>();
-
-        private Clock clock = new Clock();
+        private readonly BehaveWorld behaveWorld = new BehaveWorld();
 
         void Update()
         {
-            clock.Update(Time.deltaTime);
+            behaveWorld.Update(Time.deltaTime);
         }
     }
 }

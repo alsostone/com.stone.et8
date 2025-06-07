@@ -11,10 +11,10 @@ public class NPBehaveExampleClockThrottling : MonoBehaviour
     // tweak this value to control how often your tree is ticked
     public float updateFrequency = 1.0f; // 1.0f = every second
 
-    private Clock myThrottledClock;
+    private BehaveWorld behaveWorld;
     private Root behaviorTree;
     private float accumulator = 0.0f;
-    
+
     private class UpdateService : Service
     {
         public UpdateService(Node decoratee) : base(decoratee)
@@ -30,8 +30,9 @@ public class NPBehaveExampleClockThrottling : MonoBehaviour
     void Start()
     {
         Node mainTree = new UpdateService(new WaitUntilStopped());
-        myThrottledClock = new Clock();
-        behaviorTree = new Root(new Blackboard(myThrottledClock), myThrottledClock, mainTree);
+        
+        behaveWorld = new BehaveWorld();
+        behaviorTree = new Root(behaveWorld, behaveWorld.CreateBlackboard(), mainTree);
         behaviorTree.Start();
     }
 
@@ -41,7 +42,7 @@ public class NPBehaveExampleClockThrottling : MonoBehaviour
         if (accumulator > updateFrequency)
         {
             accumulator -= updateFrequency;
-            myThrottledClock.Update(updateFrequency);
+            behaveWorld.Update(updateFrequency);
         }
     }
 }

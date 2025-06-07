@@ -7,8 +7,8 @@ namespace NPBehave
         [Test]
         public void ShouldNotActivateLowerPriorityBranchInCaseMultipleBranchesGetValid()
         {
-            this.Timer = new Clock();
-            this.Blackboard = new Blackboard(Timer);
+            var behaveWorld = new BehaveWorld();
+            this.Blackboard = behaveWorld.CreateBlackboard();
 
             // our mock nodes we want to query for status
             MockNode firstChild = new MockNode(false); // false -> fail when aborted
@@ -16,16 +16,16 @@ namespace NPBehave
             MockNode thirdChild = new MockNode(false);
 
             // coniditions for each subtree that listen the BB for events
-            var firstCondition = new BlackboardCondition<bool>( "branch1", Operator.IS_EQUAL, true, Stops.IMMEDIATE_RESTART, firstChild );
-            var secondCondition = new BlackboardCondition<bool>( "branch2", Operator.IS_EQUAL, true, Stops.IMMEDIATE_RESTART, secondChild );
-            var thirdCondtion = new BlackboardCondition<bool>( "branch3", Operator.IS_EQUAL, true, Stops.IMMEDIATE_RESTART, thirdChild );
+            var firstCondition = new BlackboardBool( "branch1", Operator.IS_EQUAL, true, Stops.IMMEDIATE_RESTART, firstChild );
+            var secondCondition = new BlackboardBool( "branch2", Operator.IS_EQUAL, true, Stops.IMMEDIATE_RESTART, secondChild );
+            var thirdCondtion = new BlackboardBool( "branch3", Operator.IS_EQUAL, true, Stops.IMMEDIATE_RESTART, thirdChild );
 
             // set up the tree
             Selector selector = new Selector(firstCondition, secondCondition, thirdCondtion);
-            TestRoot behaviorTree = new TestRoot(Blackboard, Timer, selector);
+            TestRoot behaviorTree = new TestRoot(behaveWorld, Blackboard, selector);
 
             // intially we want to activate branch3
-            Blackboard.Set("branch3", true);
+            Blackboard.SetBool("branch3", true);
            
             // start the tree
             behaviorTree.Start();
@@ -39,8 +39,8 @@ namespace NPBehave
             Assert.AreEqual(1, thirdChild.DebugNumStartCalls);
 
             // change keys so the first & second conditions get true, too
-            Blackboard.Set("branch1", true);
-            Blackboard.Set("branch2", true);
+            Blackboard.SetBool("branch1", true);
+            Blackboard.SetBool("branch2", true);
 
             // still the third child should be active, as the blackboard didn't yet notifiy the nodes
             Assert.AreEqual(Node.State.INACTIVE, firstChild.CurrentState);
@@ -51,7 +51,7 @@ namespace NPBehave
             Assert.AreEqual(1, thirdChild.DebugNumStartCalls);
 
             // tick the timer to ensure the blackboard notifies the nodes
-            Timer.Update(0.1f);
+            behaveWorld.Update(0.1f);
 
             // now we should be in branch1
             Assert.AreEqual(Node.State.ACTIVE, firstChild.CurrentState);
@@ -62,8 +62,8 @@ namespace NPBehave
             Assert.AreEqual(1, thirdChild.DebugNumStartCalls);
 
             // disable first branch
-            Blackboard.Set("branch1", false);
-            Timer.Update(0.1f);
+            Blackboard.SetBool("branch1", false);
+            behaveWorld.Update(0.1f);
 
             // and now the second branch should be active
             Assert.AreEqual(Node.State.INACTIVE, firstChild.CurrentState);

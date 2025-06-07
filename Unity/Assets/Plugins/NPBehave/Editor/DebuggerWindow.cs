@@ -118,10 +118,11 @@ namespace NPBehave
 
             GUILayout.BeginHorizontal();
             DrawBlackboardKeyAndValues("Blackboard:", selectedDebugger.BehaviorTree.Blackboard);
-            if (selectedDebugger.CustomStats.Keys.Count > 0)
+            if (selectedDebugger.CustomStats.NumData > 0)
             {
                 DrawBlackboardKeyAndValues("Custom Stats:", selectedDebugger.CustomStats);
             }
+            
             DrawStats(selectedDebugger);
             GUILayout.EndHorizontal();
             GUILayout.Space(10);
@@ -173,11 +174,18 @@ namespace NPBehave
 
                 EditorGUILayout.BeginVertical(EditorStyles.helpBox);
                 {
-                    List<string> keys = blackboard.Keys;
-                    foreach (string key in keys)
+                    blackboard.ForeachBool((key, value) =>
                     {
-                        DrawKeyValue(key, blackboard.Get(key).ToString());
-                    }
+                        DrawKeyValue(key, value.ToString());
+                    });
+                    blackboard.ForeachInt((key, value) =>
+                    {
+                        DrawKeyValue(key, value.ToString());
+                    });
+                    blackboard.ForeachFloat((key, value) =>
+                    {
+                        DrawKeyValue(key, value.ToString("F2"));
+                    });
                 }
                 EditorGUILayout.EndVertical();
             }
@@ -305,22 +313,10 @@ namespace NPBehave
                 bool drawLabel = !string.IsNullOrEmpty(node.Label);
                 string label = node.Label;
 
-                if (node is BlackboardCondition<bool>)
+                if (node is BlackboardBool or BlackboardInt or BlackboardFloat)
                 {
-                    var nodeBlackboardCond = node as BlackboardCondition<bool>;
-                    tagName = nodeBlackboardCond.Key + " " + operatorToString[nodeBlackboardCond.Operator] + " " + nodeBlackboardCond.Value;
-                    GUI.backgroundColor = new Color(0.9f, 0.9f, 0.6f);
-                }
-                else if (node is BlackboardCondition<float>)
-                {
-                    var nodeBlackboardCond = node as BlackboardCondition<float>;
-                    tagName = nodeBlackboardCond.Key + " " + operatorToString[nodeBlackboardCond.Operator] + " " + nodeBlackboardCond.Value;
-                    GUI.backgroundColor = new Color(0.9f, 0.9f, 0.6f);
-                }
-                else if (node is BlackboardCondition<int>)
-                {
-                    var nodeBlackboardCond = node as BlackboardCondition<int>;
-                    tagName = nodeBlackboardCond.Key + " " + operatorToString[nodeBlackboardCond.Operator] + " " + nodeBlackboardCond.Value;
+                    dynamic nodeBlackboardCond = node;
+                    tagName = nodeBlackboardCond.BlackboardKey + " " + operatorToString[nodeBlackboardCond.Operator] + " " + nodeBlackboardCond.Value;
                     GUI.backgroundColor = new Color(0.9f, 0.9f, 0.6f);
                 }
                 else

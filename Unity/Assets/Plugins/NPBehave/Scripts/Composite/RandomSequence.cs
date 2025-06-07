@@ -6,7 +6,8 @@ namespace NPBehave
     public partial class RandomSequence : Composite
     {
         static System.Random rng = new System.Random();
-        
+
+
 #if UNITY_EDITOR
         public static void DebugSetSeed( int seed )
         {
@@ -35,7 +36,7 @@ namespace NPBehave
             while (n > 1)
             {
                 int k = rng.Next(n--);
-                (this.randomizedOrder[n], this.randomizedOrder[k]) = (this.randomizedOrder[k], this.randomizedOrder[n]);
+                (randomizedOrder[n], randomizedOrder[k]) = (randomizedOrder[k], randomizedOrder[n]);
             }
 
             ProcessChildren();
@@ -110,7 +111,7 @@ namespace NPBehave
 
         public override string ToString()
         {
-            return base.ToString() + "[" + this.currentIndex + "]";
+            return base.ToString() + "[" + currentIndex + "]";
         }
     }
 }
