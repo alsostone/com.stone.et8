@@ -13,15 +13,19 @@ namespace ET
             return entity.IScene as Room;
         }
         
-        public static void Init(this Room self, List<LockStepUnitInfo> unitInfos, long startTime, int frame = -1)
+        public static void Init(this Room self, List<LockStepUnitInfo> unitInfos, long startTime, int seed, int frame = -1)
         {
             self.StartTime = startTime;
+            self.Seed = seed;
             self.AuthorityFrame = frame;
             self.PredictionFrame = frame;
             self.Replay.UnitInfos = unitInfos;
+            self.Replay.Seed = seed;
             self.FrameBuffer = new FrameBuffer(frame);
-            self.FixedTimeCounter = new FixedTimeCounter(self.StartTime, 0, LSConstValue.UpdateInterval);
+            self.FixedTimeCounter = new FixedTimeCounter(startTime, 0, LSConstValue.UpdateInterval);
+            
             LSWorld lsWorld = self.LSWorld;
+            lsWorld.Random = new TSRandom(seed);
             lsWorld.Frame = frame + 1;
             lsWorld.AddComponent<LSUnitComponent>();
             lsWorld.AddComponent<LSTargetsComponent>();

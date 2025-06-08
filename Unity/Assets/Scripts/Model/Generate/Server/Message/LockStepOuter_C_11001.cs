@@ -176,6 +176,9 @@ namespace ET
         [MemoryPackOrder(1)]
         public List<LockStepUnitInfo> UnitInfo { get; set; } = new();
 
+        [MemoryPackOrder(2)]
+        public int Seed { get; set; }
+
         public override void Dispose()
         {
             if (!this.IsFromPool)
@@ -185,6 +188,7 @@ namespace ET
 
             this.StartTime = default;
             this.UnitInfo.Clear();
+            this.Seed = default;
 
             ObjectPool.Instance.Recycle(this);
         }
@@ -351,6 +355,9 @@ namespace ET
         public List<LockStepUnitInfo> UnitInfos { get; set; } = new();
 
         [MemoryPackOrder(2)]
+        public int Seed { get; set; }
+
+        [MemoryPackOrder(3)]
         public int Frame { get; set; }
 
         public override void Dispose()
@@ -362,6 +369,7 @@ namespace ET
 
             this.StartTime = default;
             this.UnitInfos.Clear();
+            this.Seed = default;
             this.Frame = default;
 
             ObjectPool.Instance.Recycle(this);

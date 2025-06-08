@@ -194,6 +194,9 @@ namespace ET
         public List<LockStepUnitInfo> UnitInfos { get; set; } = new();
 
         [MemoryPackOrder(5)]
+        public int Seed { get; set; }
+
+        [MemoryPackOrder(6)]
         public int Frame { get; set; }
 
         public override void Dispose()
@@ -208,6 +211,7 @@ namespace ET
             this.Message = default;
             this.StartTime = default;
             this.UnitInfos.Clear();
+            this.Seed = default;
             this.Frame = default;
 
             ObjectPool.Instance.Recycle(this);

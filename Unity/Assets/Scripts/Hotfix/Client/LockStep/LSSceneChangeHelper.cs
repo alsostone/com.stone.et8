@@ -20,7 +20,7 @@ namespace ET.Client
             WaitType.Wait_Room2C_Start waitRoom2CStart = await root.GetComponent<ObjectWait>().Wait<WaitType.Wait_Room2C_Start>();
 
             room.LSWorld = new LSWorld(SceneType.LockStepClient);
-            room.Init(waitRoom2CStart.Message.UnitInfo, waitRoom2CStart.Message.StartTime);
+            room.Init(waitRoom2CStart.Message.UnitInfo, waitRoom2CStart.Message.StartTime, waitRoom2CStart.Message.Seed);
             
             // 这个事件中可以订阅取消loading
             EventSystem.Instance.Publish(root, new LSSceneInitFinish());
@@ -36,7 +36,7 @@ namespace ET.Client
             room.IsReplay = true;
             room.Replay = replay;
             room.LSWorld = new LSWorld(SceneType.LockStepClient);
-            room.Init(replay.UnitInfos, TimeInfo.Instance.ServerFrameTime());
+            room.Init(replay.UnitInfos, TimeInfo.Instance.ServerFrameTime(), replay.Seed);
             
             // 等待表现层订阅的事件完成
             await EventSystem.Instance.PublishAsync(root, new LSSceneChangeStart() {Room = room});
@@ -54,7 +54,7 @@ namespace ET.Client
             room.Name = "Map1";
             
             room.LSWorld = new LSWorld(SceneType.LockStepClient);
-            room.Init(message.UnitInfos, message.StartTime, message.Frame);
+            room.Init(message.UnitInfos, message.StartTime, message.Seed, message.Frame);
             
             // 等待表现层订阅的事件完成
             await EventSystem.Instance.PublishAsync(root, new LSSceneChangeStart() {Room = room});

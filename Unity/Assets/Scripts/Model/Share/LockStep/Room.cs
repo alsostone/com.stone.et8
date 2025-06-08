@@ -10,6 +10,7 @@ namespace ET
         public string Name { get; set; }
         
         public long StartTime { get; set; }
+        public int Seed { get; set; }
 
         // 帧缓存
         public FrameBuffer FrameBuffer { get; set; }

@@ -66,6 +66,7 @@ namespace ET.Server
                 g2RoomReconnect) as Room2G_Reconnect;
             G2C_Reconnect g2CReconnect = G2C_Reconnect.Create();
             g2CReconnect.StartTime = room2GateReconnect.StartTime;
+            g2CReconnect.Seed = room2GateReconnect.Seed;
             g2CReconnect.Frame = room2GateReconnect.Frame;
             g2CReconnect.UnitInfos.AddRange(room2GateReconnect.UnitInfos);
             session.Send(g2CReconnect);

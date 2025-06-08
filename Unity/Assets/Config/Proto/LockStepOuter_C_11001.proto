@@ -40,6 +40,7 @@ message Room2C_Start // IMessage
 {
 	int64 StartTime = 1;
 	repeated LockStepUnitInfo UnitInfo = 2;
+	int32 Seed = 3;
 }
 
 message FrameMessage // IMessage
@@ -76,5 +77,6 @@ message G2C_Reconnect // IMessage
 {
 	int64 StartTime = 1;
 	repeated LockStepUnitInfo UnitInfos = 2;
-	int32 Frame = 3;
+	int32 Seed = 3;
+	int32 Frame = 4;
 }

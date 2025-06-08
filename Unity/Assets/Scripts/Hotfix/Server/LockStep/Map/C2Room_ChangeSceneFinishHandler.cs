@@ -23,6 +23,7 @@ namespace ET.Server
 
             Room2C_Start room2CStart = Room2C_Start.Create();
             room2CStart.StartTime = TimeInfo.Instance.ServerFrameTime();
+            room2CStart.Seed = (int)TimeInfo.Instance.ServerFrameTime();
             foreach (RoomPlayer rp in roomServerComponent.Children.Values)
             {
                 LockStepUnitInfo lockStepUnitInfo = LockStepUnitInfo.Create();
@@ -32,7 +33,7 @@ namespace ET.Server
                 room2CStart.UnitInfo.Add(lockStepUnitInfo);
             }
 
-            room.Init(room2CStart.UnitInfo, room2CStart.StartTime);
+            room.Init(room2CStart.UnitInfo, room2CStart.StartTime, room2CStart.Seed);
 
             room.AddComponent<LSServerUpdater>();
 

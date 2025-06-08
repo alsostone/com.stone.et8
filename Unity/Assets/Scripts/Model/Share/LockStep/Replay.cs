@@ -14,5 +14,8 @@ namespace ET
         
         [MemoryPackOrder(3)]
         public List<byte[]> Snapshots = new();
+
+        [MemoryPackOrder(4)]
+        public int Seed;
     }
 }

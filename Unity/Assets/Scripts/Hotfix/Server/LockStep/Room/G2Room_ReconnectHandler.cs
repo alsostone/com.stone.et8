@@ -9,6 +9,7 @@ namespace ET.Server
         {
             Room room = root.GetComponent<Room>();
             response.StartTime = room.StartTime;
+            response.Seed = room.Seed;
             LSUnitComponent lsUnitComponent = room.LSWorld.GetComponent<LSUnitComponent>();
             foreach (long playerId in room.PlayerIds)
             {

@@ -29,14 +29,7 @@ namespace ET
         
         public static TSRandom GetRandom(this LSEntity entity)
         {
-            // TODO:随机数 应该在初始化LSWorld时初始化
-            var random = entity.LSWorld().Random;
-            if (random == null)
-            {
-                random = new TSRandom(entity.LSWorld().Frame);
-                entity.LSWorld().Random = random;
-            }
-            return random;
+            return entity.LSWorld().Random;
         }
         
         public static int Convert2Frame(this int milliseconds)
