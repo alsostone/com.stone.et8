@@ -1,24 +1,25 @@
 ﻿using MemoryPack;
+using TrueSync;
 
 namespace NPBehave
 {
     [MemoryPackable]
     public partial class TimeMax : Decorator
     {
-        [MemoryPackInclude] private readonly float limit = 0.0f;
-        [MemoryPackInclude] private readonly float randomVariation;
+        [MemoryPackInclude] private readonly FP limit = FP.Zero;
+        [MemoryPackInclude] private readonly FP randomVariation;
         [MemoryPackInclude] private readonly bool waitForChildButFailOnLimitReached = false;
         [MemoryPackInclude] private bool isLimitReached = false;
      
-        public TimeMax(float limit, bool waitForChildButFailOnLimitReached, Node decoratee) : base("TimeMax", decoratee)
+        public TimeMax(FP limit, bool waitForChildButFailOnLimitReached, Node decoratee) : base("TimeMax", decoratee)
         {
             this.limit = limit;
-            randomVariation = limit * 0.05f;
+            randomVariation = limit * FP.Ratio(5, 100);
             this.waitForChildButFailOnLimitReached = waitForChildButFailOnLimitReached;
         }
 
         [MemoryPackConstructor]
-        public TimeMax(float limit, float randomVariation, bool waitForChildButFailOnLimitReached, Node decoratee) : base("TimeMax", decoratee)
+        public TimeMax(FP limit, FP randomVariation, bool waitForChildButFailOnLimitReached, Node decoratee) : base("TimeMax", decoratee)
         {
             this.limit = limit;
             this.randomVariation = randomVariation;

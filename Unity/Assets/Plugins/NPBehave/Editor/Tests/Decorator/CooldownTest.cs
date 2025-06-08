@@ -1,4 +1,5 @@
 ﻿using NUnit.Framework;
+using TrueSync;
 
 namespace NPBehave
 {
@@ -29,7 +30,7 @@ namespace NPBehave
 			Assert.AreEqual(Node.State.INACTIVE, child.CurrentState);
 
 			// advance clock past cooldown and check that the child has been activated
-			BehaveWorld.Update( 2.0f );
+			BehaveWorld.Update( FP.Two );
 			Assert.AreEqual(Node.State.ACTIVE, child.CurrentState);
 		}
 
@@ -58,7 +59,7 @@ namespace NPBehave
 			Assert.AreEqual(Node.State.INACTIVE, failingChild.CurrentState);
 
 			// advance clock past cooldown and check that the child has been activated
-			BehaveWorld.Update( 2.0f );
+			BehaveWorld.Update( FP.Two );
 			Assert.AreEqual(Node.State.ACTIVE, failingChild.CurrentState);
         }
 
@@ -112,7 +113,7 @@ namespace NPBehave
 			Assert.AreEqual(Node.State.INACTIVE, child.CurrentState);
 
 			// advance clock past cooldown, start the tree again and check that we could be activated again
-			BehaveWorld.Update( 2.0f );
+			BehaveWorld.Update( FP.Two );
 			behaviorTree.Start();
 			Assert.AreEqual(Node.State.ACTIVE, sut.CurrentState);
 			Assert.AreEqual(Node.State.ACTIVE, child.CurrentState);
@@ -130,7 +131,7 @@ namespace NPBehave
 			Assert.AreEqual(Node.State.ACTIVE, sut.CurrentState);
 
 			// wait 1.5 seconds
-			BehaveWorld.Update( 1.5f );
+			BehaveWorld.Update( FP.Ratio(15, 10) );
 
 			// make child suceed
 			child.Finish(true);
@@ -158,7 +159,7 @@ namespace NPBehave
 			Assert.AreEqual(Node.State.ACTIVE, sut.CurrentState);
 
 			// wait 1.5 seconds 
-			BehaveWorld.Update( 1.5f );
+			BehaveWorld.Update( FP.Ratio(15, 10) );
 
 			// make child suceed
 			child.Finish(true);
@@ -174,13 +175,13 @@ namespace NPBehave
 			Assert.AreEqual(Node.State.INACTIVE, child.CurrentState);
 
 			// advance clock to be at 2.0 seconds
-			BehaveWorld.Update( 0.5f );
+			BehaveWorld.Update( FP.Half );
 
 			// ensure the child has not been started ( due to cooldown )
 			Assert.AreEqual(Node.State.INACTIVE, child.CurrentState);
 
 			// advance clock to be at 3 seconds
-			BehaveWorld.Update( 1.0f );
+			BehaveWorld.Update( FP.One );
 
 			// ensure the child has been started 
 			Assert.AreEqual(Node.State.ACTIVE, child.CurrentState);

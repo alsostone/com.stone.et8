@@ -1,25 +1,32 @@
 ﻿using MemoryPack;
+using TrueSync;
 
 namespace NPBehave
 {
     public abstract class WaitCalc : Task
     {
-        [MemoryPackInclude] private readonly float randomVariance;
+        [MemoryPackInclude] private readonly FP randomVariance;
         
-        protected WaitCalc(float randomVariance = 0f) : base("WaitCalc")
+        protected WaitCalc() : base("WaitCalc")
+        {
+            this.randomVariance = FP.Zero;
+        }
+        
+        [MemoryPackConstructor]
+        protected WaitCalc(FP randomVariance) : base("WaitCalc")
         {
             this.randomVariance = randomVariance;
         }
 
         protected override void DoStart()
         {
-            float delay = CalcSeconds();
+            FP delay = CalcSeconds();
             if (delay < 0)
             {
                 delay = 0;
             }
 
-            if (randomVariance >= 0f)
+            if (randomVariance >= FP.Zero)
             {
                 Clock.AddTimer(delay, randomVariance, 0, Guid);
             }
@@ -41,6 +48,6 @@ namespace NPBehave
             Stopped(true);
         }
 
-        protected abstract float CalcSeconds();
+        protected abstract FP CalcSeconds();
     }
 }

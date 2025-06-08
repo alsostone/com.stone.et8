@@ -1,4 +1,5 @@
 ﻿using MemoryPack;
+using TrueSync;
 
 namespace NPBehave
 {
@@ -8,8 +9,8 @@ namespace NPBehave
         [MemoryPackInclude] private bool startAfterDecoratee = false;
         [MemoryPackInclude] private bool resetOnFailiure = false;
 	    [MemoryPackInclude] private bool failOnCooldown = false;
-        [MemoryPackInclude] private float cooldownTime = 0.0f;
-        [MemoryPackInclude] private float randomVariation = 0.05f;
+        [MemoryPackInclude] private readonly FP cooldownTime;
+        [MemoryPackInclude] private readonly FP randomVariation;
         [MemoryPackInclude] private bool isReady = true;
         
         /// <summary>
@@ -30,7 +31,7 @@ namespace NPBehave
         /// <param name="failOnCooldown">If currently on cooldown and this parameter is set to <c>true</c>, the decorator will immmediately fail instead of waiting for the cooldown.</param>
         /// <param name="decoratee">Decoratee node.</param>
         [MemoryPackConstructor]
-        public Cooldown(float cooldownTime, float randomVariation, bool startAfterDecoratee, bool resetOnFailiure, bool failOnCooldown, Node decoratee) : base("TimeCooldown", decoratee)
+        public Cooldown(FP cooldownTime, FP randomVariation, bool startAfterDecoratee, bool resetOnFailiure, bool failOnCooldown, Node decoratee) : base("TimeCooldown", decoratee)
         {
         	this.startAfterDecoratee = startAfterDecoratee;
         	this.cooldownTime = cooldownTime;
@@ -39,16 +40,16 @@ namespace NPBehave
         	this.failOnCooldown = failOnCooldown;
         }
 
-        public Cooldown(float cooldownTime, bool startAfterDecoratee, bool resetOnFailiure, bool failOnCooldown, Node decoratee) : base("TimeCooldown", decoratee)
+        public Cooldown(FP cooldownTime, bool startAfterDecoratee, bool resetOnFailiure, bool failOnCooldown, Node decoratee) : base("TimeCooldown", decoratee)
         {
         	this.startAfterDecoratee = startAfterDecoratee;
         	this.cooldownTime = cooldownTime;
-        	randomVariation = cooldownTime * 0.1f;
+        	randomVariation = cooldownTime * FP.EN1;
         	this.resetOnFailiure = resetOnFailiure;
         	this.failOnCooldown = failOnCooldown;
         }
 
-        public Cooldown(float cooldownTime, float randomVariation, bool startAfterDecoratee, bool resetOnFailiure, Node decoratee) : base("TimeCooldown", decoratee)
+        public Cooldown(FP cooldownTime, FP randomVariation, bool startAfterDecoratee, bool resetOnFailiure, Node decoratee) : base("TimeCooldown", decoratee)
         {
         	this.startAfterDecoratee = startAfterDecoratee;
         	this.cooldownTime = cooldownTime;
@@ -56,15 +57,15 @@ namespace NPBehave
         	this.randomVariation = randomVariation;
         }
 
-        public Cooldown(float cooldownTime, bool startAfterDecoratee, bool resetOnFailiure, Node decoratee) : base("TimeCooldown", decoratee)
+        public Cooldown(FP cooldownTime, bool startAfterDecoratee, bool resetOnFailiure, Node decoratee) : base("TimeCooldown", decoratee)
         {
             this.startAfterDecoratee = startAfterDecoratee;
             this.cooldownTime = cooldownTime;
-            randomVariation = cooldownTime * 0.1f;
+            randomVariation = cooldownTime * FP.EN1;
             this.resetOnFailiure = resetOnFailiure;
         }
 
-        public Cooldown(float cooldownTime, float randomVariation, Node decoratee) : base("TimeCooldown", decoratee)
+        public Cooldown(FP cooldownTime, FP randomVariation, Node decoratee) : base("TimeCooldown", decoratee)
         {
             startAfterDecoratee = false;
             this.cooldownTime = cooldownTime;
@@ -72,12 +73,12 @@ namespace NPBehave
             this.randomVariation = randomVariation;
         }
 
-        public Cooldown(float cooldownTime, Node decoratee) : base("TimeCooldown", decoratee)
+        public Cooldown(FP cooldownTime, Node decoratee) : base("TimeCooldown", decoratee)
         {
             startAfterDecoratee = false;
             this.cooldownTime = cooldownTime;
             resetOnFailiure = false;
-            randomVariation = cooldownTime * 0.1f;
+            randomVariation = cooldownTime * FP.EN1;
         }
 
         protected override void DoStart()

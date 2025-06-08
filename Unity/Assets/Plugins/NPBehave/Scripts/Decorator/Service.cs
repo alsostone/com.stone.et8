@@ -1,39 +1,42 @@
 ﻿using MemoryPack;
+using TrueSync;
 
 namespace NPBehave
 {
     public abstract class Service : Decorator
     {
-        [MemoryPackInclude] protected readonly float interval = -1.0f;
-        [MemoryPackInclude] protected readonly float randomVariation;
+        [MemoryPackInclude] protected readonly FP interval;
+        [MemoryPackInclude] protected readonly FP randomVariation;
 
-        protected Service(float interval, float randomVariation, Node decoratee) : base("Service", decoratee)
+        protected Service(FP interval, FP randomVariation, Node decoratee) : base("Service", decoratee)
         {
             this.interval = interval;
             this.randomVariation = randomVariation;
             Label = "" + (interval - randomVariation) + "..." + (interval + randomVariation) + "s";
         }
 
-        protected Service(float interval, Node decoratee) : base("Service", decoratee)
+        protected Service(FP interval, Node decoratee) : base("Service", decoratee)
         {
             this.interval = interval;
-            randomVariation = interval * 0.05f;
+            randomVariation = interval * FP.Ratio(5, 100);
             Label = "" + (interval - randomVariation) + "..." + (interval + randomVariation) + "s";
         }
 
         protected Service(Node decoratee) : base("Service", decoratee)
         {
+            interval = -FP.One;
+            randomVariation = -FP.One;
             Label = "every tick";
         }
 
         protected override void DoStart()
         {
-            if (interval <= 0f)
+            if (interval <= FP.Zero)
             {
                 Clock.AddUpdateObserver(Guid);
                 OnService();
             }
-            else if (randomVariation <= 0f)
+            else if (randomVariation <= FP.Zero)
             {
                 Clock.AddTimer(interval, -1, Guid);
                 OnService();
@@ -53,11 +56,11 @@ namespace NPBehave
 
         protected override void DoChildStopped(Node child, bool result)
         {
-            if (interval <= 0f)
+            if (interval <= FP.Zero)
             {
                 Clock.RemoveUpdateObserver(Guid);
             }
-            else if (randomVariation <= 0f)
+            else if (randomVariation <= FP.Zero)
             {
                 Clock.RemoveTimer(Guid);
             }
@@ -70,7 +73,7 @@ namespace NPBehave
 
         public override void OnTimerReached()
         {
-            if (interval > 0f && randomVariation > 0f)
+            if (interval > FP.Zero && randomVariation > FP.Zero)
             {
                 Clock.AddTimer(interval, randomVariation, 0, Guid);
             }

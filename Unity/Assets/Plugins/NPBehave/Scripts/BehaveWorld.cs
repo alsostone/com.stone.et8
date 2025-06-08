@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using MemoryPack;
+using TrueSync;
 
 namespace NPBehave
 {
@@ -13,6 +14,7 @@ namespace NPBehave
         [MemoryPackInclude] private readonly Dictionary<string, int> sharedBlackboards;
         
         [MemoryPackIgnore] public readonly Dictionary<int, Receiver> GuidReceiverMapping = new Dictionary<int, Receiver>();
+        [MemoryPackIgnore] private TSRandom random;
         
         public BehaveWorld()
         {
@@ -37,6 +39,11 @@ namespace NPBehave
             {
                 blackboard.SetWorld(this);
             }
+        }
+
+        public void SetRandom(TSRandom tsRandom)
+        {
+            this.random = tsRandom;
         }
         
         public int GetNextGuid()
@@ -75,21 +82,16 @@ namespace NPBehave
             return blackboard;
         }
 
-        public void Update(float deltaTime)
+        public void Update(FP deltaTime)
         {
             Clock.Update(deltaTime);
         }
 
-#if UNITY_EDITOR
-        public static void DebugSetSeed( int seed )
-        {
-            rng = new System.Random( seed );
-        }
-#endif
-        static System.Random rng = new System.Random();
         public int GetRandomNext(int range)
         {
-            return rng.Next(range);
+            if (random == null)
+                random = new TSRandom(0);
+            return this.random.Next(0, range);
         }
 
     }

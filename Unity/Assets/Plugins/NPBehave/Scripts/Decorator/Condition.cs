@@ -1,25 +1,26 @@
 ﻿using MemoryPack;
+using TrueSync;
 
 namespace NPBehave
 {
     public abstract class Condition : ObservingDecorator
     {
-        [MemoryPackInclude] protected float checkInterval;
-        [MemoryPackInclude] protected float checkVariance;
+        [MemoryPackInclude] protected FP checkInterval;
+        [MemoryPackInclude] protected FP checkVariance;
         
         protected Condition(Node decoratee) : base("Condition", Stops.NONE, decoratee)
         {
-            checkInterval = 0.0f;
-            checkVariance = 0.0f;
+            checkInterval = FP.Zero;
+            checkVariance = FP.Zero;
         }
 
         protected Condition(Stops stopsOnChange, Node decoratee) : base("Condition", stopsOnChange, decoratee)
         {
-            checkInterval = 0.0f;
-            checkVariance = 0.0f;
+            checkInterval = FP.Zero;
+            checkVariance = FP.Zero;
         }
 
-        protected Condition(Stops stopsOnChange, float checkInterval, float randomVariance, Node decoratee) : base("Condition", stopsOnChange, decoratee)
+        protected Condition(Stops stopsOnChange, FP checkInterval, FP randomVariance, Node decoratee) : base("Condition", stopsOnChange, decoratee)
         {
             this.checkInterval = checkInterval;
             checkVariance = randomVariance;

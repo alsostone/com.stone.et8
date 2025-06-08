@@ -73,9 +73,9 @@ namespace NPBehave.Examples
 
         private void moveToBlackboardKey()
         {
-            var x = Blackboard.GetFloat(blackboardKey + "X");
-            var y = Blackboard.GetFloat(blackboardKey + "Y");
-            var z = Blackboard.GetFloat(blackboardKey + "Z");
+            var x = Blackboard.GetFloat(blackboardKey + "X").AsFloat();
+            var y = Blackboard.GetFloat(blackboardKey + "Y").AsFloat();
+            var z = Blackboard.GetFloat(blackboardKey + "Z").AsFloat();
             
             // get target location
             var destination = new Vector3(x, y, z);

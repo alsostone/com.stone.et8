@@ -296,8 +296,8 @@ namespace NPBehave
 
         private void DrawNode(Node node, int depth, bool connected)
         {
-            float tStopRequested = Mathf.Lerp(0.85f, 0.25f, 2.0f * (Time.time - node.DebugLastStopRequestAt));
-            float tStopped = Mathf.Lerp(0.85f, 0.25f, 2.0f * (Time.time - node.DebugLastStoppedAt));
+            float tStopRequested = Mathf.Lerp(0.85f, 0.25f, 2.0f * (Time.time - node.DebugLastStopRequestAt.AsFloat()));
+            float tStopped = Mathf.Lerp(0.85f, 0.25f, 2.0f * (Time.time - node.DebugLastStoppedAt.AsFloat()));
             bool inactive = node.CurrentState != Node.State.ACTIVE;
             float alpha = inactive ? Mathf.Max(0.35f, Mathf.Pow(tStopped, 1.5f)) : 1.0f;
             bool failed = (tStopped > 0.25f && tStopped < 1.0f && !node.DebugLastResult && inactive);

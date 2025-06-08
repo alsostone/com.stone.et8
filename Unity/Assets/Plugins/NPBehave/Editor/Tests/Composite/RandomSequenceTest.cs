@@ -1,4 +1,6 @@
 ﻿using NUnit.Framework;
+using TrueSync;
+
 namespace NPBehave
 {
 
@@ -146,7 +148,7 @@ namespace NPBehave
             TestRoot behaviorTree = CreateBehaviorTree( sut );
 
             // TODO: will we keep the priority or will we switch to the priority defined by the randomized children?
-            BehaveWorld.DebugSetSeed( 2 );
+            BehaveWorld.SetRandom(new TSRandom(3));
 
             behaviorTree.Start();
 
@@ -174,7 +176,7 @@ namespace NPBehave
             TestRoot behaviorTree = CreateBehaviorTree( sut );
 
             // TODO: will we keep the priority or will we switch to the priority defined by the randomized children?
-            BehaveWorld.DebugSetSeed( 2 );
+            BehaveWorld.SetRandom(new TSRandom(3));
 
             behaviorTree.Start();
 
@@ -201,7 +203,7 @@ namespace NPBehave
             TestRoot behaviorTree = CreateBehaviorTree( sut );
 
             // TODO: will we keep the priority or will we switch to the priority defined by the randomized children?
-            BehaveWorld.DebugSetSeed( 2 ); 
+            BehaveWorld.SetRandom(new TSRandom(3));
 
             behaviorTree.Start();
 

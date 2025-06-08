@@ -1,4 +1,5 @@
 ﻿using NUnit.Framework;
+using TrueSync;
 
 namespace NPBehave
 {
@@ -11,10 +12,10 @@ namespace NPBehave
             }
             protected override bool IsConditionMet()
             {
-                float f1 = Blackboard.GetFloat("key1");
-                float f2 = Blackboard.GetFloat("key2");
+                var f1 = Blackboard.GetFloat("key1");
+                var f2 = Blackboard.GetFloat("key2");
 
-                if ((f1 > 0.99) && (f2 < 5.99f))
+                if ((f1 > FP.Ratio(99, 100)) && (f2 < FP.Ratio(599, 100)))
                     return true;
                 return false;
             }

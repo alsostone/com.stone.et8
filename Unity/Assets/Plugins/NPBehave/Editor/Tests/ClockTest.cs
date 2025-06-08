@@ -58,7 +58,7 @@ namespace NPBehave
   //           });
   //
   //           this.sut.AddUpdateObserver(action1);
-  //           this.sut.AddTimer(0f, 0, timer2);
+  //           this.sut.AddTimer(0, 0, timer2);
   //           this.sut.Update(1);
   //           Assert.IsFalse(timer2Invoked);
   //       }
@@ -78,8 +78,8 @@ namespace NPBehave
   //               this.sut.RemoveTimer(timer2);
   //           });
   //
-  //           this.sut.AddTimer(0f, 0, timer1);
-  //           this.sut.AddTimer(0f, 0, timer2);
+  //           this.sut.AddTimer(0, 0, timer1);
+  //           this.sut.AddTimer(0, 0, timer2);
   //           this.sut.Update(1);
   //           Assert.IsFalse(timer2Invoked);
   //       }
@@ -93,16 +93,16 @@ namespace NPBehave
 		// 		invokations++;
 		// 	});
   //
-		// 	this.sut.AddTimer(0.9f, -1, callback);
+		// 	this.sut.AddTimer(FP.Ratio(9, 10), -1, callback);
 		// 	this.sut.Update(1);
 		// 	Assert.AreEqual(1, invokations);
 		// 	this.sut.Update(1);
 		// 	Assert.AreEqual(2, invokations);
 		// 	this.sut.Update(1);
 		// 	Assert.AreEqual(3, invokations);
-		// 	this.sut.Update(0.1f);
+		// 	this.sut.Update(FP.EN1);
 		// 	Assert.AreEqual(3, invokations);
-		// 	this.sut.Update(0.1f);
+		// 	this.sut.Update(FP.EN1);
 		// 	Assert.AreEqual(3, invokations);
 		// }
     }

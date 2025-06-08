@@ -1,4 +1,5 @@
 ﻿using MemoryPack;
+using TrueSync;
 
 namespace NPBehave
 {
@@ -6,23 +7,30 @@ namespace NPBehave
     public partial class WaitBlackboardKey : Task
     {
         [MemoryPackInclude] private readonly string blackboardKey = null;
-        [MemoryPackInclude] private readonly float randomVariance;
+        [MemoryPackInclude] private readonly FP randomVariance;
         
-        public WaitBlackboardKey(string blackboardKey, float randomVariance = 0f) : base("WaitBlackboardKey")
+        public WaitBlackboardKey(string blackboardKey) : base("WaitBlackboardKey")
+        {
+            this.blackboardKey = blackboardKey;
+            this.randomVariance = FP.Zero;
+        }
+        
+        [MemoryPackConstructor]
+        public WaitBlackboardKey(string blackboardKey, FP randomVariance) : base("WaitBlackboardKey")
         {
             this.blackboardKey = blackboardKey;
             this.randomVariance = randomVariance;
         }
-        
+
         protected override void DoStart()
         {
-            float delay = Blackboard.GetFloat(blackboardKey);
+            FP delay = Blackboard.GetFloat(blackboardKey);
             if (delay < 0)
             {
                 delay = 0;
             }
 
-            if (randomVariance >= 0f)
+            if (randomVariance >= FP.Zero)
             {
                 Clock.AddTimer(delay, randomVariance, 0, Guid);
             }

@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using MemoryPack;
+using TrueSync;
 
 namespace NPBehave
 {
@@ -30,7 +31,7 @@ namespace NPBehave
         [MemoryPackInclude] private HashSet<int> childrenGuid = new HashSet<int>();
         [MemoryPackInclude] private Dictionary<string, bool> dataBool = new Dictionary<string, bool>();
         [MemoryPackInclude] private Dictionary<string, int> dataInt = new Dictionary<string, int>();
-        [MemoryPackInclude] private Dictionary<string, float> dataFloat = new Dictionary<string, float>();
+        [MemoryPackInclude] private Dictionary<string, FP> dataFloat = new Dictionary<string, FP>();
         
         [MemoryPackInclude] private bool isNotifying = false;
         [MemoryPackInclude] private List<Notification> notifications = new List<Notification>();
@@ -98,7 +99,7 @@ namespace NPBehave
                 {
                     dataBool[key] = value;
                     notifications.Add(new Notification(key, NotifyType.ADD));
-                    clock.AddTimer(0f, 0, Guid);
+                    clock.AddTimer(FP.Zero, 0, Guid);
                 }
                 else
                 {
@@ -106,7 +107,7 @@ namespace NPBehave
                     {
                         dataBool[key] = value;
                         notifications.Add(new Notification(key, NotifyType.CHANGE));
-                        clock.AddTimer(0f, 0, Guid);
+                        clock.AddTimer(FP.Zero, 0, Guid);
                     }
                 }
             }
@@ -124,7 +125,7 @@ namespace NPBehave
                 {
                     dataInt[key] = value;
                     notifications.Add(new Notification(key, NotifyType.ADD));
-                    clock.AddTimer(0f, 0, Guid);
+                    clock.AddTimer(FP.Zero, 0, Guid);
                 }
                 else
                 {
@@ -132,13 +133,13 @@ namespace NPBehave
                     {
                         dataInt[key] = value;
                         notifications.Add(new Notification(key, NotifyType.CHANGE));
-                        clock.AddTimer(0f, 0, Guid);
+                        clock.AddTimer(FP.Zero, 0, Guid);
                     }
                 }
             }
         }
         
-        public void SetFloat(string key, float value)
+        public void SetFloat(string key, FP value)
         {
             if (parent != null && parent.IsSetFloat(key))
             {
@@ -150,7 +151,7 @@ namespace NPBehave
                 {
                     dataFloat[key] = value;
                     notifications.Add(new Notification(key, NotifyType.ADD));
-                    clock.AddTimer(0f, 0, Guid);
+                    clock.AddTimer(FP.Zero, 0, Guid);
                 }
                 else
                 {
@@ -158,7 +159,7 @@ namespace NPBehave
                     {
                         dataFloat[key] = value;
                         notifications.Add(new Notification(key, NotifyType.CHANGE));
-                        clock.AddTimer(0f, 0, Guid);
+                        clock.AddTimer(FP.Zero, 0, Guid);
                     }
                 }
             }
@@ -172,7 +173,7 @@ namespace NPBehave
             {
                 dataBool.Remove(key);
                 notifications.Add(new Notification(key, NotifyType.REMOVE));
-                clock.AddTimer(0f, 0, Guid);
+                clock.AddTimer(FP.Zero, 0, Guid);
             }
         }
 
@@ -182,7 +183,7 @@ namespace NPBehave
             {
                 dataInt.Remove(key);
                 notifications.Add(new Notification(key, NotifyType.REMOVE));
-                clock.AddTimer(0f, 0, Guid);
+                clock.AddTimer(FP.Zero, 0, Guid);
             }
         }
         
@@ -192,7 +193,7 @@ namespace NPBehave
             {
                 dataFloat.Remove(key);
                 notifications.Add(new Notification(key, NotifyType.REMOVE));
-                clock.AddTimer(0f, 0, Guid);
+                clock.AddTimer(FP.Zero, 0, Guid);
             }
         }
         #endregion
@@ -237,7 +238,7 @@ namespace NPBehave
             }
             return 0;
         }
-        public float GetFloat(string key)
+        public FP GetFloat(string key)
         {
             if (dataFloat.TryGetValue(key, out var value))
             {
@@ -247,7 +248,7 @@ namespace NPBehave
             {
                 return parent.GetFloat(key);
             }
-            return 0f;
+            return FP.Zero;
         }
         #endregion
         
@@ -276,7 +277,7 @@ namespace NPBehave
             }
         }
         
-        public void ForeachFloat(System.Action<string, float> action)
+        public void ForeachFloat(System.Action<string, FP> action)
         {
             if (parent != null)
             {
@@ -395,7 +396,7 @@ namespace NPBehave
             {
                 var childBlackboard = behaveWorld.GetBlackboard(child);
                 childBlackboard.notifications.AddRange(notifications);
-                childBlackboard.clock.AddTimer(0f, 0, child);
+                childBlackboard.clock.AddTimer(FP.Zero, 0, child);
             }
             notifications.Clear();
 

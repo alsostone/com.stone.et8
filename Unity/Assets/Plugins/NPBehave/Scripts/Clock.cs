@@ -1,26 +1,27 @@
 using System.Collections.Generic;
 using MemoryPack;
+using TrueSync;
 
 namespace NPBehave
 {
     [MemoryPackable]
     public partial class Timer
     {
-        public double scheduledTime = 0f;
+        public FP scheduledTime = FP.Zero;
         public int repeat = 0;
-        public double delay = 0f;
-        public float randomVariance = 0.0f;
+        public FP delay = FP.Zero;
+        public FP randomVariance = FP.Zero;
 
-        public void ScheduleAbsoluteTime(BehaveWorld world, double elapsedTime)
+        public void ScheduleAbsoluteTime(BehaveWorld world, FP elapsedTime)
         {
-            scheduledTime = elapsedTime + delay - randomVariance * 0.5f + randomVariance * world.GetRandomNext(10000) / 10000.0f;
+            scheduledTime = elapsedTime + delay - randomVariance * FP.Half + randomVariance * world.GetRandomNext(10000) / 10000;
         }
     }
     
     [MemoryPackable]
     public partial class Clock
     {
-        [MemoryPackInclude] private double elapsedTime = 0f;
+        [MemoryPackInclude] private FP elapsedTime = FP.Zero;
         [MemoryPackInclude] private bool isInUpdate = false;
         
         [MemoryPackInclude] private Dictionary<int, Timer> timers = new Dictionary<int, Timer>();
@@ -51,9 +52,9 @@ namespace NPBehave
         /// <param name="time">time in milliseconds</param>
         /// <param name="repeat">number of times to repeat, set to -1 to repeat until unregistered.</param>
         /// <param name="action">method to invoke</param>
-        public void AddTimer(float time, int repeat, int action)
+        public void AddTimer(FP time, int repeat, int action)
         {
-            AddTimer(time, 0f, repeat, action);
+            AddTimer(time, FP.Zero, repeat, action);
         }
 
         /// <summary>Register a timer function with random variance</summary>
@@ -61,7 +62,7 @@ namespace NPBehave
         /// <param name="randomVariance">deviate from time on a random basis</param>
         /// <param name="repeat">number of times to repeat, set to -1 to repeat until unregistered.</param>
         /// <param name="action">method to invoke</param>
-        public void AddTimer(float delay, float randomVariance, int repeat, int action)
+        public void AddTimer(FP delay, FP randomVariance, int repeat, int action)
         {
             Timer timer = null;
 
@@ -203,7 +204,7 @@ namespace NPBehave
             }
         }
 
-        internal void Update(float deltaTime)
+        internal void Update(FP deltaTime)
         {
             elapsedTime += deltaTime;
             isInUpdate = true;
@@ -273,7 +274,7 @@ namespace NPBehave
 #if UNITY_EDITOR
         [MemoryPackIgnore] public int NumUpdateObservers => updateObservers.Count;
         [MemoryPackIgnore] public int NumTimers => timers.Count;
-        [MemoryPackIgnore] public double ElapsedTime => elapsedTime;
+        [MemoryPackIgnore] public FP ElapsedTime => elapsedTime;
         [MemoryPackIgnore] public int DebugPoolSize => timerPool.Count;
 #endif
         

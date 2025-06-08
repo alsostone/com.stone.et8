@@ -1,5 +1,6 @@
 ﻿using System;
 using MemoryPack;
+using TrueSync;
 
 namespace NPBehave
 {
@@ -7,15 +8,15 @@ namespace NPBehave
     public partial class BlackboardFloat : ObservingDecorator
     {
         [MemoryPackInclude] private readonly string blackboardKey;
-        [MemoryPackInclude] private readonly float value;
+        [MemoryPackInclude] private readonly FP value;
         [MemoryPackInclude] private readonly Operator op;
 
         [MemoryPackIgnore] public string BlackboardKey => blackboardKey;
-        [MemoryPackIgnore] public float Value => value;
+        [MemoryPackIgnore] public FP Value => value;
         [MemoryPackIgnore] public Operator Operator => op;
 
         [MemoryPackConstructor]
-        public BlackboardFloat(string blackboardKey, Operator op, float value, Stops stopsOnChange, Node decoratee) : base("BlackboardFloat", stopsOnChange, decoratee)
+        public BlackboardFloat(string blackboardKey, Operator op, FP value, Stops stopsOnChange, Node decoratee) : base("BlackboardFloat", stopsOnChange, decoratee)
         {
             this.op = op;
             this.blackboardKey = blackboardKey;

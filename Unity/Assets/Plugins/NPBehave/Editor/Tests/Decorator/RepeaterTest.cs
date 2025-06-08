@@ -1,4 +1,5 @@
 ﻿using NUnit.Framework;
+using TrueSync;
 
 namespace NPBehave
 {
@@ -36,7 +37,7 @@ namespace NPBehave
                 succeedingChild.Finish(true);
                 Assert.AreEqual(Node.State.ACTIVE, sut.CurrentState);
                 Assert.IsFalse(behaviorTree.DidFinish);
-                BehaveWorld.Update(0.01f);
+                BehaveWorld.Update(FP.Ratio(1, 100));
             }
 
             succeedingChild.Finish(true);
@@ -60,7 +61,7 @@ namespace NPBehave
             Assert.AreEqual(Node.State.INACTIVE, succeedingChild.CurrentState);
 
             // after update it's ok to have
-            BehaveWorld.Update(0.01f);
+            BehaveWorld.Update(FP.Ratio(1, 100));
             Assert.AreEqual(Node.State.ACTIVE, succeedingChild.CurrentState);
 
             Assert.IsFalse(behaviorTree.DidFinish);
@@ -82,7 +83,7 @@ namespace NPBehave
             Assert.AreEqual(1, behaviorTree.Clock.NumTimers);
             Assert.AreEqual(0, behaviorTree.Clock.NumUpdateObservers);
 
-            BehaveWorld.Update(0.01f);
+            BehaveWorld.Update(FP.Ratio(1, 100));
             child.Finish(false);
 
             Assert.IsTrue(behaviorTree.DidFinish);

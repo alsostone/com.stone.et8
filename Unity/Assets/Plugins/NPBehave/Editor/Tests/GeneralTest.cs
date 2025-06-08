@@ -1,4 +1,6 @@
 ﻿using NUnit.Framework;
+using TrueSync;
+
 namespace NPBehave
 {
 
@@ -51,7 +53,7 @@ namespace NPBehave
             Assert.AreEqual(1, thirdChild.DebugNumStartCalls);
 
             // tick the timer to ensure the blackboard notifies the nodes
-            behaveWorld.Update(0.1f);
+            behaveWorld.Update(FP.EN1);
 
             // now we should be in branch1
             Assert.AreEqual(Node.State.ACTIVE, firstChild.CurrentState);
@@ -63,7 +65,7 @@ namespace NPBehave
 
             // disable first branch
             Blackboard.SetBool("branch1", false);
-            behaveWorld.Update(0.1f);
+            behaveWorld.Update(FP.EN1);
 
             // and now the second branch should be active
             Assert.AreEqual(Node.State.INACTIVE, firstChild.CurrentState);

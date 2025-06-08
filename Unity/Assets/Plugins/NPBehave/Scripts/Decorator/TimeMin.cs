@@ -1,33 +1,34 @@
 ﻿using MemoryPack;
+using TrueSync;
 
 namespace NPBehave
 {
     [MemoryPackable]
     public partial class TimeMin : Decorator
     {
-        [MemoryPackInclude] private readonly float limit = 0.0f;
-        [MemoryPackInclude] private readonly float randomVariation;
+        [MemoryPackInclude] private readonly FP limit = FP.Zero;
+        [MemoryPackInclude] private readonly FP randomVariation;
         [MemoryPackInclude] private readonly bool waitOnFailure = false;
         [MemoryPackInclude] private bool isLimitReached = false;
         [MemoryPackInclude] private bool isDecorateeDone = false;
         [MemoryPackInclude] private bool isDecorateeSuccess = false;
         
-        public TimeMin(float limit, Node decoratee) : base("TimeMin", decoratee)
+        public TimeMin(FP limit, Node decoratee) : base("TimeMin", decoratee)
         {
             this.limit = limit;
-            randomVariation = this.limit * 0.05f;
+            randomVariation = this.limit * FP.Ratio(5, 100);
             waitOnFailure = false;
         }
 
-        public TimeMin(float limit, bool waitOnFailure, Node decoratee) : base("TimeMin", decoratee)
+        public TimeMin(FP limit, bool waitOnFailure, Node decoratee) : base("TimeMin", decoratee)
         {
             this.limit = limit;
-            randomVariation = this.limit * 0.05f;
+            randomVariation = this.limit * FP.Ratio(5, 100);
             this.waitOnFailure = waitOnFailure;
         }
 
         [MemoryPackConstructor]
-        public TimeMin(float limit, float randomVariation, bool waitOnFailure, Node decoratee) : base("TimeMin", decoratee)
+        public TimeMin(FP limit, FP randomVariation, bool waitOnFailure, Node decoratee) : base("TimeMin", decoratee)
         {
             this.limit = limit;
             this.randomVariation = randomVariation;

@@ -1,4 +1,5 @@
 ﻿using MemoryPack;
+using TrueSync;
 
 namespace NPBehave
 {
@@ -50,8 +51,8 @@ namespace NPBehave
         }
 
 #if UNITY_EDITOR
-        [MemoryPackIgnore] public float DebugLastStopRequestAt = 0.0f;
-        [MemoryPackIgnore] public float DebugLastStoppedAt = 0.0f;
+        [MemoryPackIgnore] public FP DebugLastStopRequestAt = FP.Zero;
+        [MemoryPackIgnore] public FP DebugLastStoppedAt = FP.Zero;
         [MemoryPackIgnore] public int DebugNumStartCalls = 0;
         [MemoryPackIgnore] public int DebugNumStopCalls = 0;
         [MemoryPackIgnore] public int DebugNumStoppedCalls = 0;

@@ -1,4 +1,6 @@
 ﻿using NUnit.Framework;
+using TrueSync;
+
 namespace NPBehave
 {
 #pragma warning disable 618 // deprecation
@@ -40,7 +42,7 @@ namespace NPBehave
             Blackboard.SetBool("notified", false);
             behaviorTree.Start();
 
-            Blackboard.SetFloat("test", 1f);
+            Blackboard.SetFloat("test", FP.One);
             Assert.IsFalse(behaviorTree.Blackboard.GetBool("notified"));
         }
 
@@ -53,8 +55,8 @@ namespace NPBehave
             Blackboard.SetBool("notified", false);
             behaviorTree.Start();
             
-            Blackboard.SetFloat("test", 1f);
-            BehaveWorld.Update(1f);
+            Blackboard.SetFloat("test", FP.One);
+            BehaveWorld.Update(FP.One);
             Assert.IsTrue(Blackboard.GetBool("notified"));
         }
 
@@ -63,10 +65,10 @@ namespace NPBehave
         {
             var behaveWorld = new BehaveWorld();
             var blackboard = behaveWorld.CreateBlackboard();
-            blackboard.SetFloat("test", 1f);
-            Assert.AreEqual(blackboard.GetFloat("test"), 1f);
+            blackboard.SetFloat("test", FP.One);
+            Assert.AreEqual(blackboard.GetFloat("test"), FP.One);
             blackboard.UnSetFloat("test");
-            Assert.AreEqual(blackboard.GetFloat("test"), 0f);
+            Assert.AreEqual(blackboard.GetFloat("test"), FP.Zero);
             blackboard.SetBool("test", true);
             Assert.AreEqual(blackboard.GetBool("test"), true);
         }
@@ -99,7 +101,7 @@ namespace NPBehave
             behaviorTree.Start();
 
             // tick the timer to ensure the blackboard notifies the nodes
-            behaveWorld.Update(0.1f);
+            behaveWorld.Update(FP.EN1);
 
             // verify the second child is running
             Assert.AreEqual(Node.State.INACTIVE, firstChild.CurrentState);
@@ -109,7 +111,7 @@ namespace NPBehave
             rootBlackboard.SetBool("branch1", true);
 
             // tick the timer to ensure the blackboard notifies the nodes
-            behaveWorld.Update(0.1f);
+            behaveWorld.Update(FP.EN1);
 
             // now we should be in branch1
             Assert.AreEqual(Node.State.ACTIVE, firstChild.CurrentState);

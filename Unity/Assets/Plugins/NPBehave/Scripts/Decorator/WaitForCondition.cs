@@ -1,13 +1,14 @@
 ﻿using MemoryPack;
+using TrueSync;
 
 namespace NPBehave
 {
     public abstract class WaitForCondition : Decorator
     {
-        [MemoryPackInclude] protected readonly float checkInterval;
-        [MemoryPackInclude] protected readonly float checkVariance;
+        [MemoryPackInclude] protected readonly FP checkInterval;
+        [MemoryPackInclude] protected readonly FP checkVariance;
         
-        protected WaitForCondition(float checkInterval, float randomVariance, Node decoratee) : base("WaitForCondition", decoratee)
+        protected WaitForCondition(FP checkInterval, FP randomVariance, Node decoratee) : base("WaitForCondition", decoratee)
         {
             this.checkInterval = checkInterval;
             checkVariance = randomVariance;
@@ -16,8 +17,8 @@ namespace NPBehave
 
         protected WaitForCondition(Node decoratee) : base("WaitForCondition", decoratee)
         {
-            checkInterval = 0.0f;
-            checkVariance = 0.0f;
+            checkInterval = FP.Zero;
+            checkVariance = FP.Zero;
             Label = "every tick";
         }
 

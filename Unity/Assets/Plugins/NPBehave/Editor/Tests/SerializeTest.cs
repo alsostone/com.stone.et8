@@ -1,5 +1,6 @@
 ﻿using NUnit.Framework;
 using MemoryPack;
+using TrueSync;
 
 namespace NPBehave
 {
@@ -45,8 +46,8 @@ namespace NPBehave
             Assert.AreEqual(behaveWorld.Clock.NumTimers, 5);
             Assert.AreEqual(behaveWorld1.Clock.NumTimers, 5);
             
-            behaveWorld.Update(1f);
-            behaveWorld1.Update(1f);
+            behaveWorld.Update(FP.One);
+            behaveWorld1.Update(FP.One);
             
             Assert.AreEqual(behaveWorld.Clock.NumTimers, 0);
             Assert.AreEqual(behaveWorld1.Clock.NumTimers, 0);
