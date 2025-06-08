@@ -13,7 +13,8 @@
         "YooAsset",
         "Unity.TextMeshPro",
         "YIUIFramework",
-        "com.stone.hud"
+        "com.stone.hud",
+        "TrueSync"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],

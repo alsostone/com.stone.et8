@@ -1,9 +1,8 @@
 {
-    "name": "NPBehave",
-    "rootNamespace": "NPBehave",
+    "name": "TrueSync",
+    "rootNamespace": "",
     "references": [
-        "MemoryPack",
-        "TrueSync"
+        "GUID:756335c0388f7114790e504ed368ae1d"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],
