@@ -21,7 +21,7 @@ namespace NPBehave
         [MemoryPackIgnore] public string Name => name;
         
         [MemoryPackIgnore] public State CurrentState => currentState;
-        [MemoryPackIgnore] private Root RootNode { get; set; }
+        [MemoryPackIgnore] protected Root RootNode { get; set; }
         [MemoryPackIgnore] public Container ParentNode { get; private set; }
         [MemoryPackIgnore] public Blackboard Blackboard => RootNode.RootBlackboard;
         [MemoryPackIgnore] public Clock Clock => RootNode.RootClock;

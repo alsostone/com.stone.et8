@@ -6,7 +6,7 @@ namespace NPBehave
     [MemoryPackable]
     public partial class Root : Decorator
     {
-        [MemoryPackInclude] private readonly int blackboardGuid;
+        [MemoryPackInclude] private int blackboardGuid;
         
         [MemoryPackIgnore] public Blackboard RootBlackboard { get; private set; }
         [MemoryPackIgnore] public Clock RootClock { get; private set; }

@@ -1,5 +1,4 @@
 ﻿using NUnit.Framework;
-using NPBehave.Examples;
 using MemoryPack;
 
 namespace NPBehave
@@ -57,22 +56,39 @@ namespace NPBehave
         public void ShouldEqual_SerializedBehaveWorldAndRoot()
         {
             var world = new BehaveWorld();
-            var root1 = new Root(world, new Sequence(new ActionLog("root1 1"), new ActionLog("root1 2")));
-            var root2 = new Root(world, new Sequence(new ActionLog("root2 1"), new ActionLog("root2 2")));
+            var root1 = new Root(world, new Sequence(new IncrBlackboardKey("currentActionRoot1")));
+            var root2 = new Root(world, new Sequence(new IncrBlackboardKey("currentActionRoot2")));
+            root1.Start();
+            root2.Start();
+            
+            world.Update(1);
+            Assert.AreEqual(root1.RootBlackboard.GetInt("currentActionRoot1"), 1);
+            Assert.AreEqual(root2.RootBlackboard.GetInt("currentActionRoot2"), 1);
             
             var worldBytes = MemoryPackSerializer.Serialize(world);
             var root1Bytes = MemoryPackSerializer.Serialize(root1);
             var root2Bytes = MemoryPackSerializer.Serialize(root2);
             
-            world = MemoryPackSerializer.Deserialize<BehaveWorld>(worldBytes);
+            var worldNew = MemoryPackSerializer.Deserialize<BehaveWorld>(worldBytes);
             
             // 反序列化节点1并重建其上下文
-            root1 = MemoryPackSerializer.Deserialize<Root>(root1Bytes);
-            root1.SetWorld(world);
+            var root1New = MemoryPackSerializer.Deserialize<Root>(root1Bytes);
+            root1New.SetWorld(worldNew);
             
             // 反序列化节点2并重建其上下文
-            root2 = MemoryPackSerializer.Deserialize<Root>(root2Bytes);
-            root2.SetWorld(world);
+            var root2New = MemoryPackSerializer.Deserialize<Root>(root2Bytes);
+            root2New.SetWorld(worldNew);
+            
+            world.Update(1);
+            worldNew.Update(1);
+            
+            Assert.AreEqual(root1New.RootBlackboard.GetInt("currentActionRoot1"), 2);
+            Assert.AreEqual(root2New.RootBlackboard.GetInt("currentActionRoot2"), 2);
+            
+            world.Update(1);
+            worldNew.Update(1);
+            Assert.AreEqual(root1.RootBlackboard.GetInt("currentActionRoot1"), root1New.RootBlackboard.GetInt("currentActionRoot1"));
+            Assert.AreEqual(root2.RootBlackboard.GetInt("currentActionRoot2"), root2New.RootBlackboard.GetInt("currentActionRoot2"));
         }
 
     }

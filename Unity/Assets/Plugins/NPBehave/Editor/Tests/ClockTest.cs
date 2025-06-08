@@ -4,40 +4,15 @@ namespace NPBehave
 
     public class ClockTest : Test
     {
-	    private class IncrBlackboardKey : Node
-        {
-            private string key;
-            private int value;
-            
-            public IncrBlackboardKey(string key, int value) : base("IncrBlackboardKey")
-            {
-	            this.value = value;
-                this.key = key;
-            }
-            protected override void DoStart()
-            {
-                Clock.AddUpdateObserver(Guid);
-            }
-            protected override void DoStop()
-            {
-                Clock.RemoveUpdateObserver(Guid);
-            }
-            public override void OnTimerReached()
-            {
-                Assert.AreEqual(value, Blackboard.GetInt(key));
-                Blackboard.SetInt(key, Blackboard.GetInt(key) + 1);
-            }
-        }
-
         [Test]
         public void ShouldUpdateObserversInOrder()
         {
             TestRoot behaviorTree = CreateBehaviorTree(new Parallel(Parallel.Policy.ALL, Parallel.Policy.ALL,
-                    new IncrBlackboardKey("currentAction", 0),
-                    new IncrBlackboardKey("currentAction", 1),
-                    new IncrBlackboardKey("currentAction", 2),
-                    new IncrBlackboardKey("currentAction", 3),
-                    new IncrBlackboardKey("currentAction", 4)
+                    new IncrBlackboardKey("currentAction"),
+                    new IncrBlackboardKey("currentAction"),
+                    new IncrBlackboardKey("currentAction"),
+                    new IncrBlackboardKey("currentAction"),
+                    new IncrBlackboardKey("currentAction")
                 ));
             behaviorTree.Blackboard.SetInt("currentAction", 0);
             behaviorTree.Start();

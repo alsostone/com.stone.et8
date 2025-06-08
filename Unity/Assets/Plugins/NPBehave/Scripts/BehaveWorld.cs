@@ -79,6 +79,18 @@ namespace NPBehave
         {
             Clock.Update(deltaTime);
         }
-        
+
+#if UNITY_EDITOR
+        public static void DebugSetSeed( int seed )
+        {
+            rng = new System.Random( seed );
+        }
+#endif
+        static System.Random rng = new System.Random();
+        public int GetRandomNext(int range)
+        {
+            return rng.Next(range);
+        }
+
     }
 }

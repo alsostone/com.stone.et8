@@ -11,9 +11,9 @@ namespace NPBehave
         public double delay = 0f;
         public float randomVariance = 0.0f;
 
-        public void ScheduleAbsoluteTime(double elapsedTime)
+        public void ScheduleAbsoluteTime(BehaveWorld world, double elapsedTime)
         {
-            scheduledTime = elapsedTime + delay - randomVariance * 0.5f + randomVariance * UnityEngine.Random.value;
+            scheduledTime = elapsedTime + delay - randomVariance * 0.5f + randomVariance * world.GetRandomNext(10000) / 10000.0f;
         }
     }
     
@@ -90,7 +90,7 @@ namespace NPBehave
 			timer.delay = delay;
 			timer.randomVariance = randomVariance;
 			timer.repeat = repeat;
-			timer.ScheduleAbsoluteTime(elapsedTime);
+			timer.ScheduleAbsoluteTime(behaveWorld, elapsedTime);
         }
 
         public void RemoveTimer(int action)
@@ -237,7 +237,7 @@ namespace NPBehave
                     }
                     
                     behaveWorld.GuidReceiverMapping[callback].OnTimerReached();
-					timer.ScheduleAbsoluteTime(elapsedTime);
+					timer.ScheduleAbsoluteTime(behaveWorld, elapsedTime);
                 }
             }
 

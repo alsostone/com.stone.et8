@@ -5,16 +5,17 @@ namespace NPBehave
     [MemoryPackable]
     public partial class Random : Decorator
     {
-        [MemoryPackInclude] private readonly float probability;
+        // [1~10000]
+        [MemoryPackInclude] private readonly int probability;
         
-        public Random(float probability, Node decoratee) : base("Random", decoratee)
+        public Random(int probability, Node decoratee) : base("Random", decoratee)
         {
             this.probability = probability;
         }
 
         protected override void DoStart()
         {
-            if (UnityEngine.Random.value <= probability)
+            if (RootNode.RootBehaveWorld.GetRandomNext(10000) < probability)
             {
                 Decoratee.Start();
             }

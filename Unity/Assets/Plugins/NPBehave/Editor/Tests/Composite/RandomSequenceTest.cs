@@ -146,7 +146,7 @@ namespace NPBehave
             TestRoot behaviorTree = CreateBehaviorTree( sut );
 
             // TODO: will we keep the priority or will we switch to the priority defined by the randomized children?
-            RandomSequence.DebugSetSeed( 2 );
+            BehaveWorld.DebugSetSeed( 2 );
 
             behaviorTree.Start();
 
@@ -174,7 +174,7 @@ namespace NPBehave
             TestRoot behaviorTree = CreateBehaviorTree( sut );
 
             // TODO: will we keep the priority or will we switch to the priority defined by the randomized children?
-            RandomSequence.DebugSetSeed( 2 );
+            BehaveWorld.DebugSetSeed( 2 );
 
             behaviorTree.Start();
 
@@ -201,7 +201,7 @@ namespace NPBehave
             TestRoot behaviorTree = CreateBehaviorTree( sut );
 
             // TODO: will we keep the priority or will we switch to the priority defined by the randomized children?
-            RandomSequence.DebugSetSeed( 2 ); 
+            BehaveWorld.DebugSetSeed( 2 ); 
 
             behaviorTree.Start();
 

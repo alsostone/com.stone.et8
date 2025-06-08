@@ -5,16 +5,6 @@ namespace NPBehave
     [MemoryPackable]
     public partial class RandomSequence : Composite
     {
-        static System.Random rng = new System.Random();
-
-
-#if UNITY_EDITOR
-        public static void DebugSetSeed( int seed )
-        {
-            rng = new System.Random( seed );
-        }
-#endif
-
         [MemoryPackInclude] private int currentIndex = -1;
         [MemoryPackInclude] private int[] randomizedOrder;
 
@@ -35,7 +25,7 @@ namespace NPBehave
             int n = randomizedOrder.Length;
             while (n > 1)
             {
-                int k = rng.Next(n--);
+                int k = RootNode.RootBehaveWorld.GetRandomNext(n--);
                 (randomizedOrder[n], randomizedOrder[k]) = (randomizedOrder[k], randomizedOrder[n]);
             }
 
