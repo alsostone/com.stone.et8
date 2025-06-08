@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using MemoryPack;
 using TrueSync;
@@ -5,7 +6,7 @@ using TrueSync;
 namespace NPBehave
 {
     [MemoryPackable]
-    public partial class BehaveWorld
+    public partial class BehaveWorld : IDisposable
     {
         [MemoryPackInclude] public Clock Clock { get; private set; }
         
@@ -39,6 +40,21 @@ namespace NPBehave
             {
                 blackboard.SetWorld(this);
             }
+        }
+        
+        // 防止因为循环依赖导致无法GC
+        public void Dispose()
+        {
+            Clock.Dispose();
+            Clock = null;
+            foreach (var blackboard in blackboards)
+            {
+                blackboard.Dispose();
+            }
+            blackboards.Clear();
+            sharedBlackboards.Clear();
+            GuidReceiverMapping.Clear();
+            random = null;
         }
 
         public void SetRandom(TSRandom tsRandom)

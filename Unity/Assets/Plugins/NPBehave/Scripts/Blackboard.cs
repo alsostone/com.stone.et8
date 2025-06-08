@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using MemoryPack;
 using TrueSync;
 
@@ -25,7 +26,7 @@ namespace NPBehave
     }
     
     [MemoryPackable]
-    public partial class Blackboard : Receiver
+    public partial class Blackboard : Receiver, IDisposable
     {
         [MemoryPackInclude] private int parentGuid;
         [MemoryPackInclude] private HashSet<int> childrenGuid = new HashSet<int>();
@@ -56,6 +57,13 @@ namespace NPBehave
             this.clock = world.Clock;
             this.parentGuid = parent?.Guid ?? -1;
             world.GuidReceiverMapping.Add(Guid, this);
+        }
+
+        public void Dispose()
+        {
+            behaveWorld = null;
+            parent = null;
+            clock = null;
         }
 
         internal void SetWorld(BehaveWorld world)

@@ -1,10 +1,11 @@
-﻿using MemoryPack;
+﻿using System;
+using MemoryPack;
 using TrueSync;
 
 namespace NPBehave
 {
     [MemoryPackable(GenerateType.NoGenerate)]
-    public abstract partial class Node : Receiver
+    public abstract partial class Node : Receiver, IDisposable
     {
         public enum State
         {
@@ -33,6 +34,13 @@ namespace NPBehave
         {
             this.name = name;
             NodeFormatter.TryAddFormatter(this);
+        }
+
+        // 防止因为循环依赖导致无法GC
+        public virtual void Dispose()
+        {
+            RootNode = null;
+            ParentNode = null;
         }
 
         public virtual void SetRoot(Root rootNode)
