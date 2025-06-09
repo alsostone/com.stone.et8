@@ -21,10 +21,10 @@ namespace TrueSync {
         private const int MAX_RAND_INT = 0x7fffffff;
         [BsonElement]
         [MemoryPackInclude]
-        private uint[] mag01 = { 0x0U, MATRIX_A };
+        private long[] mag01 = { 0x0U, MATRIX_A };
         [BsonElement]
         [MemoryPackInclude]
-        private uint[] mt = new uint[N];
+        private long[] mt = new long[N];
         [BsonElement]
         [MemoryPackInclude]
         private int mti = N + 1;
@@ -227,18 +227,18 @@ namespace TrueSync {
                 if (mti == N + 1)
                     init_genrand(5489U);
                 for (kk = 0; kk < N - M; kk++) {
-                    y = (mt[kk] & UPPER_MASK) | (mt[kk + 1] & LOWER_MASK);
+                    y = ((uint)mt[kk] & UPPER_MASK) | ((uint)mt[kk + 1] & LOWER_MASK);
                     mt[kk] = mt[kk + M] ^ (y >> 1) ^ mag01[y & 0x1U];
                 }
                 for (; kk < N - 1; kk++) {
-                    y = (mt[kk] & UPPER_MASK) | (mt[kk + 1] & LOWER_MASK);
+                    y = ((uint)mt[kk] & UPPER_MASK) | ((uint)mt[kk + 1] & LOWER_MASK);
                     mt[kk] = mt[kk + (M - N)] ^ (y >> 1) ^ mag01[y & 0x1U];
                 }
-                y = (mt[N - 1] & UPPER_MASK) | (mt[0] & LOWER_MASK);
+                y = ((uint)mt[N - 1] & UPPER_MASK) | ((uint)mt[0] & LOWER_MASK);
                 mt[N - 1] = mt[M - 1] ^ (y >> 1) ^ mag01[y & 0x1U];
                 mti = 0;
             }
-            y = mt[mti++];
+            y = (uint)mt[mti++];
             y ^= (y >> 11);
             y ^= (y << 7) & 0x9d2c5680U;
             y ^= (y << 15) & 0xefc60000U;
