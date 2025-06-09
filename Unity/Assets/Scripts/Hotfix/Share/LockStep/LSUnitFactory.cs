@@ -27,6 +27,7 @@ namespace ET
 			lsUnit.AddComponent<BuffComponent>();
 			lsUnit.AddComponent<BeHitComponent>();
 			lsUnit.AddComponent<SkillComponent, int[]>(row.Skills);
+			lsUnit.AddComponent<AIRootComponent, EUnitType>(EUnitType.Hero);
 			
 			lsUnit.AddComponent<LSInputComponent>();
 			EventSystem.Instance.Publish(lsWorld, new LSUnitCreate() {LSUnit = lsUnit});
@@ -56,6 +57,7 @@ namespace ET
 	        lsUnit.AddComponent<BuffComponent>();
 	        lsUnit.AddComponent<BeHitComponent>();
 	        lsUnit.AddComponent<SkillComponent, int[]>(row.Skills);
+	        lsUnit.AddComponent<AIRootComponent, EUnitType>(EUnitType.Soldier);
 			
 	        EventSystem.Instance.Publish(lsWorld, new LSUnitCreate() {LSUnit = lsUnit});
 	        return lsUnit;
@@ -84,6 +86,7 @@ namespace ET
 	        lsUnit.AddComponent<BuffComponent>();
 	        lsUnit.AddComponent<BeHitComponent>();
 	        lsUnit.AddComponent<SkillComponent, int[]>(row.Skills);
+	        lsUnit.AddComponent<AIRootComponent, EUnitType>(EUnitType.Building);
 			
 	        EventSystem.Instance.Publish(lsWorld, new LSUnitCreate() {LSUnit = lsUnit});
 	        return lsUnit;

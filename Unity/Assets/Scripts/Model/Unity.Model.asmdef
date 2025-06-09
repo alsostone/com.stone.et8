@@ -6,7 +6,8 @@
         "Unity.Core",
         "Unity.Mathematics",
         "MemoryPack",
-        "TrueSync"
+        "TrueSync",
+        "NPBehave"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],
