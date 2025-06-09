@@ -1,5 +1,6 @@
 ﻿using System;
 using MemoryPack;
+using MongoDB.Bson.Serialization.Attributes;
 using TrueSync;
 
 namespace NPBehave
@@ -7,13 +8,13 @@ namespace NPBehave
     [MemoryPackable]
     public partial class BlackboardFloat : ObservingDecorator
     {
-        [MemoryPackInclude] private readonly string blackboardKey;
-        [MemoryPackInclude] private readonly FP value;
-        [MemoryPackInclude] private readonly Operator op;
+        [BsonElement][MemoryPackInclude] private string blackboardKey;
+        [BsonElement][MemoryPackInclude] private FP value;
+        [BsonElement][MemoryPackInclude] private Operator op;
 
-        [MemoryPackIgnore] public string BlackboardKey => blackboardKey;
-        [MemoryPackIgnore] public FP Value => value;
-        [MemoryPackIgnore] public Operator Operator => op;
+        [BsonIgnore][MemoryPackIgnore] public string BlackboardKey => blackboardKey;
+        [BsonIgnore][MemoryPackIgnore] public FP Value => value;
+        [BsonIgnore][MemoryPackIgnore] public Operator Operator => op;
 
         [MemoryPackConstructor]
         public BlackboardFloat(string blackboardKey, Operator op, FP value, Stops stopsOnChange, Node decoratee) : base("BlackboardFloat", stopsOnChange, decoratee)
@@ -39,7 +40,7 @@ namespace NPBehave
             Blackboard.RemoveObserver(blackboardKey, Guid);
         }
         
-        public override void OnObservingChanged(NotifyType type)
+        public override void OnObservingChanged(BlackboardChangeType type)
         {
             Evaluate();
         }

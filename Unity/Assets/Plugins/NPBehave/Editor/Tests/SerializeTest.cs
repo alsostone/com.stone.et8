@@ -92,5 +92,11 @@ namespace NPBehave
             Assert.AreEqual(root2.RootBlackboard.GetInt("currentActionRoot2"), root2New.RootBlackboard.GetInt("currentActionRoot2"));
         }
 
+        [Test]
+        public void ShouldEqual_MongoDBSerializedBehaveWorldAndRoot()
+        {
+            MongoSerialized.ShouldEqual_MongoDBSerializedBehaveWorldAndRoot();
+        }
+
     }
 }

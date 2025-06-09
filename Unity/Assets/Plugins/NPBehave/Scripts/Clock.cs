@@ -1,6 +1,8 @@
 using System;
 using System.Collections.Generic;
 using MemoryPack;
+using MongoDB.Bson.Serialization.Attributes;
+using MongoDB.Bson.Serialization.Options;
 using TrueSync;
 
 namespace NPBehave
@@ -22,19 +24,21 @@ namespace NPBehave
     [MemoryPackable]
     public partial class Clock : IDisposable
     {
-        [MemoryPackInclude] private FP elapsedTime = FP.Zero;
-        [MemoryPackInclude] private bool isInUpdate = false;
+        [BsonElement][MemoryPackInclude] private FP elapsedTime = FP.Zero;
+        [BsonElement][MemoryPackInclude] private bool isInUpdate = false;
         
-        [MemoryPackInclude] private Dictionary<int, Timer> timers = new Dictionary<int, Timer>();
-        [MemoryPackInclude] private Dictionary<int, Timer> addTimers = new Dictionary<int, Timer>();
-        [MemoryPackInclude] private HashSet<int> removeTimers = new HashSet<int>();
+        [BsonDictionaryOptions(DictionaryRepresentation.ArrayOfArrays)]
+        [BsonElement][MemoryPackInclude] private Dictionary<int, Timer> timers = new Dictionary<int, Timer>();
+        [BsonDictionaryOptions(DictionaryRepresentation.ArrayOfArrays)]
+        [BsonElement][MemoryPackInclude] private Dictionary<int, Timer> addTimers = new Dictionary<int, Timer>();
+        [BsonElement][MemoryPackInclude] private HashSet<int> removeTimers = new HashSet<int>();
         
-        [MemoryPackInclude] private HashSet<int> updateObservers = new HashSet<int>();
-        [MemoryPackInclude] private HashSet<int> addObservers = new HashSet<int>();
-        [MemoryPackInclude] private HashSet<int> removeObservers = new HashSet<int>();
+        [BsonElement][MemoryPackInclude] private HashSet<int> updateObservers = new HashSet<int>();
+        [BsonElement][MemoryPackInclude] private HashSet<int> addObservers = new HashSet<int>();
+        [BsonElement][MemoryPackInclude] private HashSet<int> removeObservers = new HashSet<int>();
         
-        [MemoryPackIgnore] private BehaveWorld behaveWorld;
-        [MemoryPackIgnore] private readonly Queue<Timer> timerPool = new Queue<Timer>();
+        [BsonIgnore][MemoryPackIgnore] private BehaveWorld behaveWorld;
+        [BsonIgnore][MemoryPackIgnore] private Queue<Timer> timerPool = new Queue<Timer>();
 
         [MemoryPackConstructor]
         private Clock() { }
@@ -280,10 +284,10 @@ namespace NPBehave
         }
         
 #if UNITY_EDITOR
-        [MemoryPackIgnore] public int NumUpdateObservers => updateObservers.Count;
-        [MemoryPackIgnore] public int NumTimers => timers.Count;
-        [MemoryPackIgnore] public FP ElapsedTime => elapsedTime;
-        [MemoryPackIgnore] public int DebugPoolSize => timerPool.Count;
+        [BsonIgnore][MemoryPackIgnore] public int NumUpdateObservers => updateObservers.Count;
+        [BsonIgnore][MemoryPackIgnore] public int NumTimers => timers.Count;
+        [BsonIgnore][MemoryPackIgnore] public FP ElapsedTime => elapsedTime;
+        [BsonIgnore][MemoryPackIgnore] public int DebugPoolSize => timerPool.Count;
 #endif
         
         private Timer GetTimerFromPool()

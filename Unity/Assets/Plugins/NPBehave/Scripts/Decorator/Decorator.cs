@@ -1,10 +1,11 @@
 ﻿using MemoryPack;
+using MongoDB.Bson.Serialization.Attributes;
 
 namespace NPBehave
 {
     public abstract class Decorator : Container
     {
-        [MemoryPackInclude] protected Node Decoratee;
+        [BsonElement][MemoryPackInclude] protected Node Decoratee;
 
         protected Decorator(string name, Node decoratee) : base(name)
         {
@@ -28,7 +29,7 @@ namespace NPBehave
 
 
 #if UNITY_EDITOR
-        [MemoryPackIgnore] public override Node[] DebugChildren
+        [BsonIgnore][MemoryPackIgnore] public override Node[] DebugChildren
         {
             get
             {

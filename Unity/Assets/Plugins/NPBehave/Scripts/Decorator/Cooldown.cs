@@ -1,4 +1,5 @@
 ﻿using MemoryPack;
+using MongoDB.Bson.Serialization.Attributes;
 using TrueSync;
 
 namespace NPBehave
@@ -6,12 +7,12 @@ namespace NPBehave
     [MemoryPackable]
     public partial class Cooldown : Decorator
     {
-        [MemoryPackInclude] private bool startAfterDecoratee = false;
-        [MemoryPackInclude] private bool resetOnFailiure = false;
-	    [MemoryPackInclude] private bool failOnCooldown = false;
-        [MemoryPackInclude] private readonly FP cooldownTime;
-        [MemoryPackInclude] private readonly FP randomVariation;
-        [MemoryPackInclude] private bool isReady = true;
+        [BsonElement][MemoryPackInclude] private bool startAfterDecoratee = false;
+        [BsonElement][MemoryPackInclude] private bool resetOnFailiure = false;
+	    [BsonElement][MemoryPackInclude] private bool failOnCooldown = false;
+        [BsonElement][MemoryPackInclude] private FP cooldownTime;
+        [BsonElement][MemoryPackInclude] private FP randomVariation;
+        [BsonElement][MemoryPackInclude] private bool isReady = true;
         
         /// <summary>
         /// The Cooldown decorator ensures that the branch can not be started twice within the given cooldown time.

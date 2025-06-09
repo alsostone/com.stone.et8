@@ -1,5 +1,6 @@
 ﻿
 using MemoryPack;
+using MongoDB.Bson.Serialization.Attributes;
 
 namespace NPBehave
 {
@@ -20,7 +21,7 @@ namespace NPBehave
 
     public abstract class ActionRequest : Task
     {
-        [MemoryPackInclude] private bool bWasBlocked = false;
+        [BsonElement][MemoryPackInclude] private bool bWasBlocked = false;
 
         protected ActionRequest() : base("ActionRequest")
         {

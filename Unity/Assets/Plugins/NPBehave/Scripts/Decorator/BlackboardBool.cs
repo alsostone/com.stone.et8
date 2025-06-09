@@ -1,18 +1,19 @@
 ﻿using System;
 using MemoryPack;
+using MongoDB.Bson.Serialization.Attributes;
 
 namespace NPBehave
 {
     [MemoryPackable]
     public partial class BlackboardBool : ObservingDecorator
     {
-        [MemoryPackInclude] private readonly string blackboardKey;
-        [MemoryPackInclude] private readonly bool value;
-        [MemoryPackInclude] private readonly Operator op;
+        [BsonElement][MemoryPackInclude] private string blackboardKey;
+        [BsonElement][MemoryPackInclude] private bool value;
+        [BsonElement][MemoryPackInclude] private Operator op;
 
-        [MemoryPackIgnore] public string BlackboardKey => blackboardKey;
-        [MemoryPackIgnore] public bool Value => value;
-        [MemoryPackIgnore] public Operator Operator => op;
+        [BsonIgnore][MemoryPackIgnore] public string BlackboardKey => blackboardKey;
+        [BsonIgnore][MemoryPackIgnore] public bool Value => value;
+        [BsonIgnore][MemoryPackIgnore] public Operator Operator => op;
 
         [MemoryPackConstructor]
         public BlackboardBool(string blackboardKey, Operator op, bool value, Stops stopsOnChange, Node decoratee) : base("BlackboardBool", stopsOnChange, decoratee)
@@ -38,7 +39,7 @@ namespace NPBehave
             Blackboard.RemoveObserver(blackboardKey, Guid);
         }
         
-        public override void OnObservingChanged(NotifyType type)
+        public override void OnObservingChanged(BlackboardChangeType type)
         {
             Evaluate();
         }

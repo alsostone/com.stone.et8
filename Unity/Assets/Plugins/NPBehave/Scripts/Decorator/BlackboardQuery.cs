@@ -1,10 +1,11 @@
 ﻿using MemoryPack;
+using MongoDB.Bson.Serialization.Attributes;
 
 namespace NPBehave
 {
     public abstract class BlackboardQuery : ObservingDecorator
     {
-        [MemoryPackInclude] protected readonly string[] blackboardKeys;
+        [BsonElement][MemoryPackInclude] protected string[] blackboardKeys;
 
         protected BlackboardQuery(string[] blackboardKeys, Stops stopsOnChange, Node decoratee) : base("BlackboardQuery", stopsOnChange, decoratee)
         {
@@ -27,7 +28,7 @@ namespace NPBehave
             }
         }
         
-        public override void OnObservingChanged(NotifyType type)
+        public override void OnObservingChanged(BlackboardChangeType type)
         {
             Evaluate();
         }

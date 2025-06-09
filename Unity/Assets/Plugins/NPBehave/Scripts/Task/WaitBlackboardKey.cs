@@ -1,4 +1,5 @@
 ﻿using MemoryPack;
+using MongoDB.Bson.Serialization.Attributes;
 using TrueSync;
 
 namespace NPBehave
@@ -6,8 +7,8 @@ namespace NPBehave
     [MemoryPackable]
     public partial class WaitBlackboardKey : Task
     {
-        [MemoryPackInclude] private readonly string blackboardKey = null;
-        [MemoryPackInclude] private readonly FP randomVariance;
+        [BsonElement][MemoryPackInclude] private string blackboardKey = null;
+        [BsonElement][MemoryPackInclude] private FP randomVariance;
         
         public WaitBlackboardKey(string blackboardKey) : base("WaitBlackboardKey")
         {

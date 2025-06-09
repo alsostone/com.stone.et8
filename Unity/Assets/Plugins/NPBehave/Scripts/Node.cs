@@ -1,5 +1,6 @@
 ﻿using System;
 using MemoryPack;
+using MongoDB.Bson.Serialization.Attributes;
 using TrueSync;
 
 namespace NPBehave
@@ -14,21 +15,21 @@ namespace NPBehave
             STOP_REQUESTED,
         }
         
-        [MemoryPackInclude] protected State currentState = State.INACTIVE;
+        [BsonElement][MemoryPackInclude] protected State currentState = State.INACTIVE;
         
-        [MemoryPackIgnore] private string label;
-        [MemoryPackInclude] public string Label { get => label; set => label = value; }
+        [BsonIgnore][MemoryPackIgnore] private string label;
+        [BsonIgnoreIfNull][BsonElement][MemoryPackInclude] public string Label { get => label; set => label = value; }
         
-        [MemoryPackIgnore] private readonly string name;
-        [MemoryPackIgnore] public string Name => name;
+        [BsonIgnore][MemoryPackIgnore] private string name;
+        [BsonIgnore][MemoryPackIgnore] public string Name => name;
         
-        [MemoryPackIgnore] public State CurrentState => currentState;
-        [MemoryPackIgnore] protected Root RootNode { get; set; }
-        [MemoryPackIgnore] public Container ParentNode { get; private set; }
-        [MemoryPackIgnore] public Blackboard Blackboard => RootNode.RootBlackboard;
-        [MemoryPackIgnore] public Clock Clock => RootNode.RootClock;
-        [MemoryPackIgnore] public bool IsStopRequested => currentState == State.STOP_REQUESTED;
-        [MemoryPackIgnore] public bool IsActive => currentState == State.ACTIVE;
+        [BsonIgnore][MemoryPackIgnore] public State CurrentState => currentState;
+        [BsonIgnore][MemoryPackIgnore] protected Root RootNode { get; set; }
+        [BsonIgnore][MemoryPackIgnore] public Container ParentNode { get; private set; }
+        [BsonIgnore][MemoryPackIgnore] public Blackboard Blackboard => RootNode.RootBlackboard;
+        [BsonIgnore][MemoryPackIgnore] public Clock Clock => RootNode.RootClock;
+        [BsonIgnore][MemoryPackIgnore] public bool IsStopRequested => currentState == State.STOP_REQUESTED;
+        [BsonIgnore][MemoryPackIgnore] public bool IsActive => currentState == State.ACTIVE;
         
         protected Node(string name)
         {
@@ -59,12 +60,12 @@ namespace NPBehave
         }
 
 #if UNITY_EDITOR
-        [MemoryPackIgnore] public FP DebugLastStopRequestAt = FP.Zero;
-        [MemoryPackIgnore] public FP DebugLastStoppedAt = FP.Zero;
-        [MemoryPackIgnore] public int DebugNumStartCalls = 0;
-        [MemoryPackIgnore] public int DebugNumStopCalls = 0;
-        [MemoryPackIgnore] public int DebugNumStoppedCalls = 0;
-        [MemoryPackIgnore] public bool DebugLastResult = false;
+        [BsonIgnore][MemoryPackIgnore] public FP DebugLastStopRequestAt = FP.Zero;
+        [BsonIgnore][MemoryPackIgnore] public FP DebugLastStoppedAt = FP.Zero;
+        [BsonIgnore][MemoryPackIgnore] public int DebugNumStartCalls = 0;
+        [BsonIgnore][MemoryPackIgnore] public int DebugNumStopCalls = 0;
+        [BsonIgnore][MemoryPackIgnore] public int DebugNumStoppedCalls = 0;
+        [BsonIgnore][MemoryPackIgnore] public bool DebugLastResult = false;
 #endif
 
         public void Start()

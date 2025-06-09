@@ -1,4 +1,5 @@
 ﻿using MemoryPack;
+using MongoDB.Bson.Serialization.Attributes;
 using TrueSync;
 
 namespace NPBehave
@@ -6,8 +7,8 @@ namespace NPBehave
     [MemoryPackable]
     public partial class WaitSecond : Task
     {
-        [MemoryPackInclude] private readonly FP seconds;
-        [MemoryPackInclude] private readonly FP randomVariance;
+        [BsonElement][MemoryPackInclude] private FP seconds;
+        [BsonElement][MemoryPackInclude] private FP randomVariance;
         
         [MemoryPackConstructor]
         public WaitSecond(FP seconds, FP randomVariance) : base("WaitSecond")

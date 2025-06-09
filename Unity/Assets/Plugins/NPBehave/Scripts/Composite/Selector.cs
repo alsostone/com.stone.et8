@@ -1,11 +1,12 @@
 ﻿using MemoryPack;
+using MongoDB.Bson.Serialization.Attributes;
 
 namespace NPBehave
 {
     [MemoryPackable]
     public partial class Selector : Composite
     {
-        [MemoryPackInclude] private int currentIndex = -1;
+        [BsonElement][MemoryPackInclude] private int currentIndex = -1;
 
         public Selector(params Node[] children) : base("Selector", children)
         {

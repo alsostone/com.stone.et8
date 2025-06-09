@@ -1,12 +1,13 @@
 ﻿using MemoryPack;
+using MongoDB.Bson.Serialization.Attributes;
 
 namespace NPBehave
 {
     [MemoryPackable]
     public partial class RandomSequence : Composite
     {
-        [MemoryPackInclude] private int currentIndex = -1;
-        [MemoryPackInclude] private int[] randomizedOrder;
+        [BsonElement][MemoryPackInclude] private int currentIndex = -1;
+        [BsonElement][MemoryPackInclude] private int[] randomizedOrder;
 
         public RandomSequence(params Node[] children) : base("Random Sequence", children)
         {

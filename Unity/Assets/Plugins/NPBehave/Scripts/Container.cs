@@ -1,13 +1,13 @@
 using MemoryPack;
+using MongoDB.Bson.Serialization.Attributes;
 
 namespace NPBehave
 {
     public abstract class Container : Node
     {
-        [MemoryPackInclude] protected bool collapse = false;
+        [BsonElement][MemoryPackInclude] protected bool collapse = false;
         
-        [MemoryPackIgnore]
-        public bool Collapse
+        [BsonIgnore][MemoryPackIgnore] public bool Collapse
         {
             get => collapse;
             set => collapse = value;
@@ -25,7 +25,7 @@ namespace NPBehave
         protected abstract void DoChildStopped(Node child, bool succeeded);
 
 #if UNITY_EDITOR
-        [MemoryPackIgnore] public abstract Node[] DebugChildren
+        [BsonIgnore][MemoryPackIgnore] public abstract Node[] DebugChildren
         {
             get;
         }

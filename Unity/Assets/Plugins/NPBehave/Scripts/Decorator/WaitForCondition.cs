@@ -1,12 +1,13 @@
 ﻿using MemoryPack;
+using MongoDB.Bson.Serialization.Attributes;
 using TrueSync;
 
 namespace NPBehave
 {
     public abstract class WaitForCondition : Decorator
     {
-        [MemoryPackInclude] protected readonly FP checkInterval;
-        [MemoryPackInclude] protected readonly FP checkVariance;
+        [BsonElement][MemoryPackInclude] protected FP checkInterval;
+        [BsonElement][MemoryPackInclude] protected FP checkVariance;
         
         protected WaitForCondition(FP checkInterval, FP randomVariance, Node decoratee) : base("WaitForCondition", decoratee)
         {

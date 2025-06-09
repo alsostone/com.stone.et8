@@ -1,11 +1,12 @@
 ﻿using MemoryPack;
+using MongoDB.Bson.Serialization.Attributes;
 
 namespace NPBehave
 {
     [MemoryPackable]
     public partial class WaitUntilStopped : Task
     {
-        [MemoryPackInclude] private readonly bool successWhenStopped;
+        [BsonElement][MemoryPackInclude] private bool successWhenStopped;
         
         public WaitUntilStopped(bool successWhenStopped = false) : base("WaitUntilStopped")
         {

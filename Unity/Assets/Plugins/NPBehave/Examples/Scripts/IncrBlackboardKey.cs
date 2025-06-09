@@ -1,15 +1,16 @@
 using MemoryPack;
+using MongoDB.Bson.Serialization.Attributes;
 
 namespace NPBehave
 {
     [MemoryPackable]
     public partial class IncrBlackboardKey : Node
     {
-        [MemoryPackInclude] private string key;
+        [BsonElement][MemoryPackInclude] private string blackboardKey;
 
-        public IncrBlackboardKey(string key) : base("IncrBlackboardKey")
+        public IncrBlackboardKey(string blackboardKey) : base("IncrBlackboardKey")
         {
-            this.key = key;
+            this.blackboardKey = blackboardKey;
         }
         protected override void DoStart()
         {
@@ -21,7 +22,7 @@ namespace NPBehave
         }
         public override void OnTimerReached()
         {
-            Blackboard.SetInt(key, Blackboard.GetInt(key) + 1);
+            Blackboard.SetInt(this.blackboardKey, Blackboard.GetInt(this.blackboardKey) + 1);
         }
     }
 

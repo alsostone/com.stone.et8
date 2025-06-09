@@ -1,12 +1,13 @@
 ﻿using MemoryPack;
+using MongoDB.Bson.Serialization.Attributes;
 using TrueSync;
 
 namespace NPBehave
 {
     public abstract class Condition : ObservingDecorator
     {
-        [MemoryPackInclude] protected FP checkInterval;
-        [MemoryPackInclude] protected FP checkVariance;
+        [BsonElement][MemoryPackInclude] protected FP checkInterval;
+        [BsonElement][MemoryPackInclude] protected FP checkVariance;
         
         protected Condition(Node decoratee) : base("Condition", Stops.NONE, decoratee)
         {

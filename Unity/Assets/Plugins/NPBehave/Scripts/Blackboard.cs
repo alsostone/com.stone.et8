@@ -1,11 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using MemoryPack;
+using MongoDB.Bson.Serialization.Attributes;
 using TrueSync;
 
 namespace NPBehave
 {
-    public enum NotifyType
+    public enum BlackboardChangeType
     {
         ADD,
         REMOVE,
@@ -15,36 +16,36 @@ namespace NPBehave
     [MemoryPackable]
     public partial struct Notification
     {
-        public readonly string key;
-        public readonly NotifyType type;
+        public string blackboardKey;
+        public BlackboardChangeType changeType;
 
-        public Notification(string key, NotifyType type)
+        public Notification(string blackboardKey, BlackboardChangeType changeType)
         {
-            this.key = key;
-            this.type = type;
+            this.blackboardKey = blackboardKey;
+            this.changeType = changeType;
         }
     }
     
     [MemoryPackable]
     public partial class Blackboard : Receiver, IDisposable
     {
-        [MemoryPackInclude] private int parentGuid;
-        [MemoryPackInclude] private HashSet<int> childrenGuid = new HashSet<int>();
-        [MemoryPackInclude] private Dictionary<string, bool> dataBool = new Dictionary<string, bool>();
-        [MemoryPackInclude] private Dictionary<string, int> dataInt = new Dictionary<string, int>();
-        [MemoryPackInclude] private Dictionary<string, FP> dataFloat = new Dictionary<string, FP>();
+        [BsonElement][MemoryPackInclude] private int parentGuid;
+        [BsonElement][MemoryPackInclude] private HashSet<int> childrenGuid = new HashSet<int>();
+        [BsonElement][MemoryPackInclude] private Dictionary<string, bool> dataBool = new Dictionary<string, bool>();
+        [BsonElement][MemoryPackInclude] private Dictionary<string, int> dataInt = new Dictionary<string, int>();
+        [BsonElement][MemoryPackInclude] private Dictionary<string, FP> dataFloat = new Dictionary<string, FP>();
         
-        [MemoryPackInclude] private bool isNotifying = false;
-        [MemoryPackInclude] private List<Notification> notifications = new List<Notification>();
-        [MemoryPackInclude] private List<Notification> notificationsDispatch = new List<Notification>();
+        [BsonElement][MemoryPackInclude] private bool isNotifying = false;
+        [BsonElement][MemoryPackInclude] private List<Notification> notifications = new List<Notification>();
+        [BsonElement][MemoryPackInclude] private List<Notification> notificationsDispatch = new List<Notification>();
         
-        [MemoryPackInclude] private Dictionary<string, List<int>> keyObserversMapping = new Dictionary<string, List<int>>();
-        [MemoryPackInclude] private Dictionary<string, List<int>> keyAddObserversMapping = new Dictionary<string, List<int>>();
-        [MemoryPackInclude] private Dictionary<string, List<int>> keyRemoveObserversMapping = new Dictionary<string, List<int>>();
+        [BsonElement][MemoryPackInclude] private Dictionary<string, List<int>> keyObserversMapping = new Dictionary<string, List<int>>();
+        [BsonElement][MemoryPackInclude] private Dictionary<string, List<int>> keyAddObserversMapping = new Dictionary<string, List<int>>();
+        [BsonElement][MemoryPackInclude] private Dictionary<string, List<int>> keyRemoveObserversMapping = new Dictionary<string, List<int>>();
         
-        [MemoryPackIgnore] private BehaveWorld behaveWorld;
-        [MemoryPackIgnore] private Blackboard parent;
-        [MemoryPackIgnore] private Clock clock;
+        [BsonIgnore][MemoryPackIgnore] private BehaveWorld behaveWorld;
+        [BsonIgnore][MemoryPackIgnore] private Blackboard parent;
+        [BsonIgnore][MemoryPackIgnore] private Clock clock;
 
         [MemoryPackConstructor]
         private Blackboard() { }
@@ -106,7 +107,7 @@ namespace NPBehave
                 if (!dataBool.TryGetValue(key, out var dataValue))
                 {
                     dataBool[key] = value;
-                    notifications.Add(new Notification(key, NotifyType.ADD));
+                    notifications.Add(new Notification(key, BlackboardChangeType.ADD));
                     clock.AddTimer(FP.Zero, 0, Guid);
                 }
                 else
@@ -114,7 +115,7 @@ namespace NPBehave
                     if (!dataValue.Equals(value))
                     {
                         dataBool[key] = value;
-                        notifications.Add(new Notification(key, NotifyType.CHANGE));
+                        notifications.Add(new Notification(key, BlackboardChangeType.CHANGE));
                         clock.AddTimer(FP.Zero, 0, Guid);
                     }
                 }
@@ -132,7 +133,7 @@ namespace NPBehave
                 if (!dataInt.TryGetValue(key, out var dataValue))
                 {
                     dataInt[key] = value;
-                    notifications.Add(new Notification(key, NotifyType.ADD));
+                    notifications.Add(new Notification(key, BlackboardChangeType.ADD));
                     clock.AddTimer(FP.Zero, 0, Guid);
                 }
                 else
@@ -140,7 +141,7 @@ namespace NPBehave
                     if (!dataValue.Equals(value))
                     {
                         dataInt[key] = value;
-                        notifications.Add(new Notification(key, NotifyType.CHANGE));
+                        notifications.Add(new Notification(key, BlackboardChangeType.CHANGE));
                         clock.AddTimer(FP.Zero, 0, Guid);
                     }
                 }
@@ -158,7 +159,7 @@ namespace NPBehave
                 if (!dataFloat.TryGetValue(key, out var dataValue))
                 {
                     dataFloat[key] = value;
-                    notifications.Add(new Notification(key, NotifyType.ADD));
+                    notifications.Add(new Notification(key, BlackboardChangeType.ADD));
                     clock.AddTimer(FP.Zero, 0, Guid);
                 }
                 else
@@ -166,7 +167,7 @@ namespace NPBehave
                     if (!dataValue.Equals(value))
                     {
                         dataFloat[key] = value;
-                        notifications.Add(new Notification(key, NotifyType.CHANGE));
+                        notifications.Add(new Notification(key, BlackboardChangeType.CHANGE));
                         clock.AddTimer(FP.Zero, 0, Guid);
                     }
                 }
@@ -180,7 +181,7 @@ namespace NPBehave
             if (dataBool.ContainsKey(key))
             {
                 dataBool.Remove(key);
-                notifications.Add(new Notification(key, NotifyType.REMOVE));
+                notifications.Add(new Notification(key, BlackboardChangeType.REMOVE));
                 clock.AddTimer(FP.Zero, 0, Guid);
             }
         }
@@ -190,7 +191,7 @@ namespace NPBehave
             if (dataInt.ContainsKey(key))
             {
                 dataInt.Remove(key);
-                notifications.Add(new Notification(key, NotifyType.REMOVE));
+                notifications.Add(new Notification(key, BlackboardChangeType.REMOVE));
                 clock.AddTimer(FP.Zero, 0, Guid);
             }
         }
@@ -200,7 +201,7 @@ namespace NPBehave
             if (dataFloat.ContainsKey(key))
             {
                 dataFloat.Remove(key);
-                notifications.Add(new Notification(key, NotifyType.REMOVE));
+                notifications.Add(new Notification(key, BlackboardChangeType.REMOVE));
                 clock.AddTimer(FP.Zero, 0, Guid);
             }
         }
@@ -297,7 +298,7 @@ namespace NPBehave
             }
         }
         
-        [MemoryPackIgnore] public int NumObservers
+        [BsonIgnore][MemoryPackIgnore] public int NumObservers
         {
             get
             {
@@ -310,7 +311,7 @@ namespace NPBehave
             }
         }
         
-        [MemoryPackIgnore] public int NumData
+        [BsonIgnore][MemoryPackIgnore] public int NumData
         {
             get
             {
@@ -411,19 +412,19 @@ namespace NPBehave
             isNotifying = true;
             foreach (var notification in notificationsDispatch)
             {
-                if (!keyObserversMapping.ContainsKey(notification.key))
+                if (!keyObserversMapping.ContainsKey(notification.blackboardKey))
                 {
                     continue;
                 }
 
-                var observers = GetObservers(keyObserversMapping, notification.key);
+                var observers = GetObservers(keyObserversMapping, notification.blackboardKey);
                 foreach (var observer in observers)
                 {
-                    if (keyRemoveObserversMapping.TryGetValue(notification.key, out var removeObservers) && removeObservers.Contains(observer))
+                    if (keyRemoveObserversMapping.TryGetValue(notification.blackboardKey, out var removeObservers) && removeObservers.Contains(observer))
                     {
                         continue;
                     }
-                    behaveWorld.GuidReceiverMapping[observer].OnObservingChanged(notification.type);
+                    behaveWorld.GuidReceiverMapping[observer].OnObservingChanged(notification.changeType);
                 }
             }
 

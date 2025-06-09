@@ -1,12 +1,13 @@
 ﻿using MemoryPack;
+using MongoDB.Bson.Serialization.Attributes;
 using TrueSync;
 
 namespace NPBehave
 {
     public abstract class Service : Decorator
     {
-        [MemoryPackInclude] protected readonly FP interval;
-        [MemoryPackInclude] protected readonly FP randomVariation;
+        [BsonElement][MemoryPackInclude] protected FP interval;
+        [BsonElement][MemoryPackInclude] protected FP randomVariation;
 
         protected Service(FP interval, FP randomVariation, Node decoratee) : base("Service", decoratee)
         {

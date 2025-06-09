@@ -1,11 +1,12 @@
 ﻿using MemoryPack;
+using MongoDB.Bson.Serialization.Attributes;
 
 namespace NPBehave
 {
     public abstract class ObservingDecorator : Decorator
     {
-        [MemoryPackInclude] protected readonly Stops stopsOnChange;
-        [MemoryPackInclude] protected bool isObserving;
+        [BsonElement][MemoryPackInclude] protected Stops stopsOnChange;
+        [BsonElement][MemoryPackInclude] protected bool isObserving;
 
         protected ObservingDecorator(string name, Stops stopsOnChange, Node decoratee) : base(name, decoratee)
         {

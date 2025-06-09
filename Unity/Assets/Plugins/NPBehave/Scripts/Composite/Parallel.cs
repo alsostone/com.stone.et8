@@ -1,5 +1,7 @@
 using System.Collections.Generic;
 using MemoryPack;
+using MongoDB.Bson.Serialization.Attributes;
+using MongoDB.Bson.Serialization.Options;
 
 namespace NPBehave
 {
@@ -12,15 +14,16 @@ namespace NPBehave
             ALL,
         }
         
-        [MemoryPackInclude] private Policy failurePolicy;
-        [MemoryPackInclude] private Policy successPolicy;
-        [MemoryPackInclude] private int childrenCount = 0;
-        [MemoryPackInclude] private int runningCount = 0;
-        [MemoryPackInclude] private int succeededCount = 0;
-        [MemoryPackInclude] private int failedCount = 0;
-        [MemoryPackInclude] private Dictionary<int, bool> childrenResults;
-        [MemoryPackInclude] private bool successState;
-        [MemoryPackInclude] private bool childrenAborted;
+        [BsonElement][MemoryPackInclude] private Policy failurePolicy;
+        [BsonElement][MemoryPackInclude] private Policy successPolicy;
+        [BsonElement][MemoryPackInclude] private int childrenCount = 0;
+        [BsonElement][MemoryPackInclude] private int runningCount = 0;
+        [BsonElement][MemoryPackInclude] private int succeededCount = 0;
+        [BsonElement][MemoryPackInclude] private int failedCount = 0;
+        [BsonDictionaryOptions(DictionaryRepresentation.ArrayOfArrays)]
+        [BsonElement][MemoryPackInclude] private Dictionary<int, bool> childrenResults;
+        [BsonElement][MemoryPackInclude] private bool successState;
+        [BsonElement][MemoryPackInclude] private bool childrenAborted;
 
         public Parallel(Policy successPolicy, Policy failurePolicy, params Node[] children) : base("Parallel", children)
         {

@@ -61,7 +61,7 @@ namespace NPBehave.Examples
             stopAndCleanUp(false);
         }
 
-        private void OnValueChanged(NotifyType type, object newValue)
+        private void OnValueChanged(BlackboardChangeType type, object newValue)
         {
             moveToBlackboardKey();
         }

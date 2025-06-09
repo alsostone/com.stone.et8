@@ -1,11 +1,12 @@
 ﻿using MemoryPack;
+using MongoDB.Bson.Serialization.Attributes;
 using TrueSync;
 
 namespace NPBehave
 {
     public abstract class WaitCalc : Task
     {
-        [MemoryPackInclude] private readonly FP randomVariance;
+        [BsonElement][MemoryPackInclude] private FP randomVariance;
         
         protected WaitCalc() : base("WaitCalc")
         {

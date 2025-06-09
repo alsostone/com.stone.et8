@@ -1,4 +1,5 @@
 ﻿using MemoryPack;
+using MongoDB.Bson.Serialization.Attributes;
 
 namespace NPBehave
 {
@@ -6,7 +7,7 @@ namespace NPBehave
     public partial class Random : Decorator
     {
         // [1~10000]
-        [MemoryPackInclude] private readonly int probability;
+        [BsonElement][MemoryPackInclude] private int probability;
         
         public Random(int probability, Node decoratee) : base("Random", decoratee)
         {

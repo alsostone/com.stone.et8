@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using MemoryPack;
+using MongoDB.Bson.Serialization.Attributes;
 using TrueSync;
 
 namespace NPBehave
@@ -8,14 +9,14 @@ namespace NPBehave
     [MemoryPackable]
     public partial class BehaveWorld : IDisposable
     {
-        [MemoryPackInclude] public Clock Clock { get; private set; }
+        [BsonElement][MemoryPackInclude] public Clock Clock { get; private set; }
         
-        [MemoryPackInclude] private int currentGuid = 0;
-        [MemoryPackInclude] private List<Blackboard> blackboards;
-        [MemoryPackInclude] private readonly Dictionary<string, int> sharedBlackboards;
+        [BsonElement][MemoryPackInclude] private int currentGuid = 0;
+        [BsonElement][MemoryPackInclude] private List<Blackboard> blackboards;
+        [BsonElement][MemoryPackInclude] private Dictionary<string, int> sharedBlackboards;
         
-        [MemoryPackIgnore] public readonly Dictionary<int, Receiver> GuidReceiverMapping = new Dictionary<int, Receiver>();
-        [MemoryPackIgnore] private TSRandom random;
+        [BsonIgnore][MemoryPackIgnore] public Dictionary<int, Receiver> GuidReceiverMapping = new Dictionary<int, Receiver>();
+        [BsonIgnore][MemoryPackIgnore] private TSRandom random;
         
         public BehaveWorld()
         {
@@ -33,7 +34,7 @@ namespace NPBehave
         }
         
         [MemoryPackOnDeserialized]
-        private void OnDeserialized() 
+        public void OnDeserialized() 
         {
             Clock.SetWorld(this);
             foreach (var blackboard in blackboards)

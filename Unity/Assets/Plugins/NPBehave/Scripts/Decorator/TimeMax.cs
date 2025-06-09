@@ -1,4 +1,5 @@
 ﻿using MemoryPack;
+using MongoDB.Bson.Serialization.Attributes;
 using TrueSync;
 
 namespace NPBehave
@@ -6,10 +7,10 @@ namespace NPBehave
     [MemoryPackable]
     public partial class TimeMax : Decorator
     {
-        [MemoryPackInclude] private readonly FP limit = FP.Zero;
-        [MemoryPackInclude] private readonly FP randomVariation;
-        [MemoryPackInclude] private readonly bool waitForChildButFailOnLimitReached = false;
-        [MemoryPackInclude] private bool isLimitReached = false;
+        [BsonElement][MemoryPackInclude] private FP limit = FP.Zero;
+        [BsonElement][MemoryPackInclude] private FP randomVariation;
+        [BsonElement][MemoryPackInclude] private bool waitForChildButFailOnLimitReached = false;
+        [BsonElement][MemoryPackInclude] private bool isLimitReached = false;
      
         public TimeMax(FP limit, bool waitForChildButFailOnLimitReached, Node decoratee) : base("TimeMax", decoratee)
         {

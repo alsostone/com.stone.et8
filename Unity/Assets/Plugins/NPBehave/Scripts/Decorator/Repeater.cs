@@ -1,12 +1,13 @@
 ﻿using MemoryPack;
+using MongoDB.Bson.Serialization.Attributes;
 
 namespace NPBehave
 {
     [MemoryPackable]
     public partial class Repeater : Decorator
     {
-        [MemoryPackInclude] private readonly int loopCount = -1;
-        [MemoryPackInclude] private int currentLoop;
+        [BsonElement][MemoryPackInclude] private int loopCount = -1;
+        [BsonElement][MemoryPackInclude] private int currentLoop;
         
         /// <param name="loopCount">number of times to execute the decoratee. Set to -1 to repeat forever, be careful with endless loops!</param>
         /// <param name="decoratee">Decorated Node</param>

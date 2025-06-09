@@ -1,21 +1,22 @@
 ﻿using System;
 using MemoryPack;
+using MongoDB.Bson.Serialization.Attributes;
 
 namespace NPBehave
 {
     [MemoryPackable]
     public partial class Root : Decorator
     {
-        [MemoryPackInclude] private int blackboardGuid;
+        [BsonElement][MemoryPackInclude] private int blackboardGuid;
         
-        [MemoryPackIgnore] public Blackboard RootBlackboard { get; private set; }
-        [MemoryPackIgnore] public Clock RootClock { get; private set; }
-        [MemoryPackIgnore] public BehaveWorld RootBehaveWorld { get; private set; }
+        [BsonIgnore][MemoryPackIgnore] public Blackboard RootBlackboard { get; private set; }
+        [BsonIgnore][MemoryPackIgnore] public Clock RootClock { get; private set; }
+        [BsonIgnore][MemoryPackIgnore] public BehaveWorld RootBehaveWorld { get; private set; }
 
 #if UNITY_EDITOR
-        [MemoryPackIgnore] public int TotalNumStartCalls = 0;
-        [MemoryPackIgnore] public int TotalNumStopCalls = 0;
-        [MemoryPackIgnore] public int TotalNumStoppedCalls = 0;
+        [BsonIgnore][MemoryPackIgnore] public int TotalNumStartCalls = 0;
+        [BsonIgnore][MemoryPackIgnore] public int TotalNumStopCalls = 0;
+        [BsonIgnore][MemoryPackIgnore] public int TotalNumStoppedCalls = 0;
 #endif
         
         [MemoryPackConstructor]
