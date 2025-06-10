@@ -18,6 +18,8 @@ namespace ET
         // 计算fixedTime，fixedTime在客户端是动态调整的，会做时间膨胀缩放
         public FixedTimeCounter FixedTimeCounter { get; set; }
 
+        public ProcessLogMgr ProcessLog { get; set; }
+        
         // 玩家id列表
         public List<long> PlayerIds { get; } = new(LSConstValue.MatchCount);
         

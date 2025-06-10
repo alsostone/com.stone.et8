@@ -17,6 +17,12 @@ namespace ET
             return unitComponent.GetChild<LSUnit>(id);
         }
         
+        public static Room LSRoom(this LSEntity entity)
+        {
+            var world = entity.IScene as LSWorld;
+            return world.Parent as Room;
+        }
+        
         public static LSWorld LSWorld(this LSEntity entity)
         {
             return entity.IScene as LSWorld;

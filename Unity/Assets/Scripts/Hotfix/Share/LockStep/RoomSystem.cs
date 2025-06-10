@@ -23,10 +23,12 @@ namespace ET
             self.Replay.Seed = seed;
             self.FrameBuffer = new FrameBuffer(frame);
             self.FixedTimeCounter = new FixedTimeCounter(startTime, 0, LSConstValue.UpdateInterval);
+            self.ProcessLog = new ProcessLogMgr();
             
             LSWorld lsWorld = self.LSWorld;
             lsWorld.Random = new TSRandom(seed);
             lsWorld.Frame = frame + 1;
+            
             lsWorld.AddComponent<LSUnitComponent>();
             lsWorld.AddComponent<LSTargetsComponent>();
             lsWorld.AddComponent<AIWorldComponent>();

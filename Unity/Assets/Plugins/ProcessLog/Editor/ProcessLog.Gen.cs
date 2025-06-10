@@ -25,19 +25,19 @@ namespace ProcessLog.Editor
         private static Regex ms_regexFirstCode = new Regex(@"(\{\s*[^;]+;)(\s*\/\*(.)*\*\/)?");
 
         //插入的日志代码模式串
-        private static Regex ms_regexLogCode = new Regex(@"\s*(self.LSWorld\(\).ProcessLog.)(LogFunction)\(([^;]+\s*)?\)(\})?\s*;");
+        private static Regex ms_regexLogCode = new Regex(@"\s*(self.LSRoom\(\).ProcessLog.)(LogFunction)\(([^;]+\s*)?\)(\})?\s*;");
 
         //匹配日志代码的id,
         private static Regex ms_regexLogCodeId = new Regex(@"(?<=\(\s*)\s*(\d+)\s*");
 
         //不需要日志代码模式串
-        private static Regex ms_regexIgnoreCode = new Regex(@"\{\s*(self.LSWorld\(\).ProcessLog.)(LogIgnore)\(([^\)]+\s*)?\)(\})?");
+        private static Regex ms_regexIgnoreCode = new Regex(@"\{\s*(self.LSRoom\(\).ProcessLog.)(LogIgnore)\(([^\)]+\s*)?\)(\})?");
 
         //匹配手动插入的日志代码
-        private static Regex ms_regexManualCode = new Regex(@"(?:self.LSWorld\(\).ProcessLog.)(?:LogFunction)\(([^;]+\s*)?\)(?:\})?\s*;\s*\/\*(.)*\*\/");
+        private static Regex ms_regexManualCode = new Regex(@"(?:self.LSRoom\(\).ProcessLog.)(?:LogFunction)\(([^;]+\s*)?\)(?:\})?\s*;\s*\/\*(.)*\*\/");
 
         //匹配自动插入的日志代码
-        private static Regex ms_regexAutoCode = new Regex(@"\s*(?:self.LSWorld\(\).ProcessLog.)(?:LogFunction)\((?:[^\)]+\s*)?\)(\})?\s*;\s*\#(\w*)\#");
+        private static Regex ms_regexAutoCode = new Regex(@"\s*(?:self.LSRoom\(\).ProcessLog.)(?:LogFunction)\((?:[^\)]+\s*)?\)(\})?\s*;\s*\#(\w*)\#");
         
         //匹配函数的名称
         private static Regex ms_regexFuncName = new Regex(@"(\w+(<\w+>)*\s*)\(");
@@ -164,7 +164,7 @@ namespace ProcessLog.Editor
         /// <param name="funcHead"></param>
         private static LogFunctionData GetFunctionData(string funcHead)
         {
-            var codeText = "self.LSWorld().ProcessLog.LogFunction(0);";
+            var codeText = "self.LSRoom().ProcessLog.LogFunction(0);";
             var functionData = new LogFunctionData();
 
             //1. 提取函数名

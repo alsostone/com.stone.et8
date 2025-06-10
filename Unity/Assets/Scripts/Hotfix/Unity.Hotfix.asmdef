@@ -9,7 +9,8 @@
         "MemoryPack",
         "Unity.Model",
         "TrueSync",
-        "NPBehave"
+        "NPBehave",
+        "ProcessLog"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],
