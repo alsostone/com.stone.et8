@@ -29,19 +29,19 @@ namespace NPBehave
     [MemoryPackable]
     public partial class Blackboard : Receiver, IDisposable
     {
-        [BsonElement][MemoryPackInclude] private int parentGuid;
-        [BsonElement][MemoryPackInclude] private HashSet<int> childrenGuid = new HashSet<int>();
-        [BsonElement][MemoryPackInclude] private Dictionary<string, bool> dataBool = new Dictionary<string, bool>();
-        [BsonElement][MemoryPackInclude] private Dictionary<string, int> dataInt = new Dictionary<string, int>();
-        [BsonElement][MemoryPackInclude] private Dictionary<string, FP> dataFloat = new Dictionary<string, FP>();
+        [BsonElement("P")][BsonIgnoreIfDefault][MemoryPackInclude] private int parentGuid;
+        [BsonElement("C")][BsonIgnoreIfNull][MemoryPackInclude] private HashSet<int> childrenGuid;
+        [BsonElement("DB")][BsonIgnoreIfNull][MemoryPackInclude] private Dictionary<string, bool> dataBool;
+        [BsonElement("DI")][BsonIgnoreIfNull][MemoryPackInclude] private Dictionary<string, int> dataInt;
+        [BsonElement("DF")][BsonIgnoreIfNull][MemoryPackInclude] private Dictionary<string, FP> dataFloat;
         
-        [BsonElement][MemoryPackInclude] private bool isNotifying = false;
-        [BsonElement][MemoryPackInclude] private List<Notification> notifications = new List<Notification>();
-        [BsonElement][MemoryPackInclude] private List<Notification> notificationsDispatch = new List<Notification>();
+        [BsonElement("IS")][BsonIgnoreIfDefault][MemoryPackInclude] private bool isNotifying = false;
+        [BsonElement("NF")][MemoryPackInclude] private List<Notification> notifications = new List<Notification>();
+        [BsonElement("ND")][MemoryPackInclude] private List<Notification> notificationsDispatch = new List<Notification>();
         
-        [BsonElement][MemoryPackInclude] private Dictionary<string, List<int>> keyObserversMapping = new Dictionary<string, List<int>>();
-        [BsonElement][MemoryPackInclude] private Dictionary<string, List<int>> keyAddObserversMapping = new Dictionary<string, List<int>>();
-        [BsonElement][MemoryPackInclude] private Dictionary<string, List<int>> keyRemoveObserversMapping = new Dictionary<string, List<int>>();
+        [BsonElement("OB")][BsonIgnoreIfNull][MemoryPackInclude] private Dictionary<string, List<int>> keyObserversMapping;
+        [BsonElement("AB")][BsonIgnoreIfNull][MemoryPackInclude] private Dictionary<string, List<int>> keyAddObserversMapping;
+        [BsonElement("RB")][BsonIgnoreIfNull][MemoryPackInclude] private Dictionary<string, List<int>> keyRemoveObserversMapping;
         
         [BsonIgnore][MemoryPackIgnore] private BehaveWorld behaveWorld;
         [BsonIgnore][MemoryPackIgnore] private Blackboard parent;
@@ -56,7 +56,7 @@ namespace NPBehave
             this.behaveWorld = world;
             this.parent = parent;
             this.clock = world.Clock;
-            this.parentGuid = parent?.Guid ?? -1;
+            this.parentGuid = parent?.Guid ?? 0;
             world.GuidReceiverMapping.Add(Guid, this);
         }
 
@@ -79,6 +79,8 @@ namespace NPBehave
         {
             if (parent != null)
             {
+                if (parent.childrenGuid == null)
+                    parent.childrenGuid = new HashSet<int>();
                 parent.childrenGuid.Add(Guid);
             }
         }
@@ -87,7 +89,7 @@ namespace NPBehave
         {
             if (parent != null)
             {
-                parent.childrenGuid.Remove(Guid);
+                parent.childrenGuid?.Remove(Guid);
             }
             if (clock != null)
             {
@@ -104,6 +106,10 @@ namespace NPBehave
             }
             else
             {
+                if (dataBool == null)
+                {
+                    dataBool = new Dictionary<string, bool>();
+                }
                 if (!dataBool.TryGetValue(key, out var dataValue))
                 {
                     dataBool[key] = value;
@@ -130,6 +136,10 @@ namespace NPBehave
             }
             else
             {
+                if (dataInt == null)
+                {
+                    dataInt = new Dictionary<string, int>();
+                }
                 if (!dataInt.TryGetValue(key, out var dataValue))
                 {
                     dataInt[key] = value;
@@ -156,6 +166,10 @@ namespace NPBehave
             }
             else
             {
+                if (dataFloat == null)
+                {
+                    dataFloat = new Dictionary<string, FP>();
+                }
                 if (!dataFloat.TryGetValue(key, out var dataValue))
                 {
                     dataFloat[key] = value;
@@ -178,7 +192,7 @@ namespace NPBehave
         #region UnSet
         public void UnSetBool(string key)
         {
-            if (dataBool.ContainsKey(key))
+            if (dataBool != null && dataBool.ContainsKey(key))
             {
                 dataBool.Remove(key);
                 notifications.Add(new Notification(key, BlackboardChangeType.REMOVE));
@@ -188,7 +202,7 @@ namespace NPBehave
 
         public void UnSetInt(string key)
         {
-            if (dataInt.ContainsKey(key))
+            if (dataInt != null && dataInt.ContainsKey(key))
             {
                 dataInt.Remove(key);
                 notifications.Add(new Notification(key, BlackboardChangeType.REMOVE));
@@ -198,7 +212,7 @@ namespace NPBehave
         
         public void UnSetFloat(string key)
         {
-            if (dataFloat.ContainsKey(key))
+            if (dataFloat != null && dataFloat.ContainsKey(key))
             {
                 dataFloat.Remove(key);
                 notifications.Add(new Notification(key, BlackboardChangeType.REMOVE));
@@ -210,22 +224,22 @@ namespace NPBehave
         #region IsSet
         public bool IsSetBool(string key)
         {
-            return dataBool.ContainsKey(key) || (parent != null && parent.IsSetBool(key));
+            return dataBool != null && (dataBool.ContainsKey(key) || (parent != null && parent.IsSetBool(key)));
         }
         public bool IsSetInt(string key)
         {
-            return dataInt.ContainsKey(key) || (parent != null && parent.IsSetInt(key));
+            return dataInt != null && (dataInt.ContainsKey(key) || (parent != null && parent.IsSetInt(key)));
         }
         public bool IsSetFloat(string key)
         {
-            return dataFloat.ContainsKey(key) || (parent != null && parent.IsSetFloat(key));
+            return dataFloat != null && (dataFloat.ContainsKey(key) || (parent != null && parent.IsSetFloat(key)));
         }
         #endregion
 
         #region Get
         public bool GetBool(string key)
         {
-            if (dataBool.TryGetValue(key, out var value))
+            if (dataBool != null && dataBool.TryGetValue(key, out var value))
             {
                 return value;
             }
@@ -237,7 +251,7 @@ namespace NPBehave
         }
         public int GetInt(string key)
         {
-            if (dataInt.TryGetValue(key, out var value))
+            if (dataInt != null && dataInt.TryGetValue(key, out var value))
             {
                 return value;
             }
@@ -249,7 +263,7 @@ namespace NPBehave
         }
         public FP GetFloat(string key)
         {
-            if (dataFloat.TryGetValue(key, out var value))
+            if (dataFloat != null && dataFloat.TryGetValue(key, out var value))
             {
                 return value;
             }
@@ -257,7 +271,7 @@ namespace NPBehave
             {
                 return parent.GetFloat(key);
             }
-            return FP.Zero;
+            return 0;
         }
         #endregion
         
@@ -267,6 +281,10 @@ namespace NPBehave
             if (parent != null)
             {
                 parent.ForeachBool(action);
+            }
+            if (dataBool == null)
+            {
+                return;
             }
             foreach (var pair in dataBool)
             {
@@ -280,6 +298,10 @@ namespace NPBehave
             {
                 parent.ForeachInt(action);
             }
+            if (dataInt == null)
+            {
+                return;
+            }
             foreach (var pair in dataInt)
             {
                 action(pair.Key, pair.Value);
@@ -292,6 +314,10 @@ namespace NPBehave
             {
                 parent.ForeachFloat(action);
             }
+            if (dataFloat == null)
+            {
+                return;
+            }
             foreach (var pair in dataFloat)
             {
                 action(pair.Key, pair.Value);
@@ -303,9 +329,12 @@ namespace NPBehave
             get
             {
                 int count = 0;
-                foreach (var pair in keyObserversMapping)
+                if (keyObserversMapping != null)
                 {
-                    count += pair.Value.Count;
+                    foreach (var pair in keyObserversMapping)
+                    {
+                        count += pair.Value.Count;
+                    }
                 }
                 return count;
             }
@@ -316,9 +345,9 @@ namespace NPBehave
             get
             {
                 int count = 0;
-                count += dataBool.Count;
-                count += dataInt.Count;
-                count += dataFloat.Count;
+                count += dataBool?.Count??0;
+                count += dataInt?.Count??0;
+                count += dataFloat?.Count??0;
                 return count;
             }
         }
@@ -326,7 +355,7 @@ namespace NPBehave
         
         public void AddObserver(string key, int observer)
         {
-            var observers = GetObservers(keyObserversMapping, key);
+            var observers = GetObservers(ref keyObserversMapping, key);
             if (!isNotifying)
             {
                 if (!observers.Contains(observer))
@@ -338,14 +367,14 @@ namespace NPBehave
             {
                 if (!observers.Contains(observer))
                 {
-                    var addObservers = GetObservers(keyAddObserversMapping, key);
+                    var addObservers = GetObservers(ref keyAddObserversMapping, key);
                     if (!addObservers.Contains(observer))
                     {
                         addObservers.Add(observer);
                     }
                 }
 
-                var removeObservers = GetObservers(keyRemoveObserversMapping, key);
+                var removeObservers = GetObservers(ref keyRemoveObserversMapping, key);
                 if (removeObservers.Contains(observer))
                 {
                     removeObservers.Remove(observer);
@@ -355,7 +384,7 @@ namespace NPBehave
 
         public void RemoveObserver(string key, int observer)
         {
-            var observers = GetObservers(keyObserversMapping, key);
+            var observers = GetObservers(ref keyObserversMapping, key);
             if (!isNotifying)
             {
                 if (observers.Contains(observer))
@@ -365,7 +394,7 @@ namespace NPBehave
             }
             else
             {
-                var removeObservers = GetObservers(keyRemoveObserversMapping, key);
+                var removeObservers = GetObservers(ref keyRemoveObserversMapping, key);
                 if (!removeObservers.Contains(observer))
                 {
                     if (observers.Contains(observer))
@@ -374,7 +403,7 @@ namespace NPBehave
                     }
                 }
 
-                var addObservers = GetObservers(keyAddObserversMapping, key);
+                var addObservers = GetObservers(ref keyAddObserversMapping, key);
                 if (addObservers.Contains(observer))
                 {
                     addObservers.Remove(observer);
@@ -382,8 +411,12 @@ namespace NPBehave
             }
         }
 
-        private List<int> GetObservers(Dictionary<string, List<int>> targetMapping, string key)
+        private List<int> GetObservers(ref Dictionary<string, List<int>> targetMapping, string key)
         {
+            if (targetMapping == null)
+            {
+                targetMapping = new Dictionary<string, List<int>>();
+            }
             if (!targetMapping.TryGetValue(key, out var observers))
             {
                 observers = new List<int>();
@@ -401,23 +434,26 @@ namespace NPBehave
 
             notificationsDispatch.Clear();
             notificationsDispatch.AddRange(notifications);
-            foreach (var child in childrenGuid)
+            if (childrenGuid != null)
             {
-                var childBlackboard = behaveWorld.GetBlackboard(child);
-                childBlackboard.notifications.AddRange(notifications);
-                childBlackboard.clock.AddTimer(FP.Zero, 0, child);
+                foreach (var child in childrenGuid)
+                {
+                    var childBlackboard = behaveWorld.GetBlackboard(child);
+                    childBlackboard.notifications.AddRange(notifications);
+                    childBlackboard.clock.AddTimer(FP.Zero, 0, child);
+                }
             }
             notifications.Clear();
 
             isNotifying = true;
             foreach (var notification in notificationsDispatch)
             {
-                if (!keyObserversMapping.ContainsKey(notification.blackboardKey))
+                if (keyObserversMapping == null || !keyObserversMapping.ContainsKey(notification.blackboardKey))
                 {
                     continue;
                 }
 
-                var observers = GetObservers(keyObserversMapping, notification.blackboardKey);
+                var observers = GetObservers(ref keyObserversMapping, notification.blackboardKey);
                 foreach (var observer in observers)
                 {
                     if (keyRemoveObserversMapping.TryGetValue(notification.blackboardKey, out var removeObservers) && removeObservers.Contains(observer))
@@ -428,21 +464,27 @@ namespace NPBehave
                 }
             }
 
-            foreach (var pair in keyAddObserversMapping)
+            if (keyAddObserversMapping != null)
             {
-                GetObservers(keyObserversMapping, pair.Key).AddRange(pair.Value);
-            }
-            foreach (var pair in keyRemoveObserversMapping)
-            {
-                var observers = GetObservers(keyObserversMapping, pair.Key);
-                foreach (var action in pair.Value)
+                foreach (var pair in keyAddObserversMapping)
                 {
-                    observers.Remove(action);
+                    GetObservers(ref keyObserversMapping, pair.Key).AddRange(pair.Value);
                 }
+                keyAddObserversMapping.Clear();
             }
-            keyAddObserversMapping.Clear();
-            keyRemoveObserversMapping.Clear();
 
+            if (keyRemoveObserversMapping != null)
+            {
+                foreach (var pair in keyRemoveObserversMapping)
+                {
+                    var observers = GetObservers(ref keyObserversMapping, pair.Key);
+                    foreach (var action in pair.Value)
+                    {
+                        observers.Remove(action);
+                    }
+                }
+                keyRemoveObserversMapping.Clear();
+            }
             isNotifying = false;
         }
 

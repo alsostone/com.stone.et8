@@ -49,7 +49,7 @@ namespace NPBehave
             RootNode = rootNode;
             
             // 注册到黑板的意义：通过Guid找到该节点，后调用该节点的方法
-            if (Guid < 0)
+            if (Guid <= 0)
                 Guid = RootNode.RootBehaveWorld.GetNextGuid();
             RootNode.RootBehaveWorld.GuidReceiverMapping.Add(Guid, this);
         }

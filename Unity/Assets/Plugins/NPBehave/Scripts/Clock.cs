@@ -10,10 +10,10 @@ namespace NPBehave
     [MemoryPackable]
     public partial class Timer
     {
-        public FP scheduledTime = FP.Zero;
-        public int repeat = 0;
-        public FP delay = FP.Zero;
-        public FP randomVariance = FP.Zero;
+        [BsonElement("ST")][BsonIgnoreIfDefault] public FP scheduledTime;
+        [BsonElement("R")][BsonIgnoreIfDefault] public int repeat;
+        [BsonElement("D")][BsonIgnoreIfDefault] public FP delay;
+        [BsonElement("RV")][BsonIgnoreIfDefault] public FP randomVariance;
 
         public void ScheduleAbsoluteTime(BehaveWorld world, FP elapsedTime)
         {
@@ -24,18 +24,18 @@ namespace NPBehave
     [MemoryPackable]
     public partial class Clock : IDisposable
     {
-        [BsonElement][MemoryPackInclude] private FP elapsedTime = FP.Zero;
-        [BsonElement][MemoryPackInclude] private bool isInUpdate = false;
+        [BsonElement("ES")][BsonIgnoreIfDefault][MemoryPackInclude] private FP elapsedTime = FP.Zero;
+        [BsonElement("IS")][BsonIgnoreIfDefault][MemoryPackInclude] private bool isInUpdate = false;
         
         [BsonDictionaryOptions(DictionaryRepresentation.ArrayOfArrays)]
-        [BsonElement][MemoryPackInclude] private Dictionary<int, Timer> timers = new Dictionary<int, Timer>();
+        [BsonElement("TM")][MemoryPackInclude] private Dictionary<int, Timer> timers = new Dictionary<int, Timer>();
         [BsonDictionaryOptions(DictionaryRepresentation.ArrayOfArrays)]
-        [BsonElement][MemoryPackInclude] private Dictionary<int, Timer> addTimers = new Dictionary<int, Timer>();
-        [BsonElement][MemoryPackInclude] private HashSet<int> removeTimers = new HashSet<int>();
+        [BsonElement("AM")][MemoryPackInclude] private Dictionary<int, Timer> addTimers = new Dictionary<int, Timer>();
+        [BsonElement("RM")][MemoryPackInclude] private HashSet<int> removeTimers = new HashSet<int>();
         
-        [BsonElement][MemoryPackInclude] private HashSet<int> updateObservers = new HashSet<int>();
-        [BsonElement][MemoryPackInclude] private HashSet<int> addObservers = new HashSet<int>();
-        [BsonElement][MemoryPackInclude] private HashSet<int> removeObservers = new HashSet<int>();
+        [BsonElement("OB")][MemoryPackInclude] private HashSet<int> updateObservers = new HashSet<int>();
+        [BsonElement("AB")][MemoryPackInclude] private HashSet<int> addObservers = new HashSet<int>();
+        [BsonElement("RB")][MemoryPackInclude] private HashSet<int> removeObservers = new HashSet<int>();
         
         [BsonIgnore][MemoryPackIgnore] private BehaveWorld behaveWorld;
         [BsonIgnore][MemoryPackIgnore] private Queue<Timer> timerPool = new Queue<Timer>();

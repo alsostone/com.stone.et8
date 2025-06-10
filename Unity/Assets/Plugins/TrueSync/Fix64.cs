@@ -9,7 +9,7 @@ namespace TrueSync {
     [Serializable]
     public partial struct FP : IEquatable<FP>, IComparable<FP> {
 
-        public long _serializedValue;
+        public long V;
 
 		public const long MAX_VALUE = long.MaxValue;
 		public const long MIN_VALUE = long.MinValue;
@@ -79,8 +79,8 @@ namespace TrueSync {
         /// </summary>
         public static int Sign(FP value) {
             return
-                value._serializedValue < 0 ? -1 :
-                value._serializedValue > 0 ? 1 :
+                value.V < 0 ? -1 :
+                value.V > 0 ? 1 :
                 0;
         }
 
@@ -90,14 +90,14 @@ namespace TrueSync {
         /// Note: Abs(Fix64.MinValue) == Fix64.MaxValue.
         /// </summary>
         public static FP Abs(FP value) {
-            if (value._serializedValue == MIN_VALUE) {
+            if (value.V == MIN_VALUE) {
                 return MaxValue;
             }
 
             // branchless implementation, see http://www.strchr.com/optimized_abs_function
-            var mask = value._serializedValue >> 63;
+            var mask = value.V >> 63;
             FP result;
-            result._serializedValue = (value._serializedValue + mask) ^ mask;
+            result.V = (value.V + mask) ^ mask;
             return result;
             //return new FP((value._serializedValue + mask) ^ mask);
         }
@@ -108,9 +108,9 @@ namespace TrueSync {
         /// </summary>
         public static FP FastAbs(FP value) {
             // branchless implementation, see http://www.strchr.com/optimized_abs_function
-            var mask = value._serializedValue >> 63;
+            var mask = value.V >> 63;
             FP result;
-            result._serializedValue = (value._serializedValue + mask) ^ mask;
+            result.V = (value.V + mask) ^ mask;
             return result;
             //return new FP((value._serializedValue + mask) ^ mask);
         }
@@ -122,7 +122,7 @@ namespace TrueSync {
         public static FP Floor(FP value) {
             // Just zero out the fractional part
             FP result;
-            result._serializedValue = (long)((ulong)value._serializedValue & 0xFFFFFFFF00000000);
+            result.V = (long)((ulong)value.V & 0xFFFFFFFF00000000);
             return result;
             //return new FP((long)((ulong)value._serializedValue & 0xFFFFFFFF00000000));
         }
@@ -131,7 +131,7 @@ namespace TrueSync {
         /// Returns the smallest integral value that is greater than or equal to the specified number.
         /// </summary>
         public static FP Ceiling(FP value) {
-            var hasFractionalPart = (value._serializedValue & 0x00000000FFFFFFFF) != 0;
+            var hasFractionalPart = (value.V & 0x00000000FFFFFFFF) != 0;
             return hasFractionalPart ? Floor(value) + One : value;
         }
 
@@ -140,7 +140,7 @@ namespace TrueSync {
         /// If the value is halfway between an even and an uneven value, returns the even value.
         /// </summary>
         public static FP Round(FP value) {
-            var fractionalPart = value._serializedValue & 0x00000000FFFFFFFF;
+            var fractionalPart = value.V & 0x00000000FFFFFFFF;
             var integralPart = Floor(value);
             if (fractionalPart < 0x80000000) {
                 return integralPart;
@@ -150,7 +150,7 @@ namespace TrueSync {
             }
             // if number is halfway between two values, round to the nearest even number
             // this is the method used by System.Math.Round().
-            return (integralPart._serializedValue & ONE) == 0
+            return (integralPart.V & ONE) == 0
                        ? integralPart
                        : integralPart + One;
         }
@@ -161,7 +161,7 @@ namespace TrueSync {
         /// </summary>
         public static FP operator +(FP x, FP y) {
             FP result;
-            result._serializedValue = x._serializedValue + y._serializedValue;
+            result.V = x.V + y.V;
             return result;
             //return new FP(x._serializedValue + y._serializedValue);
         }
@@ -170,15 +170,15 @@ namespace TrueSync {
         /// Adds x and y performing overflow checking. Should be inlined by the CLR.
         /// </summary>
         public static FP OverflowAdd(FP x, FP y) {
-            var xl = x._serializedValue;
-            var yl = y._serializedValue;
+            var xl = x.V;
+            var yl = y.V;
             var sum = xl + yl;
             // if signs of operands are equal and signs of sum and x are different
             if (((~(xl ^ yl) & (xl ^ sum)) & MIN_VALUE) != 0) {
                 sum = xl > 0 ? MAX_VALUE : MIN_VALUE;
             }
             FP result;
-            result._serializedValue = sum;
+            result.V = sum;
             return result;
             //return new FP(sum);
         }
@@ -188,7 +188,7 @@ namespace TrueSync {
         /// </summary>
         public static FP FastAdd(FP x, FP y) {
             FP result;
-            result._serializedValue = x._serializedValue + y._serializedValue;
+            result.V = x.V + y.V;
             return result;
             //return new FP(x._serializedValue + y._serializedValue);
         }
@@ -199,7 +199,7 @@ namespace TrueSync {
         /// </summary>
         public static FP operator -(FP x, FP y) {
             FP result;
-            result._serializedValue = x._serializedValue - y._serializedValue;
+            result.V = x.V - y.V;
             return result;
             //return new FP(x._serializedValue - y._serializedValue);
         }
@@ -208,15 +208,15 @@ namespace TrueSync {
         /// Subtracts y from x witout performing overflow checking. Should be inlined by the CLR.
         /// </summary>
         public static FP OverflowSub(FP x, FP y) {
-            var xl = x._serializedValue;
-            var yl = y._serializedValue;
+            var xl = x.V;
+            var yl = y.V;
             var diff = xl - yl;
             // if signs of operands are different and signs of sum and x are different
             if ((((xl ^ yl) & (xl ^ diff)) & MIN_VALUE) != 0) {
                 diff = xl < 0 ? MIN_VALUE : MAX_VALUE;
             }
             FP result;
-            result._serializedValue = diff;
+            result.V = diff;
             return result;
             //return new FP(diff);
         }
@@ -225,7 +225,7 @@ namespace TrueSync {
         /// Subtracts y from x witout performing overflow checking. Should be inlined by the CLR.
         /// </summary>
         public static FP FastSub(FP x, FP y) {
-            return new FP(x._serializedValue - y._serializedValue);
+            return new FP(x.V - y.V);
         }
 
         static long AddOverflowHelper(long x, long y, ref bool overflow) {
@@ -236,8 +236,8 @@ namespace TrueSync {
         }
 
         public static FP operator *(FP x, FP y) {
-            var xl = x._serializedValue;
-            var yl = y._serializedValue;
+            var xl = x.V;
+            var yl = y.V;
 
             var xlo = (ulong)(xl & 0x00000000FFFFFFFF);
             var xhi = xl >> FRACTIONAL_PLACES;
@@ -256,7 +256,7 @@ namespace TrueSync {
 
             var sum = (long)loResult + midResult1 + midResult2 + hiResult;
             FP result;// = default(FP);
-            result._serializedValue = sum;
+            result.V = sum;
             return result;
         }
 
@@ -265,8 +265,8 @@ namespace TrueSync {
         /// Useful for performance-critical code where the values are guaranteed not to cause overflow
         /// </summary>
         public static FP OverflowMul(FP x, FP y) {
-            var xl = x._serializedValue;
-            var yl = y._serializedValue;
+            var xl = x.V;
+            var yl = y.V;
 
             var xlo = (ulong)(xl & 0x00000000FFFFFFFF);
             var xhi = xl >> FRACTIONAL_PLACES;
@@ -326,7 +326,7 @@ namespace TrueSync {
                 }
             }
             FP result;
-            result._serializedValue = sum;
+            result.V = sum;
             return result;
             //return new FP(sum);
         }
@@ -336,8 +336,8 @@ namespace TrueSync {
         /// Useful for performance-critical code where the values are guaranteed not to cause overflow
         /// </summary>
         public static FP FastMul(FP x, FP y) {
-            var xl = x._serializedValue;
-            var yl = y._serializedValue;
+            var xl = x.V;
+            var yl = y.V;
 
             var xlo = (ulong)(xl & 0x00000000FFFFFFFF);
             var xhi = xl >> FRACTIONAL_PLACES;
@@ -356,7 +356,7 @@ namespace TrueSync {
 
             var sum = (long)loResult + midResult1 + midResult2 + hiResult;
 			FP result;// = default(FP);
-			result._serializedValue = sum;
+			result.V = sum;
 			return result;
             //return new FP(sum);
         }
@@ -370,8 +370,8 @@ namespace TrueSync {
         }
 
         public static FP operator /(FP x, FP y) {
-            var xl = x._serializedValue;
-            var yl = y._serializedValue;
+            var xl = x.V;
+            var yl = y.V;
 
             if (yl == 0) {
                 return MAX_VALUE;
@@ -419,16 +419,16 @@ namespace TrueSync {
             }
 
             FP r;
-            r._serializedValue = result;
+            r.V = result;
             return r;
             //return new FP(result);
         }
 
         public static FP operator %(FP x, FP y) {
             FP result;
-            result._serializedValue = x._serializedValue == MIN_VALUE & y._serializedValue == -1 ?
+            result.V = x.V == MIN_VALUE & y.V == -1 ?
                 0 :
-                x._serializedValue % y._serializedValue;
+                x.V % y.V;
             return result;
             //return new FP(
             //    x._serializedValue == MIN_VALUE & y._serializedValue == -1 ?
@@ -442,37 +442,37 @@ namespace TrueSync {
         /// </summary>
         public static FP FastMod(FP x, FP y) {
             FP result;
-            result._serializedValue = x._serializedValue % y._serializedValue;
+            result.V = x.V % y.V;
             return result;
             //return new FP(x._serializedValue % y._serializedValue);
         }
 
         public static FP operator -(FP x) {
-            return x._serializedValue == MIN_VALUE ? MaxValue : new FP(-x._serializedValue);
+            return x.V == MIN_VALUE ? MaxValue : new FP(-x.V);
         }
 
         public static bool operator ==(FP x, FP y) {
-            return x._serializedValue == y._serializedValue;
+            return x.V == y.V;
         }
 
         public static bool operator !=(FP x, FP y) {
-            return x._serializedValue != y._serializedValue;
+            return x.V != y.V;
         }
 
         public static bool operator >(FP x, FP y) {
-            return x._serializedValue > y._serializedValue;
+            return x.V > y.V;
         }
 
         public static bool operator <(FP x, FP y) {
-            return x._serializedValue < y._serializedValue;
+            return x.V < y.V;
         }
 
         public static bool operator >=(FP x, FP y) {
-            return x._serializedValue >= y._serializedValue;
+            return x.V >= y.V;
         }
 
         public static bool operator <=(FP x, FP y) {
-            return x._serializedValue <= y._serializedValue;
+            return x.V <= y.V;
         }
 
 
@@ -483,7 +483,7 @@ namespace TrueSync {
         /// The argument was negative.
         /// </exception>
         public static FP Sqrt(FP x) {
-            var xl = x._serializedValue;
+            var xl = x.V;
             if (xl < 0) {
                 // We cannot represent infinities like Single and Double, and Sqrt is
                 // mathematically undefined for x < 0. So we just throw an exception.
@@ -540,7 +540,7 @@ namespace TrueSync {
             }
 
             FP r;
-            r._serializedValue = (long)result;
+            r.V = (long)result;
             return r;
             //return new FP((long)result);
         }
@@ -553,7 +553,7 @@ namespace TrueSync {
         /// </summary>
         public static FP Sin(FP x) {
             bool flipHorizontal, flipVertical;
-            var clampedL = ClampSinValue(x._serializedValue, out flipHorizontal, out flipVertical);
+            var clampedL = ClampSinValue(x.V, out flipHorizontal, out flipVertical);
             var clamped = new FP(clampedL);
 
             // Find the two closest values in the LUT and perform linear interpolation
@@ -569,13 +569,13 @@ namespace TrueSync {
                 SinLut.Length - 1 - (int)roundedIndex - Sign(indexError) :
                 (int)roundedIndex + Sign(indexError)]);
 
-            var delta = FastMul(indexError, FastAbs(FastSub(nearestValue, secondNearestValue)))._serializedValue;
-            var interpolatedValue = nearestValue._serializedValue + (flipHorizontal ? -delta : delta);
+            var delta = FastMul(indexError, FastAbs(FastSub(nearestValue, secondNearestValue))).V;
+            var interpolatedValue = nearestValue.V + (flipHorizontal ? -delta : delta);
             var finalValue = flipVertical ? -interpolatedValue : interpolatedValue;
 
             //FP a2 = new FP(finalValue);
             FP a2;
-            a2._serializedValue = finalValue;
+            a2.V = finalValue;
             return a2;
         }
 
@@ -586,7 +586,7 @@ namespace TrueSync {
         /// </summary>
         public static FP FastSin(FP x) {
             bool flipHorizontal, flipVertical;
-            var clampedL = ClampSinValue(x._serializedValue, out flipHorizontal, out flipVertical);
+            var clampedL = ClampSinValue(x.V, out flipHorizontal, out flipVertical);
 
             // Here we use the fact that the SinLut table has a number of entries
             // equal to (PI_OVER_2 >> 15) to use the angle to index directly into it
@@ -599,7 +599,7 @@ namespace TrueSync {
                 (int)rawIndex];
 
             FP result;
-            result._serializedValue = flipVertical ? -nearestValue : nearestValue;
+            result.V = flipVertical ? -nearestValue : nearestValue;
             return result;
             //return new FP(flipVertical ? -nearestValue : nearestValue);
         }
@@ -636,7 +636,7 @@ namespace TrueSync {
         /// See Sin() for more details.
         /// </summary>
         public static FP Cos(FP x) {
-            var xl = x._serializedValue;
+            var xl = x.V;
             var rawAngle = xl + (xl > 0 ? -PI - PI_OVER_2 : PI_OVER_2);
             FP a2 = Sin(new FP(rawAngle));
             return a2;
@@ -648,7 +648,7 @@ namespace TrueSync {
         /// See FastSin for more details.
         /// </summary>
         public static FP FastCos(FP x) {
-            var xl = x._serializedValue;
+            var xl = x.V;
             var rawAngle = xl + (xl > 0 ? -PI - PI_OVER_2 : PI_OVER_2);
             return FastSin(new FP(rawAngle));
         }
@@ -661,7 +661,7 @@ namespace TrueSync {
         /// This function is not well-tested. It may be wildly inaccurate.
         /// </remarks>
         public static FP Tan(FP x) {
-            var clampedPi = x._serializedValue % PI;
+            var clampedPi = x.V % PI;
             var flip = false;
             if (clampedPi < 0) {
                 clampedPi = -clampedPi;
@@ -682,8 +682,8 @@ namespace TrueSync {
             var nearestValue = new FP(TanLut[(int)roundedIndex]);
             var secondNearestValue = new FP(TanLut[(int)roundedIndex + Sign(indexError)]);
 
-            var delta = FastMul(indexError, FastAbs(FastSub(nearestValue, secondNearestValue)))._serializedValue;
-            var interpolatedValue = nearestValue._serializedValue + delta;
+            var delta = FastMul(indexError, FastAbs(FastSub(nearestValue, secondNearestValue))).V;
+            var interpolatedValue = nearestValue.V + delta;
             var finalValue = flip ? -interpolatedValue : interpolatedValue;
             FP a2 = new FP(finalValue);
             return a2;
@@ -749,8 +749,8 @@ namespace TrueSync {
         }
 
         public static FP Atan2(FP y, FP x) {
-            var yl = y._serializedValue;
-            var xl = x._serializedValue;
+            var yl = y.V;
+            var xl = x.V;
             if (xl == 0) {
                 if (yl > 0) {
                     return PiOver2;
@@ -809,53 +809,53 @@ namespace TrueSync {
 
         public static implicit operator FP(long value) {
             FP result;
-            result._serializedValue = value * ONE;
+            result.V = value * ONE;
             return result;
             //return new FP(value * ONE);
         }
 
         public static explicit operator long(FP value) {
-            return value._serializedValue >> FRACTIONAL_PLACES;
+            return value.V >> FRACTIONAL_PLACES;
         }
 
         public static implicit operator FP(float value) {
             FP result;
-            result._serializedValue = (long)(value * ONE);
+            result.V = (long)(value * ONE);
             return result;
             //return new FP((long)(value * ONE));
         }
 
         public static explicit operator float(FP value) {
-            return (float)value._serializedValue / ONE;
+            return (float)value.V / ONE;
         }
 
         public static implicit operator FP(double value) {
             FP result;
-            result._serializedValue = (long)(value * ONE);
+            result.V = (long)(value * ONE);
             return result;
             //return new FP((long)(value * ONE));
         }
 
         public static explicit operator double(FP value) {
-            return (double)value._serializedValue / ONE;
+            return (double)value.V / ONE;
         }
 
         public static explicit operator FP(decimal value) {
             FP result;
-            result._serializedValue = (long)(value * ONE);
+            result.V = (long)(value * ONE);
             return result;
             //return new FP((long)(value * ONE));
         }
 
         public static implicit operator FP(int value) {
             FP result;
-            result._serializedValue = value * ONE;
+            result.V = value * ONE;
             return result;
             //return new FP(value * ONE);
         }
 
         public static explicit operator decimal(FP value) {
-            return (decimal)value._serializedValue / ONE;
+            return (decimal)value.V / ONE;
         }
 
         public float AsFloat() {
@@ -904,19 +904,19 @@ namespace TrueSync {
         }
 
         public override bool Equals(object obj) {
-            return obj is FP && ((FP)obj)._serializedValue == _serializedValue;
+            return obj is FP && ((FP)obj).V == this.V;
         }
 
         public override int GetHashCode() {
-            return _serializedValue.GetHashCode();
+            return this.V.GetHashCode();
         }
 
         public bool Equals(FP other) {
-            return _serializedValue == other._serializedValue;
+            return this.V == other.V;
         }
 
         public int CompareTo(FP other) {
-            return _serializedValue.CompareTo(other._serializedValue);
+            return this.V.CompareTo(other.V);
         }
 
         public override string ToString() {
@@ -948,7 +948,7 @@ namespace TrueSync {
                         writer.Write("            ");
                     }
                     var acos = Math.Acos(angle);
-                    var rawValue = ((FP)acos)._serializedValue;
+                    var rawValue = ((FP)acos).V;
                     writer.Write(string.Format("0x{0:X}L, ", rawValue));
                 }
                 writer.Write(
@@ -973,7 +973,7 @@ namespace TrueSync {
                         writer.Write("            ");
                     }
                     var sin = Math.Sin(angle);
-                    var rawValue = ((FP)sin)._serializedValue;
+                    var rawValue = ((FP)sin).V;
                     writer.Write(string.Format("0x{0:X}L, ", rawValue));
                 }
                 writer.Write(
@@ -1001,7 +1001,7 @@ namespace TrueSync {
                     if (tan > (double)MaxValue || tan < 0.0) {
                         tan = (double)MaxValue;
                     }
-                    var rawValue = (((decimal)tan > (decimal)MaxValue || tan < 0.0) ? MaxValue : (FP)tan)._serializedValue;
+                    var rawValue = (((decimal)tan > (decimal)MaxValue || tan < 0.0) ? MaxValue : (FP)tan).V;
                     writer.Write(string.Format("0x{0:X}L, ", rawValue));
                 }
                 writer.Write(
@@ -1015,18 +1015,18 @@ namespace TrueSync {
         /// <summary>
         /// The underlying integer representation
         /// </summary>
-        public long RawValue { get { return _serializedValue; } }
+        public long RawValue { get { return this.V; } }
 
         /// <summary>
         /// This is the constructor from raw value; it can only be used interally.
         /// </summary>
         /// <param name="rawValue"></param>
         FP(long rawValue) {
-            _serializedValue = rawValue;
+            this.V = rawValue;
         }
 
         public FP(int value) {
-            _serializedValue = value * ONE;
+            this.V = value * ONE;
         }
         
         public static FP Mix(int integer, int numerator, int denominator)
