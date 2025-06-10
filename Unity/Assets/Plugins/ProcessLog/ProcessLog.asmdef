@@ -1,0 +1,17 @@
+{
+    "name": "ProcessLog",
+    "rootNamespace": "",
+    "references": [
+        "GUID:3bc34195423a3497e8e70fc30a077526",
+        "GUID:9ef2053bcf13a254ab3940a767f7b1a5"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}
