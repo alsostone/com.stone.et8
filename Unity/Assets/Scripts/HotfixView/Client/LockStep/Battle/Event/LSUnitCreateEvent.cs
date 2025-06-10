@@ -5,10 +5,11 @@ namespace ET.Client
     {
         protected override async ETTask Run(LSWorld lsWorld, LSUnitCreate args)
         {
-            var room = lsWorld.GetParent<Room>();
-            if (room.GetComponent<LSUnitViewComponent>() == null)
+            Room room = lsWorld.GetParent<Room>();
+            LSUnitViewComponent viewComponent = room.GetComponent<LSUnitViewComponent>();
+            if (viewComponent == null)
                 return;
-            await LSUnitViewFactory.CreateLSUnitViewAsync(room, lsWorld, args.LSUnit);
+            await LSUnitViewFactory.CreateLSUnitViewAsync(viewComponent, args.LSUnit);
         }
     }
 }

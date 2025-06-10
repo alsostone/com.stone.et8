@@ -6,9 +6,6 @@ namespace ET.Client
     {
         public static async ETTask CreateLSUnitViewAsync(LSUnitViewComponent viewComponent, LSUnit lsUnit)
         {
-            // 回滚后重新执行帧，ID对应的实体可能已变化。需清除表现层单位重新创建
-            viewComponent.RemoveChild(lsUnit.Id);
-
             var type = lsUnit.GetComponent<TypeComponent>().GetUnitType();
             switch (type)
             {
@@ -32,7 +29,10 @@ namespace ET.Client
 
         private static async ETTask CreateHeroViewAsync(LSUnitViewComponent viewComponent, LSUnit lsUnit)
         {
+            // 回滚后重新执行帧，ID对应的实体可能已变化。需清除表现层单位重新创建
+            viewComponent.RemoveChild(lsUnit.Id);
             Scene root = viewComponent.Root();
+            
             string assetsName = $"Assets/Bundles/Unit/Unit.prefab";
             GameObject bundleGameObject = await root.GetComponent<ResourcesLoaderComponent>().LoadAssetAsync<GameObject>(assetsName);
             GameObject prefab = bundleGameObject.Get<GameObject>("Skeleton");
@@ -52,6 +52,8 @@ namespace ET.Client
         
         private static async ETTask CreateBuildingViewAsync(LSUnitViewComponent viewComponent, LSUnit lsUnit)
         {
+            // 回滚后重新执行帧，ID对应的实体可能已变化。需清除表现层单位重新创建
+            viewComponent.RemoveChild(lsUnit.Id);
             Scene root = viewComponent.Root();
             
             BuildingComponent buildingComponent = lsUnit.GetComponent<BuildingComponent>();
@@ -69,6 +71,8 @@ namespace ET.Client
         
         private static async ETTask CreateSoldierViewAsync(LSUnitViewComponent viewComponent, LSUnit lsUnit)
         {
+            // 回滚后重新执行帧，ID对应的实体可能已变化。需清除表现层单位重新创建
+            viewComponent.RemoveChild(lsUnit.Id);
             Scene root = viewComponent.Root();
             
             SoldierComponent soldierComponent = lsUnit.GetComponent<SoldierComponent>();
@@ -91,6 +95,8 @@ namespace ET.Client
         
         private static async ETTask CreateDropViewAsync(LSUnitViewComponent viewComponent, LSUnit lsUnit)
         {
+            // 回滚后重新执行帧，ID对应的实体可能已变化。需清除表现层单位重新创建
+            viewComponent.RemoveChild(lsUnit.Id);
             Scene root = viewComponent.Root();
             
             DropComponent dropComponent = lsUnit.GetComponent<DropComponent>();
@@ -106,6 +112,8 @@ namespace ET.Client
         
         private static async ETTask CreateBulletViewAsync(LSUnitViewComponent viewComponent, LSUnit lsUnit)
         {
+            // 回滚后重新执行帧，ID对应的实体可能已变化。需清除表现层单位重新创建
+            viewComponent.RemoveChild(lsUnit.Id);
             Scene root = viewComponent.Root();
 
             BulletComponent bulletComponent = lsUnit.GetComponent<BulletComponent>();
