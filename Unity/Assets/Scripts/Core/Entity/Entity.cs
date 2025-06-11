@@ -225,9 +225,9 @@ namespace ET
                 {
                     child.ViewGO.transform.SetParent(this.ViewGO.transform);
                 }
-                foreach (var comp in this.Components.Values)
+                foreach (var component in this.Components)
                 {
-                    comp.ViewGO.transform.SetParent(this.ViewGO.transform);
+                    component.ViewGO.transform.SetParent(this.ViewGO.transform);
                 }
 #endif
             }
@@ -335,7 +335,8 @@ namespace ET
                         foreach (Entity component in this.componentsDB)
                         {
                             component.IsComponent = true;
-                            this.Components.Add(this.GetLongHashCode(component.GetType()), component);
+                            this.Components.Add(component);
+                            this.TypeComponentMapping.Add(this.GetLongHashCode(component.GetType()), component);
                             component.parent = this;
                         }
                     }
@@ -362,7 +363,7 @@ namespace ET
 
                 if (this.components != null)
                 {
-                    foreach (Entity component in this.components.Values)
+                    foreach (var component in this.components)
                     {
                         component.IScene = this.iScene;
                     }
@@ -420,18 +421,13 @@ namespace ET
         [BsonIgnoreIfNull]
         protected List<Entity> componentsDB;
 
-        [BsonIgnore]
-        private SortedDictionary<long, Entity> components;
-
-        [MemoryPackIgnore]
-        [BsonIgnore]
-        public SortedDictionary<long, Entity> Components
-        {
-            get
-            {
-                return this.components ??= ObjectPool.Instance.Fetch<SortedDictionary<long, Entity>>();
-            }
-        }
+        [BsonIgnore][MemoryPackIgnore] private List<Entity> components;
+        [BsonIgnore][MemoryPackIgnore]
+        public List<Entity> Components => this.components ??= ObjectPool.Instance.Fetch<List<Entity>>();
+        
+        [BsonIgnore][MemoryPackIgnore] private Dictionary<long, Entity> typeComponentMapping;
+        [BsonIgnore][MemoryPackIgnore]
+        public Dictionary<long, Entity> TypeComponentMapping => this.typeComponentMapping ??= ObjectPool.Instance.Fetch<Dictionary<long, Entity>>();
 
         public int ComponentsCount()
         {
@@ -473,40 +469,48 @@ namespace ET
                 this.children.Clear();
                 objectPool.Recycle(this.children);
                 this.children = null;
-
-                if (this.childrenDB != null)
+            }
+            
+            // 创建的才需要回到池中,从db中不需要回收
+            if (this.childrenDB != null)
+            {
+                this.childrenDB.Clear();
+                if (this.IsNew)
                 {
-                    this.childrenDB.Clear();
-                    // 创建的才需要回到池中,从db中不需要回收
-                    if (this.IsNew)
-                    {
-                        objectPool.Recycle(this.childrenDB);
-                        this.childrenDB = null;
-                    }
+                    objectPool.Recycle(this.childrenDB);
+                    this.childrenDB = null;
                 }
             }
 
             // 清理Component
             if (this.components != null)
             {
-                foreach (var kv in this.components)
+                for (int index = this.components.Count - 1; index >= 0; index--)
                 {
-                    kv.Value.Dispose();
+                    Entity component = this.components[index];
+                    component.Dispose();
                 }
 
                 this.components.Clear();
                 objectPool.Recycle(this.components);
                 this.components = null;
-
-                // 创建的才需要回到池中,从db中不需要回收
-                if (this.componentsDB != null)
+            }
+            
+            if (this.typeComponentMapping != null)
+            {
+                this.typeComponentMapping.Clear();
+                objectPool.Recycle(this.typeComponentMapping);
+                this.typeComponentMapping = null;
+            }
+            
+            // 创建的才需要回到池中,从db中不需要回收
+            if (this.componentsDB != null)
+            {
+                this.componentsDB.Clear();
+                if (this.IsNew)
                 {
-                    this.componentsDB.Clear();
-                    if (this.IsNew)
-                    {
-                        objectPool.Recycle(this.componentsDB);
-                        this.componentsDB = null;
-                    }
+                    objectPool.Recycle(this.componentsDB);
+                    this.componentsDB = null;
                 }
             }
 
@@ -544,7 +548,8 @@ namespace ET
 
         private void AddToComponents(Entity component)
         {
-            this.Components.Add(this.GetLongHashCode(component.GetType()), component);
+            this.TypeComponentMapping.Add(this.GetLongHashCode(component.GetType()), component);
+            this.Components.Add(component);
         }
 
         private void RemoveFromComponents(Entity component)
@@ -554,7 +559,8 @@ namespace ET
                 return;
             }
 
-            this.components.Remove(this.GetLongHashCode(component.GetType()));
+            this.Components.Remove(component);
+            this.TypeComponentMapping.Remove(this.GetLongHashCode(component.GetType()));
 
             if (this.components.Count == 0)
             {
@@ -592,50 +598,27 @@ namespace ET
 
         public void RemoveComponent<K>() where K : Entity
         {
-            if (this.IsDisposed)
-            {
-                return;
-            }
-
-            if (this.components == null)
-            {
-                return;
-            }
+            if (this.IsDisposed) return;
+            if (this.typeComponentMapping == null) return;
 
             Type type = typeof (K);
-            
-            Entity c;
-            if (!this.components.TryGetValue(this.GetLongHashCode(type), out c))
-            {
+            if (!this.typeComponentMapping.TryGetValue(this.GetLongHashCode(type), out var c))
                 return;
-            }
-
+            
             this.RemoveFromComponents(c);
             c.Dispose();
         }
 
         private void RemoveComponent(Entity component)
         {
-            if (this.IsDisposed)
-            {
-                return;
-            }
+            if (this.IsDisposed) return;
+            if (this.typeComponentMapping == null) return;
 
-            if (this.components == null)
-            {
+            if (!this.typeComponentMapping.TryGetValue(this.GetLongHashCode(component.GetType()), out var c))
                 return;
-            }
-
-            Entity c;
-            if (!this.components.TryGetValue(this.GetLongHashCode(component.GetType()), out c))
-            {
-                return;
-            }
 
             if (c.InstanceId != component.InstanceId)
-            {
                 return;
-            }
 
             this.RemoveFromComponents(c);
             c.Dispose();
@@ -643,16 +626,11 @@ namespace ET
 
         public void RemoveComponent(Type type)
         {
-            if (this.IsDisposed)
-            {
-                return;
-            }
+            if (this.IsDisposed) return;
+            if (this.typeComponentMapping == null) return;
 
-            Entity c;
-            if (!this.components.TryGetValue(this.GetLongHashCode(type), out c))
-            {
+            if (!this.typeComponentMapping.TryGetValue(this.GetLongHashCode(type), out var c))
                 return;
-            }
 
             RemoveFromComponents(c);
             c.Dispose();
@@ -660,32 +638,25 @@ namespace ET
 
         public K GetComponent<K>() where K : Entity
         {
-            if (this.components == null)
-            {
+            if (this.typeComponentMapping == null)
                 return null;
-            }
 
             // 如果有IGetComponent接口，则触发GetComponentSystem
             if (this is IGetComponentSys)
             {
                 EntitySystemSingleton.Instance.GetComponentSys(this, typeof(K));
             }
-            
-            Entity component;
-            if (!this.components.TryGetValue(this.GetLongHashCode(typeof (K)), out component))
-            {
+
+            if (!this.typeComponentMapping.TryGetValue(this.GetLongHashCode(typeof (K)), out var component))
                 return default;
-            }
 
             return (K) component;
         }
 
         public Entity GetComponent(Type type)
         {
-            if (this.components == null)
-            {
+            if (this.typeComponentMapping == null)
                 return null;
-            }
 
             // 如果有IGetComponent接口，则触发GetComponentSystem
             // 这个要在tryget之前调用，因为有可能components没有，但是执行GetComponentSystem后又有了
@@ -694,11 +665,8 @@ namespace ET
                 EntitySystemSingleton.Instance.GetComponentSys(this, type);
             }
             
-            Entity component;
-            if (!this.components.TryGetValue(this.GetLongHashCode(type), out component))
-            {
+            if (!this.typeComponentMapping.TryGetValue(this.GetLongHashCode(type), out var component))
                 return null;
-            }
 
             return component;
         }
@@ -725,7 +693,7 @@ namespace ET
         public Entity AddComponent(Entity component)
         {
             Type type = component.GetType();
-            if (this.components != null && this.components.ContainsKey(this.GetLongHashCode(type)))
+            if (this.typeComponentMapping != null && this.typeComponentMapping.ContainsKey(this.GetLongHashCode(type)))
             {
                 throw new Exception($"entity already has component: {type.FullName}");
             }
@@ -737,7 +705,7 @@ namespace ET
 
         public Entity AddComponent(Type type, bool isFromPool = false)
         {
-            if (this.components != null && this.components.ContainsKey(this.GetLongHashCode(type)))
+            if (this.typeComponentMapping != null && this.typeComponentMapping.ContainsKey(this.GetLongHashCode(type)))
             {
                 throw new Exception($"entity already has component: {type.FullName}");
             }
@@ -754,7 +722,7 @@ namespace ET
         public K AddComponentWithId<K>(long id, bool isFromPool = false) where K : Entity, IAwake, new()
         {
             Type type = typeof (K);
-            if (this.components != null && this.components.ContainsKey(this.GetLongHashCode(type)))
+            if (this.typeComponentMapping != null && this.typeComponentMapping.ContainsKey(this.GetLongHashCode(type)))
             {
                 throw new Exception($"entity already has component: {type.FullName}");
             }
@@ -771,7 +739,7 @@ namespace ET
         public K AddComponentWithId<K, P1>(long id, P1 p1, bool isFromPool = false) where K : Entity, IAwake<P1>, new()
         {
             Type type = typeof (K);
-            if (this.components != null && this.components.ContainsKey(this.GetLongHashCode(type)))
+            if (this.typeComponentMapping != null && this.typeComponentMapping.ContainsKey(this.GetLongHashCode(type)))
             {
                 throw new Exception($"entity already has component: {type.FullName}");
             }
@@ -788,7 +756,7 @@ namespace ET
         public K AddComponentWithId<K, P1, P2>(long id, P1 p1, P2 p2, bool isFromPool = false) where K : Entity, IAwake<P1, P2>, new()
         {
             Type type = typeof (K);
-            if (this.components != null && this.components.ContainsKey(this.GetLongHashCode(type)))
+            if (this.typeComponentMapping != null && this.typeComponentMapping.ContainsKey(this.GetLongHashCode(type)))
             {
                 throw new Exception($"entity already has component: {type.FullName}");
             }
@@ -805,7 +773,7 @@ namespace ET
         public K AddComponentWithId<K, P1, P2, P3>(long id, P1 p1, P2 p2, P3 p3, bool isFromPool = false) where K : Entity, IAwake<P1, P2, P3>, new()
         {
             Type type = typeof (K);
-            if (this.components != null && this.components.ContainsKey(this.GetLongHashCode(type)))
+            if (this.typeComponentMapping != null && this.typeComponentMapping.ContainsKey(this.GetLongHashCode(type)))
             {
                 throw new Exception($"entity already has component: {type.FullName}");
             }
@@ -822,7 +790,7 @@ namespace ET
         public K AddComponentWithId<K, P1, P2, P3, P4>(long id, P1 p1, P2 p2, P3 p3, P4 p4, bool isFromPool = false) where K : Entity, IAwake<P1, P2, P3, P4>, new()
         {
             Type type = typeof (K);
-            if (this.components != null && this.components.ContainsKey(this.GetLongHashCode(type)))
+            if (this.typeComponentMapping != null && this.typeComponentMapping.ContainsKey(this.GetLongHashCode(type)))
             {
                 throw new Exception($"entity already has component: {type.FullName}");
             }
@@ -969,17 +937,17 @@ namespace ET
             if (this.components != null && this.components.Count != 0)
             {
                 ObjectPool objectPool = ObjectPool.Instance;
-                foreach (Entity entity in this.components.Values)
+                foreach (var component in this.components)
                 {
-                    if (entity is not ISerializeToEntity)
+                    if (component is not ISerializeToEntity)
                     {
                         continue;
                     }
 
                     this.componentsDB ??= objectPool.Fetch<List<Entity>>();
-                    this.componentsDB.Add(entity);
+                    this.componentsDB.Add(component);
 
-                    entity.BeginInit();
+                    component.BeginInit();
                 }
             }
 

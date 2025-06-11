@@ -22,13 +22,13 @@ namespace ET
         //不想报错就别调用这个方法
         public K GetComponent<K>(bool log) where K : Entity
         {
-            if (this.components == null)
+            if (this.typeComponentMapping == null)
             {
                 return null;
             }
 
             Entity component;
-            if (!this.components.TryGetValue(this.GetLongHashCode(typeof(K)), out component))
+            if (!this.typeComponentMapping.TryGetValue(this.GetLongHashCode(typeof(K)), out component))
             {
                 Log.Error($"{this.GetType().Name} 目标没有这个组件 {typeof(K).Name}");
                 return default;

@@ -13,15 +13,15 @@ namespace ET.Client
             
             LSEntitySystemSingleton.Instance.LSRollback(entity);
             
-            if (entity.ComponentsCount() > 0)
+            if (entity.Components.Count > 0)
             {
-                foreach (var kv in entity.Components)
+                foreach (var component in entity.Components)
                 {
-                    RunLSRollbackSystem(kv.Value);
+                    RunLSRollbackSystem(component);
                 }
             }
 
-            if (entity.ChildrenCount() > 0)
+            if (entity.Children.Count > 0)
             {
                 foreach (var kv in entity.Children)
                 {
