@@ -1,4 +1,4 @@
-﻿namespace ET
+namespace ET
 {
     [EntitySystemOf(typeof(TypeComponent))]
     [FriendOf(typeof(TypeComponent))]
@@ -10,9 +10,5 @@
             self.Type = type;
         }
         
-        public static EUnitType GetUnitType(this TypeComponent self)
-        {
-            return self.Type;
-        }
     }
 }

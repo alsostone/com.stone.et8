@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using TrueSync;
 
 namespace ET
@@ -6,13 +6,14 @@ namespace ET
     [EntitySystemOf(typeof(BeHitComponent))]
     [LSEntitySystemOf(typeof(BeHitComponent))]
     [FriendOf(typeof(BeHitComponent))]
+    [FriendOf(typeof(TeamComponent))]
     public static partial class BeHitComponentSystem
     {
         [EntitySystem]
         private static void Awake(this BeHitComponent self)
         {
             LSTargetsComponent component = self.LSWorld().GetComponent<LSTargetsComponent>();
-            TeamType teamType = self.LSOwner().GetComponent<TeamComponent>().GetTeamType();
+            TeamType teamType = self.LSOwner().GetComponent<TeamComponent>().Type;
             component.AddTarget(teamType, self.LSOwner());
         }
         
@@ -22,6 +23,14 @@ namespace ET
             self.Attackers.Clear();
         }
         
+        [EntitySystem]
+        private static void Deserialize(this BeHitComponent self)
+        {
+            LSTargetsComponent component = self.LSWorld().GetComponent<LSTargetsComponent>();
+            TeamType teamType = self.LSOwner().GetComponent<TeamComponent>().Type;
+            component.AddTarget(teamType, self.LSOwner());
+        }
+
         [LSEntitySystem]
         private static void LSUpdate(this BeHitComponent self)
         {

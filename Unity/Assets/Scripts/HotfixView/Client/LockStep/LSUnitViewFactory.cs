@@ -2,11 +2,12 @@ using UnityEngine;
 
 namespace ET.Client
 {
+    [FriendOf(typeof(TypeComponent))]
     public static class LSUnitViewFactory
     {
         public static async ETTask CreateLSUnitViewAsync(LSUnitViewComponent viewComponent, LSUnit lsUnit)
         {
-            var type = lsUnit.GetComponent<TypeComponent>().GetUnitType();
+            var type = lsUnit.GetComponent<TypeComponent>().Type;
             switch (type)
             {
                 case EUnitType.Hero:
@@ -29,8 +30,6 @@ namespace ET.Client
 
         private static async ETTask CreateHeroViewAsync(LSUnitViewComponent viewComponent, LSUnit lsUnit)
         {
-            // 回滚后重新执行帧，ID对应的实体可能已变化。需清除表现层单位重新创建
-            viewComponent.RemoveChild(lsUnit.Id);
             Scene root = viewComponent.Root();
             
             string assetsName = $"Assets/Bundles/Unit/Unit.prefab";
@@ -40,6 +39,8 @@ namespace ET.Client
             GlobalComponent globalComponent = root.GetComponent<GlobalComponent>();
             GameObject unitGo = UnityEngine.Object.Instantiate(prefab, globalComponent.Unit, true);
             
+            // 回滚后重新执行帧，ID对应的实体可能已变化。需清除表现层单位重新创建
+            viewComponent.RemoveChild(lsUnit.Id);
             LSUnitView lsUnitView = viewComponent.AddChildWithId<LSUnitView, GameObject>(lsUnit.Id, unitGo);
             lsUnitView.AddComponent<LSAnimatorComponent>();
             lsUnitView.AddComponent<LSViewTransformComponent, Transform, bool>(unitGo.transform, false);
@@ -52,8 +53,6 @@ namespace ET.Client
         
         private static async ETTask CreateBuildingViewAsync(LSUnitViewComponent viewComponent, LSUnit lsUnit)
         {
-            // 回滚后重新执行帧，ID对应的实体可能已变化。需清除表现层单位重新创建
-            viewComponent.RemoveChild(lsUnit.Id);
             Scene root = viewComponent.Root();
             
             BuildingComponent buildingComponent = lsUnit.GetComponent<BuildingComponent>();
@@ -64,6 +63,8 @@ namespace ET.Client
             GlobalComponent globalComponent = root.GetComponent<GlobalComponent>();
             GameObject unitGo = UnityEngine.Object.Instantiate(prefab, globalComponent.Unit, true);
             
+            // 回滚后重新执行帧，ID对应的实体可能已变化。需清除表现层单位重新创建
+            viewComponent.RemoveChild(lsUnit.Id);
             LSUnitView lsUnitView = viewComponent.AddChildWithId<LSUnitView, GameObject>(lsUnit.Id, unitGo);
             lsUnitView.AddComponent<LSAnimatorComponent>();
             lsUnitView.AddComponent<LSViewTransformComponent, Transform, bool>(unitGo.transform, false);
@@ -71,8 +72,6 @@ namespace ET.Client
         
         private static async ETTask CreateSoldierViewAsync(LSUnitViewComponent viewComponent, LSUnit lsUnit)
         {
-            // 回滚后重新执行帧，ID对应的实体可能已变化。需清除表现层单位重新创建
-            viewComponent.RemoveChild(lsUnit.Id);
             Scene root = viewComponent.Root();
             
             SoldierComponent soldierComponent = lsUnit.GetComponent<SoldierComponent>();
@@ -83,6 +82,8 @@ namespace ET.Client
             GlobalComponent globalComponent = root.GetComponent<GlobalComponent>();
             GameObject unitGo = UnityEngine.Object.Instantiate(prefab, globalComponent.Unit, true);
             
+            // 回滚后重新执行帧，ID对应的实体可能已变化。需清除表现层单位重新创建
+            viewComponent.RemoveChild(lsUnit.Id);
             LSUnitView lsUnitView = viewComponent.AddChildWithId<LSUnitView, GameObject>(lsUnit.Id, unitGo);
             lsUnitView.AddComponent<LSAnimatorComponent>();
             lsUnitView.AddComponent<LSViewTransformComponent, Transform, bool>(unitGo.transform, false);
@@ -95,8 +96,6 @@ namespace ET.Client
         
         private static async ETTask CreateDropViewAsync(LSUnitViewComponent viewComponent, LSUnit lsUnit)
         {
-            // 回滚后重新执行帧，ID对应的实体可能已变化。需清除表现层单位重新创建
-            viewComponent.RemoveChild(lsUnit.Id);
             Scene root = viewComponent.Root();
             
             DropComponent dropComponent = lsUnit.GetComponent<DropComponent>();
@@ -106,14 +105,14 @@ namespace ET.Client
             GlobalComponent globalComponent = root.GetComponent<GlobalComponent>();
             GameObject unitGo = UnityEngine.Object.Instantiate(prefab, globalComponent.Unit, true);
             
+            // 回滚后重新执行帧，ID对应的实体可能已变化。需清除表现层单位重新创建
+            viewComponent.RemoveChild(lsUnit.Id);
             LSUnitView lsUnitView = viewComponent.AddChildWithId<LSUnitView, GameObject>(lsUnit.Id, unitGo);
             lsUnitView.AddComponent<LSViewTransformComponent, Transform, bool>(unitGo.transform, true);
         }
         
         private static async ETTask CreateBulletViewAsync(LSUnitViewComponent viewComponent, LSUnit lsUnit)
         {
-            // 回滚后重新执行帧，ID对应的实体可能已变化。需清除表现层单位重新创建
-            viewComponent.RemoveChild(lsUnit.Id);
             Scene root = viewComponent.Root();
 
             BulletComponent bulletComponent = lsUnit.GetComponent<BulletComponent>();
@@ -124,6 +123,8 @@ namespace ET.Client
             GlobalComponent globalComponent = root.GetComponent<GlobalComponent>();
             GameObject unitGo = UnityEngine.Object.Instantiate(prefab, globalComponent.Unit, true);
             
+            // 回滚后重新执行帧，ID对应的实体可能已变化。需清除表现层单位重新创建
+            viewComponent.RemoveChild(lsUnit.Id);
             LSUnitView lsUnitView = viewComponent.AddChildWithId<LSUnitView, GameObject>(lsUnit.Id, unitGo);
             lsUnitView.AddComponent<LSViewTransformComponent, Transform, bool>(unitGo.transform, true);
         }

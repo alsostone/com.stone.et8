@@ -1,4 +1,4 @@
-﻿namespace ET
+namespace ET
 {
     [EntitySystemOf(typeof(TeamComponent))]
     [FriendOf(typeof(TeamComponent))]
@@ -8,11 +8,6 @@
         private static void Awake(this TeamComponent self, TeamType type)
         {
             self.Type = type;
-        }
-        
-        public static TeamType GetTeamType(this TeamComponent self)
-        {
-            return self.Type;
         }
     }
 }

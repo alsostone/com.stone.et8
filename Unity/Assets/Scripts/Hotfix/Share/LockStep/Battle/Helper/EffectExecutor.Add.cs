@@ -4,6 +4,7 @@ using TrueSync;
 
 namespace ET
 {
+    [FriendOf(typeof(TeamComponent))]
     public static partial class EffectExecutor
     {
         private static void AddBuff(int[] param, LSUnit owner, LSUnit target)
@@ -117,7 +118,7 @@ namespace ET
         
         private static void SummonSoldier(int[] param, LSUnit owner, LSUnit target)
         {
-            TeamType team = target.GetComponent<TeamComponent>().GetTeamType();
+            TeamType team = target.GetComponent<TeamComponent>().Type;
             var targetTransform = target.GetComponent<TransformComponent>();
             var position = TSVector.zero;
             if (param.Length >= 4) {
@@ -133,7 +134,7 @@ namespace ET
         
         private static void SummonRandom(int[] param, LSUnit owner, LSUnit target)
         {
-            TeamType team = target.GetComponent<TeamComponent>().GetTeamType();
+            TeamType team = target.GetComponent<TeamComponent>().Type;
             var targetTransform = target.GetComponent<TransformComponent>();
             var position = TSVector.zero;
             if (param.Length >= 4) {

@@ -6,7 +6,7 @@ namespace ET
 {
 	[ComponentOf(typeof(LSWorld))]
 	[MemoryPackable]
-	public partial class LSTargetsComponent: LSEntity, IAwake, IDeserialize, ISerializeToEntity
+	public partial class LSTargetsComponent: LSEntity, IAwake, ISerializeToEntity
 	{
 		[MemoryPackIgnore]
 		[BsonIgnore]

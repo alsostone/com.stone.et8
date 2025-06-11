@@ -4,6 +4,8 @@ using TrueSync;
 
 namespace ET
 {
+    [FriendOf(typeof(TypeComponent))]
+    [FriendOf(typeof(TeamComponent))]
     public static class TargetSearcher
     {
         public static void Search(int id, LSUnit owner, List<SearchUnit> results)
@@ -26,7 +28,7 @@ namespace ET
             if (teamComponent != null)
             { 
                 center = owner.GetComponent<TransformComponent>().Position;
-                teamSelf = teamComponent.GetTeamType();
+                teamSelf = teamComponent.Type;
             }
             
             LSTargetsComponent lsTargetsComponent = owner.LSWorld().GetComponent<LSTargetsComponent>();
@@ -85,7 +87,7 @@ namespace ET
             for (int idx = results.Count - 1; idx >= 0; idx--)
             {
                 TypeComponent typeComponent = results[idx].Target.GetComponent<TypeComponent>();
-                if (typeComponent == null || (typeComponent.GetUnitType() & type) == 0) {
+                if (typeComponent == null || (typeComponent.Type & type) == 0) {
                     results.RemoveAt(idx);
                 }
             }

@@ -2,6 +2,7 @@
 
 namespace ET
 {
+	[FriendOf(typeof(TeamComponent))]
     public static partial class LSUnitFactory
     {
         public static LSUnit CreateHero(LSWorld lsWorld, int tableId, TSVector position, TSQuaternion rotation, long playerId)
@@ -114,7 +115,7 @@ namespace ET
 			
 	        lsUnit.AddComponent<TransformComponent, TSVector, TSQuaternion>(position, TSQuaternion.identity);
 	        lsUnit.AddComponent<TypeComponent, EUnitType>(EUnitType.Bullet);
-	        lsUnit.AddComponent<TeamComponent, TeamType>(caster.GetComponent<TeamComponent>().GetTeamType());
+	        lsUnit.AddComponent<TeamComponent, TeamType>(caster.GetComponent<TeamComponent>().Type);
 	        BulletComponent bulletComponent = lsUnit.AddComponent<BulletComponent, int, LSUnit, LSUnit>(bulletId, caster, target);
 
 	        lsUnit.AddComponent<TrackComponent, int, LSUnit, TSVector>(bulletComponent.TbBulletRow.TrackId, target, TSVector.zero);
@@ -130,7 +131,7 @@ namespace ET
 			
 	        lsUnit.AddComponent<TransformComponent, TSVector, TSQuaternion>(position, TSQuaternion.identity);
 	        lsUnit.AddComponent<TypeComponent, EUnitType>(EUnitType.Bullet);
-	        lsUnit.AddComponent<TeamComponent, TeamType>(caster.GetComponent<TeamComponent>().GetTeamType());
+	        lsUnit.AddComponent<TeamComponent, TeamType>(caster.GetComponent<TeamComponent>().Type);
 	        BulletComponent bulletComponent = lsUnit.AddComponent<BulletComponent, int, LSUnit, LSUnit>(bulletId, caster, null);
 
 	        lsUnit.AddComponent<TrackComponent, int, LSUnit, TSVector>(bulletComponent.TbBulletRow.TrackId, null, targetPosition);
