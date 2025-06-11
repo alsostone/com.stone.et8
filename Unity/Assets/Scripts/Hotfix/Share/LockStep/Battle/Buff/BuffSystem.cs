@@ -1,4 +1,4 @@
-﻿namespace ET
+namespace ET
 {
     [LSEntitySystemOf(typeof(Buff))]
     [EntitySystemOf(typeof(Buff))]

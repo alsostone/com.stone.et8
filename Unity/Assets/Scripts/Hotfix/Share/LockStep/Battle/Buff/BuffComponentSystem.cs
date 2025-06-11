@@ -1,4 +1,4 @@
-﻿namespace ET
+namespace ET
 {
     [EntitySystemOf(typeof(BuffComponent))]
     [FriendOf(typeof(BuffComponent))]

@@ -1,4 +1,4 @@
-﻿namespace ET
+namespace ET
 {
     [EntitySystemOf(typeof(DeathComponent))]
     [FriendOf(typeof(DeathComponent))]
