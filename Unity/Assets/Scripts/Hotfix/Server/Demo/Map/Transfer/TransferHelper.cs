@@ -23,11 +23,11 @@ namespace ET.Server
             M2M_UnitTransferRequest request = M2M_UnitTransferRequest.Create();
             request.OldActorId = unit.GetActorId();
             request.Unit = unit.ToBson();
-            foreach (Entity entity in unit.Components.Values)
+            foreach (Entity component in unit.Components)
             {
-                if (entity is ITransfer)
+                if (component is ITransfer)
                 {
-                    request.Entitys.Add(entity.ToBson());
+                    request.Entitys.Add(component.ToBson());
                 }
             }
             unit.Dispose();
