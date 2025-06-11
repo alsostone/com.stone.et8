@@ -29,7 +29,7 @@ namespace ET.Client
                 // 回滚重新预测的时候，自己的输入不用变化
                 if (input != predictionInput)
                 {
-                    Log.Debug($"frame diff: {predictionInput} {input}");
+                    Log.Debug($"frame diff: {room.AuthorityFrame} {predictionInput} {input}");
                     input.CopyTo(predictionInput);
                     // 回滚到frameBuffer.AuthorityFrame
                     Log.Debug($"roll back start {room.AuthorityFrame}");

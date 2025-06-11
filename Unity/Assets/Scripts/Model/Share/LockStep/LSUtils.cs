@@ -11,6 +11,23 @@ namespace ET
             return entity.Parent.Parent as LSUnit;
         }
         
+        public static Entity LSParent(this LSEntity entity)
+        {
+            // 全局组件的父级是LSWorld
+            if (entity.Parent is LSWorld lsWorld)
+                return lsWorld;
+            
+            // 普通组件的父级是战斗单位
+            if (entity.Parent is LSUnit lsUnit)
+                return lsUnit;
+            
+            // 一个技能的父级是技能组件 技能组件的父级是战斗单位
+            if (entity.Parent?.Parent is LSUnit lsParent)
+                return lsParent;
+            
+            return entity;
+        }
+        
         public static LSUnit LSUnit(this LSEntity entity, long id)
         {
             LSUnitComponent unitComponent = entity.LSWorld().GetComponent<LSUnitComponent>();

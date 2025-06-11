@@ -60,6 +60,7 @@ namespace ET
 
         public static FP Get(this PropComponent self, NumericType key)
         {
+            self.LSRoom().ProcessLog.LogIgnore();
             FP value = 0;
             self.NumericDic.TryGetValue(key, out value);
             return value;

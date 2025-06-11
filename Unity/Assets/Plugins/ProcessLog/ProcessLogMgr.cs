@@ -7,23 +7,23 @@ using ProcessLog;
 
 public class ProcessLogMgr
 {
-    private int mFrameCount = 0;
     private const int mProcessFrameLimit = 18000;
+    
+    private int mFrameCount = 0;
     private int mLogEnableRef = 0;
-    private long mSum = ~0;
-
-    private CircleQueue<LogFrameData> mAllFrameLog;
+    private readonly CircleQueue<LogFrameData> mAllFrameLog;
+    
+    private long mSum;
     private LogFrameData mCurrentFrameLog;
 
-    public ProcessLogMgr()
+    public ProcessLogMgr(int frame)
     {
-        mFrameCount = 0;
+        mFrameCount = frame;
         mLogEnableRef = 0;
-        mSum = ~0;
-        
         mAllFrameLog = new CircleQueue<LogFrameData>(300);
+        
         mCurrentFrameLog = null;
-        LogNextFrame();
+        this.LogFrameBegin(frame);
     }
 
     public bool HasProcessLog()
@@ -36,24 +36,60 @@ public class ProcessLogMgr
     
     public void LogNextFrame()
     {
-        if (mFrameCount >= mProcessFrameLimit)
+        if (mCurrentFrameLog != null) {
+            mCurrentFrameLog.Hash = mSum;
+        }
+        
+        int frame = mFrameCount;
+        if (frame >= mProcessFrameLimit)
         {
             mCurrentFrameLog = null;
         }
-        else if (mAllFrameLog != null)
+        else
         {
             mCurrentFrameLog = mAllFrameLog.GetNext();
             if (mCurrentFrameLog == null) {
                 mCurrentFrameLog = new LogFrameData();
                 mAllFrameLog.Enqueue(mCurrentFrameLog);
             }
+            ++mFrameCount;
+            
             mCurrentFrameLog.Clear();
-            mCurrentFrameLog.FrameIndex = mFrameCount;
-            mCurrentFrameLog.Hash = GetCurrentFrameHash();
+            mCurrentFrameLog.FrameIndex = frame;
+            mSum = ~frame;
         }
-        mFrameCount++;
     }
     
+    public void LogFrameBegin(int frame)
+    {
+        if (frame < mProcessFrameLimit)
+        {
+            for (int i = mFrameCount; i <= frame; i++)
+            {
+                var frameLog = mAllFrameLog.GetNext();
+                if (frameLog == null) {
+                    frameLog = new LogFrameData();
+                    mAllFrameLog.Enqueue(frameLog);
+                }
+                frameLog.Clear();
+                ++mFrameCount;
+            }
+
+            mCurrentFrameLog = mAllFrameLog.GetLast(mFrameCount - frame - 1);
+            mCurrentFrameLog.Clear();
+            mCurrentFrameLog.FrameIndex = frame;
+            mSum = ~frame;
+        }
+    }
+
+    public void LogFrameEnd()
+    {
+        if (mCurrentFrameLog != null) {
+            mCurrentFrameLog.Hash = mSum;
+        }
+        mCurrentFrameLog = null;
+    }
+
     public long GetCurrentFrameHash()
     {
         return mSum;

@@ -23,15 +23,15 @@ namespace ET
             self.Replay.Seed = seed;
             self.FrameBuffer = new FrameBuffer(frame);
             self.FixedTimeCounter = new FixedTimeCounter(startTime, 0, LSConstValue.UpdateInterval);
-            self.ProcessLog = new ProcessLogMgr();
+            self.ProcessLog = new ProcessLogMgr(frame);
             
             LSWorld lsWorld = self.LSWorld;
             lsWorld.Random = new TSRandom(seed);
             lsWorld.Frame = frame + 1;
             
-            lsWorld.AddComponent<LSUnitComponent>();
             lsWorld.AddComponent<LSTargetsComponent>();
             lsWorld.AddComponent<AIWorldComponent>();
+            lsWorld.AddComponent<LSUnitComponent>();
             for (int i = 0; i < unitInfos.Count; ++i)
             {
                 LockStepUnitInfo unitInfo = unitInfos[i];
@@ -69,11 +69,13 @@ namespace ET
             if (!self.IsReplay)
             {
                 // 保存当前帧场景数据
-                self.SaveLSWorld(self.LSWorld.Frame);
-                self.Record(self.LSWorld.Frame);
+                self.SaveLSWorld(lsWorld.Frame);
+                self.Record(lsWorld.Frame);
             }
 
+            self.ProcessLog.LogFrameBegin(lsWorld.Frame);
             lsWorld.Update();
+            self.ProcessLog.LogFrameEnd();
         }
         
         public static LSWorld GetLSWorld(this Room self, SceneType sceneType, int frame)

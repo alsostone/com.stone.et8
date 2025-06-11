@@ -28,7 +28,7 @@ namespace ProcessLog.Editor
         //要屏蔽的方法名称
         public static string[] IgnoreFuncNames =
         {
-            "LSUpdate",
+            "Deserialize",
         };
 
         //要屏蔽的文件名

@@ -37,7 +37,9 @@ namespace ET.Client
             FrameBuffer frameBuffer = room.FrameBuffer;
             
             // 回滚
+            room.ProcessLog.SetLogEnable(false);
             room.LSWorld = room.GetLSWorld(SceneType.LockStepClient, frame);
+            room.ProcessLog.SetLogEnable(true);
             OneFrameInputs authorityFrameInput = frameBuffer.FrameInputs(frame);
             // 执行AuthorityFrame
             room.Update(authorityFrameInput);

@@ -89,6 +89,25 @@ namespace ProcessLog
         }
 
         /// <summary>
+        /// 返回队尾往前第N个元素
+        /// </summary>
+        /// <param name="offset"></param>
+        /// <returns></returns>
+        public T GetLast(int offset)
+        {
+            if (IsEmpty()) {
+                return default;
+            }
+            if (offset < 0 || offset >= QueueLength()) {
+                return default;
+            }
+
+            // 计算实际索引
+            int index = (Tail - 1 - offset + Length) % Length;
+            return Data[index];
+        }
+        
+        /// <summary>
         /// 返回队列长度
         /// </summary>
         /// <returns></returns>

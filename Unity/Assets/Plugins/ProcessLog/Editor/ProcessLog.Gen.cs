@@ -164,9 +164,12 @@ namespace ProcessLog.Editor
         /// <param name="funcHead"></param>
         private static LogFunctionData GetFunctionData(string funcHead)
         {
-            var codeText = "self.LSRoom().ProcessLog.LogFunction(0);";
+            var codeText = "self.LSRoom().ProcessLog.LogFunction(0, self.LSParent().Id);";
             var functionData = new LogFunctionData();
-
+            
+            functionData.ValidArgNames += "Owner,";
+            functionData.ValidArgCount++;
+            
             //1. 提取函数名
             var funcNameMatch = ms_regexFuncName.Match(funcHead);
             if (funcNameMatch.Success) {
