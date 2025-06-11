@@ -10,7 +10,7 @@ namespace ET
     {
         [EntitySystem]
         private static void Awake(this BulletComponent self, int bulletId, LSUnit caster, LSUnit target)
-        {
+        {self.LSRoom().ProcessLog.LogFunction(19, self.LSParent().Id, bulletId, caster.Id, target.Id);
             self.BulletId = bulletId;
             self.ElapseFrame = self.LSWorld().Frame + self.TbBulletRow.Life.Convert2Frame();
             self.Caster = caster.Id;
@@ -20,7 +20,7 @@ namespace ET
         
         [LSEntitySystem]
         private static void LSUpdate(this BulletComponent self)
-        {
+        {self.LSRoom().ProcessLog.LogFunction(18, self.LSParent().Id);
             if (self.LSWorld().Frame > self.ElapseFrame)
             {
                 self.OnReachTarget(false);
@@ -51,7 +51,7 @@ namespace ET
         }
         
         private static void OnReachTarget(this BulletComponent self, bool reach)
-        {
+        {self.LSRoom().ProcessLog.LogFunction(17, self.LSParent().Id, reach ? 1 : 0);
             if (reach) {
                 LSUnit caster = self.LSUnit(self.Caster);
                 LSUnit target = self.LSUnit(self.Target);

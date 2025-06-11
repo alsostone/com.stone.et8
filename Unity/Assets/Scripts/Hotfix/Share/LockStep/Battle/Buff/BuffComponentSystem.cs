@@ -13,7 +13,7 @@ namespace ET
         
         [EntitySystem]
         private static void Destroy(this BuffComponent self)
-        {
+        {self.LSRoom().ProcessLog.LogFunction(12, self.LSParent().Id);
             foreach (var valuePair in self.IdBuffMap)
             {
                 Buff buff = self.GetChild<Buff>(valuePair.Value);
@@ -23,7 +23,7 @@ namespace ET
         }
         
         public static void AddBuffs(this BuffComponent self, int[] buffIds, LSUnit owner)
-        {
+        {self.LSRoom().ProcessLog.LogFunction(11, self.LSParent().Id, owner.Id);
             foreach (int buffId in buffIds)
             {
                 self.AddBuff(buffId, owner);
@@ -31,7 +31,7 @@ namespace ET
         }
         
         public static void AddBuff(this BuffComponent self, int buffId, LSUnit owner)
-        {
+        {self.LSRoom().ProcessLog.LogFunction(10, self.LSParent().Id, buffId, owner.Id);
             if (self.IdBuffMap.TryGetValue(buffId, out long eid))
             {
                 // 若buffId已存在，则增加层数，且重新计时
@@ -51,7 +51,7 @@ namespace ET
         }
         
         public static void RemoveBuff(this BuffComponent self, int buffId, bool removeLayer = false)
-        {
+        {self.LSRoom().ProcessLog.LogFunction(9, self.LSParent().Id, buffId, removeLayer ? 1 : 0);
             if (self.IdBuffMap.TryGetValue(buffId, out long eid))
             {
                 var buff = self.GetChild<Buff>(eid);

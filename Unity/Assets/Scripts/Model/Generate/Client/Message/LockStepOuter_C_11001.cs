@@ -325,6 +325,9 @@ namespace ET
         [MemoryPackOrder(1)]
         public byte[] LSWorldBytes { get; set; }
 
+        [MemoryPackOrder(2)]
+        public byte[] LSProcessBytes { get; set; }
+
         public override void Dispose()
         {
             if (!this.IsFromPool)
@@ -334,6 +337,7 @@ namespace ET
 
             this.Frame = default;
             this.LSWorldBytes = default;
+            this.LSProcessBytes = default;
 
             ObjectPool.Instance.Recycle(this);
         }

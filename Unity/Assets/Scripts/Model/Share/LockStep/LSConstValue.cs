@@ -12,6 +12,9 @@ namespace ET
 
         public const int PredictionFrameMaxCount = 15;  // 预测帧最大值
         public const int SaveLSWorldFrameCount = 60 * FrameCountPerSecond;
+        
+        public const string ProcessFolderName = "/process_log";
+        public const string ProcessFolderNameSvr = "/process_log_server";
     }
     
     public static class LSConstButtonValue

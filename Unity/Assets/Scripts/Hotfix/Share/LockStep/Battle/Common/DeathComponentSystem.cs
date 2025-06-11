@@ -6,7 +6,7 @@ namespace ET
     {
         [EntitySystem]
         private static void Awake(this DeathComponent self, bool isDeadRelease)
-        {
+        {self.LSRoom().ProcessLog.LogFunction(32, self.LSParent().Id, isDeadRelease ? 1 : 0);
             self.IsDeadRelease = isDeadRelease;
         }
         
@@ -16,7 +16,7 @@ namespace ET
         }
         
         public static void DoDeath(this DeathComponent self)
-        {
+        {self.LSRoom().ProcessLog.LogFunction(31, self.LSParent().Id);
             // 死亡经验分配
             //ExpGetHelper.ExpGetDead(attacker, entity);
 

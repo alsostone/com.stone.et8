@@ -71,6 +71,7 @@ message Room2C_CheckHashFail // IMessage
 {
 	int32 Frame = 1;
 	bytes LSWorldBytes = 2;
+	bytes LSProcessBytes = 3;
 }
 
 message G2C_Reconnect // IMessage

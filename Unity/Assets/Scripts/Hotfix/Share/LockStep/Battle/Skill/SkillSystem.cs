@@ -9,7 +9,7 @@ namespace ET
     {
         [EntitySystem]
         private static void Awake(this Skill self, int skillId, bool isOnlyOnce)
-        {
+        {self.LSRoom().ProcessLog.LogFunction(63, self.LSParent().Id, skillId, isOnlyOnce ? 1 : 0);
             self.SkillId = skillId;
             self.IsOnlyOnce = isOnlyOnce;
             self.CastFrame = int.MinValue;
@@ -22,7 +22,7 @@ namespace ET
         }
         
         public static bool IsInCd(this Skill self)
-        {
+        {self.LSRoom().ProcessLog.LogFunction(62, self.LSParent().Id);
             // 普通攻击的CD由攻速计算
             if (self.TbSkillRow.SkillType == ESkillType.Normal) {
                 var atkSpeed = self.LSOwner().GetComponent<PropComponent>().Get(NumericType.AtkSpeed);
@@ -32,7 +32,7 @@ namespace ET
         }
         
         private static bool CheckReady(this Skill self)
-        {
+        {self.LSRoom().ProcessLog.LogFunction(61, self.LSParent().Id);
             if (self.IsRunning || self.IsInCd()) { return false; }
             
             // if (!ConditionCheck.CheckCondition(mEntity.Handle, ResSkill)) {
@@ -42,14 +42,14 @@ namespace ET
         }
 
         private static int SearchTargets(this Skill self)
-        {
+        {self.LSRoom().ProcessLog.LogFunction(60, self.LSParent().Id);
             self.SearchUnits.Clear();
             TargetSearcher.Search(self.TbSkillRow.SearchTarget, self.LSOwner(), self.SearchUnits);
             return self.SearchUnits.Count;
         }
         
         public static bool TryCast(this Skill self)
-        {
+        {self.LSRoom().ProcessLog.LogFunction(59, self.LSParent().Id);
             if (!self.CheckReady()) { return false; }
             if (!self.TbSkillRow.SearchRealTime && self.SearchTargets() == 0) { return false; }
             
@@ -71,7 +71,7 @@ namespace ET
         }
         
         public static void ForceDone(this Skill self)
-        {
+        {self.LSRoom().ProcessLog.LogFunction(58, self.LSParent().Id);
             self.IsRunning = false;
             self.CurrentPoint = 0;
             self.SearchUnits.Clear();
@@ -82,7 +82,7 @@ namespace ET
         }
 
         private static void OnCastSuccess(this Skill self)
-        {
+        {self.LSRoom().ProcessLog.LogFunction(57, self.LSParent().Id);
             var tbRow = self.TbSkillRow;
             switch (tbRow.ConsumeType) {
                 case EConsumeType.Property:
@@ -93,7 +93,7 @@ namespace ET
         }
 
         private static void OnCastDone(this Skill self)
-        {
+        {self.LSRoom().ProcessLog.LogFunction(56, self.LSParent().Id);
             self.IsRunning = false;
             self.CurrentPoint = 0;
             self.SearchUnits.Clear();
@@ -107,7 +107,7 @@ namespace ET
         }
 
         public static void StepRunning(this Skill self)
-        {
+        {self.LSRoom().ProcessLog.LogFunction(55, self.LSParent().Id);
             if (self.CastFrame + self.DurationFrame > self.LSWorld().Frame)
             {
                 // 到达效果触发点后触发效果
