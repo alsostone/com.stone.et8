@@ -28,6 +28,7 @@ namespace NPBehave
         [BsonIgnore][MemoryPackIgnore] public Container ParentNode { get; private set; }
         [BsonIgnore][MemoryPackIgnore] public Blackboard Blackboard => RootNode.RootBlackboard;
         [BsonIgnore][MemoryPackIgnore] public Clock Clock => RootNode.RootClock;
+        [BsonIgnore][MemoryPackIgnore] public IAgent Agent => RootNode.RootAgent;
         [BsonIgnore][MemoryPackIgnore] public bool IsStopRequested => currentState == State.STOP_REQUESTED;
         [BsonIgnore][MemoryPackIgnore] public bool IsActive => currentState == State.ACTIVE;
         
