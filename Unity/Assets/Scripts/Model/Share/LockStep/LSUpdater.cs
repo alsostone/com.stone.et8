@@ -5,42 +5,36 @@ namespace ET
 {
     public class LSUpdater: Object
     {
-        private List<long> updateIds = new();
-        private List<long> newUpdateIds = new();
-
-        private readonly Dictionary<long, EntityRef<LSEntity>> lsEntities = new();
-
+        private readonly SortedDictionary<long, EntityRef<LSEntity>> updateEntities = new();
+        private readonly Dictionary<long, EntityRef<LSEntity>> updateEntitiesNew = new();
+        private readonly List<long> removeIds = new();
+        
         public void Update()
         {
-            if (this.newUpdateIds.Count > 0)
-            {
-                foreach (long id in this.newUpdateIds)
-                {
-                    this.updateIds.Add(id);
-                }
-                this.updateIds.Sort();
-                this.newUpdateIds.Clear();
+            foreach (var kv in updateEntitiesNew) {
+                this.updateEntities.Add(kv.Key, kv.Value);
             }
-
-            foreach (long id in this.updateIds)
+            updateEntitiesNew.Clear();
+            
+            foreach (var kv in this.updateEntities)
             {
-                LSEntity entity = lsEntities[id];
-                if (entity == null)
-                {
-                    this.lsEntities.Remove(id);
+                LSEntity entity = kv.Value;
+                if (entity == null) {
+                    this.removeIds.Add(kv.Key);
                     continue;
                 }
-                this.newUpdateIds.Add(id);
                 LSEntitySystemSingleton.Instance.LSUpdate(entity);
             }
-            this.updateIds.Clear();
-            ObjectHelper.Swap(ref this.updateIds, ref this.newUpdateIds);
+
+            foreach (long id in this.removeIds) {
+                this.updateEntities.Remove(id);
+            }
+            removeIds.Clear();
         }
         
         public void Add(LSEntity entity)
         {
-            this.newUpdateIds.Add(entity.Id);
-            this.lsEntities.Add(entity.Id, entity);
+            this.updateEntitiesNew.Add(entity.Id, entity);
         }
     }
 }
