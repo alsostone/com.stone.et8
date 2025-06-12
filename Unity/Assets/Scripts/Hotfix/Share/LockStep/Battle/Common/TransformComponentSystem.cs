@@ -8,13 +8,13 @@ namespace ET
     {
         [EntitySystem]
         private static void Awake(this TransformComponent self, TSVector position, TSQuaternion rotation)
-        {self.LSRoom().ProcessLog.LogFunction(43, self.LSParent().Id);
+        {self.LSRoom()?.ProcessLog.LogFunction(43, self.LSParent().Id);
             self.Position = position;
             self.Rotation = rotation;
         }
 
         public static void Move(this TransformComponent self, TSVector2 forward)
-        {self.LSRoom().ProcessLog.LogFunction(42, self.LSParent().Id);
+        {self.LSRoom()?.ProcessLog.LogFunction(42, self.LSParent().Id);
             FlagComponent flagComponent = self.LSOwner().GetComponent<FlagComponent>();
             if (flagComponent.HasRestrict(FlagRestrict.NotMove)) { return; }
             

@@ -9,14 +9,14 @@ namespace ET
     {
         [EntitySystem]
         private static void Awake(this AIWorldComponent self)
-        {self.LSRoom().ProcessLog.LogFunction(8, self.LSParent().Id);
+        {self.LSRoom()?.ProcessLog.LogFunction(8, self.LSParent().Id);
             self.BehaveWorld = new NPBehave.BehaveWorld();
             self.BehaveWorld.SetRandom(self.GetRandom());
         }
         
         [EntitySystem]
         private static void Destroy(this AIWorldComponent self)
-        {self.LSRoom().ProcessLog.LogFunction(7, self.LSParent().Id);
+        {self.LSRoom()?.ProcessLog.LogFunction(7, self.LSParent().Id);
             self.BehaveWorld.Dispose();
             self.BehaveWorld = null;
         }
@@ -29,7 +29,7 @@ namespace ET
         
         [LSEntitySystem]
         private static void LSUpdate(this AIWorldComponent self)
-        {self.LSRoom().ProcessLog.LogFunction(6, self.LSParent().Id);
+        {self.LSRoom()?.ProcessLog.LogFunction(6, self.LSParent().Id);
             self.BehaveWorld.Update(LSConstValue.UpdateInterval * FP.EN3);
         }
         

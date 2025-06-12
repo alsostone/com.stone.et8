@@ -15,6 +15,8 @@ namespace ET
         
         public const string ProcessFolderName = "/process_log";
         public const string ProcessFolderNameSvr = "/process_log_server";
+        public const string LSWroldFolderName = "/frame_lsworld";
+        public const string LSWroldFolderNameSvr = "/frame_lsworld_server";
     }
     
     public static class LSConstButtonValue

@@ -7,7 +7,7 @@ namespace ET
     {
         [EntitySystem]
         private static void Awake(this Buff self, int BuffId, LSUnit caster)
-        {self.LSRoom().ProcessLog.LogFunction(16, self.LSParent().Id, BuffId, caster.Id);
+        {self.LSRoom()?.ProcessLog.LogFunction(16, self.LSParent().Id, BuffId, caster.Id);
             self.BuffId = BuffId;
             self.Caster = caster.Id;
             self.StartFrame = self.LSWorld().Frame;
@@ -24,7 +24,7 @@ namespace ET
 
         [EntitySystem]
         private static void Destroy(this Buff self)
-        {self.LSRoom().ProcessLog.LogFunction(15, self.LSParent().Id);
+        {self.LSRoom()?.ProcessLog.LogFunction(15, self.LSParent().Id);
             if (self.TbBuffRow.EnterEffect > 0) {
                 EffectExecutor.ReverseExecute(self.TbBuffRow.EnterEffect, self.LSUnit(self.Caster), self.LSOwner());
             }
@@ -35,7 +35,7 @@ namespace ET
         
         [LSEntitySystem]
         private static void LSUpdate(this Buff self)
-        {self.LSRoom().ProcessLog.LogFunction(14, self.LSParent().Id);
+        {self.LSRoom()?.ProcessLog.LogFunction(14, self.LSParent().Id);
             if (self.LSWorld().Frame > self.EndFrame)
             {
                 self.GetParent<BuffComponent>().RemoveBuff(self.BuffId, true);
@@ -50,7 +50,7 @@ namespace ET
         }
 
         public static void ResetEndFrame(this Buff self)
-        {self.LSRoom().ProcessLog.LogFunction(13, self.LSParent().Id);
+        {self.LSRoom()?.ProcessLog.LogFunction(13, self.LSParent().Id);
             self.EndFrame = self.LSWorld().Frame + self.TbBuffRow.Duration.Convert2Frame();
         }
     }

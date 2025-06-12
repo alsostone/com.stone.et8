@@ -6,7 +6,7 @@ namespace ET
     {
         [EntitySystem]
         private static void Awake(this TeamComponent self, TeamType type)
-        {self.LSRoom().ProcessLog.LogFunction(41, self.LSParent().Id);
+        {self.LSRoom()?.ProcessLog.LogFunction(41, self.LSParent().Id);
             self.Type = type;
         }
     }

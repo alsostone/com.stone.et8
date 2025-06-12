@@ -1,6 +1,7 @@
 using System;
 using System.IO;
 using System.Text;
+using System.Threading.Tasks;
 using ICSharpCode.SharpZipLib.BZip2;
 
 namespace ET.Client
@@ -20,7 +21,7 @@ namespace ET.Client
             // 如果服务器返回ProcessLog，则保存双端的日志到文件
             if (message.LSProcessBytes != null)
             {
-                string filename = GetProcessLogFileSameName(message.Frame.ToString());
+                string filename = GetProcessLogFileSameName(message.Frame);
                 
                 using var stream = room.ProcessLog.GetLogStream();
                 using var ms = new MemoryStream();
@@ -31,26 +32,23 @@ namespace ET.Client
             }
             
             // 如果服务器返回LSWorld，则保存双端的LSWorld到文件
-            // if (message.LSWorldBytes != null)
-            // {
-            //     string filename = GetProcessLogFileSameName(message.Frame.ToString() + "world");
-            //     
-            //     LSWorld clientWorld = room.GetLSWorld(SceneType.LockStepClient, message.Frame);
-            //     using (root.AddChild(clientWorld))
-            //     {
-            //         await SaveToFile(clientWorld.ToJson().ToUtf8(), LSConstValue.ProcessFolderName, filename);
-            //     }
-            //     
-            //     LSWorld serverWorld = MemoryPackHelper.Deserialize(typeof(LSWorld), message.LSWorldBytes, 0, message.LSWorldBytes.Length) as LSWorld;
-            //     using (root.AddChild(serverWorld))
-            //     {
-            //         await SaveToFile(serverWorld.ToJson().ToUtf8(), LSConstValue.ProcessFolderNameSvr, filename);
-            //     }
-            // }
+            if (message.LSWorldBytes != null)
+            {
+                string filename = GetLSWorldFileSameName(message.Frame);
+                
+                LSWorld clientWorld = room.GetLSWorld(SceneType.LockStepClient, message.Frame);
+                using (root.AddChild(clientWorld)) {
+                    await SaveToFile(clientWorld.ToJson().ToUtf8(), LSConstValue.LSWroldFolderName, filename);
+                }
+                LSWorld serverWorld = MemoryPackHelper.Deserialize(typeof(LSWorld), message.LSWorldBytes, 0, message.LSWorldBytes.Length) as LSWorld;
+                using (root.AddChild(serverWorld)) {
+                    await SaveToFile(serverWorld.ToJson().ToUtf8(), LSConstValue.LSWroldFolderNameSvr, filename);
+                }
+            }
             await ETTask.CompletedTask;
         }
         
-        private string GetProcessLogFileSameName(string key)
+        private string GetProcessLogFileSameName(long key)
         {
             var filename = new StringBuilder();
             filename.Append("process_log_");
@@ -60,16 +58,28 @@ namespace ET.Client
             return filename.ToString();
         }
         
+        private string GetLSWorldFileSameName(long key)
+        {
+            var filename = new StringBuilder();
+            filename.Append("frame_lsworld_");
+            filename.Append(key);
+            filename.Append("_").Append(DateTime.Now.ToString("yyyyMMddhhmmss"));
+            filename.Append(".json");
+            return filename.ToString();
+        }
+        
         private async ETTask SaveToFile(byte[] bytes, string folderName, string fileName)
         {
             if (bytes != null && bytes.Length > 0) {
                 var path = $"/Users/stone/Library/Application Support/test/ET/{folderName}";
                 if (!Directory.Exists(path))
                     Directory.CreateDirectory(path);
-                
-                var fullname = $"{path}/{fileName}";
-                await using var fs = new FileStream(fullname, FileMode.Create);
-                fs.Write(bytes);
+                await Task.Run(() =>
+                {
+                    var fullname = $"{path}/{fileName}";
+                    using var fs = new FileStream(fullname, FileMode.Create);
+                    fs.Write(bytes);
+                });
             }
             await ETTask.CompletedTask;
         }

@@ -6,7 +6,7 @@ namespace ET
     public static class PropComponentSystem
     {
         public static void AddRealProp(this PropComponent self, NumericType numericType, FP value)
-        {self.LSRoom().ProcessLog.LogFunction(40, self.LSParent().Id, value.V);
+        {self.LSRoom()?.ProcessLog.LogFunction(40, self.LSParent().Id, value.V);
             FP runtimeValue = self.Get(numericType);
             FP maxValue = self.Get(numericType + LSConstValue.PropRuntime2MaxOffset);
             value = TSMath.Min(runtimeValue + value, maxValue);
@@ -14,7 +14,7 @@ namespace ET
         }
         
         public static void Set(this PropComponent self, NumericType numericType, FP value, bool isPublicEvent = true)
-        {self.LSRoom().ProcessLog.LogFunction(39, self.LSParent().Id, value.V, isPublicEvent ? 1 : 0);
+        {self.LSRoom()?.ProcessLog.LogFunction(39, self.LSParent().Id, value.V, isPublicEvent ? 1 : 0);
             FP oldValue = self.Get(numericType);
             if (oldValue == value)
             {
@@ -36,7 +36,7 @@ namespace ET
         }
         
         public static void Add(this PropComponent self, NumericType numericType, FP value, bool isPublicEvent = true)
-        {self.LSRoom().ProcessLog.LogFunction(38, self.LSParent().Id, value.V, isPublicEvent ? 1 : 0);
+        {self.LSRoom()?.ProcessLog.LogFunction(38, self.LSParent().Id, value.V, isPublicEvent ? 1 : 0);
             if (0 == value)
             {
                 return;
@@ -60,19 +60,19 @@ namespace ET
 
         public static FP Get(this PropComponent self, NumericType key)
         {
-            self.LSRoom().ProcessLog.LogIgnore();
+            self.LSRoom()?.ProcessLog.LogIgnore();
             FP value = 0;
             self.NumericDic.TryGetValue(key, out value);
             return value;
         }
         
         public static bool Contains(this PropComponent self, NumericType key)
-        {self.LSRoom().ProcessLog.LogFunction(37, self.LSParent().Id);
+        {self.LSRoom()?.ProcessLog.LogFunction(37, self.LSParent().Id);
             return self.NumericDic.ContainsKey(key);
         }
 
         private static void Update(this PropComponent self, NumericType numericType, bool isPublicEvent)
-        {self.LSRoom().ProcessLog.LogFunction(36, self.LSParent().Id, isPublicEvent ? 1 : 0);
+        {self.LSRoom()?.ProcessLog.LogFunction(36, self.LSParent().Id, isPublicEvent ? 1 : 0);
             int final = (int)numericType / 10;
             NumericType bas = (NumericType)(final * 10 + 1);
             NumericType add = (NumericType)(final * 10 + 2);

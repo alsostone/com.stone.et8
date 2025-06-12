@@ -12,7 +12,7 @@ namespace ET
         }
 
         public static void AddRestrict(this FlagComponent self, int mask)
-        {self.LSRoom().ProcessLog.LogFunction(35, self.LSParent().Id, mask);
+        {self.LSRoom()?.ProcessLog.LogFunction(35, self.LSParent().Id, mask);
             foreach (FlagRestrict flagRestrict in Enum.GetValues(typeof(FlagRestrict)))
             {
                 if ((mask & (int)flagRestrict) == (int)flagRestrict)
@@ -30,7 +30,7 @@ namespace ET
         }
         
         public static void RemoveRestrict(this FlagComponent self, int mask)
-        {self.LSRoom().ProcessLog.LogFunction(34, self.LSParent().Id, mask);
+        {self.LSRoom()?.ProcessLog.LogFunction(34, self.LSParent().Id, mask);
             foreach (FlagRestrict flagRestrict in Enum.GetValues(typeof(FlagRestrict)))
             {
                 if ((mask & (int)flagRestrict) == (int)flagRestrict)
@@ -48,7 +48,7 @@ namespace ET
         }
         
         public static bool HasRestrict(this FlagComponent self, FlagRestrict flagRestrict)
-        {self.LSRoom().ProcessLog.LogFunction(33, self.LSParent().Id);
+        {self.LSRoom()?.ProcessLog.LogFunction(33, self.LSParent().Id);
             return self.RestrictRefrence.TryGetValue(flagRestrict, out var refCount) && refCount > 0;
         }
     }
