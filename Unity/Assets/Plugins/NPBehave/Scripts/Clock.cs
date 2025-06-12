@@ -28,7 +28,7 @@ namespace NPBehave
         [BsonElement("IS")][BsonIgnoreIfDefault][MemoryPackInclude] private bool isInUpdate = false;
         
         [BsonDictionaryOptions(DictionaryRepresentation.ArrayOfArrays)]
-        [BsonElement("TM")][MemoryPackInclude] private Dictionary<int, Timer> timers = new Dictionary<int, Timer>();
+        [BsonElement("TM")][MemoryPackInclude] private SortedDictionary<int, Timer> sortedTimers = new SortedDictionary<int, Timer>();
         [BsonDictionaryOptions(DictionaryRepresentation.ArrayOfArrays)]
         [BsonElement("AM")][MemoryPackInclude] private Dictionary<int, Timer> addTimers = new Dictionary<int, Timer>();
         [BsonElement("RM")][MemoryPackInclude] private HashSet<int> removeTimers = new HashSet<int>();
@@ -50,7 +50,7 @@ namespace NPBehave
         
         public void Dispose()
         {
-            timers.Clear();
+            this.sortedTimers.Clear();
             addTimers.Clear();
             timerPool.Clear();
         }
@@ -80,11 +80,11 @@ namespace NPBehave
 
             if (!isInUpdate)
             {
-                if (!timers.ContainsKey(action))
+                if (!this.sortedTimers.ContainsKey(action))
                 {
-					timers[action] = GetTimerFromPool();
+					this.sortedTimers[action] = GetTimerFromPool();
                 }
-				timer = timers[action];
+				timer = this.sortedTimers[action];
             }
             else
             {
@@ -110,15 +110,15 @@ namespace NPBehave
         {
             if (!isInUpdate)
             {
-                if (timers.ContainsKey(action))
+                if (this.sortedTimers.ContainsKey(action))
                 {
-                    timerPool.Enqueue(timers[action]);
-                    timers.Remove(action);
+                    timerPool.Enqueue(this.sortedTimers[action]);
+                    this.sortedTimers.Remove(action);
                 }
             }
             else
             {
-                if (timers.ContainsKey(action))
+                if (this.sortedTimers.ContainsKey(action))
                 {
                     removeTimers.Add(action);
                 }
@@ -134,7 +134,7 @@ namespace NPBehave
         {
             if (!isInUpdate)
             {
-                return timers.ContainsKey(action);
+                return this.sortedTimers.ContainsKey(action);
             }
             else
             {
@@ -148,7 +148,7 @@ namespace NPBehave
                 }
                 else
                 {
-                    return timers.ContainsKey(action);
+                    return this.sortedTimers.ContainsKey(action);
                 }
             }
         }
@@ -228,28 +228,27 @@ namespace NPBehave
                     behaveWorld.GuidReceiverMapping[action].OnTimerReached();
                 }
             }
-
-            var keys = timers.Keys;
-			foreach (var callback in keys)
+            
+			foreach (var kv in this.sortedTimers)
             {
-                if (removeTimers.Contains(callback))
+                if (removeTimers.Contains(kv.Key))
                 {
                     continue;
                 }
 
-				Timer timer = timers[callback];
+				Timer timer = kv.Value;
                 if (timer.scheduledTime <= elapsedTime)
                 {
                     if (timer.repeat == 0)
                     {
-                        RemoveTimer(callback);
+                        RemoveTimer(kv.Key);
                     }
                     else if (timer.repeat >= 0)
                     {
                         timer.repeat--;
                     }
                     
-                    behaveWorld.GuidReceiverMapping[callback].OnTimerReached();
+                    behaveWorld.GuidReceiverMapping[kv.Key].OnTimerReached();
 					timer.ScheduleAbsoluteTime(behaveWorld, elapsedTime);
                 }
             }
@@ -264,16 +263,16 @@ namespace NPBehave
             }
             foreach (var pair in addTimers)
             {
-                if (timers.TryGetValue(pair.Key, out var timer))
+                if (this.sortedTimers.TryGetValue(pair.Key, out var timer))
                 {
                     timerPool.Enqueue(timer);
                 }
-                timers[pair.Key] = pair.Value;
+                this.sortedTimers[pair.Key] = pair.Value;
             }
             foreach (var action in removeTimers)
             {
-                timerPool.Enqueue(timers[action]);
-                timers.Remove(action);
+                timerPool.Enqueue(this.sortedTimers[action]);
+                this.sortedTimers.Remove(action);
             }
             addObservers.Clear();
             removeObservers.Clear();
@@ -285,7 +284,7 @@ namespace NPBehave
         
 #if UNITY_EDITOR
         [BsonIgnore][MemoryPackIgnore] public int NumUpdateObservers => updateObservers.Count;
-        [BsonIgnore][MemoryPackIgnore] public int NumTimers => timers.Count;
+        [BsonIgnore][MemoryPackIgnore] public int NumTimers => this.sortedTimers.Count;
         [BsonIgnore][MemoryPackIgnore] public FP ElapsedTime => elapsedTime;
         [BsonIgnore][MemoryPackIgnore] public int DebugPoolSize => timerPool.Count;
 #endif
