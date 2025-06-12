@@ -1,9 +1,10 @@
 using System;
+using NPBehave;
 
 namespace ET
 {
     [EnableMethod]
-    public abstract partial class LSEntity: Entity
+    public abstract partial class LSEntity : Entity, IAgent
     {
         public new K AddComponent<K>(bool isFromPool = false) where K : LSEntity, IAwake, new()
         {

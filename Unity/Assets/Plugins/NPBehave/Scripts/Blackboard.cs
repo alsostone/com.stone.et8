@@ -456,7 +456,9 @@ namespace NPBehave
                 var observers = GetObservers(ref keyObserversMapping, notification.blackboardKey);
                 foreach (var observer in observers)
                 {
-                    if (keyRemoveObserversMapping.TryGetValue(notification.blackboardKey, out var removeObservers) && removeObservers.Contains(observer))
+                    if (keyRemoveObserversMapping != null &&
+                        keyRemoveObserversMapping.TryGetValue(notification.blackboardKey, out var removeObservers) &&
+                        removeObservers.Contains(observer))
                     {
                         continue;
                     }

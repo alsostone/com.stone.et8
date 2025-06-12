@@ -1,4 +1,5 @@
 using NPBehave;
+using TrueSync;
 
 namespace ET
 {
@@ -10,9 +11,19 @@ namespace ET
         [EntitySystem]
         private static void Awake(this AIRootComponent self, EUnitType type)
         {self.LSRoom()?.ProcessLog.LogFunction(5, self.LSParent().Id);
-            self.Type = type;
             var worldComponent = self.LSWorld().GetComponent<AIWorldComponent>();
-            self.AIRoot = new Root(worldComponent.BehaveWorld, new Sequence());
+            
+            Node ai = null;
+            switch (type)
+            {
+                case EUnitType.Building:
+                    ai = new Sequence(new ActionAttack(), new WaitSecond(FP.Half));
+                    break;
+                default:
+                    ai = AIAutoAttack.Gen();
+                    break;
+            }
+            self.AIRoot = new Root(worldComponent.BehaveWorld, ai, self.LSOwner());
             self.AIRoot.Start();
         }
 
@@ -28,7 +39,7 @@ namespace ET
         private static void Deserialize(this AIRootComponent self)
         {
             var worldComponent = self.LSWorld().GetComponent<AIWorldComponent>();
-            self.AIRoot.SetWorld(worldComponent.BehaveWorld);
+            self.AIRoot.SetWorld(worldComponent.BehaveWorld, self.LSOwner());
         }
 
     }

@@ -21,6 +21,8 @@ namespace ProcessLog.Editor
         //要屏蔽的文件夹路径(路径默认从Assets下开始)
         public static string[] IgnoreFolders =
         {
+            "/Scripts/Hotfix/Share/LockStep/Battle/AI/Node",
+            "/Scripts/Hotfix/Share/LockStep/Battle/AI/Helper",
             "/Scripts/Hotfix/Share/LockStep/Battle/Utils",
             "/Scripts/Hotfix/Share/LockStep/Battle/Helper",
         };
