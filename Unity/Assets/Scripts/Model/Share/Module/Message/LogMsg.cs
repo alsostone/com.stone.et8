@@ -15,6 +15,7 @@ namespace ET
             LockStepOuter.OneFrameInputs,
             LockStepOuter.C2Room_CheckHash,
             LockStepOuter.Room2C_AdjustUpdateTime,
+            LockStepOuter.Room2C_CheckHashFail,
         };
 
         public void Awake()
