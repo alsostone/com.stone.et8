@@ -128,13 +128,13 @@ MonoBehaviour:
         FilterRuleName: CollectAll
         AssetTags: 
         UserData: 
-    - GroupName: Bullet
-      GroupDesc: "\u5B50\u5F39"
+    - GroupName: Common
+      GroupDesc: "\u901A\u7528"
       AssetTags: 
       ActiveRuleName: EnableGroup
       Collectors:
-      - CollectPath: Assets/Bundles/Prefabs/Bullet
-        CollectorGUID: db4b611157bad4ccbac365037453d9d7
+      - CollectPath: Assets/Bundles/Prefabs/Common
+        CollectorGUID: a8e960a8d2d72439b87fd4aa7da5c244
         CollectorType: 0
         AddressRuleName: AddressByFileName
         PackRuleName: PackDirectory
