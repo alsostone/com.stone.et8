@@ -1,4 +1,5 @@
-﻿using TrueSync;
+﻿using NPBehave;
+using TrueSync;
 
 namespace ET
 {
@@ -28,7 +29,7 @@ namespace ET
 			lsUnit.AddComponent<BuffComponent>();
 			lsUnit.AddComponent<BeHitComponent>();
 			lsUnit.AddComponent<SkillComponent, int[]>(row.Skills);
-			lsUnit.AddComponent<AIRootComponent, EUnitType>(EUnitType.Hero);
+			lsUnit.AddComponent<AIRootComponent, Node>(AIAutoAttack.Gen());
 			
 			lsUnit.AddComponent<LSInputComponent>();
 			EventSystem.Instance.Publish(lsWorld, new LSUnitCreate() {LSUnit = lsUnit});
@@ -58,7 +59,7 @@ namespace ET
 	        lsUnit.AddComponent<BuffComponent>();
 	        lsUnit.AddComponent<BeHitComponent>();
 	        lsUnit.AddComponent<SkillComponent, int[]>(row.Skills);
-	        lsUnit.AddComponent<AIRootComponent, EUnitType>(EUnitType.Soldier);
+	        lsUnit.AddComponent<AIRootComponent, Node>(AIAutoAttack.Gen());
 			
 	        EventSystem.Instance.Publish(lsWorld, new LSUnitCreate() {LSUnit = lsUnit});
 	        return lsUnit;
@@ -87,7 +88,7 @@ namespace ET
 	        lsUnit.AddComponent<BuffComponent>();
 	        lsUnit.AddComponent<BeHitComponent>();
 	        lsUnit.AddComponent<SkillComponent, int[]>(row.Skills);
-	        lsUnit.AddComponent<AIRootComponent, EUnitType>(EUnitType.Building);
+	        lsUnit.AddComponent<AIRootComponent, Node>(new Sequence(new ActionAttack(), new WaitSecond(FP.Half)));
 			
 	        EventSystem.Instance.Publish(lsWorld, new LSUnitCreate() {LSUnit = lsUnit});
 	        return lsUnit;

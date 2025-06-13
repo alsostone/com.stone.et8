@@ -9,21 +9,10 @@ namespace ET
     public static partial class AIRootComponentSystem
     {
         [EntitySystem]
-        private static void Awake(this AIRootComponent self, EUnitType type)
+        private static void Awake(this AIRootComponent self, Node node)
         {self.LSRoom()?.ProcessLog.LogFunction(5, self.LSParent().Id);
             var worldComponent = self.LSWorld().GetComponent<AIWorldComponent>();
-            
-            Node ai = null;
-            switch (type)
-            {
-                case EUnitType.Building:
-                    ai = new Sequence(new ActionAttack(), new WaitSecond(FP.Half));
-                    break;
-                default:
-                    ai = AIAutoAttack.Gen();
-                    break;
-            }
-            self.AIRoot = new Root(worldComponent.BehaveWorld, ai, self.LSOwner());
+            self.AIRoot = new Root(worldComponent.BehaveWorld, node, self.LSOwner());
             self.AIRoot.Start();
         }
 
