@@ -59,24 +59,22 @@ namespace ET.Client
         {
             Room room = self.GetParent<Room>();
             FrameBuffer frameBuffer = room.FrameBuffer;
-            
-            if (frame <= room.AuthorityFrame)
-            {
-                return frameBuffer.FrameInputs(frame);
-            }
-            
-            // predict
-            OneFrameInputs predictionFrame = frameBuffer.FrameInputs(frame);
-            
+            OneFrameInputs oneFrameInputs = frameBuffer.FrameInputs(frame);
             frameBuffer.MoveForward(frame);
+            
+            // 若要获取的帧数据已经是服务器返回的直接用
+            if (frame <= room.AuthorityFrame)
+                return oneFrameInputs;
+            
+            // 若没有服务器返回的帧数据 组织预测数据
             if (frameBuffer.CheckFrame(room.AuthorityFrame))
             {
                 OneFrameInputs authorityFrame = frameBuffer.FrameInputs(room.AuthorityFrame);
-                authorityFrame.CopyTo(predictionFrame);
+                authorityFrame.CopyTo(oneFrameInputs);
             }
-            predictionFrame.Inputs[self.MyId] = self.Input;
+            oneFrameInputs.Inputs[self.MyId] = self.Input;
             
-            return predictionFrame;
+            return oneFrameInputs;
         }
     }
 }

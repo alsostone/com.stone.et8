@@ -129,10 +129,6 @@ namespace ST.HUD
             _kernel = frustumCulling.FindKernel("FrustumCulling");
             frustumCulling.SetBuffer(_kernel, InstanceBuffer, _instanceBuffer);
             frustumCulling.SetBuffer(_kernel, VisibleBuffer, _visibleBuffer);
-            
-            instanceMat.SetTexture(FontTex, font2Texture.TextureArray);
-            instanceMat.SetBuffer(InstanceBuffer, _instanceBuffer);
-            instanceMat.SetBuffer(VisibleBuffer, _visibleBuffer);
         }
         
         private void LateUpdate()
@@ -149,6 +145,9 @@ namespace ST.HUD
             frustumCulling.Dispatch(_kernel, threadGroups, 1, 1);
             ComputeBuffer.CopyCount(_visibleBuffer, _indirectArgsBuffer, sizeof(uint));
             
+            instanceMat.SetTexture(FontTex, font2Texture.TextureArray);
+            instanceMat.SetBuffer(InstanceBuffer, _instanceBuffer);
+            instanceMat.SetBuffer(VisibleBuffer, _visibleBuffer);
             Graphics.DrawMeshInstancedIndirect(_instanceMesh, 0, instanceMat, new Bounds(Vector3.zero, Vector3.one * 100f), _indirectArgsBuffer);
         }
 

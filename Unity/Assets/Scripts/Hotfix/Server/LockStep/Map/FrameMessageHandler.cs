@@ -21,6 +21,7 @@ namespace ET.Server
                 room.Root().GetComponent<MessageLocationSenderComponent>().Get(LocationType.GateSession).Send(message.PlayerId, room2CAdjustUpdateTime);
             }
             
+            // 如果消息的帧数远大于服务器帧数则丢弃（用预测帧数量判定，其他不离谱的值也可）
             if (message.Frame > room.AuthorityFrame + LSConstValue.PredictionFrameMaxCount)
             {
                 Log.Warning($"FrameMessage > AuthorityFrame + PredictionFrameMaxCount discard: {message}");
@@ -32,8 +33,8 @@ namespace ET.Server
             OneFrameInputs oneFrameInputs = room.FrameBuffer.FrameInputs(frame);
             if (oneFrameInputs.Inputs.TryGetValue(message.PlayerId, out LSInput value))
             {
-                value.V = message.Input.V;                  // 遥杆使用最新的 直接覆盖
-                value.Button |= message.Input.Button;       // 32位代表32个按钮的按下状态 合并他们
+                value.V = message.Input.V;                  // 覆盖 遥杆使用最新的
+                value.Button |= message.Input.Button;       // 合并 防止因丢操作影响手感 32位代表32个按钮的按下状态
                 oneFrameInputs.Inputs[message.PlayerId] = value;
             }
             else
