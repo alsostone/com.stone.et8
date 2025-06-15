@@ -10,13 +10,13 @@
     "consume_param": [],
     "effect_id": 0,
     "ani_name_pre": "",
-    "ani_name": "attack_01",
+    "ani_name": "Attack",
     "ani_name_after": "",
     "duration_pre": 0,
-    "duration": 667,
+    "duration": 2767,
     "duration_after": 0,
     "trigger_array": [
-      333
+      1000
     ],
     "effect_group_id": 10010001,
     "release_condition_type": 0,
@@ -35,13 +35,13 @@
     "consume_param": [],
     "effect_id": 0,
     "ani_name_pre": "",
-    "ani_name": "skill_01",
+    "ani_name": "Skill",
     "ani_name_after": "",
     "duration_pre": 0,
-    "duration": 667,
+    "duration": 1167,
     "duration_after": 0,
     "trigger_array": [
-      333
+      500
     ],
     "effect_group_id": 10010101,
     "release_condition_type": 0,
@@ -60,13 +60,13 @@
     "consume_param": [],
     "effect_id": 0,
     "ani_name_pre": "",
-    "ani_name": "skill_01",
+    "ani_name": "Skill",
     "ani_name_after": "",
     "duration_pre": 0,
-    "duration": 667,
+    "duration": 1167,
     "duration_after": 0,
     "trigger_array": [
-      333
+      500
     ],
     "effect_group_id": 10010201,
     "release_condition_type": 0,
@@ -85,13 +85,13 @@
     "consume_param": [],
     "effect_id": 0,
     "ani_name_pre": "",
-    "ani_name": "",
+    "ani_name": "Attack",
     "ani_name_after": "",
     "duration_pre": 0,
-    "duration": 1000,
+    "duration": 2767,
     "duration_after": 0,
     "trigger_array": [
-      333
+      1000
     ],
     "effect_group_id": 30010001,
     "release_condition_type": 0,
@@ -110,13 +110,13 @@
     "consume_param": [],
     "effect_id": 0,
     "ani_name_pre": "",
-    "ani_name": "",
+    "ani_name": "Attack",
     "ani_name_after": "",
     "duration_pre": 0,
-    "duration": 0,
+    "duration": 2767,
     "duration_after": 0,
     "trigger_array": [
-      0
+      1000
     ],
     "effect_group_id": 30020001,
     "release_condition_type": 0,
@@ -135,13 +135,13 @@
     "consume_param": [],
     "effect_id": 0,
     "ani_name_pre": "",
-    "ani_name": "",
+    "ani_name": "Attack",
     "ani_name_after": "",
     "duration_pre": 0,
-    "duration": 0,
+    "duration": 2767,
     "duration_after": 0,
     "trigger_array": [
-      0
+      1000
     ],
     "effect_group_id": 30030001,
     "release_condition_type": 0,
@@ -160,13 +160,13 @@
     "consume_param": [],
     "effect_id": 0,
     "ani_name_pre": "",
-    "ani_name": "",
+    "ani_name": "Attack",
     "ani_name_after": "",
     "duration_pre": 0,
-    "duration": 0,
+    "duration": 2767,
     "duration_after": 0,
     "trigger_array": [
-      0
+      1000
     ],
     "effect_group_id": 30040001,
     "release_condition_type": 0,
@@ -185,13 +185,13 @@
     "consume_param": [],
     "effect_id": 0,
     "ani_name_pre": "",
-    "ani_name": "AllSkill001_Release",
+    "ani_name": "Attack",
     "ani_name_after": "",
     "duration_pre": 0,
-    "duration": 1000,
+    "duration": 2767,
     "duration_after": 0,
     "trigger_array": [
-      333
+      1000
     ],
     "effect_group_id": 40000001,
     "release_condition_type": 0,
@@ -210,13 +210,13 @@
     "consume_param": [],
     "effect_id": 0,
     "ani_name_pre": "",
-    "ani_name": "",
+    "ani_name": "Skill",
     "ani_name_after": "",
     "duration_pre": 0,
-    "duration": 0,
+    "duration": 1167,
     "duration_after": 0,
     "trigger_array": [
-      333
+      500
     ],
     "effect_group_id": 40000101,
     "release_condition_type": 0,

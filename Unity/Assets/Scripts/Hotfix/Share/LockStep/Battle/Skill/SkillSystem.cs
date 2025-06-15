@@ -67,6 +67,7 @@ namespace ET
             self.IsRunning = true;
             self.CastFrame = self.LSWorld().Frame;
             self.StepRunning();
+            EventSystem.Instance.Publish(self.LSWorld(), new LSUnitSkill() { Id = self.LSOwner().Id, SkillId = self.SkillId });
             return true;
         }
         

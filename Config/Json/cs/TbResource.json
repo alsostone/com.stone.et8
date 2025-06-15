@@ -5,51 +5,51 @@
   },
   {
     "Id": 10010001,
-    "Url": "Assets/Bundles/Unit/Unit.prefab"
+    "Url": "Assets/Bundles/Unit/Skeleton1.prefab"
   },
   {
     "Id": 10020001,
-    "Url": "Assets/Bundles/Unit/Unit.prefab"
+    "Url": "Assets/Bundles/Unit/Skeleton1.prefab"
   },
   {
     "Id": 10030001,
-    "Url": "Assets/Bundles/Unit/Unit.prefab"
+    "Url": "Assets/Bundles/Unit/Skeleton1.prefab"
   },
   {
     "Id": 20010001,
-    "Url": "Assets/Bundles/Unit/Unit.prefab"
+    "Url": "Assets/Bundles/Unit/Skeleton1.prefab"
   },
   {
     "Id": 20020001,
-    "Url": "Assets/Bundles/Unit/Unit.prefab"
+    "Url": "Assets/Bundles/Unit/Skeleton1.prefab"
   },
   {
     "Id": 20030001,
-    "Url": "Assets/Bundles/Unit/Unit.prefab"
+    "Url": "Assets/Bundles/Unit/Skeleton1.prefab"
   },
   {
     "Id": 30010001,
-    "Url": "Assets/Bundles/Unit/Unit.prefab"
+    "Url": "Assets/Bundles/Unit/Skeleton1.prefab"
   },
   {
     "Id": 30020001,
-    "Url": "Assets/Bundles/Unit/Unit.prefab"
+    "Url": "Assets/Bundles/Unit/Skeleton1.prefab"
   },
   {
     "Id": 30030001,
-    "Url": "Assets/Bundles/Unit/Unit.prefab"
+    "Url": "Assets/Bundles/Unit/Skeleton1.prefab"
   },
   {
     "Id": 40010001,
-    "Url": "Assets/Bundles/Unit/Unit.prefab"
+    "Url": "Assets/Bundles/Unit/Skeleton1.prefab"
   },
   {
     "Id": 40020001,
-    "Url": "Assets/Bundles/Unit/Unit.prefab"
+    "Url": "Assets/Bundles/Unit/Skeleton1.prefab"
   },
   {
     "Id": 40030001,
-    "Url": "Assets/Bundles/Unit/Unit.prefab"
+    "Url": "Assets/Bundles/Unit/Skeleton1.prefab"
   },
   {
     "Id": 50010001,
@@ -69,10 +69,10 @@
   },
   {
     "Id": 90010001,
-    "Url": "Assets/Bundles/Unit/Unit.prefab"
+    "Url": "Assets/Bundles/Unit/Skeleton1.prefab"
   },
   {
     "Id": 90020001,
-    "Url": "Assets/Bundles/Unit/Unit.prefab"
+    "Url": "Assets/Bundles/Unit/Skeleton1.prefab"
   }
 ]

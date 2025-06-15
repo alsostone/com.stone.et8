@@ -32,9 +32,9 @@ namespace ET.Client
         {
             Scene root = viewComponent.Root();
             
-            string assetsName = $"Assets/Bundles/Unit/Unit.prefab";
-            GameObject bundleGameObject = await root.GetComponent<ResourcesLoaderComponent>().LoadAssetAsync<GameObject>(assetsName);
-            GameObject prefab = bundleGameObject.Get<GameObject>("Skeleton");
+            HeroComponent heroComponent = lsUnit.GetComponent<HeroComponent>();
+            TbResourceRow resourceRow = TbResource.Instance.Get(heroComponent.TbSkinRow.Model);
+            GameObject prefab = await root.GetComponent<ResourcesLoaderComponent>().LoadAssetAsync<GameObject>(resourceRow.Url);
 
             GlobalComponent globalComponent = root.GetComponent<GlobalComponent>();
             GameObject unitGo = UnityEngine.Object.Instantiate(prefab, globalComponent.Unit, true);
@@ -57,8 +57,7 @@ namespace ET.Client
             
             BuildingComponent buildingComponent = lsUnit.GetComponent<BuildingComponent>();
             TbResourceRow resourceRow = TbResource.Instance.Get(buildingComponent.TbRow.Model);
-            GameObject bundleGameObject = await root.GetComponent<ResourcesLoaderComponent>().LoadAssetAsync<GameObject>(resourceRow.Url);
-            GameObject prefab = bundleGameObject.Get<GameObject>("Skeleton");
+            GameObject prefab = await root.GetComponent<ResourcesLoaderComponent>().LoadAssetAsync<GameObject>(resourceRow.Url);
 
             GlobalComponent globalComponent = root.GetComponent<GlobalComponent>();
             GameObject unitGo = UnityEngine.Object.Instantiate(prefab, globalComponent.Unit, true);
@@ -76,8 +75,7 @@ namespace ET.Client
             
             SoldierComponent soldierComponent = lsUnit.GetComponent<SoldierComponent>();
             TbResourceRow resourceRow = TbResource.Instance.Get(soldierComponent.TbRow.Model);
-            GameObject bundleGameObject = await root.GetComponent<ResourcesLoaderComponent>().LoadAssetAsync<GameObject>(resourceRow.Url);
-            GameObject prefab = bundleGameObject.Get<GameObject>("Skeleton");
+            GameObject prefab = await root.GetComponent<ResourcesLoaderComponent>().LoadAssetAsync<GameObject>(resourceRow.Url);
 
             GlobalComponent globalComponent = root.GetComponent<GlobalComponent>();
             GameObject unitGo = UnityEngine.Object.Instantiate(prefab, globalComponent.Unit, true);

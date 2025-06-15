@@ -8,6 +8,7 @@ namespace ET
     public partial class HeroComponent : LSEntity, IAwake<int>, ISerializeToEntity
     {
         public int TableId;
+        public int SkinId;
 
         [BsonIgnore]
         [MemoryPackIgnore]
@@ -15,5 +16,12 @@ namespace ET
         [BsonIgnore]
         [MemoryPackIgnore]
         private TbHeroRow tbRow;
+        
+        [BsonIgnore]
+        [MemoryPackIgnore]
+        public TbHeroSkinRow TbSkinRow => this.tbSkinRow ?? TbHeroSkin.Instance.Get(this.SkinId);
+        [BsonIgnore]
+        [MemoryPackIgnore]
+        private TbHeroSkinRow tbSkinRow;
     }
 }

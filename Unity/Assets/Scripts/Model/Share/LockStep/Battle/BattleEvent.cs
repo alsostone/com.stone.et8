@@ -28,5 +28,11 @@ namespace ET
         public FP Value;
         public FloatingType Type;
     }
+    
+    public struct LSUnitSkill
+    {
+        public long Id;
+        public int SkillId;
+    }
 }
 
