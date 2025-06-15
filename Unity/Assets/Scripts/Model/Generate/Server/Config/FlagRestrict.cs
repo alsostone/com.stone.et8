@@ -23,14 +23,14 @@ namespace ET
         NotMove = 1,
 
         /// <summary>
-        /// 禁止普工
+        /// 禁止普通技能
         /// </summary>
         NotAttack = 2,
 
         /// <summary>
-        /// 禁止技能
+        /// 禁止主动技能
         /// </summary>
-        NotSkill = 4,
+        NotActive = 4,
 
     }
 }

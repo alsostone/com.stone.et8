@@ -11,13 +11,22 @@ namespace ET
         {self.LSRoom()?.ProcessLog.LogFunction(43, self.LSParent().Id);
             self.Position = position;
             self.Rotation = rotation;
+            self.IsMoving = false;
         }
 
         public static void Move(this TransformComponent self, TSVector2 forward)
         {self.LSRoom()?.ProcessLog.LogFunction(42, self.LSParent().Id);
+            if (forward.sqrMagnitude < FP.EN4) {
+                self.SetMoving(false);
+                return;
+            }
             FlagComponent flagComponent = self.LSOwner().GetComponent<FlagComponent>();
-            if (flagComponent.HasRestrict(FlagRestrict.NotMove)) { return; }
+            if (flagComponent.HasRestrict(FlagRestrict.NotMove)) {
+                self.SetMoving(false);
+                return;
+            }
             
+            self.SetMoving(true);
             PropComponent propComponent = self.LSOwner().GetComponent<PropComponent>();
             TSVector2 v2 = forward * propComponent.Get(NumericType.Speed) * LSConstValue.UpdateInterval / LSConstValue.Milliseconds;
             if (v2.LengthSquared() > FP.EN4)
@@ -27,6 +36,12 @@ namespace ET
                 self.Forward = self.Position - position;
             }
         }
-        
+
+        private static void SetMoving(this TransformComponent self, bool moving)
+        {
+            if (moving == self.IsMoving) return;
+            self.IsMoving = moving;
+            EventSystem.Instance.Publish(self.LSWorld(), new LSUnitMoving() { Id = self.LSOwner().Id, IsMoving = self.IsMoving });
+        }
     }
 }

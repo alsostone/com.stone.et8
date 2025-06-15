@@ -42,8 +42,9 @@ namespace ET.Client
             // 回滚后重新执行帧，ID对应的实体可能已变化。需清除表现层单位重新创建
             viewComponent.RemoveChild(lsUnit.Id);
             LSUnitView lsUnitView = viewComponent.AddChildWithId<LSUnitView, GameObject>(lsUnit.Id, unitGo);
-            lsUnitView.AddComponent<LSAnimatorComponent>();
+            lsUnitView.AddComponent<LSAnimationComponent>();
             lsUnitView.AddComponent<LSViewTransformComponent, Transform, bool>(unitGo.transform, false);
+            lsUnitView.AddComponent<LSViewSkillComponent>();
 
             var propComponent = lsUnit.GetComponent<PropComponent>();
             float hp = propComponent.Get(NumericType.Hp).AsFloat();
@@ -65,8 +66,9 @@ namespace ET.Client
             // 回滚后重新执行帧，ID对应的实体可能已变化。需清除表现层单位重新创建
             viewComponent.RemoveChild(lsUnit.Id);
             LSUnitView lsUnitView = viewComponent.AddChildWithId<LSUnitView, GameObject>(lsUnit.Id, unitGo);
-            lsUnitView.AddComponent<LSAnimatorComponent>();
+            lsUnitView.AddComponent<LSAnimationComponent>();
             lsUnitView.AddComponent<LSViewTransformComponent, Transform, bool>(unitGo.transform, false);
+            lsUnitView.AddComponent<LSViewSkillComponent>();
         }
         
         private static async ETTask CreateSoldierViewAsync(LSUnitViewComponent viewComponent, LSUnit lsUnit)
@@ -83,8 +85,9 @@ namespace ET.Client
             // 回滚后重新执行帧，ID对应的实体可能已变化。需清除表现层单位重新创建
             viewComponent.RemoveChild(lsUnit.Id);
             LSUnitView lsUnitView = viewComponent.AddChildWithId<LSUnitView, GameObject>(lsUnit.Id, unitGo);
-            lsUnitView.AddComponent<LSAnimatorComponent>();
+            lsUnitView.AddComponent<LSAnimationComponent>();
             lsUnitView.AddComponent<LSViewTransformComponent, Transform, bool>(unitGo.transform, false);
+            lsUnitView.AddComponent<LSViewSkillComponent>();
 
             var propComponent = lsUnit.GetComponent<PropComponent>();
             float hp = propComponent.Get(NumericType.Hp).AsFloat();

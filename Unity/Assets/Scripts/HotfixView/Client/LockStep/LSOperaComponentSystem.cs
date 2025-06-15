@@ -27,6 +27,10 @@ namespace ET.Client
             {
                 lsClientUpdater.Input.Button |= LSConstButtonValue.Skill1;
             }
+            if (Input.GetKeyDown(KeyCode.L))
+            {
+                lsClientUpdater.Input.Button |= LSConstButtonValue.Skill2;
+            }
             if (Input.GetKeyDown(KeyCode.Space))
             {
                 lsClientUpdater.Input.Button |= LSConstButtonValue.Jump;

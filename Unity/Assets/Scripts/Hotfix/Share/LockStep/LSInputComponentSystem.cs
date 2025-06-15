@@ -18,8 +18,8 @@ namespace ET
         private static void LSUpdate(this LSInputComponent self)
         {
             LSUnit unit = self.LSOwner();
-            TransformComponent numericComponent = unit.GetComponent<TransformComponent>();
-            numericComponent.Move(self.LSInput.V);
+            TransformComponent transformComponent = unit.GetComponent<TransformComponent>();
+            transformComponent.Move(self.LSInput.V);
 
             if ((self.LSInput.Button & LSConstButtonValue.Jump) > 0)
             {
@@ -31,7 +31,11 @@ namespace ET
             }
             else if ((self.LSInput.Button & LSConstButtonValue.Skill1) > 0)
             {
-                unit.GetComponent<SkillComponent>().TryCastSkill(ESkillType.Active);
+                unit.GetComponent<SkillComponent>().TryCastSkill(ESkillType.Active, 0);
+            }
+            else if ((self.LSInput.Button & LSConstButtonValue.Skill2) > 0)
+            {
+                unit.GetComponent<SkillComponent>().TryCastSkill(ESkillType.Active, 1);
             }
 
         }

@@ -29,7 +29,6 @@ namespace ET
 			lsUnit.AddComponent<BuffComponent>();
 			lsUnit.AddComponent<BeHitComponent>();
 			lsUnit.AddComponent<SkillComponent, int[]>(row.Skills);
-			lsUnit.AddComponent<AIRootComponent, Node>(AIAutoAttack.Gen());
 			
 			lsUnit.AddComponent<LSInputComponent>();
 			EventSystem.Instance.Publish(lsWorld, new LSUnitCreate() {LSUnit = lsUnit});

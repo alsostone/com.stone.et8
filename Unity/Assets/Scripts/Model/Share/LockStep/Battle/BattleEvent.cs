@@ -29,10 +29,16 @@ namespace ET
         public FloatingType Type;
     }
     
-    public struct LSUnitSkill
+    public struct LSUnitCasting
     {
         public long Id;
         public int SkillId;
+    }
+    
+    public struct LSUnitMoving
+    {
+        public long Id;
+        public bool IsMoving;
     }
 }
 

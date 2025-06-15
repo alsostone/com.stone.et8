@@ -13,7 +13,7 @@
     "ani_name": "Attack",
     "ani_name_after": "",
     "duration_pre": 0,
-    "duration": 2767,
+    "duration": 2567,
     "duration_after": 0,
     "trigger_array": [
       1000
@@ -38,7 +38,7 @@
     "ani_name": "Skill",
     "ani_name_after": "",
     "duration_pre": 0,
-    "duration": 1167,
+    "duration": 967,
     "duration_after": 0,
     "trigger_array": [
       500
@@ -63,7 +63,7 @@
     "ani_name": "Skill",
     "ani_name_after": "",
     "duration_pre": 0,
-    "duration": 1167,
+    "duration": 967,
     "duration_after": 0,
     "trigger_array": [
       500
@@ -88,7 +88,7 @@
     "ani_name": "Attack",
     "ani_name_after": "",
     "duration_pre": 0,
-    "duration": 2767,
+    "duration": 2567,
     "duration_after": 0,
     "trigger_array": [
       1000
@@ -96,7 +96,7 @@
     "effect_group_id": 30010001,
     "release_condition_type": 0,
     "condition_id_array": [],
-    "search_real_time": true,
+    "search_real_time": false,
     "search_target": 30010001
   },
   {
@@ -113,7 +113,7 @@
     "ani_name": "Attack",
     "ani_name_after": "",
     "duration_pre": 0,
-    "duration": 2767,
+    "duration": 2567,
     "duration_after": 0,
     "trigger_array": [
       1000
@@ -135,13 +135,13 @@
     "consume_param": [],
     "effect_id": 0,
     "ani_name_pre": "",
-    "ani_name": "Attack",
+    "ani_name": "Skill",
     "ani_name_after": "",
     "duration_pre": 0,
-    "duration": 2767,
+    "duration": 967,
     "duration_after": 0,
     "trigger_array": [
-      1000
+      500
     ],
     "effect_group_id": 30030001,
     "release_condition_type": 0,
@@ -163,7 +163,7 @@
     "ani_name": "Attack",
     "ani_name_after": "",
     "duration_pre": 0,
-    "duration": 2767,
+    "duration": 2567,
     "duration_after": 0,
     "trigger_array": [
       1000
@@ -188,7 +188,7 @@
     "ani_name": "Attack",
     "ani_name_after": "",
     "duration_pre": 0,
-    "duration": 2767,
+    "duration": 2567,
     "duration_after": 0,
     "trigger_array": [
       1000
@@ -213,7 +213,7 @@
     "ani_name": "Skill",
     "ani_name_after": "",
     "duration_pre": 0,
-    "duration": 1167,
+    "duration": 967,
     "duration_after": 0,
     "trigger_array": [
       500
@@ -221,7 +221,7 @@
     "effect_group_id": 40000101,
     "release_condition_type": 0,
     "condition_id_array": [],
-    "search_real_time": false,
+    "search_real_time": true,
     "search_target": 40000101
   },
   {

@@ -6,7 +6,9 @@
     "success_conds": [],
     "failure_conds": [],
     "action_type": 4,
-    "action_param": []
+    "action_param": [
+      40000
+    ]
   },
   {
     "Id": 100101010,

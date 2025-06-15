@@ -67,7 +67,16 @@ namespace ET
             self.IsRunning = true;
             self.CastFrame = self.LSWorld().Frame;
             self.StepRunning();
-            EventSystem.Instance.Publish(self.LSWorld(), new LSUnitSkill() { Id = self.LSOwner().Id, SkillId = self.SkillId });
+            
+            // 持续时间大于0时，说明技能有动作
+            // 释放有动作的技能时 禁止普攻&移动
+            if (self.DurationFrame > 0) {
+                var flagComponent = self.LSOwner().GetComponent<FlagComponent>();
+                flagComponent.AddRestrict((int)(FlagRestrict.NotAttack | FlagRestrict.NotActive | FlagRestrict.NotMove));
+                
+                // 通知表现层播放动作
+                EventSystem.Instance.Publish(self.LSWorld(), new LSUnitCasting() { Id = self.LSOwner().Id, SkillId = self.SkillId });
+            }
             return true;
         }
         
@@ -76,6 +85,11 @@ namespace ET
             self.IsRunning = false;
             self.CurrentPoint = 0;
             self.SearchUnits.Clear();
+            
+            if (self.DurationFrame > 0) {
+                var flagComponent = self.LSOwner().GetComponent<FlagComponent>();
+                flagComponent.RemoveRestrict((int)(FlagRestrict.NotAttack | FlagRestrict.NotActive | FlagRestrict.NotMove));
+            }
             
             if (self.IsOnlyOnce) {
                 self.Dispose();
@@ -99,9 +113,11 @@ namespace ET
             self.CurrentPoint = 0;
             self.SearchUnits.Clear();
 
-            // if (!string.IsNullOrEmpty(ResSkill.ani_name)) {
-            //     mEntity.ComState?.ChangeState(StateType.Idle);
-            // }
+            if (self.DurationFrame > 0) {
+                var flagComponent = self.LSOwner().GetComponent<FlagComponent>();
+                flagComponent.RemoveRestrict((int)(FlagRestrict.NotAttack | FlagRestrict.NotActive | FlagRestrict.NotMove));
+            }
+            
             if (self.IsOnlyOnce) {
                 self.Dispose();
             }

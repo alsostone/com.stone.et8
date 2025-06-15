@@ -150,8 +150,10 @@ namespace ET
             {
                 case ESkillType.Normal:
                     return flagComponent.HasRestrict(FlagRestrict.NotAttack);
+                case ESkillType.Active:
+                    return flagComponent.HasRestrict(FlagRestrict.NotActive);
                 default:
-                    return flagComponent.HasRestrict(FlagRestrict.NotSkill);
+                    return false;
             }
         }
 

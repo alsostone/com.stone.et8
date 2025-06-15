@@ -2,11 +2,11 @@
   {
     "Id": 10010001,
     "valid_forward": true,
-    "range": 15000,
+    "range": 30000,
     "team": 4,
     "type": 9,
     "table_id": [],
-    "count": 1,
+    "count": 99,
     "priority": 1
   },
   {

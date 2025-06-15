@@ -13,6 +13,11 @@
         public const int MoveTimer = 201;
         public const int AITimer = 202;
         public const int SessionAcceptTimeout = 203;
+        public const int AnimationTimer = 204;
+        
+        public const int SkillAniPreTimer = 205;
+        public const int SkillAniTimer = 206;
+        public const int SkillAniAfterTimer = 207;
         
         public const int RoomUpdate = 301;
     }

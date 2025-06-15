@@ -123,7 +123,7 @@
     <enum name="FlagRestrict" comment="禁止标签" unique="TRUE" flags="TRUE">
         <var name="None" alias="" value="0"/>
         <var name="NotMove" alias="禁止移动" value="1"/>
-        <var name="NotAttack" alias="禁止普工" value="2"/>
-        <var name="NotSkill" alias="禁止技能" value="4"/>
+        <var name="NotAttack" alias="禁止普通技能" value="2"/>
+        <var name="NotActive" alias="禁止主动技能" value="4"/>
     </enum>
 </module>

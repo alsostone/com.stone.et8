@@ -10,6 +10,7 @@ namespace ET
     [MemoryPackable]
     public partial class TransformComponent : LSEntity, IAwake<TSVector, TSQuaternion>, ISerializeToEntity
     {
+        public bool IsMoving;
         public TSVector Position { get; set; }
 
         [MemoryPackIgnore]
