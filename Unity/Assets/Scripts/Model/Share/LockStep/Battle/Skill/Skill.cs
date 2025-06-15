@@ -1,9 +1,17 @@
 ﻿using System.Collections.Generic;
 using MemoryPack;
 using MongoDB.Bson.Serialization.Attributes;
+using TrueSync;
 
 namespace ET
 {
+    [MemoryPackable]
+    public partial struct SearchUnitPackable
+    {
+        public long Target;
+        public FP Distance;
+    }
+    
     [ChildOf(typeof(SkillComponent))]
     [MemoryPackable]
     public partial class Skill : LSEntity, IAwake<int, bool>, IDestroy, ISerializeToEntity
@@ -16,9 +24,8 @@ namespace ET
         public int DurationFrame;
         public int CurrentPoint;
         
-        [BsonIgnore]
-        [MemoryPackIgnore]
-        public List<SearchUnit> SearchUnits = new List<SearchUnit>(16);
+        public List<SearchUnitPackable> SearchUnits = new List<SearchUnitPackable>(16);
+        
         [BsonIgnore]
         [MemoryPackIgnore]
         public TbSkillRow TbSkillRow => tbSkillRow ?? TbSkill.Instance.Get(this.SkillId);

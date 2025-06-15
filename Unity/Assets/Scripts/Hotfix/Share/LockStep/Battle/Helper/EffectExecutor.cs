@@ -6,6 +6,8 @@ namespace ET
     {
         public static void Execute(int groupId, LSUnit owner, List<SearchUnit> targets)
         {
+            if (targets.Count == 0) return;
+            
             var resEffects = TbEffect.Instance.GetGroupEffects(groupId);
             if (resEffects == null) {
                 return;

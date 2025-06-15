@@ -8,7 +8,7 @@ namespace ET
     public partial class Buff : LSEntity, IAwake<int, LSUnit>, IDestroy, ILSUpdate, ISerializeToEntity
     {
         public int BuffId;
-        public uint LayerCount;
+        public int LayerCount;
         
         public long Caster;
         public int StartFrame;

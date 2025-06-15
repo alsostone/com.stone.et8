@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 
 namespace ET
 {
@@ -44,7 +45,18 @@ namespace ET
         private static int SearchTargets(this Skill self)
         {self.LSRoom()?.ProcessLog.LogFunction(60, self.LSParent().Id);
             self.SearchUnits.Clear();
-            TargetSearcher.Search(self.TbSkillRow.SearchTarget, self.LSOwner(), self.SearchUnits);
+            List<SearchUnit> targets = ObjectPool.Instance.Fetch<List<SearchUnit>>();
+            TargetSearcher.Search(self.TbSkillRow.SearchTarget, self.LSOwner(), targets);
+            foreach (SearchUnit target in targets)
+            {
+                self.SearchUnits.Add(new SearchUnitPackable
+                {
+                    Target = target.Target.Id,
+                    Distance = target.Distance
+                });
+            }
+            targets.Clear();
+            ObjectPool.Instance.Recycle(targets);
             return self.SearchUnits.Count;
         }
         
@@ -59,11 +71,6 @@ namespace ET
                 }
             }
 
-            // mEntity.ComActorPathfinding?.QuitPathfinding();
-            // if (!string.IsNullOrEmpty(ResSkill.ani_name)) {
-            //     mEntity.ComState?.ChangeState(StateType.Skill, ResSkill.id_key);
-            // }
-            
             self.IsRunning = true;
             self.CastFrame = self.LSWorld().Frame;
             self.StepRunning();
@@ -134,21 +141,39 @@ namespace ET
                     if (self.LSWorld().Frame - self.CastFrame >= frame)
                     {
                         self.CurrentPoint = index + 1;
-                        if (self.TbSkillRow.SearchRealTime && self.SearchTargets() == 0) { break; } 
                         
+                        List<SearchUnit> targets = ObjectPool.Instance.Fetch<List<SearchUnit>>();
+                        if (self.TbSkillRow.SearchRealTime) {
+                            TargetSearcher.Search(self.TbSkillRow.SearchTarget, self.LSOwner(), targets);
+                        } else {
+                            foreach (SearchUnitPackable searchUnit in self.SearchUnits) {
+                                targets.Add(new SearchUnit { Target = self.LSUnit(searchUnit.Target), Distance = searchUnit.Distance });
+                            }
+                        }
                         if (index == 0) { self.OnCastSuccess(); }
-                        EffectExecutor.Execute(self.TbSkillRow.EffectGroupId, self.LSOwner(), self.SearchUnits);
+                        EffectExecutor.Execute(self.TbSkillRow.EffectGroupId, self.LSOwner(), targets);
+                        targets.Clear();
+                        ObjectPool.Instance.Recycle(targets);
                     }
                 }
             }
-            else {
+            else
+            {
                 // 技能持续时间完毕 把未触发的点全部触发
                 for (var index = self.CurrentPoint; index < self.TbSkillRow.TriggerArray.Length; index++)
                 {
-                    if (self.TbSkillRow.SearchRealTime && self.SearchTargets() == 0) { break; } 
-                    
+                    List<SearchUnit> targets = ObjectPool.Instance.Fetch<List<SearchUnit>>();
+                    if (self.TbSkillRow.SearchRealTime) {
+                        TargetSearcher.Search(self.TbSkillRow.SearchTarget, self.LSOwner(), targets);
+                    } else {
+                        foreach (SearchUnitPackable searchUnit in self.SearchUnits) {
+                            targets.Add(new SearchUnit { Target = self.LSUnit(searchUnit.Target), Distance = searchUnit.Distance });
+                        }
+                    }
                     if (index == 0) { self.OnCastSuccess(); }
-                    EffectExecutor.Execute(self.TbSkillRow.EffectGroupId, self.LSOwner(), self.SearchUnits);
+                    EffectExecutor.Execute(self.TbSkillRow.EffectGroupId, self.LSOwner(), targets);
+                    targets.Clear();
+                    ObjectPool.Instance.Recycle(targets);
                 }
                 self.OnCastDone();
             }
