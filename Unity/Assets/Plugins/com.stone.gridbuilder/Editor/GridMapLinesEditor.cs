@@ -19,48 +19,51 @@ public class GridMapLinesEditor : Editor
         if (GUI.changed)
         {
             GenerateLines(gridMapLines);
-            EditorUtility.SetDirty(gridMapLines);
-            EditorSceneManager.MarkSceneDirty(gridMapLines.gameObject.scene);
+            
+            if (!Application.isPlaying) {
+                EditorUtility.SetDirty(gridMapLines);
+                EditorSceneManager.MarkSceneDirty(gridMapLines.gameObject.scene);
+            }
         }
     }
 
     void GenerateLines(GridMapLines lines)
     {
-        GridMap grid = lines.gridMap;
+        GridData gridData = lines.gridMap.gridData;
         List<Vector3> positions = new();
         
-        Vector3 pos = grid.GetPosition();
+        Vector3 pos = lines.gridMap.GetPosition();
         int dir = 1;
-        for (int z = 0; z < grid.zLength + 1; z++)
+        for (int z = 0; z < gridData.zLength + 1; z++)
         {
             pos = RaycastPosition(lines, pos);
             positions.Add(pos);
             
-            for(int x = 1; x < grid.xLength + 1; x++)
+            for(int x = 1; x < gridData.xLength + 1; x++)
             {
-                pos.x += dir * grid.cellSize;
+                pos.x += dir * gridData.cellSize;
                 pos = RaycastPosition(lines, pos);
                 positions.Add(pos);
             }
             dir *= -1;
-            pos.z += grid.cellSize;
+            pos.z += gridData.cellSize;
         }
         
-        pos = grid.GetPosition() + new Vector3(0, 0, grid.cellSize * grid.zLength);
+        pos = lines.gridMap.GetPosition() + new Vector3(0, 0, gridData.cellSize * gridData.zLength);
         dir = -1;
-        for (int index = 0; index < grid.xLength + 1; index++)
+        for (int index = 0; index < gridData.xLength + 1; index++)
         {
             pos = RaycastPosition(lines, pos);
             positions.Add(pos);
             
-            for (int j = 0; j < grid.zLength; j++)
+            for (int j = 0; j < gridData.zLength; j++)
             {
-                pos.z += dir * grid.cellSize;
+                pos.z += dir * gridData.cellSize;
                 pos = RaycastPosition(lines, pos);
                 positions.Add(pos);
             }
             dir *= -1;
-            pos.x += grid.cellSize;
+            pos.x += gridData.cellSize;
         }
 
         LineRenderer lineRenderer = lines.GetComponent<LineRenderer>();

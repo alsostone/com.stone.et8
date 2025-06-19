@@ -7,9 +7,23 @@ public class GridMapEditor : Editor
 {
     public override void OnInspectorGUI()
     {
+        GridMap gridMap = target as GridMap;
+        
         this.DrawDefaultInspector();
         
-        GridMap grid = target as GridMap;
+        GUILayout.BeginHorizontal();
+        GUILayout.Label("xLength");
+        gridMap.gridData.xLength = EditorGUILayout.IntSlider(gridMap.gridData.xLength, 16, 96);
+        GUILayout.EndHorizontal();
+        GUILayout.BeginHorizontal();
+        GUILayout.Label("zLength");
+        gridMap.gridData.zLength = EditorGUILayout.IntSlider(gridMap.gridData.zLength, 16, 96);
+        GUILayout.EndHorizontal();
+        GUILayout.BeginHorizontal();
+        GUILayout.Label("Cell Size");
+        gridMap.gridData.cellSize = EditorGUILayout.Slider(gridMap.gridData.cellSize, 0.5f, 5.0f);
+        GUILayout.EndHorizontal();
+        
         if (GUILayout.Button("Force Refresh"))
         {
             GUI.changed = true;
@@ -17,59 +31,42 @@ public class GridMapEditor : Editor
         
         if (GUI.changed)
         {
-            GenerateGrid(grid);
-            GenerateObstacle(grid);
-            EditorUtility.SetDirty(grid);
-            EditorSceneManager.MarkSceneDirty(grid.gameObject.scene);
+            gridMap.gridData.ResetCells();
+            GenerateObstacle(gridMap);
+            
+            if (!Application.isPlaying) {
+                EditorUtility.SetDirty(gridMap);
+                EditorSceneManager.MarkSceneDirty(gridMap.gameObject.scene);
+            }
         }
     }
     
-    private void GenerateGrid(GridMap grid)
+    private void GenerateObstacle(GridMap gridMap)
     {
-        if (grid.cells == null || grid.xLength * grid.zLength != grid.cells.Length)
+        GridData gridData = gridMap.gridData;
+        for (int x = 0; x < gridData.xLength; x++)
         {
-            grid.cells = new GridCell[grid.xLength * grid.zLength];
-            for (int x = 0; x < grid.xLength; x++) {
-                for (int z = 0; z < grid.zLength; z++) {
-                    grid.cells[x + z * grid.xLength] = new GridCell(x, z);
-                }
-            }
-        }
-        else
-        {
-            for (int x = 0; x < grid.xLength; x++) {
-                for (int z = 0; z < grid.zLength; z++) {
-                    grid.cells[x + z * grid.xLength].isObstacle = false;
-                }
-            }
-        }
-    }
-
-    private void GenerateObstacle(GridMap grid)
-    {
-        for (int x = 0; x < grid.xLength; x++)
-        {
-            for (int z = 0; z < grid.zLength; z++)
+            for (int z = 0; z < gridData.zLength; z++)
             {
-                Vector3 pos = grid.GetCellPositionCenter(x, z);
-                pos.y = grid.raycastHeight;
+                Vector3 pos = gridMap.GetCellPositionCenter(x, z);
+                pos.y = gridMap.raycastHeight;
 
-                var offset = grid.cellSize / 2 * grid.raycastFineness;
-                if (Physics.Raycast(pos + new Vector3(-offset, 0, -offset), Vector3.down, out RaycastHit _, grid.raycastHeight, grid.obstacleMask))
+                var offset = gridData.cellSize / 2 * gridMap.raycastFineness;
+                if (Physics.Raycast(pos + new Vector3(-offset, 0, -offset), Vector3.down, out RaycastHit _, gridMap.raycastHeight, gridMap.obstacleMask))
                 {
-                    grid.cells[x + z * grid.xLength].isObstacle = true;
+                    gridData.SetObstacle(x, z, true);
                 }
-                else if (Physics.Raycast(pos + new Vector3(offset, 0, -offset), Vector3.down, out RaycastHit _, grid.raycastHeight, grid.obstacleMask))
+                else if (Physics.Raycast(pos + new Vector3(offset, 0, -offset), Vector3.down, out RaycastHit _, gridMap.raycastHeight, gridMap.obstacleMask))
                 {
-                    grid.cells[x + z * grid.xLength].isObstacle = true;
+                    gridData.SetObstacle(x, z, true);
                 }
-                else if (Physics.Raycast(pos + new Vector3(-offset, 0, offset), Vector3.down, out RaycastHit _, grid.raycastHeight, grid.obstacleMask))
+                else if (Physics.Raycast(pos + new Vector3(-offset, 0, offset), Vector3.down, out RaycastHit _, gridMap.raycastHeight, gridMap.obstacleMask))
                 {
-                    grid.cells[x + z * grid.xLength].isObstacle = true;
+                    gridData.SetObstacle(x, z, true);
                 }
-                else if (Physics.Raycast(pos + new Vector3(offset, 0, offset), Vector3.down, out RaycastHit _, grid.raycastHeight, grid.obstacleMask))
+                else if (Physics.Raycast(pos + new Vector3(offset, 0, offset), Vector3.down, out RaycastHit _, gridMap.raycastHeight, gridMap.obstacleMask))
                 {
-                    grid.cells[x + z * grid.xLength].isObstacle = true;
+                    gridData.SetObstacle(x, z, true);
                 }
             }
         }

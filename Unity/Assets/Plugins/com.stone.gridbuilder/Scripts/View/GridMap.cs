@@ -1,39 +1,31 @@
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 public partial class GridMap : MonoBehaviour
 {
-    [SerializeField, Range(16, 96)] public int xLength = 16;
-    [SerializeField, Range(16, 96)] public int zLength = 16;
-    [SerializeField, Range(0.5f, 5.0f)] public float cellSize = 1;
-    
     [SerializeField, Min(0.1f)] public float raycastHeight = 10;
     [SerializeField, Range(0.1f, 2.0f)] public float raycastFineness = 0.5f;
     [SerializeField] public LayerMask obstacleMask;
     
-    [SerializeField, HideInInspector] public GridCell[] cells;
+    [SerializeField, HideInInspector] public GridData gridData = new GridData();
     
     public Vector3Int ConvertToIndex(Vector3 point)
     {
         point -= GetPosition();
-        point /= cellSize;
+        point /= this.gridData.cellSize;
         return new Vector3Int((int)point.x, (int)point.y, (int)point.z);
     }
 
-    public bool CheckInside(int x, int z)
-    {
-        return x >= 0 && z >= 0 && x < this.xLength && z < this.zLength;
-    }
-    
     public Vector3 GetCellPositionCenter(int x, int z)
     {
-        float offset = cellSize * 0.5f;
-        return transform.position + new Vector3(cellSize * x + offset, 0, cellSize * z + offset);
+        float offset = this.gridData.cellSize * 0.5f;
+        return transform.position + new Vector3(this.gridData.cellSize * x + offset, 0, this.gridData.cellSize * z + offset);
     }
     
     public Vector3 GetCellPosition(int x, int z)
     {
-        return transform.position + new Vector3(cellSize * x, 0, cellSize * z);
+        return transform.position + new Vector3(this.gridData.cellSize * x, 0, this.gridData.cellSize * z);
     }
 
     public Vector3 GetPosition()
@@ -46,28 +38,28 @@ public partial class GridMap : MonoBehaviour
     private readonly List<Vector3> drawPoints = new List<Vector3>();
     void OnDrawGizmos()
     {
-        if (cells == null || cells.Length != xLength * zLength) {
+        if (gridData.cells == null || gridData.cells.Length != gridData.xLength * gridData.zLength) {
             return;
         }
         drawPoints.Clear();
         
         Gizmos.color = Color.yellow;
-        for (int x = 0; x < this.xLength + 1; x++)
+        for (int x = 0; x < this.gridData.xLength + 1; x++)
         {
-            for (int z = 0; z < this.zLength; ++z)
+            for (int z = 0; z < this.gridData.zLength; ++z)
             {
-                if ((x - 1 < 0 || this.cells[x - 1 + z * this.xLength].isObstacle)
-                    && (x >= this.xLength || this.cells[x + z * this.xLength].isObstacle)) {
+                if ((x - 1 < 0 || this.gridData.cells[x - 1 + z * this.gridData.xLength].isObstacle)
+                    && (x >= this.gridData.xLength || this.gridData.cells[x + z * this.gridData.xLength].isObstacle)) {
                     continue;
                 }
-                Vector3 start = this.GetPosition() + new Vector3(x * this.cellSize, yOffset, z * this.cellSize);
+                Vector3 start = this.GetPosition() + new Vector3(x * this.gridData.cellSize, yOffset, z * this.gridData.cellSize);
                 drawPoints.Add(start);
                 
-                for (; z < this.zLength; ++z)
+                for (; z < this.gridData.zLength; ++z)
                 {
-                    Vector3 end = this.GetPosition() + new Vector3(x * this.cellSize, yOffset, z * this.cellSize);
-                    if ((x - 1 >= 0 && !this.cells[x - 1 + z * this.xLength].isObstacle)
-                        || (x < this.xLength && !this.cells[x + z * this.xLength].isObstacle)) {
+                    Vector3 end = this.GetPosition() + new Vector3(x * this.gridData.cellSize, yOffset, z * this.gridData.cellSize);
+                    if ((x - 1 >= 0 && !this.gridData.cells[x - 1 + z * this.gridData.xLength].isObstacle)
+                        || (x < this.gridData.xLength && !this.gridData.cells[x + z * this.gridData.xLength].isObstacle)) {
                         drawPoints.Add(end);
                         continue;
                     }
@@ -75,30 +67,30 @@ public partial class GridMap : MonoBehaviour
                     break;
                 }
 
-                if (z == this.zLength)
+                if (z == this.gridData.zLength)
                 {
-                    Vector3 end = new Vector3(start.x, yOffset, this.zLength * cellSize);
+                    Vector3 end = new Vector3(start.x, yOffset, this.gridData.zLength * this.gridData.cellSize);
                     drawPoints.Add(end);
                     Gizmos.DrawLine(start, end);
                 }
             }
         }
         
-        for (int z = 0; z < this.zLength + 1; z++)
+        for (int z = 0; z < this.gridData.zLength + 1; z++)
         {
-            for (int x = 0; x < this.xLength; ++x)
+            for (int x = 0; x < this.gridData.xLength; ++x)
             {
-                if ((z - 1 < 0 || this.cells[x + (z - 1) * this.xLength].isObstacle)
-                    && (z >= this.zLength || this.cells[x + z * this.xLength].isObstacle)) {
+                if ((z - 1 < 0 || this.gridData.cells[x + (z - 1) * this.gridData.xLength].isObstacle)
+                    && (z >= this.gridData.zLength || this.gridData.cells[x + z * this.gridData.xLength].isObstacle)) {
                     continue;
                 }
-                Vector3 start = this.GetPosition() + new Vector3(x * this.cellSize, yOffset, z * this.cellSize);
+                Vector3 start = this.GetPosition() + new Vector3(x * this.gridData.cellSize, yOffset, z * this.gridData.cellSize);
                 
-                for (; x < this.xLength; ++x)
+                for (; x < this.gridData.xLength; ++x)
                 {
-                    Vector3 end = this.GetPosition() + new Vector3(x * this.cellSize, yOffset, z * this.cellSize);
-                    if ((z - 1 >= 0 && !this.cells[x + (z - 1) * this.xLength].isObstacle)
-                        || (z < this.zLength && !this.cells[x + z * this.xLength].isObstacle)) {
+                    Vector3 end = this.GetPosition() + new Vector3(x * this.gridData.cellSize, yOffset, z * this.gridData.cellSize);
+                    if ((z - 1 >= 0 && !this.gridData.cells[x + (z - 1) * this.gridData.xLength].isObstacle)
+                        || (z < this.gridData.zLength && !this.gridData.cells[x + z * this.gridData.xLength].isObstacle)) {
                         drawPoints.Add(end);
                         continue;
                     }
@@ -106,9 +98,9 @@ public partial class GridMap : MonoBehaviour
                     break;
                 }
 
-                if (x == this.xLength)
+                if (x == this.gridData.xLength)
                 {
-                    Vector3 end = new Vector3(this.xLength * cellSize, yOffset, start.z);
+                    Vector3 end = new Vector3(this.gridData.xLength * this.gridData.cellSize, yOffset, start.z);
                     Gizmos.DrawLine(start, end);
                 }
             }
