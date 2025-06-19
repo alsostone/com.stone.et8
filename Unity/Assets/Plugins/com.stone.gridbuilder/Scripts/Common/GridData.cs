@@ -6,16 +6,16 @@ public class GridData
     public int xLength = 16;
     public int zLength = 16;
     public float cellSize = 1;
-    public GridCell[] cells;
+    public CellData[] cells;
 
     public void ResetCells()
     {
         if (cells == null || xLength * zLength != cells.Length)
         {
-            cells = new GridCell[xLength * zLength];
+            cells = new CellData[xLength * zLength];
             for (int x = 0; x < xLength; x++) {
                 for (int z = 0; z < zLength; z++) {
-                    cells[x + z * xLength] = new GridCell(x, z);
+                    cells[x + z * xLength] = new CellData(x, z);
                 }
             }
         }
@@ -23,9 +23,9 @@ public class GridData
         {
             for (int x = 0; x < xLength; x++) {
                 for (int z = 0; z < zLength; z++) {
-                    GridCell cell = cells[x + z * xLength];
-                    cell.isObstacle = false;
-                    cell.buildingId = 0;
+                    CellData cellData = cells[x + z * xLength];
+                    cellData.isObstacle = false;
+                    cellData.buildingId = 0;
                 }
             }
         }
@@ -36,11 +36,11 @@ public class GridData
         return x >= 0 && z >= 0 && x < xLength && z < zLength;
     }
     
-    public bool TryPlace(Building building)
+    public bool TryPlace(BuildingData buildingData)
     {
-        if (!CanPlace(building))
+        if (!CanPlace(buildingData))
             return false;
-        this.Place(building);
+        this.Place(buildingData);
         return true;
     }
     
@@ -49,18 +49,18 @@ public class GridData
         return !cells[x + z * xLength].isFill;
     }
     
-    public bool CanPlace(Building building)
+    public bool CanPlace(BuildingData buildingData)
     {
-        int len = (int)Math.Sqrt(building.points.Length);
-        if (len * len != building.points.Length) {
+        int len = (int)Math.Sqrt(buildingData.points.Length);
+        if (len * len != buildingData.points.Length) {
             throw new ArgumentException("Invalid building points length");
         }
         for (int x = 0; x < len; x++) {
             for (int z = 0; z < len; z++) {
-                if (building.points[x + z * len])
+                if (buildingData.points[x + z * len])
                 {
-                    int cellX = building.x + x;
-                    int cellZ = building.z + z;
+                    int cellX = buildingData.x + x;
+                    int cellZ = buildingData.z + z;
                     if (!this.CheckInside(cellX, cellZ)) {
                         return false;
                     }
@@ -73,19 +73,19 @@ public class GridData
         return true;
     }
 
-    public void Place(Building building)
+    public void Place(BuildingData buildingData)
     {
-        int len = (int)Math.Sqrt(building.points.Length);
-        if (len * len != building.points.Length) {
+        int len = (int)Math.Sqrt(buildingData.points.Length);
+        if (len * len != buildingData.points.Length) {
             throw new ArgumentException("Invalid building points length");
         }
         for (int x = 0; x < len; x++) {
             for (int z = 0; z < len; z++) {
-                if (building.points[x + z * len])
+                if (buildingData.points[x + z * len])
                 {
-                    int cellX = building.x + x;
-                    int cellZ = building.z + z;
-                    this.cells[cellX + cellZ * xLength].buildingId = building.Id;
+                    int cellX = buildingData.x + x;
+                    int cellZ = buildingData.z + z;
+                    this.cells[cellX + cellZ * xLength].buildingId = buildingData.Id;
                 }
             }
         }
