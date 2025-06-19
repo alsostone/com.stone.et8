@@ -7,6 +7,7 @@ public partial class GridMap : MonoBehaviour
     [SerializeField, Min(0.1f)] public float raycastHeight = 10;
     [SerializeField, Range(0.1f, 2.0f)] public float raycastFineness = 0.5f;
     [SerializeField] public LayerMask obstacleMask;
+    [SerializeField] public LayerMask terrainMask;
     
     [SerializeField, HideInInspector] public GridData gridData = new GridData();
     
@@ -31,6 +32,27 @@ public partial class GridMap : MonoBehaviour
     public Vector3 GetPosition()
     {
         return transform.position;
+    }
+    
+    public Vector3 RaycastPosition(int x, int z)
+    {
+        Vector3 pos = new Vector3(gridData.cellSize * x, raycastHeight, gridData.cellSize * z);
+        if (Physics.Raycast(pos, Vector3.down, out RaycastHit hit, raycastHeight, terrainMask)) {
+            pos.y = hit.point.y + 0.01f;
+        } else {
+            pos.y = GetPosition().y + 0.01f;
+        }
+        return pos;
+    }
+    
+    public Vector3 RaycastPosition(Vector3 pos)
+    {
+        if (Physics.Raycast(new Vector3(pos.x, raycastHeight, pos.z), Vector3.down, out RaycastHit hit, raycastHeight, terrainMask)) {
+            pos.y = hit.point.y + 0.01f;
+        } else {
+            pos.y = GetPosition().y + 0.01f;
+        }
+        return pos;
     }
 
 #if UNITY_EDITOR

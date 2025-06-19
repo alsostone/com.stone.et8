@@ -2,14 +2,14 @@ using UnityEngine;
 using UnityEditor;
 using UnityEditor.SceneManagement;
 
-[CustomEditor(typeof(GridMapLines))]
-public class GridMapLinesEditor : Editor
+[CustomEditor(typeof(GridMapTiles))]
+public class GridMapTilesEditor : Editor
 {
     public override void OnInspectorGUI()
     {
         this.DrawDefaultInspector();
         
-        GridMapLines gridMapLines = target as GridMapLines;
+        GridMapTiles gridMapTiles = target as GridMapTiles;
         if (GUILayout.Button("Force Refresh"))
         {
             GUI.changed = true;
@@ -17,13 +17,13 @@ public class GridMapLinesEditor : Editor
         
         if (GUI.changed)
         {
-            gridMapLines.GenerateLines();
+            gridMapTiles.GenerateTiles();
             
             if (!Application.isPlaying) {
-                EditorUtility.SetDirty(gridMapLines);
-                EditorSceneManager.MarkSceneDirty(gridMapLines.gameObject.scene);
+                EditorUtility.SetDirty(gridMapTiles);
+                EditorSceneManager.MarkSceneDirty(gridMapTiles.gameObject.scene);
             }
         }
     }
-
+    
 }
