@@ -80,9 +80,9 @@ public partial class GridMap : MonoBehaviour
                 for (; z < this.gridData.zLength; ++z)
                 {
                     Vector3 end = this.GetPosition() + new Vector3(x * this.gridData.cellSize, yOffset, z * this.gridData.cellSize);
+                    drawPoints.Add(end);
                     if ((x - 1 >= 0 && !this.gridData.cells[x - 1 + z * this.gridData.xLength].isObstacle)
                         || (x < this.gridData.xLength && !this.gridData.cells[x + z * this.gridData.xLength].isObstacle)) {
-                        drawPoints.Add(end);
                         continue;
                     }
                     Gizmos.DrawLine(start, end);
@@ -110,12 +110,11 @@ public partial class GridMap : MonoBehaviour
                 
                 for (; x < this.gridData.xLength; ++x)
                 {
-                    Vector3 end = this.GetPosition() + new Vector3(x * this.gridData.cellSize, yOffset, z * this.gridData.cellSize);
                     if ((z - 1 >= 0 && !this.gridData.cells[x + (z - 1) * this.gridData.xLength].isObstacle)
                         || (z < this.gridData.zLength && !this.gridData.cells[x + z * this.gridData.xLength].isObstacle)) {
-                        drawPoints.Add(end);
                         continue;
                     }
+                    Vector3 end = this.GetPosition() + new Vector3(x * this.gridData.cellSize, yOffset, z * this.gridData.cellSize);
                     Gizmos.DrawLine(start, end);
                     break;
                 }
