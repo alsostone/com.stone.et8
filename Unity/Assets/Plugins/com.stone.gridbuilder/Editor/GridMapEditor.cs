@@ -33,6 +33,7 @@ public class GridMapEditor : Editor
         {
             gridMap.gridData.ResetCells();
             GenerateObstacle(gridMap);
+            GenerateBuilding(gridMap);
             
             if (!Application.isPlaying) {
                 EditorUtility.SetDirty(gridMap);
@@ -69,6 +70,15 @@ public class GridMapEditor : Editor
                     gridData.SetObstacle(x, z, true);
                 }
             }
+        }
+    }
+
+    private void GenerateBuilding(GridMap gridMap)
+    {
+        Building[] buildings = FindObjectsOfType<Building>();
+        foreach (Building building in buildings)
+        {
+            gridMap.TryPlace(building, true);
         }
     }
 

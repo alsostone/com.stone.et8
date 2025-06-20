@@ -5,24 +5,19 @@ public class BuildingData
 {
     public static int width = 5;
     public static int height = 5;
+    public static int xOffset = 2;
+    public static int zOffset = 2;
 
     public long Id;
-    public int x;
-    public int z;
-    
     public bool[] points = new bool[width * height];
-    public bool[] points2 = new bool[width * height];
-    public int rotation;
-    
+    private bool[] points2 = new bool[width * height];
+
     public BuildingData(){ }
     
-    public BuildingData(long id, int x, int z, bool[] points, int rotation = 0)
+    public BuildingData(long id, bool[] points)
     {
         Id = id;
-        this.x = x;
-        this.z = z;
-        this.rotation = rotation;
-        Rotation(points, this.points, rotation);
+        Rotation(points, this.points, 0);
     }
 
     public void Rotation(bool[] from, bool[] to, int r)

@@ -12,7 +12,7 @@ public class BuildingEditor : Editor
         this.DrawDefaultInspector();
         
         GUILayout.Label("Shape", EditorStyles.boldLabel);
-        for (int z = 0; z < BuildingData.height; z++)
+        for (int z = BuildingData.height - 1; z >= 0; z--)
         {
             GUILayout.BeginHorizontal();
             for (int x = 0; x < BuildingData.width; x++)
