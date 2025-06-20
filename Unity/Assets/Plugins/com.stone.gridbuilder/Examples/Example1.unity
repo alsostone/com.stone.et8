@@ -135,7 +135,7 @@ GameObject:
   - component: {fileID: 130391016}
   - component: {fileID: 130391015}
   - component: {fileID: 130391014}
-  m_Layer: 7
+  m_Layer: 14
   m_Name: Cube (3)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -239,7 +239,7 @@ GameObject:
   - component: {fileID: 474482163}
   - component: {fileID: 474482162}
   - component: {fileID: 474482161}
-  m_Layer: 8
+  m_Layer: 13
   m_Name: Terrain
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -332,7 +332,7 @@ GameObject:
   - component: {fileID: 587429046}
   - component: {fileID: 587429045}
   - component: {fileID: 587429044}
-  m_Layer: 7
+  m_Layer: 14
   m_Name: Cube
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -458,10 +458,10 @@ MonoBehaviour:
   raycastFineness: 1
   obstacleMask:
     serializedVersion: 2
-    m_Bits: 128
+    m_Bits: 16512
   terrainMask:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 8192
   gridData:
     xLength: 23
     zLength: 20
@@ -2307,7 +2307,7 @@ MonoBehaviour:
       isObstacle: 0
       x: 22
       z: 19
-  placedBuildings: []
+    currentGuid: 0
 --- !u!4 &1016826418
 Transform:
   m_ObjectHideFlags: 0
@@ -2472,7 +2472,7 @@ GameObject:
   - component: {fileID: 2081313091}
   - component: {fileID: 2081313090}
   - component: {fileID: 2081313089}
-  m_Layer: 7
+  m_Layer: 14
   m_Name: Cube (2)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2577,7 +2577,7 @@ GameObject:
   - component: {fileID: 2099387790}
   - component: {fileID: 2099387789}
   - component: {fileID: 2099387788}
-  m_Layer: 7
+  m_Layer: 14
   m_Name: Cube (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}

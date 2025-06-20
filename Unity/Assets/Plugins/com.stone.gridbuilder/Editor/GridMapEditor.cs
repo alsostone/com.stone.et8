@@ -78,7 +78,8 @@ public class GridMapEditor : Editor
         Building[] buildings = FindObjectsOfType<Building>();
         foreach (Building building in buildings)
         {
-            gridMap.TryPlace(building, true);
+            if (gridMap.TryPlace(building, true))
+                EditorUtility.SetDirty(building);
         }
     }
 

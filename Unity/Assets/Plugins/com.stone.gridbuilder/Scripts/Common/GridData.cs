@@ -12,6 +12,7 @@ public class GridData
     
     public void ResetCells()
     {
+        currentGuid = 0;
         if (cells == null || xLength * zLength != cells.Length)
         {
             cells = new CellData[xLength * zLength];
@@ -43,20 +44,20 @@ public class GridData
         return ++currentGuid;
     }
     
-    public bool TryPlace(int x, int z, BuildingData buildingData)
+    public bool TryPut(int x, int z, BuildingData buildingData)
     {
-        if (!CanPlace(x, z, buildingData))
+        if (!this.CanPut(x, z, buildingData))
             return false;
-        this.Place(x, z, buildingData);
+        this.Put(x, z, buildingData);
         return true;
     }
     
-    public bool CanPlace(int x, int z)
+    public bool CanPut(int x, int z)
     {
         return !cells[x + z * xLength].isFill;
     }
     
-    public bool CanPlace(int x, int z, BuildingData buildingData)
+    public bool CanPut(int x, int z, BuildingData buildingData)
     {
         for (int x1 = 0; x1 < BuildingData.width; x1++) {
             for (int z1 = 0; z1 < BuildingData.height; z1++) {
@@ -67,7 +68,8 @@ public class GridData
                     if (!this.CheckInside(x2, z2)) {
                         return false;
                     }
-                    if (!CanPlace(x2, z2)) {
+                    CellData data = cells[x2 + z2 * xLength];
+                    if (data.isObstacle || (data.buildingId > 0 && data.buildingId != buildingData.Id)) {
                         return false;
                     }
                 }
@@ -75,8 +77,22 @@ public class GridData
         }
         return true;
     }
-
-    public void Place(int x, int z, BuildingData buildingData)
+    
+    public void Take(int x, int z, BuildingData buildingData)
+    {
+        for (int x1 = 0; x1 < BuildingData.width; x1++) {
+            for (int z1 = 0; z1 < BuildingData.height; z1++) {
+                if (buildingData.points[x1 + z1 * BuildingData.width])
+                {
+                    int x2 = x + x1 - BuildingData.xOffset;
+                    int z2 = z + z1 - BuildingData.zOffset;
+                    this.cells[x2 + z2 * xLength].buildingId = 0;
+                }
+            }
+        }
+    }
+    
+    public void Put(int x, int z, BuildingData buildingData)
     {
         for (int x1 = 0; x1 < BuildingData.width; x1++) {
             for (int z1 = 0; z1 < BuildingData.height; z1++) {

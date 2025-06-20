@@ -259,7 +259,8 @@ GameObject:
   m_Component:
   - component: {fileID: 146582365976954613}
   - component: {fileID: 6178925463495704729}
-  m_Layer: 0
+  - component: {fileID: 8098348298472188186}
+  m_Layer: 15
   m_Name: Building4vI
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -299,9 +300,28 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   buildingData:
     Id: 0
-    xPlace: 0
-    zPlace: 0
     points: 00000100000000010000000001000000000100000000000000
+--- !u!65 &8098348298472188186
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3117728376025562796}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 1, y: 1, z: 4}
+  m_Center: {x: 0, y: 0, z: -0.5}
 --- !u!1 &4132523878050298728
 GameObject:
   m_ObjectHideFlags: 0
