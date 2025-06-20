@@ -7,10 +7,9 @@ public class GridMapEditor : Editor
 {
     public override void OnInspectorGUI()
     {
-        GridMap gridMap = target as GridMap;
-        
         this.DrawDefaultInspector();
         
+        GridMap gridMap = target as GridMap;
         GUILayout.BeginHorizontal();
         GUILayout.Label("xLength");
         gridMap.gridData.xLength = EditorGUILayout.IntSlider(gridMap.gridData.xLength, 16, 96);

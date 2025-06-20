@@ -7,13 +7,14 @@ public class GridBuilder : MonoBehaviour
     [SerializeField] public GridMap gridMap;
     [SerializeField] public float raycastDistance = 1000.0f;
     
-    private Building placingBuilding;
-    private Vector3Int placingIndex;
-    private Vector3 placingOffset;
-
-    private int dragFingerId = -1;
-    private Vector2 dragPosition;
+    private Building dragBuilding;
+    private Vector3Int dragIndex;
+    private Vector3 dragOffset;
     
+#if !UNITY_EDITOR
+    private int dragFingerId = -1;
+#endif
+
     private void Awake()
     {
         if (this.rayCamera == null)
@@ -69,16 +70,16 @@ public class GridBuilder : MonoBehaviour
     
     private bool OnTouchBegin(Vector3 touchPosition)
     {
-        if (!placingBuilding)
+        if (!this.dragBuilding)
         {
             if (RaycastTarget(touchPosition, out var pos, out var target))
             {
-                placingBuilding = target.GetComponent<Building>();
-                if (placingBuilding)
+                this.dragBuilding = target.GetComponent<Building>();
+                if (this.dragBuilding)
                 {
-                    Vector3 position = placingBuilding.transform.position;
-                    placingIndex = gridMap.ConvertToIndex(position);
-                    placingOffset = position - pos;
+                    Vector3 position = this.dragBuilding.transform.position;
+                    this.dragIndex = gridMap.ConvertToIndex(position);
+                    this.dragOffset = position - pos;
                     return true;
                 }
             }
@@ -88,32 +89,32 @@ public class GridBuilder : MonoBehaviour
 
     private void OnTouchMove(Vector3 touchPosition)
     {
-        if (placingBuilding)
+        if (this.dragBuilding)
         {
             if (RaycastTerrain(touchPosition, out Vector3 pos))
             {
-                Vector3Int index = gridMap.ConvertToIndex(pos + placingOffset);
-                placingBuilding.transform.position = gridMap.GetCellPositionCenter(index.x, index.z);
+                Vector3Int index = gridMap.ConvertToIndex(pos + this.dragOffset);
+                this.dragBuilding.transform.position = gridMap.GetCellPositionCenter(index.x, index.z);
             }
         }
     }
 
     private void OnTouchEnd(Vector3 touchPosition)
     {
-        if (placingBuilding)
+        if (this.dragBuilding)
         {
             if (RaycastTerrain(touchPosition, out Vector3 pos))
             {
-                Vector3Int index = gridMap.ConvertToIndex(pos + placingOffset);
-                if (index != placingIndex && gridMap.gridData.CanPut(index.x, index.z, placingBuilding.buildingData)) {
-                    gridMap.gridData.Take(placingIndex.x, placingIndex.z, placingBuilding.buildingData);
-                    gridMap.gridData.Put(index.x, index.z, placingBuilding.buildingData);
-                    placingBuilding.transform.position = gridMap.GetCellPositionCenter(index.x, index.z);
+                Vector3Int index = gridMap.ConvertToIndex(pos + this.dragOffset);
+                if (index != this.dragIndex && gridMap.gridData.CanPut(index.x, index.z, this.dragBuilding.buildingData)) {
+                    gridMap.gridData.Take(this.dragIndex.x, this.dragIndex.z, this.dragBuilding.buildingData);
+                    gridMap.gridData.Put(index.x, index.z, this.dragBuilding.buildingData);
+                    this.dragBuilding.transform.position = gridMap.GetCellPositionCenter(index.x, index.z);
                 }
                 else {
-                    placingBuilding.transform.position = gridMap.GetCellPositionCenter(placingIndex.x, placingIndex.z);
+                    this.dragBuilding.transform.position = gridMap.GetCellPositionCenter(this.dragIndex.x, this.dragIndex.z);
                 }
-                placingBuilding = null;
+                this.dragBuilding = null;
             }
         }
     }

@@ -7,10 +7,9 @@ public class BuildingEditor : Editor
 {
     public override void OnInspectorGUI()
     {
-        Building building = target as Building;
-        
         this.DrawDefaultInspector();
         
+        Building building = target as Building;
         GUILayout.Label($"Id({building.buildingData.Id})  Shape", EditorStyles.boldLabel);
         for (int z = BuildingData.height - 1; z >= 0; z--)
         {

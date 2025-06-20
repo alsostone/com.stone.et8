@@ -1,0 +1,16 @@
+{
+    "name": "GridBuilder.View",
+    "rootNamespace": "ST.GridBuilder",
+    "references": [
+        "GUID:250538599349741c5b1d7dafcd7deb38"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}
