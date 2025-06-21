@@ -22,6 +22,11 @@ namespace ET
                 Building building = go.GetComponent<Building>();
                 gridBuilder.SetPlacementBuilding(building);
             }
+
+            if (Input.GetKeyDown(KeyCode.Space))
+            {
+                gridBuilder.RotationPlacementBuilding();
+            }
         }
     }
 }

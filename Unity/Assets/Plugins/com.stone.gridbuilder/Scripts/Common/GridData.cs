@@ -49,19 +49,45 @@ public class GridData
         return ++currentGuid;
     }
     
-    public bool TryPut(int x, int z, BuildingData buildingData)
+    public bool CanTake(BuildingData buildingData)
     {
-        if (!CanPut(x, z, buildingData))
-            return false;
-        Put(x, z, buildingData);
+        for (int x1 = 0; x1 < BuildingData.width; x1++) {
+            for (int z1 = 0; z1 < BuildingData.height; z1++) {
+                if (buildingData.points[x1 + z1 * BuildingData.width])
+                {
+                    int x2 = buildingData.x + x1 - BuildingData.xOffset;
+                    int z2 = buildingData.z + z1 - BuildingData.zOffset;
+                    if (!CheckInside(x2, z2)) {
+                        return false;
+                    }
+                    CellData data = cells[x2 + z2 * xLength];
+                    if (data.contentIds.Count == 0) {
+                        return false;
+                    }
+                    if (data.contentIds[^1] != buildingData.Id) {
+                        return false;
+                    }
+                }
+            }
+        }
         return true;
     }
     
-    public bool CanPut(int x, int z)
+    public void Take(BuildingData buildingData)
     {
-        return !cells[x + z * xLength].isFill;
+        for (int x1 = 0; x1 < BuildingData.width; x1++) {
+            for (int z1 = 0; z1 < BuildingData.height; z1++) {
+                if (buildingData.points[x1 + z1 * BuildingData.width])
+                {
+                    int x2 = buildingData.x + x1 - BuildingData.xOffset;
+                    int z2 = buildingData.z + z1 - BuildingData.zOffset;
+                    CellData cellData = cells[x2 + z2 * xLength];
+                    cellData.contentIds.Remove(buildingData.Id);
+                }
+            }
+        }
     }
-    
+
     public bool CanPut(int x, int z, BuildingData buildingData)
     {
         int level = -1;
@@ -79,9 +105,14 @@ public class GridData
                         return false;
                     }
 
+                    int count = data.contentIds.Count;
+                    if (data.contentIds.IndexOf(buildingData.Id) != -1) {
+                        count = count - 1;
+                    }
+
                     if (level == -1) {
-                        level = data.contentIds.Count;
-                    } else if (data.contentIds.Count != level) {
+                        level = count;
+                    } else if (count != level) {
                         return false;
                     }
                 }
@@ -128,45 +159,6 @@ public class GridData
             }
         }
         return level;
-    }
-    
-    public bool CanTake(BuildingData buildingData)
-    {
-        for (int x1 = 0; x1 < BuildingData.width; x1++) {
-            for (int z1 = 0; z1 < BuildingData.height; z1++) {
-                if (buildingData.points[x1 + z1 * BuildingData.width])
-                {
-                    int x2 = buildingData.x + x1 - BuildingData.xOffset;
-                    int z2 = buildingData.z + z1 - BuildingData.zOffset;
-                    if (!CheckInside(x2, z2)) {
-                        return false;
-                    }
-                    CellData data = cells[x2 + z2 * xLength];
-                    if (data.contentIds.Count == 0) {
-                        return false;
-                    }
-                    if (data.contentIds[^1] != buildingData.Id) {
-                        return false;
-                    }
-                }
-            }
-        }
-        return true;
-    }
-    
-    public void Take(BuildingData buildingData)
-    {
-        for (int x1 = 0; x1 < BuildingData.width; x1++) {
-            for (int z1 = 0; z1 < BuildingData.height; z1++) {
-                if (buildingData.points[x1 + z1 * BuildingData.width])
-                {
-                    int x2 = buildingData.x + x1 - BuildingData.xOffset;
-                    int z2 = buildingData.z + z1 - BuildingData.zOffset;
-                    CellData cellData = cells[x2 + z2 * xLength];
-                    cellData.contentIds.Remove(buildingData.Id);
-                }
-            }
-        }
     }
     
     public void SetObstacle(int x, int z, bool isObstacle)

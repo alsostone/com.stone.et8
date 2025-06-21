@@ -170,6 +170,21 @@ public class GridBuilder : MonoBehaviour
             dragOffset = Vector3.zero;
         }
     }
+
+    public void RotationPlacementBuilding()
+    {
+        if (dragBuilding)
+        {
+            if (isNewBuilding)
+            {
+                dragBuilding.Rotation(1);
+            }
+            else
+            {
+                Debug.LogWarning("Cannot rotate a building that is already placed.");
+            }
+        }
+    }
     
     public bool RaycastTerrain(Vector3 position, out Vector3 pos)
     {

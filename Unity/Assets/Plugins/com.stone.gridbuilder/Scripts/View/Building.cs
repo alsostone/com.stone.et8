@@ -2,6 +2,7 @@ using UnityEngine;
 
 public class Building : MonoBehaviour
 {
+    [SerializeField, Range(0.1f, 1.0f)] public float putHeight = 0.5f;
     [SerializeField, Range(0.1f, 1.0f)] public float takeHeight = 0.5f;
     [SerializeField, HideInInspector] public BuildingData buildingData = new();
 
@@ -19,12 +20,18 @@ public class Building : MonoBehaviour
     
     public void SetMovePosition(Vector3 pos)
     {
-        transform.position = pos + new Vector3(0, takeHeight, 0);
+        transform.position = pos + new Vector3(0, putHeight + takeHeight, 0);
     }
     
     public void SetPutPosition(Vector3 pos)
     {
-        transform.position = pos;
+        transform.position = pos + new Vector3(0, putHeight, 0);
+    }
+
+    public void Rotation(int r)
+    {
+        buildingData.Rotation(r);
+        transform.rotation = Quaternion.Euler(0, buildingData.rotation * 90, 0);
     }
 
     public void Remove()

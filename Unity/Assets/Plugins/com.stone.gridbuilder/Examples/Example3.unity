@@ -129,22 +129,22 @@ PrefabInstance:
   serializedVersion: 2
   m_Modification:
     serializedVersion: 3
-    m_TransformParent: {fileID: 0}
+    m_TransformParent: {fileID: 1637333463}
     m_Modifications:
     - target: {fileID: 146582365976954613, guid: dc83affa9d6044736a8613cc17a98906,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 17.82
+      value: 0.4300003
       objectReference: {fileID: 0}
     - target: {fileID: 146582365976954613, guid: dc83affa9d6044736a8613cc17a98906,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0
+      value: 2.7396173
       objectReference: {fileID: 0}
     - target: {fileID: 146582365976954613, guid: dc83affa9d6044736a8613cc17a98906,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: 5.71
+      value: -5.61
       objectReference: {fileID: 0}
     - target: {fileID: 146582365976954613, guid: dc83affa9d6044736a8613cc17a98906,
         type: 3}
@@ -154,17 +154,17 @@ PrefabInstance:
     - target: {fileID: 146582365976954613, guid: dc83affa9d6044736a8613cc17a98906,
         type: 3}
       propertyPath: m_LocalRotation.x
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 146582365976954613, guid: dc83affa9d6044736a8613cc17a98906,
         type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 146582365976954613, guid: dc83affa9d6044736a8613cc17a98906,
         type: 3}
       propertyPath: m_LocalRotation.z
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 146582365976954613, guid: dc83affa9d6044736a8613cc17a98906,
         type: 3}
@@ -193,14 +193,30 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6178925463495704729, guid: dc83affa9d6044736a8613cc17a98906,
         type: 3}
+      propertyPath: buildingData.x
+      value: 11
+      objectReference: {fileID: 0}
+    - target: {fileID: 6178925463495704729, guid: dc83affa9d6044736a8613cc17a98906,
+        type: 3}
+      propertyPath: buildingData.z
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 6178925463495704729, guid: dc83affa9d6044736a8613cc17a98906,
+        type: 3}
       propertyPath: buildingData.Id
-      value: 1
+      value: 2
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: dc83affa9d6044736a8613cc17a98906, type: 3}
+--- !u!4 &115378939 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 146582365976954613, guid: dc83affa9d6044736a8613cc17a98906,
+    type: 3}
+  m_PrefabInstance: {fileID: 115378938}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &130391013
 GameObject:
   m_ObjectHideFlags: 0
@@ -299,12 +315,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 130391013}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 19.36, y: 0, z: 16}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 2.2438946, y: 2.2396173, z: 4.930561}
   m_LocalScale: {x: 5.6, y: 1, z: 2.79}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 0}
+  m_Father: {fileID: 1314852557}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &474482160
 GameObject:
@@ -404,22 +420,22 @@ PrefabInstance:
   serializedVersion: 2
   m_Modification:
     serializedVersion: 3
-    m_TransformParent: {fileID: 0}
+    m_TransformParent: {fileID: 1637333463}
     m_Modifications:
     - target: {fileID: 146582365976954613, guid: e540eeeea90fd4808be148374b95dd0c,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 21.82
+      value: 4.4300003
       objectReference: {fileID: 0}
     - target: {fileID: 146582365976954613, guid: e540eeeea90fd4808be148374b95dd0c,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0
+      value: 2.7396173
       objectReference: {fileID: 0}
     - target: {fileID: 146582365976954613, guid: e540eeeea90fd4808be148374b95dd0c,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: 5.71
+      value: -5.61
       objectReference: {fileID: 0}
     - target: {fileID: 146582365976954613, guid: e540eeeea90fd4808be148374b95dd0c,
         type: 3}
@@ -429,17 +445,17 @@ PrefabInstance:
     - target: {fileID: 146582365976954613, guid: e540eeeea90fd4808be148374b95dd0c,
         type: 3}
       propertyPath: m_LocalRotation.x
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 146582365976954613, guid: e540eeeea90fd4808be148374b95dd0c,
         type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 146582365976954613, guid: e540eeeea90fd4808be148374b95dd0c,
         type: 3}
       propertyPath: m_LocalRotation.z
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 146582365976954613, guid: e540eeeea90fd4808be148374b95dd0c,
         type: 3}
@@ -468,14 +484,30 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6178925463495704729, guid: e540eeeea90fd4808be148374b95dd0c,
         type: 3}
+      propertyPath: buildingData.x
+      value: 15
+      objectReference: {fileID: 0}
+    - target: {fileID: 6178925463495704729, guid: e540eeeea90fd4808be148374b95dd0c,
+        type: 3}
+      propertyPath: buildingData.z
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 6178925463495704729, guid: e540eeeea90fd4808be148374b95dd0c,
+        type: 3}
       propertyPath: buildingData.Id
-      value: 2
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e540eeeea90fd4808be148374b95dd0c, type: 3}
+--- !u!4 &546281612 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 146582365976954613, guid: e540eeeea90fd4808be148374b95dd0c,
+    type: 3}
+  m_PrefabInstance: {fileID: 546281611}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &587429043
 GameObject:
   m_ObjectHideFlags: 0
@@ -574,12 +606,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 587429043}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 12.58, y: 0, z: 9.85}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -4.536106, y: 2.2396173, z: -1.2194386}
   m_LocalScale: {x: 2, y: 1, z: 2}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 0}
+  m_Father: {fileID: 1314852557}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &949307946
 GameObject:
@@ -607,7 +639,7 @@ MeshFilter:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 949307946}
-  m_Mesh: {fileID: 1854541368}
+  m_Mesh: {fileID: 1459548005}
 --- !u!23 &949307948
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -720,1846 +752,926 @@ MonoBehaviour:
     zLength: 20
     cellSize: 1
     cells:
-    - buildingId: 0
+    - contentIds: 
       isObstacle: 1
-      x: 0
-      z: 0
-    - buildingId: 0
+    - contentIds: 
       isObstacle: 1
-      x: 1
-      z: 0
-    - buildingId: 0
+    - contentIds: 
       isObstacle: 0
-      x: 2
-      z: 0
-    - buildingId: 0
+    - contentIds: 
       isObstacle: 0
-      x: 3
-      z: 0
-    - buildingId: 0
+    - contentIds: 
       isObstacle: 0
-      x: 4
-      z: 0
-    - buildingId: 0
+    - contentIds: 
       isObstacle: 0
-      x: 5
-      z: 0
-    - buildingId: 0
+    - contentIds: 
       isObstacle: 0
-      x: 6
-      z: 0
-    - buildingId: 0
+    - contentIds: 
       isObstacle: 0
-      x: 7
-      z: 0
-    - buildingId: 0
+    - contentIds: 
       isObstacle: 0
-      x: 8
-      z: 0
-    - buildingId: 0
+    - contentIds: 
       isObstacle: 0
-      x: 9
-      z: 0
-    - buildingId: 0
+    - contentIds: 
       isObstacle: 0
-      x: 10
-      z: 0
-    - buildingId: 0
+    - contentIds: 
       isObstacle: 0
-      x: 11
-      z: 0
-    - buildingId: 0
+    - contentIds: 
       isObstacle: 0
-      x: 12
-      z: 0
-    - buildingId: 0
+    - contentIds: 
       isObstacle: 0
-      x: 13
-      z: 0
-    - buildingId: 0
+    - contentIds: 
       isObstacle: 0
-      x: 14
-      z: 0
-    - buildingId: 0
+    - contentIds: 
       isObstacle: 0
-      x: 15
-      z: 0
-    - buildingId: 0
+    - contentIds: 
       isObstacle: 0
-      x: 16
-      z: 0
-    - buildingId: 0
+    - contentIds: 
       isObstacle: 0
-      x: 17
-      z: 0
-    - buildingId: 0
+    - contentIds: 
       isObstacle: 0
-      x: 18
-      z: 0
-    - buildingId: 0
+    - contentIds: 
       isObstacle: 0
-      x: 19
-      z: 0
-    - buildingId: 0
+    - contentIds: 
       isObstacle: 0
-      x: 20
-      z: 0
-    - buildingId: 0
+    - contentIds: 
       isObstacle: 0
-      x: 21
-      z: 0
-    - buildingId: 0
+    - contentIds: 
       isObstacle: 0
-      x: 22
-      z: 0
-    - buildingId: 0
+    - contentIds: 
       isObstacle: 1
-      x: 0
-      z: 1
-    - buildingId: 0
+    - contentIds: 
       isObstacle: 1
-      x: 1
-      z: 1
-    - buildingId: 0
-      isObstacle: 0
-      x: 2
-      z: 1
-    - buildingId: 0
-      isObstacle: 0
-      x: 3
-      z: 1
-    - buildingId: 0
-      isObstacle: 0
-      x: 4
-      z: 1
-    - buildingId: 0
-      isObstacle: 0
-      x: 5
-      z: 1
-    - buildingId: 0
-      isObstacle: 0
-      x: 6
-      z: 1
-    - buildingId: 0
-      isObstacle: 0
-      x: 7
-      z: 1
-    - buildingId: 0
-      isObstacle: 0
-      x: 8
-      z: 1
-    - buildingId: 0
-      isObstacle: 0
-      x: 9
-      z: 1
-    - buildingId: 0
-      isObstacle: 0
-      x: 10
-      z: 1
-    - buildingId: 0
-      isObstacle: 0
-      x: 11
-      z: 1
-    - buildingId: 0
-      isObstacle: 0
-      x: 12
-      z: 1
-    - buildingId: 0
-      isObstacle: 0
-      x: 13
-      z: 1
-    - buildingId: 0
-      isObstacle: 0
-      x: 14
-      z: 1
-    - buildingId: 0
-      isObstacle: 0
-      x: 15
-      z: 1
-    - buildingId: 0
-      isObstacle: 0
-      x: 16
-      z: 1
-    - buildingId: 0
-      isObstacle: 0
-      x: 17
-      z: 1
-    - buildingId: 0
-      isObstacle: 0
-      x: 18
-      z: 1
-    - buildingId: 0
-      isObstacle: 0
-      x: 19
-      z: 1
-    - buildingId: 0
-      isObstacle: 0
-      x: 20
-      z: 1
-    - buildingId: 0
-      isObstacle: 0
-      x: 21
-      z: 1
-    - buildingId: 0
-      isObstacle: 0
-      x: 22
-      z: 1
-    - buildingId: 0
-      isObstacle: 0
-      x: 0
-      z: 2
-    - buildingId: 0
-      isObstacle: 0
-      x: 1
-      z: 2
-    - buildingId: 0
-      isObstacle: 0
-      x: 2
-      z: 2
-    - buildingId: 0
-      isObstacle: 0
-      x: 3
-      z: 2
-    - buildingId: 0
-      isObstacle: 0
-      x: 4
-      z: 2
-    - buildingId: 0
-      isObstacle: 0
-      x: 5
-      z: 2
-    - buildingId: 3
-      isObstacle: 0
-      x: 6
-      z: 2
-    - buildingId: 0
-      isObstacle: 0
-      x: 7
-      z: 2
-    - buildingId: 0
-      isObstacle: 0
-      x: 8
-      z: 2
-    - buildingId: 0
-      isObstacle: 0
-      x: 9
-      z: 2
-    - buildingId: 0
-      isObstacle: 0
-      x: 10
-      z: 2
-    - buildingId: 0
-      isObstacle: 0
-      x: 11
-      z: 2
-    - buildingId: 0
-      isObstacle: 0
-      x: 12
-      z: 2
-    - buildingId: 0
-      isObstacle: 0
-      x: 13
-      z: 2
-    - buildingId: 0
-      isObstacle: 0
-      x: 14
-      z: 2
-    - buildingId: 0
-      isObstacle: 0
-      x: 15
-      z: 2
-    - buildingId: 0
-      isObstacle: 0
-      x: 16
-      z: 2
-    - buildingId: 0
-      isObstacle: 0
-      x: 17
-      z: 2
-    - buildingId: 0
-      isObstacle: 0
-      x: 18
-      z: 2
-    - buildingId: 0
-      isObstacle: 0
-      x: 19
-      z: 2
-    - buildingId: 0
-      isObstacle: 0
-      x: 20
-      z: 2
-    - buildingId: 0
-      isObstacle: 0
-      x: 21
-      z: 2
-    - buildingId: 0
-      isObstacle: 0
-      x: 22
-      z: 2
-    - buildingId: 0
-      isObstacle: 0
-      x: 0
-      z: 3
-    - buildingId: 0
-      isObstacle: 0
-      x: 1
-      z: 3
-    - buildingId: 0
-      isObstacle: 0
-      x: 2
-      z: 3
-    - buildingId: 0
-      isObstacle: 0
-      x: 3
-      z: 3
-    - buildingId: 0
-      isObstacle: 0
-      x: 4
-      z: 3
-    - buildingId: 0
-      isObstacle: 0
-      x: 5
-      z: 3
-    - buildingId: 3
-      isObstacle: 0
-      x: 6
-      z: 3
-    - buildingId: 0
-      isObstacle: 0
-      x: 7
-      z: 3
-    - buildingId: 0
-      isObstacle: 0
-      x: 8
-      z: 3
-    - buildingId: 0
-      isObstacle: 0
-      x: 9
-      z: 3
-    - buildingId: 0
-      isObstacle: 0
-      x: 10
-      z: 3
-    - buildingId: 0
-      isObstacle: 0
-      x: 11
-      z: 3
-    - buildingId: 0
-      isObstacle: 0
-      x: 12
-      z: 3
-    - buildingId: 0
-      isObstacle: 0
-      x: 13
-      z: 3
-    - buildingId: 0
-      isObstacle: 0
-      x: 14
-      z: 3
-    - buildingId: 2
-      isObstacle: 0
-      x: 15
-      z: 3
-    - buildingId: 0
-      isObstacle: 0
-      x: 16
-      z: 3
-    - buildingId: 0
-      isObstacle: 0
-      x: 17
-      z: 3
-    - buildingId: 0
-      isObstacle: 0
-      x: 18
-      z: 3
-    - buildingId: 0
-      isObstacle: 0
-      x: 19
-      z: 3
-    - buildingId: 0
-      isObstacle: 0
-      x: 20
-      z: 3
-    - buildingId: 0
-      isObstacle: 0
-      x: 21
-      z: 3
-    - buildingId: 0
-      isObstacle: 0
-      x: 22
-      z: 3
-    - buildingId: 0
-      isObstacle: 0
-      x: 0
-      z: 4
-    - buildingId: 0
-      isObstacle: 0
-      x: 1
-      z: 4
-    - buildingId: 0
-      isObstacle: 0
-      x: 2
-      z: 4
-    - buildingId: 0
-      isObstacle: 0
-      x: 3
-      z: 4
-    - buildingId: 0
-      isObstacle: 0
-      x: 4
-      z: 4
-    - buildingId: 3
-      isObstacle: 0
-      x: 5
-      z: 4
-    - buildingId: 3
-      isObstacle: 0
-      x: 6
-      z: 4
-    - buildingId: 3
-      isObstacle: 0
-      x: 7
-      z: 4
-    - buildingId: 0
-      isObstacle: 0
-      x: 8
-      z: 4
-    - buildingId: 0
-      isObstacle: 0
-      x: 9
-      z: 4
-    - buildingId: 0
-      isObstacle: 0
-      x: 10
-      z: 4
-    - buildingId: 0
-      isObstacle: 0
-      x: 11
-      z: 4
-    - buildingId: 0
-      isObstacle: 0
-      x: 12
-      z: 4
-    - buildingId: 0
-      isObstacle: 0
-      x: 13
-      z: 4
-    - buildingId: 0
-      isObstacle: 0
-      x: 14
-      z: 4
-    - buildingId: 2
-      isObstacle: 0
-      x: 15
-      z: 4
-    - buildingId: 0
-      isObstacle: 0
-      x: 16
-      z: 4
-    - buildingId: 0
-      isObstacle: 0
-      x: 17
-      z: 4
-    - buildingId: 0
-      isObstacle: 0
-      x: 18
-      z: 4
-    - buildingId: 0
-      isObstacle: 0
-      x: 19
-      z: 4
-    - buildingId: 0
-      isObstacle: 0
-      x: 20
-      z: 4
-    - buildingId: 0
-      isObstacle: 0
-      x: 21
-      z: 4
-    - buildingId: 0
-      isObstacle: 0
-      x: 22
-      z: 4
-    - buildingId: 0
-      isObstacle: 0
-      x: 0
-      z: 5
-    - buildingId: 0
-      isObstacle: 0
-      x: 1
-      z: 5
-    - buildingId: 0
-      isObstacle: 0
-      x: 2
-      z: 5
-    - buildingId: 0
-      isObstacle: 0
-      x: 3
-      z: 5
-    - buildingId: 0
-      isObstacle: 0
-      x: 4
-      z: 5
-    - buildingId: 0
-      isObstacle: 0
-      x: 5
-      z: 5
-    - buildingId: 0
-      isObstacle: 0
-      x: 6
-      z: 5
-    - buildingId: 0
-      isObstacle: 0
-      x: 7
-      z: 5
-    - buildingId: 0
-      isObstacle: 0
-      x: 8
-      z: 5
-    - buildingId: 1
-      isObstacle: 0
-      x: 9
-      z: 5
-    - buildingId: 1
-      isObstacle: 0
-      x: 10
-      z: 5
-    - buildingId: 1
-      isObstacle: 0
-      x: 11
-      z: 5
-    - buildingId: 1
-      isObstacle: 0
-      x: 12
-      z: 5
-    - buildingId: 0
-      isObstacle: 0
-      x: 13
-      z: 5
-    - buildingId: 0
-      isObstacle: 0
-      x: 14
-      z: 5
-    - buildingId: 2
-      isObstacle: 0
-      x: 15
-      z: 5
-    - buildingId: 0
-      isObstacle: 0
-      x: 16
-      z: 5
-    - buildingId: 0
-      isObstacle: 0
-      x: 17
-      z: 5
-    - buildingId: 0
-      isObstacle: 0
-      x: 18
-      z: 5
-    - buildingId: 0
-      isObstacle: 0
-      x: 19
-      z: 5
-    - buildingId: 0
-      isObstacle: 0
-      x: 20
-      z: 5
-    - buildingId: 0
-      isObstacle: 0
-      x: 21
-      z: 5
-    - buildingId: 0
-      isObstacle: 0
-      x: 22
-      z: 5
-    - buildingId: 0
-      isObstacle: 0
-      x: 0
-      z: 6
-    - buildingId: 0
-      isObstacle: 0
-      x: 1
-      z: 6
-    - buildingId: 0
-      isObstacle: 0
-      x: 2
-      z: 6
-    - buildingId: 0
-      isObstacle: 0
-      x: 3
-      z: 6
-    - buildingId: 0
-      isObstacle: 0
-      x: 4
-      z: 6
-    - buildingId: 0
-      isObstacle: 0
-      x: 5
-      z: 6
-    - buildingId: 0
-      isObstacle: 0
-      x: 6
-      z: 6
-    - buildingId: 0
-      isObstacle: 0
-      x: 7
-      z: 6
-    - buildingId: 0
-      isObstacle: 0
-      x: 8
-      z: 6
-    - buildingId: 0
-      isObstacle: 0
-      x: 9
-      z: 6
-    - buildingId: 0
-      isObstacle: 0
-      x: 10
-      z: 6
-    - buildingId: 0
-      isObstacle: 0
-      x: 11
-      z: 6
-    - buildingId: 0
-      isObstacle: 0
-      x: 12
-      z: 6
-    - buildingId: 0
-      isObstacle: 0
-      x: 13
-      z: 6
-    - buildingId: 0
-      isObstacle: 0
-      x: 14
-      z: 6
-    - buildingId: 2
-      isObstacle: 0
-      x: 15
-      z: 6
-    - buildingId: 0
-      isObstacle: 0
-      x: 16
-      z: 6
-    - buildingId: 0
-      isObstacle: 0
-      x: 17
-      z: 6
-    - buildingId: 0
-      isObstacle: 0
-      x: 18
-      z: 6
-    - buildingId: 0
-      isObstacle: 0
-      x: 19
-      z: 6
-    - buildingId: 0
-      isObstacle: 0
-      x: 20
-      z: 6
-    - buildingId: 0
-      isObstacle: 0
-      x: 21
-      z: 6
-    - buildingId: 0
-      isObstacle: 0
-      x: 22
-      z: 6
-    - buildingId: 0
-      isObstacle: 0
-      x: 0
-      z: 7
-    - buildingId: 0
-      isObstacle: 0
-      x: 1
-      z: 7
-    - buildingId: 0
-      isObstacle: 0
-      x: 2
-      z: 7
-    - buildingId: 0
-      isObstacle: 0
-      x: 3
-      z: 7
-    - buildingId: 0
-      isObstacle: 0
-      x: 4
-      z: 7
-    - buildingId: 0
-      isObstacle: 0
-      x: 5
-      z: 7
-    - buildingId: 0
-      isObstacle: 0
-      x: 6
-      z: 7
-    - buildingId: 0
-      isObstacle: 0
-      x: 7
-      z: 7
-    - buildingId: 0
-      isObstacle: 0
-      x: 8
-      z: 7
-    - buildingId: 0
-      isObstacle: 0
-      x: 9
-      z: 7
-    - buildingId: 0
-      isObstacle: 0
-      x: 10
-      z: 7
-    - buildingId: 0
-      isObstacle: 0
-      x: 11
-      z: 7
-    - buildingId: 0
-      isObstacle: 0
-      x: 12
-      z: 7
-    - buildingId: 0
-      isObstacle: 0
-      x: 13
-      z: 7
-    - buildingId: 0
-      isObstacle: 0
-      x: 14
-      z: 7
-    - buildingId: 0
-      isObstacle: 0
-      x: 15
-      z: 7
-    - buildingId: 0
-      isObstacle: 0
-      x: 16
-      z: 7
-    - buildingId: 0
-      isObstacle: 0
-      x: 17
-      z: 7
-    - buildingId: 0
-      isObstacle: 0
-      x: 18
-      z: 7
-    - buildingId: 0
-      isObstacle: 0
-      x: 19
-      z: 7
-    - buildingId: 0
-      isObstacle: 0
-      x: 20
-      z: 7
-    - buildingId: 0
-      isObstacle: 0
-      x: 21
-      z: 7
-    - buildingId: 0
-      isObstacle: 0
-      x: 22
-      z: 7
-    - buildingId: 0
-      isObstacle: 0
-      x: 0
-      z: 8
-    - buildingId: 0
-      isObstacle: 0
-      x: 1
-      z: 8
-    - buildingId: 0
-      isObstacle: 0
-      x: 2
-      z: 8
-    - buildingId: 0
-      isObstacle: 0
-      x: 3
-      z: 8
-    - buildingId: 0
-      isObstacle: 0
-      x: 4
-      z: 8
-    - buildingId: 0
+    - contentIds: 
+      isObstacle: 0
+    - contentIds: 
+      isObstacle: 0
+    - contentIds: 
+      isObstacle: 0
+    - contentIds: 
+      isObstacle: 0
+    - contentIds: 
+      isObstacle: 0
+    - contentIds: 
+      isObstacle: 0
+    - contentIds: 
+      isObstacle: 0
+    - contentIds: 
+      isObstacle: 0
+    - contentIds: 
+      isObstacle: 0
+    - contentIds: 
+      isObstacle: 0
+    - contentIds: 
+      isObstacle: 0
+    - contentIds: 
+      isObstacle: 0
+    - contentIds: 
+      isObstacle: 0
+    - contentIds: 
+      isObstacle: 0
+    - contentIds: 
+      isObstacle: 0
+    - contentIds: 
+      isObstacle: 0
+    - contentIds: 
+      isObstacle: 0
+    - contentIds: 
+      isObstacle: 0
+    - contentIds: 
+      isObstacle: 0
+    - contentIds: 
+      isObstacle: 0
+    - contentIds: 
+      isObstacle: 0
+    - contentIds: 
+      isObstacle: 0
+    - contentIds: 
+      isObstacle: 0
+    - contentIds: 
+      isObstacle: 0
+    - contentIds: 
+      isObstacle: 0
+    - contentIds: 
+      isObstacle: 0
+    - contentIds: 
+      isObstacle: 0
+    - contentIds: 0300000000000000
+      isObstacle: 0
+    - contentIds: 
+      isObstacle: 0
+    - contentIds: 
+      isObstacle: 0
+    - contentIds: 
+      isObstacle: 0
+    - contentIds: 
+      isObstacle: 0
+    - contentIds: 
+      isObstacle: 0
+    - contentIds: 
+      isObstacle: 0
+    - contentIds: 
+      isObstacle: 0
+    - contentIds: 
+      isObstacle: 0
+    - contentIds: 
+      isObstacle: 0
+    - contentIds: 
+      isObstacle: 0
+    - contentIds: 
+      isObstacle: 0
+    - contentIds: 
+      isObstacle: 0
+    - contentIds: 
+      isObstacle: 0
+    - contentIds: 
+      isObstacle: 0
+    - contentIds: 
+      isObstacle: 0
+    - contentIds: 
+      isObstacle: 0
+    - contentIds: 
+      isObstacle: 0
+    - contentIds: 
+      isObstacle: 0
+    - contentIds: 
+      isObstacle: 0
+    - contentIds: 
+      isObstacle: 0
+    - contentIds: 
+      isObstacle: 0
+    - contentIds: 
+      isObstacle: 0
+    - contentIds: 0300000000000000
+      isObstacle: 0
+    - contentIds: 
+      isObstacle: 0
+    - contentIds: 
+      isObstacle: 0
+    - contentIds: 
+      isObstacle: 0
+    - contentIds: 
+      isObstacle: 0
+    - contentIds: 
+      isObstacle: 0
+    - contentIds: 
+      isObstacle: 0
+    - contentIds: 
+      isObstacle: 0
+    - contentIds: 
+      isObstacle: 0
+    - contentIds: 0100000000000000
+      isObstacle: 0
+    - contentIds: 
+      isObstacle: 0
+    - contentIds: 
+      isObstacle: 0
+    - contentIds: 
+      isObstacle: 0
+    - contentIds: 
+      isObstacle: 0
+    - contentIds: 
+      isObstacle: 0
+    - contentIds: 
+      isObstacle: 0
+    - contentIds: 
+      isObstacle: 0
+    - contentIds: 
+      isObstacle: 0
+    - contentIds: 
+      isObstacle: 0
+    - contentIds: 
+      isObstacle: 0
+    - contentIds: 
+      isObstacle: 0
+    - contentIds: 
+      isObstacle: 0
+    - contentIds: 0300000000000000
+      isObstacle: 0
+    - contentIds: 0300000000000000
+      isObstacle: 0
+    - contentIds: 0300000000000000
+      isObstacle: 0
+    - contentIds: 
+      isObstacle: 0
+    - contentIds: 
+      isObstacle: 0
+    - contentIds: 
+      isObstacle: 0
+    - contentIds: 
+      isObstacle: 0
+    - contentIds: 
+      isObstacle: 0
+    - contentIds: 
+      isObstacle: 0
+    - contentIds: 
+      isObstacle: 0
+    - contentIds: 0100000000000000
+      isObstacle: 0
+    - contentIds: 
+      isObstacle: 0
+    - contentIds: 
+      isObstacle: 0
+    - contentIds: 
+      isObstacle: 0
+    - contentIds: 
+      isObstacle: 0
+    - contentIds: 
+      isObstacle: 0
+    - contentIds: 
+      isObstacle: 0
+    - contentIds: 
+      isObstacle: 0
+    - contentIds: 
+      isObstacle: 0
+    - contentIds: 
+      isObstacle: 0
+    - contentIds: 
+      isObstacle: 0
+    - contentIds: 
+      isObstacle: 0
+    - contentIds: 
+      isObstacle: 0
+    - contentIds: 
+      isObstacle: 0
+    - contentIds: 
+      isObstacle: 0
+    - contentIds: 
+      isObstacle: 0
+    - contentIds: 
+      isObstacle: 0
+    - contentIds: 0200000000000000
+      isObstacle: 0
+    - contentIds: 0200000000000000
+      isObstacle: 0
+    - contentIds: 0200000000000000
+      isObstacle: 0
+    - contentIds: 0200000000000000
+      isObstacle: 0
+    - contentIds: 
+      isObstacle: 0
+    - contentIds: 
+      isObstacle: 0
+    - contentIds: 0100000000000000
+      isObstacle: 0
+    - contentIds: 
+      isObstacle: 0
+    - contentIds: 
+      isObstacle: 0
+    - contentIds: 
+      isObstacle: 0
+    - contentIds: 
+      isObstacle: 0
+    - contentIds: 
+      isObstacle: 0
+    - contentIds: 
+      isObstacle: 0
+    - contentIds: 
+      isObstacle: 0
+    - contentIds: 
+      isObstacle: 0
+    - contentIds: 
+      isObstacle: 0
+    - contentIds: 
+      isObstacle: 0
+    - contentIds: 
+      isObstacle: 0
+    - contentIds: 
+      isObstacle: 0
+    - contentIds: 
+      isObstacle: 0
+    - contentIds: 
+      isObstacle: 0
+    - contentIds: 
+      isObstacle: 0
+    - contentIds: 
+      isObstacle: 0
+    - contentIds: 
+      isObstacle: 0
+    - contentIds: 
+      isObstacle: 0
+    - contentIds: 
+      isObstacle: 0
+    - contentIds: 
+      isObstacle: 0
+    - contentIds: 
+      isObstacle: 0
+    - contentIds: 
+      isObstacle: 0
+    - contentIds: 0100000000000000
+      isObstacle: 0
+    - contentIds: 
+      isObstacle: 0
+    - contentIds: 
+      isObstacle: 0
+    - contentIds: 
+      isObstacle: 0
+    - contentIds: 
+      isObstacle: 0
+    - contentIds: 
+      isObstacle: 0
+    - contentIds: 
+      isObstacle: 0
+    - contentIds: 
+      isObstacle: 0
+    - contentIds: 
+      isObstacle: 0
+    - contentIds: 
+      isObstacle: 0
+    - contentIds: 
+      isObstacle: 0
+    - contentIds: 
+      isObstacle: 0
+    - contentIds: 
+      isObstacle: 0
+    - contentIds: 
+      isObstacle: 0
+    - contentIds: 
+      isObstacle: 0
+    - contentIds: 
+      isObstacle: 0
+    - contentIds: 
+      isObstacle: 0
+    - contentIds: 
+      isObstacle: 0
+    - contentIds: 
+      isObstacle: 0
+    - contentIds: 
+      isObstacle: 0
+    - contentIds: 
+      isObstacle: 0
+    - contentIds: 
+      isObstacle: 0
+    - contentIds: 
+      isObstacle: 0
+    - contentIds: 
+      isObstacle: 0
+    - contentIds: 
+      isObstacle: 0
+    - contentIds: 
+      isObstacle: 0
+    - contentIds: 
+      isObstacle: 0
+    - contentIds: 
+      isObstacle: 0
+    - contentIds: 
+      isObstacle: 0
+    - contentIds: 
+      isObstacle: 0
+    - contentIds: 
+      isObstacle: 0
+    - contentIds: 
+      isObstacle: 0
+    - contentIds: 
+      isObstacle: 0
+    - contentIds: 
+      isObstacle: 0
+    - contentIds: 
+      isObstacle: 0
+    - contentIds: 
+      isObstacle: 0
+    - contentIds: 
       isObstacle: 1
-      x: 5
-      z: 8
-    - buildingId: 0
+    - contentIds: 
       isObstacle: 1
-      x: 6
-      z: 8
-    - buildingId: 0
+    - contentIds: 
       isObstacle: 1
-      x: 7
-      z: 8
-    - buildingId: 0
+    - contentIds: 
       isObstacle: 0
-      x: 8
-      z: 8
-    - buildingId: 0
+    - contentIds: 
       isObstacle: 0
-      x: 9
-      z: 8
-    - buildingId: 0
+    - contentIds: 
       isObstacle: 0
-      x: 10
-      z: 8
-    - buildingId: 0
+    - contentIds: 
       isObstacle: 0
-      x: 11
-      z: 8
-    - buildingId: 0
+    - contentIds: 
       isObstacle: 0
-      x: 12
-      z: 8
-    - buildingId: 0
+    - contentIds: 
       isObstacle: 0
-      x: 13
-      z: 8
-    - buildingId: 0
+    - contentIds: 
       isObstacle: 0
-      x: 14
-      z: 8
-    - buildingId: 0
+    - contentIds: 
       isObstacle: 0
-      x: 15
-      z: 8
-    - buildingId: 0
+    - contentIds: 
       isObstacle: 0
-      x: 16
-      z: 8
-    - buildingId: 0
+    - contentIds: 
       isObstacle: 0
-      x: 17
-      z: 8
-    - buildingId: 0
+    - contentIds: 
       isObstacle: 0
-      x: 18
-      z: 8
-    - buildingId: 0
+    - contentIds: 
       isObstacle: 0
-      x: 19
-      z: 8
-    - buildingId: 0
+    - contentIds: 
       isObstacle: 0
-      x: 20
-      z: 8
-    - buildingId: 0
+    - contentIds: 
       isObstacle: 0
-      x: 21
-      z: 8
-    - buildingId: 0
+    - contentIds: 
       isObstacle: 0
-      x: 22
-      z: 8
-    - buildingId: 0
+    - contentIds: 
       isObstacle: 0
-      x: 0
-      z: 9
-    - buildingId: 0
+    - contentIds: 
       isObstacle: 0
-      x: 1
-      z: 9
-    - buildingId: 0
+    - contentIds: 
       isObstacle: 0
-      x: 2
-      z: 9
-    - buildingId: 0
+    - contentIds: 
       isObstacle: 0
-      x: 3
-      z: 9
-    - buildingId: 0
+    - contentIds: 
       isObstacle: 0
-      x: 4
-      z: 9
-    - buildingId: 0
+    - contentIds: 
       isObstacle: 1
-      x: 5
-      z: 9
-    - buildingId: 0
+    - contentIds: 
       isObstacle: 1
-      x: 6
-      z: 9
-    - buildingId: 0
+    - contentIds: 
       isObstacle: 1
-      x: 7
-      z: 9
-    - buildingId: 0
+    - contentIds: 
       isObstacle: 0
-      x: 8
-      z: 9
-    - buildingId: 0
+    - contentIds: 
       isObstacle: 0
-      x: 9
-      z: 9
-    - buildingId: 0
+    - contentIds: 
       isObstacle: 0
-      x: 10
-      z: 9
-    - buildingId: 0
+    - contentIds: 
       isObstacle: 0
-      x: 11
-      z: 9
-    - buildingId: 0
+    - contentIds: 
       isObstacle: 0
-      x: 12
-      z: 9
-    - buildingId: 0
+    - contentIds: 
       isObstacle: 0
-      x: 13
-      z: 9
-    - buildingId: 0
+    - contentIds: 
       isObstacle: 0
-      x: 14
-      z: 9
-    - buildingId: 0
+    - contentIds: 
       isObstacle: 0
-      x: 15
-      z: 9
-    - buildingId: 0
+    - contentIds: 
       isObstacle: 0
-      x: 16
-      z: 9
-    - buildingId: 0
+    - contentIds: 
       isObstacle: 0
-      x: 17
-      z: 9
-    - buildingId: 0
+    - contentIds: 
       isObstacle: 0
-      x: 18
-      z: 9
-    - buildingId: 0
+    - contentIds: 
       isObstacle: 0
-      x: 19
-      z: 9
-    - buildingId: 0
+    - contentIds: 
       isObstacle: 0
-      x: 20
-      z: 9
-    - buildingId: 0
+    - contentIds: 
       isObstacle: 0
-      x: 21
-      z: 9
-    - buildingId: 0
+    - contentIds: 
       isObstacle: 0
-      x: 22
-      z: 9
-    - buildingId: 0
+    - contentIds: 
       isObstacle: 0
-      x: 0
-      z: 10
-    - buildingId: 0
+    - contentIds: 
       isObstacle: 0
-      x: 1
-      z: 10
-    - buildingId: 0
+    - contentIds: 
       isObstacle: 0
-      x: 2
-      z: 10
-    - buildingId: 0
+    - contentIds: 
       isObstacle: 0
-      x: 3
-      z: 10
-    - buildingId: 0
+    - contentIds: 
       isObstacle: 0
-      x: 4
-      z: 10
-    - buildingId: 0
+    - contentIds: 
       isObstacle: 1
-      x: 5
-      z: 10
-    - buildingId: 0
+    - contentIds: 
       isObstacle: 1
-      x: 6
-      z: 10
-    - buildingId: 0
+    - contentIds: 
       isObstacle: 1
-      x: 7
-      z: 10
-    - buildingId: 0
-      isObstacle: 0
-      x: 8
-      z: 10
-    - buildingId: 0
-      isObstacle: 0
-      x: 9
-      z: 10
-    - buildingId: 0
-      isObstacle: 0
-      x: 10
-      z: 10
-    - buildingId: 0
-      isObstacle: 0
-      x: 11
-      z: 10
-    - buildingId: 0
-      isObstacle: 0
-      x: 12
-      z: 10
-    - buildingId: 0
-      isObstacle: 0
-      x: 13
-      z: 10
-    - buildingId: 0
-      isObstacle: 0
-      x: 14
-      z: 10
-    - buildingId: 0
-      isObstacle: 0
-      x: 15
-      z: 10
-    - buildingId: 0
-      isObstacle: 0
-      x: 16
-      z: 10
-    - buildingId: 0
-      isObstacle: 0
-      x: 17
-      z: 10
-    - buildingId: 0
-      isObstacle: 0
-      x: 18
-      z: 10
-    - buildingId: 0
-      isObstacle: 0
-      x: 19
-      z: 10
-    - buildingId: 0
-      isObstacle: 0
-      x: 20
-      z: 10
-    - buildingId: 0
-      isObstacle: 0
-      x: 21
-      z: 10
-    - buildingId: 0
-      isObstacle: 0
-      x: 22
-      z: 10
-    - buildingId: 0
-      isObstacle: 0
-      x: 0
-      z: 11
-    - buildingId: 0
-      isObstacle: 0
-      x: 1
-      z: 11
-    - buildingId: 0
-      isObstacle: 0
-      x: 2
-      z: 11
-    - buildingId: 0
-      isObstacle: 0
-      x: 3
-      z: 11
-    - buildingId: 0
-      isObstacle: 0
-      x: 4
-      z: 11
-    - buildingId: 0
-      isObstacle: 0
-      x: 5
-      z: 11
-    - buildingId: 0
-      isObstacle: 0
-      x: 6
-      z: 11
-    - buildingId: 0
-      isObstacle: 0
-      x: 7
-      z: 11
-    - buildingId: 0
-      isObstacle: 0
-      x: 8
-      z: 11
-    - buildingId: 0
-      isObstacle: 0
-      x: 9
-      z: 11
-    - buildingId: 0
-      isObstacle: 0
-      x: 10
-      z: 11
-    - buildingId: 0
-      isObstacle: 0
-      x: 11
-      z: 11
-    - buildingId: 0
-      isObstacle: 0
-      x: 12
-      z: 11
-    - buildingId: 0
-      isObstacle: 0
-      x: 13
-      z: 11
-    - buildingId: 0
-      isObstacle: 0
-      x: 14
-      z: 11
-    - buildingId: 0
-      isObstacle: 0
-      x: 15
-      z: 11
-    - buildingId: 0
-      isObstacle: 0
-      x: 16
-      z: 11
-    - buildingId: 0
-      isObstacle: 0
-      x: 17
-      z: 11
-    - buildingId: 0
-      isObstacle: 0
-      x: 18
-      z: 11
-    - buildingId: 0
-      isObstacle: 0
-      x: 19
-      z: 11
-    - buildingId: 0
-      isObstacle: 0
-      x: 20
-      z: 11
-    - buildingId: 0
-      isObstacle: 0
-      x: 21
-      z: 11
-    - buildingId: 0
-      isObstacle: 0
-      x: 22
-      z: 11
-    - buildingId: 0
-      isObstacle: 0
-      x: 0
-      z: 12
-    - buildingId: 0
-      isObstacle: 0
-      x: 1
-      z: 12
-    - buildingId: 0
-      isObstacle: 0
-      x: 2
-      z: 12
-    - buildingId: 0
-      isObstacle: 0
-      x: 3
-      z: 12
-    - buildingId: 0
-      isObstacle: 0
-      x: 4
-      z: 12
-    - buildingId: 0
-      isObstacle: 0
-      x: 5
-      z: 12
-    - buildingId: 0
-      isObstacle: 0
-      x: 6
-      z: 12
-    - buildingId: 0
-      isObstacle: 0
-      x: 7
-      z: 12
-    - buildingId: 0
-      isObstacle: 0
-      x: 8
-      z: 12
-    - buildingId: 0
-      isObstacle: 0
-      x: 9
-      z: 12
-    - buildingId: 0
-      isObstacle: 0
-      x: 10
-      z: 12
-    - buildingId: 0
-      isObstacle: 0
-      x: 11
-      z: 12
-    - buildingId: 0
-      isObstacle: 0
-      x: 12
-      z: 12
-    - buildingId: 0
-      isObstacle: 0
-      x: 13
-      z: 12
-    - buildingId: 0
-      isObstacle: 0
-      x: 14
-      z: 12
-    - buildingId: 0
-      isObstacle: 0
-      x: 15
-      z: 12
-    - buildingId: 0
-      isObstacle: 0
-      x: 16
-      z: 12
-    - buildingId: 0
-      isObstacle: 0
-      x: 17
-      z: 12
-    - buildingId: 0
-      isObstacle: 0
-      x: 18
-      z: 12
-    - buildingId: 0
-      isObstacle: 0
-      x: 19
-      z: 12
-    - buildingId: 0
-      isObstacle: 0
-      x: 20
-      z: 12
-    - buildingId: 0
-      isObstacle: 0
-      x: 21
-      z: 12
-    - buildingId: 0
-      isObstacle: 0
-      x: 22
-      z: 12
-    - buildingId: 0
-      isObstacle: 0
-      x: 0
-      z: 13
-    - buildingId: 0
-      isObstacle: 0
-      x: 1
-      z: 13
-    - buildingId: 0
-      isObstacle: 0
-      x: 2
-      z: 13
-    - buildingId: 0
-      isObstacle: 0
-      x: 3
-      z: 13
-    - buildingId: 0
-      isObstacle: 0
-      x: 4
-      z: 13
-    - buildingId: 0
-      isObstacle: 0
-      x: 5
-      z: 13
-    - buildingId: 0
-      isObstacle: 0
-      x: 6
-      z: 13
-    - buildingId: 0
-      isObstacle: 0
-      x: 7
-      z: 13
-    - buildingId: 0
-      isObstacle: 0
-      x: 8
-      z: 13
-    - buildingId: 0
-      isObstacle: 0
-      x: 9
-      z: 13
-    - buildingId: 0
-      isObstacle: 0
-      x: 10
-      z: 13
-    - buildingId: 0
-      isObstacle: 0
-      x: 11
-      z: 13
-    - buildingId: 0
-      isObstacle: 0
-      x: 12
-      z: 13
-    - buildingId: 0
-      isObstacle: 0
-      x: 13
-      z: 13
-    - buildingId: 0
-      isObstacle: 0
-      x: 14
-      z: 13
-    - buildingId: 0
-      isObstacle: 0
-      x: 15
-      z: 13
-    - buildingId: 0
-      isObstacle: 0
-      x: 16
-      z: 13
-    - buildingId: 0
-      isObstacle: 0
-      x: 17
-      z: 13
-    - buildingId: 0
-      isObstacle: 0
-      x: 18
-      z: 13
-    - buildingId: 0
-      isObstacle: 0
-      x: 19
-      z: 13
-    - buildingId: 0
-      isObstacle: 0
-      x: 20
-      z: 13
-    - buildingId: 0
-      isObstacle: 0
-      x: 21
-      z: 13
-    - buildingId: 0
-      isObstacle: 0
-      x: 22
-      z: 13
-    - buildingId: 0
-      isObstacle: 0
-      x: 0
-      z: 14
-    - buildingId: 0
-      isObstacle: 0
-      x: 1
-      z: 14
-    - buildingId: 0
-      isObstacle: 0
-      x: 2
-      z: 14
-    - buildingId: 0
-      isObstacle: 0
-      x: 3
-      z: 14
-    - buildingId: 0
-      isObstacle: 0
-      x: 4
-      z: 14
-    - buildingId: 0
-      isObstacle: 0
-      x: 5
-      z: 14
-    - buildingId: 0
-      isObstacle: 0
-      x: 6
-      z: 14
-    - buildingId: 0
-      isObstacle: 0
-      x: 7
-      z: 14
-    - buildingId: 0
-      isObstacle: 0
-      x: 8
-      z: 14
-    - buildingId: 0
-      isObstacle: 0
-      x: 9
-      z: 14
-    - buildingId: 0
+    - contentIds: 
+      isObstacle: 0
+    - contentIds: 
+      isObstacle: 0
+    - contentIds: 
+      isObstacle: 0
+    - contentIds: 
+      isObstacle: 0
+    - contentIds: 
+      isObstacle: 0
+    - contentIds: 
+      isObstacle: 0
+    - contentIds: 
+      isObstacle: 0
+    - contentIds: 
+      isObstacle: 0
+    - contentIds: 
+      isObstacle: 0
+    - contentIds: 
+      isObstacle: 0
+    - contentIds: 
+      isObstacle: 0
+    - contentIds: 
+      isObstacle: 0
+    - contentIds: 
+      isObstacle: 0
+    - contentIds: 
+      isObstacle: 0
+    - contentIds: 
+      isObstacle: 0
+    - contentIds: 
+      isObstacle: 0
+    - contentIds: 
+      isObstacle: 0
+    - contentIds: 
+      isObstacle: 0
+    - contentIds: 
+      isObstacle: 0
+    - contentIds: 
+      isObstacle: 0
+    - contentIds: 
+      isObstacle: 0
+    - contentIds: 
+      isObstacle: 0
+    - contentIds: 
+      isObstacle: 0
+    - contentIds: 
+      isObstacle: 0
+    - contentIds: 
+      isObstacle: 0
+    - contentIds: 
+      isObstacle: 0
+    - contentIds: 
+      isObstacle: 0
+    - contentIds: 
+      isObstacle: 0
+    - contentIds: 
+      isObstacle: 0
+    - contentIds: 
+      isObstacle: 0
+    - contentIds: 
+      isObstacle: 0
+    - contentIds: 
+      isObstacle: 0
+    - contentIds: 
+      isObstacle: 0
+    - contentIds: 
+      isObstacle: 0
+    - contentIds: 
+      isObstacle: 0
+    - contentIds: 
+      isObstacle: 0
+    - contentIds: 
+      isObstacle: 0
+    - contentIds: 
+      isObstacle: 0
+    - contentIds: 
+      isObstacle: 0
+    - contentIds: 
+      isObstacle: 0
+    - contentIds: 
+      isObstacle: 0
+    - contentIds: 
+      isObstacle: 0
+    - contentIds: 
+      isObstacle: 0
+    - contentIds: 
+      isObstacle: 0
+    - contentIds: 
+      isObstacle: 0
+    - contentIds: 
+      isObstacle: 0
+    - contentIds: 
+      isObstacle: 0
+    - contentIds: 
+      isObstacle: 0
+    - contentIds: 
+      isObstacle: 0
+    - contentIds: 
+      isObstacle: 0
+    - contentIds: 
+      isObstacle: 0
+    - contentIds: 
+      isObstacle: 0
+    - contentIds: 
+      isObstacle: 0
+    - contentIds: 
+      isObstacle: 0
+    - contentIds: 
+      isObstacle: 0
+    - contentIds: 
+      isObstacle: 0
+    - contentIds: 
+      isObstacle: 0
+    - contentIds: 
+      isObstacle: 0
+    - contentIds: 
+      isObstacle: 0
+    - contentIds: 
+      isObstacle: 0
+    - contentIds: 
+      isObstacle: 0
+    - contentIds: 
+      isObstacle: 0
+    - contentIds: 
+      isObstacle: 0
+    - contentIds: 
+      isObstacle: 0
+    - contentIds: 
+      isObstacle: 0
+    - contentIds: 
+      isObstacle: 0
+    - contentIds: 
+      isObstacle: 0
+    - contentIds: 
+      isObstacle: 0
+    - contentIds: 
+      isObstacle: 0
+    - contentIds: 
+      isObstacle: 0
+    - contentIds: 
+      isObstacle: 0
+    - contentIds: 
+      isObstacle: 0
+    - contentIds: 
+      isObstacle: 0
+    - contentIds: 
+      isObstacle: 0
+    - contentIds: 
+      isObstacle: 0
+    - contentIds: 
+      isObstacle: 0
+    - contentIds: 
+      isObstacle: 0
+    - contentIds: 
+      isObstacle: 0
+    - contentIds: 
+      isObstacle: 0
+    - contentIds: 
+      isObstacle: 0
+    - contentIds: 
+      isObstacle: 0
+    - contentIds: 
+      isObstacle: 0
+    - contentIds: 
+      isObstacle: 0
+    - contentIds: 
+      isObstacle: 0
+    - contentIds: 
+      isObstacle: 0
+    - contentIds: 
+      isObstacle: 0
+    - contentIds: 
+      isObstacle: 0
+    - contentIds: 
+      isObstacle: 0
+    - contentIds: 
+      isObstacle: 0
+    - contentIds: 
+      isObstacle: 0
+    - contentIds: 
+      isObstacle: 0
+    - contentIds: 
+      isObstacle: 0
+    - contentIds: 
+      isObstacle: 0
+    - contentIds: 
+      isObstacle: 0
+    - contentIds: 
       isObstacle: 1
-      x: 10
-      z: 14
-    - buildingId: 0
+    - contentIds: 
       isObstacle: 1
-      x: 11
-      z: 14
-    - buildingId: 0
+    - contentIds: 
       isObstacle: 1
-      x: 12
-      z: 14
-    - buildingId: 0
+    - contentIds: 
       isObstacle: 1
-      x: 13
-      z: 14
-    - buildingId: 0
+    - contentIds: 
       isObstacle: 1
-      x: 14
-      z: 14
-    - buildingId: 0
+    - contentIds: 
       isObstacle: 1
-      x: 15
-      z: 14
-    - buildingId: 0
+    - contentIds: 
       isObstacle: 1
-      x: 16
-      z: 14
-    - buildingId: 0
+    - contentIds: 
       isObstacle: 0
-      x: 17
-      z: 14
-    - buildingId: 0
+    - contentIds: 
       isObstacle: 0
-      x: 18
-      z: 14
-    - buildingId: 0
+    - contentIds: 
       isObstacle: 0
-      x: 19
-      z: 14
-    - buildingId: 0
+    - contentIds: 
       isObstacle: 0
-      x: 20
-      z: 14
-    - buildingId: 0
+    - contentIds: 
       isObstacle: 0
-      x: 21
-      z: 14
-    - buildingId: 0
+    - contentIds: 
       isObstacle: 0
-      x: 22
-      z: 14
-    - buildingId: 0
+    - contentIds: 
       isObstacle: 0
-      x: 0
-      z: 15
-    - buildingId: 0
+    - contentIds: 
       isObstacle: 0
-      x: 1
-      z: 15
-    - buildingId: 0
+    - contentIds: 
       isObstacle: 0
-      x: 2
-      z: 15
-    - buildingId: 0
+    - contentIds: 
       isObstacle: 0
-      x: 3
-      z: 15
-    - buildingId: 0
+    - contentIds: 
       isObstacle: 0
-      x: 4
-      z: 15
-    - buildingId: 0
+    - contentIds: 
       isObstacle: 0
-      x: 5
-      z: 15
-    - buildingId: 0
+    - contentIds: 
       isObstacle: 0
-      x: 6
-      z: 15
-    - buildingId: 0
+    - contentIds: 
       isObstacle: 0
-      x: 7
-      z: 15
-    - buildingId: 0
+    - contentIds: 
       isObstacle: 0
-      x: 8
-      z: 15
-    - buildingId: 0
+    - contentIds: 
       isObstacle: 0
-      x: 9
-      z: 15
-    - buildingId: 0
+    - contentIds: 
       isObstacle: 1
-      x: 10
-      z: 15
-    - buildingId: 0
+    - contentIds: 
       isObstacle: 1
-      x: 11
-      z: 15
-    - buildingId: 0
+    - contentIds: 
       isObstacle: 1
-      x: 12
-      z: 15
-    - buildingId: 0
+    - contentIds: 
       isObstacle: 1
-      x: 13
-      z: 15
-    - buildingId: 0
+    - contentIds: 
       isObstacle: 1
-      x: 14
-      z: 15
-    - buildingId: 0
+    - contentIds: 
       isObstacle: 1
-      x: 15
-      z: 15
-    - buildingId: 0
+    - contentIds: 
       isObstacle: 1
-      x: 16
-      z: 15
-    - buildingId: 0
+    - contentIds: 
       isObstacle: 0
-      x: 17
-      z: 15
-    - buildingId: 0
+    - contentIds: 
       isObstacle: 0
-      x: 18
-      z: 15
-    - buildingId: 0
+    - contentIds: 
       isObstacle: 0
-      x: 19
-      z: 15
-    - buildingId: 0
+    - contentIds: 
       isObstacle: 0
-      x: 20
-      z: 15
-    - buildingId: 0
+    - contentIds: 
       isObstacle: 0
-      x: 21
-      z: 15
-    - buildingId: 0
+    - contentIds: 
       isObstacle: 0
-      x: 22
-      z: 15
-    - buildingId: 0
+    - contentIds: 
       isObstacle: 0
-      x: 0
-      z: 16
-    - buildingId: 0
+    - contentIds: 
       isObstacle: 0
-      x: 1
-      z: 16
-    - buildingId: 0
+    - contentIds: 
       isObstacle: 0
-      x: 2
-      z: 16
-    - buildingId: 0
+    - contentIds: 
       isObstacle: 0
-      x: 3
-      z: 16
-    - buildingId: 0
+    - contentIds: 
       isObstacle: 0
-      x: 4
-      z: 16
-    - buildingId: 0
+    - contentIds: 
       isObstacle: 0
-      x: 5
-      z: 16
-    - buildingId: 0
+    - contentIds: 
       isObstacle: 0
-      x: 6
-      z: 16
-    - buildingId: 0
+    - contentIds: 
       isObstacle: 0
-      x: 7
-      z: 16
-    - buildingId: 0
+    - contentIds: 
       isObstacle: 0
-      x: 8
-      z: 16
-    - buildingId: 0
+    - contentIds: 
       isObstacle: 0
-      x: 9
-      z: 16
-    - buildingId: 0
+    - contentIds: 
       isObstacle: 1
-      x: 10
-      z: 16
-    - buildingId: 0
+    - contentIds: 
       isObstacle: 1
-      x: 11
-      z: 16
-    - buildingId: 0
+    - contentIds: 
       isObstacle: 1
-      x: 12
-      z: 16
-    - buildingId: 0
+    - contentIds: 
       isObstacle: 1
-      x: 13
-      z: 16
-    - buildingId: 0
+    - contentIds: 
       isObstacle: 1
-      x: 14
-      z: 16
-    - buildingId: 0
+    - contentIds: 
       isObstacle: 1
-      x: 15
-      z: 16
-    - buildingId: 0
+    - contentIds: 
       isObstacle: 1
-      x: 16
-      z: 16
-    - buildingId: 0
+    - contentIds: 
       isObstacle: 0
-      x: 17
-      z: 16
-    - buildingId: 0
+    - contentIds: 
       isObstacle: 0
-      x: 18
-      z: 16
-    - buildingId: 0
+    - contentIds: 
       isObstacle: 0
-      x: 19
-      z: 16
-    - buildingId: 0
+    - contentIds: 
       isObstacle: 0
-      x: 20
-      z: 16
-    - buildingId: 0
+    - contentIds: 
       isObstacle: 0
-      x: 21
-      z: 16
-    - buildingId: 0
+    - contentIds: 
       isObstacle: 0
-      x: 22
-      z: 16
-    - buildingId: 0
+    - contentIds: 
       isObstacle: 0
-      x: 0
-      z: 17
-    - buildingId: 0
+    - contentIds: 
       isObstacle: 0
-      x: 1
-      z: 17
-    - buildingId: 0
+    - contentIds: 
       isObstacle: 0
-      x: 2
-      z: 17
-    - buildingId: 0
+    - contentIds: 
       isObstacle: 0
-      x: 3
-      z: 17
-    - buildingId: 0
+    - contentIds: 
       isObstacle: 0
-      x: 4
-      z: 17
-    - buildingId: 0
+    - contentIds: 
       isObstacle: 0
-      x: 5
-      z: 17
-    - buildingId: 0
+    - contentIds: 
       isObstacle: 0
-      x: 6
-      z: 17
-    - buildingId: 0
+    - contentIds: 
       isObstacle: 0
-      x: 7
-      z: 17
-    - buildingId: 0
+    - contentIds: 
       isObstacle: 0
-      x: 8
-      z: 17
-    - buildingId: 0
+    - contentIds: 
       isObstacle: 0
-      x: 9
-      z: 17
-    - buildingId: 0
+    - contentIds: 
       isObstacle: 1
-      x: 10
-      z: 17
-    - buildingId: 0
+    - contentIds: 
       isObstacle: 1
-      x: 11
-      z: 17
-    - buildingId: 0
+    - contentIds: 
       isObstacle: 1
-      x: 12
-      z: 17
-    - buildingId: 0
+    - contentIds: 
       isObstacle: 1
-      x: 13
-      z: 17
-    - buildingId: 0
+    - contentIds: 
       isObstacle: 1
-      x: 14
-      z: 17
-    - buildingId: 0
+    - contentIds: 
       isObstacle: 1
-      x: 15
-      z: 17
-    - buildingId: 0
+    - contentIds: 
       isObstacle: 1
-      x: 16
-      z: 17
-    - buildingId: 0
+    - contentIds: 
       isObstacle: 0
-      x: 17
-      z: 17
-    - buildingId: 0
+    - contentIds: 
       isObstacle: 0
-      x: 18
-      z: 17
-    - buildingId: 0
+    - contentIds: 
       isObstacle: 0
-      x: 19
-      z: 17
-    - buildingId: 0
+    - contentIds: 
       isObstacle: 0
-      x: 20
-      z: 17
-    - buildingId: 0
+    - contentIds: 
       isObstacle: 0
-      x: 21
-      z: 17
-    - buildingId: 0
+    - contentIds: 
       isObstacle: 0
-      x: 22
-      z: 17
-    - buildingId: 0
+    - contentIds: 
       isObstacle: 0
-      x: 0
-      z: 18
-    - buildingId: 0
+    - contentIds: 
       isObstacle: 0
-      x: 1
-      z: 18
-    - buildingId: 0
+    - contentIds: 
       isObstacle: 0
-      x: 2
-      z: 18
-    - buildingId: 0
+    - contentIds: 
       isObstacle: 0
-      x: 3
-      z: 18
-    - buildingId: 0
+    - contentIds: 
       isObstacle: 0
-      x: 4
-      z: 18
-    - buildingId: 0
+    - contentIds: 
       isObstacle: 0
-      x: 5
-      z: 18
-    - buildingId: 0
+    - contentIds: 
       isObstacle: 0
-      x: 6
-      z: 18
-    - buildingId: 0
+    - contentIds: 
       isObstacle: 0
-      x: 7
-      z: 18
-    - buildingId: 0
+    - contentIds: 
       isObstacle: 0
-      x: 8
-      z: 18
-    - buildingId: 0
+    - contentIds: 
       isObstacle: 0
-      x: 9
-      z: 18
-    - buildingId: 0
+    - contentIds: 
       isObstacle: 0
-      x: 10
-      z: 18
-    - buildingId: 0
+    - contentIds: 
       isObstacle: 0
-      x: 11
-      z: 18
-    - buildingId: 0
+    - contentIds: 
       isObstacle: 0
-      x: 12
-      z: 18
-    - buildingId: 0
+    - contentIds: 
       isObstacle: 0
-      x: 13
-      z: 18
-    - buildingId: 0
+    - contentIds: 
       isObstacle: 0
-      x: 14
-      z: 18
-    - buildingId: 0
+    - contentIds: 
       isObstacle: 0
-      x: 15
-      z: 18
-    - buildingId: 0
+    - contentIds: 
       isObstacle: 0
-      x: 16
-      z: 18
-    - buildingId: 0
+    - contentIds: 
       isObstacle: 0
-      x: 17
-      z: 18
-    - buildingId: 0
+    - contentIds: 
       isObstacle: 0
-      x: 18
-      z: 18
-    - buildingId: 0
+    - contentIds: 
       isObstacle: 0
-      x: 19
-      z: 18
-    - buildingId: 0
+    - contentIds: 
       isObstacle: 0
-      x: 20
-      z: 18
-    - buildingId: 0
+    - contentIds: 
       isObstacle: 0
-      x: 21
-      z: 18
-    - buildingId: 0
+    - contentIds: 
       isObstacle: 0
-      x: 22
-      z: 18
-    - buildingId: 0
+    - contentIds: 
       isObstacle: 0
-      x: 0
-      z: 19
-    - buildingId: 0
+    - contentIds: 
       isObstacle: 0
-      x: 1
-      z: 19
-    - buildingId: 0
+    - contentIds: 
       isObstacle: 0
-      x: 2
-      z: 19
-    - buildingId: 0
+    - contentIds: 
       isObstacle: 0
-      x: 3
-      z: 19
-    - buildingId: 0
+    - contentIds: 
       isObstacle: 0
-      x: 4
-      z: 19
-    - buildingId: 0
+    - contentIds: 
       isObstacle: 0
-      x: 5
-      z: 19
-    - buildingId: 0
+    - contentIds: 
       isObstacle: 0
-      x: 6
-      z: 19
-    - buildingId: 0
+    - contentIds: 
       isObstacle: 0
-      x: 7
-      z: 19
-    - buildingId: 0
+    - contentIds: 
       isObstacle: 0
-      x: 8
-      z: 19
-    - buildingId: 0
+    - contentIds: 
       isObstacle: 0
-      x: 9
-      z: 19
-    - buildingId: 0
+    - contentIds: 
       isObstacle: 0
-      x: 10
-      z: 19
-    - buildingId: 0
+    - contentIds: 
       isObstacle: 0
-      x: 11
-      z: 19
-    - buildingId: 0
+    - contentIds: 
       isObstacle: 0
-      x: 12
-      z: 19
-    - buildingId: 0
+    - contentIds: 
       isObstacle: 0
-      x: 13
-      z: 19
-    - buildingId: 0
+    - contentIds: 
       isObstacle: 0
-      x: 14
-      z: 19
-    - buildingId: 0
+    - contentIds: 
       isObstacle: 0
-      x: 15
-      z: 19
-    - buildingId: 0
+    - contentIds: 
       isObstacle: 0
-      x: 16
-      z: 19
-    - buildingId: 0
+    - contentIds: 
       isObstacle: 0
-      x: 17
-      z: 19
-    - buildingId: 0
+    - contentIds: 
       isObstacle: 0
-      x: 18
-      z: 19
-    - buildingId: 0
+    - contentIds: 
       isObstacle: 0
-      x: 19
-      z: 19
-    - buildingId: 0
+    - contentIds: 
       isObstacle: 0
-      x: 20
-      z: 19
-    - buildingId: 0
+    - contentIds: 
       isObstacle: 0
-      x: 21
-      z: 19
-    - buildingId: 0
+    - contentIds: 
       isObstacle: 0
-      x: 22
-      z: 19
     currentGuid: 3
 --- !u!4 &1016826418
 Transform:
@@ -2582,22 +1694,22 @@ PrefabInstance:
   serializedVersion: 2
   m_Modification:
     serializedVersion: 3
-    m_TransformParent: {fileID: 0}
+    m_TransformParent: {fileID: 1637333463}
     m_Modifications:
     - target: {fileID: 146582365976954613, guid: 113b4ee2df44d4cf389c313a3e88027e,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 12.82
+      value: -4.57
       objectReference: {fileID: 0}
     - target: {fileID: 146582365976954613, guid: 113b4ee2df44d4cf389c313a3e88027e,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0
+      value: 2.7396173
       objectReference: {fileID: 0}
     - target: {fileID: 146582365976954613, guid: 113b4ee2df44d4cf389c313a3e88027e,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: 3.71
+      value: -7.61
       objectReference: {fileID: 0}
     - target: {fileID: 146582365976954613, guid: 113b4ee2df44d4cf389c313a3e88027e,
         type: 3}
@@ -2607,17 +1719,17 @@ PrefabInstance:
     - target: {fileID: 146582365976954613, guid: 113b4ee2df44d4cf389c313a3e88027e,
         type: 3}
       propertyPath: m_LocalRotation.x
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 146582365976954613, guid: 113b4ee2df44d4cf389c313a3e88027e,
         type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 146582365976954613, guid: 113b4ee2df44d4cf389c313a3e88027e,
         type: 3}
       propertyPath: m_LocalRotation.z
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 146582365976954613, guid: 113b4ee2df44d4cf389c313a3e88027e,
         type: 3}
@@ -2641,6 +1753,16 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6178925463495704729, guid: 113b4ee2df44d4cf389c313a3e88027e,
         type: 3}
+      propertyPath: buildingData.x
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 6178925463495704729, guid: 113b4ee2df44d4cf389c313a3e88027e,
+        type: 3}
+      propertyPath: buildingData.z
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 6178925463495704729, guid: 113b4ee2df44d4cf389c313a3e88027e,
+        type: 3}
       propertyPath: buildingData.Id
       value: 3
       objectReference: {fileID: 0}
@@ -2649,7 +1771,48 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 113b4ee2df44d4cf389c313a3e88027e, type: 3}
---- !u!43 &1854541368
+--- !u!4 &1134010708 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 146582365976954613, guid: 113b4ee2df44d4cf389c313a3e88027e,
+    type: 3}
+  m_PrefabInstance: {fileID: 1134010707}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &1314852556
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1314852557}
+  m_Layer: 0
+  m_Name: Obstacles
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1314852557
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1314852556}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 17.116106, y: -2.2396173, z: 11.069439}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 587429047}
+  - {fileID: 2099387791}
+  - {fileID: 2081313092}
+  - {fileID: 130391017}
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!43 &1459548005
 Mesh:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -2814,6 +1977,40 @@ Mesh:
     offset: 0
     size: 0
     path: 
+--- !u!1 &1637333462
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1637333463}
+  m_Layer: 0
+  m_Name: Default
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1637333463
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1637333462}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 17.38, y: -2.2396173, z: 11.5}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 1134010708}
+  - {fileID: 546281612}
+  - {fileID: 115378939}
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1899506827
 GameObject:
   m_ObjectHideFlags: 0
@@ -3049,12 +2246,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2081313088}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 6.62, y: 0, z: 0.84}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -10.496106, y: 2.2396173, z: -10.229439}
   m_LocalScale: {x: 2, y: 1, z: 2}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 0}
+  m_Father: {fileID: 1314852557}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2099387787
 GameObject:
@@ -3154,12 +2351,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2099387787}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 2.61, y: 0, z: 16.53}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -14.506106, y: 2.2396173, z: 5.4605618}
   m_LocalScale: {x: 2, y: 1, z: 2}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 0}
+  m_Father: {fileID: 1314852557}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2110946947
 GameObject:
@@ -3286,12 +2483,7 @@ SceneRoots:
   - {fileID: 1899506830}
   - {fileID: 2110946949}
   - {fileID: 474482163}
+  - {fileID: 1314852557}
+  - {fileID: 1637333463}
   - {fileID: 1016826418}
   - {fileID: 949307950}
-  - {fileID: 587429047}
-  - {fileID: 2099387791}
-  - {fileID: 2081313092}
-  - {fileID: 130391017}
-  - {fileID: 1134010707}
-  - {fileID: 546281611}
-  - {fileID: 115378938}

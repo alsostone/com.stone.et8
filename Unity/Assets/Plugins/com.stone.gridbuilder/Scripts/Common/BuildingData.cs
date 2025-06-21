@@ -12,6 +12,7 @@ public class BuildingData
     public long Id;
     public int x;
     public int z;
+    public int rotation;
     public bool[] points = new bool[width * height];
     
     public BuildingData(){ }
@@ -24,14 +25,15 @@ public class BuildingData
 
     public void Rotation(bool[] from, bool[] to, int r)
     {
-        r = ((r % 4) + 4) % 4;
+        rotation += r;
+        rotation = ((rotation % 4) + 4) % 4;
         for (int x1 = 0; x1 < width; x1++)
         {
             for (int z1 = 0; z1 < height; z1++)
             {
                 int x2 = x1;
                 int z2 = z1;
-                switch (r)
+                switch (rotation)
                 {
                     case 1:
                         x2 = z1;

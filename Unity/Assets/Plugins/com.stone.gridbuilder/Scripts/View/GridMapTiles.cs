@@ -20,7 +20,7 @@ public class GridMapTiles : MonoBehaviour
             for (int z = 0; z < gridData.zLength; z++)
             {
                 Color color = Color.red;
-                if (gridData.CanPut(x, z))
+                if (!gridData.GetCell(x, z).isFill)
                     color = Color.green;
                 
                 colors.Add(color);

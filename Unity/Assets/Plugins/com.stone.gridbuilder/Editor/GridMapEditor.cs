@@ -77,8 +77,15 @@ public class GridMapEditor : Editor
         Building[] buildings = FindObjectsOfType<Building>();
         foreach (Building building in buildings)
         {
-            if (gridMap.TryPut(building, true))
-                EditorUtility.SetDirty(building);
+            Vector3Int index = gridMap.ConvertToIndex(building.transform.position);
+            if (!gridMap.gridData.CanPut(index.x, index.z, building.buildingData)) {
+                continue;
+            }
+
+            building.buildingData.Id = gridMap.gridData.GetNextGuid();
+            gridMap.gridData.Put(index.x, index.z, building.buildingData);
+            building.SetPutPosition(gridMap.GetPutPosition(building.buildingData));
+            EditorUtility.SetDirty(building);
         }
     }
 

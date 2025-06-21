@@ -77,22 +77,6 @@ public partial class GridMap : MonoBehaviour
         return transform.position + new Vector3(x1, y1, z1);
     }
     
-    public bool TryPut(Building building, bool resetPosition = true)
-    {
-        Vector3Int index = ConvertToIndex(building.transform.position);
-        if (!gridData.CanPut(index.x, index.z, building.buildingData)) {
-            return false;
-        }
-
-        building.buildingData.Id = gridData.GetNextGuid();
-        gridData.Put(index.x, index.z, building.buildingData);
-        
-        if (resetPosition) {
-            building.transform.position = GetCellPositionCenter(index.x, index.z);
-        }
-        return true;
-    }
-
 #if UNITY_EDITOR
     private readonly float yOffset = 0.01f;
     private readonly List<Vector3> drawPoints = new List<Vector3>();

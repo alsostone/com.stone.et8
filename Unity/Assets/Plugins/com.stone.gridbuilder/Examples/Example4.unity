@@ -139,7 +139,7 @@ PrefabInstance:
     - target: {fileID: 146582365976954613, guid: dc83affa9d6044736a8613cc17a98906,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: -0.49999884
+      value: 0.0000011622906
       objectReference: {fileID: 0}
     - target: {fileID: 146582365976954613, guid: dc83affa9d6044736a8613cc17a98906,
         type: 3}
@@ -204,7 +204,7 @@ PrefabInstance:
     - target: {fileID: 6178925463495704729, guid: dc83affa9d6044736a8613cc17a98906,
         type: 3}
       propertyPath: buildingData.Id
-      value: 3
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -430,7 +430,7 @@ PrefabInstance:
     - target: {fileID: 146582365976954613, guid: e540eeeea90fd4808be148374b95dd0c,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: -0.49999884
+      value: 0.0000011622906
       objectReference: {fileID: 0}
     - target: {fileID: 146582365976954613, guid: e540eeeea90fd4808be148374b95dd0c,
         type: 3}
@@ -495,7 +495,7 @@ PrefabInstance:
     - target: {fileID: 6178925463495704729, guid: e540eeeea90fd4808be148374b95dd0c,
         type: 3}
       propertyPath: buildingData.Id
-      value: 1
+      value: 2
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -862,7 +862,7 @@ MonoBehaviour:
       isObstacle: 0
     - contentIds: 
       isObstacle: 0
-    - contentIds: 0200000000000000
+    - contentIds: 0300000000000000
       isObstacle: 0
     - contentIds: 
       isObstacle: 0
@@ -875,104 +875,6 @@ MonoBehaviour:
     - contentIds: 
       isObstacle: 0
     - contentIds: 
-      isObstacle: 0
-    - contentIds: 
-      isObstacle: 0
-    - contentIds: 
-      isObstacle: 0
-    - contentIds: 
-      isObstacle: 0
-    - contentIds: 
-      isObstacle: 0
-    - contentIds: 
-      isObstacle: 0
-    - contentIds: 
-      isObstacle: 0
-    - contentIds: 
-      isObstacle: 0
-    - contentIds: 
-      isObstacle: 0
-    - contentIds: 
-      isObstacle: 0
-    - contentIds: 
-      isObstacle: 0
-    - contentIds: 
-      isObstacle: 0
-    - contentIds: 
-      isObstacle: 0
-    - contentIds: 
-      isObstacle: 0
-    - contentIds: 
-      isObstacle: 0
-    - contentIds: 
-      isObstacle: 0
-    - contentIds: 
-      isObstacle: 0
-    - contentIds: 0200000000000000
-      isObstacle: 0
-    - contentIds: 
-      isObstacle: 0
-    - contentIds: 
-      isObstacle: 0
-    - contentIds: 
-      isObstacle: 0
-    - contentIds: 
-      isObstacle: 0
-    - contentIds: 
-      isObstacle: 0
-    - contentIds: 
-      isObstacle: 0
-    - contentIds: 
-      isObstacle: 0
-    - contentIds: 
-      isObstacle: 0
-    - contentIds: 0100000000000000
-      isObstacle: 0
-    - contentIds: 
-      isObstacle: 0
-    - contentIds: 
-      isObstacle: 0
-    - contentIds: 
-      isObstacle: 0
-    - contentIds: 
-      isObstacle: 0
-    - contentIds: 
-      isObstacle: 0
-    - contentIds: 
-      isObstacle: 0
-    - contentIds: 
-      isObstacle: 0
-    - contentIds: 
-      isObstacle: 0
-    - contentIds: 
-      isObstacle: 0
-    - contentIds: 
-      isObstacle: 0
-    - contentIds: 
-      isObstacle: 0
-    - contentIds: 
-      isObstacle: 0
-    - contentIds: 0200000000000000
-      isObstacle: 0
-    - contentIds: 0200000000000000
-      isObstacle: 0
-    - contentIds: 0200000000000000
-      isObstacle: 0
-    - contentIds: 
-      isObstacle: 0
-    - contentIds: 
-      isObstacle: 0
-    - contentIds: 
-      isObstacle: 0
-    - contentIds: 
-      isObstacle: 0
-    - contentIds: 
-      isObstacle: 0
-    - contentIds: 
-      isObstacle: 0
-    - contentIds: 
-      isObstacle: 0
-    - contentIds: 0100000000000000
       isObstacle: 0
     - contentIds: 
       isObstacle: 0
@@ -1008,11 +910,97 @@ MonoBehaviour:
       isObstacle: 0
     - contentIds: 0300000000000000
       isObstacle: 0
-    - contentIds: 0300000000000000
+    - contentIds: 
+      isObstacle: 0
+    - contentIds: 
+      isObstacle: 0
+    - contentIds: 
+      isObstacle: 0
+    - contentIds: 
+      isObstacle: 0
+    - contentIds: 
+      isObstacle: 0
+    - contentIds: 
+      isObstacle: 0
+    - contentIds: 
+      isObstacle: 0
+    - contentIds: 
+      isObstacle: 0
+    - contentIds: 0200000000000000
+      isObstacle: 0
+    - contentIds: 
+      isObstacle: 0
+    - contentIds: 
+      isObstacle: 0
+    - contentIds: 
+      isObstacle: 0
+    - contentIds: 
+      isObstacle: 0
+    - contentIds: 
+      isObstacle: 0
+    - contentIds: 
+      isObstacle: 0
+    - contentIds: 
+      isObstacle: 0
+    - contentIds: 
+      isObstacle: 0
+    - contentIds: 
+      isObstacle: 0
+    - contentIds: 
+      isObstacle: 0
+    - contentIds: 
+      isObstacle: 0
+    - contentIds: 
       isObstacle: 0
     - contentIds: 0300000000000000
       isObstacle: 0
     - contentIds: 0300000000000000
+      isObstacle: 0
+    - contentIds: 0300000000000000
+      isObstacle: 0
+    - contentIds: 
+      isObstacle: 0
+    - contentIds: 
+      isObstacle: 0
+    - contentIds: 
+      isObstacle: 0
+    - contentIds: 
+      isObstacle: 0
+    - contentIds: 
+      isObstacle: 0
+    - contentIds: 
+      isObstacle: 0
+    - contentIds: 
+      isObstacle: 0
+    - contentIds: 0200000000000000
+      isObstacle: 0
+    - contentIds: 
+      isObstacle: 0
+    - contentIds: 
+      isObstacle: 0
+    - contentIds: 
+      isObstacle: 0
+    - contentIds: 
+      isObstacle: 0
+    - contentIds: 
+      isObstacle: 0
+    - contentIds: 
+      isObstacle: 0
+    - contentIds: 
+      isObstacle: 0
+    - contentIds: 
+      isObstacle: 0
+    - contentIds: 
+      isObstacle: 0
+    - contentIds: 
+      isObstacle: 0
+    - contentIds: 
+      isObstacle: 0
+    - contentIds: 
+      isObstacle: 0
+    - contentIds: 
+      isObstacle: 0
+    - contentIds: 
       isObstacle: 0
     - contentIds: 
       isObstacle: 0
@@ -1020,51 +1008,63 @@ MonoBehaviour:
       isObstacle: 0
     - contentIds: 0100000000000000
       isObstacle: 0
-    - contentIds: 
-      isObstacle: 0
-    - contentIds: 
-      isObstacle: 0
-    - contentIds: 
-      isObstacle: 0
-    - contentIds: 
-      isObstacle: 0
-    - contentIds: 
-      isObstacle: 0
-    - contentIds: 
-      isObstacle: 0
-    - contentIds: 
-      isObstacle: 0
-    - contentIds: 
-      isObstacle: 0
-    - contentIds: 
-      isObstacle: 0
-    - contentIds: 
-      isObstacle: 0
-    - contentIds: 
-      isObstacle: 0
-    - contentIds: 
-      isObstacle: 0
-    - contentIds: 
-      isObstacle: 0
-    - contentIds: 
-      isObstacle: 0
-    - contentIds: 
-      isObstacle: 0
-    - contentIds: 
-      isObstacle: 0
-    - contentIds: 
-      isObstacle: 0
-    - contentIds: 
-      isObstacle: 0
-    - contentIds: 
-      isObstacle: 0
-    - contentIds: 
-      isObstacle: 0
-    - contentIds: 
-      isObstacle: 0
-    - contentIds: 
+    - contentIds: 0100000000000000
       isObstacle: 0
     - contentIds: 0100000000000000
+      isObstacle: 0
+    - contentIds: 0100000000000000
+      isObstacle: 0
+    - contentIds: 
+      isObstacle: 0
+    - contentIds: 
+      isObstacle: 0
+    - contentIds: 0200000000000000
+      isObstacle: 0
+    - contentIds: 
+      isObstacle: 0
+    - contentIds: 
+      isObstacle: 0
+    - contentIds: 
+      isObstacle: 0
+    - contentIds: 
+      isObstacle: 0
+    - contentIds: 
+      isObstacle: 0
+    - contentIds: 
+      isObstacle: 0
+    - contentIds: 
+      isObstacle: 0
+    - contentIds: 
+      isObstacle: 0
+    - contentIds: 
+      isObstacle: 0
+    - contentIds: 
+      isObstacle: 0
+    - contentIds: 
+      isObstacle: 0
+    - contentIds: 
+      isObstacle: 0
+    - contentIds: 
+      isObstacle: 0
+    - contentIds: 
+      isObstacle: 0
+    - contentIds: 
+      isObstacle: 0
+    - contentIds: 
+      isObstacle: 0
+    - contentIds: 
+      isObstacle: 0
+    - contentIds: 
+      isObstacle: 0
+    - contentIds: 
+      isObstacle: 0
+    - contentIds: 
+      isObstacle: 0
+    - contentIds: 
+      isObstacle: 0
+    - contentIds: 
+      isObstacle: 0
+    - contentIds: 0200000000000000
       isObstacle: 0
     - contentIds: 
       isObstacle: 0
@@ -1720,7 +1720,7 @@ MeshFilter:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1017165837}
-  m_Mesh: {fileID: 1715752108}
+  m_Mesh: {fileID: 1782601678}
 --- !u!23 &1017165839
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -1807,7 +1807,7 @@ PrefabInstance:
     - target: {fileID: 146582365976954613, guid: 113b4ee2df44d4cf389c313a3e88027e,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: -0.49999884
+      value: 0.0000011622906
       objectReference: {fileID: 0}
     - target: {fileID: 146582365976954613, guid: 113b4ee2df44d4cf389c313a3e88027e,
         type: 3}
@@ -1867,7 +1867,7 @@ PrefabInstance:
     - target: {fileID: 6178925463495704729, guid: 113b4ee2df44d4cf389c313a3e88027e,
         type: 3}
       propertyPath: buildingData.Id
-      value: 2
+      value: 3
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -1944,7 +1944,7 @@ MonoBehaviour:
   - {fileID: 3117728376025562796, guid: dc83affa9d6044736a8613cc17a98906, type: 3}
   - {fileID: 3117728376025562796, guid: e540eeeea90fd4808be148374b95dd0c, type: 3}
   - {fileID: 3117728376025562796, guid: 113b4ee2df44d4cf389c313a3e88027e, type: 3}
---- !u!43 &1715752108
+--- !u!43 &1782601678
 Mesh:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -2618,6 +2618,6 @@ SceneRoots:
   - {fileID: 474482163}
   - {fileID: 839176044}
   - {fileID: 1918031265}
-  - {fileID: 1017165841}
   - {fileID: 1016826418}
+  - {fileID: 1017165841}
   - {fileID: 1553460569}
