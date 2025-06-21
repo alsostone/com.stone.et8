@@ -54,7 +54,7 @@ public partial class GridMap : MonoBehaviour
         return pos;
     }
     
-    public bool TryPlace(Building building, bool resetPosition = true)
+    public bool TryPut(Building building, bool resetPosition = true)
     {
         Vector3Int index = ConvertToIndex(building.transform.position);
         if (!gridData.CanPut(index.x, index.z, building.buildingData)) {

@@ -6,19 +6,17 @@ public class GridBuilder : MonoBehaviour
     [SerializeField] public Camera rayCamera;
     [SerializeField] public GridMap gridMap;
     [SerializeField] public float raycastDistance = 1000.0f;
-    
+
+    private bool isNewBuilding;
     private Building dragBuilding;
     private Vector3Int dragIndex;
     private Vector3 dragOffset;
-    
-#if !UNITY_EDITOR
     private int dragFingerId = -1;
-#endif
 
     private void Awake()
     {
-        if (this.rayCamera == null)
-            this.rayCamera = Camera.main;
+        if (rayCamera == null)
+            rayCamera = Camera.main;
         if (gridMap == null)
             gridMap = FindObjectOfType<GridMap>();
     }
@@ -31,10 +29,6 @@ public class GridBuilder : MonoBehaviour
             if (EventSystem.current.IsPointerOverGameObject())
                 return;
             OnTouchBegin(Input.mousePosition);
-        }
-        else if (Input.GetMouseButton(0))
-        {
-            OnTouchMove(Input.mousePosition);
         }
         else if (Input.GetMouseButtonUp(0))
         {
@@ -61,25 +55,25 @@ public class GridBuilder : MonoBehaviour
                 dragFingerId = -1;
             }
         }
+#endif
         if (dragFingerId == -1)
         {
             OnTouchMove(Input.mousePosition);
         }
-#endif
     }
     
     private bool OnTouchBegin(Vector3 touchPosition)
     {
-        if (!this.dragBuilding)
+        if (!dragBuilding)
         {
             if (RaycastTarget(touchPosition, out var pos, out var target))
             {
-                this.dragBuilding = target.GetComponent<Building>();
-                if (this.dragBuilding)
+                dragBuilding = target.GetComponent<Building>();
+                if (dragBuilding)
                 {
-                    Vector3 position = this.dragBuilding.transform.position;
-                    this.dragIndex = gridMap.ConvertToIndex(position);
-                    this.dragOffset = position - pos;
+                    Vector3 position = dragBuilding.Take();
+                    dragIndex = gridMap.ConvertToIndex(position);
+                    dragOffset = position - pos;
                     return true;
                 }
             }
@@ -89,56 +83,90 @@ public class GridBuilder : MonoBehaviour
 
     private void OnTouchMove(Vector3 touchPosition)
     {
-        if (this.dragBuilding)
+        if (dragBuilding)
         {
             if (RaycastTerrain(touchPosition, out Vector3 pos))
             {
-                Vector3Int index = gridMap.ConvertToIndex(pos + this.dragOffset);
-                this.dragBuilding.transform.position = gridMap.GetCellPositionCenter(index.x, index.z);
+                Vector3Int index = gridMap.ConvertToIndex(pos + dragOffset);
+                dragBuilding.SetPosition(gridMap.GetCellPositionCenter(index.x, index.z));
             }
         }
     }
 
     private void OnTouchEnd(Vector3 touchPosition)
     {
-        if (this.dragBuilding)
+        if (dragBuilding)
         {
             if (RaycastTerrain(touchPosition, out Vector3 pos))
             {
-                Vector3Int index = gridMap.ConvertToIndex(pos + this.dragOffset);
-                if (index != this.dragIndex && gridMap.gridData.CanPut(index.x, index.z, this.dragBuilding.buildingData)) {
-                    gridMap.gridData.Take(this.dragIndex.x, this.dragIndex.z, this.dragBuilding.buildingData);
-                    gridMap.gridData.Put(index.x, index.z, this.dragBuilding.buildingData);
-                    this.dragBuilding.transform.position = gridMap.GetCellPositionCenter(index.x, index.z);
+                Vector3Int index = gridMap.ConvertToIndex(pos + dragOffset);
+                if (gridMap.gridData.CanPut(index.x, index.z, dragBuilding.buildingData))
+                {
+                    if (isNewBuilding)
+                    {
+                        dragBuilding.buildingData.Id = gridMap.gridData.GetNextGuid();
+                        gridMap.gridData.Put(index.x, index.z, dragBuilding.buildingData);
+                    }
+                    else if (index != dragIndex)
+                    {
+                        gridMap.gridData.Take(dragIndex.x, dragIndex.z, dragBuilding.buildingData);
+                        gridMap.gridData.Put(index.x, index.z, dragBuilding.buildingData);
+                    }
+                    dragBuilding.PutPosition(gridMap.GetCellPositionCenter(index.x, index.z));
                 }
                 else {
-                    this.dragBuilding.transform.position = gridMap.GetCellPositionCenter(this.dragIndex.x, this.dragIndex.z);
+                    if (isNewBuilding) {
+                        dragBuilding.Remove();
+                    } else {
+                        dragBuilding.PutPosition(gridMap.GetCellPositionCenter(dragIndex.x, dragIndex.z));
+                    }
                 }
-                this.dragBuilding = null;
+            } else {
+                if (isNewBuilding) {
+                    dragBuilding.Remove();
+                } else {
+                    dragBuilding.PutPosition(gridMap.GetCellPositionCenter(dragIndex.x, dragIndex.z));
+                }
             }
+            dragBuilding = null;
+            isNewBuilding = false;
         }
     }
     
-#if UNITY_EDITOR
-    private void OnDrawGizmos()
+    public void CanclePlacementBuilding()
     {
-        if (RaycastTarget(Input.mousePosition, out Vector3 pos, out var _))
+        if (dragBuilding)
         {
-            Gizmos.color = Color.red;
-            Gizmos.DrawLine(this.rayCamera.transform.position, pos);
+            if (isNewBuilding) {
+                dragBuilding.Remove();
+            } else {
+                dragBuilding.PutPosition(gridMap.GetCellPositionCenter(dragIndex.x, dragIndex.z));
+            }
+            dragBuilding = null;
+            isNewBuilding = false;
         }
     }
-#endif
+    
+    public void SetPlacementBuilding(Building building)
+    {
+        if (dragBuilding) {
+            dragBuilding.PutPosition(gridMap.GetCellPositionCenter(dragIndex.x, dragIndex.z));
+        }
+        dragBuilding = building;
+        isNewBuilding = true;
+        dragIndex = Vector3Int.zero;
+        dragOffset = Vector3.zero;
+    }
     
     public bool RaycastTerrain(Vector3 position, out Vector3 pos)
     {
         pos = default;
         
-        if (this.rayCamera == null) {
+        if (rayCamera == null) {
             return false;
         }
 
-        Ray ray = this.rayCamera.ScreenPointToRay(position);
+        Ray ray = rayCamera.ScreenPointToRay(position);
         if (Physics.Raycast(ray, out RaycastHit hit, raycastDistance, gridMap.terrainMask)) {
             pos = hit.point;
             return true;
@@ -152,11 +180,11 @@ public class GridBuilder : MonoBehaviour
         target = null;
         pos = default;
         
-        if (this.rayCamera == null) {
+        if (rayCamera == null) {
             return false;
         }
 
-        Ray ray = this.rayCamera.ScreenPointToRay(position);
+        Ray ray = rayCamera.ScreenPointToRay(position);
         if (Physics.Raycast(ray, out RaycastHit hit, raycastDistance)) {
             pos = hit.point;
             target = hit.collider.gameObject;
@@ -164,5 +192,16 @@ public class GridBuilder : MonoBehaviour
         }
         return false;
     }
+
+#if UNITY_EDITOR
+    private void OnDrawGizmos()
+    {
+        if (RaycastTarget(Input.mousePosition, out Vector3 pos, out var _))
+        {
+            Gizmos.color = Color.red;
+            Gizmos.DrawLine(rayCamera.transform.position, pos);
+        }
+    }
+#endif
 
 }
