@@ -1,18 +1,21 @@
 using System;
+using System.Collections.Generic;
 
 [Serializable]
 public class CellData
 {
-    public bool isFill => this.isObstacle || this.buildingId > 0;
+    public bool isFill => isObstacle || contentIds.Count > 0;
     
-    public long buildingId;
+    public List<long> contentIds;
     public bool isObstacle;
-    public int x;
-    public int z;
-
-    public CellData(int x, int z)
+    
+    public CellData()
     {
-        this.x = x;
-        this.z = z;
+        contentIds = new List<long>();
+    }
+    
+    public CellData(List<long> buildingIds)
+    {
+        this.contentIds = buildingIds;
     }
 }

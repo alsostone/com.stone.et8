@@ -18,8 +18,6 @@ namespace ET
         {
             if (Input.GetKeyDown(KeyCode.N))
             {
-                gridBuilder.CanclePlacementBuilding();
-                
                 GameObject go = Instantiate(buildingPrefab[Random.Range(0, this.buildingPrefab.Length)]);
                 Building building = go.GetComponent<Building>();
                 gridBuilder.SetPlacementBuilding(building);

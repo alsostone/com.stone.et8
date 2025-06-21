@@ -9,7 +9,6 @@ public class GridBuilder : MonoBehaviour
 
     private bool isNewBuilding;
     private Building dragBuilding;
-    private Vector3Int dragIndex;
     private Vector3 dragOffset;
     private int dragFingerId = -1;
 
@@ -32,7 +31,7 @@ public class GridBuilder : MonoBehaviour
         }
         else if (Input.GetMouseButtonUp(0))
         {
-            this.OnTouchEnd(Input.mousePosition);
+            OnTouchEnd(Input.mousePosition);
         }
 #else
         for (int i = 0; i < Input.touchCount; i++)
@@ -51,7 +50,7 @@ public class GridBuilder : MonoBehaviour
             }
             else if (touch.fingerId == dragFingerId && touch.phase == UnityEngine.TouchPhase.Ended)
             {
-                this.OnTouchEnd(touch.position);
+                OnTouchEnd(touch.position);
                 dragFingerId = -1;
             }
         }
@@ -68,14 +67,19 @@ public class GridBuilder : MonoBehaviour
         {
             if (RaycastTarget(touchPosition, out var pos, out var target))
             {
-                dragBuilding = target.GetComponent<Building>();
-                if (dragBuilding)
+                Building buiding = target.GetComponent<Building>();
+                if (!buiding) {
+                    return false;
+                }
+
+                Vector3 position = buiding.GetPosition();
+                if (gridMap.gridData.CanTake(buiding.buildingData))
                 {
-                    Vector3 position = dragBuilding.Take();
-                    dragIndex = gridMap.ConvertToIndex(position);
+                    dragBuilding = buiding;
                     dragOffset = position - pos;
                     return true;
                 }
+                buiding.DoShake();
             }
         }
         return false;
@@ -88,7 +92,7 @@ public class GridBuilder : MonoBehaviour
             if (RaycastTerrain(touchPosition, out Vector3 pos))
             {
                 Vector3Int index = gridMap.ConvertToIndex(pos + dragOffset);
-                dragBuilding.SetPosition(gridMap.GetCellPositionCenter(index.x, index.z));
+                dragBuilding.SetMovePosition(gridMap.GetMovePosition(dragBuilding.buildingData, index.x, index.z));
             }
         }
     }
@@ -107,55 +111,64 @@ public class GridBuilder : MonoBehaviour
                         dragBuilding.buildingData.Id = gridMap.gridData.GetNextGuid();
                         gridMap.gridData.Put(index.x, index.z, dragBuilding.buildingData);
                     }
-                    else if (index != dragIndex)
+                    else if (index.x != dragBuilding.buildingData.x || index.z != dragBuilding.buildingData.z)
                     {
-                        gridMap.gridData.Take(dragIndex.x, dragIndex.z, dragBuilding.buildingData);
+                        gridMap.gridData.Take(dragBuilding.buildingData);
                         gridMap.gridData.Put(index.x, index.z, dragBuilding.buildingData);
                     }
-                    dragBuilding.PutPosition(gridMap.GetCellPositionCenter(index.x, index.z));
+                    dragBuilding.SetPutPosition(gridMap.GetPutPosition(dragBuilding.buildingData));
                 }
                 else {
                     if (isNewBuilding) {
                         dragBuilding.Remove();
                     } else {
-                        dragBuilding.PutPosition(gridMap.GetCellPositionCenter(dragIndex.x, dragIndex.z));
+                        dragBuilding.SetPutPosition(gridMap.GetPutPosition(dragBuilding.buildingData));
                     }
                 }
             } else {
                 if (isNewBuilding) {
                     dragBuilding.Remove();
                 } else {
-                    dragBuilding.PutPosition(gridMap.GetCellPositionCenter(dragIndex.x, dragIndex.z));
+                    dragBuilding.SetPutPosition(gridMap.GetPutPosition(dragBuilding.buildingData));
                 }
             }
             dragBuilding = null;
             isNewBuilding = false;
+            dragOffset = Vector3.zero;
         }
     }
     
-    public void CanclePlacementBuilding()
+    public void ClearPlacementBuilding()
     {
         if (dragBuilding)
         {
             if (isNewBuilding) {
                 dragBuilding.Remove();
             } else {
-                dragBuilding.PutPosition(gridMap.GetCellPositionCenter(dragIndex.x, dragIndex.z));
+                dragBuilding.SetPutPosition(gridMap.GetPutPosition(dragBuilding.buildingData));
             }
             dragBuilding = null;
             isNewBuilding = false;
+            dragOffset = Vector3.zero;
         }
     }
     
     public void SetPlacementBuilding(Building building)
     {
-        if (dragBuilding) {
-            dragBuilding.PutPosition(gridMap.GetCellPositionCenter(dragIndex.x, dragIndex.z));
+        if (dragBuilding)
+        {
+            if (isNewBuilding) {
+                dragBuilding.Remove();
+            } else {
+                dragBuilding.SetPutPosition(gridMap.GetPutPosition(dragBuilding.buildingData));
+            }
         }
-        dragBuilding = building;
-        isNewBuilding = true;
-        dragIndex = Vector3Int.zero;
-        dragOffset = Vector3.zero;
+        if (building) {
+            building.Reset();
+            dragBuilding = building;
+            isNewBuilding = true;
+            dragOffset = Vector3.zero;
+        }
     }
     
     public bool RaycastTerrain(Vector3 position, out Vector3 pos)

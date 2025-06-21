@@ -5,20 +5,24 @@ public class Building : MonoBehaviour
     [SerializeField, Range(0.1f, 1.0f)] public float takeHeight = 0.5f;
     [SerializeField, HideInInspector] public BuildingData buildingData = new();
 
-    public Vector3 Take()
+    public void Reset()
     {
-        Transform transform1 = transform;
-        Vector3 pos = transform1.position;
-        transform1.position = pos + new Vector3(0, takeHeight, 0);
-        return pos;
+        buildingData.Id = 0;
+        buildingData.x = 0;
+        buildingData.z = 0;
     }
     
-    public void SetPosition(Vector3 pos)
+    public Vector3 GetPosition()
+    {
+        return transform.position;
+    }
+    
+    public void SetMovePosition(Vector3 pos)
     {
         transform.position = pos + new Vector3(0, takeHeight, 0);
     }
     
-    public void PutPosition(Vector3 pos)
+    public void SetPutPosition(Vector3 pos)
     {
         transform.position = pos;
     }
@@ -26,5 +30,14 @@ public class Building : MonoBehaviour
     public void Remove()
     {
         DestroyImmediate(gameObject);
+    }
+    
+    public void DoShake()
+    {
+        BuildingShake shake = GetComponent<BuildingShake>();
+        if (shake == null) {
+            shake = gameObject.AddComponent<BuildingShake>();
+        }
+        shake.StartShake(new Vector3(1, 0, 1));
     }
 }

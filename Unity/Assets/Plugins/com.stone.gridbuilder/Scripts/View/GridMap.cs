@@ -13,19 +13,19 @@ public partial class GridMap : MonoBehaviour
     public Vector3Int ConvertToIndex(Vector3 point)
     {
         point -= GetPosition();
-        point /= this.gridData.cellSize;
+        point /= gridData.cellSize;
         return new Vector3Int((int)point.x, (int)point.y, (int)point.z);
     }
 
     public Vector3 GetCellPositionCenter(int x, int z)
     {
-        float offset = this.gridData.cellSize * 0.5f;
-        return transform.position + new Vector3(this.gridData.cellSize * x + offset, 0, this.gridData.cellSize * z + offset);
+        float offset = gridData.cellSize * 0.5f;
+        return transform.position + new Vector3(gridData.cellSize * x + offset, 0, gridData.cellSize * z + offset);
     }
-    
+
     public Vector3 GetCellPosition(int x, int z)
     {
-        return transform.position + new Vector3(this.gridData.cellSize * x, 0, this.gridData.cellSize * z);
+        return transform.position + new Vector3(gridData.cellSize * x, 0, gridData.cellSize * z);
     }
 
     public Vector3 GetPosition()
@@ -54,6 +54,29 @@ public partial class GridMap : MonoBehaviour
         return pos;
     }
     
+    public Vector3 GetPutPosition(BuildingData buildingData)
+    {
+        int index = 0;
+        if (gridData.CheckInside(buildingData.x, buildingData.z)) {
+            CellData cellData = gridData.GetCell(buildingData.x, buildingData.z);
+            index = cellData.contentIds.IndexOf(buildingData.Id);
+        }
+
+        float x = gridData.cellSize * (buildingData.x + 0.5f);
+        float y = gridData.cellSize * index;
+        float z = gridData.cellSize * (buildingData.z + 0.5f);
+        return transform.position + new Vector3(x, y, z);
+    }
+    
+    public Vector3 GetMovePosition(BuildingData buildingData, int x, int z)
+    {
+        int index = this.gridData.GetPutLevel(x, z, buildingData);
+        float x1 = gridData.cellSize * (x + 0.5f);
+        float y1 = gridData.cellSize * index;
+        float z1 = gridData.cellSize * (z + 0.5f);
+        return transform.position + new Vector3(x1, y1, z1);
+    }
+    
     public bool TryPut(Building building, bool resetPosition = true)
     {
         Vector3Int index = ConvertToIndex(building.transform.position);
@@ -80,17 +103,17 @@ public partial class GridMap : MonoBehaviour
         }
         drawPoints.Clear();
 
-        int xLength = this.gridData.xLength;
-        int zLength = this.gridData.zLength;
-        float size = this.gridData.cellSize;
+        int xLength = gridData.xLength;
+        int zLength = gridData.zLength;
+        float size = gridData.cellSize;
         
         Gizmos.color = Color.yellow;
         for (int x = 0; x < xLength + 1; x++)
         {
             for (int z = 0; z < zLength; ++z)
             {
-                if ((x - 1 < 0 || this.gridData.cells[x - 1 + z * xLength].isFill)
-                    && (x >= xLength || this.gridData.cells[x + z * xLength].isFill)) {
+                if ((x - 1 < 0 || gridData.cells[x - 1 + z * xLength].isFill)
+                    && (x >= xLength || gridData.cells[x + z * xLength].isFill)) {
                     continue;
                 }
                 Vector3 start = this.GetPosition() + new Vector3(x * size, yOffset, z * size);
@@ -100,8 +123,8 @@ public partial class GridMap : MonoBehaviour
                 {
                     Vector3 end = this.GetPosition() + new Vector3(x * size, yOffset, z * size);
                     drawPoints.Add(end);
-                    if ((x - 1 >= 0 && !this.gridData.cells[x - 1 + z * xLength].isFill)
-                        || (x < xLength && !this.gridData.cells[x + z * xLength].isFill)) {
+                    if ((x - 1 >= 0 && !gridData.cells[x - 1 + z * xLength].isFill)
+                        || (x < xLength && !gridData.cells[x + z * xLength].isFill)) {
                         continue;
                     }
                     Gizmos.DrawLine(start, end);
@@ -121,16 +144,16 @@ public partial class GridMap : MonoBehaviour
         {
             for (int x = 0; x < xLength; ++x)
             {
-                if ((z - 1 < 0 || this.gridData.cells[x + (z - 1) * xLength].isFill)
-                    && (z >= zLength || this.gridData.cells[x + z * xLength].isFill)) {
+                if ((z - 1 < 0 || gridData.cells[x + (z - 1) * xLength].isFill)
+                    && (z >= zLength || gridData.cells[x + z * xLength].isFill)) {
                     continue;
                 }
                 Vector3 start = this.GetPosition() + new Vector3(x * size, yOffset, z * size);
                 
                 for (; x < xLength; ++x)
                 {
-                    if ((z - 1 >= 0 && !this.gridData.cells[x + (z - 1) * xLength].isFill)
-                        || (z < zLength && !this.gridData.cells[x + z * xLength].isFill)) {
+                    if ((z - 1 >= 0 && !gridData.cells[x + (z - 1) * xLength].isFill)
+                        || (z < zLength && !gridData.cells[x + z * xLength].isFill)) {
                         continue;
                     }
                     Vector3 end = this.GetPosition() + new Vector3(x * size, yOffset, z * size);

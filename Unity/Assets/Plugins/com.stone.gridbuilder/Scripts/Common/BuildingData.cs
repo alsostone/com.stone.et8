@@ -7,11 +7,13 @@ public class BuildingData
     public static int height = 5;
     public static int xOffset = 2;
     public static int zOffset = 2;
-
+    private static bool[] temp = new bool[width * height];
+    
     public long Id;
+    public int x;
+    public int z;
     public bool[] points = new bool[width * height];
-    private bool[] points2 = new bool[width * height];
-
+    
     public BuildingData(){ }
     
     public BuildingData(long id, bool[] points)
@@ -51,7 +53,7 @@ public class BuildingData
     
     public void Rotation(int r)
     {
-        Rotation(points, points2, r);
-        (points, points2) = (points2, points);
+        Rotation(points, temp, r);
+        (points, temp) = (temp, points);
     }
 }
