@@ -65,7 +65,6 @@ public class GridMapIndicator : MonoBehaviour
                     indicators[(x1, z1)] = indicator;
                     indicator.DoAdd(this, gridMap.GetLevelPosition(x1, z1, id));
                     //indicator.DoAdd(this, gridMap.GetCellPosition(x1, z1));
-                    
                 }
                 keepIndicators.Add(indicator);
                 
