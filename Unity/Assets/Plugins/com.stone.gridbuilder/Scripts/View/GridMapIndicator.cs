@@ -63,10 +63,12 @@ public class GridMapIndicator : MonoBehaviour
                         indicator = go.GetComponent<CellIndicator>();
                     }
                     indicators[(x1, z1)] = indicator;
+                    indicator.DoAdd(this, gridMap.GetLevelPosition(x1, z1, id));
+                    //indicator.DoAdd(this, gridMap.GetCellPosition(x1, z1));
+                    
                 }
                 keepIndicators.Add(indicator);
                 
-                indicator.DoAdd(this, gridMap.GetCellPosition(x1, z1));
                 Color color = new Color(1f, 0.0f, 0.0f, 0.5f);
                 if (gridData.IsInside(x1, z1) && !gridData.GetCell(x1, z1).isObstacle)
                     color = new Color(0.0f, 1f, 0.0f, 0.5f);

@@ -33,9 +33,22 @@ public class GridMapEditor : Editor
             gridMap.gridData.ResetCells();
             GenerateObstacle(gridMap);
             GenerateBuilding(gridMap);
+            EditorUtility.SetDirty(gridMap);
+
+            GridMapLines lines = FindObjectOfType<GridMapLines>();
+            if (lines != null)
+            {
+                lines.GenerateLines();
+                EditorUtility.SetDirty(lines);
+            }
+            GridMapTiles tiles = FindObjectOfType<GridMapTiles>();
+            if (tiles != null)
+            {
+                tiles.GenerateTiles();
+                EditorUtility.SetDirty(tiles);
+            }
             
             if (!Application.isPlaying) {
-                EditorUtility.SetDirty(gridMap);
                 EditorSceneManager.MarkSceneDirty(gridMap.gameObject.scene);
             }
         }

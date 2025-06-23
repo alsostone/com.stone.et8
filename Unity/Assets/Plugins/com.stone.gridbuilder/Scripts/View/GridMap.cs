@@ -31,8 +31,8 @@ public partial class GridMap : MonoBehaviour
     
     public Vector3 RaycastPosition(int x, int z)
     {
-        Vector3 pos = transform.position + new Vector3(gridData.cellSize * x, yHeight, gridData.cellSize * z);
-        if (Physics.Raycast(new Vector3(pos.x, pos.y + raycastHeight, pos.z), Vector3.down, out RaycastHit hit, raycastHeight, terrainMask)) {
+        Vector3 pos = transform.position + new Vector3(gridData.cellSize * x, 0, gridData.cellSize * z);
+        if (Physics.Raycast(new Vector3(pos.x, raycastHeight, pos.z), Vector3.down, out RaycastHit hit, raycastHeight, terrainMask)) {
             pos.y = hit.point.y + yHeight;
         } else {
             pos.y = GetPosition().y + yHeight;
@@ -42,7 +42,7 @@ public partial class GridMap : MonoBehaviour
     
     public Vector3 RaycastPosition(Vector3 pos)
     {
-        if (Physics.Raycast(new Vector3(pos.x, pos.y + raycastHeight, pos.z), Vector3.down, out RaycastHit hit, raycastHeight, terrainMask)) {
+        if (Physics.Raycast(new Vector3(pos.x, raycastHeight, pos.z), Vector3.down, out RaycastHit hit, raycastHeight, terrainMask)) {
             pos.y = hit.point.y + yHeight;
         } else {
             pos.y = GetPosition().y + yHeight;
@@ -52,23 +52,34 @@ public partial class GridMap : MonoBehaviour
     
     public Vector3 GetPutPosition(BuildingData buildingData)
     {
-        int index = 0;
+        int level = 0;
         if (gridData.IsInside(buildingData.x, buildingData.z)) {
             CellData cellData = gridData.GetCell(buildingData.x, buildingData.z);
-            index = cellData.contentIds.IndexOf(buildingData.Id);
+            level = cellData.contentIds.IndexOf(buildingData.Id);
         }
 
         float x = gridData.cellSize * (buildingData.x + 0.5f);
-        float y = gridData.cellSize * index;
+        float y = gridData.cellSize * level;
         float z = gridData.cellSize * (buildingData.z + 0.5f);
         return transform.position + new Vector3(x, y, z);
     }
     
-    public Vector3 GetMovePosition(BuildingData buildingData, int x, int z)
+    public Vector3 GetMovePosition(int x, int z, BuildingData buildingData)
     {
-        int index = gridData.GetPutLevel(x, z, buildingData);
+        int level = gridData.GetPutLevel(x, z, buildingData);
+        
         float x1 = gridData.cellSize * (x + 0.5f);
-        float y1 = gridData.cellSize * index;
+        float y1 = gridData.cellSize * level ;
+        float z1 = gridData.cellSize * (z + 0.5f);
+        return transform.position + new Vector3(x1, y1, z1);
+    }
+
+    public Vector3 GetLevelPosition(int x, int z, long id)
+    {
+        int level = gridData.GetLevel(x, z, id);
+        
+        float x1 = gridData.cellSize * (x + 0.5f);
+        float y1 = gridData.cellSize * level + yHeight;
         float z1 = gridData.cellSize * (z + 0.5f);
         return transform.position + new Vector3(x1, y1, z1);
     }

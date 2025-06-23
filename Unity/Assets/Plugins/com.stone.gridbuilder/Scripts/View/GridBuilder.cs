@@ -95,7 +95,7 @@ public class GridBuilder : MonoBehaviour
             if (RaycastTerrain(touchPosition, out Vector3 pos))
             {
                 Vector3Int index = gridMap.ConvertToIndex(pos + dragOffset);
-                dragBuilding.SetMovePosition(gridMap.GetMovePosition(dragBuilding.buildingData, index.x, index.z));
+                dragBuilding.SetMovePosition(gridMap.GetMovePosition(index.x, index.z, dragBuilding.buildingData));
                 if (gridMapIndicator) {
                     gridMapIndicator.GenerateIndicator(index.x, index.z, dragBuilding.buildingData.Id);
                 }

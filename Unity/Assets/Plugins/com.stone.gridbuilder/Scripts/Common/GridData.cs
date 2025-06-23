@@ -147,18 +147,22 @@ public class GridData
                 {
                     int x2 = x + x1 - BuildingData.xOffset;
                     int z2 = z + z1 - BuildingData.zOffset;
-                    if (IsInside(x2, z2)) {
-                        CellData data = cells[x2 + z2 * xLength];
-                        if (data.contentIds.IndexOf(buildingData.Id) != -1) {
-                            level = Math.Max(level, data.contentIds.Count - 1);
-                        } else {
-                            level = Math.Max(level, data.contentIds.Count);
-                        }
-                    }
+                    level = Math.Max(level, GetLevel(x2, z2, buildingData.Id));
                 }
             }
         }
         return level;
+    }
+
+    public int GetLevel(int x, int z, long id)
+    {
+        if (!IsInside(x, z)) return 0;
+        
+        CellData data = cells[x + z * xLength];
+        if (data.contentIds.IndexOf(id) != -1) {
+            return data.contentIds.Count - 1;
+        }
+        return data.contentIds.Count;
     }
     
     public void SetObstacle(int x, int z, bool isObstacle)
