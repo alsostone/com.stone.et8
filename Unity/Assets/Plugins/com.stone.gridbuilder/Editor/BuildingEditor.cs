@@ -7,7 +7,7 @@ public class BuildingEditor : Editor
 {
     public override void OnInspectorGUI()
     {
-        this.DrawDefaultInspector();
+        DrawDefaultInspector();
         
         Building building = target as Building;
         GUILayout.Label($"Id({building.buildingData.Id})  Shape", EditorStyles.boldLabel);

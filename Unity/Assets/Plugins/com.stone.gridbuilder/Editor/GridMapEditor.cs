@@ -7,7 +7,7 @@ public class GridMapEditor : Editor
 {
     public override void OnInspectorGUI()
     {
-        this.DrawDefaultInspector();
+        DrawDefaultInspector();
         
         GridMap gridMap = target as GridMap;
         GUILayout.BeginHorizontal();
@@ -48,7 +48,7 @@ public class GridMapEditor : Editor
         {
             for (int z = 0; z < gridData.zLength; z++)
             {
-                Vector3 pos = gridMap.GetCellPositionCenter(x, z);
+                Vector3 pos = gridMap.GetCellPosition(x, z);
                 pos.y = gridMap.raycastHeight;
 
                 var offset = gridData.cellSize / 2 * gridMap.raycastFineness;

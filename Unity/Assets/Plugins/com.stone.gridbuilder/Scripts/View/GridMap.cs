@@ -7,7 +7,8 @@ public partial class GridMap : MonoBehaviour
     [SerializeField, Range(0.1f, 2.0f)] public float raycastFineness = 0.5f;
     [SerializeField] public LayerMask obstacleMask;
     [SerializeField] public LayerMask terrainMask;
-    
+    [SerializeField, Min(0.01f)] public float yHeight = 0.01f;
+
     [SerializeField, HideInInspector] public GridData gridData = new();
 
     public Vector3Int ConvertToIndex(Vector3 point)
@@ -17,15 +18,10 @@ public partial class GridMap : MonoBehaviour
         return new Vector3Int((int)point.x, (int)point.y, (int)point.z);
     }
 
-    public Vector3 GetCellPositionCenter(int x, int z)
-    {
-        float offset = gridData.cellSize * 0.5f;
-        return transform.position + new Vector3(gridData.cellSize * x + offset, 0, gridData.cellSize * z + offset);
-    }
-
     public Vector3 GetCellPosition(int x, int z)
     {
-        return transform.position + new Vector3(gridData.cellSize * x, 0, gridData.cellSize * z);
+        float offset = gridData.cellSize * 0.5f;
+        return transform.position + new Vector3(gridData.cellSize * x + offset, yHeight, gridData.cellSize * z + offset);
     }
 
     public Vector3 GetPosition()
@@ -35,21 +31,21 @@ public partial class GridMap : MonoBehaviour
     
     public Vector3 RaycastPosition(int x, int z)
     {
-        Vector3 pos = GetCellPosition(x, z);
-        if (Physics.Raycast(pos, Vector3.down, out RaycastHit hit, raycastHeight, terrainMask)) {
-            pos.y = hit.point.y + 0.01f;
+        Vector3 pos = transform.position + new Vector3(gridData.cellSize * x, yHeight, gridData.cellSize * z);
+        if (Physics.Raycast(new Vector3(pos.x, pos.y + raycastHeight, pos.z), Vector3.down, out RaycastHit hit, raycastHeight, terrainMask)) {
+            pos.y = hit.point.y + yHeight;
         } else {
-            pos.y = GetPosition().y + 0.01f;
+            pos.y = GetPosition().y + yHeight;
         }
         return pos;
     }
     
     public Vector3 RaycastPosition(Vector3 pos)
     {
-        if (Physics.Raycast(new Vector3(pos.x, raycastHeight, pos.z), Vector3.down, out RaycastHit hit, raycastHeight, terrainMask)) {
-            pos.y = hit.point.y + 0.01f;
+        if (Physics.Raycast(new Vector3(pos.x, pos.y + raycastHeight, pos.z), Vector3.down, out RaycastHit hit, raycastHeight, terrainMask)) {
+            pos.y = hit.point.y + yHeight;
         } else {
-            pos.y = GetPosition().y + 0.01f;
+            pos.y = GetPosition().y + yHeight;
         }
         return pos;
     }
@@ -57,7 +53,7 @@ public partial class GridMap : MonoBehaviour
     public Vector3 GetPutPosition(BuildingData buildingData)
     {
         int index = 0;
-        if (gridData.CheckInside(buildingData.x, buildingData.z)) {
+        if (gridData.IsInside(buildingData.x, buildingData.z)) {
             CellData cellData = gridData.GetCell(buildingData.x, buildingData.z);
             index = cellData.contentIds.IndexOf(buildingData.Id);
         }
@@ -70,7 +66,7 @@ public partial class GridMap : MonoBehaviour
     
     public Vector3 GetMovePosition(BuildingData buildingData, int x, int z)
     {
-        int index = this.gridData.GetPutLevel(x, z, buildingData);
+        int index = gridData.GetPutLevel(x, z, buildingData);
         float x1 = gridData.cellSize * (x + 0.5f);
         float y1 = gridData.cellSize * index;
         float z1 = gridData.cellSize * (z + 0.5f);
@@ -100,12 +96,12 @@ public partial class GridMap : MonoBehaviour
                     && (x >= xLength || gridData.cells[x + z * xLength].isFill)) {
                     continue;
                 }
-                Vector3 start = this.GetPosition() + new Vector3(x * size, yOffset, z * size);
+                Vector3 start = GetPosition() + new Vector3(x * size, yOffset, z * size);
                 drawPoints.Add(start);
                 
                 for (; z < zLength; ++z)
                 {
-                    Vector3 end = this.GetPosition() + new Vector3(x * size, yOffset, z * size);
+                    Vector3 end = GetPosition() + new Vector3(x * size, yOffset, z * size);
                     drawPoints.Add(end);
                     if ((x - 1 >= 0 && !gridData.cells[x - 1 + z * xLength].isFill)
                         || (x < xLength && !gridData.cells[x + z * xLength].isFill)) {
@@ -117,7 +113,7 @@ public partial class GridMap : MonoBehaviour
 
                 if (z == zLength)
                 {
-                    Vector3 end = this.GetPosition() + new Vector3(x * size, yOffset, zLength * size);
+                    Vector3 end = GetPosition() + new Vector3(x * size, yOffset, zLength * size);
                     drawPoints.Add(end);
                     Gizmos.DrawLine(start, end);
                 }
@@ -132,7 +128,7 @@ public partial class GridMap : MonoBehaviour
                     && (z >= zLength || gridData.cells[x + z * xLength].isFill)) {
                     continue;
                 }
-                Vector3 start = this.GetPosition() + new Vector3(x * size, yOffset, z * size);
+                Vector3 start = GetPosition() + new Vector3(x * size, yOffset, z * size);
                 
                 for (; x < xLength; ++x)
                 {
@@ -140,14 +136,14 @@ public partial class GridMap : MonoBehaviour
                         || (z < zLength && !gridData.cells[x + z * xLength].isFill)) {
                         continue;
                     }
-                    Vector3 end = this.GetPosition() + new Vector3(x * size, yOffset, z * size);
+                    Vector3 end = GetPosition() + new Vector3(x * size, yOffset, z * size);
                     Gizmos.DrawLine(start, end);
                     break;
                 }
 
                 if (x == xLength)
                 {
-                    Vector3 end = this.GetPosition() + new Vector3(xLength * size, yOffset, z * size);
+                    Vector3 end = GetPosition() + new Vector3(xLength * size, yOffset, z * size);
                     Gizmos.DrawLine(start, end);
                 }
             }

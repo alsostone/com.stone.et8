@@ -7,7 +7,7 @@ public class GridMapTilesEditor : Editor
 {
     public override void OnInspectorGUI()
     {
-        this.DrawDefaultInspector();
+        DrawDefaultInspector();
         
         GridMapTiles gridMapTiles = target as GridMapTiles;
         if (GUILayout.Button("Force Refresh"))

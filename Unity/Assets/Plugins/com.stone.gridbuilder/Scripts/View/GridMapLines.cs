@@ -6,6 +6,12 @@ public class GridMapLines : MonoBehaviour
 {
     public GridMap gridMap;
     
+    private void Awake()
+    {
+        if (gridMap == null)
+            gridMap = FindObjectOfType<GridMap>();
+    }
+
     public void GenerateLines()
     {
         GridData gridData = gridMap.gridData;

@@ -7,7 +7,7 @@ public class GridMapLinesEditor : Editor
 {
     public override void OnInspectorGUI()
     {
-        this.DrawDefaultInspector();
+        DrawDefaultInspector();
         
         GridMapLines gridMapLines = target as GridMapLines;
         if (GUILayout.Button("Force Refresh"))

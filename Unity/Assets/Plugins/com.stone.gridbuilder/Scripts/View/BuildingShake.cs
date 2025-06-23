@@ -30,7 +30,7 @@ public class BuildingShake : MonoBehaviour
     // 开始震动
     public void StartShake(Vector3 multiplier)
     {
-        this.axisMultiplier = multiplier;
+        axisMultiplier = multiplier;
         if (shakeCoroutine != null)
         {
             StopCoroutine(shakeCoroutine);

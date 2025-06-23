@@ -5,6 +5,7 @@ public class GridBuilder : MonoBehaviour
 {
     [SerializeField] public Camera rayCamera;
     [SerializeField] public GridMap gridMap;
+    [SerializeField] public GridMapIndicator gridMapIndicator;
     [SerializeField] public float raycastDistance = 1000.0f;
 
     private bool isNewBuilding;
@@ -18,6 +19,8 @@ public class GridBuilder : MonoBehaviour
             rayCamera = Camera.main;
         if (gridMap == null)
             gridMap = FindObjectOfType<GridMap>();
+        if (gridMapIndicator == null)
+            gridMapIndicator = FindObjectOfType<GridMapIndicator>();
     }
 
     private void Update()
@@ -93,6 +96,9 @@ public class GridBuilder : MonoBehaviour
             {
                 Vector3Int index = gridMap.ConvertToIndex(pos + dragOffset);
                 dragBuilding.SetMovePosition(gridMap.GetMovePosition(dragBuilding.buildingData, index.x, index.z));
+                if (gridMapIndicator) {
+                    gridMapIndicator.GenerateIndicator(index.x, index.z, dragBuilding.buildingData.Id);
+                }
             }
         }
     }
@@ -135,6 +141,9 @@ public class GridBuilder : MonoBehaviour
             dragBuilding = null;
             isNewBuilding = false;
             dragOffset = Vector3.zero;
+            if (gridMapIndicator) {
+                gridMapIndicator.ClearIndicator();
+            }
         }
     }
     

@@ -39,7 +39,7 @@ public class GridData
         return cells[x + z * xLength];
     }
     
-    public bool CheckInside(int x, int z)
+    public bool IsInside(int x, int z)
     {
         return x >= 0 && z >= 0 && x < xLength && z < zLength;
     }
@@ -57,7 +57,7 @@ public class GridData
                 {
                     int x2 = buildingData.x + x1 - BuildingData.xOffset;
                     int z2 = buildingData.z + z1 - BuildingData.zOffset;
-                    if (!CheckInside(x2, z2)) {
+                    if (!IsInside(x2, z2)) {
                         return false;
                     }
                     CellData data = cells[x2 + z2 * xLength];
@@ -97,7 +97,7 @@ public class GridData
                 {
                     int x2 = x + x1 - BuildingData.xOffset;
                     int z2 = z + z1 - BuildingData.zOffset;
-                    if (!CheckInside(x2, z2)) {
+                    if (!IsInside(x2, z2)) {
                         return false;
                     }
                     CellData data = cells[x2 + z2 * xLength];
@@ -147,7 +147,7 @@ public class GridData
                 {
                     int x2 = x + x1 - BuildingData.xOffset;
                     int z2 = z + z1 - BuildingData.zOffset;
-                    if (CheckInside(x2, z2)) {
+                    if (IsInside(x2, z2)) {
                         CellData data = cells[x2 + z2 * xLength];
                         if (data.contentIds.IndexOf(buildingData.Id) != -1) {
                             level = Math.Max(level, data.contentIds.Count - 1);
@@ -163,7 +163,7 @@ public class GridData
     
     public void SetObstacle(int x, int z, bool isObstacle)
     {
-        if (CheckInside(x, z))
+        if (IsInside(x, z))
         {
             cells[x + z * xLength].isObstacle = isObstacle;
         }

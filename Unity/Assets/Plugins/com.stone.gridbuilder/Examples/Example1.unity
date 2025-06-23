@@ -462,6 +462,7 @@ MonoBehaviour:
   terrainMask:
     serializedVersion: 2
     m_Bits: 8192
+  yHeight: 0.01
   gridData:
     xLength: 23
     zLength: 20
