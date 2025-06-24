@@ -98,7 +98,7 @@ public class GridBuilder : MonoBehaviour
                 int targetLevel = gridMap.gridData.GetLevel(index.x, index.z, dragBuilding.buildingData);
                 dragBuilding.SetMovePosition(gridMap.GetLevelPosition(index.x, index.z, targetLevel));
                 if (gridMapIndicator) {
-                    gridMapIndicator.GenerateIndicator(index.x, index.z, targetLevel, dragBuilding.buildingData.Id);
+                    gridMapIndicator.GenerateIndicator(index.x, index.z, targetLevel, dragBuilding.buildingData);
                 }
             }
         }

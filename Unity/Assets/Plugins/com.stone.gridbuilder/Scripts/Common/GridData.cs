@@ -139,6 +139,16 @@ public class GridData
         buildingData.z = z;
     }
     
+    public bool IsInsideShape(int xOffset, int zOffset, BuildingData buildingData)
+    {
+        int x = xOffset + BuildingData.xOffset;
+        int z = zOffset + BuildingData.zOffset;
+        if (x < 0 || x >= BuildingData.width || z < 0 || z >= BuildingData.height) {
+            return false;
+        }
+        return buildingData.points[x + z * BuildingData.width];
+    }
+    
     public int GetLevel(int x, int z, BuildingData buildingData)
     {
         int level = 0;

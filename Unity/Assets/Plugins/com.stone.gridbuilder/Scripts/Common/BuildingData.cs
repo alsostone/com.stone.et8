@@ -26,14 +26,16 @@ public class BuildingData
     public void Rotation(bool[] from, bool[] to, int r)
     {
         rotation += r;
-        rotation = ((rotation % 4) + 4) % 4;
+        rotation = (rotation % 4 + 4) % 4;
+        
+        r = (r % 4 + 4) % 4;
         for (int x1 = 0; x1 < width; x1++)
         {
             for (int z1 = 0; z1 < height; z1++)
             {
                 int x2 = x1;
                 int z2 = z1;
-                switch (rotation)
+                switch (r)
                 {
                     case 1:
                         x2 = z1;
