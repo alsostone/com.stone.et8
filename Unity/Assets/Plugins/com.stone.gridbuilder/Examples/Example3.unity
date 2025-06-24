@@ -184,7 +184,7 @@ PrefabInstance:
     - target: {fileID: 3117728376025562796, guid: dc83affa9d6044736a8613cc17a98906,
         type: 3}
       propertyPath: m_Name
-      value: Building4hI
+      value: Block4hI
       objectReference: {fileID: 0}
     - target: {fileID: 3117728376025562796, guid: dc83affa9d6044736a8613cc17a98906,
         type: 3}
@@ -490,7 +490,7 @@ PrefabInstance:
     - target: {fileID: 3117728376025562796, guid: e540eeeea90fd4808be148374b95dd0c,
         type: 3}
       propertyPath: m_Name
-      value: Building4vI
+      value: Block4vI
       objectReference: {fileID: 0}
     - target: {fileID: 3117728376025562796, guid: e540eeeea90fd4808be148374b95dd0c,
         type: 3}
@@ -7395,7 +7395,7 @@ PrefabInstance:
     - target: {fileID: 3117728376025562796, guid: 113b4ee2df44d4cf389c313a3e88027e,
         type: 3}
       propertyPath: m_Name
-      value: Building5T
+      value: Block5T
       objectReference: {fileID: 0}
     - target: {fileID: 6178925463495704729, guid: 113b4ee2df44d4cf389c313a3e88027e,
         type: 3}
@@ -7503,6 +7503,8 @@ MonoBehaviour:
   - {fileID: 3117728376025562796, guid: dc83affa9d6044736a8613cc17a98906, type: 3}
   - {fileID: 3117728376025562796, guid: e540eeeea90fd4808be148374b95dd0c, type: 3}
   - {fileID: 3117728376025562796, guid: 113b4ee2df44d4cf389c313a3e88027e, type: 3}
+  - {fileID: 3117728376025562796, guid: 6898e9c3e58f94aa5a462ef89e8855e2, type: 3}
+  - {fileID: 3117728376025562796, guid: 399f2f6f4e1534c028ca7bb9b57bc3bb, type: 3}
 --- !u!1 &1899506827
 GameObject:
   m_ObjectHideFlags: 0

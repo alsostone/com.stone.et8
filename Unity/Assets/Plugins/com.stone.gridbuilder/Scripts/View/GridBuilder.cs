@@ -68,7 +68,7 @@ public class GridBuilder : MonoBehaviour
     {
         if (!dragPlacement)
         {
-            if (RaycastTarget(touchPosition, out var pos, out var target))
+            if (RaycastTarget(touchPosition, out GameObject target))
             {
                 Placement buiding = target.GetComponent<Placement>();
                 if (!buiding) {
@@ -79,6 +79,7 @@ public class GridBuilder : MonoBehaviour
                 if (gridMap.gridData.CanTake(buiding.placementData))
                 {
                     dragPlacement = buiding;
+                    RaycastTerrain(touchPosition, out Vector3 pos);
                     dragOffset = position - pos;
                     return true;
                 }
@@ -213,10 +214,9 @@ public class GridBuilder : MonoBehaviour
         return false;
     }
 
-    public bool RaycastTarget(Vector3 position, out Vector3 pos, out GameObject target)
+    public bool RaycastTarget(Vector3 position, out GameObject target)
     {
         target = null;
-        pos = default;
         
         if (rayCamera == null) {
             return false;
@@ -224,7 +224,6 @@ public class GridBuilder : MonoBehaviour
 
         Ray ray = rayCamera.ScreenPointToRay(position);
         if (Physics.Raycast(ray, out RaycastHit hit, raycastDistance)) {
-            pos = hit.point;
             target = hit.collider.gameObject;
             return true;
         }
@@ -234,7 +233,7 @@ public class GridBuilder : MonoBehaviour
 #if UNITY_EDITOR
     private void OnDrawGizmos()
     {
-        if (RaycastTarget(Input.mousePosition, out Vector3 pos, out var _))
+        if (RaycastTerrain(Input.mousePosition, out Vector3 pos))
         {
             Gizmos.color = Color.red;
             Gizmos.DrawLine(rayCamera.transform.position, pos);
