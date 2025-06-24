@@ -50,14 +50,14 @@ public class GridData
         return ++currentGuid;
     }
     
-    public bool CanTake(BuildingData buildingData)
+    public bool CanTake(PlacementData placementData)
     {
-        for (int x1 = 0; x1 < BuildingData.width; x1++) {
-            for (int z1 = 0; z1 < BuildingData.height; z1++) {
-                if (buildingData.points[x1 + z1 * BuildingData.width])
+        for (int x1 = 0; x1 < PlacementData.width; x1++) {
+            for (int z1 = 0; z1 < PlacementData.height; z1++) {
+                if (placementData.points[x1 + z1 * PlacementData.width])
                 {
-                    int x2 = buildingData.x + x1 - BuildingData.xOffset;
-                    int z2 = buildingData.z + z1 - BuildingData.zOffset;
+                    int x2 = placementData.x + x1 - PlacementData.xOffset;
+                    int z2 = placementData.z + z1 - PlacementData.zOffset;
                     if (!IsInside(x2, z2)) {
                         return false;
                     }
@@ -65,7 +65,7 @@ public class GridData
                     if (data.contentIds.Count == 0) {
                         return false;
                     }
-                    if (data.contentIds[^1] != buildingData.Id) {
+                    if (data.contentIds[^1] != placementData.Id) {
                         return false;
                     }
                 }
@@ -74,30 +74,30 @@ public class GridData
         return true;
     }
     
-    public void Take(BuildingData buildingData)
+    public void Take(PlacementData placementData)
     {
-        for (int x1 = 0; x1 < BuildingData.width; x1++) {
-            for (int z1 = 0; z1 < BuildingData.height; z1++) {
-                if (buildingData.points[x1 + z1 * BuildingData.width])
+        for (int x1 = 0; x1 < PlacementData.width; x1++) {
+            for (int z1 = 0; z1 < PlacementData.height; z1++) {
+                if (placementData.points[x1 + z1 * PlacementData.width])
                 {
-                    int x2 = buildingData.x + x1 - BuildingData.xOffset;
-                    int z2 = buildingData.z + z1 - BuildingData.zOffset;
+                    int x2 = placementData.x + x1 - PlacementData.xOffset;
+                    int z2 = placementData.z + z1 - PlacementData.zOffset;
                     CellData cellData = cells[x2 + z2 * xLength];
-                    cellData.contentIds.Remove(buildingData.Id);
+                    cellData.contentIds.Remove(placementData.Id);
                 }
             }
         }
     }
 
-    public bool CanPut(int x, int z, BuildingData buildingData)
+    public bool CanPut(int x, int z, PlacementData placementData)
     {
         int level = -1;
-        for (int x1 = 0; x1 < BuildingData.width; x1++) {
-            for (int z1 = 0; z1 < BuildingData.height; z1++) {
-                if (buildingData.points[x1 + z1 * BuildingData.width])
+        for (int x1 = 0; x1 < PlacementData.width; x1++) {
+            for (int z1 = 0; z1 < PlacementData.height; z1++) {
+                if (placementData.points[x1 + z1 * PlacementData.width])
                 {
-                    int x2 = x + x1 - BuildingData.xOffset;
-                    int z2 = z + z1 - BuildingData.zOffset;
+                    int x2 = x + x1 - PlacementData.xOffset;
+                    int z2 = z + z1 - PlacementData.zOffset;
                     if (!IsInside(x2, z2)) {
                         return false;
                     }
@@ -107,7 +107,7 @@ public class GridData
                     }
 
                     int count = data.contentIds.Count;
-                    if (data.contentIds.IndexOf(buildingData.Id) != -1) {
+                    if (data.contentIds.IndexOf(placementData.Id) != -1) {
                         count = count - 1;
                     }
 
@@ -125,31 +125,31 @@ public class GridData
         return true;
     }
     
-    public void Put(int x, int z, BuildingData buildingData)
+    public void Put(int x, int z, PlacementData placementData)
     {
-        for (int x1 = 0; x1 < BuildingData.width; x1++) {
-            for (int z1 = 0; z1 < BuildingData.height; z1++) {
-                if (buildingData.points[x1 + z1 * BuildingData.width])
+        for (int x1 = 0; x1 < PlacementData.width; x1++) {
+            for (int z1 = 0; z1 < PlacementData.height; z1++) {
+                if (placementData.points[x1 + z1 * PlacementData.width])
                 {
-                    int x2 = x + x1 - BuildingData.xOffset;
-                    int z2 = z + z1 - BuildingData.zOffset;
+                    int x2 = x + x1 - PlacementData.xOffset;
+                    int z2 = z + z1 - PlacementData.zOffset;
                     CellData cellData = cells[x2 + z2 * xLength];
-                    cellData.contentIds.Add(buildingData.Id);
+                    cellData.contentIds.Add(placementData.Id);
                 }
             }
         }
-        buildingData.x = x;
-        buildingData.z = z;
+        placementData.x = x;
+        placementData.z = z;
     }
     
-    public bool IsInsideShape(int xOffset, int zOffset, BuildingData buildingData)
+    public bool IsInsideShape(int xOffset, int zOffset, PlacementData placementData)
     {
-        int x = xOffset + BuildingData.xOffset;
-        int z = zOffset + BuildingData.zOffset;
-        if (x < 0 || x >= BuildingData.width || z < 0 || z >= BuildingData.height) {
+        int x = xOffset + PlacementData.xOffset;
+        int z = zOffset + PlacementData.zOffset;
+        if (x < 0 || x >= PlacementData.width || z < 0 || z >= PlacementData.height) {
             return false;
         }
-        return buildingData.points[x + z * BuildingData.width];
+        return placementData.points[x + z * PlacementData.width];
     }
 
     public bool CanPutLevel(int level)
@@ -157,16 +157,16 @@ public class GridData
         return levelMax == -1 || levelMax > level;
     }
     
-    public int GetLevel(int x, int z, BuildingData buildingData)
+    public int GetLevel(int x, int z, PlacementData placementData)
     {
         int level = 0;
-        for (int x1 = 0; x1 < BuildingData.width; x1++) {
-            for (int z1 = 0; z1 < BuildingData.height; z1++) {
-                if (buildingData.points[x1 + z1 * BuildingData.width])
+        for (int x1 = 0; x1 < PlacementData.width; x1++) {
+            for (int z1 = 0; z1 < PlacementData.height; z1++) {
+                if (placementData.points[x1 + z1 * PlacementData.width])
                 {
-                    int x2 = x + x1 - BuildingData.xOffset;
-                    int z2 = z + z1 - BuildingData.zOffset;
-                    level = Math.Max(level, GetLevel(x2, z2, buildingData.Id));
+                    int x2 = x + x1 - PlacementData.xOffset;
+                    int z2 = z + z1 - PlacementData.zOffset;
+                    level = Math.Max(level, GetLevel(x2, z2, placementData.Id));
                 }
             }
         }

@@ -1,7 +1,7 @@
 using System;
 
 [Serializable]
-public class BuildingData
+public class PlacementData
 {
     public static int width = 5;
     public static int height = 5;
@@ -15,9 +15,9 @@ public class BuildingData
     public int rotation;
     public bool[] points = new bool[width * height];
     
-    public BuildingData(){ }
+    public PlacementData(){ }
     
-    public BuildingData(long id, bool[] points)
+    public PlacementData(long id, bool[] points)
     {
         Id = id;
         Rotation(points, this.points, 0);

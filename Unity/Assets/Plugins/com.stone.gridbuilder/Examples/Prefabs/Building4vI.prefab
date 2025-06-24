@@ -298,13 +298,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 56941c4d1c2b421fab67a8ba3d397bad, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  putHeight: 0.5
   takeHeight: 0.5
-  buildingData:
+  placementData:
     Id: 0
     x: 0
     z: 0
     rotation: 0
-    points: 00000100000000010000000001000000000100000000000000
+    points: 00000000000000010000000001000000000100000000010000
 --- !u!65 &8098348298472188186
 BoxCollider:
   m_ObjectHideFlags: 0

@@ -9,7 +9,7 @@ public class GridBuilder : MonoBehaviour
     [SerializeField] public float raycastDistance = 1000.0f;
 
     private bool isNewBuilding;
-    private Building dragBuilding;
+    private Placement dragPlacement;
     private Vector3 dragOffset;
     private int dragFingerId = -1;
 
@@ -66,19 +66,19 @@ public class GridBuilder : MonoBehaviour
     
     private bool OnTouchBegin(Vector3 touchPosition)
     {
-        if (!dragBuilding)
+        if (!dragPlacement)
         {
             if (RaycastTarget(touchPosition, out var pos, out var target))
             {
-                Building buiding = target.GetComponent<Building>();
+                Placement buiding = target.GetComponent<Placement>();
                 if (!buiding) {
                     return false;
                 }
 
                 Vector3 position = buiding.GetPosition();
-                if (gridMap.gridData.CanTake(buiding.buildingData))
+                if (gridMap.gridData.CanTake(buiding.placementData))
                 {
-                    dragBuilding = buiding;
+                    dragPlacement = buiding;
                     dragOffset = position - pos;
                     return true;
                 }
@@ -90,15 +90,15 @@ public class GridBuilder : MonoBehaviour
 
     private void OnTouchMove(Vector3 touchPosition)
     {
-        if (dragBuilding)
+        if (dragPlacement)
         {
             if (RaycastTerrain(touchPosition, out Vector3 pos))
             {
                 Vector3Int index = gridMap.ConvertToIndex(pos + dragOffset);
-                int targetLevel = gridMap.gridData.GetLevel(index.x, index.z, dragBuilding.buildingData);
-                dragBuilding.SetMovePosition(gridMap.GetLevelPosition(index.x, index.z, targetLevel));
+                int targetLevel = gridMap.gridData.GetLevel(index.x, index.z, dragPlacement.placementData);
+                dragPlacement.SetMovePosition(gridMap.GetLevelPosition(index.x, index.z, targetLevel));
                 if (gridMapIndicator) {
-                    gridMapIndicator.GenerateIndicator(index.x, index.z, targetLevel, dragBuilding.buildingData);
+                    gridMapIndicator.GenerateIndicator(index.x, index.z, targetLevel, dragPlacement.placementData);
                 }
             }
         }
@@ -106,40 +106,40 @@ public class GridBuilder : MonoBehaviour
 
     private void OnTouchEnd(Vector3 touchPosition)
     {
-        if (dragBuilding)
+        if (dragPlacement)
         {
             if (RaycastTerrain(touchPosition, out Vector3 pos))
             {
                 Vector3Int index = gridMap.ConvertToIndex(pos + dragOffset);
-                if (gridMap.gridData.CanPut(index.x, index.z, dragBuilding.buildingData))
+                if (gridMap.gridData.CanPut(index.x, index.z, dragPlacement.placementData))
                 {
                     if (isNewBuilding)
                     {
-                        dragBuilding.buildingData.Id = gridMap.gridData.GetNextGuid();
-                        gridMap.gridData.Put(index.x, index.z, dragBuilding.buildingData);
+                        dragPlacement.placementData.Id = gridMap.gridData.GetNextGuid();
+                        gridMap.gridData.Put(index.x, index.z, dragPlacement.placementData);
                     }
-                    else if (index.x != dragBuilding.buildingData.x || index.z != dragBuilding.buildingData.z)
+                    else if (index.x != dragPlacement.placementData.x || index.z != dragPlacement.placementData.z)
                     {
-                        gridMap.gridData.Take(dragBuilding.buildingData);
-                        gridMap.gridData.Put(index.x, index.z, dragBuilding.buildingData);
+                        gridMap.gridData.Take(dragPlacement.placementData);
+                        gridMap.gridData.Put(index.x, index.z, dragPlacement.placementData);
                     }
-                    dragBuilding.SetPutPosition(gridMap.GetPutPosition(dragBuilding.buildingData));
+                    dragPlacement.SetPutPosition(gridMap.GetPutPosition(dragPlacement.placementData));
                 }
                 else {
                     if (isNewBuilding) {
-                        dragBuilding.Remove();
+                        dragPlacement.Remove();
                     } else {
-                        dragBuilding.SetPutPosition(gridMap.GetPutPosition(dragBuilding.buildingData));
+                        dragPlacement.SetPutPosition(gridMap.GetPutPosition(dragPlacement.placementData));
                     }
                 }
             } else {
                 if (isNewBuilding) {
-                    dragBuilding.Remove();
+                    dragPlacement.Remove();
                 } else {
-                    dragBuilding.SetPutPosition(gridMap.GetPutPosition(dragBuilding.buildingData));
+                    dragPlacement.SetPutPosition(gridMap.GetPutPosition(dragPlacement.placementData));
                 }
             }
-            dragBuilding = null;
+            dragPlacement = null;
             isNewBuilding = false;
             dragOffset = Vector3.zero;
             if (gridMapIndicator) {
@@ -150,32 +150,32 @@ public class GridBuilder : MonoBehaviour
     
     public void ClearPlacementBuilding()
     {
-        if (dragBuilding)
+        if (dragPlacement)
         {
             if (isNewBuilding) {
-                dragBuilding.Remove();
+                dragPlacement.Remove();
             } else {
-                dragBuilding.SetPutPosition(gridMap.GetPutPosition(dragBuilding.buildingData));
+                dragPlacement.SetPutPosition(gridMap.GetPutPosition(dragPlacement.placementData));
             }
-            dragBuilding = null;
+            dragPlacement = null;
             isNewBuilding = false;
             dragOffset = Vector3.zero;
         }
     }
     
-    public void SetPlacementBuilding(Building building)
+    public void SetPlacementBuilding(Placement placement)
     {
-        if (dragBuilding)
+        if (dragPlacement)
         {
             if (isNewBuilding) {
-                dragBuilding.Remove();
+                dragPlacement.Remove();
             } else {
-                dragBuilding.SetPutPosition(gridMap.GetPutPosition(dragBuilding.buildingData));
+                dragPlacement.SetPutPosition(gridMap.GetPutPosition(dragPlacement.placementData));
             }
         }
-        if (building) {
-            building.Reset();
-            dragBuilding = building;
+        if (placement) {
+            placement.Reset();
+            dragPlacement = placement;
             isNewBuilding = true;
             dragOffset = Vector3.zero;
         }
@@ -183,11 +183,11 @@ public class GridBuilder : MonoBehaviour
 
     public void RotationPlacementBuilding()
     {
-        if (dragBuilding)
+        if (dragPlacement)
         {
             if (isNewBuilding)
             {
-                dragBuilding.Rotation(1);
+                dragPlacement.Rotation(1);
             }
             else
             {

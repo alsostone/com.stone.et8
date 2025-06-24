@@ -206,6 +206,21 @@ PrefabInstance:
       propertyPath: buildingData.Id
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 6178925463495704729, guid: dc83affa9d6044736a8613cc17a98906,
+        type: 3}
+      propertyPath: placementData.x
+      value: 17
+      objectReference: {fileID: 0}
+    - target: {fileID: 6178925463495704729, guid: dc83affa9d6044736a8613cc17a98906,
+        type: 3}
+      propertyPath: placementData.z
+      value: 14
+      objectReference: {fileID: 0}
+    - target: {fileID: 6178925463495704729, guid: dc83affa9d6044736a8613cc17a98906,
+        type: 3}
+      propertyPath: placementData.Id
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -497,6 +512,21 @@ PrefabInstance:
       propertyPath: buildingData.Id
       value: 3
       objectReference: {fileID: 0}
+    - target: {fileID: 6178925463495704729, guid: e540eeeea90fd4808be148374b95dd0c,
+        type: 3}
+      propertyPath: placementData.x
+      value: 21
+      objectReference: {fileID: 0}
+    - target: {fileID: 6178925463495704729, guid: e540eeeea90fd4808be148374b95dd0c,
+        type: 3}
+      propertyPath: placementData.z
+      value: 14
+      objectReference: {fileID: 0}
+    - target: {fileID: 6178925463495704729, guid: e540eeeea90fd4808be148374b95dd0c,
+        type: 3}
+      propertyPath: placementData.Id
+      value: 2
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -758,6 +788,7 @@ MonoBehaviour:
     xLength: 68
     zLength: 48
     cellSize: 1
+    levelMax: 2
     cells:
     - contentIds: 
       isObstacle: 0
@@ -2333,378 +2364,6 @@ MonoBehaviour:
       isObstacle: 0
     - contentIds: 
       isObstacle: 0
-    - contentIds: 0200000000000000
-      isObstacle: 0
-    - contentIds: 
-      isObstacle: 0
-    - contentIds: 
-      isObstacle: 0
-    - contentIds: 
-      isObstacle: 0
-    - contentIds: 
-      isObstacle: 0
-    - contentIds: 
-      isObstacle: 0
-    - contentIds: 
-      isObstacle: 0
-    - contentIds: 
-      isObstacle: 0
-    - contentIds: 
-      isObstacle: 0
-    - contentIds: 
-      isObstacle: 0
-    - contentIds: 
-      isObstacle: 0
-    - contentIds: 
-      isObstacle: 0
-    - contentIds: 
-      isObstacle: 0
-    - contentIds: 
-      isObstacle: 0
-    - contentIds: 
-      isObstacle: 0
-    - contentIds: 
-      isObstacle: 0
-    - contentIds: 
-      isObstacle: 0
-    - contentIds: 
-      isObstacle: 0
-    - contentIds: 
-      isObstacle: 0
-    - contentIds: 
-      isObstacle: 0
-    - contentIds: 
-      isObstacle: 0
-    - contentIds: 
-      isObstacle: 0
-    - contentIds: 
-      isObstacle: 0
-    - contentIds: 
-      isObstacle: 0
-    - contentIds: 
-      isObstacle: 0
-    - contentIds: 
-      isObstacle: 0
-    - contentIds: 
-      isObstacle: 0
-    - contentIds: 
-      isObstacle: 0
-    - contentIds: 
-      isObstacle: 0
-    - contentIds: 
-      isObstacle: 0
-    - contentIds: 
-      isObstacle: 0
-    - contentIds: 
-      isObstacle: 0
-    - contentIds: 
-      isObstacle: 0
-    - contentIds: 
-      isObstacle: 0
-    - contentIds: 
-      isObstacle: 0
-    - contentIds: 
-      isObstacle: 0
-    - contentIds: 
-      isObstacle: 0
-    - contentIds: 
-      isObstacle: 0
-    - contentIds: 
-      isObstacle: 0
-    - contentIds: 
-      isObstacle: 0
-    - contentIds: 
-      isObstacle: 0
-    - contentIds: 
-      isObstacle: 0
-    - contentIds: 
-      isObstacle: 0
-    - contentIds: 
-      isObstacle: 0
-    - contentIds: 
-      isObstacle: 0
-    - contentIds: 
-      isObstacle: 0
-    - contentIds: 
-      isObstacle: 0
-    - contentIds: 
-      isObstacle: 0
-    - contentIds: 
-      isObstacle: 0
-    - contentIds: 
-      isObstacle: 0
-    - contentIds: 0300000000000000
-      isObstacle: 0
-    - contentIds: 
-      isObstacle: 0
-    - contentIds: 
-      isObstacle: 0
-    - contentIds: 
-      isObstacle: 0
-    - contentIds: 
-      isObstacle: 0
-    - contentIds: 
-      isObstacle: 0
-    - contentIds: 
-      isObstacle: 0
-    - contentIds: 
-      isObstacle: 0
-    - contentIds: 
-      isObstacle: 0
-    - contentIds: 
-      isObstacle: 0
-    - contentIds: 
-      isObstacle: 0
-    - contentIds: 
-      isObstacle: 0
-    - contentIds: 
-      isObstacle: 0
-    - contentIds: 
-      isObstacle: 0
-    - contentIds: 
-      isObstacle: 0
-    - contentIds: 
-      isObstacle: 0
-    - contentIds: 
-      isObstacle: 0
-    - contentIds: 
-      isObstacle: 0
-    - contentIds: 0200000000000000
-      isObstacle: 0
-    - contentIds: 
-      isObstacle: 0
-    - contentIds: 
-      isObstacle: 0
-    - contentIds: 
-      isObstacle: 0
-    - contentIds: 
-      isObstacle: 0
-    - contentIds: 
-      isObstacle: 0
-    - contentIds: 
-      isObstacle: 0
-    - contentIds: 
-      isObstacle: 0
-    - contentIds: 
-      isObstacle: 0
-    - contentIds: 
-      isObstacle: 0
-    - contentIds: 
-      isObstacle: 0
-    - contentIds: 
-      isObstacle: 0
-    - contentIds: 
-      isObstacle: 0
-    - contentIds: 
-      isObstacle: 0
-    - contentIds: 
-      isObstacle: 0
-    - contentIds: 
-      isObstacle: 0
-    - contentIds: 
-      isObstacle: 0
-    - contentIds: 
-      isObstacle: 0
-    - contentIds: 
-      isObstacle: 0
-    - contentIds: 
-      isObstacle: 0
-    - contentIds: 
-      isObstacle: 0
-    - contentIds: 
-      isObstacle: 0
-    - contentIds: 
-      isObstacle: 0
-    - contentIds: 
-      isObstacle: 0
-    - contentIds: 
-      isObstacle: 0
-    - contentIds: 
-      isObstacle: 0
-    - contentIds: 
-      isObstacle: 0
-    - contentIds: 
-      isObstacle: 0
-    - contentIds: 
-      isObstacle: 0
-    - contentIds: 
-      isObstacle: 0
-    - contentIds: 
-      isObstacle: 0
-    - contentIds: 
-      isObstacle: 0
-    - contentIds: 
-      isObstacle: 0
-    - contentIds: 
-      isObstacle: 0
-    - contentIds: 
-      isObstacle: 0
-    - contentIds: 
-      isObstacle: 0
-    - contentIds: 
-      isObstacle: 0
-    - contentIds: 
-      isObstacle: 0
-    - contentIds: 
-      isObstacle: 0
-    - contentIds: 
-      isObstacle: 0
-    - contentIds: 
-      isObstacle: 0
-    - contentIds: 
-      isObstacle: 0
-    - contentIds: 
-      isObstacle: 0
-    - contentIds: 
-      isObstacle: 0
-    - contentIds: 
-      isObstacle: 0
-    - contentIds: 
-      isObstacle: 0
-    - contentIds: 
-      isObstacle: 0
-    - contentIds: 
-      isObstacle: 0
-    - contentIds: 
-      isObstacle: 0
-    - contentIds: 
-      isObstacle: 0
-    - contentIds: 0300000000000000
-      isObstacle: 0
-    - contentIds: 
-      isObstacle: 0
-    - contentIds: 
-      isObstacle: 0
-    - contentIds: 
-      isObstacle: 0
-    - contentIds: 
-      isObstacle: 0
-    - contentIds: 
-      isObstacle: 0
-    - contentIds: 
-      isObstacle: 0
-    - contentIds: 
-      isObstacle: 0
-    - contentIds: 
-      isObstacle: 0
-    - contentIds: 
-      isObstacle: 0
-    - contentIds: 
-      isObstacle: 0
-    - contentIds: 
-      isObstacle: 0
-    - contentIds: 
-      isObstacle: 0
-    - contentIds: 
-      isObstacle: 0
-    - contentIds: 
-      isObstacle: 0
-    - contentIds: 
-      isObstacle: 0
-    - contentIds: 
-      isObstacle: 0
-    - contentIds: 0200000000000000
-      isObstacle: 0
-    - contentIds: 0200000000000000
-      isObstacle: 0
-    - contentIds: 0200000000000000
-      isObstacle: 0
-    - contentIds: 
-      isObstacle: 0
-    - contentIds: 
-      isObstacle: 0
-    - contentIds: 
-      isObstacle: 0
-    - contentIds: 
-      isObstacle: 0
-    - contentIds: 
-      isObstacle: 0
-    - contentIds: 
-      isObstacle: 0
-    - contentIds: 
-      isObstacle: 0
-    - contentIds: 
-      isObstacle: 0
-    - contentIds: 
-      isObstacle: 0
-    - contentIds: 
-      isObstacle: 0
-    - contentIds: 
-      isObstacle: 0
-    - contentIds: 
-      isObstacle: 0
-    - contentIds: 
-      isObstacle: 0
-    - contentIds: 
-      isObstacle: 0
-    - contentIds: 
-      isObstacle: 0
-    - contentIds: 
-      isObstacle: 0
-    - contentIds: 
-      isObstacle: 0
-    - contentIds: 
-      isObstacle: 0
-    - contentIds: 
-      isObstacle: 0
-    - contentIds: 
-      isObstacle: 0
-    - contentIds: 
-      isObstacle: 0
-    - contentIds: 
-      isObstacle: 0
-    - contentIds: 
-      isObstacle: 0
-    - contentIds: 
-      isObstacle: 0
-    - contentIds: 
-      isObstacle: 0
-    - contentIds: 
-      isObstacle: 0
-    - contentIds: 
-      isObstacle: 0
-    - contentIds: 
-      isObstacle: 0
-    - contentIds: 
-      isObstacle: 0
-    - contentIds: 
-      isObstacle: 0
-    - contentIds: 
-      isObstacle: 0
-    - contentIds: 
-      isObstacle: 0
-    - contentIds: 
-      isObstacle: 0
-    - contentIds: 
-      isObstacle: 0
-    - contentIds: 
-      isObstacle: 0
-    - contentIds: 
-      isObstacle: 0
-    - contentIds: 
-      isObstacle: 0
-    - contentIds: 
-      isObstacle: 0
-    - contentIds: 
-      isObstacle: 0
-    - contentIds: 
-      isObstacle: 0
-    - contentIds: 
-      isObstacle: 0
-    - contentIds: 
-      isObstacle: 0
-    - contentIds: 0100000000000000
-      isObstacle: 0
-    - contentIds: 0100000000000000
-      isObstacle: 0
-    - contentIds: 0100000000000000
-      isObstacle: 0
-    - contentIds: 0100000000000000
-      isObstacle: 0
-    - contentIds: 
-      isObstacle: 0
-    - contentIds: 
-      isObstacle: 0
     - contentIds: 0300000000000000
       isObstacle: 0
     - contentIds: 
@@ -2842,6 +2501,378 @@ MonoBehaviour:
     - contentIds: 
       isObstacle: 0
     - contentIds: 0300000000000000
+      isObstacle: 0
+    - contentIds: 
+      isObstacle: 0
+    - contentIds: 
+      isObstacle: 0
+    - contentIds: 
+      isObstacle: 0
+    - contentIds: 
+      isObstacle: 0
+    - contentIds: 
+      isObstacle: 0
+    - contentIds: 
+      isObstacle: 0
+    - contentIds: 
+      isObstacle: 0
+    - contentIds: 
+      isObstacle: 0
+    - contentIds: 
+      isObstacle: 0
+    - contentIds: 
+      isObstacle: 0
+    - contentIds: 
+      isObstacle: 0
+    - contentIds: 
+      isObstacle: 0
+    - contentIds: 
+      isObstacle: 0
+    - contentIds: 
+      isObstacle: 0
+    - contentIds: 
+      isObstacle: 0
+    - contentIds: 
+      isObstacle: 0
+    - contentIds: 
+      isObstacle: 0
+    - contentIds: 
+      isObstacle: 0
+    - contentIds: 
+      isObstacle: 0
+    - contentIds: 
+      isObstacle: 0
+    - contentIds: 
+      isObstacle: 0
+    - contentIds: 
+      isObstacle: 0
+    - contentIds: 
+      isObstacle: 0
+    - contentIds: 
+      isObstacle: 0
+    - contentIds: 
+      isObstacle: 0
+    - contentIds: 
+      isObstacle: 0
+    - contentIds: 
+      isObstacle: 0
+    - contentIds: 
+      isObstacle: 0
+    - contentIds: 
+      isObstacle: 0
+    - contentIds: 
+      isObstacle: 0
+    - contentIds: 
+      isObstacle: 0
+    - contentIds: 
+      isObstacle: 0
+    - contentIds: 
+      isObstacle: 0
+    - contentIds: 
+      isObstacle: 0
+    - contentIds: 
+      isObstacle: 0
+    - contentIds: 
+      isObstacle: 0
+    - contentIds: 
+      isObstacle: 0
+    - contentIds: 
+      isObstacle: 0
+    - contentIds: 
+      isObstacle: 0
+    - contentIds: 
+      isObstacle: 0
+    - contentIds: 
+      isObstacle: 0
+    - contentIds: 
+      isObstacle: 0
+    - contentIds: 
+      isObstacle: 0
+    - contentIds: 
+      isObstacle: 0
+    - contentIds: 
+      isObstacle: 0
+    - contentIds: 
+      isObstacle: 0
+    - contentIds: 
+      isObstacle: 0
+    - contentIds: 
+      isObstacle: 0
+    - contentIds: 
+      isObstacle: 0
+    - contentIds: 0200000000000000
+      isObstacle: 0
+    - contentIds: 
+      isObstacle: 0
+    - contentIds: 
+      isObstacle: 0
+    - contentIds: 
+      isObstacle: 0
+    - contentIds: 
+      isObstacle: 0
+    - contentIds: 
+      isObstacle: 0
+    - contentIds: 
+      isObstacle: 0
+    - contentIds: 
+      isObstacle: 0
+    - contentIds: 
+      isObstacle: 0
+    - contentIds: 
+      isObstacle: 0
+    - contentIds: 
+      isObstacle: 0
+    - contentIds: 
+      isObstacle: 0
+    - contentIds: 
+      isObstacle: 0
+    - contentIds: 
+      isObstacle: 0
+    - contentIds: 
+      isObstacle: 0
+    - contentIds: 
+      isObstacle: 0
+    - contentIds: 
+      isObstacle: 0
+    - contentIds: 0300000000000000
+      isObstacle: 0
+    - contentIds: 0300000000000000
+      isObstacle: 0
+    - contentIds: 0300000000000000
+      isObstacle: 0
+    - contentIds: 
+      isObstacle: 0
+    - contentIds: 
+      isObstacle: 0
+    - contentIds: 
+      isObstacle: 0
+    - contentIds: 
+      isObstacle: 0
+    - contentIds: 
+      isObstacle: 0
+    - contentIds: 
+      isObstacle: 0
+    - contentIds: 
+      isObstacle: 0
+    - contentIds: 
+      isObstacle: 0
+    - contentIds: 
+      isObstacle: 0
+    - contentIds: 
+      isObstacle: 0
+    - contentIds: 
+      isObstacle: 0
+    - contentIds: 
+      isObstacle: 0
+    - contentIds: 
+      isObstacle: 0
+    - contentIds: 
+      isObstacle: 0
+    - contentIds: 
+      isObstacle: 0
+    - contentIds: 
+      isObstacle: 0
+    - contentIds: 
+      isObstacle: 0
+    - contentIds: 
+      isObstacle: 0
+    - contentIds: 
+      isObstacle: 0
+    - contentIds: 
+      isObstacle: 0
+    - contentIds: 
+      isObstacle: 0
+    - contentIds: 
+      isObstacle: 0
+    - contentIds: 
+      isObstacle: 0
+    - contentIds: 
+      isObstacle: 0
+    - contentIds: 
+      isObstacle: 0
+    - contentIds: 
+      isObstacle: 0
+    - contentIds: 
+      isObstacle: 0
+    - contentIds: 
+      isObstacle: 0
+    - contentIds: 
+      isObstacle: 0
+    - contentIds: 
+      isObstacle: 0
+    - contentIds: 
+      isObstacle: 0
+    - contentIds: 
+      isObstacle: 0
+    - contentIds: 
+      isObstacle: 0
+    - contentIds: 
+      isObstacle: 0
+    - contentIds: 
+      isObstacle: 0
+    - contentIds: 
+      isObstacle: 0
+    - contentIds: 
+      isObstacle: 0
+    - contentIds: 
+      isObstacle: 0
+    - contentIds: 
+      isObstacle: 0
+    - contentIds: 
+      isObstacle: 0
+    - contentIds: 
+      isObstacle: 0
+    - contentIds: 
+      isObstacle: 0
+    - contentIds: 0100000000000000
+      isObstacle: 0
+    - contentIds: 0100000000000000
+      isObstacle: 0
+    - contentIds: 0100000000000000
+      isObstacle: 0
+    - contentIds: 0100000000000000
+      isObstacle: 0
+    - contentIds: 
+      isObstacle: 0
+    - contentIds: 
+      isObstacle: 0
+    - contentIds: 0200000000000000
+      isObstacle: 0
+    - contentIds: 
+      isObstacle: 0
+    - contentIds: 
+      isObstacle: 0
+    - contentIds: 
+      isObstacle: 0
+    - contentIds: 
+      isObstacle: 0
+    - contentIds: 
+      isObstacle: 0
+    - contentIds: 
+      isObstacle: 0
+    - contentIds: 
+      isObstacle: 0
+    - contentIds: 
+      isObstacle: 0
+    - contentIds: 
+      isObstacle: 0
+    - contentIds: 
+      isObstacle: 0
+    - contentIds: 
+      isObstacle: 0
+    - contentIds: 
+      isObstacle: 0
+    - contentIds: 
+      isObstacle: 0
+    - contentIds: 
+      isObstacle: 0
+    - contentIds: 
+      isObstacle: 0
+    - contentIds: 
+      isObstacle: 0
+    - contentIds: 
+      isObstacle: 0
+    - contentIds: 
+      isObstacle: 0
+    - contentIds: 
+      isObstacle: 0
+    - contentIds: 
+      isObstacle: 0
+    - contentIds: 
+      isObstacle: 0
+    - contentIds: 
+      isObstacle: 0
+    - contentIds: 
+      isObstacle: 0
+    - contentIds: 
+      isObstacle: 0
+    - contentIds: 
+      isObstacle: 0
+    - contentIds: 
+      isObstacle: 0
+    - contentIds: 
+      isObstacle: 0
+    - contentIds: 
+      isObstacle: 0
+    - contentIds: 
+      isObstacle: 0
+    - contentIds: 
+      isObstacle: 0
+    - contentIds: 
+      isObstacle: 0
+    - contentIds: 
+      isObstacle: 0
+    - contentIds: 
+      isObstacle: 0
+    - contentIds: 
+      isObstacle: 0
+    - contentIds: 
+      isObstacle: 0
+    - contentIds: 
+      isObstacle: 0
+    - contentIds: 
+      isObstacle: 0
+    - contentIds: 
+      isObstacle: 0
+    - contentIds: 
+      isObstacle: 0
+    - contentIds: 
+      isObstacle: 0
+    - contentIds: 
+      isObstacle: 0
+    - contentIds: 
+      isObstacle: 0
+    - contentIds: 
+      isObstacle: 0
+    - contentIds: 
+      isObstacle: 0
+    - contentIds: 
+      isObstacle: 0
+    - contentIds: 
+      isObstacle: 0
+    - contentIds: 
+      isObstacle: 0
+    - contentIds: 
+      isObstacle: 0
+    - contentIds: 
+      isObstacle: 0
+    - contentIds: 
+      isObstacle: 0
+    - contentIds: 
+      isObstacle: 0
+    - contentIds: 
+      isObstacle: 0
+    - contentIds: 
+      isObstacle: 0
+    - contentIds: 
+      isObstacle: 0
+    - contentIds: 
+      isObstacle: 0
+    - contentIds: 
+      isObstacle: 0
+    - contentIds: 
+      isObstacle: 0
+    - contentIds: 
+      isObstacle: 0
+    - contentIds: 
+      isObstacle: 0
+    - contentIds: 
+      isObstacle: 0
+    - contentIds: 
+      isObstacle: 0
+    - contentIds: 
+      isObstacle: 0
+    - contentIds: 
+      isObstacle: 0
+    - contentIds: 
+      isObstacle: 0
+    - contentIds: 
+      isObstacle: 0
+    - contentIds: 
+      isObstacle: 0
+    - contentIds: 
+      isObstacle: 0
+    - contentIds: 0200000000000000
       isObstacle: 0
     - contentIds: 
       isObstacle: 0
@@ -2977,7 +3008,7 @@ MonoBehaviour:
       isObstacle: 0
     - contentIds: 
       isObstacle: 0
-    - contentIds: 
+    - contentIds: 0200000000000000
       isObstacle: 0
     - contentIds: 
       isObstacle: 0
@@ -7380,6 +7411,21 @@ PrefabInstance:
         type: 3}
       propertyPath: buildingData.Id
       value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 6178925463495704729, guid: 113b4ee2df44d4cf389c313a3e88027e,
+        type: 3}
+      propertyPath: placementData.x
+      value: 39
+      objectReference: {fileID: 0}
+    - target: {fileID: 6178925463495704729, guid: 113b4ee2df44d4cf389c313a3e88027e,
+        type: 3}
+      propertyPath: placementData.z
+      value: 12
+      objectReference: {fileID: 0}
+    - target: {fileID: 6178925463495704729, guid: 113b4ee2df44d4cf389c313a3e88027e,
+        type: 3}
+      propertyPath: placementData.Id
+      value: 3
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

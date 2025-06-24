@@ -39,7 +39,7 @@ public class GridMapIndicator : MonoBehaviour
         indicatorPool.Add(indicator);
     }
 
-    public void GenerateIndicator(int x, int z, int targetLevel, BuildingData buildingData)
+    public void GenerateIndicator(int x, int z, int targetLevel, PlacementData placementData)
     {
         GridData gridData = gridMap.gridData;
         int halfSize = indicatorSize / 2;
@@ -49,7 +49,7 @@ public class GridMapIndicator : MonoBehaviour
         {
             for (int z1 = z - halfSize; z1 < z + halfSize; z1++)
             {
-                int indicatorLevel = gridData.GetLevel(x1, z1, buildingData.Id);
+                int indicatorLevel = gridData.GetLevel(x1, z1, placementData.Id);
                 if (!indicators.TryGetValue((x1, z1), out var indicator))
                 {
                     if (indicatorPool.Count > 0)
@@ -69,7 +69,7 @@ public class GridMapIndicator : MonoBehaviour
                 keepIndicators.Add(indicator);
                 
                 float alpha = 0.25f;
-                if (gridMap.gridData.IsInsideShape(x1 - x, z1 - z, buildingData)) {
+                if (gridMap.gridData.IsInsideShape(x1 - x, z1 - z, placementData)) {
                     alpha = 1.0f;
                 }
 

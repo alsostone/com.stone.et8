@@ -19,8 +19,8 @@ namespace ET
             if (Input.GetKeyDown(KeyCode.N))
             {
                 GameObject go = Instantiate(buildingPrefab[Random.Range(0, buildingPrefab.Length)]);
-                Building building = go.GetComponent<Building>();
-                gridBuilder.SetPlacementBuilding(building);
+                Placement placement = go.GetComponent<Placement>();
+                gridBuilder.SetPlacementBuilding(placement);
             }
 
             if (Input.GetKeyDown(KeyCode.Space))

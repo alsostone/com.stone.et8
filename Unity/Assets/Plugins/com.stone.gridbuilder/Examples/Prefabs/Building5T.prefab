@@ -384,7 +384,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   putHeight: 0.5
   takeHeight: 0.5
-  buildingData:
+  placementData:
     Id: 0
     x: 0
     z: 0

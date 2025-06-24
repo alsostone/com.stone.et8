@@ -1,16 +1,16 @@
 using UnityEngine;
 
-public class Building : MonoBehaviour
+public class Placement : MonoBehaviour
 {
     [SerializeField, Range(0.1f, 1.0f)] public float putHeight = 0.5f;
     [SerializeField, Range(0.1f, 1.0f)] public float takeHeight = 0.5f;
-    [SerializeField, HideInInspector] public BuildingData buildingData = new();
+    [SerializeField, HideInInspector] public PlacementData placementData = new();
 
     public void Reset()
     {
-        buildingData.Id = 0;
-        buildingData.x = 0;
-        buildingData.z = 0;
+        placementData.Id = 0;
+        placementData.x = 0;
+        placementData.z = 0;
     }
     
     public Vector3 GetPosition()
@@ -30,8 +30,8 @@ public class Building : MonoBehaviour
 
     public void Rotation(int r)
     {
-        buildingData.Rotation(r);
-        transform.rotation = Quaternion.Euler(0, buildingData.rotation * 90, 0);
+        placementData.Rotation(r);
+        transform.rotation = Quaternion.Euler(0, placementData.rotation * 90, 0);
     }
 
     public void Remove()

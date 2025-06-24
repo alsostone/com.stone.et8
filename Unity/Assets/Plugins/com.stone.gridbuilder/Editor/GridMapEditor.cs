@@ -87,17 +87,17 @@ public class GridMapEditor : Editor
 
     private void GenerateBuilding(GridMap gridMap)
     {
-        Building[] buildings = FindObjectsOfType<Building>();
-        foreach (Building building in buildings)
+        Placement[] buildings = FindObjectsOfType<Placement>();
+        foreach (Placement building in buildings)
         {
             Vector3Int index = gridMap.ConvertToIndex(building.transform.position);
-            if (!gridMap.gridData.CanPut(index.x, index.z, building.buildingData)) {
+            if (!gridMap.gridData.CanPut(index.x, index.z, building.placementData)) {
                 continue;
             }
 
-            building.buildingData.Id = gridMap.gridData.GetNextGuid();
-            gridMap.gridData.Put(index.x, index.z, building.buildingData);
-            building.SetPutPosition(gridMap.GetPutPosition(building.buildingData));
+            building.placementData.Id = gridMap.gridData.GetNextGuid();
+            gridMap.gridData.Put(index.x, index.z, building.placementData);
+            building.SetPutPosition(gridMap.GetPutPosition(building.placementData));
             EditorUtility.SetDirty(building);
         }
     }

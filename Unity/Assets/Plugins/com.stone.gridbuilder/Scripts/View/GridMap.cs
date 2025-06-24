@@ -50,17 +50,17 @@ public partial class GridMap : MonoBehaviour
         return pos;
     }
     
-    public Vector3 GetPutPosition(BuildingData buildingData)
+    public Vector3 GetPutPosition(PlacementData placementData)
     {
         int level = 0;
-        if (gridData.IsInside(buildingData.x, buildingData.z)) {
-            CellData cellData = gridData.GetCell(buildingData.x, buildingData.z);
-            level = cellData.contentIds.IndexOf(buildingData.Id);
+        if (gridData.IsInside(placementData.x, placementData.z)) {
+            CellData cellData = gridData.GetCell(placementData.x, placementData.z);
+            level = cellData.contentIds.IndexOf(placementData.Id);
         }
 
-        float x = gridData.cellSize * (buildingData.x + 0.5f);
+        float x = gridData.cellSize * (placementData.x + 0.5f);
         float y = gridData.cellSize * level;
-        float z = gridData.cellSize * (buildingData.z + 0.5f);
+        float z = gridData.cellSize * (placementData.z + 0.5f);
         return transform.position + new Vector3(x, y, z);
     }
     
