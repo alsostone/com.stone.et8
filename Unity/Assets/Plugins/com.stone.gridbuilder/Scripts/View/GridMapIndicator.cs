@@ -74,8 +74,12 @@ public class GridMapIndicator : MonoBehaviour
                 }
 
                 Color color = new Color(1f, 0.0f, 0.0f, alpha);
-                if (targetLevel == indicatorLevel && gridData.IsInside(x1, z1) && !gridData.GetCell(x1, z1).isObstacle)
+                if (!gridData.CanPutLevel(indicatorLevel) || indicatorLevel != targetLevel) {
+                    // keep red
+                }
+                else if (gridData.IsInside(x1, z1) && !gridData.GetCell(x1, z1).isObstacle) {
                     color = new Color(0.0f, 1f, 0.0f, alpha);
+                }
 
                 indicator.spriteRenderer.color = color;
             }

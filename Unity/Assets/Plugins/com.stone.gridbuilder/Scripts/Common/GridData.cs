@@ -6,7 +6,7 @@ public class GridData
     public int xLength = 16;
     public int zLength = 16;
     public float cellSize = 1;
-    public int levelMax = 3;
+    public int levelMax = 2;
     
     public CellData[] cells;
     public int currentGuid = 0;
@@ -111,6 +111,9 @@ public class GridData
                         count = count - 1;
                     }
 
+                    if (!CanPutLevel(count)) {
+                        return false;
+                    }
                     if (level == -1) {
                         level = count;
                     } else if (count != level) {
@@ -147,6 +150,11 @@ public class GridData
             return false;
         }
         return buildingData.points[x + z * BuildingData.width];
+    }
+
+    public bool CanPutLevel(int level)
+    {
+        return levelMax == -1 || levelMax > level;
     }
     
     public int GetLevel(int x, int z, BuildingData buildingData)
