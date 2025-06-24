@@ -64,26 +64,24 @@ public partial class GridMap : MonoBehaviour
         return transform.position + new Vector3(x, y, z);
     }
     
-    public Vector3 GetMovePosition(int x, int z, BuildingData buildingData)
+    public Vector3 GetLevelPosition(int x, int z, int level)
     {
-        int level = gridData.GetPutLevel(x, z, buildingData);
-        
         float x1 = gridData.cellSize * (x + 0.5f);
-        float y1 = gridData.cellSize * level ;
+        float y1 = gridData.cellSize * level;
         float z1 = gridData.cellSize * (z + 0.5f);
         return transform.position + new Vector3(x1, y1, z1);
     }
-
-    public Vector3 GetLevelPosition(int x, int z, long id)
+    
+    public Vector3 GetCellPosition(int x, int z, long ignoreId)
     {
-        int level = gridData.GetLevel(x, z, id);
+        int level = gridData.GetLevel(x, z, ignoreId);
         
         float x1 = gridData.cellSize * (x + 0.5f);
         float y1 = gridData.cellSize * level + yHeight;
         float z1 = gridData.cellSize * (z + 0.5f);
         return transform.position + new Vector3(x1, y1, z1);
     }
-    
+
 #if UNITY_EDITOR
     private readonly float yOffset = 0.01f;
     private readonly List<Vector3> drawPoints = new List<Vector3>();

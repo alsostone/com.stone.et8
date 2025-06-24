@@ -6,6 +6,7 @@ public class GridData
     public int xLength = 16;
     public int zLength = 16;
     public float cellSize = 1;
+    public int levelMax = 3;
     
     public CellData[] cells;
     public int currentGuid = 0;
@@ -138,7 +139,7 @@ public class GridData
         buildingData.z = z;
     }
     
-    public int GetPutLevel(int x, int z, BuildingData buildingData)
+    public int GetLevel(int x, int z, BuildingData buildingData)
     {
         int level = 0;
         for (int x1 = 0; x1 < BuildingData.width; x1++) {
@@ -154,12 +155,12 @@ public class GridData
         return level;
     }
 
-    public int GetLevel(int x, int z, long id)
+    public int GetLevel(int x, int z, long ignoreId)
     {
         if (!IsInside(x, z)) return 0;
         
         CellData data = cells[x + z * xLength];
-        if (data.contentIds.IndexOf(id) != -1) {
+        if (data.contentIds.IndexOf(ignoreId) != -1) {
             return data.contentIds.Count - 1;
         }
         return data.contentIds.Count;

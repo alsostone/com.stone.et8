@@ -39,7 +39,7 @@ public class GridMapIndicator : MonoBehaviour
         indicatorPool.Add(indicator);
     }
 
-    public void GenerateIndicator(int x, int z, long id)
+    public void GenerateIndicator(int x, int z, int targetLevel, long ignoreId)
     {
         GridData gridData = gridMap.gridData;
         int halfSize = indicatorSize / 2;
@@ -49,6 +49,7 @@ public class GridMapIndicator : MonoBehaviour
         {
             for (int z1 = z - halfSize; z1 < z + halfSize; z1++)
             {
+                int indicatorLevel = gridData.GetLevel(x1, z1, ignoreId);
                 if (!indicators.TryGetValue((x1, z1), out var indicator))
                 {
                     if (indicatorPool.Count > 0)
@@ -63,13 +64,12 @@ public class GridMapIndicator : MonoBehaviour
                         indicator = go.GetComponent<CellIndicator>();
                     }
                     indicators[(x1, z1)] = indicator;
-                    indicator.DoAdd(this, gridMap.GetLevelPosition(x1, z1, id));
-                    //indicator.DoAdd(this, gridMap.GetCellPosition(x1, z1));
+                    indicator.DoAdd(this, gridMap.GetLevelPosition(x1, z1, indicatorLevel) + new Vector3(0, gridMap.yHeight, 0));
                 }
                 keepIndicators.Add(indicator);
-                
+
                 Color color = new Color(1f, 0.0f, 0.0f, 0.5f);
-                if (gridData.IsInside(x1, z1) && !gridData.GetCell(x1, z1).isObstacle)
+                if (targetLevel == indicatorLevel && gridData.IsInside(x1, z1) && !gridData.GetCell(x1, z1).isObstacle)
                     color = new Color(0.0f, 1f, 0.0f, 0.5f);
 
                 indicator.spriteRenderer.color = color;
