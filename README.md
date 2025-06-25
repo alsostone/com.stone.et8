@@ -1,20 +1,18 @@
 ## 帧同步战斗系统
 ### 目标
-原子化设计、配套齐全（如调试工具、AI工具、各种插件）、客户端服务器代码共用、打通匹配到结算流程，以流行技术栈搭建。
+原子化设计、配套齐全（如调试工具、AI工具、各种插件）、客户端服务器代码共用、打通匹配到结算流程。
 #### 参考《帧同步战斗架构设计Ver.2》来设计。 [文档地址](https://zhuanlan.zhihu.com/p/1911184476500897969)
 预期2025年底能完工。
 
 ### 如何运行
 1. 切换到Init场景
 2. ET/Excel/XXX导表
-3. Lockstep模式 AWSD移动 J普攻 K技能。
+3. Lockstep模式 AWSD移动 J普攻 K、L技能。
 
 ### 战斗单位
 单位配置表位置 `com.stone.et8/Unity/Assets/Config/Excel/Datas/Unit`
-1. 英雄 皮肤、名字、配置初始属性、初始技能
-2. 建筑 等级、名字、模型、初始属性、初始技能
-3. 小兵 等级、名字、模型、初始属性、初始技能
-4. 掉落物 逐步拓展中，后续再补充；
+
+英雄、建筑、小兵、掉落物等
 ### 技能系统
 技能配置表位置 `com.stone.et8/Unity/Assets/Config/Excel/Datas/Skill`
 1. 技能配置 释放条件检测、CD、初始CD、消耗、前摇动作、持续动作、后摇动作、效果触发点、效果组、是否实时索敌；
@@ -23,9 +21,29 @@
 4. 索敌系统 支持指定范围、队伍、类型、优先级；
 5. 移动轨迹 轨迹基于贝塞尔曲线，当前支持1个控制点(配置控制点趋近起终点比例和控制点高度偏移)，支持炸弹抛射；
 ### AI
-正在开发中...
-
-
+基于NPBehave实现的行为树，并对其进行可序列化的再开发。项目链接在下边插件目录中。
+```csharp
+// 每间隔0.5秒攻击一次
+lsUnit.AddComponent<AIRootComponent, Node>(
+    new Sequence(new ActionAttack(), new WaitSecond(FP.Half))
+    );
+```
+该框架项目中的版本同时支持MongoDB.Bson和MemoryPack2种序列化。
+```csharp
+namespace NPBehave
+{
+    [MemoryPackable(GenerateType.NoGenerate)]
+    public abstract partial class Node : Receiver, IDisposable
+    {
+        [BsonElement][MemoryPackInclude] protected State currentState = State.INACTIVE;
+        
+        [BsonIgnore][MemoryPackIgnore] private string label;
+        [BsonIgnoreIfNull][BsonElement][MemoryPackInclude] public string Label { get => label; set => label = value; }
+        
+        [BsonIgnore][MemoryPackIgnore] private string name;
+        [BsonIgnore][MemoryPackIgnore] public string Name => name;
+...
+```
 ## 基于YIUI-ET8.1拓展 包含Luban，YIUI，HybridCLR，YooAsset
 ## 支持功能
 1.  移除ET的UI框架 使用YIUI框架实现所有UI
@@ -133,8 +151,8 @@ public static void ExcelAllExporter()
 项目中用到了以下插件，部分为付费插件，如商用请在Unity商店购买。此处只做学习研究使用，如有侵权请联系删除。
 
 1. 伤害飘字使用DamageNumbersPro [Unity商店地址](https://assetstore.unity.com/packages/2d/gui/damage-numbers-pro-186447)
-2. 血条HUD是用com.stone.hud [GitHub地址](https://github.com/alsostone/com.stone.hud)
-3. 行为树用NPBehave [GitHub地址](https://github.com/alsostone/NPBehave)
+2. 血条HUD使用com.stone.hud [GitHub地址](https://github.com/alsostone/com.stone.hud)
+3. AI使用行为树NPBehave [GitHub地址](https://github.com/alsostone/NPBehave)
 
 # Reference
 1. ET [ET8.1](https://github.com/egametang/ET/tree/release8.1)
