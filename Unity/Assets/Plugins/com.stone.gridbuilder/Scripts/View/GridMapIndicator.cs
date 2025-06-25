@@ -75,7 +75,9 @@ public class GridMapIndicator : MonoBehaviour
                 
                 Color color = new Color(1f, 0.0f, 0.0f, alpha);
                 CellData cellData = gridData.GetCell(x1, z1);
-                if (!cellData.CanPut(placementData) || !gridData.CanPutLevel(indicatorLevel, placementData) || indicatorLevel != targetLevel) {
+                if (cellData == null || !cellData.CanPut(placementData) || 
+                    !gridData.CanPutLevel(indicatorLevel, placementData) || indicatorLevel != targetLevel)
+                {
                     // keep red
                 } else {
                     color = new Color(0.0f, 1f, 0.0f, alpha);

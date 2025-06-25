@@ -308,6 +308,7 @@ MonoBehaviour:
     z: 0
     rotation: 0
     points: 00000000000000000000010101010000000000000000000000
+  previewMaterial: {fileID: 2100000, guid: 502d741f79ac343ee9a97dc847aee5f0, type: 2}
 --- !u!65 &1496451046108467130
 BoxCollider:
   m_ObjectHideFlags: 0

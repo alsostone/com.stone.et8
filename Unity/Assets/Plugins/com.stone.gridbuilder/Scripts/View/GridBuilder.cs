@@ -79,6 +79,7 @@ public class GridBuilder : MonoBehaviour
                 if (gridMap.gridData.CanTake(buiding.placementData))
                 {
                     dragPlacement = buiding;
+                    dragPlacement.SetPreviewMaterial();
                     RaycastTerrain(touchPosition, out Vector3 pos);
                     dragOffset = position - pos;
                     return true;
@@ -109,6 +110,7 @@ public class GridBuilder : MonoBehaviour
     {
         if (dragPlacement)
         {
+            dragPlacement.ResetPreviewMaterial();
             if (RaycastTerrain(touchPosition, out Vector3 pos))
             {
                 Vector3Int index = gridMap.ConvertToIndex(pos + dragOffset);
@@ -177,6 +179,7 @@ public class GridBuilder : MonoBehaviour
         if (placement) {
             placement.Reset();
             dragPlacement = placement;
+            dragPlacement.SetPreviewMaterial();
             isNewBuilding = true;
             dragOffset = Vector3.zero;
         }
