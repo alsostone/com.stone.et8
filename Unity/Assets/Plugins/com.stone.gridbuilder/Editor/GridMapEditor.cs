@@ -11,16 +11,20 @@ public class GridMapEditor : Editor
         
         GridMap gridMap = target as GridMap;
         GUILayout.BeginHorizontal();
-        GUILayout.Label("xLength");
+        GUILayout.Label("xLength", GUILayout.Width(EditorGUIUtility.labelWidth));
         gridMap.gridData.xLength = EditorGUILayout.IntSlider(gridMap.gridData.xLength, 16, 96);
         GUILayout.EndHorizontal();
         GUILayout.BeginHorizontal();
-        GUILayout.Label("zLength");
+        GUILayout.Label("zLength", GUILayout.Width(EditorGUIUtility.labelWidth));
         gridMap.gridData.zLength = EditorGUILayout.IntSlider(gridMap.gridData.zLength, 16, 96);
         GUILayout.EndHorizontal();
         GUILayout.BeginHorizontal();
-        GUILayout.Label("Cell Size");
+        GUILayout.Label("Cell Size", GUILayout.Width(EditorGUIUtility.labelWidth));
         gridMap.gridData.cellSize = EditorGUILayout.Slider(gridMap.gridData.cellSize, 0.5f, 5.0f);
+        GUILayout.EndHorizontal();
+        GUILayout.BeginHorizontal();
+        GUILayout.Label("Level Count Max", GUILayout.Width(EditorGUIUtility.labelWidth));
+        gridMap.gridData.levelCountMax = EditorGUILayout.IntField(gridMap.gridData.levelCountMax);
         GUILayout.EndHorizontal();
         
         if (GUILayout.Button("Force Refresh"))
@@ -95,7 +99,7 @@ public class GridMapEditor : Editor
                 continue;
             }
 
-            building.placementData.Id = gridMap.gridData.GetNextGuid();
+            building.placementData.Id = gridMap.gridData.GetNextGuid(building.placementData);
             gridMap.gridData.Put(index.x, index.z, building.placementData);
             building.SetPutPosition(gridMap.GetPutPosition(building.placementData));
             EditorUtility.SetDirty(building);

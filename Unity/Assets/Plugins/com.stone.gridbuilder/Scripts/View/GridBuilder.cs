@@ -96,7 +96,7 @@ public class GridBuilder : MonoBehaviour
             if (RaycastTerrain(touchPosition, out Vector3 pos))
             {
                 Vector3Int index = gridMap.ConvertToIndex(pos + dragOffset);
-                int targetLevel = gridMap.gridData.GetLevel(index.x, index.z, dragPlacement.placementData);
+                int targetLevel = gridMap.gridData.GetLevelCount(index.x, index.z, dragPlacement.placementData);
                 dragPlacement.SetMovePosition(gridMap.GetLevelPosition(index.x, index.z, targetLevel));
                 if (gridMapIndicator) {
                     gridMapIndicator.GenerateIndicator(index.x, index.z, targetLevel, dragPlacement.placementData);
@@ -116,7 +116,7 @@ public class GridBuilder : MonoBehaviour
                 {
                     if (isNewBuilding)
                     {
-                        dragPlacement.placementData.Id = gridMap.gridData.GetNextGuid();
+                        dragPlacement.placementData.Id = gridMap.gridData.GetNextGuid(dragPlacement.placementData);
                         gridMap.gridData.Put(index.x, index.z, dragPlacement.placementData);
                     }
                     else if (index.x != dragPlacement.placementData.x || index.z != dragPlacement.placementData.z)

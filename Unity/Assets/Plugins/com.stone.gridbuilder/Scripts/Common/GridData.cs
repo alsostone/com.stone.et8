@@ -6,14 +6,16 @@ public class GridData
     public int xLength = 16;
     public int zLength = 16;
     public float cellSize = 1;
-    public int levelMax = 2;
+    public int levelCountMax = 2;
     
     public CellData[] cells;
-    public int currentGuid = 0;
+    public int currentBlockGuid = 0;
+    public int currentTowerGuid = 1000;
     
     public void ResetCells()
     {
-        currentGuid = 0;
+        currentBlockGuid = 0;
+        currentTowerGuid = 0;
         if (cells == null || xLength * zLength != cells.Length)
         {
             cells = new CellData[xLength * zLength];
@@ -45,9 +47,17 @@ public class GridData
         return x >= 0 && z >= 0 && x < xLength && z < zLength;
     }
     
-    public long GetNextGuid()
+    public long GetNextGuid(PlacementData placementData)
     {
-        return ++currentGuid;
+        switch (placementData.type)
+        {
+            case PlacementType.Block:
+                return ++currentBlockGuid;
+            case PlacementType.Tower:
+                return ++currentTowerGuid;
+            default:
+                return 0;
+        }
     }
     
     public bool CanTake(PlacementData placementData)
@@ -154,10 +164,10 @@ public class GridData
 
     public bool CanPutLevel(int level)
     {
-        return levelMax == -1 || levelMax > level;
+        return levelCountMax == -1 || levelCountMax > level;
     }
     
-    public int GetLevel(int x, int z, PlacementData placementData)
+    public int GetLevelCount(int x, int z, PlacementData placementData)
     {
         int level = 0;
         for (int x1 = 0; x1 < PlacementData.width; x1++) {
@@ -166,14 +176,14 @@ public class GridData
                 {
                     int x2 = x + x1 - PlacementData.xOffset;
                     int z2 = z + z1 - PlacementData.zOffset;
-                    level = Math.Max(level, GetLevel(x2, z2, placementData.Id));
+                    level = Math.Max(level, GetLevelCount(x2, z2, placementData.Id));
                 }
             }
         }
         return level;
     }
 
-    public int GetLevel(int x, int z, long ignoreId)
+    public int GetLevelCount(int x, int z, long ignoreId)
     {
         if (!IsInside(x, z)) return 0;
         

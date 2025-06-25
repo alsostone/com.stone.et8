@@ -133,6 +133,8 @@ MonoBehaviour:
   putHeight: 0.5
   takeHeight: 0.5
   placementData:
+    type: 1
+    PlacedLayer: 2
     Id: 0
     x: 0
     z: 0
@@ -186,7 +188,7 @@ Transform:
   m_GameObject: {fileID: 5471246397836959890}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 2, z: 0}
+  m_LocalPosition: {x: 0, y: 1.5, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -270,7 +272,7 @@ Transform:
   m_GameObject: {fileID: 5877682616634097329}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 1, z: 0}
+  m_LocalPosition: {x: 0, y: 0.5, z: 0}
   m_LocalScale: {x: 0.5, y: 1, z: 0.5}
   m_ConstrainProportionsScale: 0
   m_Children: []

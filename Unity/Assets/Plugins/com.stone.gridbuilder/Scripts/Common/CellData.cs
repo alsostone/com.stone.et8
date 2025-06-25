@@ -8,6 +8,7 @@ public class CellData
     
     public List<long> contentIds;
     public bool isObstacle;
+    public bool hasTower;
     
     public CellData()
     {

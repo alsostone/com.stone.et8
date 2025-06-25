@@ -49,7 +49,7 @@ public class GridMapIndicator : MonoBehaviour
         {
             for (int z1 = z - halfSize; z1 < z + halfSize; z1++)
             {
-                int indicatorLevel = gridData.GetLevel(x1, z1, placementData.Id);
+                int indicatorLevel = gridData.GetLevelCount(x1, z1, placementData.Id);
                 if (!indicators.TryGetValue((x1, z1), out var indicator))
                 {
                     if (indicatorPool.Count > 0)
