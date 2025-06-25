@@ -23,8 +23,8 @@ public class GridMapEditor : Editor
         gridMap.gridData.cellSize = EditorGUILayout.Slider(gridMap.gridData.cellSize, 0.5f, 5.0f);
         GUILayout.EndHorizontal();
         GUILayout.BeginHorizontal();
-        GUILayout.Label("Level Count Max", GUILayout.Width(EditorGUIUtility.labelWidth));
-        gridMap.gridData.levelCountMax = EditorGUILayout.IntField(gridMap.gridData.levelCountMax);
+        GUILayout.Label("block Level Max", GUILayout.Width(EditorGUIUtility.labelWidth));
+        gridMap.gridData.blockLevelMax = EditorGUILayout.IntField(gridMap.gridData.blockLevelMax);
         GUILayout.EndHorizontal();
         
         if (GUILayout.Button("Force Refresh"))

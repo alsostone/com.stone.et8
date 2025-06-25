@@ -11,12 +11,12 @@ public class PlacementEditor : Editor
         Placement placement = target as Placement;
         GUILayout.BeginHorizontal();
         GUILayout.Label("Placement Type", GUILayout.Width(EditorGUIUtility.labelWidth));
-        placement.placementData.type = (PlacementType)EditorGUILayout.EnumPopup(placement.placementData.type);
+        placement.placementData.placementType = (PlacedLayer)EditorGUILayout.EnumFlagsField(placement.placementData.placementType);
         GUILayout.EndHorizontal();
         
         GUILayout.BeginHorizontal();
         GUILayout.Label("Placed Layer", GUILayout.Width(EditorGUIUtility.labelWidth));
-        placement.placementData.PlacedLayer = (PlacedLayer)EditorGUILayout.EnumFlagsField(placement.placementData.PlacedLayer);
+        placement.placementData.placedLayer = (PlacedLayer)EditorGUILayout.EnumFlagsField(placement.placementData.placedLayer);
         GUILayout.EndHorizontal();
         
         GUILayout.BeginHorizontal();

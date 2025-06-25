@@ -52,11 +52,8 @@ public partial class GridMap : MonoBehaviour
     
     public Vector3 GetPutPosition(PlacementData placementData)
     {
-        int level = 0;
-        if (gridData.IsInside(placementData.x, placementData.z)) {
-            CellData cellData = gridData.GetCell(placementData.x, placementData.z);
-            level = cellData.contentIds.IndexOf(placementData.Id);
-        }
+        CellData cellData = gridData.GetCell(placementData.x, placementData.z);
+        int level = cellData?.contentIds.IndexOf(placementData.Id) ?? 0 ;
 
         float x = gridData.cellSize * (placementData.x + 0.5f);
         float y = gridData.cellSize * level;

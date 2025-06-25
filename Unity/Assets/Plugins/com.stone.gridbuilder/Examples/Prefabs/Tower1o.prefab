@@ -133,8 +133,8 @@ MonoBehaviour:
   putHeight: 0.5
   takeHeight: 0.5
   placementData:
-    type: 1
-    PlacedLayer: 2
+    placementType: 4
+    placedLayer: 2
     Id: 0
     x: 0
     z: 0

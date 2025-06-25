@@ -6,16 +6,14 @@ public class GridData
     public int xLength = 16;
     public int zLength = 16;
     public float cellSize = 1;
-    public int levelCountMax = 2;
+    public int blockLevelMax = 2;
     
     public CellData[] cells;
-    public int currentBlockGuid = 0;
-    public int currentTowerGuid = 1000;
-    
+    public int currentNextGuid = 0;
+
     public void ResetCells()
     {
-        currentBlockGuid = 0;
-        currentTowerGuid = 0;
+        currentNextGuid = 0;
         if (cells == null || xLength * zLength != cells.Length)
         {
             cells = new CellData[xLength * zLength];
@@ -32,6 +30,7 @@ public class GridData
                     CellData cellData = cells[x + z * xLength];
                     cellData.isObstacle = false;
                     cellData.contentIds.Clear();
+                    cellData.contentTypes.Clear();
                 }
             }
         }
@@ -39,7 +38,9 @@ public class GridData
     
     public CellData GetCell(int x, int z)
     {
-        return cells[x + z * xLength];
+        if (x >= 0 && z >= 0 && x < xLength && z < zLength)
+            return cells[x + z * xLength];
+        return null;
     }
     
     public bool IsInside(int x, int z)
@@ -49,15 +50,7 @@ public class GridData
     
     public long GetNextGuid(PlacementData placementData)
     {
-        switch (placementData.type)
-        {
-            case PlacementType.Block:
-                return ++currentBlockGuid;
-            case PlacementType.Tower:
-                return ++currentTowerGuid;
-            default:
-                return 0;
-        }
+        return ++currentNextGuid;
     }
     
     public bool CanTake(PlacementData placementData)
@@ -93,7 +86,8 @@ public class GridData
                     int x2 = placementData.x + x1 - PlacementData.xOffset;
                     int z2 = placementData.z + z1 - PlacementData.zOffset;
                     CellData cellData = cells[x2 + z2 * xLength];
-                    cellData.contentIds.Remove(placementData.Id);
+                    cellData.contentIds.RemoveAt(cellData.contentIds.Count - 1);
+                    cellData.contentTypes.RemoveAt(cellData.contentTypes.Count - 1);
                 }
             }
         }
@@ -108,20 +102,17 @@ public class GridData
                 {
                     int x2 = x + x1 - PlacementData.xOffset;
                     int z2 = z + z1 - PlacementData.zOffset;
-                    if (!IsInside(x2, z2)) {
-                        return false;
-                    }
-                    CellData data = cells[x2 + z2 * xLength];
-                    if (data.isObstacle) {
+                    CellData data = GetCell(x2, z2);
+                    if (data == null || !data.CanPut(placementData)) {
                         return false;
                     }
 
                     int count = data.contentIds.Count;
                     if (data.contentIds.IndexOf(placementData.Id) != -1) {
-                        count = count - 1;
+                        count -= 1;
                     }
 
-                    if (!CanPutLevel(count)) {
+                    if (!CanPutLevel(count, placementData)) {
                         return false;
                     }
                     if (level == -1) {
@@ -145,6 +136,7 @@ public class GridData
                     int z2 = z + z1 - PlacementData.zOffset;
                     CellData cellData = cells[x2 + z2 * xLength];
                     cellData.contentIds.Add(placementData.Id);
+                    cellData.contentTypes.Add(placementData.placementType);
                 }
             }
         }
@@ -162,33 +154,37 @@ public class GridData
         return placementData.points[x + z * PlacementData.width];
     }
 
-    public bool CanPutLevel(int level)
+    public bool CanPutLevel(int level, PlacementData placementData)
     {
-        return levelCountMax == -1 || levelCountMax > level;
+        if ((placementData.placementType & PlacedLayer.Tower) == PlacedLayer.Tower)
+            return true;
+        if (blockLevelMax == -1)
+            return true;
+        return blockLevelMax > level;
     }
     
-    public int GetLevelCount(int x, int z, PlacementData placementData)
+    public int GetShapeLevelCount(int x, int z, PlacementData placementData)
     {
-        int level = 0;
+        int level = (placementData.placedLayer & PlacedLayer.Map) == PlacedLayer.Map ? 0 : 1;
         for (int x1 = 0; x1 < PlacementData.width; x1++) {
             for (int z1 = 0; z1 < PlacementData.height; z1++) {
                 if (placementData.points[x1 + z1 * PlacementData.width])
                 {
                     int x2 = x + x1 - PlacementData.xOffset;
                     int z2 = z + z1 - PlacementData.zOffset;
-                    level = Math.Max(level, GetLevelCount(x2, z2, placementData.Id));
+                    level = Math.Max(level, GetPointLevelCount(x2, z2, placementData));
                 }
             }
         }
         return level;
     }
 
-    public int GetLevelCount(int x, int z, long ignoreId)
+    public int GetPointLevelCount(int x, int z, PlacementData placementData)
     {
         if (!IsInside(x, z)) return 0;
         
         CellData data = cells[x + z * xLength];
-        if (data.contentIds.IndexOf(ignoreId) != -1) {
+        if (data.contentIds.IndexOf(placementData.Id) != -1) {
             return data.contentIds.Count - 1;
         }
         return data.contentIds.Count;

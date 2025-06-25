@@ -49,7 +49,7 @@ public class GridMapIndicator : MonoBehaviour
         {
             for (int z1 = z - halfSize; z1 < z + halfSize; z1++)
             {
-                int indicatorLevel = gridData.GetLevelCount(x1, z1, placementData.Id);
+                int indicatorLevel = gridData.GetPointLevelCount(x1, z1, placementData);
                 if (!indicators.TryGetValue((x1, z1), out var indicator))
                 {
                     if (indicatorPool.Count > 0)
@@ -72,12 +72,12 @@ public class GridMapIndicator : MonoBehaviour
                 if (gridMap.gridData.IsInsideShape(x1 - x, z1 - z, placementData)) {
                     alpha = 1.0f;
                 }
-
+                
                 Color color = new Color(1f, 0.0f, 0.0f, alpha);
-                if (!gridData.CanPutLevel(indicatorLevel) || indicatorLevel != targetLevel) {
+                CellData cellData = gridData.GetCell(x1, z1);
+                if (!cellData.CanPut(placementData) || !gridData.CanPutLevel(indicatorLevel, placementData) || indicatorLevel != targetLevel) {
                     // keep red
-                }
-                else if (gridData.IsInside(x1, z1) && !gridData.GetCell(x1, z1).isObstacle) {
+                } else {
                     color = new Color(0.0f, 1f, 0.0f, alpha);
                 }
 

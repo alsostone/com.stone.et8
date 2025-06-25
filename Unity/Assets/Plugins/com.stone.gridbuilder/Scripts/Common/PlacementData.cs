@@ -1,11 +1,5 @@
 using System;
 
-public enum PlacementType
-{
-    Block,
-    Tower
-}
-
 [Flags]
 public enum PlacedLayer
 {
@@ -24,8 +18,8 @@ public class PlacementData
     public static int zOffset = 2;
     private static bool[] temp = new bool[width * height];
     
-    public PlacementType type = PlacementType.Block;
-    public PlacedLayer PlacedLayer = PlacedLayer.Map | PlacedLayer.Block;
+    public PlacedLayer placementType = PlacedLayer.Block;
+    public PlacedLayer placedLayer = PlacedLayer.Map | PlacedLayer.Block;
     public long Id;
     public int x;
     public int z;
