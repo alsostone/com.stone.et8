@@ -182,12 +182,17 @@ public class GridData
     public int GetPointLevelCount(int x, int z, PlacementData placementData)
     {
         if (!IsInside(x, z)) return 0;
-        
+
+        int blockLevel = 0;
         CellData data = cells[x + z * xLength];
-        if (data.contentIds.IndexOf(placementData.Id) != -1) {
-            return data.contentIds.Count - 1;
+        for (int i = 0; i < data.contentTypes.Count; i++)
+        {
+            PlacedLayer placedLayer = data.contentTypes[i];
+            if (data.contentIds[i] != placementData.Id && (placedLayer & PlacedLayer.Block) == PlacedLayer.Block) {
+                blockLevel++;
+            }
         }
-        return data.contentIds.Count;
+        return blockLevel;
     }
     
     public void SetObstacle(int x, int z, bool isObstacle)
