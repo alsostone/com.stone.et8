@@ -1,7 +1,7 @@
 using UnityEngine;
 using Random = UnityEngine.Random;
 
-namespace ET
+namespace ST.GridBuilder
 {
     public class BuildingSpawner : MonoBehaviour
     {
@@ -16,11 +16,11 @@ namespace ET
         // Update is called once per frame
         void Update()
         {
-            if (Input.GetKeyDown(KeyCode.N))
+            if (Input.GetKeyDown(KeyCode.B))
             {
                 GameObject go = Instantiate(buildingPrefab[Random.Range(0, buildingPrefab.Length)]);
                 Placement placement = go.GetComponent<Placement>();
-                gridBuilder.SetPlacementBuilding(placement);
+                gridBuilder.SetPlacementObject(placement);
             }
 
             if (Input.GetKeyDown(KeyCode.Space))

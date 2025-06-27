@@ -153,6 +153,7 @@ public static void ExcelAllExporter()
 1. 伤害飘字使用DamageNumbersPro [Unity商店地址](https://assetstore.unity.com/packages/2d/gui/damage-numbers-pro-186447)
 2. 血条HUD使用com.stone.hud [GitHub地址](https://github.com/alsostone/com.stone.hud)
 3. AI使用行为树NPBehave [GitHub地址](https://github.com/alsostone/NPBehave)
+4. 放置系统&流场寻路 [GitHub地址](https://github.com/alsostone/com.stone.gridbuilder)
 
 # Reference
 1. ET [ET8.1](https://github.com/egametang/ET/tree/release8.1)

@@ -2,28 +2,37 @@ using UnityEngine;
 using UnityEditor;
 using UnityEditor.SceneManagement;
 
-[CustomEditor(typeof(GridMapLines))]
-public class GridMapLinesEditor : Editor
+namespace ST.GridBuilder
 {
-    public override void OnInspectorGUI()
+    [CustomEditor(typeof(GridMapLines))]
+    public class GridMapLinesEditor : Editor
     {
-        DrawDefaultInspector();
-        
-        GridMapLines gridMapLines = target as GridMapLines;
-        if (GUILayout.Button("Force Refresh"))
+        public override void OnInspectorGUI()
         {
-            GUI.changed = true;
-        }
-        
-        if (GUI.changed)
-        {
-            gridMapLines.GenerateLines();
-            
-            if (!Application.isPlaying) {
-                EditorUtility.SetDirty(gridMapLines);
-                EditorSceneManager.MarkSceneDirty(gridMapLines.gameObject.scene);
+            DrawDefaultInspector();
+
+            GridMapLines gridMapLines = target as GridMapLines;
+            if (gridMapLines == null || gridMapLines.gridMap == null)
+            {
+                EditorGUILayout.HelpBox("GridMap or GridData is not set.", MessageType.Error);
+                return;
+            }
+            if (GUILayout.Button("Force Refresh"))
+            {
+                GUI.changed = true;
+            }
+
+            if (GUI.changed)
+            {
+                gridMapLines.GenerateLines();
+
+                if (!Application.isPlaying)
+                {
+                    EditorUtility.SetDirty(gridMapLines);
+                    EditorSceneManager.MarkSceneDirty(gridMapLines.gameObject.scene);
+                }
             }
         }
-    }
 
+    }
 }

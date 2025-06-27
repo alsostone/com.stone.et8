@@ -123,6 +123,103 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!1 &46851956
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 46851959}
+  - component: {fileID: 46851958}
+  - component: {fileID: 46851957}
+  m_Layer: 0
+  m_Name: Help D
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!102 &46851957
+TextMesh:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 46851956}
+  m_Text: D  set flowfiled destination
+  m_OffsetZ: 0
+  m_CharacterSize: 1
+  m_LineSpacing: 1
+  m_Anchor: 0
+  m_Alignment: 0
+  m_TabSize: 4
+  m_FontSize: 0
+  m_FontStyle: 1
+  m_RichText: 1
+  m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
+  m_Color:
+    serializedVersion: 2
+    rgba: 4278190080
+--- !u!23 &46851958
+MeshRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 46851956}
+  m_Enabled: 1
+  m_CastShadows: 1
+  m_ReceiveShadows: 1
+  m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
+  m_RayTraceProcedural: 0
+  m_RenderingLayerMask: 1
+  m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 10100, guid: 0000000000000000e000000000000000, type: 0}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 1
+  m_SelectedEditorRenderState: 3
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+  m_AdditionalVertexStreams: {fileID: 0}
+--- !u!4 &46851959
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 46851956}
+  m_LocalRotation: {x: 0.7071068, y: -0, z: -0, w: 0.7071068}
+  m_LocalPosition: {x: 3.4049149, y: -5.6935945, z: -7.196211}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 438060727}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 90, y: 0, z: 0}
 --- !u!1001 &115378938
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -329,6 +426,41 @@ Transform:
   m_Children: []
   m_Father: {fileID: 839176044}
   m_RootOrder: 3
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &438060726
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 438060727}
+  m_Layer: 0
+  m_Name: Help
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &438060727
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 438060726}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 27.835085, y: 5.7935944, z: 14.066211}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 1488122798}
+  - {fileID: 46851959}
+  - {fileID: 1304809752}
+  - {fileID: 1504683753}
+  m_Father: {fileID: 0}
+  m_RootOrder: 9
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &474482160
 GameObject:
@@ -763,7 +895,7 @@ MonoBehaviour:
   gridData:
     xPosition: 0
     zPosition: 0
-    xLength: 63
+    xLength: 50
     zLength: 40
     cellSize: 1
     blockLevelMax: 2
@@ -1272,136 +1404,6 @@ MonoBehaviour:
       contentTypes: 
       isObstacle: 0
       index:
-        x: 50
-        z: 0
-      distance: 2147483647
-      direction:
-        x: 0
-        z: 0
-    - contentIds: 
-      contentTypes: 
-      isObstacle: 0
-      index:
-        x: 51
-        z: 0
-      distance: 2147483647
-      direction:
-        x: 0
-        z: 0
-    - contentIds: 
-      contentTypes: 
-      isObstacle: 0
-      index:
-        x: 52
-        z: 0
-      distance: 2147483647
-      direction:
-        x: 0
-        z: 0
-    - contentIds: 
-      contentTypes: 
-      isObstacle: 0
-      index:
-        x: 53
-        z: 0
-      distance: 2147483647
-      direction:
-        x: 0
-        z: 0
-    - contentIds: 
-      contentTypes: 
-      isObstacle: 0
-      index:
-        x: 54
-        z: 0
-      distance: 2147483647
-      direction:
-        x: 0
-        z: 0
-    - contentIds: 
-      contentTypes: 
-      isObstacle: 0
-      index:
-        x: 55
-        z: 0
-      distance: 2147483647
-      direction:
-        x: 0
-        z: 0
-    - contentIds: 
-      contentTypes: 
-      isObstacle: 0
-      index:
-        x: 56
-        z: 0
-      distance: 2147483647
-      direction:
-        x: 0
-        z: 0
-    - contentIds: 
-      contentTypes: 
-      isObstacle: 0
-      index:
-        x: 57
-        z: 0
-      distance: 2147483647
-      direction:
-        x: 0
-        z: 0
-    - contentIds: 
-      contentTypes: 
-      isObstacle: 0
-      index:
-        x: 58
-        z: 0
-      distance: 2147483647
-      direction:
-        x: 0
-        z: 0
-    - contentIds: 
-      contentTypes: 
-      isObstacle: 0
-      index:
-        x: 59
-        z: 0
-      distance: 2147483647
-      direction:
-        x: 0
-        z: 0
-    - contentIds: 
-      contentTypes: 
-      isObstacle: 0
-      index:
-        x: 60
-        z: 0
-      distance: 2147483647
-      direction:
-        x: 0
-        z: 0
-    - contentIds: 
-      contentTypes: 
-      isObstacle: 0
-      index:
-        x: 61
-        z: 0
-      distance: 2147483647
-      direction:
-        x: 0
-        z: 0
-    - contentIds: 
-      contentTypes: 
-      isObstacle: 0
-      index:
-        x: 62
-        z: 0
-      distance: 2147483647
-      direction:
-        x: 0
-        z: 0
-    - contentIds: 
-      contentTypes: 
-      isObstacle: 0
-      index:
         x: 0
         z: 1
       distance: 2147483647
@@ -1893,136 +1895,6 @@ MonoBehaviour:
       isObstacle: 0
       index:
         x: 49
-        z: 1
-      distance: 2147483647
-      direction:
-        x: 0
-        z: 0
-    - contentIds: 
-      contentTypes: 
-      isObstacle: 0
-      index:
-        x: 50
-        z: 1
-      distance: 2147483647
-      direction:
-        x: 0
-        z: 0
-    - contentIds: 
-      contentTypes: 
-      isObstacle: 0
-      index:
-        x: 51
-        z: 1
-      distance: 2147483647
-      direction:
-        x: 0
-        z: 0
-    - contentIds: 
-      contentTypes: 
-      isObstacle: 0
-      index:
-        x: 52
-        z: 1
-      distance: 2147483647
-      direction:
-        x: 0
-        z: 0
-    - contentIds: 
-      contentTypes: 
-      isObstacle: 0
-      index:
-        x: 53
-        z: 1
-      distance: 2147483647
-      direction:
-        x: 0
-        z: 0
-    - contentIds: 
-      contentTypes: 
-      isObstacle: 0
-      index:
-        x: 54
-        z: 1
-      distance: 2147483647
-      direction:
-        x: 0
-        z: 0
-    - contentIds: 
-      contentTypes: 
-      isObstacle: 0
-      index:
-        x: 55
-        z: 1
-      distance: 2147483647
-      direction:
-        x: 0
-        z: 0
-    - contentIds: 
-      contentTypes: 
-      isObstacle: 0
-      index:
-        x: 56
-        z: 1
-      distance: 2147483647
-      direction:
-        x: 0
-        z: 0
-    - contentIds: 
-      contentTypes: 
-      isObstacle: 0
-      index:
-        x: 57
-        z: 1
-      distance: 2147483647
-      direction:
-        x: 0
-        z: 0
-    - contentIds: 
-      contentTypes: 
-      isObstacle: 0
-      index:
-        x: 58
-        z: 1
-      distance: 2147483647
-      direction:
-        x: 0
-        z: 0
-    - contentIds: 
-      contentTypes: 
-      isObstacle: 0
-      index:
-        x: 59
-        z: 1
-      distance: 2147483647
-      direction:
-        x: 0
-        z: 0
-    - contentIds: 
-      contentTypes: 
-      isObstacle: 0
-      index:
-        x: 60
-        z: 1
-      distance: 2147483647
-      direction:
-        x: 0
-        z: 0
-    - contentIds: 
-      contentTypes: 
-      isObstacle: 0
-      index:
-        x: 61
-        z: 1
-      distance: 2147483647
-      direction:
-        x: 0
-        z: 0
-    - contentIds: 
-      contentTypes: 
-      isObstacle: 0
-      index:
-        x: 62
         z: 1
       distance: 2147483647
       direction:
@@ -2532,136 +2404,6 @@ MonoBehaviour:
       contentTypes: 
       isObstacle: 0
       index:
-        x: 50
-        z: 2
-      distance: 2147483647
-      direction:
-        x: 0
-        z: 0
-    - contentIds: 
-      contentTypes: 
-      isObstacle: 0
-      index:
-        x: 51
-        z: 2
-      distance: 2147483647
-      direction:
-        x: 0
-        z: 0
-    - contentIds: 
-      contentTypes: 
-      isObstacle: 0
-      index:
-        x: 52
-        z: 2
-      distance: 2147483647
-      direction:
-        x: 0
-        z: 0
-    - contentIds: 
-      contentTypes: 
-      isObstacle: 0
-      index:
-        x: 53
-        z: 2
-      distance: 2147483647
-      direction:
-        x: 0
-        z: 0
-    - contentIds: 
-      contentTypes: 
-      isObstacle: 0
-      index:
-        x: 54
-        z: 2
-      distance: 2147483647
-      direction:
-        x: 0
-        z: 0
-    - contentIds: 
-      contentTypes: 
-      isObstacle: 0
-      index:
-        x: 55
-        z: 2
-      distance: 2147483647
-      direction:
-        x: 0
-        z: 0
-    - contentIds: 
-      contentTypes: 
-      isObstacle: 0
-      index:
-        x: 56
-        z: 2
-      distance: 2147483647
-      direction:
-        x: 0
-        z: 0
-    - contentIds: 
-      contentTypes: 
-      isObstacle: 0
-      index:
-        x: 57
-        z: 2
-      distance: 2147483647
-      direction:
-        x: 0
-        z: 0
-    - contentIds: 
-      contentTypes: 
-      isObstacle: 0
-      index:
-        x: 58
-        z: 2
-      distance: 2147483647
-      direction:
-        x: 0
-        z: 0
-    - contentIds: 
-      contentTypes: 
-      isObstacle: 0
-      index:
-        x: 59
-        z: 2
-      distance: 2147483647
-      direction:
-        x: 0
-        z: 0
-    - contentIds: 
-      contentTypes: 
-      isObstacle: 0
-      index:
-        x: 60
-        z: 2
-      distance: 2147483647
-      direction:
-        x: 0
-        z: 0
-    - contentIds: 
-      contentTypes: 
-      isObstacle: 0
-      index:
-        x: 61
-        z: 2
-      distance: 2147483647
-      direction:
-        x: 0
-        z: 0
-    - contentIds: 
-      contentTypes: 
-      isObstacle: 0
-      index:
-        x: 62
-        z: 2
-      distance: 2147483647
-      direction:
-        x: 0
-        z: 0
-    - contentIds: 
-      contentTypes: 
-      isObstacle: 0
-      index:
         x: 0
         z: 3
       distance: 2147483647
@@ -3153,136 +2895,6 @@ MonoBehaviour:
       isObstacle: 0
       index:
         x: 49
-        z: 3
-      distance: 2147483647
-      direction:
-        x: 0
-        z: 0
-    - contentIds: 
-      contentTypes: 
-      isObstacle: 0
-      index:
-        x: 50
-        z: 3
-      distance: 2147483647
-      direction:
-        x: 0
-        z: 0
-    - contentIds: 
-      contentTypes: 
-      isObstacle: 0
-      index:
-        x: 51
-        z: 3
-      distance: 2147483647
-      direction:
-        x: 0
-        z: 0
-    - contentIds: 
-      contentTypes: 
-      isObstacle: 0
-      index:
-        x: 52
-        z: 3
-      distance: 2147483647
-      direction:
-        x: 0
-        z: 0
-    - contentIds: 
-      contentTypes: 
-      isObstacle: 0
-      index:
-        x: 53
-        z: 3
-      distance: 2147483647
-      direction:
-        x: 0
-        z: 0
-    - contentIds: 
-      contentTypes: 
-      isObstacle: 0
-      index:
-        x: 54
-        z: 3
-      distance: 2147483647
-      direction:
-        x: 0
-        z: 0
-    - contentIds: 
-      contentTypes: 
-      isObstacle: 0
-      index:
-        x: 55
-        z: 3
-      distance: 2147483647
-      direction:
-        x: 0
-        z: 0
-    - contentIds: 
-      contentTypes: 
-      isObstacle: 0
-      index:
-        x: 56
-        z: 3
-      distance: 2147483647
-      direction:
-        x: 0
-        z: 0
-    - contentIds: 
-      contentTypes: 
-      isObstacle: 0
-      index:
-        x: 57
-        z: 3
-      distance: 2147483647
-      direction:
-        x: 0
-        z: 0
-    - contentIds: 
-      contentTypes: 
-      isObstacle: 0
-      index:
-        x: 58
-        z: 3
-      distance: 2147483647
-      direction:
-        x: 0
-        z: 0
-    - contentIds: 
-      contentTypes: 
-      isObstacle: 0
-      index:
-        x: 59
-        z: 3
-      distance: 2147483647
-      direction:
-        x: 0
-        z: 0
-    - contentIds: 
-      contentTypes: 
-      isObstacle: 0
-      index:
-        x: 60
-        z: 3
-      distance: 2147483647
-      direction:
-        x: 0
-        z: 0
-    - contentIds: 
-      contentTypes: 
-      isObstacle: 0
-      index:
-        x: 61
-        z: 3
-      distance: 2147483647
-      direction:
-        x: 0
-        z: 0
-    - contentIds: 
-      contentTypes: 
-      isObstacle: 0
-      index:
-        x: 62
         z: 3
       distance: 2147483647
       direction:
@@ -3792,136 +3404,6 @@ MonoBehaviour:
       contentTypes: 
       isObstacle: 0
       index:
-        x: 50
-        z: 4
-      distance: 2147483647
-      direction:
-        x: 0
-        z: 0
-    - contentIds: 
-      contentTypes: 
-      isObstacle: 0
-      index:
-        x: 51
-        z: 4
-      distance: 2147483647
-      direction:
-        x: 0
-        z: 0
-    - contentIds: 
-      contentTypes: 
-      isObstacle: 0
-      index:
-        x: 52
-        z: 4
-      distance: 2147483647
-      direction:
-        x: 0
-        z: 0
-    - contentIds: 
-      contentTypes: 
-      isObstacle: 0
-      index:
-        x: 53
-        z: 4
-      distance: 2147483647
-      direction:
-        x: 0
-        z: 0
-    - contentIds: 
-      contentTypes: 
-      isObstacle: 0
-      index:
-        x: 54
-        z: 4
-      distance: 2147483647
-      direction:
-        x: 0
-        z: 0
-    - contentIds: 
-      contentTypes: 
-      isObstacle: 0
-      index:
-        x: 55
-        z: 4
-      distance: 2147483647
-      direction:
-        x: 0
-        z: 0
-    - contentIds: 
-      contentTypes: 
-      isObstacle: 0
-      index:
-        x: 56
-        z: 4
-      distance: 2147483647
-      direction:
-        x: 0
-        z: 0
-    - contentIds: 
-      contentTypes: 
-      isObstacle: 0
-      index:
-        x: 57
-        z: 4
-      distance: 2147483647
-      direction:
-        x: 0
-        z: 0
-    - contentIds: 
-      contentTypes: 
-      isObstacle: 0
-      index:
-        x: 58
-        z: 4
-      distance: 2147483647
-      direction:
-        x: 0
-        z: 0
-    - contentIds: 
-      contentTypes: 
-      isObstacle: 0
-      index:
-        x: 59
-        z: 4
-      distance: 2147483647
-      direction:
-        x: 0
-        z: 0
-    - contentIds: 
-      contentTypes: 
-      isObstacle: 0
-      index:
-        x: 60
-        z: 4
-      distance: 2147483647
-      direction:
-        x: 0
-        z: 0
-    - contentIds: 
-      contentTypes: 
-      isObstacle: 0
-      index:
-        x: 61
-        z: 4
-      distance: 2147483647
-      direction:
-        x: 0
-        z: 0
-    - contentIds: 
-      contentTypes: 
-      isObstacle: 0
-      index:
-        x: 62
-        z: 4
-      distance: 2147483647
-      direction:
-        x: 0
-        z: 0
-    - contentIds: 
-      contentTypes: 
-      isObstacle: 0
-      index:
         x: 0
         z: 5
       distance: 2147483647
@@ -4413,136 +3895,6 @@ MonoBehaviour:
       isObstacle: 0
       index:
         x: 49
-        z: 5
-      distance: 2147483647
-      direction:
-        x: 0
-        z: 0
-    - contentIds: 
-      contentTypes: 
-      isObstacle: 0
-      index:
-        x: 50
-        z: 5
-      distance: 2147483647
-      direction:
-        x: 0
-        z: 0
-    - contentIds: 
-      contentTypes: 
-      isObstacle: 0
-      index:
-        x: 51
-        z: 5
-      distance: 2147483647
-      direction:
-        x: 0
-        z: 0
-    - contentIds: 
-      contentTypes: 
-      isObstacle: 0
-      index:
-        x: 52
-        z: 5
-      distance: 2147483647
-      direction:
-        x: 0
-        z: 0
-    - contentIds: 
-      contentTypes: 
-      isObstacle: 0
-      index:
-        x: 53
-        z: 5
-      distance: 2147483647
-      direction:
-        x: 0
-        z: 0
-    - contentIds: 
-      contentTypes: 
-      isObstacle: 0
-      index:
-        x: 54
-        z: 5
-      distance: 2147483647
-      direction:
-        x: 0
-        z: 0
-    - contentIds: 
-      contentTypes: 
-      isObstacle: 0
-      index:
-        x: 55
-        z: 5
-      distance: 2147483647
-      direction:
-        x: 0
-        z: 0
-    - contentIds: 
-      contentTypes: 
-      isObstacle: 0
-      index:
-        x: 56
-        z: 5
-      distance: 2147483647
-      direction:
-        x: 0
-        z: 0
-    - contentIds: 
-      contentTypes: 
-      isObstacle: 0
-      index:
-        x: 57
-        z: 5
-      distance: 2147483647
-      direction:
-        x: 0
-        z: 0
-    - contentIds: 
-      contentTypes: 
-      isObstacle: 0
-      index:
-        x: 58
-        z: 5
-      distance: 2147483647
-      direction:
-        x: 0
-        z: 0
-    - contentIds: 
-      contentTypes: 
-      isObstacle: 0
-      index:
-        x: 59
-        z: 5
-      distance: 2147483647
-      direction:
-        x: 0
-        z: 0
-    - contentIds: 
-      contentTypes: 
-      isObstacle: 0
-      index:
-        x: 60
-        z: 5
-      distance: 2147483647
-      direction:
-        x: 0
-        z: 0
-    - contentIds: 
-      contentTypes: 
-      isObstacle: 0
-      index:
-        x: 61
-        z: 5
-      distance: 2147483647
-      direction:
-        x: 0
-        z: 0
-    - contentIds: 
-      contentTypes: 
-      isObstacle: 0
-      index:
-        x: 62
         z: 5
       distance: 2147483647
       direction:
@@ -5052,136 +4404,6 @@ MonoBehaviour:
       contentTypes: 
       isObstacle: 0
       index:
-        x: 50
-        z: 6
-      distance: 2147483647
-      direction:
-        x: 0
-        z: 0
-    - contentIds: 
-      contentTypes: 
-      isObstacle: 0
-      index:
-        x: 51
-        z: 6
-      distance: 2147483647
-      direction:
-        x: 0
-        z: 0
-    - contentIds: 
-      contentTypes: 
-      isObstacle: 0
-      index:
-        x: 52
-        z: 6
-      distance: 2147483647
-      direction:
-        x: 0
-        z: 0
-    - contentIds: 
-      contentTypes: 
-      isObstacle: 0
-      index:
-        x: 53
-        z: 6
-      distance: 2147483647
-      direction:
-        x: 0
-        z: 0
-    - contentIds: 
-      contentTypes: 
-      isObstacle: 0
-      index:
-        x: 54
-        z: 6
-      distance: 2147483647
-      direction:
-        x: 0
-        z: 0
-    - contentIds: 
-      contentTypes: 
-      isObstacle: 0
-      index:
-        x: 55
-        z: 6
-      distance: 2147483647
-      direction:
-        x: 0
-        z: 0
-    - contentIds: 
-      contentTypes: 
-      isObstacle: 0
-      index:
-        x: 56
-        z: 6
-      distance: 2147483647
-      direction:
-        x: 0
-        z: 0
-    - contentIds: 
-      contentTypes: 
-      isObstacle: 0
-      index:
-        x: 57
-        z: 6
-      distance: 2147483647
-      direction:
-        x: 0
-        z: 0
-    - contentIds: 
-      contentTypes: 
-      isObstacle: 0
-      index:
-        x: 58
-        z: 6
-      distance: 2147483647
-      direction:
-        x: 0
-        z: 0
-    - contentIds: 
-      contentTypes: 
-      isObstacle: 0
-      index:
-        x: 59
-        z: 6
-      distance: 2147483647
-      direction:
-        x: 0
-        z: 0
-    - contentIds: 
-      contentTypes: 
-      isObstacle: 0
-      index:
-        x: 60
-        z: 6
-      distance: 2147483647
-      direction:
-        x: 0
-        z: 0
-    - contentIds: 
-      contentTypes: 
-      isObstacle: 0
-      index:
-        x: 61
-        z: 6
-      distance: 2147483647
-      direction:
-        x: 0
-        z: 0
-    - contentIds: 
-      contentTypes: 
-      isObstacle: 0
-      index:
-        x: 62
-        z: 6
-      distance: 2147483647
-      direction:
-        x: 0
-        z: 0
-    - contentIds: 
-      contentTypes: 
-      isObstacle: 0
-      index:
         x: 0
         z: 7
       distance: 2147483647
@@ -5673,136 +4895,6 @@ MonoBehaviour:
       isObstacle: 0
       index:
         x: 49
-        z: 7
-      distance: 2147483647
-      direction:
-        x: 0
-        z: 0
-    - contentIds: 
-      contentTypes: 
-      isObstacle: 0
-      index:
-        x: 50
-        z: 7
-      distance: 2147483647
-      direction:
-        x: 0
-        z: 0
-    - contentIds: 
-      contentTypes: 
-      isObstacle: 0
-      index:
-        x: 51
-        z: 7
-      distance: 2147483647
-      direction:
-        x: 0
-        z: 0
-    - contentIds: 
-      contentTypes: 
-      isObstacle: 0
-      index:
-        x: 52
-        z: 7
-      distance: 2147483647
-      direction:
-        x: 0
-        z: 0
-    - contentIds: 
-      contentTypes: 
-      isObstacle: 0
-      index:
-        x: 53
-        z: 7
-      distance: 2147483647
-      direction:
-        x: 0
-        z: 0
-    - contentIds: 
-      contentTypes: 
-      isObstacle: 0
-      index:
-        x: 54
-        z: 7
-      distance: 2147483647
-      direction:
-        x: 0
-        z: 0
-    - contentIds: 
-      contentTypes: 
-      isObstacle: 0
-      index:
-        x: 55
-        z: 7
-      distance: 2147483647
-      direction:
-        x: 0
-        z: 0
-    - contentIds: 
-      contentTypes: 
-      isObstacle: 0
-      index:
-        x: 56
-        z: 7
-      distance: 2147483647
-      direction:
-        x: 0
-        z: 0
-    - contentIds: 
-      contentTypes: 
-      isObstacle: 0
-      index:
-        x: 57
-        z: 7
-      distance: 2147483647
-      direction:
-        x: 0
-        z: 0
-    - contentIds: 
-      contentTypes: 
-      isObstacle: 0
-      index:
-        x: 58
-        z: 7
-      distance: 2147483647
-      direction:
-        x: 0
-        z: 0
-    - contentIds: 
-      contentTypes: 
-      isObstacle: 0
-      index:
-        x: 59
-        z: 7
-      distance: 2147483647
-      direction:
-        x: 0
-        z: 0
-    - contentIds: 
-      contentTypes: 
-      isObstacle: 0
-      index:
-        x: 60
-        z: 7
-      distance: 2147483647
-      direction:
-        x: 0
-        z: 0
-    - contentIds: 
-      contentTypes: 
-      isObstacle: 0
-      index:
-        x: 61
-        z: 7
-      distance: 2147483647
-      direction:
-        x: 0
-        z: 0
-    - contentIds: 
-      contentTypes: 
-      isObstacle: 0
-      index:
-        x: 62
         z: 7
       distance: 2147483647
       direction:
@@ -6312,136 +5404,6 @@ MonoBehaviour:
       contentTypes: 
       isObstacle: 0
       index:
-        x: 50
-        z: 8
-      distance: 2147483647
-      direction:
-        x: 0
-        z: 0
-    - contentIds: 
-      contentTypes: 
-      isObstacle: 0
-      index:
-        x: 51
-        z: 8
-      distance: 2147483647
-      direction:
-        x: 0
-        z: 0
-    - contentIds: 
-      contentTypes: 
-      isObstacle: 0
-      index:
-        x: 52
-        z: 8
-      distance: 2147483647
-      direction:
-        x: 0
-        z: 0
-    - contentIds: 
-      contentTypes: 
-      isObstacle: 0
-      index:
-        x: 53
-        z: 8
-      distance: 2147483647
-      direction:
-        x: 0
-        z: 0
-    - contentIds: 
-      contentTypes: 
-      isObstacle: 0
-      index:
-        x: 54
-        z: 8
-      distance: 2147483647
-      direction:
-        x: 0
-        z: 0
-    - contentIds: 
-      contentTypes: 
-      isObstacle: 0
-      index:
-        x: 55
-        z: 8
-      distance: 2147483647
-      direction:
-        x: 0
-        z: 0
-    - contentIds: 
-      contentTypes: 
-      isObstacle: 0
-      index:
-        x: 56
-        z: 8
-      distance: 2147483647
-      direction:
-        x: 0
-        z: 0
-    - contentIds: 
-      contentTypes: 
-      isObstacle: 0
-      index:
-        x: 57
-        z: 8
-      distance: 2147483647
-      direction:
-        x: 0
-        z: 0
-    - contentIds: 
-      contentTypes: 
-      isObstacle: 0
-      index:
-        x: 58
-        z: 8
-      distance: 2147483647
-      direction:
-        x: 0
-        z: 0
-    - contentIds: 
-      contentTypes: 
-      isObstacle: 0
-      index:
-        x: 59
-        z: 8
-      distance: 2147483647
-      direction:
-        x: 0
-        z: 0
-    - contentIds: 
-      contentTypes: 
-      isObstacle: 0
-      index:
-        x: 60
-        z: 8
-      distance: 2147483647
-      direction:
-        x: 0
-        z: 0
-    - contentIds: 
-      contentTypes: 
-      isObstacle: 0
-      index:
-        x: 61
-        z: 8
-      distance: 2147483647
-      direction:
-        x: 0
-        z: 0
-    - contentIds: 
-      contentTypes: 
-      isObstacle: 0
-      index:
-        x: 62
-        z: 8
-      distance: 2147483647
-      direction:
-        x: 0
-        z: 0
-    - contentIds: 
-      contentTypes: 
-      isObstacle: 0
-      index:
         x: 0
         z: 9
       distance: 2147483647
@@ -6942,136 +5904,6 @@ MonoBehaviour:
       contentTypes: 
       isObstacle: 0
       index:
-        x: 50
-        z: 9
-      distance: 2147483647
-      direction:
-        x: 0
-        z: 0
-    - contentIds: 
-      contentTypes: 
-      isObstacle: 0
-      index:
-        x: 51
-        z: 9
-      distance: 2147483647
-      direction:
-        x: 0
-        z: 0
-    - contentIds: 
-      contentTypes: 
-      isObstacle: 0
-      index:
-        x: 52
-        z: 9
-      distance: 2147483647
-      direction:
-        x: 0
-        z: 0
-    - contentIds: 
-      contentTypes: 
-      isObstacle: 0
-      index:
-        x: 53
-        z: 9
-      distance: 2147483647
-      direction:
-        x: 0
-        z: 0
-    - contentIds: 
-      contentTypes: 
-      isObstacle: 0
-      index:
-        x: 54
-        z: 9
-      distance: 2147483647
-      direction:
-        x: 0
-        z: 0
-    - contentIds: 
-      contentTypes: 
-      isObstacle: 0
-      index:
-        x: 55
-        z: 9
-      distance: 2147483647
-      direction:
-        x: 0
-        z: 0
-    - contentIds: 
-      contentTypes: 
-      isObstacle: 0
-      index:
-        x: 56
-        z: 9
-      distance: 2147483647
-      direction:
-        x: 0
-        z: 0
-    - contentIds: 
-      contentTypes: 
-      isObstacle: 0
-      index:
-        x: 57
-        z: 9
-      distance: 2147483647
-      direction:
-        x: 0
-        z: 0
-    - contentIds: 
-      contentTypes: 
-      isObstacle: 0
-      index:
-        x: 58
-        z: 9
-      distance: 2147483647
-      direction:
-        x: 0
-        z: 0
-    - contentIds: 
-      contentTypes: 
-      isObstacle: 0
-      index:
-        x: 59
-        z: 9
-      distance: 2147483647
-      direction:
-        x: 0
-        z: 0
-    - contentIds: 
-      contentTypes: 
-      isObstacle: 0
-      index:
-        x: 60
-        z: 9
-      distance: 2147483647
-      direction:
-        x: 0
-        z: 0
-    - contentIds: 
-      contentTypes: 
-      isObstacle: 0
-      index:
-        x: 61
-        z: 9
-      distance: 2147483647
-      direction:
-        x: 0
-        z: 0
-    - contentIds: 
-      contentTypes: 
-      isObstacle: 0
-      index:
-        x: 62
-        z: 9
-      distance: 2147483647
-      direction:
-        x: 0
-        z: 0
-    - contentIds: 
-      contentTypes: 
-      isObstacle: 0
-      index:
         x: 0
         z: 10
       distance: 2147483647
@@ -7563,136 +6395,6 @@ MonoBehaviour:
       isObstacle: 0
       index:
         x: 49
-        z: 10
-      distance: 2147483647
-      direction:
-        x: 0
-        z: 0
-    - contentIds: 
-      contentTypes: 
-      isObstacle: 0
-      index:
-        x: 50
-        z: 10
-      distance: 2147483647
-      direction:
-        x: 0
-        z: 0
-    - contentIds: 
-      contentTypes: 
-      isObstacle: 0
-      index:
-        x: 51
-        z: 10
-      distance: 2147483647
-      direction:
-        x: 0
-        z: 0
-    - contentIds: 
-      contentTypes: 
-      isObstacle: 0
-      index:
-        x: 52
-        z: 10
-      distance: 2147483647
-      direction:
-        x: 0
-        z: 0
-    - contentIds: 
-      contentTypes: 
-      isObstacle: 0
-      index:
-        x: 53
-        z: 10
-      distance: 2147483647
-      direction:
-        x: 0
-        z: 0
-    - contentIds: 
-      contentTypes: 
-      isObstacle: 0
-      index:
-        x: 54
-        z: 10
-      distance: 2147483647
-      direction:
-        x: 0
-        z: 0
-    - contentIds: 
-      contentTypes: 
-      isObstacle: 0
-      index:
-        x: 55
-        z: 10
-      distance: 2147483647
-      direction:
-        x: 0
-        z: 0
-    - contentIds: 
-      contentTypes: 
-      isObstacle: 0
-      index:
-        x: 56
-        z: 10
-      distance: 2147483647
-      direction:
-        x: 0
-        z: 0
-    - contentIds: 
-      contentTypes: 
-      isObstacle: 0
-      index:
-        x: 57
-        z: 10
-      distance: 2147483647
-      direction:
-        x: 0
-        z: 0
-    - contentIds: 
-      contentTypes: 
-      isObstacle: 0
-      index:
-        x: 58
-        z: 10
-      distance: 2147483647
-      direction:
-        x: 0
-        z: 0
-    - contentIds: 
-      contentTypes: 
-      isObstacle: 0
-      index:
-        x: 59
-        z: 10
-      distance: 2147483647
-      direction:
-        x: 0
-        z: 0
-    - contentIds: 
-      contentTypes: 
-      isObstacle: 0
-      index:
-        x: 60
-        z: 10
-      distance: 2147483647
-      direction:
-        x: 0
-        z: 0
-    - contentIds: 
-      contentTypes: 
-      isObstacle: 0
-      index:
-        x: 61
-        z: 10
-      distance: 2147483647
-      direction:
-        x: 0
-        z: 0
-    - contentIds: 
-      contentTypes: 
-      isObstacle: 0
-      index:
-        x: 62
         z: 10
       distance: 2147483647
       direction:
@@ -8193,136 +6895,6 @@ MonoBehaviour:
       isObstacle: 0
       index:
         x: 49
-        z: 11
-      distance: 2147483647
-      direction:
-        x: 0
-        z: 0
-    - contentIds: 
-      contentTypes: 
-      isObstacle: 0
-      index:
-        x: 50
-        z: 11
-      distance: 2147483647
-      direction:
-        x: 0
-        z: 0
-    - contentIds: 
-      contentTypes: 
-      isObstacle: 0
-      index:
-        x: 51
-        z: 11
-      distance: 2147483647
-      direction:
-        x: 0
-        z: 0
-    - contentIds: 
-      contentTypes: 
-      isObstacle: 0
-      index:
-        x: 52
-        z: 11
-      distance: 2147483647
-      direction:
-        x: 0
-        z: 0
-    - contentIds: 
-      contentTypes: 
-      isObstacle: 0
-      index:
-        x: 53
-        z: 11
-      distance: 2147483647
-      direction:
-        x: 0
-        z: 0
-    - contentIds: 
-      contentTypes: 
-      isObstacle: 0
-      index:
-        x: 54
-        z: 11
-      distance: 2147483647
-      direction:
-        x: 0
-        z: 0
-    - contentIds: 
-      contentTypes: 
-      isObstacle: 0
-      index:
-        x: 55
-        z: 11
-      distance: 2147483647
-      direction:
-        x: 0
-        z: 0
-    - contentIds: 
-      contentTypes: 
-      isObstacle: 0
-      index:
-        x: 56
-        z: 11
-      distance: 2147483647
-      direction:
-        x: 0
-        z: 0
-    - contentIds: 
-      contentTypes: 
-      isObstacle: 0
-      index:
-        x: 57
-        z: 11
-      distance: 2147483647
-      direction:
-        x: 0
-        z: 0
-    - contentIds: 
-      contentTypes: 
-      isObstacle: 0
-      index:
-        x: 58
-        z: 11
-      distance: 2147483647
-      direction:
-        x: 0
-        z: 0
-    - contentIds: 
-      contentTypes: 
-      isObstacle: 0
-      index:
-        x: 59
-        z: 11
-      distance: 2147483647
-      direction:
-        x: 0
-        z: 0
-    - contentIds: 
-      contentTypes: 
-      isObstacle: 0
-      index:
-        x: 60
-        z: 11
-      distance: 2147483647
-      direction:
-        x: 0
-        z: 0
-    - contentIds: 
-      contentTypes: 
-      isObstacle: 0
-      index:
-        x: 61
-        z: 11
-      distance: 2147483647
-      direction:
-        x: 0
-        z: 0
-    - contentIds: 
-      contentTypes: 
-      isObstacle: 0
-      index:
-        x: 62
         z: 11
       distance: 2147483647
       direction:
@@ -8832,136 +7404,6 @@ MonoBehaviour:
       contentTypes: 
       isObstacle: 0
       index:
-        x: 50
-        z: 12
-      distance: 2147483647
-      direction:
-        x: 0
-        z: 0
-    - contentIds: 
-      contentTypes: 
-      isObstacle: 0
-      index:
-        x: 51
-        z: 12
-      distance: 2147483647
-      direction:
-        x: 0
-        z: 0
-    - contentIds: 
-      contentTypes: 
-      isObstacle: 0
-      index:
-        x: 52
-        z: 12
-      distance: 2147483647
-      direction:
-        x: 0
-        z: 0
-    - contentIds: 
-      contentTypes: 
-      isObstacle: 0
-      index:
-        x: 53
-        z: 12
-      distance: 2147483647
-      direction:
-        x: 0
-        z: 0
-    - contentIds: 
-      contentTypes: 
-      isObstacle: 0
-      index:
-        x: 54
-        z: 12
-      distance: 2147483647
-      direction:
-        x: 0
-        z: 0
-    - contentIds: 
-      contentTypes: 
-      isObstacle: 0
-      index:
-        x: 55
-        z: 12
-      distance: 2147483647
-      direction:
-        x: 0
-        z: 0
-    - contentIds: 
-      contentTypes: 
-      isObstacle: 0
-      index:
-        x: 56
-        z: 12
-      distance: 2147483647
-      direction:
-        x: 0
-        z: 0
-    - contentIds: 
-      contentTypes: 
-      isObstacle: 0
-      index:
-        x: 57
-        z: 12
-      distance: 2147483647
-      direction:
-        x: 0
-        z: 0
-    - contentIds: 
-      contentTypes: 
-      isObstacle: 0
-      index:
-        x: 58
-        z: 12
-      distance: 2147483647
-      direction:
-        x: 0
-        z: 0
-    - contentIds: 
-      contentTypes: 
-      isObstacle: 0
-      index:
-        x: 59
-        z: 12
-      distance: 2147483647
-      direction:
-        x: 0
-        z: 0
-    - contentIds: 
-      contentTypes: 
-      isObstacle: 0
-      index:
-        x: 60
-        z: 12
-      distance: 2147483647
-      direction:
-        x: 0
-        z: 0
-    - contentIds: 
-      contentTypes: 
-      isObstacle: 0
-      index:
-        x: 61
-        z: 12
-      distance: 2147483647
-      direction:
-        x: 0
-        z: 0
-    - contentIds: 
-      contentTypes: 
-      isObstacle: 0
-      index:
-        x: 62
-        z: 12
-      distance: 2147483647
-      direction:
-        x: 0
-        z: 0
-    - contentIds: 
-      contentTypes: 
-      isObstacle: 0
-      index:
         x: 0
         z: 13
       distance: 2147483647
@@ -9453,136 +7895,6 @@ MonoBehaviour:
       isObstacle: 0
       index:
         x: 49
-        z: 13
-      distance: 2147483647
-      direction:
-        x: 0
-        z: 0
-    - contentIds: 
-      contentTypes: 
-      isObstacle: 0
-      index:
-        x: 50
-        z: 13
-      distance: 2147483647
-      direction:
-        x: 0
-        z: 0
-    - contentIds: 
-      contentTypes: 
-      isObstacle: 0
-      index:
-        x: 51
-        z: 13
-      distance: 2147483647
-      direction:
-        x: 0
-        z: 0
-    - contentIds: 
-      contentTypes: 
-      isObstacle: 0
-      index:
-        x: 52
-        z: 13
-      distance: 2147483647
-      direction:
-        x: 0
-        z: 0
-    - contentIds: 
-      contentTypes: 
-      isObstacle: 0
-      index:
-        x: 53
-        z: 13
-      distance: 2147483647
-      direction:
-        x: 0
-        z: 0
-    - contentIds: 
-      contentTypes: 
-      isObstacle: 0
-      index:
-        x: 54
-        z: 13
-      distance: 2147483647
-      direction:
-        x: 0
-        z: 0
-    - contentIds: 
-      contentTypes: 
-      isObstacle: 0
-      index:
-        x: 55
-        z: 13
-      distance: 2147483647
-      direction:
-        x: 0
-        z: 0
-    - contentIds: 
-      contentTypes: 
-      isObstacle: 0
-      index:
-        x: 56
-        z: 13
-      distance: 2147483647
-      direction:
-        x: 0
-        z: 0
-    - contentIds: 
-      contentTypes: 
-      isObstacle: 0
-      index:
-        x: 57
-        z: 13
-      distance: 2147483647
-      direction:
-        x: 0
-        z: 0
-    - contentIds: 
-      contentTypes: 
-      isObstacle: 0
-      index:
-        x: 58
-        z: 13
-      distance: 2147483647
-      direction:
-        x: 0
-        z: 0
-    - contentIds: 
-      contentTypes: 
-      isObstacle: 0
-      index:
-        x: 59
-        z: 13
-      distance: 2147483647
-      direction:
-        x: 0
-        z: 0
-    - contentIds: 
-      contentTypes: 
-      isObstacle: 0
-      index:
-        x: 60
-        z: 13
-      distance: 2147483647
-      direction:
-        x: 0
-        z: 0
-    - contentIds: 
-      contentTypes: 
-      isObstacle: 0
-      index:
-        x: 61
-        z: 13
-      distance: 2147483647
-      direction:
-        x: 0
-        z: 0
-    - contentIds: 
-      contentTypes: 
-      isObstacle: 0
-      index:
-        x: 62
         z: 13
       distance: 2147483647
       direction:
@@ -10092,136 +8404,6 @@ MonoBehaviour:
       contentTypes: 
       isObstacle: 0
       index:
-        x: 50
-        z: 14
-      distance: 2147483647
-      direction:
-        x: 0
-        z: 0
-    - contentIds: 
-      contentTypes: 
-      isObstacle: 0
-      index:
-        x: 51
-        z: 14
-      distance: 2147483647
-      direction:
-        x: 0
-        z: 0
-    - contentIds: 
-      contentTypes: 
-      isObstacle: 0
-      index:
-        x: 52
-        z: 14
-      distance: 2147483647
-      direction:
-        x: 0
-        z: 0
-    - contentIds: 
-      contentTypes: 
-      isObstacle: 0
-      index:
-        x: 53
-        z: 14
-      distance: 2147483647
-      direction:
-        x: 0
-        z: 0
-    - contentIds: 
-      contentTypes: 
-      isObstacle: 0
-      index:
-        x: 54
-        z: 14
-      distance: 2147483647
-      direction:
-        x: 0
-        z: 0
-    - contentIds: 
-      contentTypes: 
-      isObstacle: 0
-      index:
-        x: 55
-        z: 14
-      distance: 2147483647
-      direction:
-        x: 0
-        z: 0
-    - contentIds: 
-      contentTypes: 
-      isObstacle: 0
-      index:
-        x: 56
-        z: 14
-      distance: 2147483647
-      direction:
-        x: 0
-        z: 0
-    - contentIds: 
-      contentTypes: 
-      isObstacle: 0
-      index:
-        x: 57
-        z: 14
-      distance: 2147483647
-      direction:
-        x: 0
-        z: 0
-    - contentIds: 
-      contentTypes: 
-      isObstacle: 0
-      index:
-        x: 58
-        z: 14
-      distance: 2147483647
-      direction:
-        x: 0
-        z: 0
-    - contentIds: 
-      contentTypes: 
-      isObstacle: 0
-      index:
-        x: 59
-        z: 14
-      distance: 2147483647
-      direction:
-        x: 0
-        z: 0
-    - contentIds: 
-      contentTypes: 
-      isObstacle: 0
-      index:
-        x: 60
-        z: 14
-      distance: 2147483647
-      direction:
-        x: 0
-        z: 0
-    - contentIds: 
-      contentTypes: 
-      isObstacle: 0
-      index:
-        x: 61
-        z: 14
-      distance: 2147483647
-      direction:
-        x: 0
-        z: 0
-    - contentIds: 
-      contentTypes: 
-      isObstacle: 0
-      index:
-        x: 62
-        z: 14
-      distance: 2147483647
-      direction:
-        x: 0
-        z: 0
-    - contentIds: 
-      contentTypes: 
-      isObstacle: 0
-      index:
         x: 0
         z: 15
       distance: 2147483647
@@ -10722,136 +8904,6 @@ MonoBehaviour:
       contentTypes: 
       isObstacle: 0
       index:
-        x: 50
-        z: 15
-      distance: 2147483647
-      direction:
-        x: 0
-        z: 0
-    - contentIds: 
-      contentTypes: 
-      isObstacle: 0
-      index:
-        x: 51
-        z: 15
-      distance: 2147483647
-      direction:
-        x: 0
-        z: 0
-    - contentIds: 
-      contentTypes: 
-      isObstacle: 0
-      index:
-        x: 52
-        z: 15
-      distance: 2147483647
-      direction:
-        x: 0
-        z: 0
-    - contentIds: 
-      contentTypes: 
-      isObstacle: 0
-      index:
-        x: 53
-        z: 15
-      distance: 2147483647
-      direction:
-        x: 0
-        z: 0
-    - contentIds: 
-      contentTypes: 
-      isObstacle: 0
-      index:
-        x: 54
-        z: 15
-      distance: 2147483647
-      direction:
-        x: 0
-        z: 0
-    - contentIds: 
-      contentTypes: 
-      isObstacle: 0
-      index:
-        x: 55
-        z: 15
-      distance: 2147483647
-      direction:
-        x: 0
-        z: 0
-    - contentIds: 
-      contentTypes: 
-      isObstacle: 0
-      index:
-        x: 56
-        z: 15
-      distance: 2147483647
-      direction:
-        x: 0
-        z: 0
-    - contentIds: 
-      contentTypes: 
-      isObstacle: 0
-      index:
-        x: 57
-        z: 15
-      distance: 2147483647
-      direction:
-        x: 0
-        z: 0
-    - contentIds: 
-      contentTypes: 
-      isObstacle: 0
-      index:
-        x: 58
-        z: 15
-      distance: 2147483647
-      direction:
-        x: 0
-        z: 0
-    - contentIds: 
-      contentTypes: 
-      isObstacle: 0
-      index:
-        x: 59
-        z: 15
-      distance: 2147483647
-      direction:
-        x: 0
-        z: 0
-    - contentIds: 
-      contentTypes: 
-      isObstacle: 0
-      index:
-        x: 60
-        z: 15
-      distance: 2147483647
-      direction:
-        x: 0
-        z: 0
-    - contentIds: 
-      contentTypes: 
-      isObstacle: 0
-      index:
-        x: 61
-        z: 15
-      distance: 2147483647
-      direction:
-        x: 0
-        z: 0
-    - contentIds: 
-      contentTypes: 
-      isObstacle: 0
-      index:
-        x: 62
-        z: 15
-      distance: 2147483647
-      direction:
-        x: 0
-        z: 0
-    - contentIds: 
-      contentTypes: 
-      isObstacle: 0
-      index:
         x: 0
         z: 16
       distance: 2147483647
@@ -11343,136 +9395,6 @@ MonoBehaviour:
       isObstacle: 0
       index:
         x: 49
-        z: 16
-      distance: 2147483647
-      direction:
-        x: 0
-        z: 0
-    - contentIds: 
-      contentTypes: 
-      isObstacle: 0
-      index:
-        x: 50
-        z: 16
-      distance: 2147483647
-      direction:
-        x: 0
-        z: 0
-    - contentIds: 
-      contentTypes: 
-      isObstacle: 0
-      index:
-        x: 51
-        z: 16
-      distance: 2147483647
-      direction:
-        x: 0
-        z: 0
-    - contentIds: 
-      contentTypes: 
-      isObstacle: 0
-      index:
-        x: 52
-        z: 16
-      distance: 2147483647
-      direction:
-        x: 0
-        z: 0
-    - contentIds: 
-      contentTypes: 
-      isObstacle: 0
-      index:
-        x: 53
-        z: 16
-      distance: 2147483647
-      direction:
-        x: 0
-        z: 0
-    - contentIds: 
-      contentTypes: 
-      isObstacle: 0
-      index:
-        x: 54
-        z: 16
-      distance: 2147483647
-      direction:
-        x: 0
-        z: 0
-    - contentIds: 
-      contentTypes: 
-      isObstacle: 0
-      index:
-        x: 55
-        z: 16
-      distance: 2147483647
-      direction:
-        x: 0
-        z: 0
-    - contentIds: 
-      contentTypes: 
-      isObstacle: 0
-      index:
-        x: 56
-        z: 16
-      distance: 2147483647
-      direction:
-        x: 0
-        z: 0
-    - contentIds: 
-      contentTypes: 
-      isObstacle: 0
-      index:
-        x: 57
-        z: 16
-      distance: 2147483647
-      direction:
-        x: 0
-        z: 0
-    - contentIds: 
-      contentTypes: 
-      isObstacle: 0
-      index:
-        x: 58
-        z: 16
-      distance: 2147483647
-      direction:
-        x: 0
-        z: 0
-    - contentIds: 
-      contentTypes: 
-      isObstacle: 0
-      index:
-        x: 59
-        z: 16
-      distance: 2147483647
-      direction:
-        x: 0
-        z: 0
-    - contentIds: 
-      contentTypes: 
-      isObstacle: 0
-      index:
-        x: 60
-        z: 16
-      distance: 2147483647
-      direction:
-        x: 0
-        z: 0
-    - contentIds: 
-      contentTypes: 
-      isObstacle: 0
-      index:
-        x: 61
-        z: 16
-      distance: 2147483647
-      direction:
-        x: 0
-        z: 0
-    - contentIds: 
-      contentTypes: 
-      isObstacle: 0
-      index:
-        x: 62
         z: 16
       distance: 2147483647
       direction:
@@ -11982,136 +9904,6 @@ MonoBehaviour:
       contentTypes: 
       isObstacle: 0
       index:
-        x: 50
-        z: 17
-      distance: 2147483647
-      direction:
-        x: 0
-        z: 0
-    - contentIds: 
-      contentTypes: 
-      isObstacle: 0
-      index:
-        x: 51
-        z: 17
-      distance: 2147483647
-      direction:
-        x: 0
-        z: 0
-    - contentIds: 
-      contentTypes: 
-      isObstacle: 0
-      index:
-        x: 52
-        z: 17
-      distance: 2147483647
-      direction:
-        x: 0
-        z: 0
-    - contentIds: 
-      contentTypes: 
-      isObstacle: 0
-      index:
-        x: 53
-        z: 17
-      distance: 2147483647
-      direction:
-        x: 0
-        z: 0
-    - contentIds: 
-      contentTypes: 
-      isObstacle: 0
-      index:
-        x: 54
-        z: 17
-      distance: 2147483647
-      direction:
-        x: 0
-        z: 0
-    - contentIds: 
-      contentTypes: 
-      isObstacle: 0
-      index:
-        x: 55
-        z: 17
-      distance: 2147483647
-      direction:
-        x: 0
-        z: 0
-    - contentIds: 
-      contentTypes: 
-      isObstacle: 0
-      index:
-        x: 56
-        z: 17
-      distance: 2147483647
-      direction:
-        x: 0
-        z: 0
-    - contentIds: 
-      contentTypes: 
-      isObstacle: 0
-      index:
-        x: 57
-        z: 17
-      distance: 2147483647
-      direction:
-        x: 0
-        z: 0
-    - contentIds: 
-      contentTypes: 
-      isObstacle: 0
-      index:
-        x: 58
-        z: 17
-      distance: 2147483647
-      direction:
-        x: 0
-        z: 0
-    - contentIds: 
-      contentTypes: 
-      isObstacle: 0
-      index:
-        x: 59
-        z: 17
-      distance: 2147483647
-      direction:
-        x: 0
-        z: 0
-    - contentIds: 
-      contentTypes: 
-      isObstacle: 0
-      index:
-        x: 60
-        z: 17
-      distance: 2147483647
-      direction:
-        x: 0
-        z: 0
-    - contentIds: 
-      contentTypes: 
-      isObstacle: 0
-      index:
-        x: 61
-        z: 17
-      distance: 2147483647
-      direction:
-        x: 0
-        z: 0
-    - contentIds: 
-      contentTypes: 
-      isObstacle: 0
-      index:
-        x: 62
-        z: 17
-      distance: 2147483647
-      direction:
-        x: 0
-        z: 0
-    - contentIds: 
-      contentTypes: 
-      isObstacle: 0
-      index:
         x: 0
         z: 18
       distance: 2147483647
@@ -12603,136 +10395,6 @@ MonoBehaviour:
       isObstacle: 0
       index:
         x: 49
-        z: 18
-      distance: 2147483647
-      direction:
-        x: 0
-        z: 0
-    - contentIds: 
-      contentTypes: 
-      isObstacle: 0
-      index:
-        x: 50
-        z: 18
-      distance: 2147483647
-      direction:
-        x: 0
-        z: 0
-    - contentIds: 
-      contentTypes: 
-      isObstacle: 0
-      index:
-        x: 51
-        z: 18
-      distance: 2147483647
-      direction:
-        x: 0
-        z: 0
-    - contentIds: 
-      contentTypes: 
-      isObstacle: 0
-      index:
-        x: 52
-        z: 18
-      distance: 2147483647
-      direction:
-        x: 0
-        z: 0
-    - contentIds: 
-      contentTypes: 
-      isObstacle: 0
-      index:
-        x: 53
-        z: 18
-      distance: 2147483647
-      direction:
-        x: 0
-        z: 0
-    - contentIds: 
-      contentTypes: 
-      isObstacle: 0
-      index:
-        x: 54
-        z: 18
-      distance: 2147483647
-      direction:
-        x: 0
-        z: 0
-    - contentIds: 
-      contentTypes: 
-      isObstacle: 0
-      index:
-        x: 55
-        z: 18
-      distance: 2147483647
-      direction:
-        x: 0
-        z: 0
-    - contentIds: 
-      contentTypes: 
-      isObstacle: 0
-      index:
-        x: 56
-        z: 18
-      distance: 2147483647
-      direction:
-        x: 0
-        z: 0
-    - contentIds: 
-      contentTypes: 
-      isObstacle: 0
-      index:
-        x: 57
-        z: 18
-      distance: 2147483647
-      direction:
-        x: 0
-        z: 0
-    - contentIds: 
-      contentTypes: 
-      isObstacle: 0
-      index:
-        x: 58
-        z: 18
-      distance: 2147483647
-      direction:
-        x: 0
-        z: 0
-    - contentIds: 
-      contentTypes: 
-      isObstacle: 0
-      index:
-        x: 59
-        z: 18
-      distance: 2147483647
-      direction:
-        x: 0
-        z: 0
-    - contentIds: 
-      contentTypes: 
-      isObstacle: 0
-      index:
-        x: 60
-        z: 18
-      distance: 2147483647
-      direction:
-        x: 0
-        z: 0
-    - contentIds: 
-      contentTypes: 
-      isObstacle: 0
-      index:
-        x: 61
-        z: 18
-      distance: 2147483647
-      direction:
-        x: 0
-        z: 0
-    - contentIds: 
-      contentTypes: 
-      isObstacle: 0
-      index:
-        x: 62
         z: 18
       distance: 2147483647
       direction:
@@ -13242,136 +10904,6 @@ MonoBehaviour:
       contentTypes: 
       isObstacle: 0
       index:
-        x: 50
-        z: 19
-      distance: 2147483647
-      direction:
-        x: 0
-        z: 0
-    - contentIds: 
-      contentTypes: 
-      isObstacle: 0
-      index:
-        x: 51
-        z: 19
-      distance: 2147483647
-      direction:
-        x: 0
-        z: 0
-    - contentIds: 
-      contentTypes: 
-      isObstacle: 0
-      index:
-        x: 52
-        z: 19
-      distance: 2147483647
-      direction:
-        x: 0
-        z: 0
-    - contentIds: 
-      contentTypes: 
-      isObstacle: 0
-      index:
-        x: 53
-        z: 19
-      distance: 2147483647
-      direction:
-        x: 0
-        z: 0
-    - contentIds: 
-      contentTypes: 
-      isObstacle: 0
-      index:
-        x: 54
-        z: 19
-      distance: 2147483647
-      direction:
-        x: 0
-        z: 0
-    - contentIds: 
-      contentTypes: 
-      isObstacle: 0
-      index:
-        x: 55
-        z: 19
-      distance: 2147483647
-      direction:
-        x: 0
-        z: 0
-    - contentIds: 
-      contentTypes: 
-      isObstacle: 0
-      index:
-        x: 56
-        z: 19
-      distance: 2147483647
-      direction:
-        x: 0
-        z: 0
-    - contentIds: 
-      contentTypes: 
-      isObstacle: 0
-      index:
-        x: 57
-        z: 19
-      distance: 2147483647
-      direction:
-        x: 0
-        z: 0
-    - contentIds: 
-      contentTypes: 
-      isObstacle: 0
-      index:
-        x: 58
-        z: 19
-      distance: 2147483647
-      direction:
-        x: 0
-        z: 0
-    - contentIds: 
-      contentTypes: 
-      isObstacle: 0
-      index:
-        x: 59
-        z: 19
-      distance: 2147483647
-      direction:
-        x: 0
-        z: 0
-    - contentIds: 
-      contentTypes: 
-      isObstacle: 0
-      index:
-        x: 60
-        z: 19
-      distance: 2147483647
-      direction:
-        x: 0
-        z: 0
-    - contentIds: 
-      contentTypes: 
-      isObstacle: 0
-      index:
-        x: 61
-        z: 19
-      distance: 2147483647
-      direction:
-        x: 0
-        z: 0
-    - contentIds: 
-      contentTypes: 
-      isObstacle: 0
-      index:
-        x: 62
-        z: 19
-      distance: 2147483647
-      direction:
-        x: 0
-        z: 0
-    - contentIds: 
-      contentTypes: 
-      isObstacle: 0
-      index:
         x: 0
         z: 20
       distance: 2147483647
@@ -13863,136 +11395,6 @@ MonoBehaviour:
       isObstacle: 0
       index:
         x: 49
-        z: 20
-      distance: 2147483647
-      direction:
-        x: 0
-        z: 0
-    - contentIds: 
-      contentTypes: 
-      isObstacle: 0
-      index:
-        x: 50
-        z: 20
-      distance: 2147483647
-      direction:
-        x: 0
-        z: 0
-    - contentIds: 
-      contentTypes: 
-      isObstacle: 0
-      index:
-        x: 51
-        z: 20
-      distance: 2147483647
-      direction:
-        x: 0
-        z: 0
-    - contentIds: 
-      contentTypes: 
-      isObstacle: 0
-      index:
-        x: 52
-        z: 20
-      distance: 2147483647
-      direction:
-        x: 0
-        z: 0
-    - contentIds: 
-      contentTypes: 
-      isObstacle: 0
-      index:
-        x: 53
-        z: 20
-      distance: 2147483647
-      direction:
-        x: 0
-        z: 0
-    - contentIds: 
-      contentTypes: 
-      isObstacle: 0
-      index:
-        x: 54
-        z: 20
-      distance: 2147483647
-      direction:
-        x: 0
-        z: 0
-    - contentIds: 
-      contentTypes: 
-      isObstacle: 0
-      index:
-        x: 55
-        z: 20
-      distance: 2147483647
-      direction:
-        x: 0
-        z: 0
-    - contentIds: 
-      contentTypes: 
-      isObstacle: 0
-      index:
-        x: 56
-        z: 20
-      distance: 2147483647
-      direction:
-        x: 0
-        z: 0
-    - contentIds: 
-      contentTypes: 
-      isObstacle: 0
-      index:
-        x: 57
-        z: 20
-      distance: 2147483647
-      direction:
-        x: 0
-        z: 0
-    - contentIds: 
-      contentTypes: 
-      isObstacle: 0
-      index:
-        x: 58
-        z: 20
-      distance: 2147483647
-      direction:
-        x: 0
-        z: 0
-    - contentIds: 
-      contentTypes: 
-      isObstacle: 0
-      index:
-        x: 59
-        z: 20
-      distance: 2147483647
-      direction:
-        x: 0
-        z: 0
-    - contentIds: 
-      contentTypes: 
-      isObstacle: 0
-      index:
-        x: 60
-        z: 20
-      distance: 2147483647
-      direction:
-        x: 0
-        z: 0
-    - contentIds: 
-      contentTypes: 
-      isObstacle: 0
-      index:
-        x: 61
-        z: 20
-      distance: 2147483647
-      direction:
-        x: 0
-        z: 0
-    - contentIds: 
-      contentTypes: 
-      isObstacle: 0
-      index:
-        x: 62
         z: 20
       distance: 2147483647
       direction:
@@ -14502,136 +11904,6 @@ MonoBehaviour:
       contentTypes: 
       isObstacle: 0
       index:
-        x: 50
-        z: 21
-      distance: 2147483647
-      direction:
-        x: 0
-        z: 0
-    - contentIds: 
-      contentTypes: 
-      isObstacle: 0
-      index:
-        x: 51
-        z: 21
-      distance: 2147483647
-      direction:
-        x: 0
-        z: 0
-    - contentIds: 
-      contentTypes: 
-      isObstacle: 0
-      index:
-        x: 52
-        z: 21
-      distance: 2147483647
-      direction:
-        x: 0
-        z: 0
-    - contentIds: 
-      contentTypes: 
-      isObstacle: 0
-      index:
-        x: 53
-        z: 21
-      distance: 2147483647
-      direction:
-        x: 0
-        z: 0
-    - contentIds: 
-      contentTypes: 
-      isObstacle: 0
-      index:
-        x: 54
-        z: 21
-      distance: 2147483647
-      direction:
-        x: 0
-        z: 0
-    - contentIds: 
-      contentTypes: 
-      isObstacle: 0
-      index:
-        x: 55
-        z: 21
-      distance: 2147483647
-      direction:
-        x: 0
-        z: 0
-    - contentIds: 
-      contentTypes: 
-      isObstacle: 0
-      index:
-        x: 56
-        z: 21
-      distance: 2147483647
-      direction:
-        x: 0
-        z: 0
-    - contentIds: 
-      contentTypes: 
-      isObstacle: 0
-      index:
-        x: 57
-        z: 21
-      distance: 2147483647
-      direction:
-        x: 0
-        z: 0
-    - contentIds: 
-      contentTypes: 
-      isObstacle: 0
-      index:
-        x: 58
-        z: 21
-      distance: 2147483647
-      direction:
-        x: 0
-        z: 0
-    - contentIds: 
-      contentTypes: 
-      isObstacle: 0
-      index:
-        x: 59
-        z: 21
-      distance: 2147483647
-      direction:
-        x: 0
-        z: 0
-    - contentIds: 
-      contentTypes: 
-      isObstacle: 0
-      index:
-        x: 60
-        z: 21
-      distance: 2147483647
-      direction:
-        x: 0
-        z: 0
-    - contentIds: 
-      contentTypes: 
-      isObstacle: 0
-      index:
-        x: 61
-        z: 21
-      distance: 2147483647
-      direction:
-        x: 0
-        z: 0
-    - contentIds: 
-      contentTypes: 
-      isObstacle: 0
-      index:
-        x: 62
-        z: 21
-      distance: 2147483647
-      direction:
-        x: 0
-        z: 0
-    - contentIds: 
-      contentTypes: 
-      isObstacle: 0
-      index:
         x: 0
         z: 22
       distance: 2147483647
@@ -15123,136 +12395,6 @@ MonoBehaviour:
       isObstacle: 0
       index:
         x: 49
-        z: 22
-      distance: 2147483647
-      direction:
-        x: 0
-        z: 0
-    - contentIds: 
-      contentTypes: 
-      isObstacle: 0
-      index:
-        x: 50
-        z: 22
-      distance: 2147483647
-      direction:
-        x: 0
-        z: 0
-    - contentIds: 
-      contentTypes: 
-      isObstacle: 0
-      index:
-        x: 51
-        z: 22
-      distance: 2147483647
-      direction:
-        x: 0
-        z: 0
-    - contentIds: 
-      contentTypes: 
-      isObstacle: 0
-      index:
-        x: 52
-        z: 22
-      distance: 2147483647
-      direction:
-        x: 0
-        z: 0
-    - contentIds: 
-      contentTypes: 
-      isObstacle: 0
-      index:
-        x: 53
-        z: 22
-      distance: 2147483647
-      direction:
-        x: 0
-        z: 0
-    - contentIds: 
-      contentTypes: 
-      isObstacle: 0
-      index:
-        x: 54
-        z: 22
-      distance: 2147483647
-      direction:
-        x: 0
-        z: 0
-    - contentIds: 
-      contentTypes: 
-      isObstacle: 0
-      index:
-        x: 55
-        z: 22
-      distance: 2147483647
-      direction:
-        x: 0
-        z: 0
-    - contentIds: 
-      contentTypes: 
-      isObstacle: 0
-      index:
-        x: 56
-        z: 22
-      distance: 2147483647
-      direction:
-        x: 0
-        z: 0
-    - contentIds: 
-      contentTypes: 
-      isObstacle: 0
-      index:
-        x: 57
-        z: 22
-      distance: 2147483647
-      direction:
-        x: 0
-        z: 0
-    - contentIds: 
-      contentTypes: 
-      isObstacle: 0
-      index:
-        x: 58
-        z: 22
-      distance: 2147483647
-      direction:
-        x: 0
-        z: 0
-    - contentIds: 
-      contentTypes: 
-      isObstacle: 0
-      index:
-        x: 59
-        z: 22
-      distance: 2147483647
-      direction:
-        x: 0
-        z: 0
-    - contentIds: 
-      contentTypes: 
-      isObstacle: 0
-      index:
-        x: 60
-        z: 22
-      distance: 2147483647
-      direction:
-        x: 0
-        z: 0
-    - contentIds: 
-      contentTypes: 
-      isObstacle: 0
-      index:
-        x: 61
-        z: 22
-      distance: 2147483647
-      direction:
-        x: 0
-        z: 0
-    - contentIds: 
-      contentTypes: 
-      isObstacle: 0
-      index:
-        x: 62
         z: 22
       distance: 2147483647
       direction:
@@ -15762,136 +12904,6 @@ MonoBehaviour:
       contentTypes: 
       isObstacle: 0
       index:
-        x: 50
-        z: 23
-      distance: 2147483647
-      direction:
-        x: 0
-        z: 0
-    - contentIds: 
-      contentTypes: 
-      isObstacle: 0
-      index:
-        x: 51
-        z: 23
-      distance: 2147483647
-      direction:
-        x: 0
-        z: 0
-    - contentIds: 
-      contentTypes: 
-      isObstacle: 0
-      index:
-        x: 52
-        z: 23
-      distance: 2147483647
-      direction:
-        x: 0
-        z: 0
-    - contentIds: 
-      contentTypes: 
-      isObstacle: 0
-      index:
-        x: 53
-        z: 23
-      distance: 2147483647
-      direction:
-        x: 0
-        z: 0
-    - contentIds: 
-      contentTypes: 
-      isObstacle: 0
-      index:
-        x: 54
-        z: 23
-      distance: 2147483647
-      direction:
-        x: 0
-        z: 0
-    - contentIds: 
-      contentTypes: 
-      isObstacle: 0
-      index:
-        x: 55
-        z: 23
-      distance: 2147483647
-      direction:
-        x: 0
-        z: 0
-    - contentIds: 
-      contentTypes: 
-      isObstacle: 0
-      index:
-        x: 56
-        z: 23
-      distance: 2147483647
-      direction:
-        x: 0
-        z: 0
-    - contentIds: 
-      contentTypes: 
-      isObstacle: 0
-      index:
-        x: 57
-        z: 23
-      distance: 2147483647
-      direction:
-        x: 0
-        z: 0
-    - contentIds: 
-      contentTypes: 
-      isObstacle: 0
-      index:
-        x: 58
-        z: 23
-      distance: 2147483647
-      direction:
-        x: 0
-        z: 0
-    - contentIds: 
-      contentTypes: 
-      isObstacle: 0
-      index:
-        x: 59
-        z: 23
-      distance: 2147483647
-      direction:
-        x: 0
-        z: 0
-    - contentIds: 
-      contentTypes: 
-      isObstacle: 0
-      index:
-        x: 60
-        z: 23
-      distance: 2147483647
-      direction:
-        x: 0
-        z: 0
-    - contentIds: 
-      contentTypes: 
-      isObstacle: 0
-      index:
-        x: 61
-        z: 23
-      distance: 2147483647
-      direction:
-        x: 0
-        z: 0
-    - contentIds: 
-      contentTypes: 
-      isObstacle: 0
-      index:
-        x: 62
-        z: 23
-      distance: 2147483647
-      direction:
-        x: 0
-        z: 0
-    - contentIds: 
-      contentTypes: 
-      isObstacle: 0
-      index:
         x: 0
         z: 24
       distance: 2147483647
@@ -16383,136 +13395,6 @@ MonoBehaviour:
       isObstacle: 0
       index:
         x: 49
-        z: 24
-      distance: 2147483647
-      direction:
-        x: 0
-        z: 0
-    - contentIds: 
-      contentTypes: 
-      isObstacle: 0
-      index:
-        x: 50
-        z: 24
-      distance: 2147483647
-      direction:
-        x: 0
-        z: 0
-    - contentIds: 
-      contentTypes: 
-      isObstacle: 0
-      index:
-        x: 51
-        z: 24
-      distance: 2147483647
-      direction:
-        x: 0
-        z: 0
-    - contentIds: 
-      contentTypes: 
-      isObstacle: 0
-      index:
-        x: 52
-        z: 24
-      distance: 2147483647
-      direction:
-        x: 0
-        z: 0
-    - contentIds: 
-      contentTypes: 
-      isObstacle: 0
-      index:
-        x: 53
-        z: 24
-      distance: 2147483647
-      direction:
-        x: 0
-        z: 0
-    - contentIds: 
-      contentTypes: 
-      isObstacle: 0
-      index:
-        x: 54
-        z: 24
-      distance: 2147483647
-      direction:
-        x: 0
-        z: 0
-    - contentIds: 
-      contentTypes: 
-      isObstacle: 0
-      index:
-        x: 55
-        z: 24
-      distance: 2147483647
-      direction:
-        x: 0
-        z: 0
-    - contentIds: 
-      contentTypes: 
-      isObstacle: 0
-      index:
-        x: 56
-        z: 24
-      distance: 2147483647
-      direction:
-        x: 0
-        z: 0
-    - contentIds: 
-      contentTypes: 
-      isObstacle: 0
-      index:
-        x: 57
-        z: 24
-      distance: 2147483647
-      direction:
-        x: 0
-        z: 0
-    - contentIds: 
-      contentTypes: 
-      isObstacle: 0
-      index:
-        x: 58
-        z: 24
-      distance: 2147483647
-      direction:
-        x: 0
-        z: 0
-    - contentIds: 
-      contentTypes: 
-      isObstacle: 0
-      index:
-        x: 59
-        z: 24
-      distance: 2147483647
-      direction:
-        x: 0
-        z: 0
-    - contentIds: 
-      contentTypes: 
-      isObstacle: 0
-      index:
-        x: 60
-        z: 24
-      distance: 2147483647
-      direction:
-        x: 0
-        z: 0
-    - contentIds: 
-      contentTypes: 
-      isObstacle: 0
-      index:
-        x: 61
-        z: 24
-      distance: 2147483647
-      direction:
-        x: 0
-        z: 0
-    - contentIds: 
-      contentTypes: 
-      isObstacle: 0
-      index:
-        x: 62
         z: 24
       distance: 2147483647
       direction:
@@ -17022,136 +13904,6 @@ MonoBehaviour:
       contentTypes: 
       isObstacle: 0
       index:
-        x: 50
-        z: 25
-      distance: 2147483647
-      direction:
-        x: 0
-        z: 0
-    - contentIds: 
-      contentTypes: 
-      isObstacle: 0
-      index:
-        x: 51
-        z: 25
-      distance: 2147483647
-      direction:
-        x: 0
-        z: 0
-    - contentIds: 
-      contentTypes: 
-      isObstacle: 0
-      index:
-        x: 52
-        z: 25
-      distance: 2147483647
-      direction:
-        x: 0
-        z: 0
-    - contentIds: 
-      contentTypes: 
-      isObstacle: 0
-      index:
-        x: 53
-        z: 25
-      distance: 2147483647
-      direction:
-        x: 0
-        z: 0
-    - contentIds: 
-      contentTypes: 
-      isObstacle: 0
-      index:
-        x: 54
-        z: 25
-      distance: 2147483647
-      direction:
-        x: 0
-        z: 0
-    - contentIds: 
-      contentTypes: 
-      isObstacle: 0
-      index:
-        x: 55
-        z: 25
-      distance: 2147483647
-      direction:
-        x: 0
-        z: 0
-    - contentIds: 
-      contentTypes: 
-      isObstacle: 0
-      index:
-        x: 56
-        z: 25
-      distance: 2147483647
-      direction:
-        x: 0
-        z: 0
-    - contentIds: 
-      contentTypes: 
-      isObstacle: 0
-      index:
-        x: 57
-        z: 25
-      distance: 2147483647
-      direction:
-        x: 0
-        z: 0
-    - contentIds: 
-      contentTypes: 
-      isObstacle: 0
-      index:
-        x: 58
-        z: 25
-      distance: 2147483647
-      direction:
-        x: 0
-        z: 0
-    - contentIds: 
-      contentTypes: 
-      isObstacle: 0
-      index:
-        x: 59
-        z: 25
-      distance: 2147483647
-      direction:
-        x: 0
-        z: 0
-    - contentIds: 
-      contentTypes: 
-      isObstacle: 0
-      index:
-        x: 60
-        z: 25
-      distance: 2147483647
-      direction:
-        x: 0
-        z: 0
-    - contentIds: 
-      contentTypes: 
-      isObstacle: 0
-      index:
-        x: 61
-        z: 25
-      distance: 2147483647
-      direction:
-        x: 0
-        z: 0
-    - contentIds: 
-      contentTypes: 
-      isObstacle: 0
-      index:
-        x: 62
-        z: 25
-      distance: 2147483647
-      direction:
-        x: 0
-        z: 0
-    - contentIds: 
-      contentTypes: 
-      isObstacle: 0
-      index:
         x: 0
         z: 26
       distance: 2147483647
@@ -17643,136 +14395,6 @@ MonoBehaviour:
       isObstacle: 0
       index:
         x: 49
-        z: 26
-      distance: 2147483647
-      direction:
-        x: 0
-        z: 0
-    - contentIds: 
-      contentTypes: 
-      isObstacle: 0
-      index:
-        x: 50
-        z: 26
-      distance: 2147483647
-      direction:
-        x: 0
-        z: 0
-    - contentIds: 
-      contentTypes: 
-      isObstacle: 0
-      index:
-        x: 51
-        z: 26
-      distance: 2147483647
-      direction:
-        x: 0
-        z: 0
-    - contentIds: 
-      contentTypes: 
-      isObstacle: 0
-      index:
-        x: 52
-        z: 26
-      distance: 2147483647
-      direction:
-        x: 0
-        z: 0
-    - contentIds: 
-      contentTypes: 
-      isObstacle: 0
-      index:
-        x: 53
-        z: 26
-      distance: 2147483647
-      direction:
-        x: 0
-        z: 0
-    - contentIds: 
-      contentTypes: 
-      isObstacle: 0
-      index:
-        x: 54
-        z: 26
-      distance: 2147483647
-      direction:
-        x: 0
-        z: 0
-    - contentIds: 
-      contentTypes: 
-      isObstacle: 0
-      index:
-        x: 55
-        z: 26
-      distance: 2147483647
-      direction:
-        x: 0
-        z: 0
-    - contentIds: 
-      contentTypes: 
-      isObstacle: 0
-      index:
-        x: 56
-        z: 26
-      distance: 2147483647
-      direction:
-        x: 0
-        z: 0
-    - contentIds: 
-      contentTypes: 
-      isObstacle: 0
-      index:
-        x: 57
-        z: 26
-      distance: 2147483647
-      direction:
-        x: 0
-        z: 0
-    - contentIds: 
-      contentTypes: 
-      isObstacle: 0
-      index:
-        x: 58
-        z: 26
-      distance: 2147483647
-      direction:
-        x: 0
-        z: 0
-    - contentIds: 
-      contentTypes: 
-      isObstacle: 0
-      index:
-        x: 59
-        z: 26
-      distance: 2147483647
-      direction:
-        x: 0
-        z: 0
-    - contentIds: 
-      contentTypes: 
-      isObstacle: 0
-      index:
-        x: 60
-        z: 26
-      distance: 2147483647
-      direction:
-        x: 0
-        z: 0
-    - contentIds: 
-      contentTypes: 
-      isObstacle: 0
-      index:
-        x: 61
-        z: 26
-      distance: 2147483647
-      direction:
-        x: 0
-        z: 0
-    - contentIds: 
-      contentTypes: 
-      isObstacle: 0
-      index:
-        x: 62
         z: 26
       distance: 2147483647
       direction:
@@ -18282,136 +14904,6 @@ MonoBehaviour:
       contentTypes: 
       isObstacle: 0
       index:
-        x: 50
-        z: 27
-      distance: 2147483647
-      direction:
-        x: 0
-        z: 0
-    - contentIds: 
-      contentTypes: 
-      isObstacle: 0
-      index:
-        x: 51
-        z: 27
-      distance: 2147483647
-      direction:
-        x: 0
-        z: 0
-    - contentIds: 
-      contentTypes: 
-      isObstacle: 0
-      index:
-        x: 52
-        z: 27
-      distance: 2147483647
-      direction:
-        x: 0
-        z: 0
-    - contentIds: 
-      contentTypes: 
-      isObstacle: 0
-      index:
-        x: 53
-        z: 27
-      distance: 2147483647
-      direction:
-        x: 0
-        z: 0
-    - contentIds: 
-      contentTypes: 
-      isObstacle: 0
-      index:
-        x: 54
-        z: 27
-      distance: 2147483647
-      direction:
-        x: 0
-        z: 0
-    - contentIds: 
-      contentTypes: 
-      isObstacle: 0
-      index:
-        x: 55
-        z: 27
-      distance: 2147483647
-      direction:
-        x: 0
-        z: 0
-    - contentIds: 
-      contentTypes: 
-      isObstacle: 0
-      index:
-        x: 56
-        z: 27
-      distance: 2147483647
-      direction:
-        x: 0
-        z: 0
-    - contentIds: 
-      contentTypes: 
-      isObstacle: 0
-      index:
-        x: 57
-        z: 27
-      distance: 2147483647
-      direction:
-        x: 0
-        z: 0
-    - contentIds: 
-      contentTypes: 
-      isObstacle: 0
-      index:
-        x: 58
-        z: 27
-      distance: 2147483647
-      direction:
-        x: 0
-        z: 0
-    - contentIds: 
-      contentTypes: 
-      isObstacle: 0
-      index:
-        x: 59
-        z: 27
-      distance: 2147483647
-      direction:
-        x: 0
-        z: 0
-    - contentIds: 
-      contentTypes: 
-      isObstacle: 0
-      index:
-        x: 60
-        z: 27
-      distance: 2147483647
-      direction:
-        x: 0
-        z: 0
-    - contentIds: 
-      contentTypes: 
-      isObstacle: 0
-      index:
-        x: 61
-        z: 27
-      distance: 2147483647
-      direction:
-        x: 0
-        z: 0
-    - contentIds: 
-      contentTypes: 
-      isObstacle: 0
-      index:
-        x: 62
-        z: 27
-      distance: 2147483647
-      direction:
-        x: 0
-        z: 0
-    - contentIds: 
-      contentTypes: 
-      isObstacle: 0
-      index:
         x: 0
         z: 28
       distance: 2147483647
@@ -18903,136 +15395,6 @@ MonoBehaviour:
       isObstacle: 0
       index:
         x: 49
-        z: 28
-      distance: 2147483647
-      direction:
-        x: 0
-        z: 0
-    - contentIds: 
-      contentTypes: 
-      isObstacle: 0
-      index:
-        x: 50
-        z: 28
-      distance: 2147483647
-      direction:
-        x: 0
-        z: 0
-    - contentIds: 
-      contentTypes: 
-      isObstacle: 0
-      index:
-        x: 51
-        z: 28
-      distance: 2147483647
-      direction:
-        x: 0
-        z: 0
-    - contentIds: 
-      contentTypes: 
-      isObstacle: 0
-      index:
-        x: 52
-        z: 28
-      distance: 2147483647
-      direction:
-        x: 0
-        z: 0
-    - contentIds: 
-      contentTypes: 
-      isObstacle: 0
-      index:
-        x: 53
-        z: 28
-      distance: 2147483647
-      direction:
-        x: 0
-        z: 0
-    - contentIds: 
-      contentTypes: 
-      isObstacle: 0
-      index:
-        x: 54
-        z: 28
-      distance: 2147483647
-      direction:
-        x: 0
-        z: 0
-    - contentIds: 
-      contentTypes: 
-      isObstacle: 0
-      index:
-        x: 55
-        z: 28
-      distance: 2147483647
-      direction:
-        x: 0
-        z: 0
-    - contentIds: 
-      contentTypes: 
-      isObstacle: 0
-      index:
-        x: 56
-        z: 28
-      distance: 2147483647
-      direction:
-        x: 0
-        z: 0
-    - contentIds: 
-      contentTypes: 
-      isObstacle: 0
-      index:
-        x: 57
-        z: 28
-      distance: 2147483647
-      direction:
-        x: 0
-        z: 0
-    - contentIds: 
-      contentTypes: 
-      isObstacle: 0
-      index:
-        x: 58
-        z: 28
-      distance: 2147483647
-      direction:
-        x: 0
-        z: 0
-    - contentIds: 
-      contentTypes: 
-      isObstacle: 0
-      index:
-        x: 59
-        z: 28
-      distance: 2147483647
-      direction:
-        x: 0
-        z: 0
-    - contentIds: 
-      contentTypes: 
-      isObstacle: 0
-      index:
-        x: 60
-        z: 28
-      distance: 2147483647
-      direction:
-        x: 0
-        z: 0
-    - contentIds: 
-      contentTypes: 
-      isObstacle: 0
-      index:
-        x: 61
-        z: 28
-      distance: 2147483647
-      direction:
-        x: 0
-        z: 0
-    - contentIds: 
-      contentTypes: 
-      isObstacle: 0
-      index:
-        x: 62
         z: 28
       distance: 2147483647
       direction:
@@ -19542,136 +15904,6 @@ MonoBehaviour:
       contentTypes: 
       isObstacle: 0
       index:
-        x: 50
-        z: 29
-      distance: 2147483647
-      direction:
-        x: 0
-        z: 0
-    - contentIds: 
-      contentTypes: 
-      isObstacle: 0
-      index:
-        x: 51
-        z: 29
-      distance: 2147483647
-      direction:
-        x: 0
-        z: 0
-    - contentIds: 
-      contentTypes: 
-      isObstacle: 0
-      index:
-        x: 52
-        z: 29
-      distance: 2147483647
-      direction:
-        x: 0
-        z: 0
-    - contentIds: 
-      contentTypes: 
-      isObstacle: 0
-      index:
-        x: 53
-        z: 29
-      distance: 2147483647
-      direction:
-        x: 0
-        z: 0
-    - contentIds: 
-      contentTypes: 
-      isObstacle: 0
-      index:
-        x: 54
-        z: 29
-      distance: 2147483647
-      direction:
-        x: 0
-        z: 0
-    - contentIds: 
-      contentTypes: 
-      isObstacle: 0
-      index:
-        x: 55
-        z: 29
-      distance: 2147483647
-      direction:
-        x: 0
-        z: 0
-    - contentIds: 
-      contentTypes: 
-      isObstacle: 0
-      index:
-        x: 56
-        z: 29
-      distance: 2147483647
-      direction:
-        x: 0
-        z: 0
-    - contentIds: 
-      contentTypes: 
-      isObstacle: 0
-      index:
-        x: 57
-        z: 29
-      distance: 2147483647
-      direction:
-        x: 0
-        z: 0
-    - contentIds: 
-      contentTypes: 
-      isObstacle: 0
-      index:
-        x: 58
-        z: 29
-      distance: 2147483647
-      direction:
-        x: 0
-        z: 0
-    - contentIds: 
-      contentTypes: 
-      isObstacle: 0
-      index:
-        x: 59
-        z: 29
-      distance: 2147483647
-      direction:
-        x: 0
-        z: 0
-    - contentIds: 
-      contentTypes: 
-      isObstacle: 0
-      index:
-        x: 60
-        z: 29
-      distance: 2147483647
-      direction:
-        x: 0
-        z: 0
-    - contentIds: 
-      contentTypes: 
-      isObstacle: 0
-      index:
-        x: 61
-        z: 29
-      distance: 2147483647
-      direction:
-        x: 0
-        z: 0
-    - contentIds: 
-      contentTypes: 
-      isObstacle: 0
-      index:
-        x: 62
-        z: 29
-      distance: 2147483647
-      direction:
-        x: 0
-        z: 0
-    - contentIds: 
-      contentTypes: 
-      isObstacle: 0
-      index:
         x: 0
         z: 30
       distance: 2147483647
@@ -20163,136 +16395,6 @@ MonoBehaviour:
       isObstacle: 0
       index:
         x: 49
-        z: 30
-      distance: 2147483647
-      direction:
-        x: 0
-        z: 0
-    - contentIds: 
-      contentTypes: 
-      isObstacle: 0
-      index:
-        x: 50
-        z: 30
-      distance: 2147483647
-      direction:
-        x: 0
-        z: 0
-    - contentIds: 
-      contentTypes: 
-      isObstacle: 0
-      index:
-        x: 51
-        z: 30
-      distance: 2147483647
-      direction:
-        x: 0
-        z: 0
-    - contentIds: 
-      contentTypes: 
-      isObstacle: 0
-      index:
-        x: 52
-        z: 30
-      distance: 2147483647
-      direction:
-        x: 0
-        z: 0
-    - contentIds: 
-      contentTypes: 
-      isObstacle: 0
-      index:
-        x: 53
-        z: 30
-      distance: 2147483647
-      direction:
-        x: 0
-        z: 0
-    - contentIds: 
-      contentTypes: 
-      isObstacle: 0
-      index:
-        x: 54
-        z: 30
-      distance: 2147483647
-      direction:
-        x: 0
-        z: 0
-    - contentIds: 
-      contentTypes: 
-      isObstacle: 0
-      index:
-        x: 55
-        z: 30
-      distance: 2147483647
-      direction:
-        x: 0
-        z: 0
-    - contentIds: 
-      contentTypes: 
-      isObstacle: 0
-      index:
-        x: 56
-        z: 30
-      distance: 2147483647
-      direction:
-        x: 0
-        z: 0
-    - contentIds: 
-      contentTypes: 
-      isObstacle: 0
-      index:
-        x: 57
-        z: 30
-      distance: 2147483647
-      direction:
-        x: 0
-        z: 0
-    - contentIds: 
-      contentTypes: 
-      isObstacle: 0
-      index:
-        x: 58
-        z: 30
-      distance: 2147483647
-      direction:
-        x: 0
-        z: 0
-    - contentIds: 
-      contentTypes: 
-      isObstacle: 0
-      index:
-        x: 59
-        z: 30
-      distance: 2147483647
-      direction:
-        x: 0
-        z: 0
-    - contentIds: 
-      contentTypes: 
-      isObstacle: 0
-      index:
-        x: 60
-        z: 30
-      distance: 2147483647
-      direction:
-        x: 0
-        z: 0
-    - contentIds: 
-      contentTypes: 
-      isObstacle: 0
-      index:
-        x: 61
-        z: 30
-      distance: 2147483647
-      direction:
-        x: 0
-        z: 0
-    - contentIds: 
-      contentTypes: 
-      isObstacle: 0
-      index:
-        x: 62
         z: 30
       distance: 2147483647
       direction:
@@ -20802,136 +16904,6 @@ MonoBehaviour:
       contentTypes: 
       isObstacle: 0
       index:
-        x: 50
-        z: 31
-      distance: 2147483647
-      direction:
-        x: 0
-        z: 0
-    - contentIds: 
-      contentTypes: 
-      isObstacle: 0
-      index:
-        x: 51
-        z: 31
-      distance: 2147483647
-      direction:
-        x: 0
-        z: 0
-    - contentIds: 
-      contentTypes: 
-      isObstacle: 0
-      index:
-        x: 52
-        z: 31
-      distance: 2147483647
-      direction:
-        x: 0
-        z: 0
-    - contentIds: 
-      contentTypes: 
-      isObstacle: 0
-      index:
-        x: 53
-        z: 31
-      distance: 2147483647
-      direction:
-        x: 0
-        z: 0
-    - contentIds: 
-      contentTypes: 
-      isObstacle: 0
-      index:
-        x: 54
-        z: 31
-      distance: 2147483647
-      direction:
-        x: 0
-        z: 0
-    - contentIds: 
-      contentTypes: 
-      isObstacle: 0
-      index:
-        x: 55
-        z: 31
-      distance: 2147483647
-      direction:
-        x: 0
-        z: 0
-    - contentIds: 
-      contentTypes: 
-      isObstacle: 0
-      index:
-        x: 56
-        z: 31
-      distance: 2147483647
-      direction:
-        x: 0
-        z: 0
-    - contentIds: 
-      contentTypes: 
-      isObstacle: 0
-      index:
-        x: 57
-        z: 31
-      distance: 2147483647
-      direction:
-        x: 0
-        z: 0
-    - contentIds: 
-      contentTypes: 
-      isObstacle: 0
-      index:
-        x: 58
-        z: 31
-      distance: 2147483647
-      direction:
-        x: 0
-        z: 0
-    - contentIds: 
-      contentTypes: 
-      isObstacle: 0
-      index:
-        x: 59
-        z: 31
-      distance: 2147483647
-      direction:
-        x: 0
-        z: 0
-    - contentIds: 
-      contentTypes: 
-      isObstacle: 0
-      index:
-        x: 60
-        z: 31
-      distance: 2147483647
-      direction:
-        x: 0
-        z: 0
-    - contentIds: 
-      contentTypes: 
-      isObstacle: 0
-      index:
-        x: 61
-        z: 31
-      distance: 2147483647
-      direction:
-        x: 0
-        z: 0
-    - contentIds: 
-      contentTypes: 
-      isObstacle: 0
-      index:
-        x: 62
-        z: 31
-      distance: 2147483647
-      direction:
-        x: 0
-        z: 0
-    - contentIds: 
-      contentTypes: 
-      isObstacle: 0
-      index:
         x: 0
         z: 32
       distance: 2147483647
@@ -21423,136 +17395,6 @@ MonoBehaviour:
       isObstacle: 0
       index:
         x: 49
-        z: 32
-      distance: 2147483647
-      direction:
-        x: 0
-        z: 0
-    - contentIds: 
-      contentTypes: 
-      isObstacle: 0
-      index:
-        x: 50
-        z: 32
-      distance: 2147483647
-      direction:
-        x: 0
-        z: 0
-    - contentIds: 
-      contentTypes: 
-      isObstacle: 0
-      index:
-        x: 51
-        z: 32
-      distance: 2147483647
-      direction:
-        x: 0
-        z: 0
-    - contentIds: 
-      contentTypes: 
-      isObstacle: 0
-      index:
-        x: 52
-        z: 32
-      distance: 2147483647
-      direction:
-        x: 0
-        z: 0
-    - contentIds: 
-      contentTypes: 
-      isObstacle: 0
-      index:
-        x: 53
-        z: 32
-      distance: 2147483647
-      direction:
-        x: 0
-        z: 0
-    - contentIds: 
-      contentTypes: 
-      isObstacle: 0
-      index:
-        x: 54
-        z: 32
-      distance: 2147483647
-      direction:
-        x: 0
-        z: 0
-    - contentIds: 
-      contentTypes: 
-      isObstacle: 0
-      index:
-        x: 55
-        z: 32
-      distance: 2147483647
-      direction:
-        x: 0
-        z: 0
-    - contentIds: 
-      contentTypes: 
-      isObstacle: 0
-      index:
-        x: 56
-        z: 32
-      distance: 2147483647
-      direction:
-        x: 0
-        z: 0
-    - contentIds: 
-      contentTypes: 
-      isObstacle: 0
-      index:
-        x: 57
-        z: 32
-      distance: 2147483647
-      direction:
-        x: 0
-        z: 0
-    - contentIds: 
-      contentTypes: 
-      isObstacle: 0
-      index:
-        x: 58
-        z: 32
-      distance: 2147483647
-      direction:
-        x: 0
-        z: 0
-    - contentIds: 
-      contentTypes: 
-      isObstacle: 0
-      index:
-        x: 59
-        z: 32
-      distance: 2147483647
-      direction:
-        x: 0
-        z: 0
-    - contentIds: 
-      contentTypes: 
-      isObstacle: 0
-      index:
-        x: 60
-        z: 32
-      distance: 2147483647
-      direction:
-        x: 0
-        z: 0
-    - contentIds: 
-      contentTypes: 
-      isObstacle: 0
-      index:
-        x: 61
-        z: 32
-      distance: 2147483647
-      direction:
-        x: 0
-        z: 0
-    - contentIds: 
-      contentTypes: 
-      isObstacle: 0
-      index:
-        x: 62
         z: 32
       distance: 2147483647
       direction:
@@ -22062,136 +17904,6 @@ MonoBehaviour:
       contentTypes: 
       isObstacle: 0
       index:
-        x: 50
-        z: 33
-      distance: 2147483647
-      direction:
-        x: 0
-        z: 0
-    - contentIds: 
-      contentTypes: 
-      isObstacle: 0
-      index:
-        x: 51
-        z: 33
-      distance: 2147483647
-      direction:
-        x: 0
-        z: 0
-    - contentIds: 
-      contentTypes: 
-      isObstacle: 0
-      index:
-        x: 52
-        z: 33
-      distance: 2147483647
-      direction:
-        x: 0
-        z: 0
-    - contentIds: 
-      contentTypes: 
-      isObstacle: 0
-      index:
-        x: 53
-        z: 33
-      distance: 2147483647
-      direction:
-        x: 0
-        z: 0
-    - contentIds: 
-      contentTypes: 
-      isObstacle: 0
-      index:
-        x: 54
-        z: 33
-      distance: 2147483647
-      direction:
-        x: 0
-        z: 0
-    - contentIds: 
-      contentTypes: 
-      isObstacle: 0
-      index:
-        x: 55
-        z: 33
-      distance: 2147483647
-      direction:
-        x: 0
-        z: 0
-    - contentIds: 
-      contentTypes: 
-      isObstacle: 0
-      index:
-        x: 56
-        z: 33
-      distance: 2147483647
-      direction:
-        x: 0
-        z: 0
-    - contentIds: 
-      contentTypes: 
-      isObstacle: 0
-      index:
-        x: 57
-        z: 33
-      distance: 2147483647
-      direction:
-        x: 0
-        z: 0
-    - contentIds: 
-      contentTypes: 
-      isObstacle: 0
-      index:
-        x: 58
-        z: 33
-      distance: 2147483647
-      direction:
-        x: 0
-        z: 0
-    - contentIds: 
-      contentTypes: 
-      isObstacle: 0
-      index:
-        x: 59
-        z: 33
-      distance: 2147483647
-      direction:
-        x: 0
-        z: 0
-    - contentIds: 
-      contentTypes: 
-      isObstacle: 0
-      index:
-        x: 60
-        z: 33
-      distance: 2147483647
-      direction:
-        x: 0
-        z: 0
-    - contentIds: 
-      contentTypes: 
-      isObstacle: 0
-      index:
-        x: 61
-        z: 33
-      distance: 2147483647
-      direction:
-        x: 0
-        z: 0
-    - contentIds: 
-      contentTypes: 
-      isObstacle: 0
-      index:
-        x: 62
-        z: 33
-      distance: 2147483647
-      direction:
-        x: 0
-        z: 0
-    - contentIds: 
-      contentTypes: 
-      isObstacle: 0
-      index:
         x: 0
         z: 34
       distance: 2147483647
@@ -22683,136 +18395,6 @@ MonoBehaviour:
       isObstacle: 0
       index:
         x: 49
-        z: 34
-      distance: 2147483647
-      direction:
-        x: 0
-        z: 0
-    - contentIds: 
-      contentTypes: 
-      isObstacle: 0
-      index:
-        x: 50
-        z: 34
-      distance: 2147483647
-      direction:
-        x: 0
-        z: 0
-    - contentIds: 
-      contentTypes: 
-      isObstacle: 0
-      index:
-        x: 51
-        z: 34
-      distance: 2147483647
-      direction:
-        x: 0
-        z: 0
-    - contentIds: 
-      contentTypes: 
-      isObstacle: 0
-      index:
-        x: 52
-        z: 34
-      distance: 2147483647
-      direction:
-        x: 0
-        z: 0
-    - contentIds: 
-      contentTypes: 
-      isObstacle: 0
-      index:
-        x: 53
-        z: 34
-      distance: 2147483647
-      direction:
-        x: 0
-        z: 0
-    - contentIds: 
-      contentTypes: 
-      isObstacle: 0
-      index:
-        x: 54
-        z: 34
-      distance: 2147483647
-      direction:
-        x: 0
-        z: 0
-    - contentIds: 
-      contentTypes: 
-      isObstacle: 0
-      index:
-        x: 55
-        z: 34
-      distance: 2147483647
-      direction:
-        x: 0
-        z: 0
-    - contentIds: 
-      contentTypes: 
-      isObstacle: 0
-      index:
-        x: 56
-        z: 34
-      distance: 2147483647
-      direction:
-        x: 0
-        z: 0
-    - contentIds: 
-      contentTypes: 
-      isObstacle: 0
-      index:
-        x: 57
-        z: 34
-      distance: 2147483647
-      direction:
-        x: 0
-        z: 0
-    - contentIds: 
-      contentTypes: 
-      isObstacle: 0
-      index:
-        x: 58
-        z: 34
-      distance: 2147483647
-      direction:
-        x: 0
-        z: 0
-    - contentIds: 
-      contentTypes: 
-      isObstacle: 0
-      index:
-        x: 59
-        z: 34
-      distance: 2147483647
-      direction:
-        x: 0
-        z: 0
-    - contentIds: 
-      contentTypes: 
-      isObstacle: 0
-      index:
-        x: 60
-        z: 34
-      distance: 2147483647
-      direction:
-        x: 0
-        z: 0
-    - contentIds: 
-      contentTypes: 
-      isObstacle: 0
-      index:
-        x: 61
-        z: 34
-      distance: 2147483647
-      direction:
-        x: 0
-        z: 0
-    - contentIds: 
-      contentTypes: 
-      isObstacle: 0
-      index:
-        x: 62
         z: 34
       distance: 2147483647
       direction:
@@ -23322,136 +18904,6 @@ MonoBehaviour:
       contentTypes: 
       isObstacle: 0
       index:
-        x: 50
-        z: 35
-      distance: 2147483647
-      direction:
-        x: 0
-        z: 0
-    - contentIds: 
-      contentTypes: 
-      isObstacle: 0
-      index:
-        x: 51
-        z: 35
-      distance: 2147483647
-      direction:
-        x: 0
-        z: 0
-    - contentIds: 
-      contentTypes: 
-      isObstacle: 0
-      index:
-        x: 52
-        z: 35
-      distance: 2147483647
-      direction:
-        x: 0
-        z: 0
-    - contentIds: 
-      contentTypes: 
-      isObstacle: 0
-      index:
-        x: 53
-        z: 35
-      distance: 2147483647
-      direction:
-        x: 0
-        z: 0
-    - contentIds: 
-      contentTypes: 
-      isObstacle: 0
-      index:
-        x: 54
-        z: 35
-      distance: 2147483647
-      direction:
-        x: 0
-        z: 0
-    - contentIds: 
-      contentTypes: 
-      isObstacle: 0
-      index:
-        x: 55
-        z: 35
-      distance: 2147483647
-      direction:
-        x: 0
-        z: 0
-    - contentIds: 
-      contentTypes: 
-      isObstacle: 0
-      index:
-        x: 56
-        z: 35
-      distance: 2147483647
-      direction:
-        x: 0
-        z: 0
-    - contentIds: 
-      contentTypes: 
-      isObstacle: 0
-      index:
-        x: 57
-        z: 35
-      distance: 2147483647
-      direction:
-        x: 0
-        z: 0
-    - contentIds: 
-      contentTypes: 
-      isObstacle: 0
-      index:
-        x: 58
-        z: 35
-      distance: 2147483647
-      direction:
-        x: 0
-        z: 0
-    - contentIds: 
-      contentTypes: 
-      isObstacle: 0
-      index:
-        x: 59
-        z: 35
-      distance: 2147483647
-      direction:
-        x: 0
-        z: 0
-    - contentIds: 
-      contentTypes: 
-      isObstacle: 0
-      index:
-        x: 60
-        z: 35
-      distance: 2147483647
-      direction:
-        x: 0
-        z: 0
-    - contentIds: 
-      contentTypes: 
-      isObstacle: 0
-      index:
-        x: 61
-        z: 35
-      distance: 2147483647
-      direction:
-        x: 0
-        z: 0
-    - contentIds: 
-      contentTypes: 
-      isObstacle: 0
-      index:
-        x: 62
-        z: 35
-      distance: 2147483647
-      direction:
-        x: 0
-        z: 0
-    - contentIds: 
-      contentTypes: 
-      isObstacle: 0
-      index:
         x: 0
         z: 36
       distance: 2147483647
@@ -23943,136 +19395,6 @@ MonoBehaviour:
       isObstacle: 0
       index:
         x: 49
-        z: 36
-      distance: 2147483647
-      direction:
-        x: 0
-        z: 0
-    - contentIds: 
-      contentTypes: 
-      isObstacle: 0
-      index:
-        x: 50
-        z: 36
-      distance: 2147483647
-      direction:
-        x: 0
-        z: 0
-    - contentIds: 
-      contentTypes: 
-      isObstacle: 0
-      index:
-        x: 51
-        z: 36
-      distance: 2147483647
-      direction:
-        x: 0
-        z: 0
-    - contentIds: 
-      contentTypes: 
-      isObstacle: 0
-      index:
-        x: 52
-        z: 36
-      distance: 2147483647
-      direction:
-        x: 0
-        z: 0
-    - contentIds: 
-      contentTypes: 
-      isObstacle: 0
-      index:
-        x: 53
-        z: 36
-      distance: 2147483647
-      direction:
-        x: 0
-        z: 0
-    - contentIds: 
-      contentTypes: 
-      isObstacle: 0
-      index:
-        x: 54
-        z: 36
-      distance: 2147483647
-      direction:
-        x: 0
-        z: 0
-    - contentIds: 
-      contentTypes: 
-      isObstacle: 0
-      index:
-        x: 55
-        z: 36
-      distance: 2147483647
-      direction:
-        x: 0
-        z: 0
-    - contentIds: 
-      contentTypes: 
-      isObstacle: 0
-      index:
-        x: 56
-        z: 36
-      distance: 2147483647
-      direction:
-        x: 0
-        z: 0
-    - contentIds: 
-      contentTypes: 
-      isObstacle: 0
-      index:
-        x: 57
-        z: 36
-      distance: 2147483647
-      direction:
-        x: 0
-        z: 0
-    - contentIds: 
-      contentTypes: 
-      isObstacle: 0
-      index:
-        x: 58
-        z: 36
-      distance: 2147483647
-      direction:
-        x: 0
-        z: 0
-    - contentIds: 
-      contentTypes: 
-      isObstacle: 0
-      index:
-        x: 59
-        z: 36
-      distance: 2147483647
-      direction:
-        x: 0
-        z: 0
-    - contentIds: 
-      contentTypes: 
-      isObstacle: 0
-      index:
-        x: 60
-        z: 36
-      distance: 2147483647
-      direction:
-        x: 0
-        z: 0
-    - contentIds: 
-      contentTypes: 
-      isObstacle: 0
-      index:
-        x: 61
-        z: 36
-      distance: 2147483647
-      direction:
-        x: 0
-        z: 0
-    - contentIds: 
-      contentTypes: 
-      isObstacle: 0
-      index:
-        x: 62
         z: 36
       distance: 2147483647
       direction:
@@ -24582,136 +19904,6 @@ MonoBehaviour:
       contentTypes: 
       isObstacle: 0
       index:
-        x: 50
-        z: 37
-      distance: 2147483647
-      direction:
-        x: 0
-        z: 0
-    - contentIds: 
-      contentTypes: 
-      isObstacle: 0
-      index:
-        x: 51
-        z: 37
-      distance: 2147483647
-      direction:
-        x: 0
-        z: 0
-    - contentIds: 
-      contentTypes: 
-      isObstacle: 0
-      index:
-        x: 52
-        z: 37
-      distance: 2147483647
-      direction:
-        x: 0
-        z: 0
-    - contentIds: 
-      contentTypes: 
-      isObstacle: 0
-      index:
-        x: 53
-        z: 37
-      distance: 2147483647
-      direction:
-        x: 0
-        z: 0
-    - contentIds: 
-      contentTypes: 
-      isObstacle: 0
-      index:
-        x: 54
-        z: 37
-      distance: 2147483647
-      direction:
-        x: 0
-        z: 0
-    - contentIds: 
-      contentTypes: 
-      isObstacle: 0
-      index:
-        x: 55
-        z: 37
-      distance: 2147483647
-      direction:
-        x: 0
-        z: 0
-    - contentIds: 
-      contentTypes: 
-      isObstacle: 0
-      index:
-        x: 56
-        z: 37
-      distance: 2147483647
-      direction:
-        x: 0
-        z: 0
-    - contentIds: 
-      contentTypes: 
-      isObstacle: 0
-      index:
-        x: 57
-        z: 37
-      distance: 2147483647
-      direction:
-        x: 0
-        z: 0
-    - contentIds: 
-      contentTypes: 
-      isObstacle: 0
-      index:
-        x: 58
-        z: 37
-      distance: 2147483647
-      direction:
-        x: 0
-        z: 0
-    - contentIds: 
-      contentTypes: 
-      isObstacle: 0
-      index:
-        x: 59
-        z: 37
-      distance: 2147483647
-      direction:
-        x: 0
-        z: 0
-    - contentIds: 
-      contentTypes: 
-      isObstacle: 0
-      index:
-        x: 60
-        z: 37
-      distance: 2147483647
-      direction:
-        x: 0
-        z: 0
-    - contentIds: 
-      contentTypes: 
-      isObstacle: 0
-      index:
-        x: 61
-        z: 37
-      distance: 2147483647
-      direction:
-        x: 0
-        z: 0
-    - contentIds: 
-      contentTypes: 
-      isObstacle: 0
-      index:
-        x: 62
-        z: 37
-      distance: 2147483647
-      direction:
-        x: 0
-        z: 0
-    - contentIds: 
-      contentTypes: 
-      isObstacle: 0
-      index:
         x: 0
         z: 38
       distance: 2147483647
@@ -25212,136 +20404,6 @@ MonoBehaviour:
       contentTypes: 
       isObstacle: 0
       index:
-        x: 50
-        z: 38
-      distance: 2147483647
-      direction:
-        x: 0
-        z: 0
-    - contentIds: 
-      contentTypes: 
-      isObstacle: 0
-      index:
-        x: 51
-        z: 38
-      distance: 2147483647
-      direction:
-        x: 0
-        z: 0
-    - contentIds: 
-      contentTypes: 
-      isObstacle: 0
-      index:
-        x: 52
-        z: 38
-      distance: 2147483647
-      direction:
-        x: 0
-        z: 0
-    - contentIds: 
-      contentTypes: 
-      isObstacle: 0
-      index:
-        x: 53
-        z: 38
-      distance: 2147483647
-      direction:
-        x: 0
-        z: 0
-    - contentIds: 
-      contentTypes: 
-      isObstacle: 0
-      index:
-        x: 54
-        z: 38
-      distance: 2147483647
-      direction:
-        x: 0
-        z: 0
-    - contentIds: 
-      contentTypes: 
-      isObstacle: 0
-      index:
-        x: 55
-        z: 38
-      distance: 2147483647
-      direction:
-        x: 0
-        z: 0
-    - contentIds: 
-      contentTypes: 
-      isObstacle: 0
-      index:
-        x: 56
-        z: 38
-      distance: 2147483647
-      direction:
-        x: 0
-        z: 0
-    - contentIds: 
-      contentTypes: 
-      isObstacle: 0
-      index:
-        x: 57
-        z: 38
-      distance: 2147483647
-      direction:
-        x: 0
-        z: 0
-    - contentIds: 
-      contentTypes: 
-      isObstacle: 0
-      index:
-        x: 58
-        z: 38
-      distance: 2147483647
-      direction:
-        x: 0
-        z: 0
-    - contentIds: 
-      contentTypes: 
-      isObstacle: 0
-      index:
-        x: 59
-        z: 38
-      distance: 2147483647
-      direction:
-        x: 0
-        z: 0
-    - contentIds: 
-      contentTypes: 
-      isObstacle: 0
-      index:
-        x: 60
-        z: 38
-      distance: 2147483647
-      direction:
-        x: 0
-        z: 0
-    - contentIds: 
-      contentTypes: 
-      isObstacle: 0
-      index:
-        x: 61
-        z: 38
-      distance: 2147483647
-      direction:
-        x: 0
-        z: 0
-    - contentIds: 
-      contentTypes: 
-      isObstacle: 0
-      index:
-        x: 62
-        z: 38
-      distance: 2147483647
-      direction:
-        x: 0
-        z: 0
-    - contentIds: 
-      contentTypes: 
-      isObstacle: 0
-      index:
         x: 0
         z: 39
       distance: 2147483647
@@ -25833,136 +20895,6 @@ MonoBehaviour:
       isObstacle: 0
       index:
         x: 49
-        z: 39
-      distance: 2147483647
-      direction:
-        x: 0
-        z: 0
-    - contentIds: 
-      contentTypes: 
-      isObstacle: 0
-      index:
-        x: 50
-        z: 39
-      distance: 2147483647
-      direction:
-        x: 0
-        z: 0
-    - contentIds: 
-      contentTypes: 
-      isObstacle: 0
-      index:
-        x: 51
-        z: 39
-      distance: 2147483647
-      direction:
-        x: 0
-        z: 0
-    - contentIds: 
-      contentTypes: 
-      isObstacle: 0
-      index:
-        x: 52
-        z: 39
-      distance: 2147483647
-      direction:
-        x: 0
-        z: 0
-    - contentIds: 
-      contentTypes: 
-      isObstacle: 0
-      index:
-        x: 53
-        z: 39
-      distance: 2147483647
-      direction:
-        x: 0
-        z: 0
-    - contentIds: 
-      contentTypes: 
-      isObstacle: 0
-      index:
-        x: 54
-        z: 39
-      distance: 2147483647
-      direction:
-        x: 0
-        z: 0
-    - contentIds: 
-      contentTypes: 
-      isObstacle: 0
-      index:
-        x: 55
-        z: 39
-      distance: 2147483647
-      direction:
-        x: 0
-        z: 0
-    - contentIds: 
-      contentTypes: 
-      isObstacle: 0
-      index:
-        x: 56
-        z: 39
-      distance: 2147483647
-      direction:
-        x: 0
-        z: 0
-    - contentIds: 
-      contentTypes: 
-      isObstacle: 0
-      index:
-        x: 57
-        z: 39
-      distance: 2147483647
-      direction:
-        x: 0
-        z: 0
-    - contentIds: 
-      contentTypes: 
-      isObstacle: 0
-      index:
-        x: 58
-        z: 39
-      distance: 2147483647
-      direction:
-        x: 0
-        z: 0
-    - contentIds: 
-      contentTypes: 
-      isObstacle: 0
-      index:
-        x: 59
-        z: 39
-      distance: 2147483647
-      direction:
-        x: 0
-        z: 0
-    - contentIds: 
-      contentTypes: 
-      isObstacle: 0
-      index:
-        x: 60
-        z: 39
-      distance: 2147483647
-      direction:
-        x: 0
-        z: 0
-    - contentIds: 
-      contentTypes: 
-      isObstacle: 0
-      index:
-        x: 61
-        z: 39
-      distance: 2147483647
-      direction:
-        x: 0
-        z: 0
-    - contentIds: 
-      contentTypes: 
-      isObstacle: 0
-      index:
-        x: 62
         z: 39
       distance: 2147483647
       direction:
@@ -26094,6 +21026,297 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 1134010707}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1304809749
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1304809752}
+  - component: {fileID: 1304809751}
+  - component: {fileID: 1304809750}
+  m_Layer: 0
+  m_Name: Help B
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!102 &1304809750
+TextMesh:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1304809749}
+  m_Text: B  create block
+  m_OffsetZ: 0
+  m_CharacterSize: 1
+  m_LineSpacing: 1
+  m_Anchor: 0
+  m_Alignment: 0
+  m_TabSize: 4
+  m_FontSize: 0
+  m_FontStyle: 1
+  m_RichText: 1
+  m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
+  m_Color:
+    serializedVersion: 2
+    rgba: 4278190080
+--- !u!23 &1304809751
+MeshRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1304809749}
+  m_Enabled: 1
+  m_CastShadows: 1
+  m_ReceiveShadows: 1
+  m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
+  m_RayTraceProcedural: 0
+  m_RenderingLayerMask: 1
+  m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 10100, guid: 0000000000000000e000000000000000, type: 0}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 1
+  m_SelectedEditorRenderState: 3
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+  m_AdditionalVertexStreams: {fileID: 0}
+--- !u!4 &1304809752
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1304809749}
+  m_LocalRotation: {x: 0.7071068, y: -0, z: -0, w: 0.7071068}
+  m_LocalPosition: {x: 3.4049149, y: -5.6935945, z: -8.886211}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 438060727}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 90, y: 0, z: 0}
+--- !u!1 &1488122795
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1488122798}
+  - component: {fileID: 1488122797}
+  - component: {fileID: 1488122796}
+  m_Layer: 0
+  m_Name: Help N
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!102 &1488122796
+TextMesh:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1488122795}
+  m_Text: N  create Agent
+  m_OffsetZ: 0
+  m_CharacterSize: 1
+  m_LineSpacing: 1
+  m_Anchor: 0
+  m_Alignment: 0
+  m_TabSize: 4
+  m_FontSize: 0
+  m_FontStyle: 1
+  m_RichText: 1
+  m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
+  m_Color:
+    serializedVersion: 2
+    rgba: 4278190080
+--- !u!23 &1488122797
+MeshRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1488122795}
+  m_Enabled: 1
+  m_CastShadows: 1
+  m_ReceiveShadows: 1
+  m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
+  m_RayTraceProcedural: 0
+  m_RenderingLayerMask: 1
+  m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 10100, guid: 0000000000000000e000000000000000, type: 0}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 1
+  m_SelectedEditorRenderState: 3
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+  m_AdditionalVertexStreams: {fileID: 0}
+--- !u!4 &1488122798
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1488122795}
+  m_LocalRotation: {x: 0.7071068, y: -0, z: -0, w: 0.7071068}
+  m_LocalPosition: {x: 3.4049149, y: -5.6935945, z: -5.496211}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 438060727}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 90, y: 0, z: 0}
+--- !u!1 &1504683750
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1504683753}
+  - component: {fileID: 1504683752}
+  - component: {fileID: 1504683751}
+  m_Layer: 0
+  m_Name: Help Space
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!102 &1504683751
+TextMesh:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1504683750}
+  m_Text: Space  rotation block
+  m_OffsetZ: 0
+  m_CharacterSize: 1
+  m_LineSpacing: 1
+  m_Anchor: 0
+  m_Alignment: 0
+  m_TabSize: 4
+  m_FontSize: 0
+  m_FontStyle: 1
+  m_RichText: 1
+  m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
+  m_Color:
+    serializedVersion: 2
+    rgba: 4278190080
+--- !u!23 &1504683752
+MeshRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1504683750}
+  m_Enabled: 1
+  m_CastShadows: 1
+  m_ReceiveShadows: 1
+  m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
+  m_RayTraceProcedural: 0
+  m_RenderingLayerMask: 1
+  m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 10100, guid: 0000000000000000e000000000000000, type: 0}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 1
+  m_SelectedEditorRenderState: 3
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+  m_AdditionalVertexStreams: {fileID: 0}
+--- !u!4 &1504683753
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1504683750}
+  m_LocalRotation: {x: 0.7071068, y: -0, z: -0, w: 0.7071068}
+  m_LocalPosition: {x: 0.36491585, y: -5.6935945, z: -10.476211}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 438060727}
+  m_RootOrder: 3
+  m_LocalEulerAnglesHint: {x: 90, y: 0, z: 0}
 --- !u!1 &1553460567
 GameObject:
   m_ObjectHideFlags: 0
@@ -26105,6 +21328,7 @@ GameObject:
   - component: {fileID: 1553460569}
   - component: {fileID: 1553460568}
   - component: {fileID: 1553460570}
+  - component: {fileID: 1553460571}
   m_Layer: 0
   m_Name: GridBuilder
   m_TagString: Untagged
@@ -26141,7 +21365,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 8
+  m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1553460570
 MonoBehaviour:
@@ -26161,233 +21385,20 @@ MonoBehaviour:
   - {fileID: 3117728376025562796, guid: 113b4ee2df44d4cf389c313a3e88027e, type: 3}
   - {fileID: 3117728376025562796, guid: 6898e9c3e58f94aa5a462ef89e8855e2, type: 3}
   - {fileID: 3117728376025562796, guid: 399f2f6f4e1534c028ca7bb9b57bc3bb, type: 3}
---- !u!1 &1622062617
-GameObject:
+--- !u!114 &1553460571
+MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1622062618}
-  - component: {fileID: 1622062620}
-  - component: {fileID: 1622062619}
-  m_Layer: 0
-  m_Name: Help Space
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1622062618
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1622062617}
-  m_LocalRotation: {x: 0.7071068, y: -0, z: -0, w: 0.7071068}
-  m_LocalPosition: {x: 0.36491585, y: -5.6935945, z: -10.476211}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 1776661648}
-  m_RootOrder: 1
-  m_LocalEulerAnglesHint: {x: 90, y: 0, z: 0}
---- !u!102 &1622062619
-TextMesh:
-  serializedVersion: 3
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1622062617}
-  m_Text: Space  rotation block
-  m_OffsetZ: 0
-  m_CharacterSize: 1
-  m_LineSpacing: 1
-  m_Anchor: 0
-  m_Alignment: 0
-  m_TabSize: 4
-  m_FontSize: 0
-  m_FontStyle: 1
-  m_RichText: 1
-  m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
-  m_Color:
-    serializedVersion: 2
-    rgba: 4278190080
---- !u!23 &1622062620
-MeshRenderer:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1622062617}
+  m_GameObject: {fileID: 1553460567}
   m_Enabled: 1
-  m_CastShadows: 1
-  m_ReceiveShadows: 1
-  m_DynamicOccludee: 1
-  m_StaticShadowCaster: 0
-  m_MotionVectors: 1
-  m_LightProbeUsage: 1
-  m_ReflectionProbeUsage: 1
-  m_RayTracingMode: 2
-  m_RayTraceProcedural: 0
-  m_RenderingLayerMask: 1
-  m_RendererPriority: 0
-  m_Materials:
-  - {fileID: 10100, guid: 0000000000000000e000000000000000, type: 0}
-  m_StaticBatchInfo:
-    firstSubMesh: 0
-    subMeshCount: 0
-  m_StaticBatchRoot: {fileID: 0}
-  m_ProbeAnchor: {fileID: 0}
-  m_LightProbeVolumeOverride: {fileID: 0}
-  m_ScaleInLightmap: 1
-  m_ReceiveGI: 1
-  m_PreserveUVs: 0
-  m_IgnoreNormalsForChartDetection: 0
-  m_ImportantGI: 0
-  m_StitchLightmapSeams: 1
-  m_SelectedEditorRenderState: 3
-  m_MinimumChartSize: 4
-  m_AutoUVMaxDistance: 0.5
-  m_AutoUVMaxAngle: 89
-  m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
-  m_SortingOrder: 0
-  m_AdditionalVertexStreams: {fileID: 0}
---- !u!1 &1622063403
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1622063404}
-  - component: {fileID: 1622063406}
-  - component: {fileID: 1622063405}
-  m_Layer: 0
-  m_Name: Help B
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1622063404
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1622063403}
-  m_LocalRotation: {x: 0.7071068, y: -0, z: -0, w: 0.7071068}
-  m_LocalPosition: {x: 3.4049149, y: -5.6935945, z: -8.886211}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 1776661648}
-  m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 90, y: 0, z: 0}
---- !u!102 &1622063405
-TextMesh:
-  serializedVersion: 3
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1622063403}
-  m_Text: B  create block
-  m_OffsetZ: 0
-  m_CharacterSize: 1
-  m_LineSpacing: 1
-  m_Anchor: 0
-  m_Alignment: 0
-  m_TabSize: 4
-  m_FontSize: 0
-  m_FontStyle: 1
-  m_RichText: 1
-  m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
-  m_Color:
-    serializedVersion: 2
-    rgba: 4278190080
---- !u!23 &1622063406
-MeshRenderer:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1622063403}
-  m_Enabled: 1
-  m_CastShadows: 1
-  m_ReceiveShadows: 1
-  m_DynamicOccludee: 1
-  m_StaticShadowCaster: 0
-  m_MotionVectors: 1
-  m_LightProbeUsage: 1
-  m_ReflectionProbeUsage: 1
-  m_RayTracingMode: 2
-  m_RayTraceProcedural: 0
-  m_RenderingLayerMask: 1
-  m_RendererPriority: 0
-  m_Materials:
-  - {fileID: 10100, guid: 0000000000000000e000000000000000, type: 0}
-  m_StaticBatchInfo:
-    firstSubMesh: 0
-    subMeshCount: 0
-  m_StaticBatchRoot: {fileID: 0}
-  m_ProbeAnchor: {fileID: 0}
-  m_LightProbeVolumeOverride: {fileID: 0}
-  m_ScaleInLightmap: 1
-  m_ReceiveGI: 1
-  m_PreserveUVs: 0
-  m_IgnoreNormalsForChartDetection: 0
-  m_ImportantGI: 0
-  m_StitchLightmapSeams: 1
-  m_SelectedEditorRenderState: 3
-  m_MinimumChartSize: 4
-  m_AutoUVMaxDistance: 0.5
-  m_AutoUVMaxAngle: 89
-  m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
-  m_SortingOrder: 0
-  m_AdditionalVertexStreams: {fileID: 0}
---- !u!1 &1776661647
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1776661648}
-  m_Layer: 0
-  m_Name: Help
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1776661648
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1776661647}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 27.835085, y: 5.7935944, z: 14.066211}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children:
-  - {fileID: 1622063404}
-  - {fileID: 1622062618}
-  m_Father: {fileID: 0}
-  m_RootOrder: 9
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9e0029e635944fc3a77c66f570609a7b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  agentPrefab: {fileID: 8631232457783057256, guid: f6675154d7b7442d894cf12fcce1fcef,
+    type: 3}
 --- !u!1 &1899506827
 GameObject:
   m_ObjectHideFlags: 0
@@ -26869,7 +21880,7 @@ PrefabInstance:
     - target: {fileID: 8367022545492952948, guid: 251bbf739a674441a808b2f76255e299,
         type: 3}
       propertyPath: m_RootOrder
-      value: 7
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 8367022545492952948, guid: 251bbf739a674441a808b2f76255e299,
         type: 3}
