@@ -42,6 +42,7 @@ namespace ET
             World.Instance.AddSingleton<MessageQueue>();
             World.Instance.AddSingleton<NetServices>();
             World.Instance.AddSingleton<NavmeshComponent>();
+            World.Instance.AddSingleton<FileComponent>();
             World.Instance.AddSingleton<LogMsg>();
             
             // 创建需要reload的code singleton
