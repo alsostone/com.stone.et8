@@ -2,7 +2,8 @@
     "name": "GridBuilder.Common",
     "rootNamespace": "ST.GridBuilder",
     "references": [
-        "GUID:756335c0388f7114790e504ed368ae1d"
+        "GUID:756335c0388f7114790e504ed368ae1d",
+        "GUID:3bc34195423a3497e8e70fc30a077526"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],

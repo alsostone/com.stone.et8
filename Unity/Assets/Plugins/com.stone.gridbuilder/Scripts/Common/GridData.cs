@@ -1,5 +1,6 @@
 using System;
 using MemoryPack;
+using TrueSync;
 
 namespace ST.GridBuilder
 {
@@ -38,11 +39,11 @@ namespace ST.GridBuilder
         [MemoryPackInclude] public int zPosition = 0;
         [MemoryPackInclude] public int xLength = 16;
         [MemoryPackInclude] public int zLength = 16;
-        [MemoryPackInclude] public float cellSize = 1;
+        [MemoryPackInclude] public int cellSize = 1;
         [MemoryPackInclude] public int blockLevelMax = 2;
 
         [MemoryPackInclude] public CellData[] cells;
-        [MemoryPackInclude] public int currentGuid = 0;
+        [MemoryPackInclude] private int currentGuid = 0;
 
         public void ResetCells()
         {
@@ -84,7 +85,7 @@ namespace ST.GridBuilder
         
         public FieldV2 GetCellPosition(int x, int z)
         {
-            return new FieldV2(cellSize * (x + 0.5f) + xPosition, cellSize * (z + 0.5f) + zPosition);
+            return new FieldV2(cellSize * (x + FP.Half) + xPosition, cellSize * (z + FP.Half) + zPosition);
         }
 
         public bool IsInside(int x, int z)

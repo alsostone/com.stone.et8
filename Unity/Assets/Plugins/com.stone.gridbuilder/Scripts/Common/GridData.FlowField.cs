@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using MemoryPack;
+using TrueSync;
 
 namespace ST.GridBuilder
 {
@@ -32,7 +33,7 @@ namespace ST.GridBuilder
             if (indexCurrent.x < 0 || indexCurrent.x >= xLength || indexCurrent.z < 0 || indexCurrent.z >= zLength) {
                 return new FieldV2(0, 0);
             }
-            float half = cellSize / 2;
+            FP half = cellSize / 2;
             
             FieldV2 v1 = new FieldV2(0, 0);
             int xLeft = (int)((position.x - half) / cellSize);

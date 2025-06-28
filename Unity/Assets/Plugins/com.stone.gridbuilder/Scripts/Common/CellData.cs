@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using MemoryPack;
+using TrueSync;
 
 namespace ST.GridBuilder
 {
@@ -8,15 +9,15 @@ namespace ST.GridBuilder
     [Serializable]
     public partial struct FieldV2
     {
-        [MemoryPackInclude] public float x;
-        [MemoryPackInclude] public float z;
+        [MemoryPackInclude] public FP x;
+        [MemoryPackInclude] public FP z;
 
-        public FieldV2(float x, float z)
+        public FieldV2(FP x, FP z)
         {
             this.x = x;
             this.z = z;
         }
-        public FieldV2 Lerp(FieldV2 b, float t)
+        public FieldV2 Lerp(FieldV2 b, FP t)
         {
             return new FieldV2(
                 x + (b.x - x) * t,
@@ -25,7 +26,7 @@ namespace ST.GridBuilder
         }
         public FieldV2 Normalize()
         {
-            float length = (float)Math.Sqrt(x * x + z * z);
+            FP length = TSMath.Sqrt(x * x + z * z);
             if (length == 0) return new FieldV2(0, 0);
             return new FieldV2(x / length, z / length);
         }

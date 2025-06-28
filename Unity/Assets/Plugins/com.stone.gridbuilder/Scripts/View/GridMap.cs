@@ -32,13 +32,12 @@ namespace ST.GridBuilder
         
         public void SetDestination(Vector3 position)
         {
-            gridData.SetDestination(new FieldV2(position.x, position.z));
+            gridData.SetDestination(position.ToFieldV2());
         }
 
         public Vector3 GetFieldVector(Vector3 position)
         {
-            FieldV2 v2 = gridData.GetFieldVector(new FieldV2(position.x, position.z));
-            return new Vector3(v2.x, 0, v2.z);
+            return gridData.GetFieldVector(position.ToFieldV2()).ToVector3();
         }
         
         public Vector3 RaycastPosition(int x, int z)
@@ -174,7 +173,7 @@ namespace ST.GridBuilder
                 if (data.distance == 0 || data.distance == int.MaxValue)
                     continue;
 
-                Vector3 direction = new Vector3(data.direction.x, 0, data.direction.z).normalized;
+                Vector3 direction = data.direction.ToVector3().normalized;
                 Vector3 from = GetCellPosition(x, z) - direction * 0.25f;
                 Vector3 to = GetCellPosition(x, z) + direction * 0.25f;
                 

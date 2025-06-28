@@ -1,5 +1,6 @@
 using System.IO;
 using MemoryPack;
+using TrueSync;
 using UnityEngine;
 using UnityEditor;
 using UnityEditor.SceneManagement;
@@ -37,7 +38,7 @@ namespace ST.GridBuilder
             GUILayout.EndHorizontal();
             GUILayout.BeginHorizontal();
             GUILayout.Label("Cell Size", GUILayout.Width(EditorGUIUtility.labelWidth));
-            gridMap.gridData.cellSize = EditorGUILayout.Slider(gridMap.gridData.cellSize, 0.5f, 5.0f);
+            gridMap.gridData.cellSize = EditorGUILayout.IntSlider(gridMap.gridData.cellSize, 1, 5);
             GUILayout.EndHorizontal();
             GUILayout.BeginHorizontal();
             GUILayout.Label("block Level Max", GUILayout.Width(EditorGUIUtility.labelWidth));
@@ -93,7 +94,7 @@ namespace ST.GridBuilder
                     Vector3 pos = gridMap.GetCellPosition(x, z);
                     pos.y = gridMap.raycastHeight;
 
-                    var offset = gridData.cellSize / 2 * gridMap.raycastFineness;
+                    float offset = gridData.cellSize / 2.0f * gridMap.raycastFineness;
                     if (Physics.Raycast(pos + new Vector3(-offset, 0, -offset), Vector3.down, out RaycastHit _, gridMap.raycastHeight, gridMap.obstacleMask))
                     {
                         gridData.SetObstacle(x, z, true);
