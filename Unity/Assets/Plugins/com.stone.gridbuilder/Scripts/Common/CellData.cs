@@ -4,11 +4,12 @@ using MemoryPack;
 
 namespace ST.GridBuilder
 {
+    [MemoryPackable]
     [Serializable]
-    public struct FieldV2
+    public partial struct FieldV2
     {
-        public float x;
-        public float z;
+        [MemoryPackInclude] public float x;
+        [MemoryPackInclude] public float z;
 
         public FieldV2(float x, float z)
         {

@@ -3,11 +3,12 @@ using MemoryPack;
 
 namespace ST.GridBuilder
 {
+    [MemoryPackable]
     [Serializable]
-    public struct IndexV2
+    public partial struct IndexV2
     {
-        public int x;
-        public int z;
+        [MemoryPackInclude] public int x;
+        [MemoryPackInclude] public int z;
 
         public IndexV2(int x,int z)
         {
@@ -41,11 +42,11 @@ namespace ST.GridBuilder
         [MemoryPackInclude] public int blockLevelMax = 2;
 
         [MemoryPackInclude] public CellData[] cells;
-        [MemoryPackInclude] public int currentNextGuid = 0;
+        [MemoryPackInclude] public int currentGuid = 0;
 
         public void ResetCells()
         {
-            currentNextGuid = 0;
+            currentGuid = 0;
             if (cells == null || xLength * zLength != cells.Length)
             {
                 cells = new CellData[xLength * zLength];
@@ -91,9 +92,9 @@ namespace ST.GridBuilder
             return x >= 0 && z >= 0 && x < xLength && z < zLength;
         }
 
-        public long GetNextGuid(PlacementData placementData)
+        public long GetNextGuid()
         {
-            return ++currentNextGuid;
+            return ++currentGuid;
         }
 
         public bool CanTake(PlacementData placementData)

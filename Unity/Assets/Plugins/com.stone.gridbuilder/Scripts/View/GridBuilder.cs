@@ -120,7 +120,7 @@ namespace ST.GridBuilder
                     {
                         if (isNewBuilding)
                         {
-                            dragPlacement.placementData.id = gridMap.gridData.GetNextGuid(dragPlacement.placementData);
+                            dragPlacement.placementData.id = gridMap.gridData.GetNextGuid();
                             gridMap.gridData.Put(index.x, index.z, dragPlacement.placementData);
                             gridMap.gridData.ResetFlowField();
                         }

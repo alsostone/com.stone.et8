@@ -1,3 +1,5 @@
+using System.IO;
+using MemoryPack;
 using UnityEngine;
 using UnityEditor;
 using UnityEditor.SceneManagement;
@@ -72,6 +74,13 @@ namespace ST.GridBuilder
                     EditorSceneManager.MarkSceneDirty(gridMap.gameObject.scene);
                 }
             }
+            
+            if (GUILayout.Button("MemoryPack Serialize"))
+            {
+                byte[] gridBytes = MemoryPackSerializer.Serialize(gridMap.gridData);
+                var folder = EditorUtility.OpenFolderPanel("Save Folder Select", Application.dataPath, "");
+                File.WriteAllBytes(folder + "/GridData.bin", gridBytes);
+            }
         }
         
         private void GenerateObstacle(GridMap gridMap)
@@ -115,7 +124,7 @@ namespace ST.GridBuilder
                     continue;
                 }
 
-                building.placementData.id = gridMap.gridData.GetNextGuid(building.placementData);
+                building.placementData.id = gridMap.gridData.GetNextGuid();
                 gridMap.gridData.Put(index.x, index.z, building.placementData);
                 building.SetPutPosition(gridMap.GetPutPosition(building.placementData));
                 EditorUtility.SetDirty(building);
