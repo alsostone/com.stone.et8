@@ -4,6 +4,10 @@
     "Url": "Assets/Bundles/Scenes/Map1.unity"
   },
   {
+    "Id": 1002,
+    "Url": "Assets/Bundles/Scenes/Map2.unity"
+  },
+  {
     "Id": 10010001,
     "Url": "Assets/Bundles/Unit/Skeleton1.prefab"
   },

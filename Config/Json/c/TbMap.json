@@ -1,0 +1,20 @@
+[
+  {
+    "Id": 1001,
+    "name": "Map1",
+    "scene": 1001,
+    "grid_data": "Map/Map1.bytes"
+  },
+  {
+    "Id": 1002,
+    "name": "Map2",
+    "scene": 1002,
+    "grid_data": "Map/Map2.bytes"
+  },
+  {
+    "Id": 1003,
+    "name": "Map1",
+    "scene": 1001,
+    "grid_data": "Map/Map1.bytes"
+  }
+]
