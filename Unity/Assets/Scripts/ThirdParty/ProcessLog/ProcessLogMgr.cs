@@ -141,6 +141,7 @@ public class ProcessLogMgr
 #endif
     }
 
+#if !DOTNET
     public void SaveLogToFtp(string filename, string ip, string port, string user, string password)
     {
         if (mAllFrameLog == null || mAllFrameLog.IsEmpty()) { return; }
@@ -174,6 +175,7 @@ public class ProcessLogMgr
         logThread.Start();
 #endif
     }
+#endif
 
     public MemoryStream GetLogStream()
     {

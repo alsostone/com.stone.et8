@@ -23,7 +23,11 @@ namespace NPBehave
             }
         }
 
+#if DOTNET
+        public override void Serialize<TBufferWriter>(ref MemoryPackWriter<TBufferWriter> writer, scoped ref Node? value)
+#else
         public override void Serialize(ref MemoryPackWriter writer, ref Node? value)
+#endif
         {
             if (value == null)
             {
@@ -43,7 +47,11 @@ namespace NPBehave
             }
         }
 
+#if DOTNET
+        public override void Deserialize(ref MemoryPackReader reader, scoped ref Node? value)
+#else
         public override void Deserialize(ref MemoryPackReader reader, ref Node? value)
+#endif
         {
             if (!reader.TryReadUnionHeader(out var tag))
             {

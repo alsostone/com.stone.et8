@@ -61,8 +61,8 @@ namespace NPBehave
         }
 
 #if UNITY_EDITOR
-        [BsonIgnore][MemoryPackIgnore] public FP DebugLastStopRequestAt = FP.Zero;
-        [BsonIgnore][MemoryPackIgnore] public FP DebugLastStoppedAt = FP.Zero;
+        [BsonIgnore][MemoryPackIgnore] public long DebugLastStopRequestAt = 0;
+        [BsonIgnore][MemoryPackIgnore] public long DebugLastStoppedAt = 0;
         [BsonIgnore][MemoryPackIgnore] public int DebugNumStartCalls = 0;
         [BsonIgnore][MemoryPackIgnore] public int DebugNumStopCalls = 0;
         [BsonIgnore][MemoryPackIgnore] public int DebugNumStoppedCalls = 0;
@@ -87,7 +87,7 @@ namespace NPBehave
             currentState = State.STOP_REQUESTED;
 #if UNITY_EDITOR
             RootNode.TotalNumStopCalls++;
-            DebugLastStopRequestAt = UnityEngine.Time.time;
+            DebugLastStopRequestAt = DateTime.Now.Ticks;
             DebugNumStopCalls++;
 #endif
             DoStop();
@@ -112,7 +112,7 @@ namespace NPBehave
 #if UNITY_EDITOR
             RootNode.TotalNumStoppedCalls++;
             DebugNumStoppedCalls++;
-            DebugLastStoppedAt = UnityEngine.Time.time;
+            DebugLastStoppedAt = DateTime.Now.Ticks;
             DebugLastResult = success;
 #endif
             if (ParentNode != null)
