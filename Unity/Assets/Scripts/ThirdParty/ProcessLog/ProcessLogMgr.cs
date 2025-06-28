@@ -128,7 +128,6 @@ public class ProcessLogMgr
                 using (var fs = new FileStream(fullname, mode, FileAccess.Write)) {
                     BZip2.Compress(logStream, fs, false, 6);
                 }
-                ET.Log.Error($"frame process log to file {fullname}");
             }
             catch (Exception) {
                 // ignored
@@ -163,7 +162,6 @@ public class ProcessLogMgr
                     var uri = new Uri($"ftp://{ip}:{port}/{filename}");
                     client.UploadDataAsync(uri, WebRequestMethods.Ftp.UploadFile, bytes);
                 }
-                ET.Log.Error($"frame process log to ftp {filename}");
             }
             catch (Exception) {
                 // ignored

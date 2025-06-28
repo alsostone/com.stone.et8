@@ -5,10 +5,7 @@
         "Unity.ThirdParty",
         "Unity.Core",
         "Unity.Mathematics",
-        "MemoryPack",
-        "TrueSync",
-        "NPBehave",
-        "ProcessLog"
+        "MemoryPack"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],

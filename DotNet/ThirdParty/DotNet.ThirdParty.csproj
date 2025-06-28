@@ -36,6 +36,18 @@
             <Link>TrueSync/%(RecursiveDir)%(FileName)%(Extension)</Link>
         </Compile>
 
+        <Compile Include="..\..\Unity\Assets\Scripts\ThirdParty\GridBuilder\**\*.cs">
+            <Link>GridBuilder/%(RecursiveDir)%(FileName)%(Extension)</Link>
+        </Compile>
+        
+        <Compile Include="..\..\Unity\Assets\Scripts\ThirdParty\NPBehave\**\*.cs">
+            <Link>NPBehave/%(RecursiveDir)%(FileName)%(Extension)</Link>
+        </Compile>
+        
+        <Compile Include="..\..\Unity\Assets\Scripts\ThirdParty\ProcessLog\**\*.cs">
+            <Link>ProcessLog/%(RecursiveDir)%(FileName)%(Extension)</Link>
+        </Compile>
+        
         <Compile Include="..\..\Unity\Assets\Scripts\ThirdParty\ETTask\**\*.cs">
             <Link>ETTask/%(RecursiveDir)%(FileName)%(Extension)</Link>
         </Compile>
