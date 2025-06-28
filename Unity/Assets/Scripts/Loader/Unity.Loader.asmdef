@@ -8,8 +8,7 @@
         "MemoryPack",
         "YooAsset",
         "YooAsset.Editor",
-        "YIUIFramework",
-        "DamageNumbersPro"
+        "YIUIFramework"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],
