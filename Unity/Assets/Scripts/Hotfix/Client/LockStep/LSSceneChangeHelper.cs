@@ -1,26 +1,33 @@
+using MemoryPack;
+
 namespace ET.Client
 {
 
     public static partial class LSSceneChangeHelper
     {
         // 场景切换协程
-        public static async ETTask SceneChangeTo(Scene root, string sceneName, long sceneInstanceId)
+        public static async ETTask SceneChangeTo(Scene root, LockStepMatchInfo matchInfo)
         {
             root.RemoveComponent<Room>();
 
-            Room room = root.AddComponentWithId<Room>(sceneInstanceId);
-            room.Name = sceneName;
+            Room room = root.AddComponentWithId<Room>(matchInfo.ActorId.InstanceId);
+            room.Name = matchInfo.SceneName;
+            room.Replay.MatchInfo = matchInfo;
+            
+            LSWorld lsWorld = new LSWorld(SceneType.LockStepClient);
+            await room.Init(lsWorld, matchInfo);
 
             // 等待表现层订阅的事件完成
-            await EventSystem.Instance.PublishAsync(root, new LSSceneChangeStart() {Room = room});
+            await EventSystem.Instance.PublishAsync(root, new LSSceneChangeStart() {SceneName = matchInfo.SceneName, IsReplay = false});
 
-            root.GetComponent<ClientSenderComponent>().Send(C2Room_ChangeSceneFinish.Create());
+            C2Room_LoadingProgress loadingProgress = C2Room_LoadingProgress.Create();
+            loadingProgress.Progress = 100;
+            root.GetComponent<ClientSenderComponent>().Send(loadingProgress);
             
             // 等待Room2C_EnterMap消息
             WaitType.Wait_Room2C_Start waitRoom2CStart = await root.GetComponent<ObjectWait>().Wait<WaitType.Wait_Room2C_Start>();
 
-            room.LSWorld = new LSWorld(SceneType.LockStepClient);
-            room.Init(waitRoom2CStart.Message.UnitInfo, waitRoom2CStart.Message.StartTime, waitRoom2CStart.Message.Seed);
+            room.Start(waitRoom2CStart.Message.StartTime);
             
             // 这个事件中可以订阅取消loading
             EventSystem.Instance.Publish(root, new LSSceneInitFinish());
@@ -32,14 +39,17 @@ namespace ET.Client
             root.RemoveComponent<Room>();
 
             Room room = root.AddComponent<Room>();
-            room.Name = "Map1";
+            room.Name = replay.MatchInfo.SceneName;
             room.IsReplay = true;
             room.Replay = replay;
-            room.LSWorld = new LSWorld(SceneType.LockStepClient);
-            room.Init(replay.UnitInfos, TimeInfo.Instance.ServerFrameTime(), replay.Seed);
+            
+            LSWorld lsWorld = new LSWorld(SceneType.LockStepClient);
+            await room.Init(lsWorld, replay.MatchInfo);
             
             // 等待表现层订阅的事件完成
-            await EventSystem.Instance.PublishAsync(root, new LSSceneChangeStart() {Room = room});
+            await EventSystem.Instance.PublishAsync(root, new LSSceneChangeStart() {SceneName = replay.MatchInfo.SceneName, IsReplay = true});
+            
+            room.Start(TimeInfo.Instance.ServerFrameTime());
             
             // 这个事件中可以订阅取消loading
             EventSystem.Instance.Publish(root, new LSSceneInitFinish());
@@ -49,15 +59,21 @@ namespace ET.Client
         public static async ETTask SceneChangeToReconnect(Scene root, G2C_Reconnect message)
         {
             root.RemoveComponent<Room>();
-
-            Room room = root.AddComponent<Room>();
-            room.Name = "Map1";
             
-            room.LSWorld = new LSWorld(SceneType.LockStepClient);
-            room.Init(message.UnitInfos, message.StartTime, message.Seed, message.Frame);
+            Room room = root.AddComponentWithId<Room>(message.MatchInfo.ActorId.InstanceId);
+            room.Name = message.MatchInfo.SceneName;
+            
+            room.Replay.MatchInfo = message.MatchInfo;
+            room.Replay.LSWorldBytes = message.LSWorldBytes;
+            
+            LSWorld lsWorld = MemoryPackHelper.Deserialize(typeof(LSWorld), message.LSWorldBytes, 0, message.LSWorldBytes.Length) as LSWorld;
+            room.Init(lsWorld);
+            LSClientHelper.RunLSRollbackSystem(room);
             
             // 等待表现层订阅的事件完成
-            await EventSystem.Instance.PublishAsync(root, new LSSceneChangeStart() {Room = room});
+            await EventSystem.Instance.PublishAsync(root, new LSSceneChangeStart() {SceneName = message.MatchInfo.SceneName, IsReplay = false});
+            
+            room.Start(message.StartTime);
             
             // 这个事件中可以订阅取消loading
             EventSystem.Instance.Publish(root, new LSSceneInitFinish());

@@ -22,6 +22,7 @@ message Match2Map_GetRoom // IRequest
 {
 	int32 RpcId = 1;
 	repeated int64 PlayerIds = 2;
+	string SceneName = 3;
 }
 
 message Map2Match_GetRoom // IResponse
@@ -48,9 +49,8 @@ message Room2G_Reconnect // IResponse
 	string Message = 3;
 
 	int64 StartTime = 4;
-	repeated LockStepUnitInfo UnitInfos = 5;
-	int32 Seed = 6;
-	int32 Frame = 7;
+	LockStepMatchInfo MatchInfo = 5;
+	bytes LSWorldBytes = 6;
 }
 
 // ResponseType Room2RoomManager_Init
@@ -58,6 +58,7 @@ message RoomManager2Room_Init // IRequest
 {
 	int32 RpcId = 1;
 	repeated int64 PlayerIds = 2;
+	string SceneName = 3;
 }
 
 message Room2RoomManager_Init // IResponse

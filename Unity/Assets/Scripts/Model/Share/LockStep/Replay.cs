@@ -7,15 +7,15 @@ namespace ET
     public partial class Replay: Object
     {
         [MemoryPackOrder(1)]
-        public List<LockStepUnitInfo> UnitInfos;
+        public LockStepMatchInfo MatchInfo;
         
         [MemoryPackOrder(2)]
         public List<OneFrameInputs> FrameInputs = new();
         
         [MemoryPackOrder(3)]
         public List<byte[]> Snapshots = new();
-
+        
         [MemoryPackOrder(4)]
-        public int Seed;
+        public byte[] LSWorldBytes; // 重连的战斗 MatchInfo为空 需使用LSWorldBytes
     }
 }

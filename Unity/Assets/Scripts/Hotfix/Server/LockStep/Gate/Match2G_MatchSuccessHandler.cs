@@ -4,9 +4,9 @@
 namespace ET.Server
 {
 	[MessageHandler(SceneType.Gate)]
-	public class Match2G_NotifyMatchSuccessHandler : MessageHandler<Player, Match2G_NotifyMatchSuccess>
+	public class Match2G_MatchSuccessHandler : MessageHandler<Player, Match2G_MatchSuccess>
 	{
-		protected override async ETTask Run(Player player, Match2G_NotifyMatchSuccess message)
+		protected override async ETTask Run(Player player, Match2G_MatchSuccess message)
 		{
 			player.AddComponent<PlayerRoomComponent>().RoomActorId = message.ActorId;
 			

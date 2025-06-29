@@ -1,8 +1,8 @@
 using MongoDB.Bson.Serialization.Attributes;
 using System;
-using System.Collections.Generic;
 using MemoryPack;
 using TrueSync;
+using ST.GridBuilder;
 
 namespace ET
 {
@@ -38,6 +38,8 @@ namespace ET
             return ++this.idGenerator;
         }
 
+        public GridData GridData { get; set; }
+        
         public TSRandom Random { get; set; }
         
         [BsonIgnore]

@@ -85,6 +85,9 @@ namespace ET
         [MemoryPackOrder(1)]
         public List<long> PlayerIds { get; set; } = new();
 
+        [MemoryPackOrder(2)]
+        public string SceneName { get; set; }
+
         public override void Dispose()
         {
             if (!this.IsFromPool)
@@ -94,6 +97,7 @@ namespace ET
 
             this.RpcId = default;
             this.PlayerIds.Clear();
+            this.SceneName = default;
 
             ObjectPool.Instance.Recycle(this);
         }
@@ -191,13 +195,10 @@ namespace ET
         public long StartTime { get; set; }
 
         [MemoryPackOrder(4)]
-        public List<LockStepUnitInfo> UnitInfos { get; set; } = new();
+        public LockStepMatchInfo MatchInfo { get; set; }
 
         [MemoryPackOrder(5)]
-        public int Seed { get; set; }
-
-        [MemoryPackOrder(6)]
-        public int Frame { get; set; }
+        public byte[] LSWorldBytes { get; set; }
 
         public override void Dispose()
         {
@@ -210,9 +211,8 @@ namespace ET
             this.Error = default;
             this.Message = default;
             this.StartTime = default;
-            this.UnitInfos.Clear();
-            this.Seed = default;
-            this.Frame = default;
+            this.MatchInfo = default;
+            this.LSWorldBytes = default;
 
             ObjectPool.Instance.Recycle(this);
         }
@@ -234,6 +234,9 @@ namespace ET
         [MemoryPackOrder(1)]
         public List<long> PlayerIds { get; set; } = new();
 
+        [MemoryPackOrder(2)]
+        public string SceneName { get; set; }
+
         public override void Dispose()
         {
             if (!this.IsFromPool)
@@ -243,6 +246,7 @@ namespace ET
 
             this.RpcId = default;
             this.PlayerIds.Clear();
+            this.SceneName = default;
 
             ObjectPool.Instance.Recycle(this);
         }

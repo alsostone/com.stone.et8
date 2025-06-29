@@ -63,15 +63,15 @@ namespace ET
     }
 
     /// <summary>
-    /// 匹配成功，通知客户端切换场景
+    /// 匹配成功，通知客户端进入房间
     /// </summary>
     [MemoryPackable]
-    [Message(LockStepOuter.Match2G_NotifyMatchSuccess)]
-    public partial class Match2G_NotifyMatchSuccess : MessageObject, IMessage
+    [Message(LockStepOuter.Match2G_MatchSuccess)]
+    public partial class Match2G_MatchSuccess : MessageObject, IMessage
     {
-        public static Match2G_NotifyMatchSuccess Create(bool isFromPool = false)
+        public static Match2G_MatchSuccess Create(bool isFromPool = false)
         {
-            return ObjectPool.Instance.Fetch(typeof(Match2G_NotifyMatchSuccess), isFromPool) as Match2G_NotifyMatchSuccess;
+            return ObjectPool.Instance.Fetch(typeof(Match2G_MatchSuccess), isFromPool) as Match2G_MatchSuccess;
         }
 
         [MemoryPackOrder(0)]
@@ -98,15 +98,15 @@ namespace ET
     }
 
     /// <summary>
-    /// 客户端通知房间切换场景完成
+    /// 客户端通知要进入房间
     /// </summary>
     [MemoryPackable]
-    [Message(LockStepOuter.C2Room_ChangeSceneFinish)]
-    public partial class C2Room_ChangeSceneFinish : MessageObject, IRoomMessage
+    [Message(LockStepOuter.C2Room_JoinRoom)]
+    public partial class C2Room_JoinRoom : MessageObject, IRoomMessage
     {
-        public static C2Room_ChangeSceneFinish Create(bool isFromPool = false)
+        public static C2Room_JoinRoom Create(bool isFromPool = false)
         {
-            return ObjectPool.Instance.Fetch(typeof(C2Room_ChangeSceneFinish), isFromPool) as C2Room_ChangeSceneFinish;
+            return ObjectPool.Instance.Fetch(typeof(C2Room_JoinRoom), isFromPool) as C2Room_JoinRoom;
         }
 
         [MemoryPackOrder(0)]
@@ -120,6 +120,69 @@ namespace ET
             }
 
             this.PlayerId = default;
+
+            ObjectPool.Instance.Recycle(this);
+        }
+    }
+
+    /// <summary>
+    /// 房间通知客户端进入战斗
+    /// </summary>
+    [MemoryPackable]
+    [Message(LockStepOuter.Room2C_Enter)]
+    public partial class Room2C_Enter : MessageObject, IMessage
+    {
+        public static Room2C_Enter Create(bool isFromPool = false)
+        {
+            return ObjectPool.Instance.Fetch(typeof(Room2C_Enter), isFromPool) as Room2C_Enter;
+        }
+
+        [MemoryPackOrder(0)]
+        public LockStepMatchInfo MatchInfo { get; set; }
+
+        public override void Dispose()
+        {
+            if (!this.IsFromPool)
+            {
+                return;
+            }
+
+            this.MatchInfo = default;
+
+            ObjectPool.Instance.Recycle(this);
+        }
+    }
+
+    /// <summary>
+    /// 客户端通知房间加载进度
+    /// </summary>
+    [MemoryPackable]
+    [Message(LockStepOuter.C2Room_LoadingProgress)]
+    public partial class C2Room_LoadingProgress : MessageObject, IRoomMessage
+    {
+        public static C2Room_LoadingProgress Create(bool isFromPool = false)
+        {
+            return ObjectPool.Instance.Fetch(typeof(C2Room_LoadingProgress), isFromPool) as C2Room_LoadingProgress;
+        }
+
+        [MemoryPackOrder(0)]
+        public long PlayerId { get; set; }
+
+        /// <summary>
+        /// 场景加载进度 0~100 100表示加载完成
+        /// </summary>
+        [MemoryPackOrder(1)]
+        public int Progress { get; set; }
+
+        public override void Dispose()
+        {
+            if (!this.IsFromPool)
+            {
+                return;
+            }
+
+            this.PlayerId = default;
+            this.Progress = default;
 
             ObjectPool.Instance.Recycle(this);
         }
@@ -158,6 +221,53 @@ namespace ET
         }
     }
 
+    [MemoryPackable]
+    [Message(LockStepOuter.LockStepMatchInfo)]
+    public partial class LockStepMatchInfo : MessageObject
+    {
+        public static LockStepMatchInfo Create(bool isFromPool = false)
+        {
+            return ObjectPool.Instance.Fetch(typeof(LockStepMatchInfo), isFromPool) as LockStepMatchInfo;
+        }
+
+        /// <summary>
+        /// / 地图场景名称
+        /// </summary>
+        [MemoryPackOrder(0)]
+        public string SceneName { get; set; }
+
+        /// <summary>
+        /// / 房间的ActorId
+        /// </summary>
+        [MemoryPackOrder(1)]
+        public ActorId ActorId { get; set; }
+
+        [MemoryPackOrder(2)]
+        public long MatchTime { get; set; }
+
+        [MemoryPackOrder(3)]
+        public int Seed { get; set; }
+
+        [MemoryPackOrder(4)]
+        public List<LockStepUnitInfo> UnitInfos { get; set; } = new();
+
+        public override void Dispose()
+        {
+            if (!this.IsFromPool)
+            {
+                return;
+            }
+
+            this.SceneName = default;
+            this.ActorId = default;
+            this.MatchTime = default;
+            this.Seed = default;
+            this.UnitInfos.Clear();
+
+            ObjectPool.Instance.Recycle(this);
+        }
+    }
+
     /// <summary>
     /// 房间通知客户端进入战斗
     /// </summary>
@@ -173,12 +283,6 @@ namespace ET
         [MemoryPackOrder(0)]
         public long StartTime { get; set; }
 
-        [MemoryPackOrder(1)]
-        public List<LockStepUnitInfo> UnitInfo { get; set; } = new();
-
-        [MemoryPackOrder(2)]
-        public int Seed { get; set; }
-
         public override void Dispose()
         {
             if (!this.IsFromPool)
@@ -187,8 +291,6 @@ namespace ET
             }
 
             this.StartTime = default;
-            this.UnitInfo.Clear();
-            this.Seed = default;
 
             ObjectPool.Instance.Recycle(this);
         }
@@ -356,13 +458,10 @@ namespace ET
         public long StartTime { get; set; }
 
         [MemoryPackOrder(1)]
-        public List<LockStepUnitInfo> UnitInfos { get; set; } = new();
+        public LockStepMatchInfo MatchInfo { get; set; }
 
         [MemoryPackOrder(2)]
-        public int Seed { get; set; }
-
-        [MemoryPackOrder(3)]
-        public int Frame { get; set; }
+        public byte[] LSWorldBytes { get; set; }
 
         public override void Dispose()
         {
@@ -372,9 +471,8 @@ namespace ET
             }
 
             this.StartTime = default;
-            this.UnitInfos.Clear();
-            this.Seed = default;
-            this.Frame = default;
+            this.MatchInfo = default;
+            this.LSWorldBytes = default;
 
             ObjectPool.Instance.Recycle(this);
         }
@@ -384,15 +482,18 @@ namespace ET
     {
         public const ushort C2G_Match = 11002;
         public const ushort G2C_Match = 11003;
-        public const ushort Match2G_NotifyMatchSuccess = 11004;
-        public const ushort C2Room_ChangeSceneFinish = 11005;
-        public const ushort LockStepUnitInfo = 11006;
-        public const ushort Room2C_Start = 11007;
-        public const ushort FrameMessage = 11008;
-        public const ushort OneFrameInputs = 11009;
-        public const ushort Room2C_AdjustUpdateTime = 11010;
-        public const ushort C2Room_CheckHash = 11011;
-        public const ushort Room2C_CheckHashFail = 11012;
-        public const ushort G2C_Reconnect = 11013;
+        public const ushort Match2G_MatchSuccess = 11004;
+        public const ushort C2Room_JoinRoom = 11005;
+        public const ushort Room2C_Enter = 11006;
+        public const ushort C2Room_LoadingProgress = 11007;
+        public const ushort LockStepUnitInfo = 11008;
+        public const ushort LockStepMatchInfo = 11009;
+        public const ushort Room2C_Start = 11010;
+        public const ushort FrameMessage = 11011;
+        public const ushort OneFrameInputs = 11012;
+        public const ushort Room2C_AdjustUpdateTime = 11013;
+        public const ushort C2Room_CheckHash = 11014;
+        public const ushort Room2C_CheckHashFail = 11015;
+        public const ushort G2C_Reconnect = 11016;
     }
 }

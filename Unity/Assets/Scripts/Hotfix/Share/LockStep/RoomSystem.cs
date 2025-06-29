@@ -1,7 +1,7 @@
-using System;
-using System.Collections.Generic;
 using System.IO;
+using ST.GridBuilder;
 using TrueSync;
+using MemoryPack;
 
 namespace ET
 {
@@ -13,28 +13,27 @@ namespace ET
             return entity.IScene as Room;
         }
         
-        public static void Init(this Room self, List<LockStepUnitInfo> unitInfos, long startTime, int seed, int frame = -1)
+        public static async ETTask Init(this Room self, LSWorld lsWorld, LockStepMatchInfo matchInfo)
         {
-            self.StartTime = startTime;
-            self.Seed = seed;
+            int frame = -1;
             self.AuthorityFrame = frame;
             self.PredictionFrame = frame;
-            self.Replay.UnitInfos = unitInfos;
-            self.Replay.Seed = seed;
             self.FrameBuffer = new FrameBuffer(frame);
-            self.FixedTimeCounter = new FixedTimeCounter(startTime, 0, LSConstValue.UpdateInterval);
             self.ProcessLog = new ProcessLogMgr(frame);
+            self.LSWorld = lsWorld;
             
-            LSWorld lsWorld = self.LSWorld;
-            lsWorld.Random = new TSRandom(seed);
+            byte[] gridBytes = await FileComponent.Instance.Get($"Map/{matchInfo.SceneName}.bytes");
+            lsWorld.GridData = MemoryPackSerializer.Deserialize<GridData>(gridBytes);
+            lsWorld.Random = new TSRandom(matchInfo.Seed);
             lsWorld.Frame = frame + 1;
             
             lsWorld.AddComponent<LSTargetsComponent>();
             lsWorld.AddComponent<AIWorldComponent>();
             lsWorld.AddComponent<LSUnitComponent>();
-            for (int i = 0; i < unitInfos.Count; ++i)
+            
+            for (int i = 0; i < matchInfo.UnitInfos.Count; ++i)
             {
-                LockStepUnitInfo unitInfo = unitInfos[i];
+                LockStepUnitInfo unitInfo = matchInfo.UnitInfos[i];
                 LSUnitFactory.CreateHero(lsWorld, 1001, unitInfo.Position, unitInfo.Rotation, unitInfo.PlayerId);
                 self.PlayerIds.Add(unitInfo.PlayerId);
             }
@@ -51,6 +50,22 @@ namespace ET
             }
             
             LSUnitFactory.CreateBuilding(lsWorld, 3004, new TSVector(14, 0, 1 * 5 + 20), TSQuaternion.identity, TeamType.TeamA);
+        }
+
+        public static void Init(this Room self, LSWorld lsWorld)
+        {
+            int frame = lsWorld.Frame - 1;
+            self.AuthorityFrame = frame;
+            self.PredictionFrame = frame;
+            self.FrameBuffer = new FrameBuffer(frame);
+            self.ProcessLog = new ProcessLogMgr(frame);
+            self.LSWorld = lsWorld;
+        }
+
+        public static void Start(this Room self, long startTime)
+        {
+            self.StartTime = startTime;
+            self.FixedTimeCounter = new FixedTimeCounter(startTime, 0, LSConstValue.UpdateInterval);
         }
 
         public static void Update(this Room self, OneFrameInputs oneFrameInputs)

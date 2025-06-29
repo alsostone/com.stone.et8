@@ -20,7 +20,19 @@ namespace ET.Server
         {
             foreach (RoomPlayer roomPlayer in self.Children.Values)
             {
-                if (roomPlayer.Progress != 100)
+                if (roomPlayer.Progress < 100)
+                {
+                    return false;
+                }
+            }
+            return true;
+        }
+        
+        public static bool IsAllPlayerAccept(this RoomServerComponent self)
+        {
+            foreach (RoomPlayer roomPlayer in self.Children.Values)
+            {
+                if (!roomPlayer.IsAccept)
                 {
                     return false;
                 }

@@ -14,18 +14,31 @@ message G2C_Match // ISessionResponse
 	string Message = 3;
 }
 
-/// 匹配成功，通知客户端切换场景
-message Match2G_NotifyMatchSuccess // IMessage
+/// 匹配成功，通知客户端进入房间
+message Match2G_MatchSuccess // IMessage
 {
 	int32 RpcId = 1;
 	/// 房间的ActorId
 	ActorId ActorId = 2;
 }
 
-/// 客户端通知房间切换场景完成
-message C2Room_ChangeSceneFinish // IRoomMessage
+/// 客户端通知要进入房间
+message C2Room_JoinRoom // IRoomMessage
 {
 	int64 PlayerId = 1;
+}
+
+/// 房间通知客户端进入战斗
+message Room2C_Enter // IMessage
+{
+	LockStepMatchInfo MatchInfo = 1;
+}
+
+/// 客户端通知房间加载进度
+message C2Room_LoadingProgress // IRoomMessage
+{
+	int64 PlayerId = 1;
+	int32 Progress = 2; // 场景加载进度 0~100 100表示加载完成
 }
 
 message LockStepUnitInfo
@@ -35,12 +48,19 @@ message LockStepUnitInfo
 	TrueSync.TSQuaternion Rotation = 3;
 }
 
+message LockStepMatchInfo
+{
+	string SceneName = 1;	/// 地图场景名称
+	ActorId ActorId = 2;	/// 房间的ActorId
+	int64 MatchTime = 3;
+	int32 Seed = 4;
+	repeated LockStepUnitInfo UnitInfos = 5;
+}
+
 /// 房间通知客户端进入战斗
 message Room2C_Start // IMessage
 {
 	int64 StartTime = 1;
-	repeated LockStepUnitInfo UnitInfo = 2;
-	int32 Seed = 3;
 }
 
 message FrameMessage // IMessage
@@ -77,7 +97,6 @@ message Room2C_CheckHashFail // IMessage
 message G2C_Reconnect // IMessage
 {
 	int64 StartTime = 1;
-	repeated LockStepUnitInfo UnitInfos = 2;
-	int32 Seed = 3;
-	int32 Frame = 4;
+	LockStepMatchInfo MatchInfo = 2;
+	bytes LSWorldBytes = 3;
 }

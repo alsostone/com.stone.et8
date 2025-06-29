@@ -2,7 +2,8 @@
 {
     public struct LSSceneChangeStart
     {
-        public Room Room;
+        public string SceneName;
+        public bool IsReplay; 
     }
     
     public struct LSSceneInitFinish

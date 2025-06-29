@@ -8,21 +8,14 @@ namespace ET.Server
         protected override async ETTask Run(Scene root, G2Room_Reconnect request, Room2G_Reconnect response)
         {
             Room room = root.GetComponent<Room>();
-            response.StartTime = room.StartTime;
-            response.Seed = room.Seed;
-            LSUnitComponent lsUnitComponent = room.LSWorld.GetComponent<LSUnitComponent>();
-            foreach (long playerId in room.PlayerIds)
-            {
-                LSUnit lsUnit = lsUnitComponent.GetChild<LSUnit>(playerId);
-                TransformComponent transformComponent = lsUnit.GetComponent<TransformComponent>();
-                LockStepUnitInfo lockStepUnitInfo = LockStepUnitInfo.Create();
-                lockStepUnitInfo.PlayerId = playerId;
-                lockStepUnitInfo.Position = transformComponent.Position;
-                lockStepUnitInfo.Rotation = transformComponent.Rotation;
-                response.UnitInfos.Add(lockStepUnitInfo);    
-            }
 
-            response.Frame = room.AuthorityFrame;
+            int frame = room.AuthorityFrame;
+            byte[] bytes = room.FrameBuffer.Snapshot(frame).ToArray();
+            
+            response.StartTime = room.StartTime;
+            response.MatchInfo = room.Replay.MatchInfo;
+            response.LSWorldBytes = bytes;
+            
             await ETTask.CompletedTask;
         }
     }
