@@ -36,7 +36,7 @@ namespace ET.Client
             {
                 string filename = GetLSWorldFileSameName(message.Frame);
                 
-                LSWorld clientWorld = room.GetLSWorld(SceneType.LockStepClient, message.Frame);
+                LSWorld clientWorld = room.GetLSWorld(message.Frame);
                 using (root.AddChild(clientWorld)) {
                     await SaveToFile(clientWorld.ToJson().ToUtf8(), LSConstValue.LSWroldFolderName, filename);
                 }

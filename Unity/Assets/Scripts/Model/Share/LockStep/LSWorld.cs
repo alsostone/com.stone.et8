@@ -44,7 +44,7 @@ namespace ET
         
         [BsonIgnore]
         [MemoryPackIgnore]
-        public SceneType SceneType { get; set; }
+        public SceneType SceneType { get; set; } = SceneType.LockStepClient;
         
         public int Frame { get; set; }
 
