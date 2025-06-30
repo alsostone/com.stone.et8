@@ -1,5 +1,6 @@
 namespace ET
 {
+    [LSEntitySystemOf(typeof(BuffComponent))]
     [EntitySystemOf(typeof(BuffComponent))]
     [FriendOf(typeof(BuffComponent))]
     [FriendOf(typeof(Buff))]
@@ -22,6 +23,25 @@ namespace ET
             self.IdBuffMap.Clear();
         }
         
+        [LSEntitySystem]
+        private static void LSUpdate(this BuffComponent self)
+        {self.LSRoom()?.ProcessLog.LogFunction(28, self.LSParent().Id);
+            int frame = self.LSWorld().Frame;
+            foreach (long value in self.IdBuffMap.Values)
+            {
+                Buff buff = self.GetChild<Buff>(value);
+                if (frame > buff.EndFrame)
+                {
+                    self.IdBuffMap.Remove(buff.BuffId);
+                    buff.Dispose();
+                }
+                else
+                {
+                    buff.TryExecuteInterval();
+                }
+            }
+        }
+
         public static void AddBuffs(this BuffComponent self, int[] buffIds, LSUnit owner)
         {self.LSRoom()?.ProcessLog.LogFunction(11, self.LSParent().Id, owner.Id);
             foreach (int buffId in buffIds)

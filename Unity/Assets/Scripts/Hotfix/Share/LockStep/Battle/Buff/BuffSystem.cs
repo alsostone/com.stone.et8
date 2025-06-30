@@ -1,6 +1,5 @@
 namespace ET
 {
-    [LSEntitySystemOf(typeof(Buff))]
     [EntitySystemOf(typeof(Buff))]
     [FriendOf(typeof(Buff))]
     public static partial class BuffSystem
@@ -33,25 +32,18 @@ namespace ET
             }
         }
         
-        [LSEntitySystem]
-        private static void LSUpdate(this Buff self)
-        {self.LSRoom()?.ProcessLog.LogFunction(14, self.LSParent().Id);
-            if (self.LSWorld().Frame > self.EndFrame)
-            {
-                self.GetParent<BuffComponent>().RemoveBuff(self.BuffId, true);
-                return;
-            }
+        public static void ResetEndFrame(this Buff self)
+        {self.LSRoom()?.ProcessLog.LogFunction(13, self.LSParent().Id);
+            self.EndFrame = self.LSWorld().Frame + self.TbBuffRow.Duration.Convert2Frame();
+        }
 
+        public static void TryExecuteInterval(this Buff self)
+        {self.LSRoom()?.ProcessLog.LogFunction(31, self.LSParent().Id);
             if (self.TbBuffRow.IntervalEffect > 0 && self.LSWorld().Frame > self.IntervalFrame)
             {
                 EffectExecutor.Execute(self.TbBuffRow.IntervalEffect, self.LSUnit(self.Caster), self.LSOwner());
                 self.IntervalFrame = self.LSWorld().Frame + self.TbBuffRow.Interval.Convert2Frame();
             }
-        }
-
-        public static void ResetEndFrame(this Buff self)
-        {self.LSRoom()?.ProcessLog.LogFunction(13, self.LSParent().Id);
-            self.EndFrame = self.LSWorld().Frame + self.TbBuffRow.Duration.Convert2Frame();
         }
     }
 }

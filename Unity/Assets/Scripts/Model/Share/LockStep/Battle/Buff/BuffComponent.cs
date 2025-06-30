@@ -7,7 +7,7 @@ namespace ET
 {
     [ComponentOf(typeof(LSUnit))]
     [MemoryPackable]
-    public partial class BuffComponent : LSEntity, IAwake, IDestroy, ISerializeToEntity
+    public partial class BuffComponent : LSEntity, IAwake, IDestroy, ILSUpdate, ISerializeToEntity
     {
         [BsonDictionaryOptions(DictionaryRepresentation.ArrayOfArrays)]
         public SortedDictionary<int, long> IdBuffMap = new();

@@ -12,7 +12,6 @@
 {"ID":11,"FileName":"BuffComponentSystem.cs","FuncName":"AddBuffs","ArgTypes":"BuffComponent,int[],LSUnit","ArgNames":"self,buffIds,owner","ValidArgNames":"Owner,owner.Id","ValidArgCount":2,"Comments":null}
 {"ID":12,"FileName":"BuffComponentSystem.cs","FuncName":"Destroy","ArgTypes":"BuffComponent","ArgNames":"self","ValidArgNames":"Owner","ValidArgCount":1,"Comments":null}
 {"ID":13,"FileName":"BuffSystem.cs","FuncName":"ResetEndFrame","ArgTypes":"Buff","ArgNames":"self","ValidArgNames":"Owner","ValidArgCount":1,"Comments":null}
-{"ID":14,"FileName":"BuffSystem.cs","FuncName":"LSUpdate","ArgTypes":"Buff","ArgNames":"self","ValidArgNames":"Owner","ValidArgCount":1,"Comments":null}
 {"ID":15,"FileName":"BuffSystem.cs","FuncName":"Destroy","ArgTypes":"Buff","ArgNames":"self","ValidArgNames":"Owner","ValidArgCount":1,"Comments":null}
 {"ID":16,"FileName":"BuffSystem.cs","FuncName":"Awake","ArgTypes":"Buff,int,LSUnit","ArgNames":"self,BuffId,caster","ValidArgNames":"Owner,BuffId,caster.Id","ValidArgCount":3,"Comments":null}
 {"ID":17,"FileName":"BulletComponentSystem.cs","FuncName":"OnReachTarget","ArgTypes":"BulletComponent,bool","ArgNames":"self,reach","ValidArgNames":"Owner,reach","ValidArgCount":2,"Comments":null}
@@ -26,8 +25,10 @@
 {"ID":25,"FileName":"BeHitComponentSystem.cs","FuncName":"DeductHp","ArgTypes":"BeHitComponent,LSUnit,FP","ArgNames":"self,attacker,value","ValidArgNames":"Owner,attacker.Id,(FP)value","ValidArgCount":3,"Comments":null}
 {"ID":26,"FileName":"BeHitComponentSystem.cs","FuncName":"BeDamage","ArgTypes":"BeHitComponent,LSUnit,FP","ArgNames":"self,attacker,damage","ValidArgNames":"Owner,attacker.Id,(FP)damage","ValidArgCount":3,"Comments":null}
 {"ID":27,"FileName":"BeHitComponentSystem.cs","FuncName":"BeHealing","ArgTypes":"BeHitComponent,LSUnit,FP","ArgNames":"self,attacker,value","ValidArgNames":"Owner,attacker.Id,(FP)value","ValidArgCount":3,"Comments":null}
+{"ID":28,"FileName":"BuffComponentSystem.cs","FuncName":"LSUpdate","ArgTypes":"BuffComponent","ArgNames":"self","ValidArgNames":"Owner","ValidArgCount":1,"Comments":null}
 {"ID":29,"FileName":"BeHitComponentSystem.cs","FuncName":"Destroy","ArgTypes":"BeHitComponent","ArgNames":"self","ValidArgNames":"Owner","ValidArgCount":1,"Comments":null}
 {"ID":30,"FileName":"BeHitComponentSystem.cs","FuncName":"Awake","ArgTypes":"BeHitComponent","ArgNames":"self","ValidArgNames":"Owner","ValidArgCount":1,"Comments":null}
+{"ID":31,"FileName":"BuffSystem.cs","FuncName":"TryExecuteInterval","ArgTypes":"Buff","ArgNames":"self","ValidArgNames":"Owner","ValidArgCount":1,"Comments":null}
 {"ID":32,"FileName":"DeathComponentSystem.cs","FuncName":"Awake","ArgTypes":"DeathComponent,bool","ArgNames":"self,isDeadRelease","ValidArgNames":"Owner,isDeadRelease","ValidArgCount":2,"Comments":null}
 {"ID":33,"FileName":"FlagComponentSystem.cs","FuncName":"HasRestrict","ArgTypes":"FlagComponent,FlagRestrict","ArgNames":"self,flagRestrict","ValidArgNames":"Owner","ValidArgCount":1,"Comments":null}
 {"ID":34,"FileName":"FlagComponentSystem.cs","FuncName":"RemoveRestrict","ArgTypes":"FlagComponent,int","ArgNames":"self,mask","ValidArgNames":"Owner,mask","ValidArgCount":2,"Comments":null}
