@@ -1,5 +1,11 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <linker>
+  <assembly fullname="DamageNumbersPro">
+    <type fullname="FloatingTextSpawner" preserve="all" />
+  </assembly>
+  <assembly fullname="ICSharpCode.SharpZipLib">
+    <type fullname="ICSharpCode.SharpZipLib.BZip2.BZip2" preserve="all" />
+  </assembly>
   <assembly fullname="MemoryPack">
     <type fullname="MemoryPack.Formatters.ArrayFormatter`1" preserve="all" />
     <type fullname="MemoryPack.Formatters.DictionaryFormatter`2" preserve="all" />
@@ -19,6 +25,8 @@
     <type fullname="MemoryPack.MemoryPackOrderAttribute" preserve="all" />
     <type fullname="MemoryPack.MemoryPackReader" preserve="all" />
     <type fullname="MemoryPack.MemoryPackSerializationException" preserve="all" />
+    <type fullname="MemoryPack.MemoryPackSerializer" preserve="all" />
+    <type fullname="MemoryPack.MemoryPackSerializerOptions" preserve="all" />
     <type fullname="MemoryPack.MemoryPackWriter" preserve="all" />
     <type fullname="MemoryPack.MemoryPackableAttribute" preserve="all" />
   </assembly>
@@ -112,6 +120,7 @@
     <type fullname="ET.Fiber" preserve="all" />
     <type fullname="ET.FiberInit" preserve="all" />
     <type fullname="ET.FiberManager" preserve="all" />
+    <type fullname="ET.FileComponent" preserve="all" />
     <type fullname="ET.FriendOfAttribute" preserve="all" />
     <type fullname="ET.HandlerObject" preserve="all" />
     <type fullname="ET.IAwake" preserve="all" />
@@ -163,7 +172,6 @@
     <type fullname="ET.NetworkHelper" preserve="all" />
     <type fullname="ET.NetworkProtocol" preserve="all" />
     <type fullname="ET.Object" preserve="all" />
-    <type fullname="ET.ObjectHelper" preserve="all" />
     <type fullname="ET.ObjectPool" preserve="all" />
     <type fullname="ET.OpcodeType" preserve="all" />
     <type fullname="ET.ProcessInnerSender" preserve="all" />
@@ -199,7 +207,6 @@
     <type fullname="ET.CodeLoader" preserve="all" />
     <type fullname="ET.GlobalComponent" preserve="all" />
     <type fullname="ET.GlobalConfig" preserve="all" />
-    <type fullname="FloatingTextSpawner" preserve="all" />
     <type fullname="ReferenceCollector" preserve="all" />
   </assembly>
   <assembly fullname="Unity.Mathematics">
@@ -237,6 +244,29 @@
     <type fullname="Luban.BeanBase" preserve="all" />
     <type fullname="Luban.ByteBuf" preserve="all" />
     <type fullname="Luban.StringUtil" preserve="all" />
+    <type fullname="NPBehave.ActionRequest" preserve="all" />
+    <type fullname="NPBehave.BehaveWorld" preserve="all" />
+    <type fullname="NPBehave.Blackboard" preserve="all" />
+    <type fullname="NPBehave.BlackboardBool" preserve="all" />
+    <type fullname="NPBehave.Container" preserve="all" />
+    <type fullname="NPBehave.Decorator" preserve="all" />
+    <type fullname="NPBehave.IAgent" preserve="all" />
+    <type fullname="NPBehave.Node" preserve="all" />
+    <type fullname="NPBehave.Node/State" preserve="all" />
+    <type fullname="NPBehave.Operator" preserve="all" />
+    <type fullname="NPBehave.Receiver" preserve="all" />
+    <type fullname="NPBehave.Repeater" preserve="all" />
+    <type fullname="NPBehave.Request" preserve="all" />
+    <type fullname="NPBehave.Result" preserve="all" />
+    <type fullname="NPBehave.Root" preserve="all" />
+    <type fullname="NPBehave.Selector" preserve="all" />
+    <type fullname="NPBehave.Sequence" preserve="all" />
+    <type fullname="NPBehave.Service" preserve="all" />
+    <type fullname="NPBehave.Stops" preserve="all" />
+    <type fullname="NPBehave.WaitSecond" preserve="all" />
+    <type fullname="NPBehave.WaitUntilStopped" preserve="all" />
+    <type fullname="ProcessLogMgr" preserve="all" />
+    <type fullname="ST.GridBuilder.GridData" preserve="all" />
     <type fullname="TrueSync.FP" preserve="all" />
     <type fullname="TrueSync.TSMath" preserve="all" />
     <type fullname="TrueSync.TSMatrix" preserve="all" />
@@ -402,11 +432,15 @@
     <type fullname="System.Collections.IEnumerator" preserve="all" />
     <type fullname="System.Comparison`1" preserve="all" />
     <type fullname="System.Console" preserve="all" />
+    <type fullname="System.DateTime" preserve="all" />
     <type fullname="System.Diagnostics.ConditionalAttribute" preserve="all" />
     <type fullname="System.Diagnostics.DebuggableAttribute" preserve="all" />
     <type fullname="System.Diagnostics.DebuggableAttribute/DebuggingModes" preserve="all" />
+    <type fullname="System.Diagnostics.DebuggerBrowsableAttribute" preserve="all" />
+    <type fullname="System.Diagnostics.DebuggerBrowsableState" preserve="all" />
     <type fullname="System.Diagnostics.DebuggerDisplayAttribute" preserve="all" />
     <type fullname="System.Diagnostics.DebuggerHiddenAttribute" preserve="all" />
+    <type fullname="System.Diagnostics.DebuggerStepThroughAttribute" preserve="all" />
     <type fullname="System.Enum" preserve="all" />
     <type fullname="System.Exception" preserve="all" />
     <type fullname="System.FlagsAttribute" preserve="all" />
@@ -415,7 +449,11 @@
     <type fullname="System.HashCode" preserve="all" />
     <type fullname="System.IDisposable" preserve="all" />
     <type fullname="System.IO.BinaryReader" preserve="all" />
+    <type fullname="System.IO.Directory" preserve="all" />
+    <type fullname="System.IO.DirectoryInfo" preserve="all" />
     <type fullname="System.IO.File" preserve="all" />
+    <type fullname="System.IO.FileMode" preserve="all" />
+    <type fullname="System.IO.FileStream" preserve="all" />
     <type fullname="System.IO.MemoryStream" preserve="all" />
     <type fullname="System.IO.SeekOrigin" preserve="all" />
     <type fullname="System.IO.Stream" preserve="all" />
@@ -423,8 +461,10 @@
     <type fullname="System.Int32" preserve="all" />
     <type fullname="System.Int64" preserve="all" />
     <type fullname="System.Math" preserve="all" />
+    <type fullname="System.Nullable`1" preserve="all" />
     <type fullname="System.Object" preserve="all" />
     <type fullname="System.ParamArrayAttribute" preserve="all" />
+    <type fullname="System.ReadOnlySpan`1" preserve="all" />
     <type fullname="System.Reflection.BindingFlags" preserve="all" />
     <type fullname="System.Reflection.CustomAttributeExtensions" preserve="all" />
     <type fullname="System.Reflection.DefaultMemberAttribute" preserve="all" />
@@ -450,6 +490,7 @@
     <type fullname="System.Single" preserve="all" />
     <type fullname="System.String" preserve="all" />
     <type fullname="System.StringSplitOptions" preserve="all" />
+    <type fullname="System.Text.StringBuilder" preserve="all" />
     <type fullname="System.Threading.CancellationToken" preserve="all" />
     <type fullname="System.Threading.CancellationTokenSource" preserve="all" />
     <type fullname="System.Threading.Tasks.Task" preserve="all" />
