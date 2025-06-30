@@ -83,7 +83,7 @@ namespace ET
 
         public static bool TryCastSkill(this SkillComponent self, ESkillType type)
         {self.LSRoom()?.ProcessLog.LogFunction(48, self.LSParent().Id);
-            if (self.LSOwner().DeadMark) { return false; }
+            if (self.LSOwner().DeadMark > 0 && type != ESkillType.Dead) { return false; }
             // if (!Enable) { return; }
             if (self.CheckRestrict(type)) { return false; }
             
@@ -105,7 +105,7 @@ namespace ET
 
         public static bool TryCastSkill(this SkillComponent self, ESkillType type, int index)
         {self.LSRoom()?.ProcessLog.LogFunction(47, self.LSParent().Id, index);
-            if (self.LSOwner().DeadMark) { return false; }
+            if (self.LSOwner().DeadMark > 0) { return false; }
             // if (!Enable) { return false; }
             if (self.CheckRestrict(type)) { return false; }
 
@@ -127,7 +127,7 @@ namespace ET
 
         public static bool CastAttachSkill(this SkillComponent self, int id)
         {self.LSRoom()?.ProcessLog.LogFunction(46, self.LSParent().Id, id);
-            if (self.LSOwner().DeadMark) { return false; }
+            if (self.LSOwner().DeadMark > 0) { return false; }
             // if (!Enable) { return false; }
             if (self.CheckRestrict(ESkillType.Active)) { return false; }
 

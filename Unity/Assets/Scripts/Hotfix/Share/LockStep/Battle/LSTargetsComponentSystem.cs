@@ -33,7 +33,7 @@ namespace ET
                     for(int i = targets.Count - 1; i >= 0; i--)
                     {
                         LSUnit target = targets[i];
-                        if (target == null || target.DeadMark) {
+                        if (target == null || target.DeadMark > 0) {
                             targets.RemoveAt(i);
                             continue;
                         }
@@ -52,7 +52,7 @@ namespace ET
                 for(int i = targets.Count - 1; i >= 0; i--)
                 {
                     LSUnit target = targets[i];
-                    if (target == null || target.DeadMark) {
+                    if (target == null || target.DeadMark > 0) {
                         targets.RemoveAt(i);
                         continue;
                     }

@@ -5,7 +5,7 @@ namespace ET
 {
     [ComponentOf(typeof(LSUnit))]
     [MemoryPackable]
-    public partial class BeHitComponent : LSEntity, IAwake, IDestroy, ILSUpdate, IDeserialize, ISerializeToEntity
+    public partial class BeHitComponent : LSEntity, IAwake, IDestroy, IDeserialize, ISerializeToEntity
     {
         public List<long> Attackers = new();
     }

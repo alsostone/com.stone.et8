@@ -1,6 +1,7 @@
 namespace ET
 {
     [EntitySystemOf(typeof(DeathComponent))]
+    [LSEntitySystemOf(typeof(DeathComponent))]
     [FriendOf(typeof(DeathComponent))]
     public static partial class DeathComponentSystem
     {
@@ -14,9 +15,32 @@ namespace ET
         private static void Destroy(this DeathComponent self)
         {
         }
-        
-        public static void DoDeath(this DeathComponent self)
-        {self.LSRoom()?.ProcessLog.LogFunction(31, self.LSParent().Id);
+
+        [LSEntitySystem]
+        private static void LSUpdate(this DeathComponent self)
+        {self.LSRoom()?.ProcessLog.LogFunction(69, self.LSParent().Id);
+            LSUnit lsUnit = self.LSOwner();
+            if (lsUnit.DeadMark == 1)
+            {
+                // 血量归零触发死亡技能
+                SkillComponent skillComponent = self.LSOwner().GetComponent<SkillComponent>();
+                skillComponent.ForceAllDone();
+                skillComponent.TryCastSkill(ESkillType.Dead);
+                lsUnit.DeadMark = 2;
+            }
+
+            if (lsUnit.DeadMark == 2)
+            {
+                SkillComponent skillComponent = self.LSOwner().GetComponent<SkillComponent>();
+                if (skillComponent.HasRunningSkill())
+                    return;
+                self.DoDeathReal();
+                lsUnit.DeadMark = 3;
+            }
+        }
+
+        private static void DoDeathReal(this DeathComponent self)
+        {self.LSRoom()?.ProcessLog.LogFunction(68, self.LSParent().Id);
             // 死亡经验分配
             //ExpGetHelper.ExpGetDead(attacker, entity);
 

@@ -12,7 +12,6 @@ namespace ET
         public int TableId { get; set; }
 
         public bool Active { get; set; }
-        public bool DeadMark { get; set; }
-        public bool Dead { get; set; }
+        public int DeadMark { get; set; }   // 0未死 1血量归零 2释放死亡技能中 3死亡
     }
 }

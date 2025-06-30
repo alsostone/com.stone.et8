@@ -38,7 +38,7 @@ namespace ET
         }
 
         private static void SetMoving(this TransformComponent self, bool moving)
-        {
+        {self.LSRoom()?.ProcessLog.LogFunction(70, self.LSParent().Id, moving ? 1 : 0);
             if (moving == self.IsMoving) return;
             self.IsMoving = moving;
             EventSystem.Instance.Publish(self.LSWorld(), new LSUnitMoving() { Id = self.LSOwner().Id, IsMoving = self.IsMoving });

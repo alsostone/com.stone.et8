@@ -4,7 +4,6 @@ using TrueSync;
 namespace ET
 {
     [EntitySystemOf(typeof(BeHitComponent))]
-    [LSEntitySystemOf(typeof(BeHitComponent))]
     [FriendOf(typeof(BeHitComponent))]
     [FriendOf(typeof(TeamComponent))]
     public static partial class BeHitComponentSystem
@@ -30,33 +29,10 @@ namespace ET
             TeamType teamType = self.LSOwner().GetComponent<TeamComponent>().Type;
             component.AddTarget(teamType, self.LSOwner());
         }
-
-        [LSEntitySystem]
-        private static void LSUpdate(this BeHitComponent self)
-        {self.LSRoom()?.ProcessLog.LogFunction(28, self.LSParent().Id);
-            LSUnit lsUnit = self.LSOwner();
-            if (lsUnit.DeadMark && !lsUnit.Dead)
-            {
-                // 释放死亡技能时还没有真正死亡
-                SkillComponent skillComponent = self.LSOwner().GetComponent<SkillComponent>();
-                if (skillComponent != null && skillComponent.HasRunningSkill())
-                    return;
-
-                self.LSOwner().Dead = true;
-                DeathComponent deathComponent = self.LSOwner().GetComponent<DeathComponent>();
-                if (deathComponent != null)
-                    deathComponent.DoDeath();
-                else
-                {
-                    EventSystem.Instance.Publish(self.LSWorld(), new LSUnitRemove() { Id = self.LSOwner().Id });
-                    self.LSOwner().Dispose();
-                }
-            }
-        }
         
         public static void BeHealing(this BeHitComponent self, LSUnit attacker, FP value)
         {self.LSRoom()?.ProcessLog.LogFunction(27, self.LSParent().Id, attacker.Id, value.V);
-            if (self.LSOwner().DeadMark) { return; }
+            if (self.LSOwner().DeadMark > 0) { return; }
             
             PropComponent component = self.LSOwner().GetComponent<PropComponent>();
             component.AddRealProp(NumericType.Hp, value);
@@ -65,7 +41,7 @@ namespace ET
 
         public static void BeDamage(this BeHitComponent self, LSUnit attacker, FP damage)
         {self.LSRoom()?.ProcessLog.LogFunction(26, self.LSParent().Id, attacker.Id, damage.V);
-            if (self.LSOwner().DeadMark) { return; }
+            if (self.LSOwner().DeadMark > 0) { return; }
             
             // 1. 优先处理闪避
             PropComponent component = self.LSOwner().GetComponent<PropComponent>();
@@ -131,16 +107,16 @@ namespace ET
 
             FP current = hp - value;
             component.Set(NumericType.Hp, current);
+            
+            // 血量值小于等于0时，没有死亡组件直接移除 有则只标记死亡即可
             if (current <= FP.EN1)
             {
-                // 血量值空触发死亡技能
-                SkillComponent comSkill = self.LSOwner().GetComponent<SkillComponent>();
-                if (comSkill != null)
+                self.LSOwner().DeadMark = 1;
+                if (self.LSOwner().GetComponent<DeathComponent>() != null)
                 {
-                    comSkill.ForceAllDone();
-                    comSkill.TryCastSkill(ESkillType.Dead);
+                    EventSystem.Instance.Publish(self.LSWorld(), new LSUnitRemove() { Id = self.LSOwner().Id });
+                    self.LSOwner().Dispose();
                 }
-                self.LSOwner().DeadMark = true;
             }
         }
         

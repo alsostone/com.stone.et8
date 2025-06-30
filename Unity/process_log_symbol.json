@@ -3,7 +3,7 @@
 {"ID":2,"FileName":"LSTargetsComponentSystem.cs","FuncName":"GetAllAttackTargets","ArgTypes":"LSTargetsComponent,List<SearchUnit>","ArgNames":"self,results","ValidArgNames":"Owner","ValidArgCount":1,"Comments":null}
 {"ID":3,"FileName":"LSTargetsComponentSystem.cs","FuncName":"AddTarget","ArgTypes":"LSTargetsComponent,TeamType,LSUnit","ArgNames":"self,teamType,lsUnit","ValidArgNames":"Owner,lsUnit.Id","ValidArgCount":2,"Comments":null}
 {"ID":4,"FileName":"AIRootComponentSystem.cs","FuncName":"Destroy","ArgTypes":"AIRootComponent","ArgNames":"self","ValidArgNames":"Owner","ValidArgCount":1,"Comments":null}
-{"ID":5,"FileName":"AIRootComponentSystem.cs","FuncName":"Awake","ArgTypes":"AIRootComponent,EUnitType","ArgNames":"self,type","ValidArgNames":"Owner","ValidArgCount":1,"Comments":null}
+{"ID":5,"FileName":"AIRootComponentSystem.cs","FuncName":"Awake","ArgTypes":"AIRootComponent,Node","ArgNames":"self,node","ValidArgNames":"Owner","ValidArgCount":1,"Comments":null}
 {"ID":6,"FileName":"AIWorldComponentSystem.cs","FuncName":"LSUpdate","ArgTypes":"AIWorldComponent","ArgNames":"self","ValidArgNames":"Owner","ValidArgCount":1,"Comments":null}
 {"ID":7,"FileName":"AIWorldComponentSystem.cs","FuncName":"Destroy","ArgTypes":"AIWorldComponent","ArgNames":"self","ValidArgNames":"Owner","ValidArgCount":1,"Comments":null}
 {"ID":8,"FileName":"AIWorldComponentSystem.cs","FuncName":"Awake","ArgTypes":"AIWorldComponent","ArgNames":"self","ValidArgNames":"Owner","ValidArgCount":1,"Comments":null}
@@ -26,10 +26,8 @@
 {"ID":25,"FileName":"BeHitComponentSystem.cs","FuncName":"DeductHp","ArgTypes":"BeHitComponent,LSUnit,FP","ArgNames":"self,attacker,value","ValidArgNames":"Owner,attacker.Id,(FP)value","ValidArgCount":3,"Comments":null}
 {"ID":26,"FileName":"BeHitComponentSystem.cs","FuncName":"BeDamage","ArgTypes":"BeHitComponent,LSUnit,FP","ArgNames":"self,attacker,damage","ValidArgNames":"Owner,attacker.Id,(FP)damage","ValidArgCount":3,"Comments":null}
 {"ID":27,"FileName":"BeHitComponentSystem.cs","FuncName":"BeHealing","ArgTypes":"BeHitComponent,LSUnit,FP","ArgNames":"self,attacker,value","ValidArgNames":"Owner,attacker.Id,(FP)value","ValidArgCount":3,"Comments":null}
-{"ID":28,"FileName":"BeHitComponentSystem.cs","FuncName":"LSUpdate","ArgTypes":"BeHitComponent","ArgNames":"self","ValidArgNames":"Owner","ValidArgCount":1,"Comments":null}
 {"ID":29,"FileName":"BeHitComponentSystem.cs","FuncName":"Destroy","ArgTypes":"BeHitComponent","ArgNames":"self","ValidArgNames":"Owner","ValidArgCount":1,"Comments":null}
 {"ID":30,"FileName":"BeHitComponentSystem.cs","FuncName":"Awake","ArgTypes":"BeHitComponent","ArgNames":"self","ValidArgNames":"Owner","ValidArgCount":1,"Comments":null}
-{"ID":31,"FileName":"DeathComponentSystem.cs","FuncName":"DoDeath","ArgTypes":"DeathComponent","ArgNames":"self","ValidArgNames":"Owner","ValidArgCount":1,"Comments":null}
 {"ID":32,"FileName":"DeathComponentSystem.cs","FuncName":"Awake","ArgTypes":"DeathComponent,bool","ArgNames":"self,isDeadRelease","ValidArgNames":"Owner,isDeadRelease","ValidArgCount":2,"Comments":null}
 {"ID":33,"FileName":"FlagComponentSystem.cs","FuncName":"HasRestrict","ArgTypes":"FlagComponent,FlagRestrict","ArgNames":"self,flagRestrict","ValidArgNames":"Owner","ValidArgCount":1,"Comments":null}
 {"ID":34,"FileName":"FlagComponentSystem.cs","FuncName":"RemoveRestrict","ArgTypes":"FlagComponent,int","ArgNames":"self,mask","ValidArgNames":"Owner,mask","ValidArgCount":2,"Comments":null}
@@ -66,4 +64,7 @@
 {"ID":65,"FileName":"DropComponentSystem.cs","FuncName":"Awake","ArgTypes":"DropComponent,int","ArgNames":"self,tableId","ValidArgNames":"Owner,tableId","ValidArgCount":2,"Comments":null}
 {"ID":66,"FileName":"HeroComponentSystem.cs","FuncName":"Awake","ArgTypes":"HeroComponent,int","ArgNames":"self,tableId","ValidArgNames":"Owner,tableId","ValidArgCount":2,"Comments":null}
 {"ID":67,"FileName":"SoldierComponentSystem.cs","FuncName":"Awake","ArgTypes":"SoldierComponent,int,int","ArgNames":"self,tableId,level","ValidArgNames":"Owner,tableId,level","ValidArgCount":3,"Comments":null}
+{"ID":68,"FileName":"DeathComponentSystem.cs","FuncName":"DoDeathReal","ArgTypes":"DeathComponent","ArgNames":"self","ValidArgNames":"Owner","ValidArgCount":1,"Comments":null}
+{"ID":69,"FileName":"DeathComponentSystem.cs","FuncName":"LSUpdate","ArgTypes":"DeathComponent","ArgNames":"self","ValidArgNames":"Owner","ValidArgCount":1,"Comments":null}
+{"ID":70,"FileName":"TransformComponentSystem.cs","FuncName":"SetMoving","ArgTypes":"TransformComponent,bool","ArgNames":"self,moving","ValidArgNames":"Owner,moving","ValidArgCount":2,"Comments":null}
 ]
