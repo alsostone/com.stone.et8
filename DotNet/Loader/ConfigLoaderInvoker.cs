@@ -13,7 +13,7 @@ namespace ET
             Dictionary<Type, ByteBuf> output = new Dictionary<Type, ByteBuf>();
             List<string> startConfigs = new()
             {
-                "StartMachineConfigCategory", "StartProcessConfigCategory", "StartSceneConfigCategory", "StartZoneConfigCategory"
+                "TbStartMachine", "TbStartProcess", "TbStartScene", "TbStartZone"
             };
             HashSet<Type> configTypes = CodeTypes.Instance.GetTypes(typeof(ConfigAttribute));
             foreach (Type configType in configTypes)
