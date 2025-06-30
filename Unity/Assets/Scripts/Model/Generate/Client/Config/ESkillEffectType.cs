@@ -17,11 +17,6 @@ namespace ET
         None = 0,
 
         /// <summary>
-        /// 属性改变
-        /// </summary>
-        ChangeProperty = 1,
-
-        /// <summary>
         /// 实时属性改变
         /// </summary>
         ChangePropertyReal = 2,
@@ -42,9 +37,9 @@ namespace ET
         AddBuff = 5,
 
         /// <summary>
-        /// 添加子弹
+        /// 移除Buff
         /// </summary>
-        AddBullet = 6,
+        RemoveBuff = 6,
 
         /// <summary>
         /// 添加限制
@@ -52,24 +47,44 @@ namespace ET
         AddRestrict = 7,
 
         /// <summary>
-        /// 移除Buff
+        /// 移除限制
         /// </summary>
-        RemoveBuff = 9,
+        RemoveRestrict = 8,
+
+        /// <summary>
+        /// 增加属性
+        /// </summary>
+        AddProperty = 9,
+
+        /// <summary>
+        /// 降低属性
+        /// </summary>
+        SubProperty = 10,
 
         /// <summary>
         /// 召唤士兵
         /// </summary>
-        SummonSoldier = 10,
+        SummonSoldier = 11,
 
         /// <summary>
         /// 随机召唤
         /// </summary>
-        SummonRandom = 11,
+        SummonRandom = 12,
+
+        /// <summary>
+        /// 目标子弹
+        /// </summary>
+        AddBulletTarget = 13,
+
+        /// <summary>
+        /// 位置子弹
+        /// </summary>
+        AddBulletPosition = 14,
 
         /// <summary>
         /// 重新索敌
         /// </summary>
-        Research = 12,
+        Research = 15,
 
     }
 }

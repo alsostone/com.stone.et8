@@ -25,6 +25,7 @@ namespace ProcessLog.Editor
             "/Scripts/Hotfix/Share/LockStep/Battle/AI/Helper",
             "/Scripts/Hotfix/Share/LockStep/Battle/Utils",
             "/Scripts/Hotfix/Share/LockStep/Battle/Helper",
+            "/Scripts/Hotfix/Share/LockStep/Battle/Effect",
         };
 
         //要屏蔽的方法名称
