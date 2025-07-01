@@ -7,19 +7,48 @@ namespace NPBehave
 {
     public sealed class NodeFormatter : MemoryPackFormatter<Node>
     {
-        static NodeFormatter() => MemoryPackFormatterProvider.Register(new NodeFormatter());
+        static NodeFormatter()
+        {
+            MemoryPackFormatterProvider.Register(new NodeFormatter());
+            RegisterFormatter(typeof(Parallel), 1);
+            RegisterFormatter(typeof(RandomSelector), 2);
+            RegisterFormatter(typeof(RandomSequence), 3);
+            RegisterFormatter(typeof(Selector), 4);
+            RegisterFormatter(typeof(Sequence), 5);
+            RegisterFormatter(typeof(BlackboardBool), 6);
+            RegisterFormatter(typeof(BlackboardFloat), 7);
+            RegisterFormatter(typeof(BlackboardInt), 8);
+            RegisterFormatter(typeof(Cooldown), 9);
+            RegisterFormatter(typeof(Failer), 10);
+            RegisterFormatter(typeof(Inverter), 11);
+            RegisterFormatter(typeof(Observer), 12);
+            RegisterFormatter(typeof(Random), 13);
+            RegisterFormatter(typeof(Repeater), 14);
+            RegisterFormatter(typeof(Succeeder), 15);
+            RegisterFormatter(typeof(TimeMax), 16);
+            RegisterFormatter(typeof(TimeMin), 17);
+            RegisterFormatter(typeof(WaitBlackboardKey), 18);
+            RegisterFormatter(typeof(WaitSecond), 19);
+            RegisterFormatter(typeof(WaitUntilStopped), 20);
+            RegisterFormatter(typeof(Root), 21);
+        }
         
+        public const ushort UserFormatterTagBegin = 32;
         private static readonly Dictionary<Type, ushort> TypeToTag = new Dictionary<Type, ushort>(64);
         private static readonly Dictionary<ushort, Type> TagToType = new Dictionary<ushort, Type>(64);
-        private static ushort sCurrentTag = 0;
 
-        public static void TryAddFormatter(Node value)
+        public static void RegisterFormatter(Type type, ushort tag)
         {
-            var type = value.GetType();
-            if (!TypeToTag.ContainsKey(type))
+            if (TagToType.TryGetValue(tag, out var exsit))
             {
-                TypeToTag.Add(type, ++sCurrentTag);
-                TagToType.Add(sCurrentTag, type);
+                TypeToTag.Remove(exsit);
+                TagToType[tag] = type;
+                TypeToTag[type] = tag;
+            }
+            else
+            {
+                TypeToTag.Add(type, tag);
+                TagToType.Add(tag, type);
             }
         }
 

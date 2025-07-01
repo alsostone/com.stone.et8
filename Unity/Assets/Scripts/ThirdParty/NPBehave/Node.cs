@@ -35,7 +35,6 @@ namespace NPBehave
         protected Node(string name)
         {
             this.name = name;
-            NodeFormatter.TryAddFormatter(this);
         }
 
         // 防止因为循环依赖导致无法GC
