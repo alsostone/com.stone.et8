@@ -38,8 +38,9 @@ namespace ET.Client
             
             // 回滚
             room.ProcessLog.SetLogEnable(false);
-            room.LSWorld = room.GetLSWorld(frame);
+            room.LSWorld = room.GetLSWorld(frame - 1);
             room.ProcessLog.SetLogEnable(true);
+            
             OneFrameInputs authorityFrameInput = frameBuffer.FrameInputs(frame);
             // 执行AuthorityFrame
             room.Update(authorityFrameInput);
@@ -117,7 +118,7 @@ namespace ET.Client
                 byte[] memoryBuffer = room.Replay.Snapshots[snapshotIndex];
                 LSWorld lsWorld = MemoryPackHelper.Deserialize(typeof(LSWorld), memoryBuffer, 0, memoryBuffer.Length) as LSWorld;
                 room.LSWorld = lsWorld;
-                room.AuthorityFrame = snapshotIndex * LSConstValue.SaveLSWorldFrameCount - 1;
+                room.AuthorityFrame = snapshotIndex * LSConstValue.SaveLSWorldFrameCount;
                 RunLSRollbackSystem(room);
             }
             

@@ -51,7 +51,6 @@ namespace ET
         public void Update()
         {
             this.updater.Update();
-            ++this.Frame;
         }
 
         public void RegisterSystem(LSEntity component)

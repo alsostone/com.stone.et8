@@ -1,3 +1,5 @@
+using System.Collections.Generic;
+
 namespace ET
 {
     [LSEntitySystemOf(typeof(BuffComponent))]
@@ -27,9 +29,16 @@ namespace ET
         private static void LSUpdate(this BuffComponent self)
         {self.LSRoom()?.ProcessLog.LogFunction(28, self.LSParent().Id);
             int frame = self.LSWorld().Frame;
-            foreach (long value in self.IdBuffMap.Values)
+            
+            List<long> buffs = ObjectPool.Instance.Fetch<List<long>>();
+            buffs.AddRange(self.IdBuffMap.Values);
+            foreach (long value in buffs)
             {
                 Buff buff = self.GetChild<Buff>(value);
+                if (buff == null) {
+                    continue;
+                }
+                
                 if (frame > buff.EndFrame)
                 {
                     self.IdBuffMap.Remove(buff.BuffId);
@@ -40,6 +49,8 @@ namespace ET
                     buff.TryExecuteInterval();
                 }
             }
+            buffs.Clear();
+            ObjectPool.Instance.Recycle(buffs);
         }
 
         public static void AddBuffs(this BuffComponent self, int[] buffIds, LSUnit owner)

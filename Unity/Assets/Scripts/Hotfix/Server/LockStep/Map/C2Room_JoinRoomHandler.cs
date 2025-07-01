@@ -33,14 +33,14 @@ namespace ET.Server
                 matchInfo.UnitInfos.Add(lockStepUnitInfo);
             }
 
-            Room2C_Enter room2CEnter = Room2C_Enter.Create();
-            room2CEnter.MatchInfo = matchInfo;
-            RoomMessageHelper.Broadcast(room, room2CEnter);
-            
             room.Replay.MatchInfo = matchInfo;
             
             LSWorld lsWorld = new LSWorld(SceneType.LockStepServer);
             await room.Init(lsWorld, matchInfo);
+            
+            Room2C_Enter room2CEnter = Room2C_Enter.Create();
+            room2CEnter.MatchInfo = matchInfo;
+            RoomMessageHelper.Broadcast(room, room2CEnter);
         }
     }
 }

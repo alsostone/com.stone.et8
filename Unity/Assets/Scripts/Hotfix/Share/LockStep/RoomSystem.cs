@@ -25,7 +25,7 @@ namespace ET
             byte[] gridBytes = await FileComponent.Instance.Get($"Map/{matchInfo.SceneName}.bytes");
             lsWorld.GridData = MemoryPackSerializer.Deserialize<GridData>(gridBytes);
             lsWorld.Random = new TSRandom(matchInfo.Seed);
-            lsWorld.Frame = frame + 1;
+            lsWorld.Frame = frame;
             
             lsWorld.AddComponent<LSTargetsComponent>();
             lsWorld.AddComponent<AIWorldComponent>();
@@ -50,16 +50,18 @@ namespace ET
             }
             
             LSUnitFactory.CreateBuilding(lsWorld, 3004, new TSVector(14, 0, 1 * 5 + 20), TSQuaternion.identity, TeamType.TeamA);
+            self.ProcessLog.LogFrameEnd();
         }
 
         public static void Init(this Room self, LSWorld lsWorld)
         {
-            int frame = lsWorld.Frame - 1;
+            int frame = lsWorld.Frame;
             self.AuthorityFrame = frame;
             self.PredictionFrame = frame;
             self.FrameBuffer = new FrameBuffer(frame);
             self.ProcessLog = new ProcessLogMgr(frame);
             self.LSWorld = lsWorld;
+            self.ProcessLog.LogFrameEnd();
         }
 
         public static void Start(this Room self, long startTime)
@@ -81,16 +83,17 @@ namespace ET
                 lsInputComponent.LSInput = kv.Value;
             }
             
+            ++lsWorld.Frame;
+            self.ProcessLog.LogFrameBegin(lsWorld.Frame);
+            lsWorld.Update();
+            self.ProcessLog.LogFrameEnd();
+            
             if (!self.IsReplay)
             {
                 // 保存当前帧场景数据
                 self.SaveLSWorld(lsWorld.Frame);
                 self.Record(lsWorld.Frame);
             }
-
-            self.ProcessLog.LogFrameBegin(lsWorld.Frame);
-            lsWorld.Update();
-            self.ProcessLog.LogFrameEnd();
         }
         
         public static LSWorld GetLSWorld(this Room self, int frame)

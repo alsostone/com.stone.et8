@@ -26,6 +26,7 @@ namespace ET
 
         public void Run(ESkillEffectType type, int[] param, LSUnit owner, LSUnit target, LSUnit carrier = null)
         {
+            if (target == null) return;
             if (effectExecutors.TryGetValue(type, out IEffectExecutor effectExecutor))
             {
                 effectExecutor.Run(param, owner, target, carrier);
