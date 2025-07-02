@@ -1,3 +1,4 @@
+using System.Text;
 using UnityEngine;
 using UnityEditor;
 
@@ -57,6 +58,21 @@ namespace ST.GridBuilder
             if (GUILayout.Button("Rotate 180°"))
                 placement.placementData.Rotation(2);
             GUILayout.EndHorizontal();
+            if (GUILayout.Button("Copy Shpae to Clipboard"))
+            {
+                bool[] points = placement.placementData.points;
+                StringBuilder builder = new StringBuilder();
+                builder.Append(points[0] ? '1' : '0');
+                for (int index = 1; index < points.Length; index++)
+                {
+                    bool point = points[index];
+                    builder.Append(point ? ",1" : ",0");
+                }
+                GUIUtility.systemCopyBuffer = builder.ToString();
+            }
+            {
+                GUI.changed = true;
+            }
             serializedObject.ApplyModifiedProperties();
 
             if (GUI.changed)

@@ -18,6 +18,7 @@ namespace ET
         {
             Id = _buf.ReadInt();
             Level = _buf.ReadInt();
+            {int __n0 = System.Math.Min(_buf.ReadSize(), _buf.Size);Shape = new int[__n0];for(var __index0 = 0 ; __index0 < __n0 ; __index0++) { int __e0;__e0 = _buf.ReadInt(); Shape[__index0] = __e0;}}
             CanBeAttack = _buf.ReadBool();
             {int n0 = System.Math.Min(_buf.ReadSize(), _buf.Size);Props = new System.Collections.Generic.Dictionary<NumericType, int>(n0 * 3 / 2);for(var i0 = 0 ; i0 < n0 ; i0++) { NumericType _k0;  _k0 = (NumericType)_buf.ReadInt(); int _v0;  _v0 = _buf.ReadInt();     Props.Add(_k0, _v0);}}
             {int __n0 = System.Math.Min(_buf.ReadSize(), _buf.Size);Skills = new int[__n0];for(var __index0 = 0 ; __index0 < __n0 ; __index0++) { int __e0;__e0 = _buf.ReadInt(); Skills[__index0] = __e0;}}
@@ -41,6 +42,11 @@ namespace ET
         /// 等级
         /// </summary>
         public readonly int Level;
+
+        /// <summary>
+        /// 形状
+        /// </summary>
+        public readonly int[] Shape;
 
         /// <summary>
         /// 是否受攻击
@@ -75,6 +81,7 @@ namespace ET
             
             
             
+            
             RandomBagId_Ref = TbRandomBag.Instance.GetOrDefault(RandomBagId);
         }
 
@@ -83,6 +90,7 @@ namespace ET
             return "{ "
             + "Id:" + Id + ","
             + "level:" + Level + ","
+            + "shape:" + Luban.StringUtil.CollectionToString(Shape) + ","
             + "canBeAttack:" + CanBeAttack + ","
             + "props:" + Luban.StringUtil.CollectionToString(Props) + ","
             + "skills:" + Luban.StringUtil.CollectionToString(Skills) + ","
