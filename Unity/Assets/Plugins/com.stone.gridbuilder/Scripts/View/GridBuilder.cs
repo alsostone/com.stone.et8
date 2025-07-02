@@ -208,7 +208,7 @@ namespace ST.GridBuilder
         {
             pos = default;
             
-            if (rayCamera == null) {
+            if (rayCamera == null || gridMap == null) {
                 return false;
             }
 
