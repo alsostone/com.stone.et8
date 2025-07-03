@@ -83,6 +83,9 @@ namespace ET
         [MemoryPackOrder(1)]
         public ActorId ActorId { get; set; }
 
+        [MemoryPackOrder(2)]
+        public int SeatIndex { get; set; }
+
         public override void Dispose()
         {
             if (!this.IsFromPool)
@@ -92,6 +95,7 @@ namespace ET
 
             this.RpcId = default;
             this.ActorId = default;
+            this.SeatIndex = default;
 
             ObjectPool.Instance.Recycle(this);
         }
