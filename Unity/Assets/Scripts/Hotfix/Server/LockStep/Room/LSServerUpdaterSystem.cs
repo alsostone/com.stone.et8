@@ -28,10 +28,10 @@ namespace ET.Server
             Room2C_FrameMessage frameMessage = self.GetFrameMessage(frame);
             ++room.AuthorityFrame;
 
-            Room2C_FrameMessage sendInput = Room2C_FrameMessage.Create();
-            frameMessage.CopyTo(sendInput);
+            Room2C_FrameMessage sendFrameMessage = Room2C_FrameMessage.Create();
+            frameMessage.CopyTo(sendFrameMessage);
 
-            RoomMessageHelper.Broadcast(room, sendInput);
+            RoomMessageHelper.Broadcast(room, sendFrameMessage);
 
             room.Update(frameMessage);
         }
@@ -42,37 +42,6 @@ namespace ET.Server
             FrameBuffer frameBuffer = room.FrameBuffer;
             Room2C_FrameMessage frameMessage = frameBuffer.GetFrameMessage(frame);
             frameBuffer.MoveForward(frame);
-
-            if (frameMessage.Inputs.Count == LSConstValue.MatchCount)
-            {
-                return frameMessage;
-            }
-
-            Room2C_FrameMessage preFrameInputs = null;
-            if (frameBuffer.CheckFrame(frame - 1))
-            {
-                preFrameInputs = frameBuffer.GetFrameMessage(frame - 1);
-            }
-
-            // 有人输入的消息没过来，给他使用上一帧的操作
-            foreach (long playerId in room.PlayerIds)
-            {
-                if (frameMessage.Inputs.ContainsKey(playerId))
-                {
-                    continue;
-                }
-
-                if (preFrameInputs != null && preFrameInputs.Inputs.TryGetValue(playerId, out LSInput input))
-                {
-                    // 使用上一帧的输入
-                    frameMessage.Inputs[playerId] = input;
-                }
-                else
-                {
-                    frameMessage.Inputs[playerId] = new LSInput();
-                }
-            }
-
             return frameMessage;
         }
     }

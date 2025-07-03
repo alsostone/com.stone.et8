@@ -41,9 +41,9 @@ namespace ET.Client
             room.LSWorld = room.GetLSWorld(frame - 1);
             room.ProcessLog.SetLogEnable(true);
             
-            Room2C_FrameMessage authorityFrameInput = frameBuffer.GetFrameMessage(frame);
+            Room2C_FrameMessage authorityFrameMessage = frameBuffer.GetFrameMessage(frame);
             // 执行AuthorityFrame
-            room.Update(authorityFrameInput);
+            room.Update(authorityFrameMessage);
             room.SendHash(frame);
 
             
@@ -51,7 +51,7 @@ namespace ET.Client
             for (int i = room.AuthorityFrame + 1; i <= room.PredictionFrame; ++i)
             {
                 Room2C_FrameMessage frameMessage = frameBuffer.GetFrameMessage(i);
-                LSClientHelper.CopyOtherInputsTo(room, authorityFrameInput, frameMessage); // 重新预测消息
+                CopyOtherInputsTo(room, authorityFrameMessage, frameMessage); // 重新预测消息
                 room.Update(frameMessage);
             }
             

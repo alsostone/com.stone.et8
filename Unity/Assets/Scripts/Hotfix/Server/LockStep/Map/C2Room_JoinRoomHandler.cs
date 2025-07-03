@@ -36,7 +36,7 @@ namespace ET.Server
             room.Replay.MatchInfo = matchInfo;
             
             LSWorld lsWorld = new LSWorld(SceneType.LockStepServer);
-            await room.Init(lsWorld, matchInfo);
+            await room.InitNewWorld(lsWorld, matchInfo);
             
             Room2C_Enter room2CEnter = Room2C_Enter.Create();
             room2CEnter.MatchInfo = matchInfo;

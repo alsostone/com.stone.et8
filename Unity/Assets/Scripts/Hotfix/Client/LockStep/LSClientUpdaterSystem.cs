@@ -12,6 +12,7 @@ namespace ET.Client
         {
             Room room = self.GetParent<Room>();
             self.MyId = room.Root().GetComponent<PlayerComponent>().MyId;
+            self.MySeatIndex = room.GetSeatIndex(self.MyId);
         }
         
         [EntitySystem]

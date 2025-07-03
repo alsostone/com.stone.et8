@@ -7,5 +7,7 @@ namespace ET.Client
         public LSInput Input = new();
         
         public long MyId { get; set; }
+        
+        public int MySeatIndex { get; set; }
     }
 }

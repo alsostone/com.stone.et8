@@ -13,7 +13,7 @@ namespace ET
             return entity.IScene as Room;
         }
         
-        public static async ETTask Init(this Room self, LSWorld lsWorld, LockStepMatchInfo matchInfo)
+        public static async ETTask InitNewWorld(this Room self, LSWorld lsWorld, LockStepMatchInfo matchInfo)
         {
             int frame = -1;
             self.AuthorityFrame = frame;
@@ -54,7 +54,7 @@ namespace ET
             self.ProcessLog.LogFrameEnd();
         }
 
-        public static void Init(this Room self, LSWorld lsWorld)
+        public static async ETTask InitExsitWorld(this Room self, LSWorld lsWorld, LockStepMatchInfo matchInfo)
         {
             int frame = lsWorld.Frame;
             self.AuthorityFrame = frame;
@@ -62,13 +62,25 @@ namespace ET
             self.FrameBuffer = new FrameBuffer(frame);
             self.ProcessLog = new ProcessLogMgr(frame);
             self.LSWorld = lsWorld;
+            
+            for (int i = 0; i < matchInfo.UnitInfos.Count; ++i)
+            {
+                LockStepUnitInfo unitInfo = matchInfo.UnitInfos[i];
+                self.PlayerIds.Add(unitInfo.PlayerId);
+            }
             self.ProcessLog.LogFrameEnd();
+            await ETTask.CompletedTask;
         }
 
         public static void Start(this Room self, long startTime)
         {
             self.StartTime = startTime;
             self.FixedTimeCounter = new FixedTimeCounter(startTime, 0, LSConstValue.UpdateInterval);
+        }
+
+        public static int GetSeatIndex(this Room self, long playerId)
+        {
+            return self.PlayerIds.IndexOf(playerId);
         }
 
         public static void Update(this Room self, Room2C_FrameMessage frameMessage)

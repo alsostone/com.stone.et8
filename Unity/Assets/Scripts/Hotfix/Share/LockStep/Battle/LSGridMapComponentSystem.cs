@@ -1,3 +1,4 @@
+using MemoryPack;
 using ST.GridBuilder;
 using TrueSync;
 
@@ -11,6 +12,13 @@ namespace ET
         private static void Awake(this LSGridMapComponent self, GridData gridData)
         {
             self.GridData = gridData;
+        }
+        
+        [EntitySystem]
+        private static void Deserialize(this LSGridMapComponent self)
+        {
+            // byte[] gridBytes = FileComponent.Instance.Get($"Map/{matchInfo.SceneName}.bytes");
+            // self.GridData = MemoryPackSerializer.Deserialize<GridData>(gridBytes);
         }
         
         public static bool TryTake(this LSGridMapComponent self, PlacementData placementData)
