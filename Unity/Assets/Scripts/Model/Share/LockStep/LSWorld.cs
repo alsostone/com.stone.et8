@@ -38,8 +38,6 @@ namespace ET
             return ++this.idGenerator;
         }
 
-        public GridData GridData { get; set; }
-        
         public TSRandom Random { get; set; }
         
         [BsonIgnore]

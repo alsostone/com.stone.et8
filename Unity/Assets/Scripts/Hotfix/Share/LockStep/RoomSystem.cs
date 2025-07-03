@@ -22,11 +22,12 @@ namespace ET
             self.ProcessLog = new ProcessLogMgr(frame);
             self.LSWorld = lsWorld;
             
-            byte[] gridBytes = await FileComponent.Instance.Get($"Map/{matchInfo.SceneName}.bytes");
-            lsWorld.GridData = MemoryPackSerializer.Deserialize<GridData>(gridBytes);
             lsWorld.Random = new TSRandom(matchInfo.Seed);
             lsWorld.Frame = frame;
             
+            byte[] gridBytes = await FileComponent.Instance.Get($"Map/{matchInfo.SceneName}.bytes");
+            GridData gridData = MemoryPackSerializer.Deserialize<GridData>(gridBytes);
+            lsWorld.AddComponent<LSGridMapComponent, GridData>(gridData);
             lsWorld.AddComponent<LSTargetsComponent>();
             lsWorld.AddComponent<AIWorldComponent>();
             lsWorld.AddComponent<LSUnitComponent>();
