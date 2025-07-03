@@ -74,10 +74,10 @@ namespace ET.Client
         // 重新调整预测消息，只需要调整其他玩家的输入
         public static void CopyOtherInputsTo(Room room, Room2C_FrameMessage from, Room2C_FrameMessage to)
         {
-            long myId = room.GetComponent<LSClientUpdater>().MyId;
+            int mySeatIndex = room.GetComponent<LSClientUpdater>().MySeatIndex;
             foreach (var kv in from.Inputs)
             {
-                if (kv.Key == myId)
+                if (kv.Key == mySeatIndex)
                 {
                     continue;
                 }

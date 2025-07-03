@@ -14,7 +14,8 @@ namespace ET
             LockStepOuter.Room2C_FrameMessage,
             LockStepOuter.C2Room_FrameMessage,
             LockStepOuter.C2Room_CheckHash,
-            LockStepOuter.Room2C_AdjustUpdateTime,
+            LockStepOuter.Room2C_TimeAdjust,
+            LockStepOuter.C2Room_TimeAdjust,
             LockStepOuter.Room2C_CheckHashFail,
         };
 

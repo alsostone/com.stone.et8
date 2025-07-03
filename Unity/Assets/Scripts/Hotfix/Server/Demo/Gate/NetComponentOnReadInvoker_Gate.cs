@@ -23,20 +23,12 @@ namespace ET.Server
                     MessageSessionDispatcher.Instance.Handle(session, message);
                     break;
                 }
-                case C2Room_FrameMessage frameMessage:
+                case IRoomMessage roomMessage:
                 {
                     Player player = session.GetComponent<SessionPlayerComponent>().Player;
-                    ActorId roomActorId = player.GetComponent<PlayerRoomComponent>().RoomActorId;
-                    frameMessage.PlayerId = player.Id;
-                    root.GetComponent<MessageSender>().Send(roomActorId, frameMessage);
-                    break;
-                }
-                case IRoomMessage actorRoom:
-                {
-                    Player player = session.GetComponent<SessionPlayerComponent>().Player;
-                    ActorId roomActorId = player.GetComponent<PlayerRoomComponent>().RoomActorId;
-                    actorRoom.PlayerId = player.Id;
-                    root.GetComponent<MessageSender>().Send(roomActorId, actorRoom);
+                    PlayerRoomComponent roomComponent =  player.GetComponent<PlayerRoomComponent>();
+                    roomMessage.SeatIndex = roomComponent.RoomSeatIndex;
+                    root.GetComponent<MessageSender>().Send(roomComponent.RoomActorId, roomMessage);
                     break;
                 }
                 case ILocationMessage actorLocationMessage:

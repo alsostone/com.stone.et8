@@ -91,7 +91,7 @@ namespace ET
             LSUnitComponent unitComponent = lsWorld.GetComponent<LSUnitComponent>();
             foreach (var kv in frameMessage.Inputs)
             {
-                LSUnit lsUnit = unitComponent.GetChild<LSUnit>(kv.Key);
+                LSUnit lsUnit = unitComponent.GetChild<LSUnit>(self.PlayerIds[kv.Key]);
                 LSInputComponent lsInputComponent = lsUnit.GetComponent<LSInputComponent>();
                 lsInputComponent.LSInput = kv.Value;
             }

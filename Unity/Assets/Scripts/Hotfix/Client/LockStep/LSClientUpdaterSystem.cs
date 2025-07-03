@@ -29,6 +29,13 @@ namespace ET.Client
                     break;
 
                 ++room.PredictionFrame;
+                if (room.PredictionFrame % LSConstValue.FrameCountPerSecond == 0)
+                {
+                    C2Room_TimeAdjust timeAdjust = C2Room_TimeAdjust.Create(true);
+                    timeAdjust.Frame = room.PredictionFrame;
+                    root.GetComponent<ClientSenderComponent>().Send(timeAdjust);
+                }
+                
                 Room2C_FrameMessage frameMessage = self.GetFrameMessage(room.PredictionFrame);
                 
                 room.Update(frameMessage);
@@ -73,7 +80,7 @@ namespace ET.Client
                 Room2C_FrameMessage authorityFrame = frameBuffer.GetFrameMessage(room.AuthorityFrame);
                 authorityFrame.CopyTo(frameMessage);
             }
-            frameMessage.Inputs[self.MyId] = self.Input;
+            frameMessage.Inputs[self.MySeatIndex] = self.Input;
             
             return frameMessage;
         }

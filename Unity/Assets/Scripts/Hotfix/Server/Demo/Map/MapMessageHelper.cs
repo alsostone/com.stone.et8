@@ -24,10 +24,10 @@ namespace ET.Server
         public static void Broadcast(Unit unit, IMessage message)
         {
             Dictionary<long, EntityRef<AOIEntity>> dict = unit.GetBeSeePlayers();
-            MessageLocationSenderOneType oneTypeMessageLocationType = unit.Root().GetComponent<MessageLocationSenderComponent>().Get(LocationType.GateSession);
+            MessageLocationSenderOneType gateSession = unit.Root().GetComponent<MessageLocationSenderComponent>().Get(LocationType.GateSession);
             foreach (AOIEntity u in dict.Values)
             {
-                oneTypeMessageLocationType.Send(u.Unit.Id, message);
+                gateSession.Send(u.Unit.Id, message);
             }
         }
         

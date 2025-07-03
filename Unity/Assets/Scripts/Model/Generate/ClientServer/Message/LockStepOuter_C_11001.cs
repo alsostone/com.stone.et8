@@ -113,8 +113,11 @@ namespace ET
             return ObjectPool.Instance.Fetch(typeof(C2Room_JoinRoom), isFromPool) as C2Room_JoinRoom;
         }
 
+        /// <summary>
+        /// / 座位索引 不需要客户端赋值
+        /// </summary>
         [MemoryPackOrder(0)]
-        public long PlayerId { get; set; }
+        public int SeatIndex { get; set; }
 
         public override void Dispose()
         {
@@ -123,7 +126,7 @@ namespace ET
                 return;
             }
 
-            this.PlayerId = default;
+            this.SeatIndex = default;
 
             ObjectPool.Instance.Recycle(this);
         }
@@ -169,8 +172,11 @@ namespace ET
             return ObjectPool.Instance.Fetch(typeof(C2Room_LoadingProgress), isFromPool) as C2Room_LoadingProgress;
         }
 
+        /// <summary>
+        /// / 座位索引 不需要客户端赋值
+        /// </summary>
         [MemoryPackOrder(0)]
-        public long PlayerId { get; set; }
+        public int SeatIndex { get; set; }
 
         /// <summary>
         /// 场景加载进度 0~100 100表示加载完成
@@ -185,7 +191,7 @@ namespace ET
                 return;
             }
 
-            this.PlayerId = default;
+            this.SeatIndex = default;
             this.Progress = default;
 
             ObjectPool.Instance.Recycle(this);
@@ -302,18 +308,21 @@ namespace ET
 
     [MemoryPackable]
     [Message(LockStepOuter.C2Room_FrameMessage)]
-    public partial class C2Room_FrameMessage : MessageObject, IMessage
+    public partial class C2Room_FrameMessage : MessageObject, IRoomMessage
     {
         public static C2Room_FrameMessage Create(bool isFromPool = false)
         {
             return ObjectPool.Instance.Fetch(typeof(C2Room_FrameMessage), isFromPool) as C2Room_FrameMessage;
         }
 
+        /// <summary>
+        /// / 座位索引 不需要客户端赋值
+        /// </summary>
         [MemoryPackOrder(0)]
-        public int Frame { get; set; }
+        public int SeatIndex { get; set; }
 
         [MemoryPackOrder(1)]
-        public long PlayerId { get; set; }
+        public int Frame { get; set; }
 
         [MemoryPackOrder(2)]
         public LSInput Input { get; set; }
@@ -325,8 +334,8 @@ namespace ET
                 return;
             }
 
+            this.SeatIndex = default;
             this.Frame = default;
-            this.PlayerId = default;
             this.Input = default;
 
             ObjectPool.Instance.Recycle(this);
@@ -344,7 +353,7 @@ namespace ET
 
         [MongoDB.Bson.Serialization.Attributes.BsonDictionaryOptions(MongoDB.Bson.Serialization.Options.DictionaryRepresentation.ArrayOfArrays)]
         [MemoryPackOrder(1)]
-        public Dictionary<long, LSInput> Inputs { get; set; } = new();
+        public Dictionary<int, LSInput> Inputs { get; set; } = new();
         public override void Dispose()
         {
             if (!this.IsFromPool)
@@ -359,12 +368,44 @@ namespace ET
     }
 
     [MemoryPackable]
-    [Message(LockStepOuter.Room2C_AdjustUpdateTime)]
-    public partial class Room2C_AdjustUpdateTime : MessageObject, IMessage
+    [Message(LockStepOuter.C2Room_TimeAdjust)]
+    public partial class C2Room_TimeAdjust : MessageObject, IRoomMessage
     {
-        public static Room2C_AdjustUpdateTime Create(bool isFromPool = false)
+        public static C2Room_TimeAdjust Create(bool isFromPool = false)
         {
-            return ObjectPool.Instance.Fetch(typeof(Room2C_AdjustUpdateTime), isFromPool) as Room2C_AdjustUpdateTime;
+            return ObjectPool.Instance.Fetch(typeof(C2Room_TimeAdjust), isFromPool) as C2Room_TimeAdjust;
+        }
+
+        /// <summary>
+        /// / 座位索引 不需要客户端赋值
+        /// </summary>
+        [MemoryPackOrder(0)]
+        public int SeatIndex { get; set; }
+
+        [MemoryPackOrder(1)]
+        public int Frame { get; set; }
+
+        public override void Dispose()
+        {
+            if (!this.IsFromPool)
+            {
+                return;
+            }
+
+            this.SeatIndex = default;
+            this.Frame = default;
+
+            ObjectPool.Instance.Recycle(this);
+        }
+    }
+
+    [MemoryPackable]
+    [Message(LockStepOuter.Room2C_TimeAdjust)]
+    public partial class Room2C_TimeAdjust : MessageObject, IMessage
+    {
+        public static Room2C_TimeAdjust Create(bool isFromPool = false)
+        {
+            return ObjectPool.Instance.Fetch(typeof(Room2C_TimeAdjust), isFromPool) as Room2C_TimeAdjust;
         }
 
         [MemoryPackOrder(0)]
@@ -392,8 +433,11 @@ namespace ET
             return ObjectPool.Instance.Fetch(typeof(C2Room_CheckHash), isFromPool) as C2Room_CheckHash;
         }
 
+        /// <summary>
+        /// / 座位索引 不需要客户端赋值
+        /// </summary>
         [MemoryPackOrder(0)]
-        public long PlayerId { get; set; }
+        public int SeatIndex { get; set; }
 
         [MemoryPackOrder(1)]
         public int Frame { get; set; }
@@ -408,7 +452,7 @@ namespace ET
                 return;
             }
 
-            this.PlayerId = default;
+            this.SeatIndex = default;
             this.Frame = default;
             this.Hash = default;
 
@@ -495,9 +539,10 @@ namespace ET
         public const ushort Room2C_Start = 11010;
         public const ushort C2Room_FrameMessage = 11011;
         public const ushort Room2C_FrameMessage = 11012;
-        public const ushort Room2C_AdjustUpdateTime = 11013;
-        public const ushort C2Room_CheckHash = 11014;
-        public const ushort Room2C_CheckHashFail = 11015;
-        public const ushort G2C_Reconnect = 11016;
+        public const ushort C2Room_TimeAdjust = 11013;
+        public const ushort Room2C_TimeAdjust = 11014;
+        public const ushort C2Room_CheckHash = 11015;
+        public const ushort Room2C_CheckHashFail = 11016;
+        public const ushort G2C_Reconnect = 11017;
     }
 }

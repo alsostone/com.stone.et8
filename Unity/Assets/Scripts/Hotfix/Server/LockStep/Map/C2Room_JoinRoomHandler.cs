@@ -9,9 +9,11 @@ namespace ET.Server
     {
         protected override async ETTask Run(Scene root, C2Room_JoinRoom message)
         {
+            using C2Room_JoinRoom _ = message;  // 让消息回到池中
+            
             Room room = root.GetComponent<Room>();
             RoomServerComponent roomServerComponent = room.GetComponent<RoomServerComponent>();
-            RoomPlayer roomPlayer = roomServerComponent.GetChild<RoomPlayer>(message.PlayerId);
+            RoomPlayer roomPlayer = roomServerComponent.GetRoomPlayer(message.SeatIndex);
             roomPlayer.IsAccept = true;
             
             if (!roomServerComponent.IsAllPlayerAccept())

@@ -10,10 +10,18 @@ namespace ET.Server
         [EntitySystem]
         private static void Awake(this RoomServerComponent self, List<long> playerIds)
         {
-            foreach (long id in playerIds)
+            self.PlayerIds.AddRange(playerIds);
+            for (int index = 0; index < self.PlayerIds.Count; index++)
             {
-                RoomPlayer roomPlayer = self.AddChildWithId<RoomPlayer>(id);
+                long id = self.PlayerIds[index];
+                self.AddChildWithId<RoomPlayer>(id);
             }
+        }
+        
+        public static RoomPlayer GetRoomPlayer(this RoomServerComponent self, int seatIndex)
+        {
+            long id = self.PlayerIds[seatIndex];
+            return self.GetChild<RoomPlayer>(id);
         }
 
         public static bool IsAllPlayerProgress100(this RoomServerComponent self)
