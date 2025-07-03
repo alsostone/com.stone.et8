@@ -28,7 +28,7 @@ namespace ET.Client
                     break;
 
                 ++room.PredictionFrame;
-                Room2C_FrameMessage frameMessage = self.GetOneFrameMessages(room.PredictionFrame);
+                Room2C_FrameMessage frameMessage = self.GetFrameMessage(room.PredictionFrame);
                 
                 room.Update(frameMessage);
                 room.SendHash(room.PredictionFrame);
@@ -55,7 +55,7 @@ namespace ET.Client
             }
         }
 
-        private static Room2C_FrameMessage GetOneFrameMessages(this LSClientUpdater self, int frame)
+        private static Room2C_FrameMessage GetFrameMessage(this LSClientUpdater self, int frame)
         {
             Room room = self.GetParent<Room>();
             FrameBuffer frameBuffer = room.FrameBuffer;

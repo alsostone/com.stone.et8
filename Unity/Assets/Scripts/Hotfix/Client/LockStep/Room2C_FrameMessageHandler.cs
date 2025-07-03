@@ -3,7 +3,7 @@ using System;
 namespace ET.Client
 {
     [MessageHandler(SceneType.LockStep)]
-    public class OneFrameInputsHandler: MessageHandler<Scene, Room2C_FrameMessage>
+    public class Room2C_FrameMessageHandler: MessageHandler<Scene, Room2C_FrameMessage>
     {
         protected override async ETTask Run(Scene root, Room2C_FrameMessage input)
         {

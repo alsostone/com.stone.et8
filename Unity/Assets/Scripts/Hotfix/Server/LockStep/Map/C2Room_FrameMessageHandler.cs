@@ -4,7 +4,7 @@ using System.Collections.Generic;
 namespace ET.Server
 {
     [MessageHandler(SceneType.RoomRoot)]
-    public class FrameMessageHandler: MessageHandler<Scene, C2Room_FrameMessage>
+    public class C2Room_FrameMessageHandler: MessageHandler<Scene, C2Room_FrameMessage>
     {
         protected override async ETTask Run(Scene root, C2Room_FrameMessage message)
         {

@@ -25,7 +25,7 @@ namespace ET.Server
                 return;
             }
 
-            Room2C_FrameMessage frameMessage = self.GetOneFrameMessage(frame);
+            Room2C_FrameMessage frameMessage = self.GetFrameMessage(frame);
             ++room.AuthorityFrame;
 
             Room2C_FrameMessage sendInput = Room2C_FrameMessage.Create();
@@ -36,7 +36,7 @@ namespace ET.Server
             room.Update(frameMessage);
         }
 
-        private static Room2C_FrameMessage GetOneFrameMessage(this LSServerUpdater self, int frame)
+        private static Room2C_FrameMessage GetFrameMessage(this LSServerUpdater self, int frame)
         {
             Room room = self.GetParent<Room>();
             FrameBuffer frameBuffer = room.FrameBuffer;
