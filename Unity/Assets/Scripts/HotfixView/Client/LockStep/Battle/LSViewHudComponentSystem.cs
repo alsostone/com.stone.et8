@@ -6,7 +6,7 @@ namespace ET.Client
 {
     [EntitySystemOf(typeof(LSViewHudComponent))]
     [FriendOf(typeof(LSViewHudComponent))]
-    public static partial class LSViewHudSystem
+    public static partial class LSViewHudComponentSystem
     {
         [EntitySystem]
         private static void Awake(this LSViewHudComponent self, Vector3 offset, Transform follow, float hp, float hpMax)

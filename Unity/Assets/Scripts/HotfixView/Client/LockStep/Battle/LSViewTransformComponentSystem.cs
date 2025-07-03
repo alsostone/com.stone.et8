@@ -6,7 +6,7 @@ namespace ET.Client
     [EntitySystemOf(typeof(LSViewTransformComponent))]
     [LSEntitySystemOf(typeof(LSViewTransformComponent))]
     [FriendOf(typeof(LSViewTransformComponent))]
-    public static partial class LSViewTransformSystem
+    public static partial class LSViewTransformComponentSystem
     {
         [EntitySystem]
         private static void Awake(this LSViewTransformComponent self, Transform transform, bool uesViewRotation)

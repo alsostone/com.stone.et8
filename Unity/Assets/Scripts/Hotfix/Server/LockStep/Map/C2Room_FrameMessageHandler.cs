@@ -12,10 +12,10 @@ namespace ET.Server
             
             Room room = root.GetComponent<Room>();
 
-            // 如果消息的帧数远大于服务器帧数则丢弃（用预测帧数量判定，其他不离谱的值也可）
-            if (message.Frame > room.AuthorityFrame + LSConstValue.PredictionFrameMaxCount)
-            {
-                Log.Warning($"FrameMessage > AuthorityFrame + PredictionFrameMaxCount discard: {message}");
+            // 如果消息的帧数和服务器帧数差异过大则丢弃（用预测帧数量判定，其他不离谱的值也可）
+            if (message.Frame < room.AuthorityFrame - LSConstValue.PredictionFrameMaxCount
+                || message.Frame > room.AuthorityFrame + LSConstValue.PredictionFrameMaxCount) {
+                Log.Warning($"The frame rate difference is too large. discard: {message}");
                 return;
             }
             

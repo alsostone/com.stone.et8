@@ -8,7 +8,8 @@ namespace ET.Client
             using Room2C_TimeAdjust _ = message;  // 让消息回到池中
             
             Room room = root.GetComponent<Room>();
-            int newInterval = (1000 + (message.DiffTime - LSConstValue.UpdateInterval)) * LSConstValue.UpdateInterval / 1000;
+            int diff = message.DiffTime - LSConstValue.UpdateInterval;  // 额外慢一帧 以确保客户端快于服务器一帧
+            int newInterval = (1000 + diff) * LSConstValue.UpdateInterval / 1000;
 
             if (newInterval < 40)
             {
