@@ -3,14 +3,14 @@ using System.Collections.Generic;
 
 namespace ET
 {
-    public partial class OneFrameInputs
+    public partial class Room2C_FrameMessage
     {
-        protected bool Equals(OneFrameInputs other)
+        protected bool Equals(Room2C_FrameMessage other)
         {
             return Equals(this.Inputs, other.Inputs);
         }
 
-        public void CopyTo(OneFrameInputs to)
+        public void CopyTo(Room2C_FrameMessage to)
         {
             to.Inputs.Clear();
             foreach (var kv in this.Inputs)
@@ -36,7 +36,7 @@ namespace ET
                 return false;
             }
 
-            return Equals((OneFrameInputs) obj);
+            return Equals((Room2C_FrameMessage) obj);
         }
 
         public override int GetHashCode()
@@ -44,7 +44,7 @@ namespace ET
             return HashCode.Combine(this.Inputs);
         }
 
-        public static bool operator==(OneFrameInputs a, OneFrameInputs b)
+        public static bool operator==(Room2C_FrameMessage a, Room2C_FrameMessage b)
         {
             if (a is null || b is null)
             {
@@ -76,7 +76,7 @@ namespace ET
             return true;
         }
 
-        public static bool operator !=(OneFrameInputs a, OneFrameInputs b)
+        public static bool operator !=(Room2C_FrameMessage a, Room2C_FrameMessage b)
         {
             return !(a == b);
         }

@@ -4,11 +4,11 @@ using System.Collections.Generic;
 namespace ET.Server
 {
     [MessageHandler(SceneType.RoomRoot)]
-    public class FrameMessageHandler: MessageHandler<Scene, FrameMessage>
+    public class FrameMessageHandler: MessageHandler<Scene, C2Room_FrameMessage>
     {
-        protected override async ETTask Run(Scene root, FrameMessage message)
+        protected override async ETTask Run(Scene root, C2Room_FrameMessage message)
         {
-            using FrameMessage _ = message;  // 让消息回到池中
+            using C2Room_FrameMessage _ = message;  // 让消息回到池中
             
             Room room = root.GetComponent<Room>();
             if (message.Frame % (1000 / LSConstValue.UpdateInterval) == 0)
@@ -30,16 +30,16 @@ namespace ET.Server
             
             // 晚到的消息放在最近帧数据中 防止因丢操作影响手感
             int frame = Math.Max(room.AuthorityFrame + 1, message.Frame);
-            OneFrameInputs oneFrameInputs = room.FrameBuffer.FrameInputs(frame);
-            if (oneFrameInputs.Inputs.TryGetValue(message.PlayerId, out LSInput value))
+            Room2C_FrameMessage frameMessage = room.FrameBuffer.GetFrameMessage(frame);
+            if (frameMessage.Inputs.TryGetValue(message.PlayerId, out LSInput value))
             {
                 value.V = message.Input.V;                  // 覆盖 遥杆使用最新的
                 value.Button |= message.Input.Button;       // 合并 防止因丢操作影响手感 32位代表32个按钮的按下状态
-                oneFrameInputs.Inputs[message.PlayerId] = value;
+                frameMessage.Inputs[message.PlayerId] = value;
             }
             else
             {
-                oneFrameInputs.Inputs[message.PlayerId] = message.Input;
+                frameMessage.Inputs[message.PlayerId] = message.Input;
             }
             await ETTask.CompletedTask;
         }

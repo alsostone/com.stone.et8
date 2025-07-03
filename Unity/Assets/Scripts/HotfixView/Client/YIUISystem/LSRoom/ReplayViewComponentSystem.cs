@@ -38,7 +38,7 @@ namespace ET.Client
         [EntitySystem]
         private static async ETTask<bool> YIUIOpen(this ReplayViewComponent self)
         {
-            self.u_DataTotalFrame.SetValue(self.Room().Replay.FrameInputs.Count.ToString());
+            self.u_DataTotalFrame.SetValue(self.Room().Replay.FrameMessages.Count.ToString());
             
             await ETTask.CompletedTask;
             return true;

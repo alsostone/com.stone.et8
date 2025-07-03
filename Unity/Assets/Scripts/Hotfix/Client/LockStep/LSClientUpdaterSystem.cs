@@ -28,17 +28,17 @@ namespace ET.Client
                     break;
 
                 ++room.PredictionFrame;
-                OneFrameInputs oneFrameInputs = self.GetOneFrameMessages(room.PredictionFrame);
+                Room2C_FrameMessage frameMessage = self.GetOneFrameMessages(room.PredictionFrame);
                 
-                room.Update(oneFrameInputs);
+                room.Update(frameMessage);
                 room.SendHash(room.PredictionFrame);
                 
                 room.SpeedMultiply = ++i;
 
-                FrameMessage frameMessage = FrameMessage.Create();
-                frameMessage.Frame = room.PredictionFrame;
-                frameMessage.Input = self.Input;
-                root.GetComponent<ClientSenderComponent>().Send(frameMessage);
+                C2Room_FrameMessage sendFrameMessage = C2Room_FrameMessage.Create();
+                sendFrameMessage.Frame = room.PredictionFrame;
+                sendFrameMessage.Input = self.Input;
+                root.GetComponent<ClientSenderComponent>().Send(sendFrameMessage);
                 
                 long timeNow2 = TimeInfo.Instance.ServerNow();
                 if (timeNow2 - timeNow > 5)
@@ -55,26 +55,26 @@ namespace ET.Client
             }
         }
 
-        private static OneFrameInputs GetOneFrameMessages(this LSClientUpdater self, int frame)
+        private static Room2C_FrameMessage GetOneFrameMessages(this LSClientUpdater self, int frame)
         {
             Room room = self.GetParent<Room>();
             FrameBuffer frameBuffer = room.FrameBuffer;
-            OneFrameInputs oneFrameInputs = frameBuffer.FrameInputs(frame);
+            Room2C_FrameMessage frameMessage = frameBuffer.GetFrameMessage(frame);
             frameBuffer.MoveForward(frame);
             
             // 若要获取的帧数据已经是服务器返回的直接用
             if (frame <= room.AuthorityFrame)
-                return oneFrameInputs;
+                return frameMessage;
             
             // 若没有服务器返回的帧数据 组织预测数据
             if (frameBuffer.CheckFrame(room.AuthorityFrame))
             {
-                OneFrameInputs authorityFrame = frameBuffer.FrameInputs(room.AuthorityFrame);
-                authorityFrame.CopyTo(oneFrameInputs);
+                Room2C_FrameMessage authorityFrame = frameBuffer.GetFrameMessage(room.AuthorityFrame);
+                authorityFrame.CopyTo(frameMessage);
             }
-            oneFrameInputs.Inputs[self.MyId] = self.Input;
+            frameMessage.Inputs[self.MyId] = self.Input;
             
-            return oneFrameInputs;
+            return frameMessage;
         }
     }
 }

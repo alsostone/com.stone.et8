@@ -7,21 +7,21 @@ namespace ET
     public class FrameBuffer: Object
     {
         public int MaxFrame { get; private set; }
-        private readonly List<OneFrameInputs> frameInputs;
+        private readonly List<Room2C_FrameMessage> frameMessages;
         private readonly List<MemoryBuffer> snapshots;
         private readonly List<long> hashs;
 
         public FrameBuffer(int frame = 0, int capacity = LSConstValue.FrameCountPerSecond * 60)
         {
             this.MaxFrame = frame + LSConstValue.FrameCountPerSecond * 30;
-            this.frameInputs = new List<OneFrameInputs>(capacity);
+            this.frameMessages = new List<Room2C_FrameMessage>(capacity);
             this.snapshots = new List<MemoryBuffer>(capacity);
             this.hashs = new List<long>(capacity);
             
             for (int i = 0; i < this.snapshots.Capacity; ++i)
             {
                 this.hashs.Add(0);
-                this.frameInputs.Add(OneFrameInputs.Create());
+                this.frameMessages.Add(Room2C_FrameMessage.Create());
                 MemoryBuffer memoryBuffer = new(10240);
                 memoryBuffer.SetLength(0);
                 memoryBuffer.Seek(0, SeekOrigin.Begin);
@@ -32,13 +32,13 @@ namespace ET
         public void SetHash(int frame, long hash)
         {
             EnsureFrame(frame);
-            this.hashs[frame % this.frameInputs.Capacity] = hash;
+            this.hashs[frame % this.frameMessages.Capacity] = hash;
         }
         
         public long GetHash(int frame)
         {
             EnsureFrame(frame);
-            return this.hashs[frame % this.frameInputs.Capacity];
+            return this.hashs[frame % this.frameMessages.Capacity];
         }
 
         public bool CheckFrame(int frame)
@@ -64,11 +64,11 @@ namespace ET
             }
         }
         
-        public OneFrameInputs FrameInputs(int frame)
+        public Room2C_FrameMessage GetFrameMessage(int frame)
         {
             EnsureFrame(frame);
-            OneFrameInputs oneFrameInputs = this.frameInputs[frame % this.frameInputs.Capacity];
-            return oneFrameInputs;
+            Room2C_FrameMessage frameMessage = this.frameMessages[frame % this.frameMessages.Capacity];
+            return frameMessage;
         }
 
         public void MoveForward(int frame)
@@ -80,8 +80,8 @@ namespace ET
             
             ++this.MaxFrame;
             
-            OneFrameInputs oneFrameInputs = this.FrameInputs(this.MaxFrame);
-            oneFrameInputs.Inputs.Clear();
+            Room2C_FrameMessage frameMessage = this.GetFrameMessage(this.MaxFrame);
+            frameMessage.Inputs.Clear();
         }
 
         public MemoryBuffer Snapshot(int frame)

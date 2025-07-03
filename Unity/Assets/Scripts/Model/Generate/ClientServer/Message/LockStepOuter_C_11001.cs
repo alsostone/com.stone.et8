@@ -301,12 +301,12 @@ namespace ET
     }
 
     [MemoryPackable]
-    [Message(LockStepOuter.FrameMessage)]
-    public partial class FrameMessage : MessageObject, IMessage
+    [Message(LockStepOuter.C2Room_FrameMessage)]
+    public partial class C2Room_FrameMessage : MessageObject, IMessage
     {
-        public static FrameMessage Create(bool isFromPool = false)
+        public static C2Room_FrameMessage Create(bool isFromPool = false)
         {
-            return ObjectPool.Instance.Fetch(typeof(FrameMessage), isFromPool) as FrameMessage;
+            return ObjectPool.Instance.Fetch(typeof(C2Room_FrameMessage), isFromPool) as C2Room_FrameMessage;
         }
 
         [MemoryPackOrder(0)]
@@ -334,12 +334,12 @@ namespace ET
     }
 
     [MemoryPackable]
-    [Message(LockStepOuter.OneFrameInputs)]
-    public partial class OneFrameInputs : MessageObject, IMessage
+    [Message(LockStepOuter.Room2C_FrameMessage)]
+    public partial class Room2C_FrameMessage : MessageObject, IMessage
     {
-        public static OneFrameInputs Create(bool isFromPool = false)
+        public static Room2C_FrameMessage Create(bool isFromPool = false)
         {
-            return ObjectPool.Instance.Fetch(typeof(OneFrameInputs), isFromPool) as OneFrameInputs;
+            return ObjectPool.Instance.Fetch(typeof(Room2C_FrameMessage), isFromPool) as Room2C_FrameMessage;
         }
 
         [MongoDB.Bson.Serialization.Attributes.BsonDictionaryOptions(MongoDB.Bson.Serialization.Options.DictionaryRepresentation.ArrayOfArrays)]
@@ -493,8 +493,8 @@ namespace ET
         public const ushort LockStepUnitInfo = 11008;
         public const ushort LockStepMatchInfo = 11009;
         public const ushort Room2C_Start = 11010;
-        public const ushort FrameMessage = 11011;
-        public const ushort OneFrameInputs = 11012;
+        public const ushort C2Room_FrameMessage = 11011;
+        public const ushort Room2C_FrameMessage = 11012;
         public const ushort Room2C_AdjustUpdateTime = 11013;
         public const ushort C2Room_CheckHash = 11014;
         public const ushort Room2C_CheckHashFail = 11015;

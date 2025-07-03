@@ -22,16 +22,16 @@ namespace ET.Client
             int i = 0;
             while (true)
             {
-                if (room.AuthorityFrame + 1 >= room.Replay.FrameInputs.Count)
+                if (room.AuthorityFrame + 1 >= room.Replay.FrameMessages.Count)
                     break;
                 if (timeNow < room.FixedTimeCounter.FrameTime(room.AuthorityFrame + 1))
                     break;
 
                 ++room.AuthorityFrame;
 
-                OneFrameInputs oneFrameInputs = room.Replay.FrameInputs[room.AuthorityFrame];
+                Room2C_FrameMessage frameMessage = room.Replay.FrameMessages[room.AuthorityFrame];
 
-                room.Update(oneFrameInputs);
+                room.Update(frameMessage);
                 room.SpeedMultiply = ++i;
 
                 long timeNow2 = TimeInfo.Instance.ServerNow();

@@ -10,7 +10,7 @@ namespace ET
         public LockStepMatchInfo MatchInfo;
         
         [MemoryPackOrder(2)]
-        public List<OneFrameInputs> FrameInputs = new();
+        public List<Room2C_FrameMessage> FrameMessages = new();
         
         [MemoryPackOrder(3)]
         public List<byte[]> Snapshots = new();

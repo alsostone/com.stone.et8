@@ -64,14 +64,14 @@ message Room2C_Start // IMessage
 	int64 StartTime = 1;
 }
 
-message FrameMessage // IMessage
+message C2Room_FrameMessage // IMessage
 {
 	int32 Frame = 1;
 	int64 PlayerId = 2;
 	LSInput Input = 3;
 }
 
-message OneFrameInputs // IMessage
+message Room2C_FrameMessage // IMessage
 {
 	map<int64, LSInput> Inputs = 2;
 }

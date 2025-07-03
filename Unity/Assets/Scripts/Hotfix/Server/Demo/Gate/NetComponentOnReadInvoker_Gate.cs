@@ -23,7 +23,7 @@ namespace ET.Server
                     MessageSessionDispatcher.Instance.Handle(session, message);
                     break;
                 }
-                case FrameMessage frameMessage:
+                case C2Room_FrameMessage frameMessage:
                 {
                     Player player = session.GetComponent<SessionPlayerComponent>().Player;
                     ActorId roomActorId = player.GetComponent<PlayerRoomComponent>().RoomActorId;

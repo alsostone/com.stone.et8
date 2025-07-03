@@ -41,7 +41,7 @@ namespace ET.Client
             room.LSWorld = room.GetLSWorld(frame - 1);
             room.ProcessLog.SetLogEnable(true);
             
-            OneFrameInputs authorityFrameInput = frameBuffer.FrameInputs(frame);
+            Room2C_FrameMessage authorityFrameInput = frameBuffer.GetFrameMessage(frame);
             // 执行AuthorityFrame
             room.Update(authorityFrameInput);
             room.SendHash(frame);
@@ -50,9 +50,9 @@ namespace ET.Client
             // 重新执行预测的帧
             for (int i = room.AuthorityFrame + 1; i <= room.PredictionFrame; ++i)
             {
-                OneFrameInputs oneFrameInputs = frameBuffer.FrameInputs(i);
-                LSClientHelper.CopyOtherInputsTo(room, authorityFrameInput, oneFrameInputs); // 重新预测消息
-                room.Update(oneFrameInputs);
+                Room2C_FrameMessage frameMessage = frameBuffer.GetFrameMessage(i);
+                LSClientHelper.CopyOtherInputsTo(room, authorityFrameInput, frameMessage); // 重新预测消息
+                room.Update(frameMessage);
             }
             
             RunLSRollbackSystem(room);
@@ -72,7 +72,7 @@ namespace ET.Client
         }
         
         // 重新调整预测消息，只需要调整其他玩家的输入
-        public static void CopyOtherInputsTo(Room room, OneFrameInputs from, OneFrameInputs to)
+        public static void CopyOtherInputsTo(Room room, Room2C_FrameMessage from, Room2C_FrameMessage to)
         {
             long myId = room.GetComponent<LSClientUpdater>().MyId;
             foreach (var kv in from.Inputs)
@@ -92,7 +92,7 @@ namespace ET.Client
                 return;
             }
             
-            Log.Debug($"save replay: {path} frame: {room.Replay.FrameInputs.Count}");
+            Log.Debug($"save replay: {path} frame: {room.Replay.FrameMessages.Count}");
             byte[] bytes = MemoryPackHelper.Serialize(room.Replay);
             File.WriteAllBytes(path, bytes);
         }
@@ -104,9 +104,9 @@ namespace ET.Client
                 return;
             }
 
-            if (frame >= room.Replay.FrameInputs.Count)
+            if (frame >= room.Replay.FrameMessages.Count)
             {
-                frame = room.Replay.FrameInputs.Count - 1;
+                frame = room.Replay.FrameMessages.Count - 1;
             }
             
             int snapshotIndex = frame / LSConstValue.SaveLSWorldFrameCount;

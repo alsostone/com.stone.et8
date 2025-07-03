@@ -71,13 +71,13 @@ namespace ET
             self.FixedTimeCounter = new FixedTimeCounter(startTime, 0, LSConstValue.UpdateInterval);
         }
 
-        public static void Update(this Room self, OneFrameInputs oneFrameInputs)
+        public static void Update(this Room self, Room2C_FrameMessage frameMessage)
         {
             LSWorld lsWorld = self.LSWorld;
             
             // 设置输入到每个LSUnit身上
             LSUnitComponent unitComponent = lsWorld.GetComponent<LSUnitComponent>();
-            foreach (var kv in oneFrameInputs.Inputs)
+            foreach (var kv in frameMessage.Inputs)
             {
                 LSUnit lsUnit = unitComponent.GetChild<LSUnit>(kv.Key);
                 LSInputComponent lsInputComponent = lsUnit.GetComponent<LSInputComponent>();
@@ -127,10 +127,10 @@ namespace ET
             {
                 return;
             }
-            OneFrameInputs oneFrameInputs = self.FrameBuffer.FrameInputs(frame);
-            OneFrameInputs saveInput = OneFrameInputs.Create();
-            oneFrameInputs.CopyTo(saveInput);
-            self.Replay.FrameInputs.Add(saveInput);
+            Room2C_FrameMessage frameMessage = self.FrameBuffer.GetFrameMessage(frame);
+            Room2C_FrameMessage saveFrameMessage = Room2C_FrameMessage.Create();
+            frameMessage.CopyTo(saveFrameMessage);
+            self.Replay.FrameMessages.Add(saveFrameMessage);
             if (frame % LSConstValue.SaveLSWorldFrameCount == 0)
             {
                 MemoryBuffer memoryBuffer = self.FrameBuffer.Snapshot(frame);

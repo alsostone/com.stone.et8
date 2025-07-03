@@ -3,9 +3,9 @@ using System;
 namespace ET.Client
 {
     [MessageHandler(SceneType.LockStep)]
-    public class OneFrameInputsHandler: MessageHandler<Scene, OneFrameInputs>
+    public class OneFrameInputsHandler: MessageHandler<Scene, Room2C_FrameMessage>
     {
-        protected override async ETTask Run(Scene root, OneFrameInputs input)
+        protected override async ETTask Run(Scene root, Room2C_FrameMessage input)
         {
             using var _ = input ; // 方法结束时回收消息
             Room room = root.GetComponent<Room>();
@@ -16,13 +16,13 @@ namespace ET.Client
             // 服务端返回的消息比预测的还早
             if (room.AuthorityFrame > room.PredictionFrame)
             {
-                OneFrameInputs authorityFrame = frameBuffer.FrameInputs(room.AuthorityFrame);
+                Room2C_FrameMessage authorityFrame = frameBuffer.GetFrameMessage(room.AuthorityFrame);
                 input.CopyTo(authorityFrame);
             }
             else
             {
                 // 服务端返回来的消息，跟预测消息对比
-                OneFrameInputs predictionInput = frameBuffer.FrameInputs(room.AuthorityFrame);
+                Room2C_FrameMessage predictionInput = frameBuffer.GetFrameMessage(room.AuthorityFrame);
                 // 对比失败有两种可能，
                 // 1是别人的输入预测失败，这种很正常，
                 // 2自己的输入对比失败，这种情况是自己发送的消息比服务器晚到了，服务器使用了你的上一次输入

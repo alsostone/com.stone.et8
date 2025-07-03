@@ -43,7 +43,7 @@ namespace ET.Client
             byte[] bytes = File.ReadAllBytes(self.ReplayPath);
             
             Replay replay = MemoryPackHelper.Deserialize(typeof (Replay), bytes, 0, bytes.Length) as Replay;
-            Log.Debug($"start replay: {replay.Snapshots.Count} {replay.FrameInputs.Count} {replay.MatchInfo.UnitInfos.Count}");
+            Log.Debug($"start replay: {replay.Snapshots.Count} {replay.FrameMessages.Count} {replay.MatchInfo.UnitInfos.Count}");
             LSSceneChangeHelper.SceneChangeToReplay(self.Root(), replay).Coroutine();
         }
         
