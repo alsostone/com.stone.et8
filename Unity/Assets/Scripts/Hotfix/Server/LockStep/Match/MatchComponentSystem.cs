@@ -35,12 +35,14 @@ namespace ET.Server
             Map2Match_GetRoom map2MatchGetRoom = await root.GetComponent<MessageSender>().Call(
                 tbStartSceneRow.ActorId, match2MapGetRoom) as Map2Match_GetRoom;
 
-            Match2G_MatchSuccess match2GMatchSuccess = Match2G_MatchSuccess.Create();
-            match2GMatchSuccess.ActorId = map2MatchGetRoom.ActorId;
             MessageLocationSenderComponent messageLocationSenderComponent = root.GetComponent<MessageLocationSenderComponent>();
-            
-            foreach (long id in match2MapGetRoom.PlayerIds) // 这里发送消息线程不会修改PlayerInfo，所以可以直接使用
+            for (int index = 0; index < match2MapGetRoom.PlayerIds.Count; index++)  // 这里发送消息线程不会修改PlayerInfo，所以可以直接使用
             {
+                Match2G_MatchSuccess match2GMatchSuccess = Match2G_MatchSuccess.Create();
+                match2GMatchSuccess.ActorId = map2MatchGetRoom.ActorId;
+                match2GMatchSuccess.SeatIndex = index;
+                
+                long id = match2MapGetRoom.PlayerIds[index];
                 messageLocationSenderComponent.Get(LocationType.Player).Send(id, match2GMatchSuccess);
                 // 等待进入房间的确认消息，如果超时要通知所有玩家退出房间，重新匹配
             }

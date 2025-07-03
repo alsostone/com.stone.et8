@@ -20,6 +20,7 @@ message Match2G_MatchSuccess // IMessage
 	int32 RpcId = 1;
 	/// 房间的ActorId
 	ActorId ActorId = 2;
+	int32 SeatIndex = 3;
 }
 
 /// 客户端通知要进入房间
