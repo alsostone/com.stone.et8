@@ -5,6 +5,8 @@ namespace ET.Client
     {
         protected override async ETTask Run(Scene root, Room2C_TimeAdjust message)
         {
+            using Room2C_TimeAdjust _ = message;  // 让消息回到池中
+            
             Room room = root.GetComponent<Room>();
             int newInterval = (1000 + (message.DiffTime - LSConstValue.UpdateInterval)) * LSConstValue.UpdateInterval / 1000;
 

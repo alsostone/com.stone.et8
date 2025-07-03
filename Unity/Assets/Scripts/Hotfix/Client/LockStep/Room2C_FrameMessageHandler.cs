@@ -5,11 +5,11 @@ namespace ET.Client
     [MessageHandler(SceneType.LockStep)]
     public class Room2C_FrameMessageHandler: MessageHandler<Scene, Room2C_FrameMessage>
     {
-        protected override async ETTask Run(Scene root, Room2C_FrameMessage frameMessage)
+        protected override async ETTask Run(Scene root, Room2C_FrameMessage message)
         {
-            using var _ = frameMessage ; // 方法结束时回收消息
-            Room room = root.GetComponent<Room>();
+            using Room2C_FrameMessage _ = message;  // 让消息回到池中
             
+            Room room = root.GetComponent<Room>();
             FrameBuffer frameBuffer = room.FrameBuffer;
 
             ++room.AuthorityFrame;
@@ -17,7 +17,7 @@ namespace ET.Client
             if (room.AuthorityFrame > room.PredictionFrame)
             {
                 Room2C_FrameMessage authorityFrameMessage = frameBuffer.GetFrameMessage(room.AuthorityFrame);
-                frameMessage.CopyTo(authorityFrameMessage);
+                message.CopyTo(authorityFrameMessage);
             }
             else
             {
@@ -27,10 +27,10 @@ namespace ET.Client
                 // 1是别人的输入预测失败，这种很正常，
                 // 2自己的输入对比失败，这种情况是自己发送的消息比服务器晚到了，服务器使用了你的上一次输入
                 // 回滚重新预测的时候，自己的输入不用变化
-                if (frameMessage != predictionFrameMessage)
+                if (message != predictionFrameMessage)
                 {
-                    Log.Debug($"frame diff: {room.AuthorityFrame} {predictionFrameMessage} {frameMessage}");
-                    frameMessage.CopyTo(predictionFrameMessage);
+                    Log.Debug($"frame diff: {room.AuthorityFrame} {predictionFrameMessage} {message}");
+                    message.CopyTo(predictionFrameMessage);
                     // 回滚到frameBuffer.AuthorityFrame
                     Log.Debug($"roll back start {room.AuthorityFrame}");
                     LSClientHelper.Rollback(room, room.AuthorityFrame);

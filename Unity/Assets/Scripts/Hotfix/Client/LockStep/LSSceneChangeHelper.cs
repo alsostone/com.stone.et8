@@ -20,7 +20,7 @@ namespace ET.Client
             // 等待表现层订阅的事件完成
             await EventSystem.Instance.PublishAsync(root, new LSSceneChangeStart() {SceneName = matchInfo.SceneName, IsReplay = false});
 
-            C2Room_LoadingProgress loadingProgress = C2Room_LoadingProgress.Create();
+            C2Room_LoadingProgress loadingProgress = C2Room_LoadingProgress.Create(true);
             loadingProgress.Progress = 100;
             root.GetComponent<ClientSenderComponent>().Send(loadingProgress);
             

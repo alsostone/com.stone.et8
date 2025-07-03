@@ -5,7 +5,7 @@ namespace ET.Client
     {
         protected override async ETTask Run(Scene root, Match2G_MatchSuccess message)
         {
-            root.GetComponent<ClientSenderComponent>().Send(C2Room_JoinRoom.Create());
+            root.GetComponent<ClientSenderComponent>().Send(C2Room_JoinRoom.Create(true));
             await ETTask.CompletedTask;
         }
     }
