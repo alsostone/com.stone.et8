@@ -11,7 +11,13 @@ namespace ET.Client
         [EntitySystem]
         private static void Awake(this LSUnitViewComponent self)
         {
-
+            Room room = self.Room();
+            LSUnitComponent lsUnitComponent = room.LSWorld.GetComponent<LSUnitComponent>();
+            foreach (var pair in lsUnitComponent.Children)
+            {
+                LSUnit lsUnit = pair.Value as LSUnit;
+                LSUnitViewFactory.CreateLSUnitView(self, lsUnit);
+            }
         }
         
         [EntitySystem]
@@ -49,20 +55,10 @@ namespace ET.Client
                 var lsUnitView = self.GetChild<LSUnitView>(pair.Value.Id);
                 if (lsUnitView == null)
                 {
-                    LSUnitViewFactory.CreateLSUnitViewAsync(self, pair.Value as LSUnit).Coroutine();
+                    LSUnitViewFactory.CreateLSUnitView(self, pair.Value as LSUnit);
                 }
             }
         }
 
-        public static async ETTask InitAsync(this LSUnitViewComponent self)
-        {
-            Room room = self.Room();
-            LSUnitComponent lsUnitComponent = room.LSWorld.GetComponent<LSUnitComponent>();
-            foreach (var pair in lsUnitComponent.Children)
-            {
-                LSUnit lsUnit = pair.Value as LSUnit;
-                await LSUnitViewFactory.CreateLSUnitViewAsync(self, lsUnit);
-            }
-        }
     }
 }

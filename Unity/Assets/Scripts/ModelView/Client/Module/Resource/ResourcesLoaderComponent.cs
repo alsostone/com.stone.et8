@@ -48,6 +48,18 @@ namespace ET.Client
                 }
             }
         }
+        
+        public static T LoadAssetSync<T>(this ResourcesLoaderComponent self, string location) where T : UnityEngine.Object
+        {
+            HandleBase handler;
+            if (!self.handlers.TryGetValue(location, out handler))
+            {
+                handler = self.package.LoadAssetSync<T>(location);
+                self.handlers.Add(location, handler);
+            }
+
+            return (T)((AssetHandle)handler).AssetObject;
+        }
 
         public static async ETTask<T> LoadAssetAsync<T>(this ResourcesLoaderComponent self, string location) where T : UnityEngine.Object
         {

@@ -9,7 +9,8 @@ namespace ET.Client
             LSUnitViewComponent viewComponent = room.GetComponent<LSUnitViewComponent>();
             if (viewComponent == null)
                 return;
-            await LSUnitViewFactory.CreateLSUnitViewAsync(viewComponent, args.LSUnit);
+            LSUnitViewFactory.CreateLSUnitView(viewComponent, args.LSUnit);
+            await ETTask.CompletedTask;
         }
     }
 }
