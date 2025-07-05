@@ -9,7 +9,7 @@ namespace ST.GridBuilder
         None = 0,
         Map = 1 << 0,
         Block = 1 << 1,
-        Tower = 1 << 2
+        Building = 1 << 2
     }
 
     [MemoryPackable]

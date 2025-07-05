@@ -25,9 +25,7 @@ namespace ET
             lsWorld.Random = new TSRandom(matchInfo.Seed);
             lsWorld.Frame = frame;
             
-            byte[] gridBytes = await FileComponent.Instance.Get($"Map/{matchInfo.SceneName}.bytes");
-            GridData gridData = MemoryPackSerializer.Deserialize<GridData>(gridBytes);
-            lsWorld.AddComponent<LSGridMapComponent, GridData>(gridData);
+            lsWorld.AddComponent<LSGridMapComponent, string>($"Map/{matchInfo.SceneName}.bytes");
             lsWorld.AddComponent<LSTargetsComponent>();
             lsWorld.AddComponent<AIWorldComponent>();
             lsWorld.AddComponent<LSUnitComponent>();

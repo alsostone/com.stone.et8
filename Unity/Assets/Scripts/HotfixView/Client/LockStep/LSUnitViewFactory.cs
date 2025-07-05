@@ -13,6 +13,9 @@ namespace ET.Client
                 case EUnitType.Hero:
                     CreateHeroView(viewComponent, lsUnit);
                     break;
+                case EUnitType.Block:
+                    CreateBlockView(viewComponent, lsUnit);
+                    break;
                 case EUnitType.Building:
                     CreateBuildingView(viewComponent, lsUnit);
                     break;
@@ -39,8 +42,6 @@ namespace ET.Client
             GlobalComponent globalComponent = root.GetComponent<GlobalComponent>();
             GameObject unitGo = UnityEngine.Object.Instantiate(prefab, globalComponent.Unit, true);
             
-            // 回滚后重新执行帧，ID对应的实体可能已变化。需清除表现层单位重新创建
-            viewComponent.RemoveChild(lsUnit.Id);
             LSUnitView lsUnitView = viewComponent.AddChildWithId<LSUnitView, GameObject>(lsUnit.Id, unitGo);
             lsUnitView.AddComponent<LSAnimationComponent>();
             lsUnitView.AddComponent<LSViewTransformComponent, Transform, bool>(unitGo.transform, false);
@@ -50,6 +51,21 @@ namespace ET.Client
             float hp = propComponent.Get(NumericType.Hp).AsFloat();
             float hpMax = propComponent.Get(NumericType.MaxHp).AsFloat();
             lsUnitView.AddComponent<LSViewHudComponent, Vector3, Transform, float, float>(Vector3.up * 1.75f, unitGo.transform, hp, hpMax);
+        }
+        
+        private static void CreateBlockView(LSUnitViewComponent viewComponent, LSUnit lsUnit)
+        {
+            Scene root = viewComponent.Root();
+            
+            BlockComponent blockComponent = lsUnit.GetComponent<BlockComponent>();
+            TbResourceRow resourceRow = TbResource.Instance.Get(blockComponent.TbRow.Model);
+            GameObject prefab = root.GetComponent<ResourcesLoaderComponent>().LoadAssetSync<GameObject>(resourceRow.Url);
+
+            GlobalComponent globalComponent = root.GetComponent<GlobalComponent>();
+            GameObject unitGo = UnityEngine.Object.Instantiate(prefab, globalComponent.Unit, true);
+            
+            LSUnitView lsUnitView = viewComponent.AddChildWithId<LSUnitView, GameObject>(lsUnit.Id, unitGo);
+            lsUnitView.AddComponent<LSViewTransformComponent, Transform, bool>(unitGo.transform, true);
         }
         
         private static void CreateBuildingView(LSUnitViewComponent viewComponent, LSUnit lsUnit)
@@ -63,8 +79,6 @@ namespace ET.Client
             GlobalComponent globalComponent = root.GetComponent<GlobalComponent>();
             GameObject unitGo = UnityEngine.Object.Instantiate(prefab, globalComponent.Unit, true);
             
-            // 回滚后重新执行帧，ID对应的实体可能已变化。需清除表现层单位重新创建
-            viewComponent.RemoveChild(lsUnit.Id);
             LSUnitView lsUnitView = viewComponent.AddChildWithId<LSUnitView, GameObject>(lsUnit.Id, unitGo);
             lsUnitView.AddComponent<LSAnimationComponent>();
             lsUnitView.AddComponent<LSViewTransformComponent, Transform, bool>(unitGo.transform, false);
@@ -82,8 +96,6 @@ namespace ET.Client
             GlobalComponent globalComponent = root.GetComponent<GlobalComponent>();
             GameObject unitGo = UnityEngine.Object.Instantiate(prefab, globalComponent.Unit, true);
             
-            // 回滚后重新执行帧，ID对应的实体可能已变化。需清除表现层单位重新创建
-            viewComponent.RemoveChild(lsUnit.Id);
             LSUnitView lsUnitView = viewComponent.AddChildWithId<LSUnitView, GameObject>(lsUnit.Id, unitGo);
             lsUnitView.AddComponent<LSAnimationComponent>();
             lsUnitView.AddComponent<LSViewTransformComponent, Transform, bool>(unitGo.transform, false);
@@ -106,8 +118,6 @@ namespace ET.Client
             GlobalComponent globalComponent = root.GetComponent<GlobalComponent>();
             GameObject unitGo = UnityEngine.Object.Instantiate(prefab, globalComponent.Unit, true);
             
-            // 回滚后重新执行帧，ID对应的实体可能已变化。需清除表现层单位重新创建
-            viewComponent.RemoveChild(lsUnit.Id);
             LSUnitView lsUnitView = viewComponent.AddChildWithId<LSUnitView, GameObject>(lsUnit.Id, unitGo);
             lsUnitView.AddComponent<LSViewTransformComponent, Transform, bool>(unitGo.transform, true);
         }
@@ -124,8 +134,6 @@ namespace ET.Client
             GlobalComponent globalComponent = root.GetComponent<GlobalComponent>();
             GameObject unitGo = UnityEngine.Object.Instantiate(prefab, globalComponent.Unit, true);
             
-            // 回滚后重新执行帧，ID对应的实体可能已变化。需清除表现层单位重新创建
-            viewComponent.RemoveChild(lsUnit.Id);
             LSUnitView lsUnitView = viewComponent.AddChildWithId<LSUnitView, GameObject>(lsUnit.Id, unitGo);
             lsUnitView.AddComponent<LSViewTransformComponent, Transform, bool>(unitGo.transform, true);
         }

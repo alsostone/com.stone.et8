@@ -1,4 +1,5 @@
 ﻿using NPBehave;
+using ST.GridBuilder;
 using TrueSync;
 
 namespace ET
@@ -64,6 +65,34 @@ namespace ET
 	        return lsUnit;
         }
         
+        public static LSUnit CreateBlock(LSWorld lsWorld, int tableId, TSVector position, TSQuaternion rotation, TeamType teamType)
+		{
+	        TbBlockRow row = TbBlock.Instance.Get(tableId);
+	        LSUnitComponent lsUnitComponent = lsWorld.GetComponent<LSUnitComponent>();
+	        LSUnit lsUnit = lsUnitComponent.AddChild<LSUnit>();
+	        lsUnit.Active = true;
+
+	        lsUnit.AddComponent<TransformComponent, TSVector, TSQuaternion>(position, rotation);
+	        lsUnit.AddComponent<TypeComponent, EUnitType>(EUnitType.Block);
+	        lsUnit.AddComponent<FlagComponent>();
+	        lsUnit.AddComponent<TeamComponent, TeamType>(teamType);
+	        lsUnit.AddComponent<BlockComponent, int>(tableId);
+	        lsUnit.AddComponent<PlacementComponent, PlacedLayer, PlacedLayer, bool[]>(PlacedLayer.Block, PlacedLayer.Map | PlacedLayer.Block, row.Shape);
+	        
+	        PropComponent propComponent = lsUnit.AddComponent<PropComponent>();
+	        foreach (var prop in row.Props) {
+		        propComponent.Set(prop.Key, prop.Value * FP.EN4, false);
+	        }
+	        EnsureRuntimeProp(propComponent);
+
+	        lsUnit.AddComponent<DeathComponent, bool>(true);
+	        lsUnit.AddComponent<BuffComponent>();
+	        lsUnit.AddComponent<BeHitComponent>();
+	        
+	        EventSystem.Instance.Publish(lsWorld, new LSUnitCreate() {LSUnit = lsUnit});
+	        return lsUnit;
+		}
+        
         public static LSUnit CreateBuilding(LSWorld lsWorld, int tableId, TSVector position, TSQuaternion rotation, TeamType teamType)
         {
 	        TbBuildingRow row = TbBuilding.Instance.Get(tableId, 1);
@@ -76,7 +105,8 @@ namespace ET
 	        lsUnit.AddComponent<FlagComponent>();
 	        lsUnit.AddComponent<TeamComponent, TeamType>(teamType);
 	        lsUnit.AddComponent<BuildingComponent, int, int>(tableId, 1);
-	        
+	        lsUnit.AddComponent<PlacementComponent, PlacedLayer, PlacedLayer, bool[]>(PlacedLayer.Building, PlacedLayer.Block, row.Shape);
+
 	        PropComponent propComponent = lsUnit.AddComponent<PropComponent>();
 	        foreach (var prop in row.Props) {
 		        propComponent.Set(prop.Key, prop.Value * FP.EN4, false);

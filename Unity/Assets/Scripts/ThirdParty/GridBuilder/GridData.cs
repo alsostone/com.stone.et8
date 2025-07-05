@@ -216,7 +216,7 @@ namespace ST.GridBuilder
 
         public bool CanPutLevel(int level, PlacementData placementData)
         {
-            if ((placementData.placementType & PlacedLayer.Tower) == PlacedLayer.Tower)
+            if ((placementData.placementType & PlacedLayer.Building) == PlacedLayer.Building)
                 return true;
             if (blockLevelMax == -1)
                 return true;
