@@ -78,9 +78,9 @@ namespace ET
             self.FixedTimeCounter = new FixedTimeCounter(startTime, 0, LSConstValue.UpdateInterval);
         }
 
-        public static int GetSeatIndex(this Room self, long playerId)
+        public static byte GetSeatIndex(this Room self, long playerId)
         {
-            return self.PlayerIds.IndexOf(playerId);
+            return (byte)self.PlayerIds.IndexOf(playerId);
         }
 
         public static void Update(this Room self, Room2C_FrameMessage frameMessage)
@@ -89,11 +89,19 @@ namespace ET
             
             // 设置输入到每个LSUnit身上
             LSUnitComponent unitComponent = lsWorld.GetComponent<LSUnitComponent>();
-            foreach (var kv in frameMessage.Inputs)
+            
+            LSCommandsRunComponent lsCommandsRunComponent = null;
+            byte currentSeatIndex = 0;
+            foreach (ulong command in frameMessage.Commands)
             {
-                LSUnit lsUnit = unitComponent.GetChild<LSUnit>(self.PlayerIds[kv.Key]);
-                LSInputComponent lsInputComponent = lsUnit.GetComponent<LSInputComponent>();
-                lsInputComponent.LSInput = kv.Value;
+                byte seatIndex = LSUtils.ParseCommandSeatIndex(command);
+                if (lsCommandsRunComponent == null || currentSeatIndex != seatIndex)
+                {
+                    LSUnit lsUnit = unitComponent.GetChild<LSUnit>(self.PlayerIds[seatIndex]);
+                    lsCommandsRunComponent = lsUnit.GetComponent<LSCommandsRunComponent>();
+                    currentSeatIndex = seatIndex;
+                }
+                lsCommandsRunComponent.Commands.Add(command);
             }
             
             ++lsWorld.Frame;

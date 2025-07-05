@@ -14,11 +14,12 @@ namespace ET.Server
             for (int index = 0; index < self.PlayerIds.Count; index++)
             {
                 long id = self.PlayerIds[index];
-                self.AddChildWithId<RoomPlayer>(id);
+                RoomPlayer roomPlayer = self.AddChildWithId<RoomPlayer>(id);
+                roomPlayer.AddComponent<LSCommandsComponent, byte>((byte)index);
             }
         }
         
-        public static RoomPlayer GetRoomPlayer(this RoomServerComponent self, int seatIndex)
+        public static RoomPlayer GetRoomPlayer(this RoomServerComponent self, byte seatIndex)
         {
             long id = self.PlayerIds[seatIndex];
             return self.GetChild<RoomPlayer>(id);

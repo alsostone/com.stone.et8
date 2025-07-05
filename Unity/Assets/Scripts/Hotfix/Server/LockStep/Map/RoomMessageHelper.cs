@@ -8,15 +8,10 @@ namespace ET.Server
             RoomServerComponent roomServerComponent = room.GetComponent<RoomServerComponent>();
 
             MessageLocationSenderComponent messageLocationSenderComponent = room.Root().GetComponent<MessageLocationSenderComponent>();
-            foreach (var kv in roomServerComponent.Children)
+            foreach (RoomPlayer roomPlayer in roomServerComponent.Children.Values)
             {
-                RoomPlayer roomPlayer = kv.Value as RoomPlayer;
-
                 if (!roomPlayer.IsOnline)
-                {
                     continue;
-                }
-                
                 messageLocationSenderComponent.Get(LocationType.GateSession).Send(roomPlayer.Id, message);
             }
         }

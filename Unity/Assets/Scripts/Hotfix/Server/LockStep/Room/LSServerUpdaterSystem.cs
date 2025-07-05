@@ -30,7 +30,6 @@ namespace ET.Server
 
             Room2C_FrameMessage sendFrameMessage = Room2C_FrameMessage.Create();
             frameMessage.CopyTo(sendFrameMessage);
-
             RoomMessageHelper.Broadcast(room, sendFrameMessage);
 
             room.Update(frameMessage);
@@ -42,6 +41,22 @@ namespace ET.Server
             FrameBuffer frameBuffer = room.FrameBuffer;
             Room2C_FrameMessage frameMessage = frameBuffer.GetFrameMessage(frame);
             frameBuffer.MoveForward(frame);
+            
+            frameMessage.Frame = frame;
+            frameMessage.FrameIndex = frame;
+            RoomServerComponent roomServerComponent = room.GetComponent<RoomServerComponent>();
+            foreach (RoomPlayer roomPlayer in roomServerComponent.Children.Values)
+            {
+                LSCommandsComponent lsCommandsComponent = roomPlayer.GetComponent<LSCommandsComponent>();
+                if (lsCommandsComponent.MoveCommands.Count > 0) {
+                    frameMessage.Commands.Add(lsCommandsComponent.MoveCommands.Dequeue());
+                }
+                frameMessage.Commands.AddRange(lsCommandsComponent.DragCommands);
+                lsCommandsComponent.DragCommands.Clear();
+                frameMessage.Commands.AddRange(lsCommandsComponent.Commands);
+                lsCommandsComponent.Commands.Clear();
+            }
+            
             return frameMessage;
         }
     }

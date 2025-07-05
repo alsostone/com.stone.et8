@@ -27,7 +27,7 @@ namespace ET.Client
                 // 1是别人的输入预测失败，这种很正常，
                 // 2自己的输入对比失败，这种情况是自己发送的消息比服务器晚到了，服务器使用了你的上一次输入
                 // 回滚重新预测的时候，自己的输入不用变化
-                if (message != predictionFrameMessage)
+                if (!message.Equals(predictionFrameMessage))
                 {
                     Log.Debug($"frame diff: {room.AuthorityFrame} {predictionFrameMessage} {message}");
                     message.CopyTo(predictionFrameMessage);

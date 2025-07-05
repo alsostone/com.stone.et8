@@ -10,9 +10,6 @@ namespace ET.Client
         [EntitySystem]
         private static void Awake(this LSClientUpdater self)
         {
-            Room room = self.GetParent<Room>();
-            self.MyId = room.Root().GetComponent<PlayerComponent>().MyId;
-            self.MySeatIndex = room.GetSeatIndex(self.MyId);
         }
         
         [EntitySystem]
@@ -42,24 +39,10 @@ namespace ET.Client
                 room.SendHash(room.PredictionFrame);
                 
                 room.SpeedMultiply = ++i;
-
-                C2Room_FrameMessage sendFrameMessage = C2Room_FrameMessage.Create();
-                sendFrameMessage.Frame = room.PredictionFrame;
-                sendFrameMessage.Input = self.Input;
-                root.GetComponent<ClientSenderComponent>().Send(sendFrameMessage);
                 
                 long timeNow2 = TimeInfo.Instance.ServerNow();
                 if (timeNow2 - timeNow > 5)
                     break;
-            }
-
-            // 操作只要生效即清除 LSOperaComponentSystem会在下次需要生效前设置就绪
-            // LSOperaComponentSystem的Update帧率一定大于等于该处生效的频率且保证触发在前 所以不会有空挡产生
-            // 由于是生效后才清除 也不会出现操作被丢失的情况
-            // 即使出现卡顿导致一次操作生效多次的情况 也是符合直觉的
-            if (i > 0)
-            {
-                self.Input = new LSInput();
             }
         }
 
@@ -75,12 +58,16 @@ namespace ET.Client
                 return frameMessage;
             
             // 若没有服务器返回的帧数据 组织预测数据
-            if (frameBuffer.CheckFrame(room.AuthorityFrame))
-            {
-                Room2C_FrameMessage authorityFrame = frameBuffer.GetFrameMessage(room.AuthorityFrame);
-                authorityFrame.CopyTo(frameMessage);
+            frameMessage.Frame = frame;
+            frameMessage.FrameIndex = frame;
+            LSCommandsComponent lsCommandsComponent = room.GetComponent<LSCommandsComponent>();
+            if (lsCommandsComponent.MoveCommands.Count > 0) {
+                frameMessage.Commands.Add(lsCommandsComponent.MoveCommands.Dequeue());
             }
-            frameMessage.Inputs[self.MySeatIndex] = self.Input;
+            frameMessage.Commands.AddRange(lsCommandsComponent.DragCommands);
+            lsCommandsComponent.DragCommands.Clear();
+            frameMessage.Commands.AddRange(lsCommandsComponent.Commands);
+            lsCommandsComponent.Commands.Clear();
             
             return frameMessage;
         }

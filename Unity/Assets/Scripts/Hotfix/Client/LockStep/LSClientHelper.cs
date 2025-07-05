@@ -51,7 +51,6 @@ namespace ET.Client
             for (int i = room.AuthorityFrame + 1; i <= room.PredictionFrame; ++i)
             {
                 Room2C_FrameMessage frameMessage = frameBuffer.GetFrameMessage(i);
-                CopyOtherInputsTo(room, authorityFrameMessage, frameMessage); // 重新预测消息
                 room.Update(frameMessage);
             }
             
@@ -71,20 +70,6 @@ namespace ET.Client
             self.Root().GetComponent<ClientSenderComponent>().Send(c2RoomCheckHash);
         }
         
-        // 重新调整预测消息，只需要调整其他玩家的输入
-        public static void CopyOtherInputsTo(Room room, Room2C_FrameMessage from, Room2C_FrameMessage to)
-        {
-            int mySeatIndex = room.GetComponent<LSClientUpdater>().MySeatIndex;
-            foreach (var kv in from.Inputs)
-            {
-                if (kv.Key == mySeatIndex)
-                {
-                    continue;
-                }
-                to.Inputs[kv.Key] = kv.Value;
-            }
-        }
-
         public static void SaveReplay(Room room, string path)
         {
             if (room.IsReplay)

@@ -36,7 +36,7 @@ namespace ET.Server
                 tbStartSceneRow.ActorId, match2MapGetRoom) as Map2Match_GetRoom;
 
             MessageLocationSenderComponent messageLocationSenderComponent = root.GetComponent<MessageLocationSenderComponent>();
-            for (int index = 0; index < match2MapGetRoom.PlayerIds.Count; index++)  // 这里发送消息线程不会修改PlayerInfo，所以可以直接使用
+            for (byte index = 0; index < match2MapGetRoom.PlayerIds.Count; index++)  // 这里发送消息线程不会修改PlayerInfo，所以可以直接使用
             {
                 Match2G_MatchSuccess match2GMatchSuccess = Match2G_MatchSuccess.Create();
                 match2GMatchSuccess.ActorId = map2MatchGetRoom.ActorId;

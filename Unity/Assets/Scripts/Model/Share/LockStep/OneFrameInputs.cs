@@ -5,80 +5,40 @@ namespace ET
 {
     public partial class Room2C_FrameMessage
     {
-        protected bool Equals(Room2C_FrameMessage other)
-        {
-            return Equals(this.Inputs, other.Inputs);
-        }
-
         public void CopyTo(Room2C_FrameMessage to)
         {
-            to.Inputs.Clear();
-            foreach (var kv in this.Inputs)
-            {
-                to.Inputs.Add(kv.Key, kv.Value);
-            }
+            to.Frame = Frame;
+            to.FrameIndex = FrameIndex;
+            to.Commands.Clear();
+            to.Commands.AddRange(Commands);
         }
-
-        public override bool Equals(object obj)
+        
+        public bool Equals(Room2C_FrameMessage other)
         {
-            if (ReferenceEquals(null, obj))
+            if (other is null)
             {
                 return false;
             }
 
-            if (ReferenceEquals(this, obj))
-            {
-                return true;
-            }
-
-            if (obj.GetType() != this.GetType())
+            if (Frame != other.Frame || FrameIndex != other.FrameIndex)
             {
                 return false;
             }
 
-            return Equals((Room2C_FrameMessage) obj);
-        }
-
-        public override int GetHashCode()
-        {
-            return HashCode.Combine(this.Inputs);
-        }
-
-        public static bool operator==(Room2C_FrameMessage a, Room2C_FrameMessage b)
-        {
-            if (a is null || b is null)
-            {
-                if (a is null && b is null)
-                {
-                    return true;
-                }
-                return false;
-            }
-            
-            if (a.Inputs.Count != b.Inputs.Count)
+            if (Commands.Count != other.Commands.Count)
             {
                 return false;
             }
 
-            foreach (var kv in a.Inputs)
+            for (int index = 0; index < Commands.Count; index++)
             {
-                if (!b.Inputs.TryGetValue(kv.Key, out LSInput inputInfo))
-                {
-                    return false;
-                }
-
-                if (kv.Value != inputInfo)
+                if (Commands[index] != other.Commands[index])
                 {
                     return false;
                 }
             }
 
             return true;
-        }
-
-        public static bool operator !=(Room2C_FrameMessage a, Room2C_FrameMessage b)
-        {
-            return !(a == b);
         }
     }
 }

@@ -30,7 +30,7 @@ namespace ET
 			lsUnit.AddComponent<BeHitComponent>();
 			lsUnit.AddComponent<SkillComponent, int[]>(row.Skills);
 			
-			lsUnit.AddComponent<LSInputComponent>();
+			lsUnit.AddComponent<LSCommandsRunComponent>();
 			EventSystem.Instance.Publish(lsWorld, new LSUnitCreate() {LSUnit = lsUnit});
             return lsUnit;
         }

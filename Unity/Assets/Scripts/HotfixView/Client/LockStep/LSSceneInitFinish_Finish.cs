@@ -12,6 +12,8 @@ namespace ET.Client
 
             if (!room.IsReplay)
             {
+                long myId = room.Root().GetComponent<PlayerComponent>().MyId;
+                room.AddComponent<LSCommandsComponent, byte>(room.GetSeatIndex(myId));
                 room.AddComponent<LSOperaComponent>();
                 room.AddComponent<LSClientUpdater>();
             }

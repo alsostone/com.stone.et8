@@ -1,10 +1,10 @@
-using TrueSync;
+using System;
 using UnityEngine;
 
 namespace ET.Client
 {
     [EntitySystemOf(typeof(LSOperaComponent))]
-    [FriendOf(typeof(LSClientUpdater))]
+    [FriendOf(typeof(LSOperaComponent))]
     public static partial class LSOperaComponentSystem
     {
         [EntitySystem]
@@ -15,26 +15,50 @@ namespace ET.Client
         [EntitySystem]
         private static void Update(this LSOperaComponent self)
         {
-            LSClientUpdater lsClientUpdater = self.GetParent<Room>().GetComponent<LSClientUpdater>();
-            TSVector2 v = new TSVector2((FP)Input.GetAxis("Horizontal"), (FP)Input.GetAxis("Vertical"));
-            lsClientUpdater.Input.V = v.normalized;
+            Room room = self.GetParent<Room>();
+            LSCommandsComponent lsCommandsComponent = room.GetComponent<LSCommandsComponent>();
+            
+            Vector2 axis = new Vector2(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical")).normalized;
+            if (axis != self.Axis)
+            {
+                self.Axis = axis;
+                ulong cmd = LSUtils.GenCommandFloat24x2(0, OperateCommandType.Move, axis.x, axis.y);
+                lsCommandsComponent.AddCommand(cmd);
+                self.SendCommandMeesage(room, cmd);
+            }
             
             if (Input.GetKeyDown(KeyCode.J))
             {
-                lsClientUpdater.Input.Button |= LSConstButtonValue.Attack;
+                ulong cmd = LSUtils.GenCommandButton(0, CommandButtonType.Attack);
+                lsCommandsComponent.AddCommand(cmd);
+                self.SendCommandMeesage(room, cmd);
             }
             if (Input.GetKeyDown(KeyCode.K))
             {
-                lsClientUpdater.Input.Button |= LSConstButtonValue.Skill1;
+                ulong cmd = LSUtils.GenCommandButton(0, CommandButtonType.Skill1);
+                lsCommandsComponent.AddCommand(cmd);
+                self.SendCommandMeesage(room, cmd);
             }
             if (Input.GetKeyDown(KeyCode.L))
             {
-                lsClientUpdater.Input.Button |= LSConstButtonValue.Skill2;
+                ulong cmd = LSUtils.GenCommandButton(0, CommandButtonType.Skill2);
+                lsCommandsComponent.AddCommand(cmd);
+                self.SendCommandMeesage(room, cmd);
             }
             if (Input.GetKeyDown(KeyCode.Space))
             {
-                lsClientUpdater.Input.Button |= LSConstButtonValue.Jump;
+                ulong cmd = LSUtils.GenCommandButton(0, CommandButtonType.Jump);
+                lsCommandsComponent.AddCommand(cmd);
+                self.SendCommandMeesage(room, cmd);
             }
+        }
+
+        private static void SendCommandMeesage(this LSOperaComponent self, Room room, ulong command)
+        {
+            C2Room_FrameMessage sendFrameMessage = C2Room_FrameMessage.Create();
+            sendFrameMessage.Frame = room.PredictionFrame + 1;
+            sendFrameMessage.Command = command;
+            room.Root().GetComponent<ClientSenderComponent>().Send(sendFrameMessage);
         }
 
     }

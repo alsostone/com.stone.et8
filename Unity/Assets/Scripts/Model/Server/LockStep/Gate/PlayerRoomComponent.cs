@@ -5,6 +5,6 @@ namespace ET.Server
     public class PlayerRoomComponent: Entity, IAwake
     {
         public ActorId RoomActorId { get; set; }
-        public int RoomSeatIndex { get; set; }
+        public byte RoomSeatIndex { get; set; }
     }
 }

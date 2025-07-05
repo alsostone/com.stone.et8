@@ -22,7 +22,7 @@ namespace ET
             {
                 this.hashs.Add(0);
                 this.frameMessages.Add(Room2C_FrameMessage.Create());
-                MemoryBuffer memoryBuffer = new(10240);
+                MemoryBuffer memoryBuffer = new(204800);
                 memoryBuffer.SetLength(0);
                 memoryBuffer.Seek(0, SeekOrigin.Begin);
                 this.snapshots.Add(memoryBuffer);
@@ -81,7 +81,7 @@ namespace ET
             ++this.MaxFrame;
             
             Room2C_FrameMessage frameMessage = this.GetFrameMessage(this.MaxFrame);
-            frameMessage.Inputs.Clear();
+            frameMessage.Commands.Clear();
         }
 
         public MemoryBuffer Snapshot(int frame)

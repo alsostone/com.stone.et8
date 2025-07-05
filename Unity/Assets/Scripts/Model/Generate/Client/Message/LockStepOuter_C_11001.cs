@@ -84,7 +84,7 @@ namespace ET
         public ActorId ActorId { get; set; }
 
         [MemoryPackOrder(2)]
-        public int SeatIndex { get; set; }
+        public byte SeatIndex { get; set; }
 
         public override void Dispose()
         {
@@ -117,7 +117,7 @@ namespace ET
         /// / 座位索引 不需要客户端赋值
         /// </summary>
         [MemoryPackOrder(0)]
-        public int SeatIndex { get; set; }
+        public byte SeatIndex { get; set; }
 
         public override void Dispose()
         {
@@ -176,7 +176,7 @@ namespace ET
         /// / 座位索引 不需要客户端赋值
         /// </summary>
         [MemoryPackOrder(0)]
-        public int SeatIndex { get; set; }
+        public byte SeatIndex { get; set; }
 
         /// <summary>
         /// 场景加载进度 0~100 100表示加载完成
@@ -319,13 +319,19 @@ namespace ET
         /// / 座位索引 不需要客户端赋值
         /// </summary>
         [MemoryPackOrder(0)]
-        public int SeatIndex { get; set; }
+        public byte SeatIndex { get; set; }
 
+        /// <summary>
+        /// / 帧号 服务器用来判定是否需要丢弃
+        /// </summary>
         [MemoryPackOrder(1)]
         public int Frame { get; set; }
 
+        /// <summary>
+        /// / 操作指令 内含位处理
+        /// </summary>
         [MemoryPackOrder(2)]
-        public LSInput Input { get; set; }
+        public ulong Command { get; set; }
 
         public override void Dispose()
         {
@@ -336,7 +342,7 @@ namespace ET
 
             this.SeatIndex = default;
             this.Frame = default;
-            this.Input = default;
+            this.Command = default;
 
             ObjectPool.Instance.Recycle(this);
         }
@@ -351,9 +357,24 @@ namespace ET
             return ObjectPool.Instance.Fetch(typeof(Room2C_FrameMessage), isFromPool) as Room2C_FrameMessage;
         }
 
-        [MongoDB.Bson.Serialization.Attributes.BsonDictionaryOptions(MongoDB.Bson.Serialization.Options.DictionaryRepresentation.ArrayOfArrays)]
+        /// <summary>
+        /// / 帧号 空帧不下发时不连续
+        /// </summary>
+        [MemoryPackOrder(0)]
+        public int Frame { get; set; }
+
+        /// <summary>
+        /// / 帧序号 必须连续
+        /// </summary>
         [MemoryPackOrder(1)]
-        public Dictionary<int, LSInput> Inputs { get; set; } = new();
+        public int FrameIndex { get; set; }
+
+        /// <summary>
+        /// / 操作指令 内含位处理
+        /// </summary>
+        [MemoryPackOrder(2)]
+        public List<ulong> Commands { get; set; } = new();
+
         public override void Dispose()
         {
             if (!this.IsFromPool)
@@ -361,7 +382,9 @@ namespace ET
                 return;
             }
 
-            this.Inputs.Clear();
+            this.Frame = default;
+            this.FrameIndex = default;
+            this.Commands.Clear();
 
             ObjectPool.Instance.Recycle(this);
         }
@@ -380,7 +403,7 @@ namespace ET
         /// / 座位索引 不需要客户端赋值
         /// </summary>
         [MemoryPackOrder(0)]
-        public int SeatIndex { get; set; }
+        public byte SeatIndex { get; set; }
 
         [MemoryPackOrder(1)]
         public int Frame { get; set; }
@@ -437,7 +460,7 @@ namespace ET
         /// / 座位索引 不需要客户端赋值
         /// </summary>
         [MemoryPackOrder(0)]
-        public int SeatIndex { get; set; }
+        public byte SeatIndex { get; set; }
 
         [MemoryPackOrder(1)]
         public int Frame { get; set; }

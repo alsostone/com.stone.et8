@@ -19,13 +19,27 @@ namespace ET
         public const string LSWroldFolderNameSvr = "/frame_lsworld_server";
     }
     
-    public static class LSConstButtonValue
+    // 操作类型枚举
+    public enum OperateCommandType : byte
     {
-        public const int Jump = 16;
-        public const int Attack = 32;
-        public const int Skill1 = 64;
-        public const int Skill2 = 128;
-        public const int Skill3 = 256;
-        public const int Skill4 = 512;
+        Invalid,        // 无效指令
+        Move,           // 移动
+        DragStart,      // 拖拽开始
+        Drag,           // 拖拽
+        DragEnd,        // 拖拽结束
+        Button,         // 按钮指令
+        Online,         // 上下线指令 服务器生成该指令
+        Gm,             // GM指令 正式服中丢弃该指令
     }
+    
+    public enum CommandButtonType : byte
+    {
+        Jump,       // 跳跃
+        Attack,     // 攻击
+        Skill1,     // 技能1
+        Skill2,     // 技能2
+        Skill3,     // 技能3
+        Skill4,     // 技能4
+    }
+
 }
