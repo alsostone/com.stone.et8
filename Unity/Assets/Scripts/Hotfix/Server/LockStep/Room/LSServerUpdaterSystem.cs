@@ -44,17 +44,12 @@ namespace ET.Server
             
             frameMessage.Frame = frame;
             frameMessage.FrameIndex = frame;
+            
             RoomServerComponent roomServerComponent = room.GetComponent<RoomServerComponent>();
             foreach (RoomPlayer roomPlayer in roomServerComponent.Children.Values)
             {
                 LSCommandsComponent lsCommandsComponent = roomPlayer.GetComponent<LSCommandsComponent>();
-                if (lsCommandsComponent.MoveCommands.Count > 0) {
-                    frameMessage.Commands.Add(lsCommandsComponent.MoveCommands.Dequeue());
-                }
-                frameMessage.Commands.AddRange(lsCommandsComponent.DragCommands);
-                lsCommandsComponent.DragCommands.Clear();
-                frameMessage.Commands.AddRange(lsCommandsComponent.Commands);
-                lsCommandsComponent.Commands.Clear();
+                lsCommandsComponent.AppendToFrameMessage(frame, frameMessage);
             }
             
             return frameMessage;

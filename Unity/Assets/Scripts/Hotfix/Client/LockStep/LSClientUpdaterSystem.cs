@@ -60,14 +60,9 @@ namespace ET.Client
             // 若没有服务器返回的帧数据 组织预测数据
             frameMessage.Frame = frame;
             frameMessage.FrameIndex = frame;
+            
             LSCommandsComponent lsCommandsComponent = room.GetComponent<LSCommandsComponent>();
-            if (lsCommandsComponent.MoveCommands.Count > 0) {
-                frameMessage.Commands.Add(lsCommandsComponent.MoveCommands.Dequeue());
-            }
-            frameMessage.Commands.AddRange(lsCommandsComponent.DragCommands);
-            lsCommandsComponent.DragCommands.Clear();
-            frameMessage.Commands.AddRange(lsCommandsComponent.Commands);
-            lsCommandsComponent.Commands.Clear();
+            lsCommandsComponent.AppendToFrameMessage(frame, frameMessage);
             
             return frameMessage;
         }

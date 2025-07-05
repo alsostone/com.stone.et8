@@ -8,8 +8,8 @@ namespace ET
     {
         public byte SeatIndex { get; set; }
         
-        public Queue<ulong> MoveCommands { get; } = new();
-        public List<ulong> DragCommands { get; } = new();
-        public List<ulong> Commands { get; } = new();
+        public List<Queue<ulong>> FramesCommandsMove { get; set; }
+        public List<List<ulong>> FramesCommandsDrag { get; set; }
+        public List<List<ulong>> FramesCommandsNormal { get; set; }
     }
 }

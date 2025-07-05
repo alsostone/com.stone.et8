@@ -20,7 +20,10 @@ namespace ET.Server
             
             RoomServerComponent roomServerComponent = room.GetComponent<RoomServerComponent>();
             RoomPlayer roomPlayer = roomServerComponent.GetRoomPlayer(message.SeatIndex);
-            roomPlayer.GetComponent<LSCommandsComponent>().AddCommand(message.Command);
+
+            // 晚到的消息放在最近帧数据中 防止因丢操作影响手感
+            int frame = Math.Max(room.AuthorityFrame + 1, message.Frame);
+            roomPlayer.GetComponent<LSCommandsComponent>().AddCommand(frame, message.Command);
 
             await ETTask.CompletedTask;
         }
