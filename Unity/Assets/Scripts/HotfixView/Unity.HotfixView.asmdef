@@ -14,7 +14,8 @@
         "Unity.TextMeshPro",
         "YIUIFramework",
         "com.stone.hud",
-        "DamageNumbersPro"
+        "DamageNumbersPro",
+        "GridBuilder.View"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],

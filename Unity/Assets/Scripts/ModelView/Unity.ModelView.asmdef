@@ -9,7 +9,8 @@
         "Unity.Model",
         "YooAsset",
         "Unity.TextMeshPro",
-        "YIUIFramework"
+        "YIUIFramework",
+        "GridBuilder.View"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],
