@@ -4,6 +4,7 @@ using TrueSync;
 
 namespace ET
 {
+    [LSEntitySystemOf(typeof(LSGridMapComponent))]
     [EntitySystemOf(typeof(LSGridMapComponent))]
     [FriendOf(typeof(LSGridMapComponent))]
     public static partial class LSGridMapComponentSystem
@@ -26,28 +27,24 @@ namespace ET
             self.GridData = MemoryPackSerializer.Deserialize<GridData>(gridBytes);
         }
         
-        public static bool TryTake(this LSGridMapComponent self, PlacementData placementData)
+        [LSEntitySystem]
+        private static void LSUpdate(this LSGridMapComponent self)
         {
-            if (self.GridData.CanTake(placementData))
-            {
-                self.GridData.Take(placementData);
-                self.GridData.ResetFlowField();
-                return true;
-            }
-            return false;
+            // 每帧更新时重置流场 有脏标记
+            self.GridData.ResetFlowField();
         }
         
-        public static bool TryPut(this LSGridMapComponent self, int x, int z, PlacementData placementData)
+        public static GridData GetGridData(this LSGridMapComponent self)
         {
-            if (self.GridData.CanPut(x, z, placementData))
-            {
-                self.GridData.Put(x, z, placementData);
-                self.GridData.ResetFlowField();
-                return true;
-            }
-            return false;
+            return self.GridData;
         }
         
+        public static IndexV2 ConvertToIndex(this LSGridMapComponent self, TSVector2 position)
+        {
+            FieldV2 v2 = new FieldV2(position.x, position.y);
+            return self.GridData.ConvertToIndex(ref v2);
+        }
+
         public static TSVector GetPutPosition(this LSGridMapComponent self, PlacementData placementData)
         {
             int level = self.GridData.GetPointLevelCount(placementData.x, placementData.z, placementData);

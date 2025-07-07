@@ -43,5 +43,10 @@ namespace ET
             self.IsMoving = moving;
             EventSystem.Instance.Publish(self.LSWorld(), new LSUnitMoving() { Id = self.LSOwner().Id, IsMoving = self.IsMoving });
         }
+
+        public static void SetPosition(this TransformComponent self, TSVector position)
+        {
+            self.Position = position;
+        }
     }
 }

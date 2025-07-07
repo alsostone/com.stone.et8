@@ -68,8 +68,10 @@ namespace ET.Client
             GameObject unitGo = UnityEngine.Object.Instantiate(prefab, globalComponent.Unit, true);
 
             LSUnitView lsUnitView = viewComponent.AddChildWithId<LSUnitView, GameObject>(lsUnit.Id, unitGo);
-            lsUnitView.AddComponent<LSViewTransformComponent, Transform, bool>(unitGo.transform, true);
-            lsUnitView.AddComponent<LSViewPlacementComponent>();
+            lsUnitView.AddComponent<LSViewTransformComponent, Transform, bool>(unitGo.transform, false);
+
+            PlacementData placementData = lsUnit.GetComponent<PlacementComponent>().PlacementData;
+            lsUnitView.AddComponent<LSViewPlacementComponent, long, int, int>(placementData.id, placementData.x, placementData.z);
         }
 
         private static void CreateBuildingView(LSUnitViewComponent viewComponent, LSUnit lsUnit)
@@ -87,7 +89,9 @@ namespace ET.Client
             lsUnitView.AddComponent<LSAnimationComponent>();
             lsUnitView.AddComponent<LSViewTransformComponent, Transform, bool>(unitGo.transform, false);
             lsUnitView.AddComponent<LSViewSkillComponent>();
-            lsUnitView.AddComponent<LSViewPlacementComponent>();
+            
+            PlacementData placementData = lsUnit.GetComponent<PlacementComponent>().PlacementData;
+            lsUnitView.AddComponent<LSViewPlacementComponent, long, int, int>(placementData.id, placementData.x, placementData.z);
         }
 
         private static void CreateSoldierView(LSUnitViewComponent viewComponent, LSUnit lsUnit)

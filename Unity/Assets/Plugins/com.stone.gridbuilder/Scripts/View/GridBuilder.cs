@@ -189,6 +189,7 @@ namespace ST.GridBuilder
         {
             if (dragPlacement)
             {
+                dragPlacement.ResetPreviewMaterial();
                 if (dragPlacement.placementData.isNew) {
                     dragPlacement.Remove();
                 } else {

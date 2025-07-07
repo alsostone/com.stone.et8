@@ -11,9 +11,6 @@ namespace ET.Client
 
 		public Transform Transform;
 		
-		public GridMap GridMap;
-		public GridMapIndicator GridMapIndicator;
-
 		public Camera Camera
 		{
 			get

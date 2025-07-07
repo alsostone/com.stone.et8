@@ -40,5 +40,12 @@ namespace ET
         public long Id;
         public bool IsMoving;
     }
+    
+    public struct LSUnitPlaced
+    {
+        public long Id;
+        public int X;
+        public int Z;
+    }
 }
 

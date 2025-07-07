@@ -13,4 +13,22 @@ namespace ET.Client
             await ETTask.CompletedTask;
         }
     }
+    
+    [Event(SceneType.LockStepClient)]
+    public class LSUnitPlacedEvent: AEvent<LSWorld, LSUnitPlaced>
+    {
+        protected override async ETTask Run(LSWorld lsWorld, LSUnitPlaced args)
+        {
+            Room room = lsWorld.GetParent<Room>();
+            LSUnitViewComponent comp = room.GetComponent<LSUnitViewComponent>();
+            if (comp == null)
+                return;
+            var view = comp.GetChild<LSUnitView>(args.Id);
+            LSViewPlacementComponent placementComponent = view.GetComponent<LSViewPlacementComponent>();
+            if (placementComponent == null)
+                return;
+            placementComponent.Placed(args.X, args.Z);
+            await ETTask.CompletedTask;
+        }
+    }
 }

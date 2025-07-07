@@ -10,5 +10,6 @@ namespace ET.Client
 		public Vector3 Position;
 		public Vector3 CurrentVelocity;
 		public bool IsUesViewRotation;
+		public bool Enabled = true;
 	}
 }

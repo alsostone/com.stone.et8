@@ -1,6 +1,4 @@
-using NPBehave;
 using ST.GridBuilder;
-using TrueSync;
 
 namespace ET
 {
@@ -21,9 +19,16 @@ namespace ET
         [EntitySystem]
         private static void Deserialize(this PlacementComponent self)
         {
-            LSGridMapComponent component = self.LSWorld().GetComponent<LSGridMapComponent>();
-            //component.Put(self.PlacementData.x, self.PlacementData.z, self.PlacementData);
+            if (self.PlacementData.id > 0)
+            {
+                LSGridMapComponent component = self.LSWorld().GetComponent<LSGridMapComponent>();
+                component.Put(self.PlacementData.x, self.PlacementData.z, self.PlacementData);
+            }
         }
 
+        public static PlacementData GetPlacementData(this PlacementComponent self)
+        {
+            return self.PlacementData;
+        }
     }
 }

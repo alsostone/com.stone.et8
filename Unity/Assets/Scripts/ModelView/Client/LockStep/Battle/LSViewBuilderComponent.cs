@@ -7,6 +7,7 @@ namespace ET.Client
 	public class LSViewBuilderComponent : Entity, IAwake, IDestroy
 	{
 		public Placement DragPlacement;
+		public EntityRef<LSUnitView> DragUnitView;
 		public Vector3 DragOffset;
 	}
 }

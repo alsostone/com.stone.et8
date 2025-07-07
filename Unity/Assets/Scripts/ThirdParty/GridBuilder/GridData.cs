@@ -141,6 +141,7 @@ namespace ST.GridBuilder
                     cellData.contentTypes.RemoveAt(cellData.contentTypes.Count - 1);
                 }
             }
+            isDirty = true;
         }
 
         public bool CanPut(int x, int z, PlacementData placementData)
@@ -201,6 +202,7 @@ namespace ST.GridBuilder
             placementData.isNew = false;
             placementData.x = x;
             placementData.z = z;
+            isDirty = true;
         }
 
         public bool IsInsideShape(int xOffset, int zOffset, PlacementData placementData)

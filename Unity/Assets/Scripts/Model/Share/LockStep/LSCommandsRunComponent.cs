@@ -10,5 +10,11 @@ namespace ET
     {
         public TSVector2 MoveAxis { get; set; }
         public List<ulong> Commands { get; set; } = new ();
+
+        public long PlacementTargetId;
+        public int PlacementRotation;
+        public EUnitType PlacementType;
+        public int PlacementTableId;
+        public int PlacementLevel;
     }
 }

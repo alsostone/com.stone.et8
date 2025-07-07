@@ -12,8 +12,6 @@ namespace ET.Client
 		{
 			self.Camera = Camera.main;
 			self.Camera.transform.rotation = Quaternion.Euler(new Vector3(20, 0, 0));
-			self.GridMap = UnityEngine.Object.FindObjectOfType<GridMap>();
-			self.GridMapIndicator = UnityEngine.Object.FindObjectOfType<GridMapIndicator>();
 		}
 		
 		[EntitySystem]
@@ -46,14 +44,5 @@ namespace ET.Client
 			self.Transform.position = new Vector3(pos.x, pos.y + 3, pos.z - 5);
 		}
 		
-		public static GridMap GetGridMap(this LSCameraComponent self)
-		{
-			return self.GridMap;
-		}
-		
-		public static GridMapIndicator GetGridMapIndicator(this LSCameraComponent self)
-		{
-			return self.GridMapIndicator;
-		}
 	}
 }

@@ -18,27 +18,24 @@ namespace ET.Client
         [EntitySystem]
         private static void Destroy(this LSViewBuilderComponent self)
         {
-            if (self.DragPlacement != null)
-            {
-                self.DragPlacement.Remove();
-                self.DragPlacement = null;
-            }
+            self.OnPlacementCancel();
         }
-
+        
         public static void OnPlacementDragStart(this LSViewBuilderComponent self, long targetId)
         {
             if (!self.DragPlacement)
             {
                 LSUnitViewComponent unitViewComponent = self.Room().GetComponent<LSUnitViewComponent>();
-                LSUnitView unitView = unitViewComponent.GetChild<LSUnitView>(targetId);
-                Placement placement = unitView?.GetComponent<LSViewPlacementComponent>()?.Placement;
+                LSUnitView lsUnitView = unitViewComponent.GetChild<LSUnitView>(targetId);
+                Placement placement = lsUnitView?.GetComponent<LSViewPlacementComponent>()?.Placement;
                 if (placement == null)
                     return;
                 
-                LSCameraComponent lsCameraComponent = self.Room().GetComponent<LSCameraComponent>();
-                GridMap gridMap = lsCameraComponent.GetGridMap();
-                if (gridMap.gridData.CanTake(placement.placementData))
+                LSViewGridMapComponent gridMapComponent = self.Room().GetComponent<LSViewGridMapComponent>();
+                if (gridMapComponent.GridMap.gridData.CanTake(placement.placementData))
                 {
+                    self.DragUnitView = lsUnitView;
+                    lsUnitView.GetComponent<LSViewTransformComponent>().SetTransformEnabled(false);
                     self.DragPlacement = placement;
                     self.DragPlacement.SetPreviewMaterial();
                     self.DragOffset = new Vector3(0, float.MaxValue, 0);
@@ -52,9 +49,8 @@ namespace ET.Client
         {
             if (self.DragPlacement)
             {
-                LSCameraComponent lsCameraComponent = self.Room().GetComponent<LSCameraComponent>();
-                GridMap gridMap = lsCameraComponent.GetGridMap();
-                GridMapIndicator gridMapIndicator = lsCameraComponent.GetGridMapIndicator();
+                LSViewGridMapComponent gridMapComponent = self.Room().GetComponent<LSViewGridMapComponent>();
+                GridMap gridMap = gridMapComponent.GridMap;
                 
                 Vector3 pos = new(position.x.AsFloat(), 0, position.y.AsFloat());
                 if (Math.Abs(self.DragOffset.y - float.MaxValue) < float.Epsilon) {
@@ -65,8 +61,8 @@ namespace ET.Client
                 int targetLevel = gridMap.gridData.GetShapeLevelCount(index.x, index.z, self.DragPlacement.placementData);
                 self.DragPlacement.SetMovePosition(gridMap.GetLevelPosition(index.x, index.z, targetLevel));
                 
-                if (gridMapIndicator) {
-                    gridMapIndicator.GenerateIndicator(index.x, index.z, targetLevel, self.DragPlacement.placementData);
+                if (gridMapComponent.GridMapIndicator) {
+                    gridMapComponent.GridMapIndicator.GenerateIndicator(index.x, index.z, targetLevel, self.DragPlacement.placementData);
                 }
             }
         }
@@ -75,56 +71,18 @@ namespace ET.Client
         {
             if (self.DragPlacement)
             {
-                LSCameraComponent lsCameraComponent = self.Room().GetComponent<LSCameraComponent>();
-                GridMap gridMap = lsCameraComponent.GetGridMap();
-                GridMapIndicator gridMapIndicator = lsCameraComponent.GetGridMapIndicator();
-                
-                Vector3 pos = new(position.x.AsFloat(), 0, position.y.AsFloat());
-                IndexV2 index = gridMap.ConvertToIndex(pos + self.DragOffset);
-                if (gridMap.gridData.CanPut(index.x, index.z, self.DragPlacement.placementData))
-                {
-                    if (self.DragPlacement.placementData.isNew)
-                    {
-                        gridMap.gridData.Put(index.x, index.z, self.DragPlacement.placementData);
-                        gridMap.gridData.ResetFlowField();
-                    }
-                    else if (index.x != self.DragPlacement.placementData.x || index.z != self.DragPlacement.placementData.z)
-                    {
-                        gridMap.gridData.Take(self.DragPlacement.placementData);
-                        gridMap.gridData.Put(index.x, index.z, self.DragPlacement.placementData);
-                        gridMap.gridData.ResetFlowField();
-                    }
-                    self.DragPlacement.SetPutPosition(gridMap.GetPutPosition(self.DragPlacement.placementData));
-                }
-                else {
-                    if (self.DragPlacement.placementData.isNew) {
-                        self.DragPlacement.Remove();
-                    } else {
-                        self.DragPlacement.SetPutPosition(gridMap.GetPutPosition(self.DragPlacement.placementData));
-                    }
-                }
-
-                self.DragPlacement.ResetPreviewMaterial();
-                self.DragPlacement = null;
-                
-                if (gridMapIndicator) {
-                    gridMapIndicator.ClearIndicator();
+                // 这里恢复原状即可 放置结果由逻辑层处理并通知给表现层
+                self.OnPlacementCancel();
+                LSViewGridMapComponent gridMapComponent = self.Room().GetComponent<LSViewGridMapComponent>();
+                if (gridMapComponent.GridMapIndicator) {
+                    gridMapComponent.GridMapIndicator.ClearIndicator();
                 }
             }
         }
 
         public static void OnPlacementStart(this LSViewBuilderComponent self, EUnitType type, int tableId, int level)
         {
-            if (self.DragPlacement)
-            {
-                if (self.DragPlacement.placementData.isNew) {
-                    self.DragPlacement.Remove();
-                } else {
-                    GridMap gridMap = self.Room().GetComponent<LSCameraComponent>().GetGridMap();
-                    self.DragPlacement.SetPutPosition(gridMap.GetPutPosition(self.DragPlacement.placementData));
-                }
-            }
-
+            self.OnPlacementCancel();
             int targetModel = 0;
             switch (type)
             {
@@ -145,9 +103,12 @@ namespace ET.Client
             GlobalComponent globalComponent = root.GetComponent<GlobalComponent>();
             GameObject go = UnityEngine.Object.Instantiate(prefab, globalComponent.Unit, true);
             Placement placement = go.GetComponent<Placement>();
-            if (placement == null) {
+            if (placement == null)
+            {
                 UnityEngine.Object.DestroyImmediate(go);
-            } else {
+            }
+            else
+            {
                 self.DragPlacement = placement;
                 self.DragPlacement.SetPreviewMaterial();
                 self.DragOffset = Vector3.zero;
@@ -168,13 +129,15 @@ namespace ET.Client
         {
             if (self.DragPlacement)
             {
+                self.DragPlacement.ResetPreviewMaterial();
                 if (self.DragPlacement.placementData.isNew) {
                     self.DragPlacement.Remove();
                 } else {
-                    GridMap gridMap = self.Room().GetComponent<LSCameraComponent>().GetGridMap();
-                    self.DragPlacement.SetPutPosition(gridMap.GetPutPosition(self.DragPlacement.placementData));
+                    LSUnitView lsUnitView = (LSUnitView)self.DragUnitView;
+                    lsUnitView?.GetComponent<LSViewTransformComponent>().SetTransformEnabled(true);
                 }
                 self.DragPlacement = null;
+                self.DragUnitView = null;
             }
         }
 

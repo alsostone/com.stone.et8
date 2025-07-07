@@ -7,6 +7,7 @@ namespace ST.GridBuilder
 {
     public partial class GridData
     {
+        [MemoryPackInclude] private bool isDirty = false;
         [MemoryPackIgnore] private Queue<CellData> visit = new Queue<CellData>();
         [MemoryPackInclude] private IndexV2 destination = new IndexV2(-1, -1);
 
@@ -14,17 +15,18 @@ namespace ST.GridBuilder
         {
             IndexV2 indexCurrent = ConvertToIndex(ref position);
             destination = GetValidDestination(indexCurrent);
-            ResetFlowField();
+            isDirty = true;
         }
         
         public void ResetFlowField()
         {
-            if (destination.x < 0 || destination.x >= xLength || destination.z < 0 || destination.z >= zLength) {
+            if (!isDirty || destination.x < 0 || destination.x >= xLength || destination.z < 0 || destination.z >= zLength) {
                 return;
             }
             ClearDijkstraData();
             GenerateDijkstraData(destination);
             GenerateFlowField();
+            isDirty = false;
         }
         
         public FieldV2 GetFieldVector(FieldV2 position)

@@ -9,6 +9,7 @@ namespace ET.Client
             
             room.AddComponent<LSUnitViewComponent>();
             room.AddComponent<LSCameraComponent>();
+            room.AddComponent<LSViewGridMapComponent>();
 
             if (!room.IsReplay)
             {

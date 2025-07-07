@@ -7,6 +7,6 @@ namespace ET
     [MemoryPackable]
     public partial class PlacementComponent : LSEntity, IAwake<PlacedLayer, PlacedLayer, bool[]>, IDeserialize, ISerializeToEntity
     {
-        public PlacementData PlacementData;
+        public PlacementData PlacementData { get; set; }
     }
 }

@@ -6,7 +6,7 @@ namespace ET
 {
 	[ComponentOf(typeof(LSWorld))]
 	[MemoryPackable]
-	public partial class LSGridMapComponent: LSEntity, IAwake<string>, IDeserialize, ISerializeToEntity
+	public partial class LSGridMapComponent: LSEntity, IAwake<string>, ILSUpdate, IDeserialize, ISerializeToEntity
 	{
 		public string GridName;
 		

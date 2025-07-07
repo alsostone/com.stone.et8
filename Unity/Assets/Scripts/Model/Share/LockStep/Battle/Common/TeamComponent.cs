@@ -1,5 +1,4 @@
 ﻿using MemoryPack;
-using MongoDB.Bson.Serialization.Attributes;
 
 namespace ET
 {
@@ -7,6 +6,6 @@ namespace ET
     [MemoryPackable]
     public partial class TeamComponent : LSEntity, IAwake<TeamType>, ISerializeToEntity
     {
-        public TeamType Type;
+        public TeamType Type { get; set; }
     }
 }

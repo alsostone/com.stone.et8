@@ -67,12 +67,20 @@ namespace ET
         
         public static LSUnit CreateBlock(LSWorld lsWorld, int tableId, TSVector position, TSQuaternion rotation, TeamType teamType)
 		{
+	        LSUnit lsUnit = CreateBlock(lsWorld, tableId, teamType);
+	        lsUnit.AddComponent<TransformComponent, TSVector, TSQuaternion>(position, rotation);
+	        
+	        EventSystem.Instance.Publish(lsWorld, new LSUnitCreate() {LSUnit = lsUnit});
+	        return lsUnit;
+		}
+        
+        public static LSUnit CreateBlock(LSWorld lsWorld, int tableId, TeamType teamType)
+        {
 	        TbBlockRow row = TbBlock.Instance.Get(tableId);
 	        LSUnitComponent lsUnitComponent = lsWorld.GetComponent<LSUnitComponent>();
 	        LSUnit lsUnit = lsUnitComponent.AddChild<LSUnit>();
 	        lsUnit.Active = true;
 
-	        lsUnit.AddComponent<TransformComponent, TSVector, TSQuaternion>(position, rotation);
 	        lsUnit.AddComponent<TypeComponent, EUnitType>(EUnitType.Block);
 	        lsUnit.AddComponent<FlagComponent>();
 	        lsUnit.AddComponent<TeamComponent, TeamType>(teamType);
@@ -88,19 +96,25 @@ namespace ET
 	        lsUnit.AddComponent<DeathComponent, bool>(true);
 	        lsUnit.AddComponent<BuffComponent>();
 	        lsUnit.AddComponent<BeHitComponent>();
+	        return lsUnit;
+        }
+        
+        public static LSUnit CreateBuilding(LSWorld lsWorld, int tableId, TSVector position, TSQuaternion rotation, TeamType teamType)
+        {
+	        LSUnit lsUnit = CreateBuilding(lsWorld, tableId, teamType);
+	        lsUnit.AddComponent<TransformComponent, TSVector, TSQuaternion>(position, rotation);
 	        
 	        EventSystem.Instance.Publish(lsWorld, new LSUnitCreate() {LSUnit = lsUnit});
 	        return lsUnit;
-		}
+        }
         
-        public static LSUnit CreateBuilding(LSWorld lsWorld, int tableId, TSVector position, TSQuaternion rotation, TeamType teamType)
+        public static LSUnit CreateBuilding(LSWorld lsWorld, int tableId, TeamType teamType)
         {
 	        TbBuildingRow row = TbBuilding.Instance.Get(tableId, 1);
 	        LSUnitComponent lsUnitComponent = lsWorld.GetComponent<LSUnitComponent>();
 	        LSUnit lsUnit = lsUnitComponent.AddChild<LSUnit>();
 	        lsUnit.Active = true;
 
-	        lsUnit.AddComponent<TransformComponent, TSVector, TSQuaternion>(position, rotation);
 	        lsUnit.AddComponent<TypeComponent, EUnitType>(EUnitType.Building);
 	        lsUnit.AddComponent<FlagComponent>();
 	        lsUnit.AddComponent<TeamComponent, TeamType>(teamType);
@@ -118,8 +132,6 @@ namespace ET
 	        lsUnit.AddComponent<BeHitComponent>();
 	        lsUnit.AddComponent<SkillComponent, int[]>(row.Skills);
 	        lsUnit.AddComponent<AIRootComponent, Node>(new Sequence(new ActionAttack(), new WaitSecond(FP.Half)));
-			
-	        EventSystem.Instance.Publish(lsWorld, new LSUnitCreate() {LSUnit = lsUnit});
 	        return lsUnit;
         }
         

@@ -25,6 +25,8 @@ namespace ET.Client
         [EntitySystem]
         private static void Update(this LSViewTransformComponent self)
         {
+            if (!self.Enabled) { return; }
+            
             LSUnit unit = self.LSViewOwner().GetUnit();
             
             TransformComponent transformComponent = unit.GetComponent<TransformComponent>();
@@ -55,11 +57,17 @@ namespace ET.Client
         
         private static void ResetTransfrom(this LSViewTransformComponent self)
         {
+            if (!self.Enabled) { return; }
+            
             LSUnit unit = self.LSViewOwner().GetUnit();
             TransformComponent transformComponent = unit.GetComponent<TransformComponent>();
             self.Transform.position = transformComponent.Position.ToVector();
             self.Transform.rotation = transformComponent.Rotation.ToQuaternion();
         }
         
+        public static void SetTransformEnabled(this LSViewTransformComponent self, bool enabled)
+        {
+            self.Enabled = enabled;
+        }
     }
 }
