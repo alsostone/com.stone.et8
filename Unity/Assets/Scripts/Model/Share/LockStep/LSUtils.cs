@@ -90,6 +90,17 @@ namespace ET
             return command;
         }
         
+        /// 特别注意：对于一个long类型的参数，将其保留48位
+        /// 意为着原long取值范围需在-281474976710656 ~ 281474976710655 之间
+        public static ulong GenCommandLong48(byte seatIndex, OperateCommandType type, long param)
+        {
+            ulong command = 0;
+            command |= (ulong)seatIndex << 56; // 前8位存储座位索引
+            command |= (ulong)type << 48; // 接下来的8位存储操作类型
+            command |= (ulong)(param & 0xFFFFFFFFFFFF); // 后48位存储参数
+            return command;
+        }
+        
         // 特别注意：对于2个float类型的参数，将其乘以1000并转换为整数再保留24位
         // 意为着原float取值范围需在-8388.608f ~ 8388.607f 之间
         public static TSVector2 ParseCommandFloat24x2(ulong command)
@@ -99,6 +110,15 @@ namespace ET
             i1 = (i1 >> 23) == 1 ? i1 | 0xFF000000 : i1;
             i2 = (i2 >> 23) == 1 ? i2 | 0xFF000000 : i2;
             return new TSVector2(i1, i2) / 1000;
+        }
+        
+        /// 特别注意：对于一个long类型的参数，将其保留48位
+        /// 意为着原long取值范围需在-281474976710656 ~ 281474976710655 之间
+        public static long ParseCommandLong48(ulong command)
+        {
+            ulong param = (command & 0xFFFFFFFFFFFF);
+            if ((param >> 47) == 1) param |= 0xFFFF000000000000;
+            return (long)param;
         }
         
         // 特别注意：对于2个int类型的参数，将其保留24位

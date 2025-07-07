@@ -181,7 +181,6 @@ namespace ST.GridBuilder
                 }
             }
             if (placement) {
-                placement.Reset();
                 dragPlacement = placement;
                 dragPlacement.SetPreviewMaterial();
                 isNewBuilding = true;

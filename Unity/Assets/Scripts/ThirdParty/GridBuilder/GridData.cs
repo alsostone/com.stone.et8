@@ -198,6 +198,7 @@ namespace ST.GridBuilder
                 }
             }
 
+            placementData.isNew = false;
             placementData.x = x;
             placementData.z = z;
         }

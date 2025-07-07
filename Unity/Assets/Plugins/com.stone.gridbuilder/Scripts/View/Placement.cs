@@ -57,13 +57,6 @@ namespace ST.GridBuilder
             }
         }
         
-        public void Reset()
-        {
-            placementData.id = 0;
-            placementData.x = 0;
-            placementData.z = 0;
-        }
-        
         public Vector3 GetPosition()
         {
             return transform.position;

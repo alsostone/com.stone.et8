@@ -1,8 +1,10 @@
+using ST.GridBuilder;
 using UnityEngine;
 
 namespace ET.Client
 {
     [FriendOf(typeof(TypeComponent))]
+    [FriendOf(typeof(LSOperaDragComponent))]
     public static class LSUnitViewFactory
     {
         public static void CreateLSUnitView(LSUnitViewComponent viewComponent, LSUnit lsUnit)
@@ -34,14 +36,14 @@ namespace ET.Client
         private static void CreateHeroView(LSUnitViewComponent viewComponent, LSUnit lsUnit)
         {
             Scene root = viewComponent.Root();
-            
+
             HeroComponent heroComponent = lsUnit.GetComponent<HeroComponent>();
             TbResourceRow resourceRow = TbResource.Instance.Get(heroComponent.TbSkinRow.Model);
             GameObject prefab = root.GetComponent<ResourcesLoaderComponent>().LoadAssetSync<GameObject>(resourceRow.Url);
 
             GlobalComponent globalComponent = root.GetComponent<GlobalComponent>();
             GameObject unitGo = UnityEngine.Object.Instantiate(prefab, globalComponent.Unit, true);
-            
+
             LSUnitView lsUnitView = viewComponent.AddChildWithId<LSUnitView, GameObject>(lsUnit.Id, unitGo);
             lsUnitView.AddComponent<LSAnimationComponent>();
             lsUnitView.AddComponent<LSViewTransformComponent, Transform, bool>(unitGo.transform, false);
@@ -51,51 +53,54 @@ namespace ET.Client
             float hp = propComponent.Get(NumericType.Hp).AsFloat();
             float hpMax = propComponent.Get(NumericType.MaxHp).AsFloat();
             lsUnitView.AddComponent<LSViewHudComponent, Vector3, Transform, float, float>(Vector3.up * 1.75f, unitGo.transform, hp, hpMax);
+            lsUnitView.AddComponent<LSGridBuilderComponent>();
         }
-        
+
         private static void CreateBlockView(LSUnitViewComponent viewComponent, LSUnit lsUnit)
         {
             Scene root = viewComponent.Root();
-            
+
             BlockComponent blockComponent = lsUnit.GetComponent<BlockComponent>();
             TbResourceRow resourceRow = TbResource.Instance.Get(blockComponent.TbRow.Model);
             GameObject prefab = root.GetComponent<ResourcesLoaderComponent>().LoadAssetSync<GameObject>(resourceRow.Url);
 
             GlobalComponent globalComponent = root.GetComponent<GlobalComponent>();
             GameObject unitGo = UnityEngine.Object.Instantiate(prefab, globalComponent.Unit, true);
-            
+
             LSUnitView lsUnitView = viewComponent.AddChildWithId<LSUnitView, GameObject>(lsUnit.Id, unitGo);
             lsUnitView.AddComponent<LSViewTransformComponent, Transform, bool>(unitGo.transform, true);
+            lsUnitView.AddComponent<LSViewPlacementComponent>();
         }
-        
+
         private static void CreateBuildingView(LSUnitViewComponent viewComponent, LSUnit lsUnit)
         {
             Scene root = viewComponent.Root();
-            
+
             BuildingComponent buildingComponent = lsUnit.GetComponent<BuildingComponent>();
             TbResourceRow resourceRow = TbResource.Instance.Get(buildingComponent.TbRow.Model);
             GameObject prefab = root.GetComponent<ResourcesLoaderComponent>().LoadAssetSync<GameObject>(resourceRow.Url);
 
             GlobalComponent globalComponent = root.GetComponent<GlobalComponent>();
             GameObject unitGo = UnityEngine.Object.Instantiate(prefab, globalComponent.Unit, true);
-            
+
             LSUnitView lsUnitView = viewComponent.AddChildWithId<LSUnitView, GameObject>(lsUnit.Id, unitGo);
             lsUnitView.AddComponent<LSAnimationComponent>();
             lsUnitView.AddComponent<LSViewTransformComponent, Transform, bool>(unitGo.transform, false);
             lsUnitView.AddComponent<LSViewSkillComponent>();
+            lsUnitView.AddComponent<LSViewPlacementComponent>();
         }
-        
+
         private static void CreateSoldierView(LSUnitViewComponent viewComponent, LSUnit lsUnit)
         {
             Scene root = viewComponent.Root();
-            
+
             SoldierComponent soldierComponent = lsUnit.GetComponent<SoldierComponent>();
             TbResourceRow resourceRow = TbResource.Instance.Get(soldierComponent.TbRow.Model);
             GameObject prefab = root.GetComponent<ResourcesLoaderComponent>().LoadAssetSync<GameObject>(resourceRow.Url);
 
             GlobalComponent globalComponent = root.GetComponent<GlobalComponent>();
             GameObject unitGo = UnityEngine.Object.Instantiate(prefab, globalComponent.Unit, true);
-            
+
             LSUnitView lsUnitView = viewComponent.AddChildWithId<LSUnitView, GameObject>(lsUnit.Id, unitGo);
             lsUnitView.AddComponent<LSAnimationComponent>();
             lsUnitView.AddComponent<LSViewTransformComponent, Transform, bool>(unitGo.transform, false);
@@ -106,22 +111,22 @@ namespace ET.Client
             float hpMax = propComponent.Get(NumericType.MaxHp).AsFloat();
             lsUnitView.AddComponent<LSViewHudComponent, Vector3, Transform, float, float>(Vector3.up * 1.75f, unitGo.transform, hp, hpMax);
         }
-        
+
         private static void CreateDropView(LSUnitViewComponent viewComponent, LSUnit lsUnit)
         {
             Scene root = viewComponent.Root();
-            
+
             DropComponent dropComponent = lsUnit.GetComponent<DropComponent>();
             TbResourceRow resourceRow = TbResource.Instance.Get(dropComponent.TbRow.Model);
             GameObject prefab = root.GetComponent<ResourcesLoaderComponent>().LoadAssetSync<GameObject>(resourceRow.Url);
 
             GlobalComponent globalComponent = root.GetComponent<GlobalComponent>();
             GameObject unitGo = UnityEngine.Object.Instantiate(prefab, globalComponent.Unit, true);
-            
+
             LSUnitView lsUnitView = viewComponent.AddChildWithId<LSUnitView, GameObject>(lsUnit.Id, unitGo);
             lsUnitView.AddComponent<LSViewTransformComponent, Transform, bool>(unitGo.transform, true);
         }
-        
+
         private static void CreateBulletView(LSUnitViewComponent viewComponent, LSUnit lsUnit)
         {
             Scene root = viewComponent.Root();
@@ -133,7 +138,7 @@ namespace ET.Client
 
             GlobalComponent globalComponent = root.GetComponent<GlobalComponent>();
             GameObject unitGo = UnityEngine.Object.Instantiate(prefab, globalComponent.Unit, true);
-            
+
             LSUnitView lsUnitView = viewComponent.AddChildWithId<LSUnitView, GameObject>(lsUnit.Id, unitGo);
             lsUnitView.AddComponent<LSViewTransformComponent, Transform, bool>(unitGo.transform, true);
         }

@@ -29,10 +29,12 @@ namespace ST.GridBuilder
         [MemoryPackInclude] public int z;
         [MemoryPackInclude] public int rotation;
         [MemoryPackInclude] public bool[] points;
+        [MemoryPackInclude] public bool isNew;
 
         public PlacementData()
         {
             points = new bool[width * height];
+            isNew = true;
         }
         
         [MemoryPackConstructor]

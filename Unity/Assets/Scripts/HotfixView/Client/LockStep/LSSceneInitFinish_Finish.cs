@@ -15,7 +15,7 @@ namespace ET.Client
                 long myId = room.Root().GetComponent<PlayerComponent>().MyId;
                 room.AddComponent<LSCommandsComponent, byte>(room.GetSeatIndex(myId));
                 room.AddComponent<LSOperaComponent>();
-                room.AddComponent<LSGridBuilderComponent>();
+                room.AddComponent<LSOperaDragComponent>();
                 room.AddComponent<LSClientUpdater>();
             }
             else

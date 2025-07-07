@@ -46,26 +46,26 @@ namespace ET
                     commands.Enqueue(command);
                     break;
                 }
-                case OperateCommandType.DragStart:
+                case OperateCommandType.PlacementDragStart:
                 {
                     // 指令DragStart新来时，移除缓存的DragStart和Drag
                     List<ulong> commands = self.FramesCommandsDrag[index];
                     for (int i = commands.Count - 1; i >= 0; i++) {
                         OperateCommandType cmdType = (OperateCommandType)((commands[i] >> 48) & 0xFF);
-                        if (cmdType == OperateCommandType.DragStart || cmdType == OperateCommandType.Drag)
+                        if (cmdType == OperateCommandType.PlacementDragStart || cmdType == OperateCommandType.PlacementDrag)
                             commands.RemoveAt(i);
                     }
                     commands.Add(command);
                     break;
                 }
-                case OperateCommandType.Drag:
-                case OperateCommandType.DragEnd:
+                case OperateCommandType.PlacementDrag:
+                case OperateCommandType.PlacementDragEnd:
                 {
                     // 指令Drag和DragEnd新来时，移除缓存的Drag
                     List<ulong> commands = self.FramesCommandsDrag[index];
-                    for (int i = commands.Count - 1; i >= 0; i++) {
+                    for (int i = commands.Count - 1; i >= 0; i--) {
                         OperateCommandType cmdType = (OperateCommandType)((commands[i] >> 48) & 0xFF);
-                        if (cmdType == OperateCommandType.Drag)
+                        if (cmdType == OperateCommandType.PlacementDrag)
                             commands.RemoveAt(i);
                     }
                     commands.Add(command);

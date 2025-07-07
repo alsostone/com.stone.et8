@@ -12,8 +12,6 @@ namespace ET.Client
             if (comp == null)
                 return;
             var view = comp.GetChild<LSUnitView>(args.Id);
-            if (view == null) return;   // 创建是异步的 可能未完毕
-            
             var transformComponent = view.GetComponent<LSViewTransformComponent>();
             var position = transformComponent.Transform.position + Vector3.up;
             switch (args.Type)
