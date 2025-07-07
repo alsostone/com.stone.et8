@@ -85,9 +85,9 @@ namespace ST.GridBuilder
         
         public void DoShake()
         {
-            BuildingShake shake = GetComponent<BuildingShake>();
+            GameObjectShake shake = GetComponent<GameObjectShake>();
             if (shake == null) {
-                shake = gameObject.AddComponent<BuildingShake>();
+                shake = gameObject.AddComponent<GameObjectShake>();
             }
             shake.StartShake(new Vector3(1, 0, 1));
         }

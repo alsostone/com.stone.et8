@@ -8,7 +8,7 @@ public enum ShakeType
     Scale       // 缩放震动
 }
 
-public class BuildingShake : MonoBehaviour
+public class GameObjectShake : MonoBehaviour
 {
     [Header("基础设置")]
     [SerializeField] private ShakeType shakeType = ShakeType.Position;

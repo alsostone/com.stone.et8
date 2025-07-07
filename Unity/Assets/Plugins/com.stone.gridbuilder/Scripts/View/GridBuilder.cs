@@ -9,8 +9,7 @@ namespace ST.GridBuilder
         [SerializeField] public GridMap gridMap;
         [SerializeField] public GridMapIndicator gridMapIndicator;
         [SerializeField] public float raycastDistance = 1000.0f;
-
-        private bool isNewBuilding;
+        
         private Placement dragPlacement;
         private Vector3 dragOffset;
         private int dragFingerId = -1;
@@ -72,21 +71,21 @@ namespace ST.GridBuilder
             {
                 if (RaycastTarget(touchPosition, out GameObject target))
                 {
-                    Placement buiding = target.GetComponent<Placement>();
-                    if (!buiding) {
+                    Placement placement = target.GetComponent<Placement>();
+                    if (!placement) {
                         return false;
                     }
 
-                    Vector3 position = buiding.GetPosition();
-                    if (gridMap.gridData.CanTake(buiding.placementData))
+                    Vector3 position = placement.GetPosition();
+                    if (gridMap.gridData.CanTake(placement.placementData))
                     {
-                        dragPlacement = buiding;
+                        dragPlacement = placement;
                         dragPlacement.SetPreviewMaterial();
                         RaycastTerrain(touchPosition, out Vector3 pos);
                         dragOffset = position - pos;
                         return true;
                     }
-                    buiding.DoShake();
+                    placement.DoShake();
                 }
             }
             return false;
@@ -118,7 +117,7 @@ namespace ST.GridBuilder
                     IndexV2 index = gridMap.ConvertToIndex(pos + dragOffset);
                     if (gridMap.gridData.CanPut(index.x, index.z, dragPlacement.placementData))
                     {
-                        if (isNewBuilding)
+                        if (dragPlacement.placementData.isNew)
                         {
                             dragPlacement.placementData.id = gridMap.gridData.GetNextGuid();
                             gridMap.gridData.Put(index.x, index.z, dragPlacement.placementData);
@@ -133,21 +132,20 @@ namespace ST.GridBuilder
                         dragPlacement.SetPutPosition(gridMap.GetPutPosition(dragPlacement.placementData));
                     }
                     else {
-                        if (isNewBuilding) {
+                        if (dragPlacement.placementData.isNew) {
                             dragPlacement.Remove();
                         } else {
                             dragPlacement.SetPutPosition(gridMap.GetPutPosition(dragPlacement.placementData));
                         }
                     }
                 } else {
-                    if (isNewBuilding) {
+                    if (dragPlacement.placementData.isNew) {
                         dragPlacement.Remove();
                     } else {
                         dragPlacement.SetPutPosition(gridMap.GetPutPosition(dragPlacement.placementData));
                     }
                 }
                 dragPlacement = null;
-                isNewBuilding = false;
                 dragOffset = Vector3.zero;
                 if (gridMapIndicator) {
                     gridMapIndicator.ClearIndicator();
@@ -155,26 +153,11 @@ namespace ST.GridBuilder
             }
         }
         
-        public void ClearPlacementObject()
-        {
-            if (dragPlacement)
-            {
-                if (isNewBuilding) {
-                    dragPlacement.Remove();
-                } else {
-                    dragPlacement.SetPutPosition(gridMap.GetPutPosition(dragPlacement.placementData));
-                }
-                dragPlacement = null;
-                isNewBuilding = false;
-                dragOffset = Vector3.zero;
-            }
-        }
-        
         public void SetPlacementObject(Placement placement)
         {
             if (dragPlacement)
             {
-                if (isNewBuilding) {
+                if (dragPlacement.placementData.isNew) {
                     dragPlacement.Remove();
                 } else {
                     dragPlacement.SetPutPosition(gridMap.GetPutPosition(dragPlacement.placementData));
@@ -183,31 +166,44 @@ namespace ST.GridBuilder
             if (placement) {
                 dragPlacement = placement;
                 dragPlacement.SetPreviewMaterial();
-                isNewBuilding = true;
                 dragOffset = Vector3.zero;
             }
         }
 
-        public void RotationPlacementBuilding()
+        public void RotatePlacementObject()
         {
             if (dragPlacement)
             {
-                if (isNewBuilding)
+                if (dragPlacement.placementData.isNew)
                 {
                     dragPlacement.Rotation(1);
                 }
                 else
                 {
-                    Debug.LogWarning("Cannot rotate a building that is already placed.");
+                    Debug.LogWarning("Cannot rotate a placement that is already placed.");
                 }
             }
         }
         
+        public void ClearPlacementObject()
+        {
+            if (dragPlacement)
+            {
+                if (dragPlacement.placementData.isNew) {
+                    dragPlacement.Remove();
+                } else {
+                    dragPlacement.SetPutPosition(gridMap.GetPutPosition(dragPlacement.placementData));
+                }
+                dragPlacement = null;
+                dragOffset = Vector3.zero;
+            }
+        }
+
         public bool RaycastTerrain(Vector3 position, out Vector3 pos)
         {
             pos = default;
             
-            if (rayCamera == null || gridMap == null) {
+            if (rayCamera == null) {
                 return false;
             }
 

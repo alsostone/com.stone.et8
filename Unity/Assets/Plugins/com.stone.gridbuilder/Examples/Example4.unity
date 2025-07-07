@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.1802516, g: 0.22567071, b: 0.30687967, a: 1}
+  m_IndirectSpecularColor: {r: 0.18028352, g: 0.22571376, b: 0.30692244, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -104,7 +104,7 @@ NavMeshSettings:
   serializedVersion: 2
   m_ObjectHideFlags: 0
   m_BuildSettings:
-    serializedVersion: 3
+    serializedVersion: 2
     agentTypeID: 0
     agentRadius: 0.5
     agentHeight: 2
@@ -117,7 +117,7 @@ NavMeshSettings:
     cellSize: 0.16666667
     manualTileSize: 0
     tileSize: 256
-    buildHeightMesh: 0
+    accuratePlacement: 0
     maxJobWorkers: 0
     preserveTilesOutsideBounds: 0
     debug:
@@ -212,20 +212,19 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 46851956}
-  serializedVersion: 2
   m_LocalRotation: {x: 0.7071068, y: -0, z: -0, w: 0.7071068}
   m_LocalPosition: {x: 3.4049149, y: -5.6935945, z: -7.196211}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 438060727}
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 90, y: 0, z: 0}
 --- !u!1001 &115378938
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Modification:
-    serializedVersion: 3
     m_TransformParent: {fileID: 1918031265}
     m_Modifications:
     - target: {fileID: 146582365976954613, guid: dc83affa9d6044736a8613cc17a98906,
@@ -323,10 +322,12 @@ PrefabInstance:
       propertyPath: placementData.id
       value: 3
       objectReference: {fileID: 0}
+    - target: {fileID: 6178925463495704729, guid: dc83affa9d6044736a8613cc17a98906,
+        type: 3}
+      propertyPath: placementData.isNew
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
-    m_RemovedGameObjects: []
-    m_AddedGameObjects: []
-    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: dc83affa9d6044736a8613cc17a98906, type: 3}
 --- !u!4 &115378939 stripped
 Transform:
@@ -361,18 +362,10 @@ BoxCollider:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 130391013}
   m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
   m_IsTrigger: 0
-  m_ProvidesContacts: 0
   m_Enabled: 1
-  serializedVersion: 3
-  m_Size: {x: 1, y: 1, z: 1}
+  serializedVersion: 2
+  m_Size: {x: 2, y: 2, z: 2}
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!23 &130391015
 MeshRenderer:
@@ -431,13 +424,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 130391013}
-  serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 6.1091585, y: -0.49999884, z: 8.397129}
   m_LocalScale: {x: 5.6, y: 1, z: 2.79}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 839176044}
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &438060726
 GameObject:
@@ -462,7 +455,6 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 438060726}
-  serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 27.835085, y: 5.7935944, z: 14.066211}
   m_LocalScale: {x: 1, y: 1, z: 1}
@@ -473,6 +465,7 @@ Transform:
   - {fileID: 1304809752}
   - {fileID: 1504683753}
   m_Father: {fileID: 0}
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &474482160
 GameObject:
@@ -500,16 +493,7 @@ TerrainCollider:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 474482160}
   m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_ProvidesContacts: 0
   m_Enabled: 1
-  serializedVersion: 2
   m_TerrainData: {fileID: 15600000, guid: 3f3d24856cb524980a3330d58c942d66, type: 2}
   m_EnableTreeColliders: 1
 --- !u!218 &474482162
@@ -536,21 +520,16 @@ Terrain:
   m_DrawInstanced: 0
   m_DrawTreesAndFoliage: 1
   m_StaticShadowCaster: 0
-  m_IgnoreQualitySettings: 0
   m_ReflectionProbeUsage: 1
   m_MaterialTemplate: {fileID: 2100000, guid: 594ea882c5a793440b60ff72d896021e, type: 2}
   m_BakeLightProbesForTrees: 1
   m_PreserveTreePrototypeLayers: 0
   m_DeringLightProbesForTrees: 1
-  m_ReceiveGI: 1
   m_ScaleInLightmap: 0.0256
   m_LightmapParameters: {fileID: 15203, guid: 0000000000000000f000000000000000, type: 0}
   m_GroupingID: 0
   m_RenderingLayerMask: 1
   m_AllowAutoConnect: 1
-  m_EnableHeightmapRayTracing: 1
-  m_EnableTreesAndDetailsRayTracing: 0
-  m_TreeMotionVectorModeOverride: 3
 --- !u!4 &474482163
 Transform:
   m_ObjectHideFlags: 0
@@ -558,20 +537,19 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 474482160}
-  serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
+  m_RootOrder: 9
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &546281611
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Modification:
-    serializedVersion: 3
     m_TransformParent: {fileID: 1918031265}
     m_Modifications:
     - target: {fileID: 146582365976954613, guid: e540eeeea90fd4808be148374b95dd0c,
@@ -674,10 +652,12 @@ PrefabInstance:
       propertyPath: placementData.id
       value: 2
       objectReference: {fileID: 0}
+    - target: {fileID: 6178925463495704729, guid: e540eeeea90fd4808be148374b95dd0c,
+        type: 3}
+      propertyPath: placementData.isNew
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
-    m_RemovedGameObjects: []
-    m_AddedGameObjects: []
-    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e540eeeea90fd4808be148374b95dd0c, type: 3}
 --- !u!4 &546281612 stripped
 Transform:
@@ -725,13 +705,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 564861836}
-  serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 17.26, y: 0, z: 5.73}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &564861839
 MonoBehaviour:
@@ -745,7 +725,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4f231c4fb786f3946a6b90b886c48677, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_SendPointerHoverToParent: 1
   m_HorizontalAxis: Horizontal
   m_VerticalAxis: Vertical
   m_SubmitButton: Submit
@@ -780,18 +759,10 @@ BoxCollider:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 587429043}
   m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
   m_IsTrigger: 0
-  m_ProvidesContacts: 0
   m_Enabled: 1
-  serializedVersion: 3
-  m_Size: {x: 1, y: 1, z: 1}
+  serializedVersion: 2
+  m_Size: {x: 2, y: 2, z: 2}
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!23 &587429045
 MeshRenderer:
@@ -850,13 +821,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 587429043}
-  serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: -0.6708422, y: -0.49999884, z: 2.24713}
   m_LocalScale: {x: 2, y: 1, z: 2}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 839176044}
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &839176043
 GameObject:
@@ -881,7 +852,6 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 839176043}
-  serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 31.22, y: 0.49999884, z: 13.9}
   m_LocalScale: {x: 1, y: 1, z: 1}
@@ -892,6 +862,7 @@ Transform:
   - {fileID: 2081313092}
   - {fileID: 130391017}
   m_Father: {fileID: 0}
+  m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1016826414
 GameObject:
@@ -3661,7 +3632,7 @@ MonoBehaviour:
         z: 0
     - contentIds: 
       contentTypes: 
-      isObstacle: 0
+      isObstacle: 1
       index:
         x: 22
         z: 5
@@ -3671,7 +3642,7 @@ MonoBehaviour:
         z: 0
     - contentIds: 
       contentTypes: 
-      isObstacle: 0
+      isObstacle: 1
       index:
         x: 23
         z: 5
@@ -3681,7 +3652,7 @@ MonoBehaviour:
         z: 0
     - contentIds: 
       contentTypes: 
-      isObstacle: 0
+      isObstacle: 1
       index:
         x: 24
         z: 5
@@ -3691,7 +3662,7 @@ MonoBehaviour:
         z: 0
     - contentIds: 
       contentTypes: 
-      isObstacle: 0
+      isObstacle: 1
       index:
         x: 25
         z: 5
@@ -3701,7 +3672,7 @@ MonoBehaviour:
         z: 0
     - contentIds: 
       contentTypes: 
-      isObstacle: 0
+      isObstacle: 1
       index:
         x: 26
         z: 5
@@ -4161,7 +4132,7 @@ MonoBehaviour:
         z: 0
     - contentIds: 
       contentTypes: 
-      isObstacle: 0
+      isObstacle: 1
       index:
         x: 22
         z: 6
@@ -4201,7 +4172,7 @@ MonoBehaviour:
         z: 0
     - contentIds: 
       contentTypes: 
-      isObstacle: 0
+      isObstacle: 1
       index:
         x: 26
         z: 6
@@ -4661,7 +4632,7 @@ MonoBehaviour:
         z: 0
     - contentIds: 
       contentTypes: 
-      isObstacle: 0
+      isObstacle: 1
       index:
         x: 22
         z: 7
@@ -4701,7 +4672,7 @@ MonoBehaviour:
         z: 0
     - contentIds: 
       contentTypes: 
-      isObstacle: 0
+      isObstacle: 1
       index:
         x: 26
         z: 7
@@ -5161,7 +5132,7 @@ MonoBehaviour:
         z: 0
     - contentIds: 
       contentTypes: 
-      isObstacle: 0
+      isObstacle: 1
       index:
         x: 22
         z: 8
@@ -5201,7 +5172,7 @@ MonoBehaviour:
         z: 0
     - contentIds: 
       contentTypes: 
-      isObstacle: 0
+      isObstacle: 1
       index:
         x: 26
         z: 8
@@ -5661,7 +5632,7 @@ MonoBehaviour:
         z: 0
     - contentIds: 
       contentTypes: 
-      isObstacle: 0
+      isObstacle: 1
       index:
         x: 22
         z: 9
@@ -5671,7 +5642,7 @@ MonoBehaviour:
         z: 0
     - contentIds: 
       contentTypes: 
-      isObstacle: 0
+      isObstacle: 1
       index:
         x: 23
         z: 9
@@ -5681,7 +5652,7 @@ MonoBehaviour:
         z: 0
     - contentIds: 
       contentTypes: 
-      isObstacle: 0
+      isObstacle: 1
       index:
         x: 24
         z: 9
@@ -5691,7 +5662,7 @@ MonoBehaviour:
         z: 0
     - contentIds: 
       contentTypes: 
-      isObstacle: 0
+      isObstacle: 1
       index:
         x: 25
         z: 9
@@ -5701,7 +5672,7 @@ MonoBehaviour:
         z: 0
     - contentIds: 
       contentTypes: 
-      isObstacle: 0
+      isObstacle: 1
       index:
         x: 26
         z: 9
@@ -8221,7 +8192,7 @@ MonoBehaviour:
         z: 0
     - contentIds: 
       contentTypes: 
-      isObstacle: 0
+      isObstacle: 1
       index:
         x: 28
         z: 14
@@ -8231,7 +8202,7 @@ MonoBehaviour:
         z: 0
     - contentIds: 
       contentTypes: 
-      isObstacle: 0
+      isObstacle: 1
       index:
         x: 29
         z: 14
@@ -8241,7 +8212,7 @@ MonoBehaviour:
         z: 0
     - contentIds: 
       contentTypes: 
-      isObstacle: 0
+      isObstacle: 1
       index:
         x: 30
         z: 14
@@ -8251,7 +8222,7 @@ MonoBehaviour:
         z: 0
     - contentIds: 
       contentTypes: 
-      isObstacle: 0
+      isObstacle: 1
       index:
         x: 31
         z: 14
@@ -8261,7 +8232,7 @@ MonoBehaviour:
         z: 0
     - contentIds: 
       contentTypes: 
-      isObstacle: 0
+      isObstacle: 1
       index:
         x: 32
         z: 14
@@ -8721,7 +8692,7 @@ MonoBehaviour:
         z: 0
     - contentIds: 
       contentTypes: 
-      isObstacle: 0
+      isObstacle: 1
       index:
         x: 28
         z: 15
@@ -8761,7 +8732,7 @@ MonoBehaviour:
         z: 0
     - contentIds: 
       contentTypes: 
-      isObstacle: 0
+      isObstacle: 1
       index:
         x: 32
         z: 15
@@ -9221,7 +9192,7 @@ MonoBehaviour:
         z: 0
     - contentIds: 
       contentTypes: 
-      isObstacle: 0
+      isObstacle: 1
       index:
         x: 28
         z: 16
@@ -9261,7 +9232,7 @@ MonoBehaviour:
         z: 0
     - contentIds: 
       contentTypes: 
-      isObstacle: 0
+      isObstacle: 1
       index:
         x: 32
         z: 16
@@ -9721,7 +9692,7 @@ MonoBehaviour:
         z: 0
     - contentIds: 
       contentTypes: 
-      isObstacle: 0
+      isObstacle: 1
       index:
         x: 28
         z: 17
@@ -9761,7 +9732,7 @@ MonoBehaviour:
         z: 0
     - contentIds: 
       contentTypes: 
-      isObstacle: 0
+      isObstacle: 1
       index:
         x: 32
         z: 17
@@ -10221,7 +10192,7 @@ MonoBehaviour:
         z: 0
     - contentIds: 
       contentTypes: 
-      isObstacle: 0
+      isObstacle: 1
       index:
         x: 28
         z: 18
@@ -10231,7 +10202,7 @@ MonoBehaviour:
         z: 0
     - contentIds: 
       contentTypes: 
-      isObstacle: 0
+      isObstacle: 1
       index:
         x: 29
         z: 18
@@ -10241,7 +10212,7 @@ MonoBehaviour:
         z: 0
     - contentIds: 
       contentTypes: 
-      isObstacle: 0
+      isObstacle: 1
       index:
         x: 30
         z: 18
@@ -10251,7 +10222,7 @@ MonoBehaviour:
         z: 0
     - contentIds: 
       contentTypes: 
-      isObstacle: 0
+      isObstacle: 1
       index:
         x: 31
         z: 18
@@ -10261,7 +10232,7 @@ MonoBehaviour:
         z: 0
     - contentIds: 
       contentTypes: 
-      isObstacle: 0
+      isObstacle: 1
       index:
         x: 32
         z: 18
@@ -10751,7 +10722,7 @@ MonoBehaviour:
         z: 0
     - contentIds: 
       contentTypes: 
-      isObstacle: 0
+      isObstacle: 1
       index:
         x: 31
         z: 19
@@ -10761,7 +10732,7 @@ MonoBehaviour:
         z: 0
     - contentIds: 
       contentTypes: 
-      isObstacle: 0
+      isObstacle: 1
       index:
         x: 32
         z: 19
@@ -10771,7 +10742,7 @@ MonoBehaviour:
         z: 0
     - contentIds: 
       contentTypes: 
-      isObstacle: 0
+      isObstacle: 1
       index:
         x: 33
         z: 19
@@ -10781,7 +10752,7 @@ MonoBehaviour:
         z: 0
     - contentIds: 
       contentTypes: 
-      isObstacle: 0
+      isObstacle: 1
       index:
         x: 34
         z: 19
@@ -10791,7 +10762,7 @@ MonoBehaviour:
         z: 0
     - contentIds: 
       contentTypes: 
-      isObstacle: 0
+      isObstacle: 1
       index:
         x: 35
         z: 19
@@ -10801,7 +10772,7 @@ MonoBehaviour:
         z: 0
     - contentIds: 
       contentTypes: 
-      isObstacle: 0
+      isObstacle: 1
       index:
         x: 36
         z: 19
@@ -10811,7 +10782,7 @@ MonoBehaviour:
         z: 0
     - contentIds: 
       contentTypes: 
-      isObstacle: 0
+      isObstacle: 1
       index:
         x: 37
         z: 19
@@ -10821,7 +10792,7 @@ MonoBehaviour:
         z: 0
     - contentIds: 
       contentTypes: 
-      isObstacle: 0
+      isObstacle: 1
       index:
         x: 38
         z: 19
@@ -10831,7 +10802,7 @@ MonoBehaviour:
         z: 0
     - contentIds: 
       contentTypes: 
-      isObstacle: 0
+      isObstacle: 1
       index:
         x: 39
         z: 19
@@ -10841,7 +10812,7 @@ MonoBehaviour:
         z: 0
     - contentIds: 
       contentTypes: 
-      isObstacle: 0
+      isObstacle: 1
       index:
         x: 40
         z: 19
@@ -10851,7 +10822,7 @@ MonoBehaviour:
         z: 0
     - contentIds: 
       contentTypes: 
-      isObstacle: 0
+      isObstacle: 1
       index:
         x: 41
         z: 19
@@ -10861,7 +10832,7 @@ MonoBehaviour:
         z: 0
     - contentIds: 
       contentTypes: 
-      isObstacle: 0
+      isObstacle: 1
       index:
         x: 42
         z: 19
@@ -11121,7 +11092,7 @@ MonoBehaviour:
         z: 0
     - contentIds: 
       contentTypes: 
-      isObstacle: 0
+      isObstacle: 1
       index:
         x: 18
         z: 20
@@ -11131,7 +11102,7 @@ MonoBehaviour:
         z: 0
     - contentIds: 
       contentTypes: 
-      isObstacle: 0
+      isObstacle: 1
       index:
         x: 19
         z: 20
@@ -11141,7 +11112,7 @@ MonoBehaviour:
         z: 0
     - contentIds: 
       contentTypes: 
-      isObstacle: 0
+      isObstacle: 1
       index:
         x: 20
         z: 20
@@ -11151,7 +11122,7 @@ MonoBehaviour:
         z: 0
     - contentIds: 
       contentTypes: 
-      isObstacle: 0
+      isObstacle: 1
       index:
         x: 21
         z: 20
@@ -11161,7 +11132,7 @@ MonoBehaviour:
         z: 0
     - contentIds: 
       contentTypes: 
-      isObstacle: 0
+      isObstacle: 1
       index:
         x: 22
         z: 20
@@ -11251,7 +11222,7 @@ MonoBehaviour:
         z: 0
     - contentIds: 
       contentTypes: 
-      isObstacle: 0
+      isObstacle: 1
       index:
         x: 31
         z: 20
@@ -11261,7 +11232,7 @@ MonoBehaviour:
         z: 0
     - contentIds: 
       contentTypes: 
-      isObstacle: 0
+      isObstacle: 1
       index:
         x: 32
         z: 20
@@ -11271,7 +11242,7 @@ MonoBehaviour:
         z: 0
     - contentIds: 
       contentTypes: 
-      isObstacle: 0
+      isObstacle: 1
       index:
         x: 33
         z: 20
@@ -11351,7 +11322,7 @@ MonoBehaviour:
         z: 0
     - contentIds: 
       contentTypes: 
-      isObstacle: 0
+      isObstacle: 1
       index:
         x: 41
         z: 20
@@ -11361,7 +11332,7 @@ MonoBehaviour:
         z: 0
     - contentIds: 
       contentTypes: 
-      isObstacle: 0
+      isObstacle: 1
       index:
         x: 42
         z: 20
@@ -11621,7 +11592,7 @@ MonoBehaviour:
         z: 0
     - contentIds: 
       contentTypes: 
-      isObstacle: 0
+      isObstacle: 1
       index:
         x: 18
         z: 21
@@ -11661,7 +11632,7 @@ MonoBehaviour:
         z: 0
     - contentIds: 
       contentTypes: 
-      isObstacle: 0
+      isObstacle: 1
       index:
         x: 22
         z: 21
@@ -11751,7 +11722,7 @@ MonoBehaviour:
         z: 0
     - contentIds: 
       contentTypes: 
-      isObstacle: 0
+      isObstacle: 1
       index:
         x: 31
         z: 21
@@ -11761,7 +11732,7 @@ MonoBehaviour:
         z: 0
     - contentIds: 
       contentTypes: 
-      isObstacle: 0
+      isObstacle: 1
       index:
         x: 32
         z: 21
@@ -11771,7 +11742,7 @@ MonoBehaviour:
         z: 0
     - contentIds: 
       contentTypes: 
-      isObstacle: 0
+      isObstacle: 1
       index:
         x: 33
         z: 21
@@ -11851,7 +11822,7 @@ MonoBehaviour:
         z: 0
     - contentIds: 
       contentTypes: 
-      isObstacle: 0
+      isObstacle: 1
       index:
         x: 41
         z: 21
@@ -11861,7 +11832,7 @@ MonoBehaviour:
         z: 0
     - contentIds: 
       contentTypes: 
-      isObstacle: 0
+      isObstacle: 1
       index:
         x: 42
         z: 21
@@ -12121,7 +12092,7 @@ MonoBehaviour:
         z: 0
     - contentIds: 
       contentTypes: 
-      isObstacle: 0
+      isObstacle: 1
       index:
         x: 18
         z: 22
@@ -12161,7 +12132,7 @@ MonoBehaviour:
         z: 0
     - contentIds: 
       contentTypes: 
-      isObstacle: 0
+      isObstacle: 1
       index:
         x: 22
         z: 22
@@ -12251,7 +12222,7 @@ MonoBehaviour:
         z: 0
     - contentIds: 
       contentTypes: 
-      isObstacle: 0
+      isObstacle: 1
       index:
         x: 31
         z: 22
@@ -12261,7 +12232,7 @@ MonoBehaviour:
         z: 0
     - contentIds: 
       contentTypes: 
-      isObstacle: 0
+      isObstacle: 1
       index:
         x: 32
         z: 22
@@ -12271,7 +12242,7 @@ MonoBehaviour:
         z: 0
     - contentIds: 
       contentTypes: 
-      isObstacle: 0
+      isObstacle: 1
       index:
         x: 33
         z: 22
@@ -12351,7 +12322,7 @@ MonoBehaviour:
         z: 0
     - contentIds: 
       contentTypes: 
-      isObstacle: 0
+      isObstacle: 1
       index:
         x: 41
         z: 22
@@ -12361,7 +12332,7 @@ MonoBehaviour:
         z: 0
     - contentIds: 
       contentTypes: 
-      isObstacle: 0
+      isObstacle: 1
       index:
         x: 42
         z: 22
@@ -12621,7 +12592,7 @@ MonoBehaviour:
         z: 0
     - contentIds: 
       contentTypes: 
-      isObstacle: 0
+      isObstacle: 1
       index:
         x: 18
         z: 23
@@ -12661,7 +12632,7 @@ MonoBehaviour:
         z: 0
     - contentIds: 
       contentTypes: 
-      isObstacle: 0
+      isObstacle: 1
       index:
         x: 22
         z: 23
@@ -12751,7 +12722,7 @@ MonoBehaviour:
         z: 0
     - contentIds: 
       contentTypes: 
-      isObstacle: 0
+      isObstacle: 1
       index:
         x: 31
         z: 23
@@ -12761,7 +12732,7 @@ MonoBehaviour:
         z: 0
     - contentIds: 
       contentTypes: 
-      isObstacle: 0
+      isObstacle: 1
       index:
         x: 32
         z: 23
@@ -12771,7 +12742,7 @@ MonoBehaviour:
         z: 0
     - contentIds: 
       contentTypes: 
-      isObstacle: 0
+      isObstacle: 1
       index:
         x: 33
         z: 23
@@ -12851,7 +12822,7 @@ MonoBehaviour:
         z: 0
     - contentIds: 
       contentTypes: 
-      isObstacle: 0
+      isObstacle: 1
       index:
         x: 41
         z: 23
@@ -12861,7 +12832,7 @@ MonoBehaviour:
         z: 0
     - contentIds: 
       contentTypes: 
-      isObstacle: 0
+      isObstacle: 1
       index:
         x: 42
         z: 23
@@ -13121,7 +13092,7 @@ MonoBehaviour:
         z: 0
     - contentIds: 
       contentTypes: 
-      isObstacle: 0
+      isObstacle: 1
       index:
         x: 18
         z: 24
@@ -13131,7 +13102,7 @@ MonoBehaviour:
         z: 0
     - contentIds: 
       contentTypes: 
-      isObstacle: 0
+      isObstacle: 1
       index:
         x: 19
         z: 24
@@ -13141,7 +13112,7 @@ MonoBehaviour:
         z: 0
     - contentIds: 
       contentTypes: 
-      isObstacle: 0
+      isObstacle: 1
       index:
         x: 20
         z: 24
@@ -13151,7 +13122,7 @@ MonoBehaviour:
         z: 0
     - contentIds: 
       contentTypes: 
-      isObstacle: 0
+      isObstacle: 1
       index:
         x: 21
         z: 24
@@ -13161,7 +13132,7 @@ MonoBehaviour:
         z: 0
     - contentIds: 
       contentTypes: 
-      isObstacle: 0
+      isObstacle: 1
       index:
         x: 22
         z: 24
@@ -13251,7 +13222,7 @@ MonoBehaviour:
         z: 0
     - contentIds: 
       contentTypes: 
-      isObstacle: 0
+      isObstacle: 1
       index:
         x: 31
         z: 24
@@ -13261,7 +13232,7 @@ MonoBehaviour:
         z: 0
     - contentIds: 
       contentTypes: 
-      isObstacle: 0
+      isObstacle: 1
       index:
         x: 32
         z: 24
@@ -13271,7 +13242,7 @@ MonoBehaviour:
         z: 0
     - contentIds: 
       contentTypes: 
-      isObstacle: 0
+      isObstacle: 1
       index:
         x: 33
         z: 24
@@ -13281,7 +13252,7 @@ MonoBehaviour:
         z: 0
     - contentIds: 
       contentTypes: 
-      isObstacle: 0
+      isObstacle: 1
       index:
         x: 34
         z: 24
@@ -13291,7 +13262,7 @@ MonoBehaviour:
         z: 0
     - contentIds: 
       contentTypes: 
-      isObstacle: 0
+      isObstacle: 1
       index:
         x: 35
         z: 24
@@ -13301,7 +13272,7 @@ MonoBehaviour:
         z: 0
     - contentIds: 
       contentTypes: 
-      isObstacle: 0
+      isObstacle: 1
       index:
         x: 36
         z: 24
@@ -13311,7 +13282,7 @@ MonoBehaviour:
         z: 0
     - contentIds: 
       contentTypes: 
-      isObstacle: 0
+      isObstacle: 1
       index:
         x: 37
         z: 24
@@ -13321,7 +13292,7 @@ MonoBehaviour:
         z: 0
     - contentIds: 
       contentTypes: 
-      isObstacle: 0
+      isObstacle: 1
       index:
         x: 38
         z: 24
@@ -13331,7 +13302,7 @@ MonoBehaviour:
         z: 0
     - contentIds: 
       contentTypes: 
-      isObstacle: 0
+      isObstacle: 1
       index:
         x: 39
         z: 24
@@ -13341,7 +13312,7 @@ MonoBehaviour:
         z: 0
     - contentIds: 
       contentTypes: 
-      isObstacle: 0
+      isObstacle: 1
       index:
         x: 40
         z: 24
@@ -13351,7 +13322,7 @@ MonoBehaviour:
         z: 0
     - contentIds: 
       contentTypes: 
-      isObstacle: 0
+      isObstacle: 1
       index:
         x: 41
         z: 24
@@ -13361,7 +13332,7 @@ MonoBehaviour:
         z: 0
     - contentIds: 
       contentTypes: 
-      isObstacle: 0
+      isObstacle: 1
       index:
         x: 42
         z: 24
@@ -13751,7 +13722,7 @@ MonoBehaviour:
         z: 0
     - contentIds: 
       contentTypes: 
-      isObstacle: 0
+      isObstacle: 1
       index:
         x: 31
         z: 25
@@ -13761,7 +13732,7 @@ MonoBehaviour:
         z: 0
     - contentIds: 
       contentTypes: 
-      isObstacle: 0
+      isObstacle: 1
       index:
         x: 32
         z: 25
@@ -13771,7 +13742,7 @@ MonoBehaviour:
         z: 0
     - contentIds: 
       contentTypes: 
-      isObstacle: 0
+      isObstacle: 1
       index:
         x: 33
         z: 25
@@ -13781,7 +13752,7 @@ MonoBehaviour:
         z: 0
     - contentIds: 
       contentTypes: 
-      isObstacle: 0
+      isObstacle: 1
       index:
         x: 34
         z: 25
@@ -13791,7 +13762,7 @@ MonoBehaviour:
         z: 0
     - contentIds: 
       contentTypes: 
-      isObstacle: 0
+      isObstacle: 1
       index:
         x: 35
         z: 25
@@ -13801,7 +13772,7 @@ MonoBehaviour:
         z: 0
     - contentIds: 
       contentTypes: 
-      isObstacle: 0
+      isObstacle: 1
       index:
         x: 36
         z: 25
@@ -13811,7 +13782,7 @@ MonoBehaviour:
         z: 0
     - contentIds: 
       contentTypes: 
-      isObstacle: 0
+      isObstacle: 1
       index:
         x: 37
         z: 25
@@ -13821,7 +13792,7 @@ MonoBehaviour:
         z: 0
     - contentIds: 
       contentTypes: 
-      isObstacle: 0
+      isObstacle: 1
       index:
         x: 38
         z: 25
@@ -13831,7 +13802,7 @@ MonoBehaviour:
         z: 0
     - contentIds: 
       contentTypes: 
-      isObstacle: 0
+      isObstacle: 1
       index:
         x: 39
         z: 25
@@ -13841,7 +13812,7 @@ MonoBehaviour:
         z: 0
     - contentIds: 
       contentTypes: 
-      isObstacle: 0
+      isObstacle: 1
       index:
         x: 40
         z: 25
@@ -13851,7 +13822,7 @@ MonoBehaviour:
         z: 0
     - contentIds: 
       contentTypes: 
-      isObstacle: 0
+      isObstacle: 1
       index:
         x: 41
         z: 25
@@ -13861,7 +13832,7 @@ MonoBehaviour:
         z: 0
     - contentIds: 
       contentTypes: 
-      isObstacle: 0
+      isObstacle: 1
       index:
         x: 42
         z: 25
@@ -20947,20 +20918,19 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1016826414}
-  serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1134010707
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Modification:
-    serializedVersion: 3
     m_TransformParent: {fileID: 1918031265}
     m_Modifications:
     - target: {fileID: 146582365976954613, guid: 113b4ee2df44d4cf389c313a3e88027e,
@@ -21058,10 +21028,12 @@ PrefabInstance:
       propertyPath: placementData.id
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 6178925463495704729, guid: 113b4ee2df44d4cf389c313a3e88027e,
+        type: 3}
+      propertyPath: placementData.isNew
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
-    m_RemovedGameObjects: []
-    m_AddedGameObjects: []
-    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 113b4ee2df44d4cf389c313a3e88027e, type: 3}
 --- !u!4 &1134010708 stripped
 Transform:
@@ -21158,13 +21130,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1304809749}
-  serializedVersion: 2
   m_LocalRotation: {x: 0.7071068, y: -0, z: -0, w: 0.7071068}
   m_LocalPosition: {x: 3.4049149, y: -5.6935945, z: -8.886211}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 438060727}
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 90, y: 0, z: 0}
 --- !u!1 &1488122795
 GameObject:
@@ -21255,13 +21227,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1488122795}
-  serializedVersion: 2
   m_LocalRotation: {x: 0.7071068, y: -0, z: -0, w: 0.7071068}
   m_LocalPosition: {x: 3.4049149, y: -5.6935945, z: -5.496211}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 438060727}
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 90, y: 0, z: 0}
 --- !u!1 &1504683750
 GameObject:
@@ -21352,13 +21324,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1504683750}
-  serializedVersion: 2
   m_LocalRotation: {x: 0.7071068, y: -0, z: -0, w: 0.7071068}
   m_LocalPosition: {x: 0.36491585, y: -5.6935945, z: -10.476211}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 438060727}
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 90, y: 0, z: 0}
 --- !u!1 &1553460567
 GameObject:
@@ -21402,13 +21374,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1553460567}
-  serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1553460570
 MonoBehaviour:
@@ -21422,7 +21394,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3cbfe7246a72444da88112d5a8f52e72, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  buildingPrefab:
+  gameObjects:
   - {fileID: 3117728376025562796, guid: dc83affa9d6044736a8613cc17a98906, type: 3}
   - {fileID: 3117728376025562796, guid: e540eeeea90fd4808be148374b95dd0c, type: 3}
   - {fileID: 3117728376025562796, guid: 113b4ee2df44d4cf389c313a3e88027e, type: 3}
@@ -21483,17 +21455,9 @@ Camera:
   m_projectionMatrixMode: 1
   m_GateFitMode: 2
   m_FOVAxisMode: 0
-  m_Iso: 200
-  m_ShutterSpeed: 0.005
-  m_Aperture: 16
-  m_FocusDistance: 10
-  m_FocalLength: 50
-  m_BladeCount: 5
-  m_Curvature: {x: 2, y: 11}
-  m_BarrelClipping: 0.25
-  m_Anamorphism: 0
   m_SensorSize: {x: 36, y: 24}
   m_LensShift: {x: 0, y: 0}
+  m_FocalLength: 50
   m_NormalizedViewPortRect:
     serializedVersion: 2
     x: 0
@@ -21527,13 +21491,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1899506827}
-  serializedVersion: 2
   m_LocalRotation: {x: 0.67559016, y: 0, z: 0, w: 0.7372774}
   m_LocalPosition: {x: 29.51, y: 26.458755, z: 13.8}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 85, y: 0, z: 0}
 --- !u!114 &1899506831
 MonoBehaviour:
@@ -21565,20 +21529,9 @@ MonoBehaviour:
   m_Dithering: 0
   m_ClearDepth: 1
   m_AllowXRRendering: 1
-  m_AllowHDROutput: 1
-  m_UseScreenCoordOverride: 0
-  m_ScreenSizeOverride: {x: 0, y: 0, z: 0, w: 0}
-  m_ScreenCoordScaleBias: {x: 0, y: 0, z: 0, w: 0}
   m_RequiresDepthTexture: 0
   m_RequiresColorTexture: 0
   m_Version: 2
-  m_TaaSettings:
-    quality: 3
-    frameInfluence: 0.1
-    jitterScale: 1
-    mipBias: 0
-    varianceClampScale: 0.9
-    contrastAdaptiveSharpening: 0
 --- !u!1 &1918031264
 GameObject:
   m_ObjectHideFlags: 0
@@ -21602,7 +21555,6 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1918031264}
-  serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 13.250842, y: 0.49999884, z: 17.1}
   m_LocalScale: {x: 1, y: 1, z: 1}
@@ -21612,6 +21564,7 @@ Transform:
   - {fileID: 546281612}
   - {fileID: 1134010708}
   m_Father: {fileID: 0}
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2081313088
 GameObject:
@@ -21640,18 +21593,10 @@ BoxCollider:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2081313088}
   m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
   m_IsTrigger: 0
-  m_ProvidesContacts: 0
   m_Enabled: 1
-  serializedVersion: 3
-  m_Size: {x: 1, y: 1, z: 1}
+  serializedVersion: 2
+  m_Size: {x: 2, y: 2, z: 2}
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!23 &2081313090
 MeshRenderer:
@@ -21710,13 +21655,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2081313088}
-  serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: -6.630842, y: -0.49999884, z: -6.7628703}
   m_LocalScale: {x: 2, y: 1, z: 2}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 839176044}
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2099387787
 GameObject:
@@ -21745,18 +21690,10 @@ BoxCollider:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2099387787}
   m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
   m_IsTrigger: 0
-  m_ProvidesContacts: 0
   m_Enabled: 1
-  serializedVersion: 3
-  m_Size: {x: 1, y: 1, z: 1}
+  serializedVersion: 2
+  m_Size: {x: 2, y: 2, z: 2}
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!23 &2099387789
 MeshRenderer:
@@ -21815,13 +21752,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2099387787}
-  serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: -10.640842, y: -0.49999884, z: 8.92713}
   m_LocalScale: {x: 2, y: 1, z: 2}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 839176044}
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2110946947
 GameObject:
@@ -21910,13 +21847,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2110946947}
-  serializedVersion: 2
   m_LocalRotation: {x: 0.40821788, y: -0.23456968, z: 0.10938163, w: 0.8754261}
   m_LocalPosition: {x: 0, y: 3, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 50, y: -30, z: 0}
 --- !u!114 &2110946950
 MonoBehaviour:
@@ -21934,19 +21871,15 @@ MonoBehaviour:
   m_UsePipelineSettings: 1
   m_AdditionalLightsShadowResolutionTier: 2
   m_LightLayerMask: 1
-  m_RenderingLayers: 1
   m_CustomShadowLayers: 0
   m_ShadowLayerMask: 1
-  m_ShadowRenderingLayers: 1
   m_LightCookieSize: {x: 1, y: 1}
   m_LightCookieOffset: {x: 0, y: 0}
-  m_SoftShadowQuality: 0
 --- !u!1001 &1738961480419717928
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Modification:
-    serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 166607008336041338, guid: 251bbf739a674441a808b2f76255e299,
@@ -22015,21 +21948,4 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
-    m_RemovedGameObjects: []
-    m_AddedGameObjects: []
-    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 251bbf739a674441a808b2f76255e299, type: 3}
---- !u!1660057539 &9223372036854775807
-SceneRoots:
-  m_ObjectHideFlags: 0
-  m_Roots:
-  - {fileID: 2110946949}
-  - {fileID: 564861838}
-  - {fileID: 1899506830}
-  - {fileID: 474482163}
-  - {fileID: 839176044}
-  - {fileID: 1918031265}
-  - {fileID: 1016826418}
-  - {fileID: 1553460569}
-  - {fileID: 1738961480419717928}
-  - {fileID: 438060727}

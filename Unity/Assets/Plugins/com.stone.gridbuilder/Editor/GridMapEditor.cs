@@ -1,7 +1,6 @@
 using System;
 using System.IO;
 using MemoryPack;
-using TrueSync;
 using UnityEngine;
 using UnityEditor;
 using UnityEditor.SceneManagement;
@@ -63,7 +62,7 @@ namespace ST.GridBuilder
             {
                 gridMap.gridData.ResetCells();
                 GenerateObstacle(gridMap);
-                GenerateBuilding(gridMap);
+                GeneratePlacement(gridMap);
                 EditorUtility.SetDirty(gridMap);
 
                 GridMapLines lines = FindObjectOfType<GridMapLines>();
@@ -123,20 +122,20 @@ namespace ST.GridBuilder
             }
         }
 
-        private void GenerateBuilding(GridMap gridMap)
+        private void GeneratePlacement(GridMap gridMap)
         {
-            Placement[] buildings = FindObjectsOfType<Placement>();
-            foreach (Placement building in buildings)
+            Placement[] placements = FindObjectsOfType<Placement>();
+            foreach (Placement placement in placements)
             {
-                IndexV2 index = gridMap.ConvertToIndex(building.transform.position);
-                if (!gridMap.gridData.CanPut(index.x, index.z, building.placementData)) {
+                IndexV2 index = gridMap.ConvertToIndex(placement.transform.position);
+                if (!gridMap.gridData.CanPut(index.x, index.z, placement.placementData)) {
                     continue;
                 }
 
-                building.placementData.id = gridMap.gridData.GetNextGuid();
-                gridMap.gridData.Put(index.x, index.z, building.placementData);
-                building.SetPutPosition(gridMap.GetPutPosition(building.placementData));
-                EditorUtility.SetDirty(building);
+                placement.placementData.id = gridMap.gridData.GetNextGuid();
+                gridMap.gridData.Put(index.x, index.z, placement.placementData);
+                placement.SetPutPosition(gridMap.GetPutPosition(placement.placementData));
+                EditorUtility.SetDirty(placement);
             }
         }
         
