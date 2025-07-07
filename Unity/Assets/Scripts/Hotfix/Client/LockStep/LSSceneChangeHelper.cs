@@ -15,7 +15,7 @@ namespace ET.Client
             room.Replay.MatchInfo = matchInfo;
             
             LSWorld lsWorld = new LSWorld(SceneType.LockStepClient);
-            await room.InitNewWorld(lsWorld, matchInfo);
+            room.InitNewWorld(lsWorld, matchInfo);
 
             // 等待表现层订阅的事件完成
             await EventSystem.Instance.PublishAsync(root, new LSSceneChangeStart() {SceneName = matchInfo.SceneName, IsReplay = false});
@@ -44,7 +44,7 @@ namespace ET.Client
             room.Replay = replay;
             
             LSWorld lsWorld = new LSWorld(SceneType.LockStepClient);
-            await room.InitNewWorld(lsWorld, replay.MatchInfo);
+            room.InitNewWorld(lsWorld, replay.MatchInfo);
             
             // 等待表现层订阅的事件完成
             await EventSystem.Instance.PublishAsync(root, new LSSceneChangeStart() {SceneName = replay.MatchInfo.SceneName, IsReplay = true});
@@ -67,7 +67,7 @@ namespace ET.Client
             room.Replay.LSWorldBytes = message.LSWorldBytes;
             
             LSWorld lsWorld = MemoryPackHelper.Deserialize(typeof(LSWorld), message.LSWorldBytes, 0, message.LSWorldBytes.Length) as LSWorld;
-            await room.InitExsitWorld(lsWorld, message.MatchInfo);
+            room.InitExsitWorld(lsWorld, message.MatchInfo);
             LSClientHelper.RunLSRollbackSystem(room);
             
             // 等待表现层订阅的事件完成

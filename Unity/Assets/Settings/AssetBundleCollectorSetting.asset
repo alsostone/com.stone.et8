@@ -154,3 +154,16 @@ MonoBehaviour:
         FilterRuleName: CollectAll
         AssetTags: 
         UserData: 
+    - GroupName: Block
+      GroupDesc: 
+      AssetTags: 
+      ActiveRuleName: EnableGroup
+      Collectors:
+      - CollectPath: Assets/Bundles/Prefabs/Block
+        CollectorGUID: efd12f003e9a04b5f8e057853f54b402
+        CollectorType: 0
+        AddressRuleName: AddressByFileName
+        PackRuleName: PackDirectory
+        FilterRuleName: CollectAll
+        AssetTags: 
+        UserData: 

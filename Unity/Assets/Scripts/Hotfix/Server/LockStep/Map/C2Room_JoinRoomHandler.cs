@@ -38,11 +38,12 @@ namespace ET.Server
             room.Replay.MatchInfo = matchInfo;
             
             LSWorld lsWorld = new LSWorld(SceneType.LockStepServer);
-            await room.InitNewWorld(lsWorld, matchInfo);
+            room.InitNewWorld(lsWorld, matchInfo);
             
             Room2C_Enter room2CEnter = Room2C_Enter.Create();
             room2CEnter.MatchInfo = matchInfo;
             RoomMessageHelper.Broadcast(room, room2CEnter);
+            await ETTask.CompletedTask;
         }
     }
 }

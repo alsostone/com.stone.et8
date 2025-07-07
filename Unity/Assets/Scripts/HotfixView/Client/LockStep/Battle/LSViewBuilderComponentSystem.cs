@@ -1,155 +1,181 @@
+using System;
+using ST.GridBuilder;
 using TrueSync;
+using UnityEngine;
 
 namespace ET.Client
 {
-    [EntitySystemOf(typeof(LSGridBuilderComponent))]
-    [FriendOf(typeof(LSGridBuilderComponent))]
+    [EntitySystemOf(typeof(LSViewBuilderComponent))]
+    [FriendOf(typeof(LSViewBuilderComponent))]
     [FriendOf(typeof(LSViewPlacementComponent))]
     public static partial class LSViewBuilderComponentSystem
     {
         [EntitySystem]
-        private static void Awake(this LSGridBuilderComponent self)
+        private static void Awake(this LSViewBuilderComponent self)
         {
-            // self.gridMapReference = new WeakReference<GridMap>(gridMap);
-            // self.gridMap = UnityEngine.Object.FindObjectOfType<GridMap>();
-            // self.gridMapIndicator = UnityEngine.Object.FindObjectOfType<GridMapIndicator>();
         }
 
         [EntitySystem]
-        private static void Destroy(this LSGridBuilderComponent self)
+        private static void Destroy(this LSViewBuilderComponent self)
         {
+            if (self.DragPlacement != null)
+            {
+                self.DragPlacement.Remove();
+                self.DragPlacement = null;
+            }
         }
 
-        public static void OnPlacementDragStart(this LSGridBuilderComponent self, long targetId)
+        public static void OnPlacementDragStart(this LSViewBuilderComponent self, long targetId)
         {
-            // if (!self.dragPlacement)
-            // {
-            //     if (self.RaycastTarget(touchPosition, out GameObject target))
-            //     {
-            //         Placement buiding = target.GetComponent<Placement>();
-            //         if (!buiding) {
-            //             return false;
-            //         }
-            //
-            //         Vector3 position = buiding.GetPosition();
-            //         if (self.gridMap.gridData.CanTake(buiding.placementData))
-            //         {
-            //             self.dragPlacement = buiding;
-            //             self.dragPlacement.SetPreviewMaterial();
-            //             self.RaycastTerrain(touchPosition, out Vector3 pos);
-            //             self.dragOffset = position - pos;
-            //         } else {
-            //             buiding.DoShake();
-            //         }
-            //     }
-            // }
+            if (!self.DragPlacement)
+            {
+                LSUnitViewComponent unitViewComponent = self.Room().GetComponent<LSUnitViewComponent>();
+                LSUnitView unitView = unitViewComponent.GetChild<LSUnitView>(targetId);
+                Placement placement = unitView?.GetComponent<LSViewPlacementComponent>()?.Placement;
+                if (placement == null)
+                    return;
+                
+                LSCameraComponent lsCameraComponent = self.Room().GetComponent<LSCameraComponent>();
+                GridMap gridMap = lsCameraComponent.GetGridMap();
+                if (gridMap.gridData.CanTake(placement.placementData))
+                {
+                    self.DragPlacement = placement;
+                    self.DragPlacement.SetPreviewMaterial();
+                    self.DragOffset = new Vector3(0, float.MaxValue, 0);
+                } else {
+                    placement.DoShake();
+                }
+            }
         }
 
-        public static void OnPlacementDrag(this LSGridBuilderComponent self, TSVector2 position)
+        public static void OnPlacementDrag(this LSViewBuilderComponent self, TSVector2 position)
         {
-            // if (self.dragPlacement)
-            // {
-            //     if (self.RaycastTerrain(touchPosition, out Vector3 pos))
-            //     {
-            //         IndexV2 index = self.gridMap.ConvertToIndex(pos + self.dragOffset);
-            //         int targetLevel = self.gridMap.gridData.GetShapeLevelCount(index.x, index.z, self.dragPlacement.placementData);
-            //         self.dragPlacement.SetMovePosition(self.gridMap.GetLevelPosition(index.x, index.z, targetLevel));
-            //         if (self.gridMapIndicator) {
-            //             self.gridMapIndicator.GenerateIndicator(index.x, index.z, targetLevel, self.dragPlacement.placementData);
-            //         }
-            //     }
-            // }
+            if (self.DragPlacement)
+            {
+                LSCameraComponent lsCameraComponent = self.Room().GetComponent<LSCameraComponent>();
+                GridMap gridMap = lsCameraComponent.GetGridMap();
+                GridMapIndicator gridMapIndicator = lsCameraComponent.GetGridMapIndicator();
+                
+                Vector3 pos = new(position.x.AsFloat(), 0, position.y.AsFloat());
+                if (Math.Abs(self.DragOffset.y - float.MaxValue) < float.Epsilon) {
+                    self.DragOffset = self.DragPlacement.GetPosition() - pos;
+                }
+                
+                IndexV2 index = gridMap.ConvertToIndex(pos + self.DragOffset);
+                int targetLevel = gridMap.gridData.GetShapeLevelCount(index.x, index.z, self.DragPlacement.placementData);
+                self.DragPlacement.SetMovePosition(gridMap.GetLevelPosition(index.x, index.z, targetLevel));
+                
+                if (gridMapIndicator) {
+                    gridMapIndicator.GenerateIndicator(index.x, index.z, targetLevel, self.DragPlacement.placementData);
+                }
+            }
         }
 
-        public static void OnPlacementDragEnd(this LSGridBuilderComponent self, TSVector2 position)
+        public static void OnPlacementDragEnd(this LSViewBuilderComponent self, TSVector2 position)
         {
-            // if (self.dragPlacement)
-            // {
-            //     self.dragPlacement.ResetPreviewMaterial();
-            //     if (self.RaycastTerrain(touchPosition, out Vector3 pos))
-            //     {
-            //         IndexV2 index = self.gridMap.ConvertToIndex(pos + self.dragOffset);
-            //         if (self.gridMap.gridData.CanPut(index.x, index.z, self.dragPlacement.placementData))
-            //         {
-            //             if (self.isNewBuilding)
-            //             {
-            //                 self.dragPlacement.placementData.id = self.gridMap.gridData.GetNextGuid();
-            //                 self.gridMap.gridData.Put(index.x, index.z, self.dragPlacement.placementData);
-            //                 self.gridMap.gridData.ResetFlowField();
-            //             }
-            //             else if (index.x != self.dragPlacement.placementData.x || index.z != self.dragPlacement.placementData.z)
-            //             {
-            //                 self.gridMap.gridData.Take(self.dragPlacement.placementData);
-            //                 self.gridMap.gridData.Put(index.x, index.z, self.dragPlacement.placementData);
-            //                 self.gridMap.gridData.ResetFlowField();
-            //             }
-            //             self.dragPlacement.SetPutPosition(self.gridMap.GetPutPosition(self.dragPlacement.placementData));
-            //         }
-            //         else {
-            //             if (self.isNewBuilding) {
-            //                 self.dragPlacement.Remove();
-            //             } else {
-            //                 self.dragPlacement.SetPutPosition(self.gridMap.GetPutPosition(self.dragPlacement.placementData));
-            //             }
-            //         }
-            //     } else {
-            //         if (self.isNewBuilding) {
-            //             self.dragPlacement.Remove();
-            //         } else {
-            //             self.dragPlacement.SetPutPosition(self.gridMap.GetPutPosition(self.dragPlacement.placementData));
-            //         }
-            //     }
-            //     self.dragPlacement = null;
-            //     self.isNewBuilding = false;
-            //     self.dragOffset = Vector3.zero;
-            //     if (self.gridMapIndicator) {
-            //         self.gridMapIndicator.ClearIndicator();
-            //     }
-            // }
+            if (self.DragPlacement)
+            {
+                LSCameraComponent lsCameraComponent = self.Room().GetComponent<LSCameraComponent>();
+                GridMap gridMap = lsCameraComponent.GetGridMap();
+                GridMapIndicator gridMapIndicator = lsCameraComponent.GetGridMapIndicator();
+                
+                Vector3 pos = new(position.x.AsFloat(), 0, position.y.AsFloat());
+                IndexV2 index = gridMap.ConvertToIndex(pos + self.DragOffset);
+                if (gridMap.gridData.CanPut(index.x, index.z, self.DragPlacement.placementData))
+                {
+                    if (self.DragPlacement.placementData.isNew)
+                    {
+                        gridMap.gridData.Put(index.x, index.z, self.DragPlacement.placementData);
+                        gridMap.gridData.ResetFlowField();
+                    }
+                    else if (index.x != self.DragPlacement.placementData.x || index.z != self.DragPlacement.placementData.z)
+                    {
+                        gridMap.gridData.Take(self.DragPlacement.placementData);
+                        gridMap.gridData.Put(index.x, index.z, self.DragPlacement.placementData);
+                        gridMap.gridData.ResetFlowField();
+                    }
+                    self.DragPlacement.SetPutPosition(gridMap.GetPutPosition(self.DragPlacement.placementData));
+                }
+                else {
+                    if (self.DragPlacement.placementData.isNew) {
+                        self.DragPlacement.Remove();
+                    } else {
+                        self.DragPlacement.SetPutPosition(gridMap.GetPutPosition(self.DragPlacement.placementData));
+                    }
+                }
+
+                self.DragPlacement.ResetPreviewMaterial();
+                self.DragPlacement = null;
+                
+                if (gridMapIndicator) {
+                    gridMapIndicator.ClearIndicator();
+                }
+            }
         }
 
-        public static void OnPlacementStart(this LSGridBuilderComponent self, int tableId)
+        public static void OnPlacementStart(this LSViewBuilderComponent self, EUnitType type, int tableId, int level)
         {
-            // if (self.dragPlacement)
-            // {
-            //     if (self.isNewBuilding) {
-            //         self.dragPlacement.Remove();
-            //     } else {
-            //         self.dragPlacement.SetPutPosition(self.gridMap.GetPutPosition(self.dragPlacement.placementData));
-            //     }
-            // }
-            // if (placement) {
-            //     placement.Reset();
-            //     self.dragPlacement = placement;
-            //     self.dragPlacement.SetPreviewMaterial();
-            //     self.isNewBuilding = true;
-            //     self.dragOffset = Vector3.zero;
-            // }
+            if (self.DragPlacement)
+            {
+                if (self.DragPlacement.placementData.isNew) {
+                    self.DragPlacement.Remove();
+                } else {
+                    GridMap gridMap = self.Room().GetComponent<LSCameraComponent>().GetGridMap();
+                    self.DragPlacement.SetPutPosition(gridMap.GetPutPosition(self.DragPlacement.placementData));
+                }
+            }
+
+            int targetModel = 0;
+            switch (type)
+            {
+                case EUnitType.Block:
+                    targetModel = TbBlock.Instance.Get(tableId).Model;
+                    break;
+                case EUnitType.Building:
+                    targetModel = TbBuilding.Instance.Get(tableId, level).Model;
+                    break;
+            }
+            if (targetModel == 0) {
+                return;
+            }
+            
+            Scene root = self.Root();
+            TbResourceRow resourceRow = TbResource.Instance.Get(targetModel);
+            GameObject prefab = root.GetComponent<ResourcesLoaderComponent>().LoadAssetSync<GameObject>(resourceRow.Url);
+            GlobalComponent globalComponent = root.GetComponent<GlobalComponent>();
+            GameObject go = UnityEngine.Object.Instantiate(prefab, globalComponent.Unit, true);
+            Placement placement = go.GetComponent<Placement>();
+            if (placement == null) {
+                UnityEngine.Object.DestroyImmediate(go);
+            } else {
+                self.DragPlacement = placement;
+                self.DragPlacement.SetPreviewMaterial();
+                self.DragOffset = Vector3.zero;
+            }
         }
 
-        public static void OnPlacementRotate(this LSGridBuilderComponent self, int rotation)
+        public static void OnPlacementRotate(this LSViewBuilderComponent self, int rotation)
         {
-            // if (self.dragPlacement)
-            // {
-            //     if (self.isNewBuilding) {
-            //         self.dragPlacement.Rotation(1);
-            //     }
-            // }
+            if (self.DragPlacement)
+            {
+                if (self.DragPlacement.placementData.isNew) {
+                    self.DragPlacement.Rotation(1);
+                }
+            }
         }
 
-        public static void OnPlacementCancel(this LSGridBuilderComponent self)
+        public static void OnPlacementCancel(this LSViewBuilderComponent self)
         {
-            // if (self.dragPlacement)
-            // {
-            //     if (self.isNewBuilding) {
-            //         self.dragPlacement.Remove();
-            //     } else {
-            //         self.dragPlacement.SetPutPosition(self.gridMap.GetPutPosition(self.dragPlacement.placementData));
-            //     }
-            //     self.dragPlacement = null;
-            //     self.isNewBuilding = false;
-            //     self.dragOffset = Vector3.zero;
-            // }
+            if (self.DragPlacement)
+            {
+                if (self.DragPlacement.placementData.isNew) {
+                    self.DragPlacement.Remove();
+                } else {
+                    GridMap gridMap = self.Room().GetComponent<LSCameraComponent>().GetGridMap();
+                    self.DragPlacement.SetPutPosition(gridMap.GetPutPosition(self.DragPlacement.placementData));
+                }
+                self.DragPlacement = null;
+            }
         }
 
     }

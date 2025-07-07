@@ -27,6 +27,7 @@ namespace ET
         PlacementDragStart,      // 拖拽开始
         PlacementDrag,           // 拖拽
         PlacementDragEnd,        // 拖拽结束
+        PlacementStart,     // 放置新物体
         Button,         // 按钮指令
         Online,         // 上下线指令 服务器生成该指令
         Gm,             // GM指令 正式服中丢弃该指令
@@ -34,7 +35,6 @@ namespace ET
     
     public enum CommandButtonType : byte
     {
-        PlacementStart,     // 放置
         PlacementRotate,    // 放置旋转
         PlacementCancel,    // 取消放置
         Jump,       // 跳跃

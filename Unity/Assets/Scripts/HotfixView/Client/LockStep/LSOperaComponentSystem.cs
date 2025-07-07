@@ -19,29 +19,29 @@ namespace ET.Client
             Vector2 axis = new Vector2(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical")).normalized;
             if (axis != self.Axis)
             {
-                ulong cmd = LSUtils.GenCommandFloat24x2(0, OperateCommandType.Move, axis.x, axis.y);
+                ulong cmd = LSCommand.GenCommandFloat24x2(0, OperateCommandType.Move, axis.x, axis.y);
                 self.SendCommandMeesage(room, cmd);
                 self.Axis = axis;
             }
             
             if (Input.GetKeyDown(KeyCode.J))
             {
-                ulong cmd = LSUtils.GenCommandButton(0, CommandButtonType.Attack);
+                ulong cmd = LSCommand.GenCommandButton(0, CommandButtonType.Attack);
                 self.SendCommandMeesage(room, cmd);
             }
             if (Input.GetKeyDown(KeyCode.K))
             {
-                ulong cmd = LSUtils.GenCommandButton(0, CommandButtonType.Skill1);
+                ulong cmd = LSCommand.GenCommandButton(0, CommandButtonType.Skill1);
                 self.SendCommandMeesage(room, cmd);
             }
             if (Input.GetKeyDown(KeyCode.L))
             {
-                ulong cmd = LSUtils.GenCommandButton(0, CommandButtonType.Skill2);
+                ulong cmd = LSCommand.GenCommandButton(0, CommandButtonType.Skill2);
                 self.SendCommandMeesage(room, cmd);
             }
             if (Input.GetKeyDown(KeyCode.Space))
             {
-                ulong cmd = LSUtils.GenCommandButton(0, CommandButtonType.Jump);
+                ulong cmd = LSCommand.GenCommandButton(0, CommandButtonType.Jump);
                 self.SendCommandMeesage(room, cmd);
             }
         }

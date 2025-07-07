@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using ST.GridBuilder;
+using UnityEngine;
 
 namespace ET.Client
 {
@@ -9,6 +10,9 @@ namespace ET.Client
 		private Camera camera;
 
 		public Transform Transform;
+		
+		public GridMap GridMap;
+		public GridMapIndicator GridMapIndicator;
 
 		public Camera Camera
 		{

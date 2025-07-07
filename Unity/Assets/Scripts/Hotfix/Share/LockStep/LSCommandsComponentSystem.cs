@@ -71,6 +71,16 @@ namespace ET
                     commands.Add(command);
                     break;
                 }
+                case OperateCommandType.PlacementStart:
+                {
+                    // 开始放置时，移除缓存的拖拽指令和常规指令
+                    List<ulong> commands = self.FramesCommandsDrag[index];
+                    commands.Clear();
+                    commands = self.FramesCommandsNormal[index];
+                    commands.Clear();
+                    commands.Add(command);
+                    break;
+                }
                 case OperateCommandType.Button:
                 {
                     // 按钮指令新来时，移除缓存的低优先级按钮指令

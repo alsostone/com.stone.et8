@@ -1,7 +1,5 @@
 using System.IO;
-using ST.GridBuilder;
 using TrueSync;
-using MemoryPack;
 
 namespace ET
 {
@@ -13,7 +11,7 @@ namespace ET
             return entity.IScene as Room;
         }
         
-        public static async ETTask InitNewWorld(this Room self, LSWorld lsWorld, LockStepMatchInfo matchInfo)
+        public static void InitNewWorld(this Room self, LSWorld lsWorld, LockStepMatchInfo matchInfo)
         {
             int frame = -1;
             self.AuthorityFrame = frame;
@@ -52,7 +50,7 @@ namespace ET
             self.ProcessLog.LogFrameEnd();
         }
 
-        public static async ETTask InitExsitWorld(this Room self, LSWorld lsWorld, LockStepMatchInfo matchInfo)
+        public static void InitExsitWorld(this Room self, LSWorld lsWorld, LockStepMatchInfo matchInfo)
         {
             int frame = lsWorld.Frame;
             self.AuthorityFrame = frame;
@@ -67,7 +65,6 @@ namespace ET
                 self.PlayerIds.Add(unitInfo.PlayerId);
             }
             self.ProcessLog.LogFrameEnd();
-            await ETTask.CompletedTask;
         }
 
         public static void Start(this Room self, long startTime)
@@ -92,7 +89,7 @@ namespace ET
             byte currentSeatIndex = 0;
             foreach (ulong command in frameMessage.Commands)
             {
-                byte seatIndex = LSUtils.ParseCommandSeatIndex(command);
+                byte seatIndex = LSCommand.ParseCommandSeatIndex(command);
                 if (lsCommandsRunComponent == null || currentSeatIndex != seatIndex)
                 {
                     LSUnit lsUnit = unitComponent.GetChild<LSUnit>(self.PlayerIds[seatIndex]);

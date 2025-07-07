@@ -20,25 +20,33 @@ namespace ET
             LSUnit unit = self.LSOwner();
             foreach (ulong command in self.Commands)
             {
-                switch (LSUtils.ParseCommandType(command))
+                switch (LSCommand.ParseCommandType(command))
                 {
                     case OperateCommandType.Move: {
-                        self.MoveAxis = LSUtils.ParseCommandFloat24x2(command).normalized;
+                        self.MoveAxis = LSCommand.ParseCommandFloat24x2(command).normalized;
                         break;
                     }
                     case OperateCommandType.PlacementDragStart: {
-                        long targetId = LSUtils.ParseCommandLong48(command);
+                        long targetId = (long)LSCommand.ParseCommandLong48(command);
                         self.RunCommandPlacementDragStart(targetId);
                         break;
                     }
                     case OperateCommandType.PlacementDrag: {
-                        TSVector2 pos = LSUtils.ParseCommandFloat24x2(command);
+                        TSVector2 pos = LSCommand.ParseCommandFloat24x2(command);
                         self.RunCommandPlacementDrag(pos);
                         break;
                     }
                     case OperateCommandType.PlacementDragEnd: {
-                        TSVector2 pos = LSUtils.ParseCommandFloat24x2(command);
+                        TSVector2 pos = LSCommand.ParseCommandFloat24x2(command);
                         self.RunCommandPlacementDragEnd(pos);
+                        break;
+                    }
+                    case OperateCommandType.PlacementStart: {
+                        ulong param = LSCommand.ParseCommandLong48(command);
+                        EUnitType type = (EUnitType)((param >> 40) & 0xFF);
+                        int level = (int)((param >> 32) & 0xFF);
+                        int tableId = (int)(param & 0xFFFFFFFF);
+                        self.RunCommandPlacementStart(type, tableId, level);
                         break;
                     }
                     case OperateCommandType.Button: {
@@ -55,14 +63,11 @@ namespace ET
 
         private static void RunCommandButton(this LSCommandsRunComponent self, LSUnit unit, ulong command)
         {
-            (CommandButtonType, int) button = LSUtils.ParseCommandButton(command);
+            (CommandButtonType, long) button = LSCommand.ParseCommandButton(command);
             switch (button.Item1)
             {
-                case CommandButtonType.PlacementStart:
-                    self.RunCommandPlacementStart(button.Item2);
-                    break;
                 case CommandButtonType.PlacementRotate:
-                    self.RunCommandPlacementRotate(button.Item2);
+                    self.RunCommandPlacementRotate((int)button.Item2);
                     break;
                 case CommandButtonType.PlacementCancel:
                     self.RunCommandPlacementCancel();
@@ -98,9 +103,10 @@ namespace ET
             EventSystem.Instance.Publish(self.LSWorld(), new LSPlacementDragEnd() {Id = self.LSOwner().Id, Position = position});
         }
 
-        private static void RunCommandPlacementStart(this LSCommandsRunComponent self, int tableId)
+        private static void RunCommandPlacementStart(this LSCommandsRunComponent self, EUnitType type, int tableId, int level)
         {
-            EventSystem.Instance.Publish(self.LSWorld(), new LSPlacementStart() {Id = self.LSOwner().Id, TableId = tableId });
+            EventSystem.Instance.Publish(self.LSWorld(), 
+                new LSPlacementStart() {Id = self.LSOwner().Id, Type = type, TableId = tableId, Level = level});
         }
         
         private static void RunCommandPlacementRotate(this LSCommandsRunComponent self, int rotation)

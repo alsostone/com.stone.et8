@@ -23,7 +23,9 @@ namespace ET
     public struct LSPlacementStart
     {
         public long Id;
+        public EUnitType Type;
         public int TableId;
+        public int Level;
     }
     
     public struct LSPlacementRotate
