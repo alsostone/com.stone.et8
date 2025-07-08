@@ -2,6 +2,38 @@ using TrueSync;
 
 namespace ET
 {
+    // 操作类型枚举
+    public enum OperateCommandType : byte
+    {
+        Invalid,        // 无效指令
+        Move,           // 移动
+        PlacementDragStart,      // 拖拽开始
+        PlacementDrag,           // 拖拽
+        PlacementDragEnd,        // 拖拽结束
+        PlacementStart,          // 放置新物体
+        Button,         // 按钮指令
+        Online,         // 上下线指令 服务器生成该指令
+        Gm,             // GM指令 正式服中丢弃该指令
+    }
+    
+    public enum CommandButtonType : byte
+    {
+        PlacementRotate,    // 放置旋转
+        PlacementCancel,    // 取消放置
+        Jump,       // 跳跃
+        Attack,     // 攻击
+        Skill1,     // 技能1
+        Skill2,     // 技能2
+        Skill3,     // 技能3
+        Skill4,     // 技能4
+    }
+
+    public enum CommandGMType : byte
+    {
+        Victory = 1,  // 结算胜利
+        Failure = 2,  // 结算失败
+    }
+
     public static class LSCommand
     {
         /// 特别注意：对于2个float类型的参数，将其乘以1000并转换为整数再保留24位
