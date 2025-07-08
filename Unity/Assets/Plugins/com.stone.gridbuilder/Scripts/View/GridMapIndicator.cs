@@ -5,10 +5,10 @@ namespace ST.GridBuilder
 {
     public class GridMapIndicator : MonoBehaviour
     {
-        [SerializeField] public GridMap gridMap;
         [SerializeField, Min(5)] public int indicatorSize = 11;
         [SerializeField] private GameObject indicatorPrefab;
         
+        private GridMap gridMap;
         private readonly Dictionary<(int, int), CellIndicator> indicators = new ();
         private readonly List<CellIndicator> indicatorPool = new ();
         private Transform poolGameObject;
@@ -18,12 +18,14 @@ namespace ST.GridBuilder
         
         private void Awake()
         {
-            if (gridMap == null)
-                gridMap = FindObjectOfType<GridMap>();
-            
             GameObject go = new GameObject("IndicatorPool");
             poolGameObject = go.transform;
             go.SetActive(false);
+        }
+        
+        public void SetGridMap(GridMap map)
+        {
+            this.gridMap = map;
         }
 
         public void ClearIndicator()

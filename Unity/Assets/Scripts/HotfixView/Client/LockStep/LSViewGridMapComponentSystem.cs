@@ -1,7 +1,4 @@
-using System;
 using ST.GridBuilder;
-using TrueSync;
-using UnityEngine;
 
 namespace ET.Client
 {
@@ -14,6 +11,7 @@ namespace ET.Client
         {
             self.GridMap = UnityEngine.Object.FindObjectOfType<GridMap>();
             self.GridMapIndicator = UnityEngine.Object.FindObjectOfType<GridMapIndicator>();
+            if (self.GridMapIndicator) self.GridMapIndicator.SetGridMap(self.GridMap);
         }
     }
 }
