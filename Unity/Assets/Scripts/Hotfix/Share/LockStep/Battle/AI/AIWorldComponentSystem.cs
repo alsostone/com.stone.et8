@@ -31,7 +31,18 @@ namespace ET
         private static void LSUpdate(this AIWorldComponent self)
         {self.LSRoom()?.ProcessLog.LogFunction(6, self.LSParent().Id);
             self.BehaveWorld.Update(LSConstValue.UpdateInterval * FP.EN3);
+            
+            for (int i = self.NeedStartUnits.Count - 1; i >= 0; i--)
+            {
+                LSUnit lsUnit = self.LSUnit(self.NeedStartUnits[i]);
+                lsUnit.GetComponent<AIRootComponent>().Start();
+                self.NeedStartUnits.RemoveAt(i);
+            }
         }
         
+        public static void AddNeedStartUnit(this AIWorldComponent self, LSUnit lsUnit)
+        {
+            self.NeedStartUnits.Add(lsUnit.Id);
+        }
     }
 }

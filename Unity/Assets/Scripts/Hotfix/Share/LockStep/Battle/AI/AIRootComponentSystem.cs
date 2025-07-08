@@ -13,6 +13,14 @@ namespace ET
         {self.LSRoom()?.ProcessLog.LogFunction(5, self.LSParent().Id);
             var worldComponent = self.LSWorld().GetComponent<AIWorldComponent>();
             self.AIRoot = new Root(worldComponent.BehaveWorld, node, self.LSOwner());
+            
+            // 不能在创建时调用Start，因为上下文可能还未完全初始化 如：AI的节点中用到TransformComponent组件但他还未被添加到实体
+            AIWorldComponent aiWorldComponent = self.LSWorld().GetComponent<AIWorldComponent>();
+            aiWorldComponent.AddNeedStartUnit(self.LSOwner());
+        }
+
+        public static void Start(this AIRootComponent self)
+        {
             self.AIRoot.Start();
         }
 
