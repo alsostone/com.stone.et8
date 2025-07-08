@@ -4,7 +4,6 @@ namespace ST.GridBuilder
 {
     public class Placement : MonoBehaviour
     {
-        [SerializeField, Range(0.1f, 1.0f)] public float putHeight = 0.5f;
         [SerializeField, Range(0.1f, 1.0f)] public float takeHeight = 0.5f;
         [SerializeField, HideInInspector] public PlacementData placementData = new();
         [SerializeField] private Material previewMaterial;
@@ -64,12 +63,12 @@ namespace ST.GridBuilder
         
         public void SetMovePosition(Vector3 pos)
         {
-            transform.position = pos + new Vector3(0, putHeight + takeHeight, 0);
+            transform.position = pos + new Vector3(0, takeHeight, 0);
         }
         
         public void SetPutPosition(Vector3 pos)
         {
-            transform.position = pos + new Vector3(0, putHeight, 0);
+            transform.position = pos;
         }
 
         public void Rotation(int r)
