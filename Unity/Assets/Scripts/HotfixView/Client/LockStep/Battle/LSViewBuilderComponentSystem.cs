@@ -101,7 +101,7 @@ namespace ET.Client
             TbResourceRow resourceRow = TbResource.Instance.Get(targetModel);
             GameObject prefab = root.GetComponent<ResourcesLoaderComponent>().LoadAssetSync<GameObject>(resourceRow.Url);
             GlobalComponent globalComponent = root.GetComponent<GlobalComponent>();
-            GameObject go = UnityEngine.Object.Instantiate(prefab, globalComponent.Unit, true);
+            GameObject go = UnityEngine.Object.Instantiate(prefab, new Vector3(0, 999999, 0), Quaternion.identity, globalComponent.Unit);
             Placement placement = go.GetComponent<Placement>();
             if (placement == null)
             {

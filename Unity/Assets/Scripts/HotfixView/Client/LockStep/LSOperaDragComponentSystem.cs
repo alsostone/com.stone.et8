@@ -66,7 +66,8 @@ namespace ET.Client
             }
             if (Input.GetKeyDown(KeyCode.N))
             {
-                self.SetPlacementObject(EUnitType.Block, 2001, 1);
+                int[] arr = new int[3] { 2001, 2002, 2003 };
+                self.SetPlacementObject(EUnitType.Block, arr[Random.Range(0, arr.Length)], 1);
             }
         }
         
