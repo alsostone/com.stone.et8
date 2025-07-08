@@ -11,7 +11,7 @@ namespace ET.Client
 		private static void Awake(this LSCameraComponent self)
 		{
 			self.Camera = Camera.main;
-			self.Camera.transform.rotation = Quaternion.Euler(new Vector3(20, 0, 0));
+			self.Camera.transform.rotation = Quaternion.Euler(new Vector3(70, 0, 0));
 		}
 		
 		[EntitySystem]
@@ -41,7 +41,7 @@ namespace ET.Client
 			}
 
 			Vector3 pos = lsUnit.GetComponent<LSViewTransformComponent>().Transform.position;
-			self.Transform.position = new Vector3(pos.x, pos.y + 3, pos.z - 5);
+			self.Transform.position = new Vector3(pos.x, pos.y + 8, pos.z - 2.5f);
 		}
 		
 	}
