@@ -97,22 +97,38 @@ namespace ET
 
         private static void RunCommandPlacementDragStart(this LSCommandsRunComponent self, long targetId)
         {
-            self.ClearPlacementData();
-            self.PlacementTargetId = targetId;
-            EventSystem.Instance.Publish(self.LSWorld(), new LSPlacementDragStart() { Id = self.LSOwner().Id, TargetId = targetId });
+            if (self.PlacementType == EUnitType.None && self.PlacementTargetId == 0)
+            {
+                self.ClearPlacementData();
+                self.PlacementTargetId = targetId;
+                self.PlacementDragOffset = new TSVector2(FP.MaxValue, FP.MaxValue);
+                EventSystem.Instance.Publish(self.LSWorld(), new LSPlacementDragStart() { Id = self.LSOwner().Id, TargetId = targetId });
+            }
         }
 
         private static void RunCommandPlacementDrag(this LSCommandsRunComponent self, TSVector2 position)
         {
-            // 拖动中 逻辑层不用做什么，把信息传递给表现层即可
+            if (self.PlacementType == EUnitType.None && self.PlacementTargetId == 0)
+                return;
+
+            if (self.PlacementTargetId > 0 && FP.MaxValue.Equals(self.PlacementDragOffset.y)) {
+                LSUnitComponent lsUnitComponent = self.LSWorld().GetComponent<LSUnitComponent>();
+                TransformComponent transformComponent = lsUnitComponent.GetChild<LSUnit>(self.PlacementTargetId)?.GetComponent<TransformComponent>();
+                self.PlacementDragOffset = transformComponent != null
+                        ? new TSVector2(transformComponent.Position.x - position.x, transformComponent.Position.z - position.y)
+                        : new TSVector2(0, 0);
+            }
             EventSystem.Instance.Publish(self.LSWorld(), new LSPlacementDrag() { Id = self.LSOwner().Id, Position = position });
         }
 
         private static void RunCommandPlacementDragEnd(this LSCommandsRunComponent self, TSVector2 position)
         {
+            if (self.PlacementType == EUnitType.None && self.PlacementTargetId == 0)
+                return;
+            
             LSWorld lsWorld = self.LSWorld();
             LSGridMapComponent lsGridMapComponent = lsWorld.GetComponent<LSGridMapComponent>();
-            IndexV2 index = lsGridMapComponent.ConvertToIndex(position);
+            IndexV2 index = lsGridMapComponent.ConvertToIndex(position + self.PlacementDragOffset);
             GridData gridData = lsGridMapComponent.GetGridData();
             
             LSUnitComponent lsUnitComponent = lsWorld.GetComponent<LSUnitComponent>();
@@ -162,17 +178,19 @@ namespace ET
                 else {
                     lsUnit.Dispose();
                 }
-                self.ClearPlacementData();
             }
+            self.ClearPlacementData();
             EventSystem.Instance.Publish(self.LSWorld(), new LSPlacementDragEnd() { Id = self.LSOwner().Id, Position = position });
         }
 
         private static void RunCommandPlacementStart(this LSCommandsRunComponent self, EUnitType type, int tableId, int level)
         {
-            self.ClearPlacementData();
+            self.PlacementTargetId = 0;
+            self.PlacementRotation = 0;
             self.PlacementType = type;
             self.PlacementTableId = tableId;
             self.PlacementLevel = level;
+            self.PlacementDragOffset = new TSVector2(0, 0);
             LSPlacementStart placementStart = new () { Id = self.LSOwner().Id, Type = type, TableId = tableId, Level = level };
             EventSystem.Instance.Publish(self.LSWorld(), placementStart);
         }
@@ -196,6 +214,7 @@ namespace ET
             self.PlacementType = EUnitType.None;
             self.PlacementTableId = 0;
             self.PlacementLevel = 0;
+            self.PlacementDragOffset = new TSVector2(FP.MaxValue, FP.MaxValue);
         }
     }
 }

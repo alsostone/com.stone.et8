@@ -16,5 +16,6 @@ namespace ET
         public EUnitType PlacementType;
         public int PlacementTableId;
         public int PlacementLevel;
+        public TSVector2 PlacementDragOffset;
     }
 }
