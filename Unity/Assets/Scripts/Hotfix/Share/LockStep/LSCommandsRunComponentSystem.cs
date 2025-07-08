@@ -197,12 +197,18 @@ namespace ET
 
         private static void RunCommandPlacementRotate(this LSCommandsRunComponent self, int rotation)
         {
+            if (self.PlacementType == EUnitType.None)
+                return;
+            
             self.PlacementRotation += rotation;
             EventSystem.Instance.Publish(self.LSWorld(), new LSPlacementRotate() { Id = self.LSOwner().Id, Rotation = rotation });
         }
 
         private static void RunCommandPlacementCancel(this LSCommandsRunComponent self)
         {
+            if (self.PlacementType == EUnitType.None && self.PlacementTargetId == 0)
+                return;
+
             self.ClearPlacementData();
             EventSystem.Instance.Publish(self.LSWorld(), new LSPlacementCancel() { Id = self.LSOwner().Id });
         }

@@ -3,7 +3,7 @@
 namespace ET.Client
 {
 	[ComponentOf]
-	public class LSViewPlacementComponent : Entity, IAwake<long, int, int>, IDestroy
+	public class LSViewPlacementComponent : Entity, IAwake<PlacementData>, IDestroy
 	{
 		public Placement Placement;
 	}

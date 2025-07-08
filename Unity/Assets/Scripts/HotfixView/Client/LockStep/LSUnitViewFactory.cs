@@ -71,7 +71,7 @@ namespace ET.Client
             lsUnitView.AddComponent<LSViewTransformComponent, Transform, bool>(unitGo.transform, false);
 
             PlacementData placementData = lsUnit.GetComponent<PlacementComponent>().PlacementData;
-            lsUnitView.AddComponent<LSViewPlacementComponent, long, int, int>(placementData.id, placementData.x, placementData.z);
+            lsUnitView.AddComponent<LSViewPlacementComponent, PlacementData>(placementData);
         }
 
         private static void CreateBuildingView(LSUnitViewComponent viewComponent, LSUnit lsUnit)
@@ -91,7 +91,7 @@ namespace ET.Client
             lsUnitView.AddComponent<LSViewSkillComponent>();
             
             PlacementData placementData = lsUnit.GetComponent<PlacementComponent>().PlacementData;
-            lsUnitView.AddComponent<LSViewPlacementComponent, long, int, int>(placementData.id, placementData.x, placementData.z);
+            lsUnitView.AddComponent<LSViewPlacementComponent, PlacementData>(placementData);
         }
 
         private static void CreateSoldierView(LSUnitViewComponent viewComponent, LSUnit lsUnit)

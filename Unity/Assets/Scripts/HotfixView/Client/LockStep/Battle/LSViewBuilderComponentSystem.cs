@@ -120,7 +120,7 @@ namespace ET.Client
             if (self.DragPlacement)
             {
                 if (self.DragPlacement.placementData.isNew) {
-                    self.DragPlacement.Rotation(1);
+                    self.DragPlacement.Rotation(rotation);
                 }
             }
         }
