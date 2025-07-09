@@ -31,7 +31,9 @@ namespace ET
 			lsUnit.AddComponent<BeHitComponent>();
 			lsUnit.AddComponent<SkillComponent, int[]>(row.Skills);
 			
+			lsUnit.AddComponent<LSGridBuilderComponent>();
 			lsUnit.AddComponent<LSCommandsRunComponent>();
+			
 			EventSystem.Instance.Publish(lsWorld, new LSUnitCreate() {LSUnit = lsUnit});
             return lsUnit;
         }
@@ -101,16 +103,16 @@ namespace ET
         
         public static LSUnit CreateBuilding(LSWorld lsWorld, int tableId, TSVector position, TSQuaternion rotation, TeamType teamType)
         {
-	        LSUnit lsUnit = CreateBuilding(lsWorld, tableId, teamType);
+	        LSUnit lsUnit = CreateBuilding(lsWorld, tableId, 1, teamType);
 	        lsUnit.AddComponent<TransformComponent, TSVector, TSQuaternion>(position, rotation);
 	        
 	        EventSystem.Instance.Publish(lsWorld, new LSUnitCreate() {LSUnit = lsUnit});
 	        return lsUnit;
         }
         
-        public static LSUnit CreateBuilding(LSWorld lsWorld, int tableId, TeamType teamType)
+        public static LSUnit CreateBuilding(LSWorld lsWorld, int tableId, int level, TeamType teamType)
         {
-	        TbBuildingRow row = TbBuilding.Instance.Get(tableId, 1);
+	        TbBuildingRow row = TbBuilding.Instance.Get(tableId, level);
 	        LSUnitComponent lsUnitComponent = lsWorld.GetComponent<LSUnitComponent>();
 	        LSUnit lsUnit = lsUnitComponent.AddChild<LSUnit>();
 	        lsUnit.Active = true;

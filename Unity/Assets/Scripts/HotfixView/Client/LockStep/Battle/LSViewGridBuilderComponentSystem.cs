@@ -5,23 +5,23 @@ using UnityEngine;
 
 namespace ET.Client
 {
-    [EntitySystemOf(typeof(LSViewBuilderComponent))]
-    [FriendOf(typeof(LSViewBuilderComponent))]
+    [EntitySystemOf(typeof(LSViewGridBuilderComponent))]
+    [FriendOf(typeof(LSViewGridBuilderComponent))]
     [FriendOf(typeof(LSViewPlacementComponent))]
-    public static partial class LSViewBuilderComponentSystem
+    public static partial class LSViewGridBuilderComponentSystem
     {
         [EntitySystem]
-        private static void Awake(this LSViewBuilderComponent self)
+        private static void Awake(this LSViewGridBuilderComponent self)
         {
         }
 
         [EntitySystem]
-        private static void Destroy(this LSViewBuilderComponent self)
+        private static void Destroy(this LSViewGridBuilderComponent self)
         {
             self.OnPlacementCancel();
         }
         
-        public static void OnPlacementDragStart(this LSViewBuilderComponent self, long targetId)
+        public static void OnPlacementDragStart(this LSViewGridBuilderComponent self, long targetId)
         {
             if (!self.DragPlacement)
             {
@@ -34,9 +34,9 @@ namespace ET.Client
                 LSViewGridMapComponent gridMapComponent = self.Room().GetComponent<LSViewGridMapComponent>();
                 if (gridMapComponent.GridMap.gridData.CanTake(placement.placementData))
                 {
-                    self.DragUnitView = lsUnitView;
                     lsUnitView.GetComponent<LSViewTransformComponent>().SetTransformEnabled(false);
                     self.DragPlacement = placement;
+                    self.DragUnitView = lsUnitView;
                     self.DragPlacement.SetPreviewMaterial();
                     self.DragOffset = new Vector3(0, float.MaxValue, 0);
                 } else {
@@ -45,13 +45,14 @@ namespace ET.Client
             }
         }
 
-        public static void OnPlacementDrag(this LSViewBuilderComponent self, TSVector2 position)
+        public static void OnPlacementDrag(this LSViewGridBuilderComponent self, TSVector2 position)
         {
             if (self.DragPlacement)
             {
                 LSViewGridMapComponent gridMapComponent = self.Room().GetComponent<LSViewGridMapComponent>();
                 GridMap gridMap = gridMapComponent.GridMap;
                 
+                // 第一个拖拽消息到达，记录偏移（因为单指令携带信息有限，本应在DragStart时记录）
                 Vector3 pos = new(position.x.AsFloat(), 0, position.y.AsFloat());
                 if (Math.Abs(self.DragOffset.y - float.MaxValue) < float.Epsilon) {
                     self.DragOffset = self.DragPlacement.GetPosition() - pos;
@@ -67,7 +68,7 @@ namespace ET.Client
             }
         }
 
-        public static void OnPlacementDragEnd(this LSViewBuilderComponent self, TSVector2 position)
+        public static void OnPlacementDragEnd(this LSViewGridBuilderComponent self, TSVector2 position)
         {
             if (self.DragPlacement)
             {
@@ -80,7 +81,7 @@ namespace ET.Client
             }
         }
 
-        public static void OnPlacementStart(this LSViewBuilderComponent self, EUnitType type, int tableId, int level)
+        public static void OnPlacementStart(this LSViewGridBuilderComponent self, EUnitType type, int tableId, int level)
         {
             self.OnPlacementCancel();
             int targetModel = 0;
@@ -102,6 +103,7 @@ namespace ET.Client
             GameObject prefab = root.GetComponent<ResourcesLoaderComponent>().LoadAssetSync<GameObject>(resourceRow.Url);
             GlobalComponent globalComponent = root.GetComponent<GlobalComponent>();
             GameObject go = UnityEngine.Object.Instantiate(prefab, new Vector3(0, 999999, 0), Quaternion.identity, globalComponent.Unit);
+            
             Placement placement = go.GetComponent<Placement>();
             if (placement == null)
             {
@@ -115,7 +117,7 @@ namespace ET.Client
             }
         }
 
-        public static void OnPlacementRotate(this LSViewBuilderComponent self, int rotation)
+        public static void OnPlacementRotate(this LSViewGridBuilderComponent self, int rotation)
         {
             if (self.DragPlacement)
             {
@@ -125,7 +127,7 @@ namespace ET.Client
             }
         }
 
-        public static void OnPlacementCancel(this LSViewBuilderComponent self)
+        public static void OnPlacementCancel(this LSViewGridBuilderComponent self)
         {
             if (self.DragPlacement)
             {

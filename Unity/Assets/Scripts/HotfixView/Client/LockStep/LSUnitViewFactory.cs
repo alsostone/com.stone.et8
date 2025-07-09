@@ -53,7 +53,7 @@ namespace ET.Client
             float hp = propComponent.Get(NumericType.Hp).AsFloat();
             float hpMax = propComponent.Get(NumericType.MaxHp).AsFloat();
             lsUnitView.AddComponent<LSViewHudComponent, Vector3, Transform, float, float>(Vector3.up * 3.5f, unitGo.transform, hp, hpMax);
-            lsUnitView.AddComponent<LSViewBuilderComponent>();
+            lsUnitView.AddComponent<LSViewGridBuilderComponent>();
         }
 
         private static void CreateBlockView(LSUnitViewComponent viewComponent, LSUnit lsUnit)

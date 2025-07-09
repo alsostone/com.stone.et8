@@ -9,7 +9,7 @@ namespace ET.Client
             if (comp == null)
                 return;
             var view = comp.GetChild<LSUnitView>(args.Id);
-            var builderComponent = view.GetComponent<LSViewBuilderComponent>();
+            var builderComponent = view.GetComponent<LSViewGridBuilderComponent>();
             if (builderComponent == null)
                 return;
             builderComponent.OnPlacementDragStart(args.TargetId);
@@ -26,7 +26,7 @@ namespace ET.Client
             if (comp == null)
                 return;
             var view = comp.GetChild<LSUnitView>(args.Id);
-            var builderComponent = view.GetComponent<LSViewBuilderComponent>();
+            var builderComponent = view.GetComponent<LSViewGridBuilderComponent>();
             if (builderComponent == null)
                 return;
             builderComponent.OnPlacementDrag(args.Position);
@@ -43,7 +43,7 @@ namespace ET.Client
             if (comp == null)
                 return;
             var view = comp.GetChild<LSUnitView>(args.Id);
-            var builderComponent = view.GetComponent<LSViewBuilderComponent>();
+            var builderComponent = view.GetComponent<LSViewGridBuilderComponent>();
             if (builderComponent == null)
                 return;
             builderComponent.OnPlacementDragEnd(args.Position);
@@ -60,7 +60,7 @@ namespace ET.Client
             if (comp == null)
                 return;
             var view = comp.GetChild<LSUnitView>(args.Id);
-            var builderComponent = view.GetComponent<LSViewBuilderComponent>();
+            var builderComponent = view.GetComponent<LSViewGridBuilderComponent>();
             if (builderComponent == null)
                 return;
             builderComponent.OnPlacementStart(args.Type, args.TableId, args.Level);
@@ -77,7 +77,7 @@ namespace ET.Client
             if (comp == null)
                 return;
             var view = comp.GetChild<LSUnitView>(args.Id);
-            var builderComponent = view.GetComponent<LSViewBuilderComponent>();
+            var builderComponent = view.GetComponent<LSViewGridBuilderComponent>();
             if (builderComponent == null)
                 return;
             builderComponent.OnPlacementRotate(args.Rotation);
@@ -94,7 +94,7 @@ namespace ET.Client
             if (comp == null)
                 return;
             var view = comp.GetChild<LSUnitView>(args.Id);
-            var builderComponent = view.GetComponent<LSViewBuilderComponent>();
+            var builderComponent = view.GetComponent<LSViewGridBuilderComponent>();
             if (builderComponent == null)
                 return;
             builderComponent.OnPlacementCancel();
