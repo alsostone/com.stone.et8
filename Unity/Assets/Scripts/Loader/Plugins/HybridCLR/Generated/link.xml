@@ -49,6 +49,8 @@
   </assembly>
   <assembly fullname="System">
     <type fullname="System.CodeDom.Compiler.GeneratedCodeAttribute" preserve="all" />
+    <type fullname="System.Collections.Generic.Queue`1" preserve="all" />
+    <type fullname="System.Collections.Generic.Queue`1/Enumerator" preserve="all" />
     <type fullname="System.Collections.Generic.SortedDictionary`2" preserve="all" />
     <type fullname="System.Collections.Generic.SortedDictionary`2/Enumerator" preserve="all" />
     <type fullname="System.Collections.Generic.SortedDictionary`2/ValueCollection" preserve="all" />
@@ -174,6 +176,7 @@
     <type fullname="ET.Object" preserve="all" />
     <type fullname="ET.ObjectPool" preserve="all" />
     <type fullname="ET.OpcodeType" preserve="all" />
+    <type fullname="ET.Options" preserve="all" />
     <type fullname="ET.ProcessInnerSender" preserve="all" />
     <type fullname="ET.ProcessInnerSenderSystem" preserve="all" />
     <type fullname="ET.RandomGenerator" preserve="all" />
@@ -253,6 +256,7 @@
     <type fullname="NPBehave.IAgent" preserve="all" />
     <type fullname="NPBehave.Node" preserve="all" />
     <type fullname="NPBehave.Node/State" preserve="all" />
+    <type fullname="NPBehave.NodeFormatter" preserve="all" />
     <type fullname="NPBehave.Operator" preserve="all" />
     <type fullname="NPBehave.Receiver" preserve="all" />
     <type fullname="NPBehave.Repeater" preserve="all" />
@@ -266,7 +270,11 @@
     <type fullname="NPBehave.WaitSecond" preserve="all" />
     <type fullname="NPBehave.WaitUntilStopped" preserve="all" />
     <type fullname="ProcessLogMgr" preserve="all" />
+    <type fullname="ST.GridBuilder.FieldV2" preserve="all" />
     <type fullname="ST.GridBuilder.GridData" preserve="all" />
+    <type fullname="ST.GridBuilder.IndexV2" preserve="all" />
+    <type fullname="ST.GridBuilder.PlacedLayer" preserve="all" />
+    <type fullname="ST.GridBuilder.PlacementData" preserve="all" />
     <type fullname="TrueSync.FP" preserve="all" />
     <type fullname="TrueSync.TSMath" preserve="all" />
     <type fullname="TrueSync.TSMatrix" preserve="all" />
@@ -293,6 +301,7 @@
     <type fullname="UnityEngine.Mathf" preserve="all" />
     <type fullname="UnityEngine.Object" preserve="all" />
     <type fullname="UnityEngine.Quaternion" preserve="all" />
+    <type fullname="UnityEngine.Random" preserve="all" />
     <type fullname="UnityEngine.Ray" preserve="all" />
     <type fullname="UnityEngine.Rect" preserve="all" />
     <type fullname="UnityEngine.RectTransform" preserve="all" />
@@ -304,12 +313,16 @@
   </assembly>
   <assembly fullname="UnityEngine.InputLegacyModule">
     <type fullname="UnityEngine.Input" preserve="all" />
+    <type fullname="UnityEngine.Touch" preserve="all" />
+    <type fullname="UnityEngine.TouchPhase" preserve="all" />
   </assembly>
   <assembly fullname="UnityEngine.PhysicsModule">
+    <type fullname="UnityEngine.Collider" preserve="all" />
     <type fullname="UnityEngine.Physics" preserve="all" />
     <type fullname="UnityEngine.RaycastHit" preserve="all" />
   </assembly>
   <assembly fullname="UnityEngine.UI">
+    <type fullname="UnityEngine.EventSystems.EventSystem" preserve="all" />
     <type fullname="UnityEngine.EventSystems.PointerEventData" preserve="all" />
     <type fullname="UnityEngine.UI.Toggle" preserve="all" />
   </assembly>
@@ -399,6 +412,11 @@
     <type fullname="YooAsset.UnloadSceneOperation" preserve="all" />
     <type fullname="YooAsset.YooAssets" preserve="all" />
   </assembly>
+  <assembly fullname="com.stone.GridBuilder">
+    <type fullname="ST.GridBuilder.GridMap" preserve="all" />
+    <type fullname="ST.GridBuilder.GridMapIndicator" preserve="all" />
+    <type fullname="ST.GridBuilder.Placement" preserve="all" />
+  </assembly>
   <assembly fullname="com.stone.hud">
     <type fullname="ST.HUD.HudRenderer" preserve="all" />
   </assembly>
@@ -446,7 +464,6 @@
     <type fullname="System.FlagsAttribute" preserve="all" />
     <type fullname="System.Func`1" preserve="all" />
     <type fullname="System.Func`2" preserve="all" />
-    <type fullname="System.HashCode" preserve="all" />
     <type fullname="System.IDisposable" preserve="all" />
     <type fullname="System.IO.BinaryReader" preserve="all" />
     <type fullname="System.IO.Directory" preserve="all" />
@@ -482,6 +499,7 @@
     <type fullname="System.Runtime.CompilerServices.RuntimeHelpers" preserve="all" />
     <type fullname="System.Runtime.CompilerServices.TaskAwaiter" preserve="all" />
     <type fullname="System.Runtime.CompilerServices.TaskAwaiter`1" preserve="all" />
+    <type fullname="System.Runtime.Versioning.TargetFrameworkAttribute" preserve="all" />
     <type fullname="System.RuntimeFieldHandle" preserve="all" />
     <type fullname="System.RuntimeTypeHandle" preserve="all" />
     <type fullname="System.Security.Permissions.SecurityAction" preserve="all" />

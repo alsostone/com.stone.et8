@@ -41,6 +41,9 @@ MonoBehaviour:
   - System.Runtime.CompilerServices.Unsafe.dll
   - YIUIFramework.dll
   - Sirenix.Serialization.AOTGenerated.dll
+  - DamageNumbersPro.dll
+  - com.stone.hud.dll
+  - com.stone.GridBuilder.dll
   outputLinkFile: Scripts/Loader/Plugins/HybridCLR/Generated/link.xml
   outputAOTGenericReferenceFile: Scripts/Loader/Plugins/HybridCLR/Generated/AOTGenericReferences.cs
   maxGenericReferenceIteration: 10
