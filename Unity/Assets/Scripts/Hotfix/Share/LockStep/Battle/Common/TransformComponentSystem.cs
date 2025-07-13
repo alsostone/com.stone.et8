@@ -45,7 +45,7 @@ namespace ET
         }
 
         public static void SetPosition(this TransformComponent self, TSVector position)
-        {
+        {self.LSRoom()?.ProcessLog.LogFunction(85, self.LSParent().Id);
             self.Position = position;
         }
     }

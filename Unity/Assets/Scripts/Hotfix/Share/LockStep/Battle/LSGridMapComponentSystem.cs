@@ -11,7 +11,7 @@ namespace ET
     {
         [EntitySystem]
         private static void Awake(this LSGridMapComponent self, string gridName)
-        {
+        {self.LSRoom()?.ProcessLog.LogFunction(82, self.LSParent().Id);
             self.GridName = gridName;
             byte[] gridBytes = FileComponent.Instance.Load(gridName);
             self.GridData = MemoryPackSerializer.Deserialize<GridData>(gridBytes);
@@ -29,24 +29,24 @@ namespace ET
         
         [LSEntitySystem]
         private static void LSUpdate(this LSGridMapComponent self)
-        {
+        {self.LSRoom()?.ProcessLog.LogFunction(81, self.LSParent().Id);
             // 每帧更新时重置流场 有脏标记
             self.GridData.ResetFlowField();
         }
         
         public static GridData GetGridData(this LSGridMapComponent self)
-        {
+        {self.LSRoom()?.ProcessLog.LogFunction(80, self.LSParent().Id);
             return self.GridData;
         }
         
         public static IndexV2 ConvertToIndex(this LSGridMapComponent self, TSVector2 position)
-        {
+        {self.LSRoom()?.ProcessLog.LogFunction(79, self.LSParent().Id);
             FieldV2 v2 = new FieldV2(position.x, position.y);
             return self.GridData.ConvertToIndex(ref v2);
         }
 
         public static TSVector GetPutPosition(this LSGridMapComponent self, PlacementData placementData)
-        {
+        {self.LSRoom()?.ProcessLog.LogFunction(78, self.LSParent().Id);
             int level = self.GridData.GetPointLevelCount(placementData.x, placementData.z, placementData);
             FieldV2 v2 = self.GridData.GetCellPosition(placementData.x, placementData.z);
             return new TSVector(v2.x, level * self.GridData.cellSize, v2.z);
@@ -54,7 +54,7 @@ namespace ET
 
         // 只允许反序列化时调用，战斗逻辑中应使用TryPut
         public static void Put(this LSGridMapComponent self, int x, int z, PlacementData placementData)
-        {
+        {self.LSRoom()?.ProcessLog.LogFunction(77, self.LSParent().Id, x, z);
             self.GridData.Put(x, z, placementData);
         }
     }

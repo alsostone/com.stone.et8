@@ -13,7 +13,7 @@ namespace ET
         }
 
         public static void RunCommandPlacementDragStart(this LSGridBuilderComponent self, long targetId)
-        {
+        {self.LSRoom()?.ProcessLog.LogFunction(76, self.LSParent().Id);
             if (self.PlacementType == EUnitType.None && self.PlacementTargetId == 0)
             {
                 self.PlacementTargetId = targetId;
@@ -23,7 +23,7 @@ namespace ET
         }
 
         public static void RunCommandPlacementDrag(this LSGridBuilderComponent self, TSVector2 position)
-        {
+        {self.LSRoom()?.ProcessLog.LogFunction(75, self.LSParent().Id);
             if (self.PlacementType == EUnitType.None && self.PlacementTargetId == 0)
                 return;
 
@@ -39,7 +39,7 @@ namespace ET
         }
 
         public static void RunCommandPlacementDragEnd(this LSGridBuilderComponent self, TSVector2 position)
-        {
+        {self.LSRoom()?.ProcessLog.LogFunction(74, self.LSParent().Id);
             if (self.PlacementType == EUnitType.None && self.PlacementTargetId == 0)
                 return;
             
@@ -101,7 +101,7 @@ namespace ET
         }
 
         public static void RunCommandPlacementStart(this LSGridBuilderComponent self, EUnitType type, int tableId, int level)
-        {
+        {self.LSRoom()?.ProcessLog.LogFunction(73, self.LSParent().Id, tableId, level);
             self.PlacementTargetId = 0;
             self.PlacementRotation = 0;
             self.PlacementType = type;
@@ -113,7 +113,7 @@ namespace ET
         }
 
         public static void RunCommandPlacementRotate(this LSGridBuilderComponent self, int rotation)
-        {
+        {self.LSRoom()?.ProcessLog.LogFunction(72, self.LSParent().Id, rotation);
             if (self.PlacementType == EUnitType.None)
                 return;
             
@@ -122,7 +122,7 @@ namespace ET
         }
 
         public static void RunCommandPlacementCancel(this LSGridBuilderComponent self)
-        {
+        {self.LSRoom()?.ProcessLog.LogFunction(71, self.LSParent().Id);
             if (self.PlacementType == EUnitType.None && self.PlacementTargetId == 0)
                 return;
 
@@ -131,7 +131,7 @@ namespace ET
         }
         
         private static void ClearPlacementData(this LSGridBuilderComponent self)
-        {
+        {self.LSRoom()?.ProcessLog.LogFunction(14, self.LSParent().Id);
             self.PlacementTargetId = 0;
             self.PlacementRotation = 0;
             self.PlacementType = EUnitType.None;

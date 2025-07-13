@@ -16,11 +16,11 @@ namespace ET
             
             // 不能在创建时调用Start，因为上下文可能还未完全初始化 如：AI的节点中用到TransformComponent组件但他还未被添加到实体
             AIWorldComponent aiWorldComponent = self.LSWorld().GetComponent<AIWorldComponent>();
-            aiWorldComponent.AddNeedStartUnit(self.LSOwner());
+            aiWorldComponent.NeedStartUnits.Add(self.LSOwner().Id);
         }
 
         public static void Start(this AIRootComponent self)
-        {
+        {self.LSRoom()?.ProcessLog.LogFunction(83, self.LSParent().Id);
             self.AIRoot.Start();
         }
 

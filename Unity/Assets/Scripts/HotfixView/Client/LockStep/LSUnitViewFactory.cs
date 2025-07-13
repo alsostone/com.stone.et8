@@ -45,6 +45,7 @@ namespace ET.Client
             GameObject unitGo = UnityEngine.Object.Instantiate(prefab, globalComponent.Unit, true);
 
             LSUnitView lsUnitView = viewComponent.AddChildWithId<LSUnitView, GameObject>(lsUnit.Id, unitGo);
+            viewComponent.PlayerViews.Add(lsUnitView);
             lsUnitView.AddComponent<LSAnimationComponent>();
             lsUnitView.AddComponent<LSViewTransformComponent, Transform, bool>(unitGo.transform, false);
             lsUnitView.AddComponent<LSViewSkillComponent>();

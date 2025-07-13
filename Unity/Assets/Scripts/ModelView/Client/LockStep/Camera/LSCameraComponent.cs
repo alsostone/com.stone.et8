@@ -24,17 +24,17 @@ namespace ET.Client
 			}
 		}
 
-		private EntityRef<LSUnitView> unitView;
+		private EntityRef<LSUnitView> lookUnitView;
 
-		public LSUnitView MyUnitView
+		public LSUnitView LookUnitView
 		{
 			get
 			{
-				return this.unitView;
+				return this.lookUnitView;
 			}
 			set
 			{
-				this.unitView = value;
+				this.lookUnitView = value;
 			}
 		}
 

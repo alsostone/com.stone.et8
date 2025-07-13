@@ -40,9 +40,5 @@ namespace ET
             }
         }
         
-        public static void AddNeedStartUnit(this AIWorldComponent self, LSUnit lsUnit)
-        {
-            self.NeedStartUnits.Add(lsUnit.Id);
-        }
     }
 }

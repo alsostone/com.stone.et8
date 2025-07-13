@@ -8,7 +8,7 @@ namespace ET
     {
         [EntitySystem]
         private static void Awake(this PlacementComponent self, PlacedLayer type, PlacedLayer placedLayer, bool[] shape)
-        {
+        {self.LSRoom()?.ProcessLog.LogFunction(87, self.LSParent().Id);
             self.PlacementData = new PlacementData();
             self.PlacementData.placementType = type;
             self.PlacementData.placedLayer = placedLayer;
@@ -27,7 +27,7 @@ namespace ET
         }
 
         public static PlacementData GetPlacementData(this PlacementComponent self)
-        {
+        {self.LSRoom()?.ProcessLog.LogFunction(86, self.LSParent().Id);
             return self.PlacementData;
         }
     }

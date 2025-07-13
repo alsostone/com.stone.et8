@@ -22,7 +22,7 @@ namespace ET
         public bool IsInconsistent { get; set; }
         
         // 玩家id列表
-        public List<long> PlayerIds { get; } = new(LSConstValue.MatchCount);
+        public List<long> PlayerIds { get; } = new();
         
         // 预测帧
         public int PredictionFrame { get; set; } = -1;

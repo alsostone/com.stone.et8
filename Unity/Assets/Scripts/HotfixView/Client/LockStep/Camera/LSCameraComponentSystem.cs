@@ -1,4 +1,4 @@
-﻿using ST.GridBuilder;
+﻿using System.Collections.Generic;
 using UnityEngine;
 
 namespace ET.Client
@@ -23,24 +23,24 @@ namespace ET.Client
 			{
 				if (Input.GetKeyDown(KeyCode.Tab))
 				{
-					++self.index;
-					self.MyUnitView = new LSUnitView();
+					List<EntityRef<LSUnitView>> views = room.GetComponent<LSUnitViewComponent>().PlayerViews;
+					self.index = (self.index + 1) % views.Count;
+					self.LookUnitView = views[self.index];
 				}
 			}
-
-			LSUnitView lsUnit = self.MyUnitView;
-			if (lsUnit == null)
+			else if (self.LookUnitView == null)
 			{
-				long id = room.IsReplay? room.PlayerIds[self.index % room.PlayerIds.Count] : room.GetParent<Scene>().GetComponent<PlayerComponent>().MyId;
-				self.MyUnitView = room.GetComponent<LSUnitViewComponent>().GetChild<LSUnitView>(id);
+				List<EntityRef<LSUnitView>> views = room.GetComponent<LSUnitViewComponent>().PlayerViews;
+				byte seatIndex = room.GetSeatIndex(room.GetParent<Scene>().GetComponent<PlayerComponent>().MyId);
+				self.LookUnitView = views[seatIndex];
 			}
-
-			if (lsUnit == null)
+			
+			if (self.LookUnitView == null)
 			{
 				return;
 			}
 
-			Vector3 pos = lsUnit.GetComponent<LSViewTransformComponent>().Transform.position;
+			Vector3 pos = self.LookUnitView.GetComponent<LSViewTransformComponent>().Transform.position;
 			self.Transform.position = new Vector3(pos.x, pos.y + 20, pos.z - 2.5f);
 		}
 		
