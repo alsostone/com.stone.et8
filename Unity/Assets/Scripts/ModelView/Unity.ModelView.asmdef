@@ -10,7 +10,7 @@
         "YooAsset",
         "Unity.TextMeshPro",
         "YIUIFramework",
-        "GridBuilder.View"
+        "com.stone.GridBuilder"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],

@@ -1,3 +1,4 @@
+#if UNITY_EDITOR
 using System.Text;
 using UnityEngine;
 using UnityEditor;
@@ -83,3 +84,4 @@ namespace ST.GridBuilder
 
     }
 }
+#endif

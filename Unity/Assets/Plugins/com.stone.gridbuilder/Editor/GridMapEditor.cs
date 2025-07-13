@@ -1,4 +1,4 @@
-using System;
+#if UNITY_EDITOR
 using System.IO;
 using MemoryPack;
 using UnityEngine;
@@ -141,3 +141,4 @@ namespace ST.GridBuilder
         
     }
 }
+#endif

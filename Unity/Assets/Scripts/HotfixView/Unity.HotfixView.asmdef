@@ -15,7 +15,7 @@
         "YIUIFramework",
         "com.stone.hud",
         "DamageNumbersPro",
-        "GridBuilder.View"
+        "com.stone.GridBuilder"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],

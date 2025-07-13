@@ -1,8 +1,9 @@
 {
-    "name": "GridBuilder.View",
+    "name": "com.stone.GridBuilder",
     "rootNamespace": "",
     "references": [
-        "GUID:1aa3e8589868c80499255710874679c0"
+        "Unity.ThirdParty",
+        "MemoryPack"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],
