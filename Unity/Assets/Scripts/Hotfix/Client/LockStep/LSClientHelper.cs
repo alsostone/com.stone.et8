@@ -33,19 +33,19 @@ namespace ET.Client
         // 回滚
         public static void Rollback(Room room, int frame)
         {
-            room.LSWorld.Dispose();
-            FrameBuffer frameBuffer = room.FrameBuffer;
+            room.IsRollback = true;
             
-            // 回滚
             room.ProcessLog.SetLogEnable(false);
+            room.LSWorld.Dispose();
             room.LSWorld = room.GetLSWorld(frame - 1);
             room.ProcessLog.SetLogEnable(true);
             
+            FrameBuffer frameBuffer = room.FrameBuffer;
             Room2C_FrameMessage authorityFrameMessage = frameBuffer.GetFrameMessage(frame);
+            
             // 执行AuthorityFrame
             room.Update(authorityFrameMessage);
             room.SendHash(frame);
-
             
             // 重新执行预测的帧
             for (int i = room.AuthorityFrame + 1; i <= room.PredictionFrame; ++i)
@@ -55,6 +55,7 @@ namespace ET.Client
             }
             
             RunLSRollbackSystem(room);
+            room.IsRollback = false;
         }
         
         public static void SendHash(this Room self, int frame)

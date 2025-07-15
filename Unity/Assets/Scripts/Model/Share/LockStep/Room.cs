@@ -51,6 +51,8 @@ namespace ET
 
         public bool IsReplay { get; set; }
         
+        public bool IsRollback { get; set ; }
+        
         public int SpeedMultiply { get; set; }
     }
 }

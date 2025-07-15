@@ -5,11 +5,13 @@ namespace ET.Client
     {
         protected override async ETTask Run(LSWorld lsWorld, LSUnitCreate args)
         {
-            Room room = lsWorld.GetParent<Room>();
-            LSUnitViewComponent viewComponent = room.GetComponent<LSUnitViewComponent>();
-            if (viewComponent == null)
+            var room = lsWorld.GetParent<Room>();
+            if (room.IsRollback)
+                return; // 不响应回滚过程中的消息。原因：1.RollbackSystem还未执行，单位可能不存在；2.回滚相关的所有恢复操作都应由RollbackSystem处理。
+            var comp = room.GetComponent<LSUnitViewComponent>();
+            if (comp == null)
                 return;
-            LSUnitViewFactory.CreateLSUnitView(viewComponent, args.LSUnit);
+            LSUnitViewFactory.CreateLSUnitView(comp, args.LSUnit);
             await ETTask.CompletedTask;
         }
     }
@@ -19,8 +21,10 @@ namespace ET.Client
     {
         protected override async ETTask Run(LSWorld lsWorld, LSUnitPlaced args)
         {
-            Room room = lsWorld.GetParent<Room>();
-            LSUnitViewComponent comp = room.GetComponent<LSUnitViewComponent>();
+            var room = lsWorld.GetParent<Room>();
+            if (room.IsRollback)
+                return; // 不响应回滚过程中的消息。原因：1.RollbackSystem还未执行，单位可能不存在；2.回滚相关的所有恢复操作都应由RollbackSystem处理。
+            var comp = room.GetComponent<LSUnitViewComponent>();
             if (comp == null)
                 return;
             var view = comp.GetChild<LSUnitView>(args.Id);
