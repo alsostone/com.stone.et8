@@ -39,6 +39,8 @@ namespace ET.Client
             self.u_EventSaveReplayHandle = self.u_EventSaveReplay.Add(self.OnEventSaveReplayAction);
             self.u_EventSaveName = self.UIBase.EventTable.FindEvent<UIEventP1<string>>("u_EventSaveName");
             self.u_EventSaveNameHandle = self.u_EventSaveName.Add(self.OnEventSaveNameAction);
+            self.u_EventTestMove = self.UIBase.EventTable.FindEvent<UIEventP0>("u_EventTestMove");
+            self.u_EventTestMoveHandle = self.u_EventTestMove.Add(self.OnEventTestMoveAction);
 
         }
     }

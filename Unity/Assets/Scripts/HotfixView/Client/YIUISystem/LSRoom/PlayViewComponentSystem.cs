@@ -2,6 +2,7 @@
 using UnityEngine;
 using YIUIFramework;
 using System.Collections.Generic;
+using Random = UnityEngine.Random;
 
 namespace ET.Client
 {
@@ -51,6 +52,12 @@ namespace ET.Client
         private static void OnEventSaveReplayAction(this PlayViewComponent self)
         {
             LSClientHelper.SaveReplay(self.Room(), self.SaveName);
+        }
+        
+        private static void OnEventTestMoveAction(this PlayViewComponent self)
+        {
+            ulong cmd = LSCommand.GenCommandFloat24x2(0, OperateCommandType.Move, Random.Range(-1, 1), Random.Range(-1, 1));
+            self.Room().SendCommandMeesage(cmd);
         }
         #endregion YIUIEvent结束
     }

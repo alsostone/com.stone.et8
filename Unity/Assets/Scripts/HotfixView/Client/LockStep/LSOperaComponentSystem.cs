@@ -20,40 +20,40 @@ namespace ET.Client
             if (axis != self.Axis)
             {
                 ulong cmd = LSCommand.GenCommandFloat24x2(0, OperateCommandType.Move, axis.x, axis.y);
-                self.SendCommandMeesage(room, cmd);
+                room.SendCommandMeesage(cmd);
                 self.Axis = axis;
             }
             
             if (Input.GetKeyDown(KeyCode.J))
             {
                 ulong cmd = LSCommand.GenCommandButton(0, CommandButtonType.Attack);
-                self.SendCommandMeesage(room, cmd);
+                room.SendCommandMeesage(cmd);
             }
             if (Input.GetKeyDown(KeyCode.K))
             {
                 ulong cmd = LSCommand.GenCommandButton(0, CommandButtonType.Skill1);
-                self.SendCommandMeesage(room, cmd);
+                room.SendCommandMeesage(cmd);
             }
             if (Input.GetKeyDown(KeyCode.L))
             {
                 ulong cmd = LSCommand.GenCommandButton(0, CommandButtonType.Skill2);
-                self.SendCommandMeesage(room, cmd);
+                room.SendCommandMeesage(cmd);
             }
             if (Input.GetKeyDown(KeyCode.Space))
             {
                 ulong cmd = LSCommand.GenCommandButton(0, CommandButtonType.Jump);
-                self.SendCommandMeesage(room, cmd);
+                room.SendCommandMeesage(cmd);
             }
         }
 
-        private static void SendCommandMeesage(this LSOperaComponent self, Room room, ulong command)
+        public static void SendCommandMeesage(this Room self, ulong command)
         {
             C2Room_FrameMessage sendFrameMessage = C2Room_FrameMessage.Create();
-            sendFrameMessage.Frame = room.PredictionFrame + 1;
+            sendFrameMessage.Frame = self.PredictionFrame + 1;
             sendFrameMessage.Command = command;
-            room.Root().GetComponent<ClientSenderComponent>().Send(sendFrameMessage);
+            self.Root().GetComponent<ClientSenderComponent>().Send(sendFrameMessage);
             
-            room.GetComponent<LSCommandsComponent>().AddCommand(room.PredictionFrame + 1, command);
+            self.GetComponent<LSCommandsComponent>().AddCommand(self.PredictionFrame + 1, command);
         }
 
     }

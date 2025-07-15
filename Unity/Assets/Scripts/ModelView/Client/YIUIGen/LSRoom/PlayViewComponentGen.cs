@@ -26,6 +26,8 @@ namespace ET.Client
         public UIEventHandleP0 u_EventSaveReplayHandle;
         public UIEventP1<string> u_EventSaveName;
         public UIEventHandleP1<string> u_EventSaveNameHandle;
+        public UIEventP0 u_EventTestMove;
+        public UIEventHandleP0 u_EventTestMoveHandle;
 
     }
 }

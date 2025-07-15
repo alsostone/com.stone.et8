@@ -80,7 +80,7 @@ namespace ET.Client
                     Placement buiding = target.GetComponent<Placement>();
                     if (buiding != null) {
                         ulong command = LSCommand.GenCommandLong48(0, OperateCommandType.PlacementDragStart, (ulong)buiding.placementData.id);
-                        self.SendCommandMeesage(command);
+                        self.GetParent<Room>().SendCommandMeesage(command);
                         self.isDraging = true;
                         return true;
                     }
@@ -95,7 +95,7 @@ namespace ET.Client
             {
                 if (self.RaycastTerrain(touchPosition, out Vector3 pos)) {
                     ulong command = LSCommand.GenCommandFloat24x2(0, OperateCommandType.PlacementDrag, pos.x, pos.z);
-                    self.SendCommandMeesage(command);
+                    self.GetParent<Room>().SendCommandMeesage(command);
                 }
             }
         }
@@ -107,12 +107,12 @@ namespace ET.Client
                 if (self.RaycastTerrain(touchPosition, out Vector3 pos))
                 {
                     ulong command = LSCommand.GenCommandFloat24x2(0, OperateCommandType.PlacementDragEnd, pos.x, pos.z);
-                    self.SendCommandMeesage(command);
+                    self.GetParent<Room>().SendCommandMeesage(command);
                 }
                 else
                 {
                     ulong command = LSCommand.GenCommandButton(0, CommandButtonType.PlacementCancel);
-                    self.SendCommandMeesage(command);
+                    self.GetParent<Room>().SendCommandMeesage(command);
                 }
                 self.isDraging = false;
             }
@@ -122,7 +122,7 @@ namespace ET.Client
         {
             ulong param = ((ulong)type << 40) | ((ulong)level << 32) | (uint)tableId;
             ulong command = LSCommand.GenCommandLong48(0, OperateCommandType.PlacementStart, param);
-            self.SendCommandMeesage(command);
+            self.GetParent<Room>().SendCommandMeesage(command);
             self.isDraging = true;
         }
 
@@ -131,7 +131,7 @@ namespace ET.Client
             if (self.isDraging)
             {
                 ulong command = LSCommand.GenCommandButton(0, CommandButtonType.PlacementRotate, rotation);
-                self.SendCommandMeesage(command);
+                self.GetParent<Room>().SendCommandMeesage(command);
             }
         }
         
@@ -140,7 +140,7 @@ namespace ET.Client
             if (self.isDraging)
             {
                 ulong command = LSCommand.GenCommandButton(0, CommandButtonType.PlacementCancel);
-                self.SendCommandMeesage(command);
+                self.GetParent<Room>().SendCommandMeesage(command);
                 self.isDraging = false;
             }
         }
@@ -170,17 +170,6 @@ namespace ET.Client
                 return true;
             }
             return false;
-        }
-
-        private static void SendCommandMeesage(this LSOperaDragComponent self, ulong command)
-        {
-            Room room = self.GetParent<Room>();
-            C2Room_FrameMessage sendFrameMessage = C2Room_FrameMessage.Create();
-            sendFrameMessage.Frame = room.PredictionFrame + 1;
-            sendFrameMessage.Command = command;
-            room.Root().GetComponent<ClientSenderComponent>().Send(sendFrameMessage);
-            
-            room.GetComponent<LSCommandsComponent>().AddCommand(room.PredictionFrame + 1, command);
         }
 
     }
