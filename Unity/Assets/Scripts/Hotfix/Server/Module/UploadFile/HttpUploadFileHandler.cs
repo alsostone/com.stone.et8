@@ -109,7 +109,7 @@ namespace ET.Server
                     string fileName = ExtractValue(headers, "filename");
                     
                     // 10. 保存数据
-                    string full = Path.Combine("../Logs", fileName);
+                    string full = Path.Combine(ConstValue.UploadFolder, fileName);
                     string path = Path.GetDirectoryName(full);
                     if (!string.IsNullOrEmpty(path) && !Directory.Exists(path))
                         Directory.CreateDirectory(path);

@@ -11,6 +11,7 @@ namespace ET.Client
     {
         protected override async ETTask Run(Scene root, Room2C_CheckHashFail message)
         {
+            UploadFileAddressComponent fileAddressComponent = root.GetComponent<UploadFileAddressComponent>();
             Room room = root.GetComponent<Room>();
             if (room.IsInconsistent)
                 return;
@@ -27,8 +28,8 @@ namespace ET.Client
                 using var ms = new MemoryStream();
                 BZip2.Compress(stream, ms, false, 6);
                 
-                await SaveToFile(ms.ToArray(), LSConstValue.ProcessFolderName, filename);
-                await SaveToFile(message.LSProcessBytes, LSConstValue.ProcessFolderNameSvr, filename);
+                await fileAddressComponent.UploadFile(ms.ToArray(), LSConstValue.ProcessFolderName, filename);
+                await fileAddressComponent.UploadFile(message.LSProcessBytes, LSConstValue.ProcessFolderNameSvr, filename);
             }
             
             // 如果服务器返回LSWorld，则保存双端的LSWorld到文件
@@ -38,11 +39,11 @@ namespace ET.Client
                 
                 LSWorld clientWorld = room.GetLSWorld(message.Frame);
                 using (root.AddChild(clientWorld)) {
-                    await SaveToFile(clientWorld.ToJson().ToUtf8(), LSConstValue.LSWroldFolderName, filename);
+                    await fileAddressComponent.UploadFile(clientWorld.ToJson().ToUtf8(), LSConstValue.LSWroldFolderName, filename);
                 }
                 LSWorld serverWorld = MemoryPackHelper.Deserialize(typeof(LSWorld), message.LSWorldBytes, 0, message.LSWorldBytes.Length) as LSWorld;
                 using (root.AddChild(serverWorld)) {
-                    await SaveToFile(serverWorld.ToJson().ToUtf8(), LSConstValue.LSWroldFolderNameSvr, filename);
+                    await fileAddressComponent.UploadFile(serverWorld.ToJson().ToUtf8(), LSConstValue.LSWroldFolderNameSvr, filename);
                 }
             }
             await ETTask.CompletedTask;
@@ -71,12 +72,12 @@ namespace ET.Client
         private async ETTask SaveToFile(byte[] bytes, string folderName, string fileName)
         {
             if (bytes != null && bytes.Length > 0) {
-                var path = $"/Users/stone/Library/Application Support/test/ET/{folderName}";
+                var path = Path.Combine(ConstValue.UploadFolder, folderName);
                 if (!Directory.Exists(path))
                     Directory.CreateDirectory(path);
                 await Task.Run(() =>
                 {
-                    var fullname = $"{path}/{fileName}";
+                    var fullname = Path.Combine(path, fileName);
                     using var fs = new FileStream(fullname, FileMode.Create);
                     fs.Write(bytes);
                 });

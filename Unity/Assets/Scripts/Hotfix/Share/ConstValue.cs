@@ -8,6 +8,6 @@ namespace ET
         public const int UploadFileHttpPort = 30400;
         public const int SessionTimeoutTime = 30 * 1000;
         
-        
+        public const string UploadFolder = "/Users/stone/Library/Application Support/test/ET";
     }
 }
