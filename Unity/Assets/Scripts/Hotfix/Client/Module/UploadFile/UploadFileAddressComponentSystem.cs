@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using System.Net.Http;
 
 namespace ET.Client
@@ -14,15 +15,15 @@ namespace ET.Client
             self.UploadFilePort = port;
         }
         
-        private static async ETTask UploadFile(this UploadFileAddressComponent self, byte[] bytes, string folderName, string fileName)
+        public static async ETTask UploadFile(this UploadFileAddressComponent self, byte[] bytes, string folderName, string fileName)
         {
-            string url = $"http://{self.UploadFileHost}:{self.UploadFilePort}/upload?v={RandomGenerator.RandUInt32()}";
+            string url = $"http://{self.UploadFileHost}:{self.UploadFilePort}/upload_file";
             Log.Debug($"upload file start: {url}");
-            string s = await UploadFileAsync(bytes, folderName, fileName, url);
-            Log.Debug($"upload file finish: {s}");
+            string s = await UploadFileAsync(bytes, Path.Combine(folderName, fileName), url);
+            Log.Debug($"upload file {s}");
         }
 
-        private static async ETTask<string> UploadFileAsync(byte[] bytes, string folderName, string fileName, string link)
+        private static async ETTask<string> UploadFileAsync(byte[] bytes, string fileName, string link)
         {
             try
             {
@@ -31,7 +32,6 @@ namespace ET.Client
 
                 ByteArrayContent fileContent = new(bytes);
                 formData.Add(fileContent, "file", fileName);
-                formData.Add(new StringContent("folderName"), folderName);
 
                 HttpResponseMessage response = await httpClient.PostAsync(link, formData);
                 string result = await response.Content.ReadAsStringAsync();
@@ -39,7 +39,7 @@ namespace ET.Client
             }
             catch (Exception e)
             {
-                return $"http request fail: {link.Substring(0,link.IndexOf('?'))}\n{e}";
+                return $"fail: {link}\n{e}";
             }
         }
     }
