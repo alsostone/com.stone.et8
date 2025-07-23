@@ -24,6 +24,7 @@ namespace ET
 		LockStepServer = 1 << 17,
 		RoomRoot = 1 << 18,
 		Watcher = 1 << 19,
+		UploadFile = 1 << 20,
 
 		// 客户端
 		Demo = 1 << 30,

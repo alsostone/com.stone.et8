@@ -86,5 +86,13 @@
     "SceneType": "Router",
     "Name": "Router04",
     "Port": 30304
+  },
+  {
+    "Id": 500,
+    "Process": 3,
+    "Zone": 3,
+    "SceneType": "UploadFile",
+    "Name": "UploadFile",
+    "Port": 30400
   }
 ]
