@@ -13,16 +13,14 @@ namespace ET.Client
         {
             UploadFileAddressComponent fileAddressComponent = root.GetComponent<UploadFileAddressComponent>();
             Room room = root.GetComponent<Room>();
-            if (room.IsInconsistent)
-                return;
-            
-            room.IsInconsistent = true;
+            long myId = root.GetComponent<PlayerComponent>().MyId;
+
             Log.Error($"Hash Inconsistent. frame: {message.Frame}");
             
             // 如果服务器返回ProcessLog，则保存双端的日志到文件
             if (message.LSProcessBytes != null)
             {
-                string filename = GetProcessLogFileSameName(message.Frame);
+                string filename = GetProcessLogFileSameName(room.Id, myId, message.Frame);
                 
                 using var stream = room.ProcessLog.GetLogStream();
                 using var ms = new MemoryStream();
@@ -35,7 +33,7 @@ namespace ET.Client
             // 如果服务器返回LSWorld，则保存双端的LSWorld到文件
             if (message.LSWorldBytes != null)
             {
-                string filename = GetLSWorldFileSameName(message.Frame);
+                string filename = GetLSWorldFileSameName(room.Id, myId, message.Frame);
                 
                 LSWorld clientWorld = room.GetLSWorld(message.Frame);
                 using (root.AddChild(clientWorld)) {
@@ -49,21 +47,25 @@ namespace ET.Client
             await ETTask.CompletedTask;
         }
         
-        private string GetProcessLogFileSameName(long key)
+        private string GetProcessLogFileSameName(long key, long id, int frame)
         {
             var filename = new StringBuilder();
             filename.Append("process_log_");
-            filename.Append(key);
+            filename.Append(key).Append("_");
+            filename.Append(id).Append("_");
+            filename.Append(frame);
             filename.Append("_").Append(DateTime.Now.ToString("yyyyMMddhhmmss"));
             filename.Append(".bin");
             return filename.ToString();
         }
         
-        private string GetLSWorldFileSameName(long key)
+        private string GetLSWorldFileSameName(long key, long id, int frame)
         {
             var filename = new StringBuilder();
             filename.Append("frame_lsworld_");
-            filename.Append(key);
+            filename.Append(key).Append("_");
+            filename.Append(id).Append("_");
+            filename.Append(frame);
             filename.Append("_").Append(DateTime.Now.ToString("yyyyMMddhhmmss"));
             filename.Append(".json");
             return filename.ToString();

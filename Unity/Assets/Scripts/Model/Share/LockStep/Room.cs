@@ -19,8 +19,6 @@ namespace ET
 
         public ProcessLogMgr ProcessLog { get; set; }
         
-        public bool IsInconsistent { get; set; }
-        
         // 玩家id列表
         public List<long> PlayerIds { get; } = new();
         

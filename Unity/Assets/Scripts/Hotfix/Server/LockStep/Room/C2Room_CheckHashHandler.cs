@@ -9,13 +9,15 @@ namespace ET.Server
         protected override async ETTask Run(Scene root, C2Room_CheckHash message)
         {
             Room room = root.GetComponent<Room>();
-            if (room.IsInconsistent)
+            RoomServerComponent roomServerComponent = room.GetComponent<RoomServerComponent>();
+            RoomPlayer roomPlayer = roomServerComponent.GetRoomPlayer(message.SeatIndex);
+            if (roomPlayer.IsInconsistent)
                 return;
             
             long hash = room.FrameBuffer.GetHash(message.Frame);
             if (message.Hash != hash)
             {
-                room.IsInconsistent = true;
+                roomPlayer.IsInconsistent = true;
 
                 using var stream = room.ProcessLog.GetLogStream();
                 using var ms = new MemoryStream();
