@@ -26,10 +26,10 @@ namespace ET.Server
             matchInfo.ActorId = root.GetActorId();
             matchInfo.MatchTime = TimeInfo.Instance.ServerFrameTime();
             matchInfo.Seed = (int)TimeInfo.Instance.ServerFrameTime();
-            foreach (RoomPlayer rp in roomServerComponent.Children.Values)
+            foreach (long playerId in roomServerComponent.PlayerIds)
             {
                 LockStepUnitInfo lockStepUnitInfo = LockStepUnitInfo.Create();
-                lockStepUnitInfo.PlayerId = rp.Id;
+                lockStepUnitInfo.PlayerId = playerId;
                 lockStepUnitInfo.Position = new TSVector(20, 0, -10);
                 lockStepUnitInfo.Rotation = TSQuaternion.identity;
                 matchInfo.UnitInfos.Add(lockStepUnitInfo);
