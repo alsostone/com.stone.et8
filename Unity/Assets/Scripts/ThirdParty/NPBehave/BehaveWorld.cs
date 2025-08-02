@@ -15,7 +15,7 @@ namespace NPBehave
         [BsonElement][MemoryPackInclude] private List<Blackboard> blackboards;
         [BsonElement][MemoryPackInclude] private Dictionary<string, int> sharedBlackboards;
         
-        [BsonIgnore][MemoryPackIgnore] public Dictionary<int, Receiver> GuidReceiverMapping = new Dictionary<int, Receiver>();
+        [BsonIgnore][MemoryPackIgnore] public Dictionary<long, Receiver> GuidReceiverMapping = new Dictionary<long, Receiver>();
         [BsonIgnore][MemoryPackIgnore] private TSRandom random;
         
         public BehaveWorld()
@@ -68,7 +68,7 @@ namespace NPBehave
             return ++currentGuid;
         }
         
-        public Blackboard GetBlackboard(int guid)
+        public Blackboard GetBlackboard(long guid)
         {
             if (GuidReceiverMapping.TryGetValue(guid, out var receiver))
             {

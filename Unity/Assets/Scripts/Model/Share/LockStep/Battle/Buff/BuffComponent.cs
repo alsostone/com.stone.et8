@@ -10,6 +10,6 @@ namespace ET
     public partial class BuffComponent : LSEntity, IAwake, IDestroy, ILSUpdate, ISerializeToEntity
     {
         [BsonDictionaryOptions(DictionaryRepresentation.ArrayOfArrays)]
-        public SortedDictionary<int, long> IdBuffMap = new();
+        public SortedDictionary<long, long> IdBuffMap = new();
     }
 }

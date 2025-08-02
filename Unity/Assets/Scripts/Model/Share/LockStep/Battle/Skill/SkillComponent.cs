@@ -10,7 +10,7 @@ namespace ET
     public partial class SkillComponent : LSEntity, IAwake<int[]>, IDestroy, ILSUpdate, ISerializeToEntity
     {
         [BsonDictionaryOptions(DictionaryRepresentation.ArrayOfArrays)]
-        public Dictionary<int, long> IdSkillMap = new Dictionary<int, long>();
+        public Dictionary<long, long> IdSkillMap = new Dictionary<long, long>();
 
         [BsonDictionaryOptions(DictionaryRepresentation.ArrayOfArrays)]
         public Dictionary<ESkillType, List<long>> TypeSkillsMap = new Dictionary<ESkillType, List<long>>();

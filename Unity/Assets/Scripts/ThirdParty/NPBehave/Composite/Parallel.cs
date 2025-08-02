@@ -21,7 +21,7 @@ namespace NPBehave
         [BsonElement][MemoryPackInclude] private int succeededCount = 0;
         [BsonElement][MemoryPackInclude] private int failedCount = 0;
         [BsonDictionaryOptions(DictionaryRepresentation.ArrayOfArrays)]
-        [BsonElement][MemoryPackInclude] private Dictionary<int, bool> childrenResults;
+        [BsonElement][MemoryPackInclude] private Dictionary<long, bool> childrenResults;
         [BsonElement][MemoryPackInclude] private bool successState;
         [BsonElement][MemoryPackInclude] private bool childrenAborted;
 
@@ -30,7 +30,7 @@ namespace NPBehave
             this.successPolicy = successPolicy;
             this.failurePolicy = failurePolicy;
             childrenCount = children.Length;
-            childrenResults = new Dictionary<int, bool>();
+            childrenResults = new Dictionary<long, bool>();
         }
 
         protected override void DoStart()

@@ -28,10 +28,10 @@ namespace NPBehave
         [BsonElement("IS")][BsonIgnoreIfDefault][MemoryPackInclude] private bool isInUpdate = false;
         
         [BsonDictionaryOptions(DictionaryRepresentation.ArrayOfArrays)]
-        [BsonElement("TM")][MemoryPackInclude] private SortedDictionary<int, Timer> sortedTimers = new SortedDictionary<int, Timer>();
+        [BsonElement("TM")][MemoryPackInclude] private SortedDictionary<long, Timer> sortedTimers = new SortedDictionary<long, Timer>();
         [BsonDictionaryOptions(DictionaryRepresentation.ArrayOfArrays)]
-        [BsonElement("AM")][MemoryPackInclude] private Dictionary<int, Timer> addTimers = new Dictionary<int, Timer>();
-        [BsonElement("RM")][MemoryPackInclude] private HashSet<int> removeTimers = new HashSet<int>();
+        [BsonElement("AM")][MemoryPackInclude] private Dictionary<long, Timer> addTimers = new Dictionary<long, Timer>();
+        [BsonElement("RM")][MemoryPackInclude] private HashSet<long> removeTimers = new HashSet<long>();
         
         [BsonElement("OB")][MemoryPackInclude] private HashSet<int> updateObservers = new HashSet<int>();
         [BsonElement("AB")][MemoryPackInclude] private HashSet<int> addObservers = new HashSet<int>();
@@ -106,7 +106,7 @@ namespace NPBehave
 			timer.ScheduleAbsoluteTime(behaveWorld, elapsedTime);
         }
 
-        public void RemoveTimer(int action)
+        public void RemoveTimer(long action)
         {
             if (!isInUpdate)
             {
