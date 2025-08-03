@@ -248,12 +248,13 @@ public class AOTGenericReferences : UnityEngine.MonoBehaviour
 	// MemoryPack.Formatters.DictionaryFormatter<int,int>
 	// MemoryPack.Formatters.DictionaryFormatter<int,long>
 	// MemoryPack.Formatters.DictionaryFormatter<int,object>
+	// MemoryPack.Formatters.DictionaryFormatter<long,long>
 	// MemoryPack.Formatters.ListFormatter<ET.SearchUnitPackable>
 	// MemoryPack.Formatters.ListFormatter<Unity.Mathematics.float3>
 	// MemoryPack.Formatters.ListFormatter<long>
 	// MemoryPack.Formatters.ListFormatter<object>
 	// MemoryPack.Formatters.ListFormatter<ulong>
-	// MemoryPack.Formatters.SortedDictionaryFormatter<int,long>
+	// MemoryPack.Formatters.SortedDictionaryFormatter<long,long>
 	// MemoryPack.Formatters.UnmanagedFormatter<int>
 	// MemoryPack.IMemoryPackFormatter<ET.SearchUnitPackable>
 	// MemoryPack.IMemoryPackFormatter<Unity.Mathematics.float3>
@@ -294,9 +295,9 @@ public class AOTGenericReferences : UnityEngine.MonoBehaviour
 	// System.Action<ET.NumericWatcherInfo>
 	// System.Action<ET.SearchUnit>
 	// System.Action<ET.SearchUnitPackable>
-	// System.Action<System.Collections.Generic.KeyValuePair<int,long>>
 	// System.Action<System.Collections.Generic.KeyValuePair<int,object>>
 	// System.Action<System.Collections.Generic.KeyValuePair<long,ET.EntityRef<object>>>
+	// System.Action<System.Collections.Generic.KeyValuePair<long,long>>
 	// System.Action<System.Collections.Generic.KeyValuePair<long,object>>
 	// System.Action<System.Collections.Generic.KeyValuePair<object,object>>
 	// System.Action<System.UIntPtr>
@@ -335,9 +336,9 @@ public class AOTGenericReferences : UnityEngine.MonoBehaviour
 	// System.Collections.Generic.ArraySortHelper<ET.NumericWatcherInfo>
 	// System.Collections.Generic.ArraySortHelper<ET.SearchUnit>
 	// System.Collections.Generic.ArraySortHelper<ET.SearchUnitPackable>
-	// System.Collections.Generic.ArraySortHelper<System.Collections.Generic.KeyValuePair<int,long>>
 	// System.Collections.Generic.ArraySortHelper<System.Collections.Generic.KeyValuePair<int,object>>
 	// System.Collections.Generic.ArraySortHelper<System.Collections.Generic.KeyValuePair<long,ET.EntityRef<object>>>
+	// System.Collections.Generic.ArraySortHelper<System.Collections.Generic.KeyValuePair<long,long>>
 	// System.Collections.Generic.ArraySortHelper<System.Collections.Generic.KeyValuePair<long,object>>
 	// System.Collections.Generic.ArraySortHelper<System.Collections.Generic.KeyValuePair<object,object>>
 	// System.Collections.Generic.ArraySortHelper<System.UIntPtr>
@@ -353,9 +354,9 @@ public class AOTGenericReferences : UnityEngine.MonoBehaviour
 	// System.Collections.Generic.Comparer<ET.NumericWatcherInfo>
 	// System.Collections.Generic.Comparer<ET.SearchUnit>
 	// System.Collections.Generic.Comparer<ET.SearchUnitPackable>
-	// System.Collections.Generic.Comparer<System.Collections.Generic.KeyValuePair<int,long>>
 	// System.Collections.Generic.Comparer<System.Collections.Generic.KeyValuePair<int,object>>
 	// System.Collections.Generic.Comparer<System.Collections.Generic.KeyValuePair<long,ET.EntityRef<object>>>
+	// System.Collections.Generic.Comparer<System.Collections.Generic.KeyValuePair<long,long>>
 	// System.Collections.Generic.Comparer<System.Collections.Generic.KeyValuePair<long,object>>
 	// System.Collections.Generic.Comparer<System.Collections.Generic.KeyValuePair<object,object>>
 	// System.Collections.Generic.Comparer<System.UIntPtr>
@@ -374,9 +375,9 @@ public class AOTGenericReferences : UnityEngine.MonoBehaviour
 	// System.Collections.Generic.ComparisonComparer<ET.NumericWatcherInfo>
 	// System.Collections.Generic.ComparisonComparer<ET.SearchUnit>
 	// System.Collections.Generic.ComparisonComparer<ET.SearchUnitPackable>
-	// System.Collections.Generic.ComparisonComparer<System.Collections.Generic.KeyValuePair<int,long>>
 	// System.Collections.Generic.ComparisonComparer<System.Collections.Generic.KeyValuePair<int,object>>
 	// System.Collections.Generic.ComparisonComparer<System.Collections.Generic.KeyValuePair<long,ET.EntityRef<object>>>
+	// System.Collections.Generic.ComparisonComparer<System.Collections.Generic.KeyValuePair<long,long>>
 	// System.Collections.Generic.ComparisonComparer<System.Collections.Generic.KeyValuePair<long,object>>
 	// System.Collections.Generic.ComparisonComparer<System.Collections.Generic.KeyValuePair<object,object>>
 	// System.Collections.Generic.ComparisonComparer<System.UIntPtr>
@@ -395,6 +396,7 @@ public class AOTGenericReferences : UnityEngine.MonoBehaviour
 	// System.Collections.Generic.Dictionary.Enumerator<int,long>
 	// System.Collections.Generic.Dictionary.Enumerator<int,object>
 	// System.Collections.Generic.Dictionary.Enumerator<long,ET.EntityRef<object>>
+	// System.Collections.Generic.Dictionary.Enumerator<long,long>
 	// System.Collections.Generic.Dictionary.Enumerator<long,object>
 	// System.Collections.Generic.Dictionary.Enumerator<object,float>
 	// System.Collections.Generic.Dictionary.Enumerator<object,int>
@@ -409,6 +411,7 @@ public class AOTGenericReferences : UnityEngine.MonoBehaviour
 	// System.Collections.Generic.Dictionary.KeyCollection.Enumerator<int,long>
 	// System.Collections.Generic.Dictionary.KeyCollection.Enumerator<int,object>
 	// System.Collections.Generic.Dictionary.KeyCollection.Enumerator<long,ET.EntityRef<object>>
+	// System.Collections.Generic.Dictionary.KeyCollection.Enumerator<long,long>
 	// System.Collections.Generic.Dictionary.KeyCollection.Enumerator<long,object>
 	// System.Collections.Generic.Dictionary.KeyCollection.Enumerator<object,float>
 	// System.Collections.Generic.Dictionary.KeyCollection.Enumerator<object,int>
@@ -423,6 +426,7 @@ public class AOTGenericReferences : UnityEngine.MonoBehaviour
 	// System.Collections.Generic.Dictionary.KeyCollection<int,long>
 	// System.Collections.Generic.Dictionary.KeyCollection<int,object>
 	// System.Collections.Generic.Dictionary.KeyCollection<long,ET.EntityRef<object>>
+	// System.Collections.Generic.Dictionary.KeyCollection<long,long>
 	// System.Collections.Generic.Dictionary.KeyCollection<long,object>
 	// System.Collections.Generic.Dictionary.KeyCollection<object,float>
 	// System.Collections.Generic.Dictionary.KeyCollection<object,int>
@@ -437,6 +441,7 @@ public class AOTGenericReferences : UnityEngine.MonoBehaviour
 	// System.Collections.Generic.Dictionary.ValueCollection.Enumerator<int,long>
 	// System.Collections.Generic.Dictionary.ValueCollection.Enumerator<int,object>
 	// System.Collections.Generic.Dictionary.ValueCollection.Enumerator<long,ET.EntityRef<object>>
+	// System.Collections.Generic.Dictionary.ValueCollection.Enumerator<long,long>
 	// System.Collections.Generic.Dictionary.ValueCollection.Enumerator<long,object>
 	// System.Collections.Generic.Dictionary.ValueCollection.Enumerator<object,float>
 	// System.Collections.Generic.Dictionary.ValueCollection.Enumerator<object,int>
@@ -451,6 +456,7 @@ public class AOTGenericReferences : UnityEngine.MonoBehaviour
 	// System.Collections.Generic.Dictionary.ValueCollection<int,long>
 	// System.Collections.Generic.Dictionary.ValueCollection<int,object>
 	// System.Collections.Generic.Dictionary.ValueCollection<long,ET.EntityRef<object>>
+	// System.Collections.Generic.Dictionary.ValueCollection<long,long>
 	// System.Collections.Generic.Dictionary.ValueCollection<long,object>
 	// System.Collections.Generic.Dictionary.ValueCollection<object,float>
 	// System.Collections.Generic.Dictionary.ValueCollection<object,int>
@@ -465,6 +471,7 @@ public class AOTGenericReferences : UnityEngine.MonoBehaviour
 	// System.Collections.Generic.Dictionary<int,long>
 	// System.Collections.Generic.Dictionary<int,object>
 	// System.Collections.Generic.Dictionary<long,ET.EntityRef<object>>
+	// System.Collections.Generic.Dictionary<long,long>
 	// System.Collections.Generic.Dictionary<long,object>
 	// System.Collections.Generic.Dictionary<object,float>
 	// System.Collections.Generic.Dictionary<object,int>
@@ -475,9 +482,9 @@ public class AOTGenericReferences : UnityEngine.MonoBehaviour
 	// System.Collections.Generic.EqualityComparer<ET.ActorId>
 	// System.Collections.Generic.EqualityComparer<ET.EntityRef<object>>
 	// System.Collections.Generic.EqualityComparer<ET.RpcInfo>
-	// System.Collections.Generic.EqualityComparer<System.Collections.Generic.KeyValuePair<int,long>>
 	// System.Collections.Generic.EqualityComparer<System.Collections.Generic.KeyValuePair<int,object>>
 	// System.Collections.Generic.EqualityComparer<System.Collections.Generic.KeyValuePair<long,ET.EntityRef<object>>>
+	// System.Collections.Generic.EqualityComparer<System.Collections.Generic.KeyValuePair<long,long>>
 	// System.Collections.Generic.EqualityComparer<System.Collections.Generic.KeyValuePair<long,object>>
 	// System.Collections.Generic.EqualityComparer<System.Collections.Generic.KeyValuePair<object,object>>
 	// System.Collections.Generic.EqualityComparer<System.ValueTuple<int,int>>
@@ -512,6 +519,7 @@ public class AOTGenericReferences : UnityEngine.MonoBehaviour
 	// System.Collections.Generic.ICollection<System.Collections.Generic.KeyValuePair<int,long>>
 	// System.Collections.Generic.ICollection<System.Collections.Generic.KeyValuePair<int,object>>
 	// System.Collections.Generic.ICollection<System.Collections.Generic.KeyValuePair<long,ET.EntityRef<object>>>
+	// System.Collections.Generic.ICollection<System.Collections.Generic.KeyValuePair<long,long>>
 	// System.Collections.Generic.ICollection<System.Collections.Generic.KeyValuePair<long,object>>
 	// System.Collections.Generic.ICollection<System.Collections.Generic.KeyValuePair<object,float>>
 	// System.Collections.Generic.ICollection<System.Collections.Generic.KeyValuePair<object,int>>
@@ -532,9 +540,9 @@ public class AOTGenericReferences : UnityEngine.MonoBehaviour
 	// System.Collections.Generic.IComparer<ET.NumericWatcherInfo>
 	// System.Collections.Generic.IComparer<ET.SearchUnit>
 	// System.Collections.Generic.IComparer<ET.SearchUnitPackable>
-	// System.Collections.Generic.IComparer<System.Collections.Generic.KeyValuePair<int,long>>
 	// System.Collections.Generic.IComparer<System.Collections.Generic.KeyValuePair<int,object>>
 	// System.Collections.Generic.IComparer<System.Collections.Generic.KeyValuePair<long,ET.EntityRef<object>>>
+	// System.Collections.Generic.IComparer<System.Collections.Generic.KeyValuePair<long,long>>
 	// System.Collections.Generic.IComparer<System.Collections.Generic.KeyValuePair<long,object>>
 	// System.Collections.Generic.IComparer<System.Collections.Generic.KeyValuePair<object,object>>
 	// System.Collections.Generic.IComparer<System.UIntPtr>
@@ -559,6 +567,7 @@ public class AOTGenericReferences : UnityEngine.MonoBehaviour
 	// System.Collections.Generic.IEnumerable<System.Collections.Generic.KeyValuePair<int,long>>
 	// System.Collections.Generic.IEnumerable<System.Collections.Generic.KeyValuePair<int,object>>
 	// System.Collections.Generic.IEnumerable<System.Collections.Generic.KeyValuePair<long,ET.EntityRef<object>>>
+	// System.Collections.Generic.IEnumerable<System.Collections.Generic.KeyValuePair<long,long>>
 	// System.Collections.Generic.IEnumerable<System.Collections.Generic.KeyValuePair<long,object>>
 	// System.Collections.Generic.IEnumerable<System.Collections.Generic.KeyValuePair<object,float>>
 	// System.Collections.Generic.IEnumerable<System.Collections.Generic.KeyValuePair<object,int>>
@@ -589,6 +598,7 @@ public class AOTGenericReferences : UnityEngine.MonoBehaviour
 	// System.Collections.Generic.IEnumerator<System.Collections.Generic.KeyValuePair<int,long>>
 	// System.Collections.Generic.IEnumerator<System.Collections.Generic.KeyValuePair<int,object>>
 	// System.Collections.Generic.IEnumerator<System.Collections.Generic.KeyValuePair<long,ET.EntityRef<object>>>
+	// System.Collections.Generic.IEnumerator<System.Collections.Generic.KeyValuePair<long,long>>
 	// System.Collections.Generic.IEnumerator<System.Collections.Generic.KeyValuePair<long,object>>
 	// System.Collections.Generic.IEnumerator<System.Collections.Generic.KeyValuePair<object,float>>
 	// System.Collections.Generic.IEnumerator<System.Collections.Generic.KeyValuePair<object,int>>
@@ -604,9 +614,9 @@ public class AOTGenericReferences : UnityEngine.MonoBehaviour
 	// System.Collections.Generic.IEnumerator<object>
 	// System.Collections.Generic.IEnumerator<ulong>
 	// System.Collections.Generic.IEnumerator<ushort>
-	// System.Collections.Generic.IEqualityComparer<System.Collections.Generic.KeyValuePair<int,long>>
 	// System.Collections.Generic.IEqualityComparer<System.Collections.Generic.KeyValuePair<int,object>>
 	// System.Collections.Generic.IEqualityComparer<System.Collections.Generic.KeyValuePair<long,ET.EntityRef<object>>>
+	// System.Collections.Generic.IEqualityComparer<System.Collections.Generic.KeyValuePair<long,long>>
 	// System.Collections.Generic.IEqualityComparer<System.Collections.Generic.KeyValuePair<long,object>>
 	// System.Collections.Generic.IEqualityComparer<System.Collections.Generic.KeyValuePair<object,object>>
 	// System.Collections.Generic.IEqualityComparer<System.ValueTuple<int,int>>
@@ -621,9 +631,9 @@ public class AOTGenericReferences : UnityEngine.MonoBehaviour
 	// System.Collections.Generic.IList<ET.NumericWatcherInfo>
 	// System.Collections.Generic.IList<ET.SearchUnit>
 	// System.Collections.Generic.IList<ET.SearchUnitPackable>
-	// System.Collections.Generic.IList<System.Collections.Generic.KeyValuePair<int,long>>
 	// System.Collections.Generic.IList<System.Collections.Generic.KeyValuePair<int,object>>
 	// System.Collections.Generic.IList<System.Collections.Generic.KeyValuePair<long,ET.EntityRef<object>>>
+	// System.Collections.Generic.IList<System.Collections.Generic.KeyValuePair<long,long>>
 	// System.Collections.Generic.IList<System.Collections.Generic.KeyValuePair<long,object>>
 	// System.Collections.Generic.IList<System.Collections.Generic.KeyValuePair<object,object>>
 	// System.Collections.Generic.IList<System.UIntPtr>
@@ -642,6 +652,7 @@ public class AOTGenericReferences : UnityEngine.MonoBehaviour
 	// System.Collections.Generic.KeyValuePair<int,long>
 	// System.Collections.Generic.KeyValuePair<int,object>
 	// System.Collections.Generic.KeyValuePair<long,ET.EntityRef<object>>
+	// System.Collections.Generic.KeyValuePair<long,long>
 	// System.Collections.Generic.KeyValuePair<long,object>
 	// System.Collections.Generic.KeyValuePair<object,float>
 	// System.Collections.Generic.KeyValuePair<object,int>
@@ -658,9 +669,9 @@ public class AOTGenericReferences : UnityEngine.MonoBehaviour
 	// System.Collections.Generic.List.Enumerator<ET.NumericWatcherInfo>
 	// System.Collections.Generic.List.Enumerator<ET.SearchUnit>
 	// System.Collections.Generic.List.Enumerator<ET.SearchUnitPackable>
-	// System.Collections.Generic.List.Enumerator<System.Collections.Generic.KeyValuePair<int,long>>
 	// System.Collections.Generic.List.Enumerator<System.Collections.Generic.KeyValuePair<int,object>>
 	// System.Collections.Generic.List.Enumerator<System.Collections.Generic.KeyValuePair<long,ET.EntityRef<object>>>
+	// System.Collections.Generic.List.Enumerator<System.Collections.Generic.KeyValuePair<long,long>>
 	// System.Collections.Generic.List.Enumerator<System.Collections.Generic.KeyValuePair<long,object>>
 	// System.Collections.Generic.List.Enumerator<System.Collections.Generic.KeyValuePair<object,object>>
 	// System.Collections.Generic.List.Enumerator<System.UIntPtr>
@@ -675,9 +686,9 @@ public class AOTGenericReferences : UnityEngine.MonoBehaviour
 	// System.Collections.Generic.List<ET.NumericWatcherInfo>
 	// System.Collections.Generic.List<ET.SearchUnit>
 	// System.Collections.Generic.List<ET.SearchUnitPackable>
-	// System.Collections.Generic.List<System.Collections.Generic.KeyValuePair<int,long>>
 	// System.Collections.Generic.List<System.Collections.Generic.KeyValuePair<int,object>>
 	// System.Collections.Generic.List<System.Collections.Generic.KeyValuePair<long,ET.EntityRef<object>>>
+	// System.Collections.Generic.List<System.Collections.Generic.KeyValuePair<long,long>>
 	// System.Collections.Generic.List<System.Collections.Generic.KeyValuePair<long,object>>
 	// System.Collections.Generic.List<System.Collections.Generic.KeyValuePair<object,object>>
 	// System.Collections.Generic.List<System.UIntPtr>
@@ -693,9 +704,9 @@ public class AOTGenericReferences : UnityEngine.MonoBehaviour
 	// System.Collections.Generic.ObjectComparer<ET.NumericWatcherInfo>
 	// System.Collections.Generic.ObjectComparer<ET.SearchUnit>
 	// System.Collections.Generic.ObjectComparer<ET.SearchUnitPackable>
-	// System.Collections.Generic.ObjectComparer<System.Collections.Generic.KeyValuePair<int,long>>
 	// System.Collections.Generic.ObjectComparer<System.Collections.Generic.KeyValuePair<int,object>>
 	// System.Collections.Generic.ObjectComparer<System.Collections.Generic.KeyValuePair<long,ET.EntityRef<object>>>
+	// System.Collections.Generic.ObjectComparer<System.Collections.Generic.KeyValuePair<long,long>>
 	// System.Collections.Generic.ObjectComparer<System.Collections.Generic.KeyValuePair<long,object>>
 	// System.Collections.Generic.ObjectComparer<System.Collections.Generic.KeyValuePair<object,object>>
 	// System.Collections.Generic.ObjectComparer<System.UIntPtr>
@@ -710,9 +721,9 @@ public class AOTGenericReferences : UnityEngine.MonoBehaviour
 	// System.Collections.Generic.ObjectEqualityComparer<ET.ActorId>
 	// System.Collections.Generic.ObjectEqualityComparer<ET.EntityRef<object>>
 	// System.Collections.Generic.ObjectEqualityComparer<ET.RpcInfo>
-	// System.Collections.Generic.ObjectEqualityComparer<System.Collections.Generic.KeyValuePair<int,long>>
 	// System.Collections.Generic.ObjectEqualityComparer<System.Collections.Generic.KeyValuePair<int,object>>
 	// System.Collections.Generic.ObjectEqualityComparer<System.Collections.Generic.KeyValuePair<long,ET.EntityRef<object>>>
+	// System.Collections.Generic.ObjectEqualityComparer<System.Collections.Generic.KeyValuePair<long,long>>
 	// System.Collections.Generic.ObjectEqualityComparer<System.Collections.Generic.KeyValuePair<long,object>>
 	// System.Collections.Generic.ObjectEqualityComparer<System.Collections.Generic.KeyValuePair<object,object>>
 	// System.Collections.Generic.ObjectEqualityComparer<System.ValueTuple<int,int>>
@@ -730,133 +741,133 @@ public class AOTGenericReferences : UnityEngine.MonoBehaviour
 	// System.Collections.Generic.Queue<int>
 	// System.Collections.Generic.Queue<object>
 	// System.Collections.Generic.Queue<ulong>
-	// System.Collections.Generic.SortedDictionary.<>c__DisplayClass34_0<int,long>
 	// System.Collections.Generic.SortedDictionary.<>c__DisplayClass34_0<int,object>
 	// System.Collections.Generic.SortedDictionary.<>c__DisplayClass34_0<long,ET.EntityRef<object>>
+	// System.Collections.Generic.SortedDictionary.<>c__DisplayClass34_0<long,long>
 	// System.Collections.Generic.SortedDictionary.<>c__DisplayClass34_0<long,object>
 	// System.Collections.Generic.SortedDictionary.<>c__DisplayClass34_0<object,object>
-	// System.Collections.Generic.SortedDictionary.<>c__DisplayClass34_1<int,long>
 	// System.Collections.Generic.SortedDictionary.<>c__DisplayClass34_1<int,object>
 	// System.Collections.Generic.SortedDictionary.<>c__DisplayClass34_1<long,ET.EntityRef<object>>
+	// System.Collections.Generic.SortedDictionary.<>c__DisplayClass34_1<long,long>
 	// System.Collections.Generic.SortedDictionary.<>c__DisplayClass34_1<long,object>
 	// System.Collections.Generic.SortedDictionary.<>c__DisplayClass34_1<object,object>
-	// System.Collections.Generic.SortedDictionary.Enumerator<int,long>
 	// System.Collections.Generic.SortedDictionary.Enumerator<int,object>
 	// System.Collections.Generic.SortedDictionary.Enumerator<long,ET.EntityRef<object>>
+	// System.Collections.Generic.SortedDictionary.Enumerator<long,long>
 	// System.Collections.Generic.SortedDictionary.Enumerator<long,object>
 	// System.Collections.Generic.SortedDictionary.Enumerator<object,object>
-	// System.Collections.Generic.SortedDictionary.KeyCollection.<>c__DisplayClass5_0<int,long>
 	// System.Collections.Generic.SortedDictionary.KeyCollection.<>c__DisplayClass5_0<int,object>
 	// System.Collections.Generic.SortedDictionary.KeyCollection.<>c__DisplayClass5_0<long,ET.EntityRef<object>>
+	// System.Collections.Generic.SortedDictionary.KeyCollection.<>c__DisplayClass5_0<long,long>
 	// System.Collections.Generic.SortedDictionary.KeyCollection.<>c__DisplayClass5_0<long,object>
 	// System.Collections.Generic.SortedDictionary.KeyCollection.<>c__DisplayClass5_0<object,object>
-	// System.Collections.Generic.SortedDictionary.KeyCollection.<>c__DisplayClass6_0<int,long>
 	// System.Collections.Generic.SortedDictionary.KeyCollection.<>c__DisplayClass6_0<int,object>
 	// System.Collections.Generic.SortedDictionary.KeyCollection.<>c__DisplayClass6_0<long,ET.EntityRef<object>>
+	// System.Collections.Generic.SortedDictionary.KeyCollection.<>c__DisplayClass6_0<long,long>
 	// System.Collections.Generic.SortedDictionary.KeyCollection.<>c__DisplayClass6_0<long,object>
 	// System.Collections.Generic.SortedDictionary.KeyCollection.<>c__DisplayClass6_0<object,object>
-	// System.Collections.Generic.SortedDictionary.KeyCollection.Enumerator<int,long>
 	// System.Collections.Generic.SortedDictionary.KeyCollection.Enumerator<int,object>
 	// System.Collections.Generic.SortedDictionary.KeyCollection.Enumerator<long,ET.EntityRef<object>>
+	// System.Collections.Generic.SortedDictionary.KeyCollection.Enumerator<long,long>
 	// System.Collections.Generic.SortedDictionary.KeyCollection.Enumerator<long,object>
 	// System.Collections.Generic.SortedDictionary.KeyCollection.Enumerator<object,object>
-	// System.Collections.Generic.SortedDictionary.KeyCollection<int,long>
 	// System.Collections.Generic.SortedDictionary.KeyCollection<int,object>
 	// System.Collections.Generic.SortedDictionary.KeyCollection<long,ET.EntityRef<object>>
+	// System.Collections.Generic.SortedDictionary.KeyCollection<long,long>
 	// System.Collections.Generic.SortedDictionary.KeyCollection<long,object>
 	// System.Collections.Generic.SortedDictionary.KeyCollection<object,object>
-	// System.Collections.Generic.SortedDictionary.KeyValuePairComparer<int,long>
 	// System.Collections.Generic.SortedDictionary.KeyValuePairComparer<int,object>
 	// System.Collections.Generic.SortedDictionary.KeyValuePairComparer<long,ET.EntityRef<object>>
+	// System.Collections.Generic.SortedDictionary.KeyValuePairComparer<long,long>
 	// System.Collections.Generic.SortedDictionary.KeyValuePairComparer<long,object>
 	// System.Collections.Generic.SortedDictionary.KeyValuePairComparer<object,object>
-	// System.Collections.Generic.SortedDictionary.ValueCollection.<>c__DisplayClass5_0<int,long>
 	// System.Collections.Generic.SortedDictionary.ValueCollection.<>c__DisplayClass5_0<int,object>
 	// System.Collections.Generic.SortedDictionary.ValueCollection.<>c__DisplayClass5_0<long,ET.EntityRef<object>>
+	// System.Collections.Generic.SortedDictionary.ValueCollection.<>c__DisplayClass5_0<long,long>
 	// System.Collections.Generic.SortedDictionary.ValueCollection.<>c__DisplayClass5_0<long,object>
 	// System.Collections.Generic.SortedDictionary.ValueCollection.<>c__DisplayClass5_0<object,object>
-	// System.Collections.Generic.SortedDictionary.ValueCollection.<>c__DisplayClass6_0<int,long>
 	// System.Collections.Generic.SortedDictionary.ValueCollection.<>c__DisplayClass6_0<int,object>
 	// System.Collections.Generic.SortedDictionary.ValueCollection.<>c__DisplayClass6_0<long,ET.EntityRef<object>>
+	// System.Collections.Generic.SortedDictionary.ValueCollection.<>c__DisplayClass6_0<long,long>
 	// System.Collections.Generic.SortedDictionary.ValueCollection.<>c__DisplayClass6_0<long,object>
 	// System.Collections.Generic.SortedDictionary.ValueCollection.<>c__DisplayClass6_0<object,object>
-	// System.Collections.Generic.SortedDictionary.ValueCollection.Enumerator<int,long>
 	// System.Collections.Generic.SortedDictionary.ValueCollection.Enumerator<int,object>
 	// System.Collections.Generic.SortedDictionary.ValueCollection.Enumerator<long,ET.EntityRef<object>>
+	// System.Collections.Generic.SortedDictionary.ValueCollection.Enumerator<long,long>
 	// System.Collections.Generic.SortedDictionary.ValueCollection.Enumerator<long,object>
 	// System.Collections.Generic.SortedDictionary.ValueCollection.Enumerator<object,object>
-	// System.Collections.Generic.SortedDictionary.ValueCollection<int,long>
 	// System.Collections.Generic.SortedDictionary.ValueCollection<int,object>
 	// System.Collections.Generic.SortedDictionary.ValueCollection<long,ET.EntityRef<object>>
+	// System.Collections.Generic.SortedDictionary.ValueCollection<long,long>
 	// System.Collections.Generic.SortedDictionary.ValueCollection<long,object>
 	// System.Collections.Generic.SortedDictionary.ValueCollection<object,object>
-	// System.Collections.Generic.SortedDictionary<int,long>
 	// System.Collections.Generic.SortedDictionary<int,object>
 	// System.Collections.Generic.SortedDictionary<long,ET.EntityRef<object>>
+	// System.Collections.Generic.SortedDictionary<long,long>
 	// System.Collections.Generic.SortedDictionary<long,object>
 	// System.Collections.Generic.SortedDictionary<object,object>
-	// System.Collections.Generic.SortedSet.<>c__DisplayClass52_0<System.Collections.Generic.KeyValuePair<int,long>>
 	// System.Collections.Generic.SortedSet.<>c__DisplayClass52_0<System.Collections.Generic.KeyValuePair<int,object>>
 	// System.Collections.Generic.SortedSet.<>c__DisplayClass52_0<System.Collections.Generic.KeyValuePair<long,ET.EntityRef<object>>>
+	// System.Collections.Generic.SortedSet.<>c__DisplayClass52_0<System.Collections.Generic.KeyValuePair<long,long>>
 	// System.Collections.Generic.SortedSet.<>c__DisplayClass52_0<System.Collections.Generic.KeyValuePair<long,object>>
 	// System.Collections.Generic.SortedSet.<>c__DisplayClass52_0<System.Collections.Generic.KeyValuePair<object,object>>
-	// System.Collections.Generic.SortedSet.<>c__DisplayClass53_0<System.Collections.Generic.KeyValuePair<int,long>>
 	// System.Collections.Generic.SortedSet.<>c__DisplayClass53_0<System.Collections.Generic.KeyValuePair<int,object>>
 	// System.Collections.Generic.SortedSet.<>c__DisplayClass53_0<System.Collections.Generic.KeyValuePair<long,ET.EntityRef<object>>>
+	// System.Collections.Generic.SortedSet.<>c__DisplayClass53_0<System.Collections.Generic.KeyValuePair<long,long>>
 	// System.Collections.Generic.SortedSet.<>c__DisplayClass53_0<System.Collections.Generic.KeyValuePair<long,object>>
 	// System.Collections.Generic.SortedSet.<>c__DisplayClass53_0<System.Collections.Generic.KeyValuePair<object,object>>
-	// System.Collections.Generic.SortedSet.<>c__DisplayClass85_0<System.Collections.Generic.KeyValuePair<int,long>>
 	// System.Collections.Generic.SortedSet.<>c__DisplayClass85_0<System.Collections.Generic.KeyValuePair<int,object>>
 	// System.Collections.Generic.SortedSet.<>c__DisplayClass85_0<System.Collections.Generic.KeyValuePair<long,ET.EntityRef<object>>>
+	// System.Collections.Generic.SortedSet.<>c__DisplayClass85_0<System.Collections.Generic.KeyValuePair<long,long>>
 	// System.Collections.Generic.SortedSet.<>c__DisplayClass85_0<System.Collections.Generic.KeyValuePair<long,object>>
 	// System.Collections.Generic.SortedSet.<>c__DisplayClass85_0<System.Collections.Generic.KeyValuePair<object,object>>
-	// System.Collections.Generic.SortedSet.<Reverse>d__94<System.Collections.Generic.KeyValuePair<int,long>>
 	// System.Collections.Generic.SortedSet.<Reverse>d__94<System.Collections.Generic.KeyValuePair<int,object>>
 	// System.Collections.Generic.SortedSet.<Reverse>d__94<System.Collections.Generic.KeyValuePair<long,ET.EntityRef<object>>>
+	// System.Collections.Generic.SortedSet.<Reverse>d__94<System.Collections.Generic.KeyValuePair<long,long>>
 	// System.Collections.Generic.SortedSet.<Reverse>d__94<System.Collections.Generic.KeyValuePair<long,object>>
 	// System.Collections.Generic.SortedSet.<Reverse>d__94<System.Collections.Generic.KeyValuePair<object,object>>
-	// System.Collections.Generic.SortedSet.Enumerator<System.Collections.Generic.KeyValuePair<int,long>>
 	// System.Collections.Generic.SortedSet.Enumerator<System.Collections.Generic.KeyValuePair<int,object>>
 	// System.Collections.Generic.SortedSet.Enumerator<System.Collections.Generic.KeyValuePair<long,ET.EntityRef<object>>>
+	// System.Collections.Generic.SortedSet.Enumerator<System.Collections.Generic.KeyValuePair<long,long>>
 	// System.Collections.Generic.SortedSet.Enumerator<System.Collections.Generic.KeyValuePair<long,object>>
 	// System.Collections.Generic.SortedSet.Enumerator<System.Collections.Generic.KeyValuePair<object,object>>
-	// System.Collections.Generic.SortedSet.Node<System.Collections.Generic.KeyValuePair<int,long>>
 	// System.Collections.Generic.SortedSet.Node<System.Collections.Generic.KeyValuePair<int,object>>
 	// System.Collections.Generic.SortedSet.Node<System.Collections.Generic.KeyValuePair<long,ET.EntityRef<object>>>
+	// System.Collections.Generic.SortedSet.Node<System.Collections.Generic.KeyValuePair<long,long>>
 	// System.Collections.Generic.SortedSet.Node<System.Collections.Generic.KeyValuePair<long,object>>
 	// System.Collections.Generic.SortedSet.Node<System.Collections.Generic.KeyValuePair<object,object>>
-	// System.Collections.Generic.SortedSet.TreeSubSet.<>c__DisplayClass9_0<System.Collections.Generic.KeyValuePair<int,long>>
 	// System.Collections.Generic.SortedSet.TreeSubSet.<>c__DisplayClass9_0<System.Collections.Generic.KeyValuePair<int,object>>
 	// System.Collections.Generic.SortedSet.TreeSubSet.<>c__DisplayClass9_0<System.Collections.Generic.KeyValuePair<long,ET.EntityRef<object>>>
+	// System.Collections.Generic.SortedSet.TreeSubSet.<>c__DisplayClass9_0<System.Collections.Generic.KeyValuePair<long,long>>
 	// System.Collections.Generic.SortedSet.TreeSubSet.<>c__DisplayClass9_0<System.Collections.Generic.KeyValuePair<long,object>>
 	// System.Collections.Generic.SortedSet.TreeSubSet.<>c__DisplayClass9_0<System.Collections.Generic.KeyValuePair<object,object>>
-	// System.Collections.Generic.SortedSet.TreeSubSet<System.Collections.Generic.KeyValuePair<int,long>>
 	// System.Collections.Generic.SortedSet.TreeSubSet<System.Collections.Generic.KeyValuePair<int,object>>
 	// System.Collections.Generic.SortedSet.TreeSubSet<System.Collections.Generic.KeyValuePair<long,ET.EntityRef<object>>>
+	// System.Collections.Generic.SortedSet.TreeSubSet<System.Collections.Generic.KeyValuePair<long,long>>
 	// System.Collections.Generic.SortedSet.TreeSubSet<System.Collections.Generic.KeyValuePair<long,object>>
 	// System.Collections.Generic.SortedSet.TreeSubSet<System.Collections.Generic.KeyValuePair<object,object>>
-	// System.Collections.Generic.SortedSet<System.Collections.Generic.KeyValuePair<int,long>>
 	// System.Collections.Generic.SortedSet<System.Collections.Generic.KeyValuePair<int,object>>
 	// System.Collections.Generic.SortedSet<System.Collections.Generic.KeyValuePair<long,ET.EntityRef<object>>>
+	// System.Collections.Generic.SortedSet<System.Collections.Generic.KeyValuePair<long,long>>
 	// System.Collections.Generic.SortedSet<System.Collections.Generic.KeyValuePair<long,object>>
 	// System.Collections.Generic.SortedSet<System.Collections.Generic.KeyValuePair<object,object>>
-	// System.Collections.Generic.SortedSetEqualityComparer<System.Collections.Generic.KeyValuePair<int,long>>
 	// System.Collections.Generic.SortedSetEqualityComparer<System.Collections.Generic.KeyValuePair<int,object>>
 	// System.Collections.Generic.SortedSetEqualityComparer<System.Collections.Generic.KeyValuePair<long,ET.EntityRef<object>>>
+	// System.Collections.Generic.SortedSetEqualityComparer<System.Collections.Generic.KeyValuePair<long,long>>
 	// System.Collections.Generic.SortedSetEqualityComparer<System.Collections.Generic.KeyValuePair<long,object>>
 	// System.Collections.Generic.SortedSetEqualityComparer<System.Collections.Generic.KeyValuePair<object,object>>
 	// System.Collections.Generic.Stack.Enumerator<ET.EntityRef<object>>
 	// System.Collections.Generic.Stack.Enumerator<object>
 	// System.Collections.Generic.Stack<ET.EntityRef<object>>
 	// System.Collections.Generic.Stack<object>
-	// System.Collections.Generic.TreeSet<System.Collections.Generic.KeyValuePair<int,long>>
 	// System.Collections.Generic.TreeSet<System.Collections.Generic.KeyValuePair<int,object>>
 	// System.Collections.Generic.TreeSet<System.Collections.Generic.KeyValuePair<long,ET.EntityRef<object>>>
+	// System.Collections.Generic.TreeSet<System.Collections.Generic.KeyValuePair<long,long>>
 	// System.Collections.Generic.TreeSet<System.Collections.Generic.KeyValuePair<long,object>>
 	// System.Collections.Generic.TreeSet<System.Collections.Generic.KeyValuePair<object,object>>
-	// System.Collections.Generic.TreeWalkPredicate<System.Collections.Generic.KeyValuePair<int,long>>
 	// System.Collections.Generic.TreeWalkPredicate<System.Collections.Generic.KeyValuePair<int,object>>
 	// System.Collections.Generic.TreeWalkPredicate<System.Collections.Generic.KeyValuePair<long,ET.EntityRef<object>>>
+	// System.Collections.Generic.TreeWalkPredicate<System.Collections.Generic.KeyValuePair<long,long>>
 	// System.Collections.Generic.TreeWalkPredicate<System.Collections.Generic.KeyValuePair<long,object>>
 	// System.Collections.Generic.TreeWalkPredicate<System.Collections.Generic.KeyValuePair<object,object>>
 	// System.Collections.ObjectModel.ReadOnlyCollection<DotRecast.Detour.StraightPathItem>
@@ -865,9 +876,9 @@ public class AOTGenericReferences : UnityEngine.MonoBehaviour
 	// System.Collections.ObjectModel.ReadOnlyCollection<ET.NumericWatcherInfo>
 	// System.Collections.ObjectModel.ReadOnlyCollection<ET.SearchUnit>
 	// System.Collections.ObjectModel.ReadOnlyCollection<ET.SearchUnitPackable>
-	// System.Collections.ObjectModel.ReadOnlyCollection<System.Collections.Generic.KeyValuePair<int,long>>
 	// System.Collections.ObjectModel.ReadOnlyCollection<System.Collections.Generic.KeyValuePair<int,object>>
 	// System.Collections.ObjectModel.ReadOnlyCollection<System.Collections.Generic.KeyValuePair<long,ET.EntityRef<object>>>
+	// System.Collections.ObjectModel.ReadOnlyCollection<System.Collections.Generic.KeyValuePair<long,long>>
 	// System.Collections.ObjectModel.ReadOnlyCollection<System.Collections.Generic.KeyValuePair<long,object>>
 	// System.Collections.ObjectModel.ReadOnlyCollection<System.Collections.Generic.KeyValuePair<object,object>>
 	// System.Collections.ObjectModel.ReadOnlyCollection<System.UIntPtr>
@@ -883,9 +894,9 @@ public class AOTGenericReferences : UnityEngine.MonoBehaviour
 	// System.Comparison<ET.NumericWatcherInfo>
 	// System.Comparison<ET.SearchUnit>
 	// System.Comparison<ET.SearchUnitPackable>
-	// System.Comparison<System.Collections.Generic.KeyValuePair<int,long>>
 	// System.Comparison<System.Collections.Generic.KeyValuePair<int,object>>
 	// System.Comparison<System.Collections.Generic.KeyValuePair<long,ET.EntityRef<object>>>
+	// System.Comparison<System.Collections.Generic.KeyValuePair<long,long>>
 	// System.Comparison<System.Collections.Generic.KeyValuePair<long,object>>
 	// System.Comparison<System.Collections.Generic.KeyValuePair<object,object>>
 	// System.Comparison<System.UIntPtr>
@@ -910,9 +921,9 @@ public class AOTGenericReferences : UnityEngine.MonoBehaviour
 	// System.Predicate<ET.NumericWatcherInfo>
 	// System.Predicate<ET.SearchUnit>
 	// System.Predicate<ET.SearchUnitPackable>
-	// System.Predicate<System.Collections.Generic.KeyValuePair<int,long>>
 	// System.Predicate<System.Collections.Generic.KeyValuePair<int,object>>
 	// System.Predicate<System.Collections.Generic.KeyValuePair<long,ET.EntityRef<object>>>
+	// System.Predicate<System.Collections.Generic.KeyValuePair<long,long>>
 	// System.Predicate<System.Collections.Generic.KeyValuePair<long,object>>
 	// System.Predicate<System.Collections.Generic.KeyValuePair<object,object>>
 	// System.Predicate<System.UIntPtr>
