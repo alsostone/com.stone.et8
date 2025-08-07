@@ -12,7 +12,6 @@ namespace ET
 	        TbHeroRow row = TbHero.Instance.Get(tableId);
 	        LSUnitComponent lsUnitComponent = lsWorld.GetComponent<LSUnitComponent>();
 	        LSUnit lsUnit = lsUnitComponent.AddChildWithId<LSUnit>(playerId);
-	        lsUnit.Active = true;
 
 	        lsUnit.AddComponent<TransformComponent, TSVector, TSQuaternion>(position, rotation);
 	        lsUnit.AddComponent<TypeComponent, EUnitType>(EUnitType.Hero);
@@ -43,7 +42,6 @@ namespace ET
 	        TbSoldierRow row = TbSoldier.Instance.Get(tableId, 1);
 	        LSUnitComponent lsUnitComponent = lsWorld.GetComponent<LSUnitComponent>();
 	        LSUnit lsUnit = lsUnitComponent.AddChild<LSUnit>();
-	        lsUnit.Active = true;
 
 	        lsUnit.AddComponent<TransformComponent, TSVector, TSQuaternion>(position, rotation);
 	        lsUnit.AddComponent<TypeComponent, EUnitType>(EUnitType.Soldier);
@@ -81,7 +79,6 @@ namespace ET
 	        TbBlockRow row = TbBlock.Instance.Get(tableId);
 	        LSUnitComponent lsUnitComponent = lsWorld.GetComponent<LSUnitComponent>();
 	        LSUnit lsUnit = lsUnitComponent.AddChild<LSUnit>();
-	        lsUnit.Active = true;
 
 	        lsUnit.AddComponent<TypeComponent, EUnitType>(EUnitType.Block);
 	        lsUnit.AddComponent<FlagComponent>();
@@ -115,7 +112,6 @@ namespace ET
 	        TbBuildingRow row = TbBuilding.Instance.Get(tableId, level);
 	        LSUnitComponent lsUnitComponent = lsWorld.GetComponent<LSUnitComponent>();
 	        LSUnit lsUnit = lsUnitComponent.AddChild<LSUnit>();
-	        lsUnit.Active = true;
 
 	        lsUnit.AddComponent<TypeComponent, EUnitType>(EUnitType.Building);
 	        lsUnit.AddComponent<FlagComponent>();
@@ -141,7 +137,6 @@ namespace ET
         {
 	        LSUnitComponent lsUnitComponent = lsWorld.GetComponent<LSUnitComponent>();
 	        LSUnit lsUnit = lsUnitComponent.AddChild<LSUnit>();
-	        lsUnit.Active = true;
 
 	        lsUnit.AddComponent<TransformComponent, TSVector, TSQuaternion>(position, rotation);
 	        lsUnit.AddComponent<TypeComponent, EUnitType>(EUnitType.Drop);
