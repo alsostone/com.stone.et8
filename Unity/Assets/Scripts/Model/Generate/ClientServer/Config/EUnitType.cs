@@ -52,5 +52,10 @@ namespace ET
         /// </summary>
         Global = 64,
 
+        /// <summary>
+        /// 队伍
+        /// </summary>
+        Team = 128,
+
     }
 }

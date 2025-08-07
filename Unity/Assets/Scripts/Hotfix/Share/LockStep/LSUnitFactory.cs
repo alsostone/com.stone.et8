@@ -7,6 +7,27 @@ namespace ET
 	[FriendOf(typeof(TeamComponent))]
     public static partial class LSUnitFactory
     {
+	    public static LSUnit CreateGlobal(LSWorld lsWorld)
+	    {
+		    LSUnitComponent lsUnitComponent = lsWorld.GetComponent<LSUnitComponent>();
+		    LSUnit lsUnit = lsUnitComponent.AddChildWithId<LSUnit>(LSConstValue.GlobalIdOffset);
+		    
+		    lsUnit.AddComponent<TypeComponent, EUnitType>(EUnitType.Global);
+		    lsUnit.AddComponent<PropComponent>();
+		    return lsUnit;
+	    }
+
+	    public static LSUnit CreateTeam(LSWorld lsWorld, TeamType teamType)
+	    {
+		    LSUnitComponent lsUnitComponent = lsWorld.GetComponent<LSUnitComponent>();
+		    LSUnit lsUnit = lsUnitComponent.AddChildWithId<LSUnit>(LSConstValue.GlobalIdOffset - 1 - (int)teamType);
+		    
+		    lsUnit.AddComponent<TypeComponent, EUnitType>(EUnitType.Team);
+		    lsUnit.AddComponent<TeamComponent, TeamType>(teamType);
+		    lsUnit.AddComponent<PropComponent>();
+		    return lsUnit;
+	    }
+	    
         public static LSUnit CreateHero(LSWorld lsWorld, int tableId, TSVector position, TSQuaternion rotation, long playerId)
         {
 	        TbHeroRow row = TbHero.Instance.Get(tableId);

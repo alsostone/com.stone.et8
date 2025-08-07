@@ -7,6 +7,8 @@ namespace ET
         public const int Milliseconds = 1000;
         public const int FrameCountPerSecond = Milliseconds / UpdateInterval;
         
+        public const long GlobalIdOffset = long.MaxValue; // 约定特殊实体的ID 全局物体-0，中立队伍全局-1 队伍A全局-2 队伍B全局-3...
+        
         public const int Probability = 10000;           // 概率配置以万分比
         public const int PropRuntime2MaxOffset = 1000;
 

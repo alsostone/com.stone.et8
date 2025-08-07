@@ -27,6 +27,12 @@ namespace ET
             lsWorld.AddComponent<LSTargetsComponent>();
             lsWorld.AddComponent<AIWorldComponent>();
             lsWorld.AddComponent<LSUnitComponent>();
+
+            LSUnitFactory.CreateGlobal(lsWorld);
+            for (TeamType teamType = TeamType.None; teamType < TeamType.Max; ++teamType)
+            {
+                LSUnitFactory.CreateTeam(lsWorld, teamType);
+            }
             
             for (int i = 0; i < matchInfo.UnitInfos.Count; ++i)
             {
