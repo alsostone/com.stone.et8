@@ -51,5 +51,20 @@ namespace ET
         /// </summary>
         All = 7,
 
+        /// <summary>
+        /// 全局
+        /// </summary>
+        Global = 8,
+
+        /// <summary>
+        /// 友方全局
+        /// </summary>
+        FriendTeam = 9,
+
+        /// <summary>
+        /// 敌方全局
+        /// </summary>
+        EnemyTeam = 10,
+
     }
 }

@@ -12,24 +12,32 @@ namespace ET
         {
             TbSearchRow res = TbSearch.Instance.Get(id);
             if (res == null) { return; }
-            
-            if (res.Team == ESearchTargetTeam.SingleSelf) {
-                if (owner.GetComponent<BeHitComponent>() != null) {
-                    results.Add(new SearchUnit() { Target = owner });
+
+            switch (res.Team)
+            {
+                case ESearchTargetTeam.SingleSelf:
+                    if (owner.GetComponent<BeHitComponent>() != null) {
+                        results.Add(new SearchUnit() { Target = owner });
+                    }
+                    return;
+                case ESearchTargetTeam.Global:
+                    results.Add(new SearchUnit() { Target = owner.LSUnit(LSConstValue.GlobalIdOffset)});
+                    return;
+                case ESearchTargetTeam.FriendTeam: {
+                    TeamType team = owner.GetComponent<TeamComponent>()?.GetFriendTeam() ?? TeamType.None;
+                    results.Add(new SearchUnit() { Target = owner.LSUnit(LSConstValue.GlobalIdOffset - 1 - (int)team) });
+                    return;
                 }
-                return;
+                case ESearchTargetTeam.EnemyTeam: {
+                    TeamType team = owner.GetComponent<TeamComponent>()?.GetEnemyTeam() ?? TeamType.None;
+                    results.Add(new SearchUnit() { Target = owner.LSUnit(LSConstValue.GlobalIdOffset - 1 - (int)team) });
+                    return;
+                }
             }
             
             FP range = res.Range * FP.EN4;
-            TSVector center = TSVector.zero;
-            TeamType teamSelf = TeamType.None;
-            
-            TeamComponent teamComponent = owner.GetComponent<TeamComponent>();
-            if (teamComponent != null)
-            { 
-                center = owner.GetComponent<TransformComponent>().Position;
-                teamSelf = teamComponent.Type;
-            }
+            TSVector center = owner.GetComponent<TransformComponent>()?.Position ?? TSVector.zero;
+            TeamType teamSelf = owner.GetComponent<TeamComponent>()?.Type ?? TeamType.None;
             
             LSTargetsComponent lsTargetsComponent = owner.LSWorld().GetComponent<LSTargetsComponent>();
             switch (res.Team) {
