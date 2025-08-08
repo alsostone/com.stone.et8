@@ -25,6 +25,21 @@ namespace ET
         Mp = 2,
 
         /// <summary>
+        /// 金
+        /// </summary>
+        Gold = 980,
+
+        /// <summary>
+        /// 木
+        /// </summary>
+        Wood = 981,
+
+        /// <summary>
+        /// 人口
+        /// </summary>
+        Population = 982,
+
+        /// <summary>
         /// 属性ID区间：10000~99999
         /// </summary>
         Max = 10000,

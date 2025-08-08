@@ -1,7 +1,12 @@
 <module name="">
     <enum name="NumericType" comment="属性类型" unique="TRUE">
         <var name="Hp" alias="血量" value="1"/><!-- 加1000为血量最大值 约定不可更改 -->
-        <var name="Mp" alias="蓝量" value="2"/><!-- 加1000为蓝量最大值 约定不可更改-->
+        <var name="Mp" alias="蓝量" value="2"/><!-- 加1000为蓝量最大值 约定不可更改 -->
+
+        <!-- 980~999：预留19个位置定义货币 -->
+        <var name="Gold" alias="金" value="980"/>
+        <var name="Wood" alias="木" value="981"/>
+        <var name="Population" alias="人口" value="982"/>
 
         <!-- 1~999：实时属性 比如：当前血量、当前蓝量 -->
         <!-- 1000~9999：5个养成属性的计算结果，任意1个相关的养成属性变化时根据公式计算并覆盖它 -->
