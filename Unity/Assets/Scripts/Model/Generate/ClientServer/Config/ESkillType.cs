@@ -15,6 +15,11 @@ namespace ET
     public enum ESkillType
     {
         /// <summary>
+        /// 无类型
+        /// </summary>
+        None = 0,
+
+        /// <summary>
         /// 普通攻击
         /// </summary>
         Normal = 1,

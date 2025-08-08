@@ -24,5 +24,10 @@ namespace ET
         /// </summary>
         Property = 1,
 
+        /// <summary>
+        /// 消耗队伍属性
+        /// </summary>
+        TeamProperty = 2,
+
     }
 }

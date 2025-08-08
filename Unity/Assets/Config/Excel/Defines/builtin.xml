@@ -4,8 +4,8 @@
         <var name="Mp" alias="蓝量" value="2"/><!-- 加1000为蓝量最大值 约定不可更改 -->
 
         <!-- 980~999：预留19个位置定义货币 -->
-        <var name="Gold" alias="金" value="980"/>
-        <var name="Wood" alias="木" value="981"/>
+        <var name="Gold" alias="金币" value="980"/>
+        <var name="Wood" alias="木材" value="981"/>
         <var name="Population" alias="人口" value="982"/>
 
         <!-- 1~999：实时属性 比如：当前血量、当前蓝量 -->

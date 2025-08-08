@@ -33,6 +33,7 @@ namespace ET
             DurationAfter = _buf.ReadInt();
             {int __n0 = System.Math.Min(_buf.ReadSize(), _buf.Size);TriggerArray = new int[__n0];for(var __index0 = 0 ; __index0 < __n0 ; __index0++) { int __e0;__e0 = _buf.ReadInt(); TriggerArray[__index0] = __e0;}}
             EffectGroupId = _buf.ReadInt();
+            EffectGroupId_Ref = null;
             ReleaseConditionType = (EGroupCompletedType)_buf.ReadInt();
             {int __n0 = System.Math.Min(_buf.ReadSize(), _buf.Size);ConditionIdArray = new int[__n0];for(var __index0 = 0 ; __index0 < __n0 ; __index0++) { int __e0;__e0 = _buf.ReadInt(); ConditionIdArray[__index0] = __e0;}}
             SearchRealTime = _buf.ReadBool();
@@ -132,6 +133,8 @@ namespace ET
         /// </summary>
         public readonly int EffectGroupId;
 
+        public TbEffectRow EffectGroupId_Ref { get; private set; }
+
         /// <summary>
         /// 释放条件类型
         /// </summary>
@@ -176,7 +179,7 @@ namespace ET
             
             
             
-            
+            EffectGroupId_Ref = TbEffect.Instance.GetOrDefault(EffectGroupId);
             
             
             

@@ -154,6 +154,18 @@
     ]
   },
   {
+    "Id": 300401010,
+    "name": "资源塔产出金币",
+    "group_id": 30040101,
+    "success_conds": [],
+    "failure_conds": [],
+    "action_type": 2,
+    "action_param": [
+      980,
+      10000
+    ]
+  },
+  {
     "Id": 400000010,
     "name": "伤害植物-普攻",
     "group_id": 40000001,

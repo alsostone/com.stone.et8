@@ -25,12 +25,12 @@ namespace ET
         Mp = 2,
 
         /// <summary>
-        /// 金
+        /// 金币
         /// </summary>
         Gold = 980,
 
         /// <summary>
-        /// 木
+        /// 木材
         /// </summary>
         Wood = 981,
 

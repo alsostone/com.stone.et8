@@ -60,6 +60,7 @@
     "skills": [
       30010001
     ],
+    "product_skill": 0,
     "random_bag_id": 0
   },
   {
@@ -123,6 +124,7 @@
     "skills": [
       30020001
     ],
+    "product_skill": 0,
     "random_bag_id": 0
   },
   {
@@ -186,6 +188,7 @@
     "skills": [
       30030001
     ],
+    "product_skill": 0,
     "random_bag_id": 0
   },
   {
@@ -249,6 +252,7 @@
     "skills": [
       30040001
     ],
+    "product_skill": 30040101,
     "random_bag_id": 0
   }
 ]
