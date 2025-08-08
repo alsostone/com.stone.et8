@@ -125,6 +125,23 @@ namespace ET
             return false;
         }
 
+        public static bool TryCastSkill(this SkillComponent self, int id)
+        {
+            if (self.LSOwner().DeadMark > 0) { return false; }
+            // if (!Enable) { return false; }
+            
+            Skill skill = self.GetChild<Skill>(self.IdSkillMap[id]);
+            if (self.CheckRestrict(skill.TbSkillRow.SkillType)) { return false; }
+            
+            if (skill.TryCast())
+            {
+                if (skill.IsRunning)
+                    self.mRunningSkills.Add(skill.Id);
+                return true;
+            }
+            return false;
+        }
+
         public static bool CastAttachSkill(this SkillComponent self, int id)
         {self.LSRoom()?.ProcessLog.LogFunction(46, self.LSParent().Id, id);
             if (self.LSOwner().DeadMark > 0) { return false; }

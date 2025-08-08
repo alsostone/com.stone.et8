@@ -39,7 +39,7 @@ namespace ET
 
         public static void TryExecuteInterval(this Buff self)
         {self.LSRoom()?.ProcessLog.LogFunction(31, self.LSParent().Id);
-            if (self.TbBuffRow.IntervalEffect > 0 && self.LSWorld().Frame > self.IntervalFrame)
+            if (self.TbBuffRow.IntervalEffect > 0 && self.LSWorld().Frame >= self.IntervalFrame)
             {
                 EffectExecutor.Execute(self.TbBuffRow.IntervalEffect, self.LSUnit(self.Caster), self.LSOwner());
                 self.IntervalFrame = self.LSWorld().Frame + self.TbBuffRow.Interval.Convert2Frame();
