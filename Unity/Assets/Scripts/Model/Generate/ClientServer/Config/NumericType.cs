@@ -494,5 +494,95 @@ namespace ET
         /// </summary>
         CounterRateFinalPct = 10155,
 
+        /// <summary>
+        /// 金币上限
+        /// </summary>
+        MaxGold = 1980,
+
+        /// <summary>
+        /// 金币上限B
+        /// </summary>
+        MaxGoldBase = 19801,
+
+        /// <summary>
+        /// 金币上限BD
+        /// </summary>
+        MaxGoldBaseAdd = 19802,
+
+        /// <summary>
+        /// 金币上限BP
+        /// </summary>
+        MaxGoldBasePct = 19803,
+
+        /// <summary>
+        /// 金币上限FD
+        /// </summary>
+        MaxGoldFinalAdd = 19804,
+
+        /// <summary>
+        /// 金币上限FP
+        /// </summary>
+        MaxGoldFinalPct = 19805,
+
+        /// <summary>
+        /// 木材上限
+        /// </summary>
+        MaxWood = 1981,
+
+        /// <summary>
+        /// 木材上限B
+        /// </summary>
+        MaxWoodBase = 19811,
+
+        /// <summary>
+        /// 木材上限BD
+        /// </summary>
+        MaxWoodBaseAdd = 19812,
+
+        /// <summary>
+        /// 木材上限BP
+        /// </summary>
+        MaxWoodBasePct = 19813,
+
+        /// <summary>
+        /// 木材上限FD
+        /// </summary>
+        MaxWoodFinalAdd = 19814,
+
+        /// <summary>
+        /// 木材上限FP
+        /// </summary>
+        MaxWoodFinalPct = 19815,
+
+        /// <summary>
+        /// 人口上限
+        /// </summary>
+        MaxPopulation = 1982,
+
+        /// <summary>
+        /// 人口上限B
+        /// </summary>
+        MaxPopulationBase = 19821,
+
+        /// <summary>
+        /// 人口上限BD
+        /// </summary>
+        MaxPopulationBaseAdd = 19822,
+
+        /// <summary>
+        /// 人口上限BP
+        /// </summary>
+        MaxPopulationBasePct = 19823,
+
+        /// <summary>
+        /// 人口上限FD
+        /// </summary>
+        MaxPopulationFinalAdd = 19824,
+
+        /// <summary>
+        /// 人口上限FP
+        /// </summary>
+        MaxPopulationFinalPct = 19825,
+
     }
 }

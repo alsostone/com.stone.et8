@@ -44,7 +44,7 @@ namespace ET
                     self.IdBuffMap.Remove(buff.BuffId);
                     buff.Dispose();
                 }
-                else
+                else if(self.LSOwner().EnabledRef >= 0)
                 {
                     buff.TryExecuteInterval();
                 }

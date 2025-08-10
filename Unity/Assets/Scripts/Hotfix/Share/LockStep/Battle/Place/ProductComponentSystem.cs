@@ -20,7 +20,7 @@ namespace ET
         [LSEntitySystem]
         private static void LSUpdate(this ProductComponent self)
         {
-            if (self.LSOwner().EnabledRef > 0)
+            if (self.LSOwner().EnabledRef >= 0)
             {
                 if (self.LSWorld().Frame >= self.ProductFrame)
                 {

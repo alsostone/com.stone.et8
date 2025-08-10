@@ -160,7 +160,8 @@ namespace ET
             else
             {
                 // 技能持续时间完毕 把未触发的点全部触发
-                for (var index = self.CurrentPoint; index < self.TbSkillRow.TriggerArray.Length; index++)
+                var count = Math.Max(self.TbSkillRow.TriggerArray.Length, 1);
+                for (var index = self.CurrentPoint; index < count; index++)
                 {
                     List<SearchUnit> targets = ObjectPool.Instance.Fetch<List<SearchUnit>>();
                     if (self.TbSkillRow.SearchRealTime) {

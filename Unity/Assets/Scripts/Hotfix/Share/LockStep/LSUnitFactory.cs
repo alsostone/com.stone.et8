@@ -24,7 +24,12 @@ namespace ET
 		    
 		    lsUnit.AddComponent<TypeComponent, EUnitType>(EUnitType.Team);
 		    lsUnit.AddComponent<TeamComponent, TeamType>(teamType);
-		    lsUnit.AddComponent<PropComponent>();
+		    
+		    PropComponent propComponent = lsUnit.AddComponent<PropComponent>();
+		    propComponent.Set(NumericType.MaxGoldBase, 100, false);
+		    propComponent.Set(NumericType.MaxWoodBase, 100, false);
+		    propComponent.Set(NumericType.MaxPopulationBase, 20, false);
+		    
 		    return lsUnit;
 	    }
 	    
@@ -150,6 +155,9 @@ namespace ET
 	        lsUnit.AddComponent<BuffComponent>();
 	        lsUnit.AddComponent<BeHitComponent>();
 	        lsUnit.AddComponent<SkillComponent, int[]>(row.Skills);
+	        if (row.ProductSkill > 0) {
+		        lsUnit.AddComponent<ProductComponent, int>(row.ProductSkill);
+	        }
 	        lsUnit.AddComponent<AIRootComponent, Node>(new Sequence(new ActionAttack(), new WaitSecond(FP.Half)));
 	        return lsUnit;
         }

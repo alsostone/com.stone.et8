@@ -10,6 +10,7 @@ namespace ET
             FP runtimeValue = self.Get(numericType);
             FP maxValue = self.Get(numericType + LSConstValue.PropRuntime2MaxOffset);
             value = TSMath.Min(runtimeValue + value, maxValue);
+            value = TSMath.Max(value, 0);
             self.Set(numericType, value);
         }
         
