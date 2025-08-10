@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using TrueSync;
 
 namespace ET
 {
@@ -70,6 +71,10 @@ namespace ET
                     return false;
                 }
             }
+            
+            if (!self.TrySkillConsume()) {
+                return false;
+            }
 
             self.IsRunning = true;
             self.CastFrame = self.LSWorld().Frame;
@@ -105,13 +110,63 @@ namespace ET
 
         private static void OnCastSuccess(this Skill self)
         {self.LSRoom()?.ProcessLog.LogFunction(57, self.LSParent().Id);
+        }
+        
+        private static bool TrySkillConsume(this Skill self)
+        {
             var tbRow = self.TbSkillRow;
-            switch (tbRow.ConsumeType) {
+            switch (tbRow.ConsumeType)
+            {
                 case EConsumeType.Property:
-                    if (tbRow.ConsumeParam.Length != 2) { return; }
-                    self.LSOwner().GetComponent<PropComponent>().Add((NumericType)tbRow.ConsumeParam[0], -tbRow.ConsumeParam[1]);
+                {
+                    if (tbRow.ConsumeParam.Length < 2)
+                        return true;
+
+                    PropComponent propComponent = self.LSOwner().GetComponent<PropComponent>();
+                    for (int i = 0; i < tbRow.ConsumeParam.Length; i += 2)
+                    {
+                        NumericType type = (NumericType)tbRow.ConsumeParam[i];
+                        FP value = tbRow.ConsumeParam[i + 1] * FP.EN4;
+                        FP exsit = propComponent.Get(type);
+                        if (value > 0 && exsit < (value - FP.Epsilon))
+                            return false;
+                    }
+                    for (int i = 0; i < tbRow.ConsumeParam.Length; i += 2)
+                    {
+                        NumericType type = (NumericType)tbRow.ConsumeParam[i];
+                        FP value = (FP)tbRow.ConsumeParam[i + 1] / LSConstValue.PropValueScale;
+                        propComponent.Add(type, -value);
+                    }
                     break;
+                }
+                case EConsumeType.TeamProperty:
+                {
+                    if (tbRow.ConsumeParam.Length < 2)
+                        return true;
+
+                    TeamType team = self.LSOwner().GetComponent<TeamComponent>()?.GetFriendTeam() ?? TeamType.None;
+                    LSUnit teamGlobal = self.LSUnit(LSConstValue.GlobalIdOffset - 1 - (int)team);
+                    PropComponent propComponent = teamGlobal.GetComponent<PropComponent>();
+                    
+                    for (int i = 0; i < tbRow.ConsumeParam.Length; i += 2)
+                    {
+                        NumericType type = (NumericType)tbRow.ConsumeParam[i];
+                        FP value = tbRow.ConsumeParam[i + 1] * FP.EN4;
+                        FP exsit = propComponent.Get(type);
+                        if (value > 0 && exsit < (value - FP.Epsilon))
+                            return false;
+                    }
+                    for (int i = 0; i < tbRow.ConsumeParam.Length; i += 2)
+                    {
+                        NumericType type = (NumericType)tbRow.ConsumeParam[i];
+                        FP value = (FP)tbRow.ConsumeParam[i + 1] / LSConstValue.PropValueScale;;
+                        propComponent.Add(type, -value);
+                    }
+                    break;
+                }
             }
+
+            return true;
         }
 
         private static void OnCastDone(this Skill self)

@@ -30,6 +30,10 @@ namespace ET
 		    propComponent.Set(NumericType.MaxWoodBase, 100, false);
 		    propComponent.Set(NumericType.MaxPopulationBase, 20, false);
 		    
+		    propComponent.Set(NumericType.Gold, 50, false);
+		    propComponent.Set(NumericType.Wood, 50, false);
+		    propComponent.Set(NumericType.Population, 10, false);
+		    
 		    return lsUnit;
 	    }
 	    
