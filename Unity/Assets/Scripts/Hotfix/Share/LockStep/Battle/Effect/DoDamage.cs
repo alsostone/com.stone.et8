@@ -10,9 +10,9 @@ namespace ET
 			FP attack = owner.GetComponent<PropComponent>().Get(NumericType.Atk);
 			if (param.Length > 0)
 			{
-				attack *= param[0] * FP.EN4;
+				attack *= (FP)param[0] / LSConstValue.PropValueScale;
 			}
-			attack += param.Length > 1 ? param[1] * FP.EN4 : 0;
+			attack += param.Length > 1 ? (FP)param[1] / LSConstValue.PropValueScale : 0;
 			target.GetComponent<BeHitComponent>()?.BeDamage(owner, attack);
 		}
 	}

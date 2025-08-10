@@ -12,7 +12,7 @@ namespace ET
         private static void Awake(this TrackComponent self, int trackId, LSUnit target, TSVector targetPosition)
         {self.LSRoom()?.ProcessLog.LogFunction(22, self.LSParent().Id, trackId, target.Id);
             self.TrackId = trackId;
-            self.HorSpeed = self.TbTrackRow.HorSpeed * FP.EN4;
+            self.HorSpeed = (FP)self.TbTrackRow.HorSpeed / LSConstValue.PropValueScale;
             if (target == null) {
                 self.Target = 0;
                 self.TargetPosition = targetPosition;
@@ -31,8 +31,8 @@ namespace ET
             
                     // 起止点的中心叠加高度为控制点
                     TSVector dir = self.TargetPosition - self.CasterPosition;
-                    self.ControlPosition = self.CasterPosition + dir * (self.TbTrackRow.ControlFactor * FP.EN4);
-                    FP y = (self.TbTrackRow.ControlHeight * FP.EN4) + self.ControlPosition.y;
+                    self.ControlPosition = self.CasterPosition + dir * ((FP)self.TbTrackRow.ControlFactor / LSConstValue.PropValueScale);
+                    FP y = ((FP)self.TbTrackRow.ControlHeight / LSConstValue.PropValueScale) + self.ControlPosition.y;
                     self.ControlPosition = new TSVector(self.ControlPosition.x, y, self.ControlPosition.z);
                     self.Duration = dir.magnitude / self.HorSpeed;
                     break;

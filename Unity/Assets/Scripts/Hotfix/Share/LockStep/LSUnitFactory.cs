@@ -51,7 +51,7 @@ namespace ET
 	        
 	        PropComponent propComponent = lsUnit.AddComponent<PropComponent>();
 	        foreach (var prop in row.Props) {
-		        propComponent.Set(prop.Key, prop.Value * FP.EN4, false);
+		        propComponent.Set(prop.Key, (FP)prop.Value / LSConstValue.PropValueScale, false);
 	        }
 	        EnsureRuntimeProp(propComponent);
 			
@@ -81,7 +81,7 @@ namespace ET
 	        
 	        PropComponent propComponent = lsUnit.AddComponent<PropComponent>();
 	        foreach (var prop in row.Props) {
-		        propComponent.Set(prop.Key, prop.Value * FP.EN4, false);
+		        propComponent.Set(prop.Key, (FP)prop.Value / LSConstValue.PropValueScale, false);
 	        }
 	        EnsureRuntimeProp(propComponent);
 
@@ -118,7 +118,7 @@ namespace ET
 	        
 	        PropComponent propComponent = lsUnit.AddComponent<PropComponent>();
 	        foreach (var prop in row.Props) {
-		        propComponent.Set(prop.Key, prop.Value * FP.EN4, false);
+		        propComponent.Set(prop.Key, (FP)prop.Value / LSConstValue.PropValueScale, false);
 	        }
 	        EnsureRuntimeProp(propComponent);
 
@@ -151,7 +151,7 @@ namespace ET
 
 	        PropComponent propComponent = lsUnit.AddComponent<PropComponent>();
 	        foreach (var prop in row.Props) {
-		        propComponent.Set(prop.Key, prop.Value * FP.EN4, false);
+		        propComponent.Set(prop.Key, (FP)prop.Value / LSConstValue.PropValueScale, false);
 	        }
 	        EnsureRuntimeProp(propComponent);
 

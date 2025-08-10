@@ -7,10 +7,14 @@ namespace ET
 	{
 		public void Run(int[] param, LSUnit owner, LSUnit target, LSUnit carrier = null)
 		{
-			if (param.Length < 2) { return; }
-			NumericType type = (NumericType)param[0];
 			PropComponent propComponent = target.GetComponent<PropComponent>();
-			propComponent.AddRealProp(type, param[1] * FP.EN4);
+			for (int i = 0; i < param.Length - 1; i+=2)
+			{
+				if (param[i] == 0) { continue; }
+				NumericType type = (NumericType)param[i];
+				FP value = (FP)param[i + 1] / LSConstValue.PropValueScale;
+				propComponent.AddRealProp(type, value);
+			}
 		}
 	}
 }
