@@ -145,8 +145,7 @@ namespace ET
                         return true;
 
                     TeamType team = self.LSOwner().GetComponent<TeamComponent>()?.GetFriendTeam() ?? TeamType.None;
-                    LSUnit teamGlobal = self.LSUnit(LSConstValue.GlobalIdOffset - 1 - (int)team);
-                    PropComponent propComponent = teamGlobal.GetComponent<PropComponent>();
+                    PropComponent propComponent = self.LSTeamUnit(team).GetComponent<PropComponent>();
                     
                     for (int i = 0; i < tbRow.ConsumeParam.Length; i += 2)
                     {

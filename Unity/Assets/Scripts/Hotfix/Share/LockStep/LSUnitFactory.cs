@@ -24,6 +24,7 @@ namespace ET
 		    
 		    lsUnit.AddComponent<TypeComponent, EUnitType>(EUnitType.Team);
 		    lsUnit.AddComponent<TeamComponent, TeamType>(teamType);
+		    lsUnit.AddComponent<WorkQueueComponent>();
 		    
 		    PropComponent propComponent = lsUnit.AddComponent<PropComponent>();
 		    propComponent.Set(NumericType.MaxGoldBase, 100, false);

@@ -25,12 +25,12 @@ namespace ET
                     return;
                 case ESearchTargetTeam.FriendTeam: {
                     TeamType team = owner.GetComponent<TeamComponent>()?.GetFriendTeam() ?? TeamType.None;
-                    results.Add(new SearchUnit() { Target = owner.LSUnit(LSConstValue.GlobalIdOffset - 1 - (int)team) });
+                    results.Add(new SearchUnit() { Target = owner.LSTeamUnit(team) });
                     return;
                 }
                 case ESearchTargetTeam.EnemyTeam: {
                     TeamType team = owner.GetComponent<TeamComponent>()?.GetEnemyTeam() ?? TeamType.None;
-                    results.Add(new SearchUnit() { Target = owner.LSUnit(LSConstValue.GlobalIdOffset - 1 - (int)team) });
+                    results.Add(new SearchUnit() { Target = owner.LSTeamUnit(team) });
                     return;
                 }
             }

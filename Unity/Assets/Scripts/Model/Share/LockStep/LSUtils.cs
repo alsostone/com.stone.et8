@@ -34,6 +34,12 @@ namespace ET
             return unitComponent.GetChild<LSUnit>(id);
         }
         
+        public static LSUnit LSTeamUnit(this LSEntity entity, TeamType team)
+        {
+            LSUnitComponent unitComponent = entity.LSWorld().GetComponent<LSUnitComponent>();
+            return unitComponent.GetChild<LSUnit>(LSConstValue.GlobalIdOffset - 1 - (int)team);
+        }
+        
         public static Room LSRoom(this LSEntity entity)
         {
             var world = entity.IScene as LSWorld;
