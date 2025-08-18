@@ -1,0 +1,78 @@
+[
+  {
+    "Id": 1001,
+    "scene_name": "Map1",
+    "count": 4,
+    "delay": 2000,
+    "wave_interval": 90000,
+    "random_interval": 500,
+    "random_counts": [
+      20,
+      20,
+      20,
+      20
+    ],
+    "random_sets": [
+      4001,
+      4002,
+      4003,
+      4004
+    ]
+  },
+  {
+    "Id": 1002,
+    "scene_name": "Map1",
+    "count": 6,
+    "delay": 2000,
+    "wave_interval": 90000,
+    "random_interval": 500,
+    "random_counts": [
+      20,
+      20,
+      20,
+      20,
+      20,
+      20
+    ],
+    "random_sets": [
+      4011,
+      4012,
+      4013,
+      4014,
+      4015,
+      4016
+    ]
+  },
+  {
+    "Id": 1003,
+    "scene_name": "Map2",
+    "count": 10,
+    "delay": 2000,
+    "wave_interval": 90000,
+    "random_interval": 500,
+    "random_counts": [
+      20,
+      20
+    ],
+    "random_sets": [
+      4011,
+      4012
+    ]
+  },
+  {
+    "Id": 1004,
+    "scene_name": "Map2",
+    "count": 0,
+    "delay": 2000,
+    "wave_interval": 90000,
+    "random_interval": 500,
+    "random_counts": [
+      20,
+      20
+    ],
+    "random_sets": [
+      4011,
+      4012
+    ]
+  }
+]

@@ -24,7 +24,7 @@ namespace ET.Server
             // 申请一个房间
             TbStartSceneRow tbStartSceneRow = RandomGenerator.RandomArray(TbStartScene.Instance.Maps);
             Match2Map_GetRoom match2MapGetRoom = Match2Map_GetRoom.Create();
-            match2MapGetRoom.SceneName = tbStartSceneRow.Name;
+            match2MapGetRoom.StageId = 1001;
             foreach (long id in self.waitMatchPlayers)
             {
                 match2MapGetRoom.PlayerIds.Add(id);

@@ -51,7 +51,7 @@ message LockStepUnitInfo
 
 message LockStepMatchInfo
 {
-	string SceneName = 1;	/// 地图场景名称
+	int32 StageId = 1;	/// 关卡Id
 	ActorId ActorId = 2;	/// 房间的ActorId
 	int64 MatchTime = 3;
 	int32 Seed = 4;

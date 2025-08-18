@@ -86,7 +86,7 @@ namespace ET
         public List<long> PlayerIds { get; set; } = new();
 
         [MemoryPackOrder(2)]
-        public string SceneName { get; set; }
+        public int StageId { get; set; }
 
         public override void Dispose()
         {
@@ -97,7 +97,7 @@ namespace ET
 
             this.RpcId = default;
             this.PlayerIds.Clear();
-            this.SceneName = default;
+            this.StageId = default;
 
             ObjectPool.Instance.Recycle(this);
         }
@@ -235,7 +235,7 @@ namespace ET
         public List<long> PlayerIds { get; set; } = new();
 
         [MemoryPackOrder(2)]
-        public string SceneName { get; set; }
+        public int StageId { get; set; }
 
         public override void Dispose()
         {
@@ -246,7 +246,7 @@ namespace ET
 
             this.RpcId = default;
             this.PlayerIds.Clear();
-            this.SceneName = default;
+            this.StageId = default;
 
             ObjectPool.Instance.Recycle(this);
         }

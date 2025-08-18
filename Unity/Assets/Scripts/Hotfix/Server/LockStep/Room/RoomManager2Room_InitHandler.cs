@@ -8,7 +8,7 @@ namespace ET.Server
         protected override async ETTask Run(Scene root, RoomManager2Room_Init request, Room2RoomManager_Init response)
         {
             Room room = root.AddComponent<Room>();
-            room.Name = request.SceneName;
+            room.StageId = request.StageId;
             room.AddComponent<RoomServerComponent, List<long>>(request.PlayerIds);
 
             await ETTask.CompletedTask;

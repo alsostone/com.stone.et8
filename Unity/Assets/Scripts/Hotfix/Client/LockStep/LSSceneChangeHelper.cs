@@ -11,14 +11,15 @@ namespace ET.Client
             root.RemoveComponent<Room>();
 
             Room room = root.AddComponentWithId<Room>(matchInfo.ActorId.InstanceId);
-            room.Name = matchInfo.SceneName;
+            room.StageId = matchInfo.StageId;
             room.Replay.MatchInfo = matchInfo;
             
             LSWorld lsWorld = new LSWorld(SceneType.LockStepClient);
             room.InitNewWorld(lsWorld, matchInfo);
 
             // 等待表现层订阅的事件完成
-            await EventSystem.Instance.PublishAsync(root, new LSSceneChangeStart() {SceneName = matchInfo.SceneName, IsReplay = false});
+            TbStageRow row = TbStage.Instance.Get(matchInfo.StageId);
+            await EventSystem.Instance.PublishAsync(root, new LSSceneChangeStart() {SceneName = row.SceneName, IsReplay = false});
 
             C2Room_LoadingProgress loadingProgress = C2Room_LoadingProgress.Create(true);
             loadingProgress.Progress = 100;
@@ -39,7 +40,7 @@ namespace ET.Client
             root.RemoveComponent<Room>();
 
             Room room = root.AddComponent<Room>();
-            room.Name = replay.MatchInfo.SceneName;
+            room.StageId = replay.MatchInfo.StageId;
             room.IsReplay = true;
             room.Replay = replay;
             
@@ -47,7 +48,8 @@ namespace ET.Client
             room.InitNewWorld(lsWorld, replay.MatchInfo);
             
             // 等待表现层订阅的事件完成
-            await EventSystem.Instance.PublishAsync(root, new LSSceneChangeStart() {SceneName = replay.MatchInfo.SceneName, IsReplay = true});
+            TbStageRow row = TbStage.Instance.Get(replay.MatchInfo.StageId);
+            await EventSystem.Instance.PublishAsync(root, new LSSceneChangeStart() {SceneName = row.SceneName, IsReplay = true});
             
             room.Start(TimeInfo.Instance.ServerFrameTime());
             
@@ -61,7 +63,7 @@ namespace ET.Client
             root.RemoveComponent<Room>();
             
             Room room = root.AddComponentWithId<Room>(message.MatchInfo.ActorId.InstanceId);
-            room.Name = message.MatchInfo.SceneName;
+            room.StageId = message.MatchInfo.StageId;
             
             room.Replay.MatchInfo = message.MatchInfo;
             room.Replay.LSWorldBytes = message.LSWorldBytes;
@@ -71,7 +73,8 @@ namespace ET.Client
             LSClientHelper.RunLSRollbackSystem(room);
             
             // 等待表现层订阅的事件完成
-            await EventSystem.Instance.PublishAsync(root, new LSSceneChangeStart() {SceneName = message.MatchInfo.SceneName, IsReplay = false});
+            TbStageRow row = TbStage.Instance.Get(message.MatchInfo.StageId);
+            await EventSystem.Instance.PublishAsync(root, new LSSceneChangeStart() {SceneName = row.SceneName, IsReplay = false});
             
             room.Start(message.StartTime);
             

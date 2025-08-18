@@ -7,7 +7,7 @@ namespace ET
     {
         public Fiber Fiber { get; set; }
         public SceneType SceneType { get; set; } = SceneType.Room;
-        public string Name { get; set; }
+        public int StageId { get; set; }
         
         public long StartTime { get; set; }
 

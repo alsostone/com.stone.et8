@@ -22,7 +22,7 @@ message Match2Map_GetRoom // IRequest
 {
 	int32 RpcId = 1;
 	repeated int64 PlayerIds = 2;
-	string SceneName = 3;
+	int32 StageId = 3;
 }
 
 message Map2Match_GetRoom // IResponse
@@ -58,7 +58,7 @@ message RoomManager2Room_Init // IRequest
 {
 	int32 RpcId = 1;
 	repeated int64 PlayerIds = 2;
-	string SceneName = 3;
+	int32 StageId = 3;
 }
 
 message Room2RoomManager_Init // IResponse

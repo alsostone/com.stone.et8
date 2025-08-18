@@ -22,7 +22,7 @@ namespace ET.Server
             }
             
             LockStepMatchInfo matchInfo = LockStepMatchInfo.Create();
-            matchInfo.SceneName = room.Name;
+            matchInfo.StageId = room.StageId;
             matchInfo.ActorId = root.GetActorId();
             matchInfo.MatchTime = TimeInfo.Instance.ServerFrameTime();
             matchInfo.Seed = (int)TimeInfo.Instance.ServerFrameTime();

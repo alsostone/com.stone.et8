@@ -23,7 +23,8 @@ namespace ET
             lsWorld.Random = new TSRandom(matchInfo.Seed);
             lsWorld.Frame = frame;
             
-            lsWorld.AddComponent<LSGridMapComponent, string>($"Map/{matchInfo.SceneName}.bytes");
+            LSStageComponent lsStageComponent = lsWorld.AddComponent<LSStageComponent, int>(matchInfo.StageId);
+            lsWorld.AddComponent<LSGridMapComponent, string>($"Map/{lsStageComponent.TbRow.SceneName}.bytes");
             lsWorld.AddComponent<LSTargetsComponent>();
             lsWorld.AddComponent<AIWorldComponent>();
             lsWorld.AddComponent<LSUnitComponent>();

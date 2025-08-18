@@ -241,10 +241,10 @@ namespace ET
         }
 
         /// <summary>
-        /// / 地图场景名称
+        /// / 关卡Id
         /// </summary>
         [MemoryPackOrder(0)]
-        public string SceneName { get; set; }
+        public int StageId { get; set; }
 
         /// <summary>
         /// / 房间的ActorId
@@ -268,7 +268,7 @@ namespace ET
                 return;
             }
 
-            this.SceneName = default;
+            this.StageId = default;
             this.ActorId = default;
             this.MatchTime = default;
             this.Seed = default;
