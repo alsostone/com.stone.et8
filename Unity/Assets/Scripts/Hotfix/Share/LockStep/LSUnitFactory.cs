@@ -90,7 +90,9 @@ namespace ET
 	        lsUnit.AddComponent<BuffComponent>();
 	        lsUnit.AddComponent<BeHitComponent>();
 	        lsUnit.AddComponent<SkillComponent, int[]>(row.Skills);
-	        lsUnit.AddComponent<AIRootComponent, Node>(AIAutoAttack.Gen());
+	        
+	        lsUnit.AddComponent<FieldMoveComponent>();
+	        lsUnit.AddComponent<AIRootComponent, Node>(AIAutoAttackCenter.Gen());
 			
 	        EventSystem.Instance.Publish(lsWorld, new LSUnitCreate() {LSUnit = lsUnit});
 	        return lsUnit;

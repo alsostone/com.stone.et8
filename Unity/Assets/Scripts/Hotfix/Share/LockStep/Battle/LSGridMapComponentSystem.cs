@@ -15,6 +15,7 @@ namespace ET
             self.GridName = gridName;
             byte[] gridBytes = FileComponent.Instance.Load(gridName);
             self.GridData = MemoryPackSerializer.Deserialize<GridData>(gridBytes);
+            self.GridData.SetDestination(new FieldV2(0, 0));
         }
         
         [EntitySystem]
@@ -25,6 +26,7 @@ namespace ET
             // 可以再优化，比如将GridData池化，有瓶颈时再说
             byte[] gridBytes = FileComponent.Instance.Load(self.GridName);
             self.GridData = MemoryPackSerializer.Deserialize<GridData>(gridBytes);
+            self.GridData.SetDestination(new FieldV2(0, 0));
         }
         
         [LSEntitySystem]
