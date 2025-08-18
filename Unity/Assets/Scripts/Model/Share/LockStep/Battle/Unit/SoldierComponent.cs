@@ -5,14 +5,13 @@ namespace ET
 {
     [ComponentOf(typeof(LSUnit))]
     [MemoryPackable]
-    public partial class SoldierComponent : LSEntity, IAwake<int, int>, ISerializeToEntity
+    public partial class SoldierComponent : LSEntity, IAwake<int>, ISerializeToEntity
     {
         public int TableId;
-        public int Level;
 
         [BsonIgnore]
         [MemoryPackIgnore]
-        public TbSoldierRow TbRow => this.tbRow ?? TbSoldier.Instance.Get(this.TableId, this.Level);
+        public TbSoldierRow TbRow => this.tbRow ?? TbSoldier.Instance.Get(this.TableId);
         [BsonIgnore]
         [MemoryPackIgnore]
         private TbSoldierRow tbRow;

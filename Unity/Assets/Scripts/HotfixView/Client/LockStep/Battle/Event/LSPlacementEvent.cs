@@ -75,7 +75,7 @@ namespace ET.Client
             var builderComponent = view.GetComponent<LSViewGridBuilderComponent>();
             if (builderComponent == null)
                 return;
-            builderComponent.OnPlacementStart(args.Type, args.TableId, args.Level);
+            builderComponent.OnPlacementStart(args.Type, args.TableId);
             await ETTask.CompletedTask;
         }
     }

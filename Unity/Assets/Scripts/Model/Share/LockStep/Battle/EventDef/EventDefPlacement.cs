@@ -25,7 +25,6 @@ namespace ET
         public long Id;
         public EUnitType Type;
         public int TableId;
-        public int Level;
     }
     
     public struct LSPlacementRotate

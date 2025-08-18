@@ -17,7 +17,6 @@ namespace ET
         public TbBuildingRow(ByteBuf _buf)
         {
             Id = _buf.ReadInt();
-            Level = _buf.ReadInt();
             Model = _buf.ReadInt();
             Model_Ref = null;
             {int __n0 = System.Math.Min(_buf.ReadSize(), _buf.Size);Shape = new bool[__n0];for(var __index0 = 0 ; __index0 < __n0 ; __index0++) { bool __e0;__e0 = _buf.ReadBool(); Shape[__index0] = __e0;}}
@@ -41,11 +40,6 @@ namespace ET
         /// ID
         /// </summary>
         public readonly int Id;
-
-        /// <summary>
-        /// 等级
-        /// </summary>
-        public readonly int Level;
 
         /// <summary>
         /// 模型
@@ -95,7 +89,6 @@ namespace ET
         public  void ResolveRef()
         {
             
-            
             Model_Ref = TbResource.Instance.GetOrDefault(Model);
             
             
@@ -109,7 +102,6 @@ namespace ET
         {
             return "{ "
             + "Id:" + Id + ","
-            + "level:" + Level + ","
             + "model:" + Model + ","
             + "shape:" + Luban.StringUtil.CollectionToString(Shape) + ","
             + "canBeAttack:" + CanBeAttack + ","

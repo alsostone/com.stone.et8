@@ -67,7 +67,7 @@ namespace ET.Client
             if (Input.GetKeyDown(KeyCode.N))
             {
                 int[] arr = new int[3] { 2001, 2002, 2003 };
-                self.SetPlacementObject(EUnitType.Block, arr[Random.Range(0, arr.Length)], 1);
+                self.SetPlacementObject(EUnitType.Block, arr[Random.Range(0, arr.Length)]);
             }
         }
         
@@ -118,9 +118,9 @@ namespace ET.Client
             }
         }
         
-        public static void SetPlacementObject(this LSOperaDragComponent self, EUnitType type, int tableId, int level)
+        public static void SetPlacementObject(this LSOperaDragComponent self, EUnitType type, int tableId)
         {
-            ulong param = ((ulong)type << 40) | ((ulong)level << 32) | (uint)tableId;
+            ulong param = ((ulong)type << 32) | (uint)tableId;
             ulong command = LSCommand.GenCommandLong48(0, OperateCommandType.PlacementStart, param);
             self.GetParent<Room>().SendCommandMeesage(command);
             self.isDraging = true;

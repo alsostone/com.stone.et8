@@ -72,7 +72,7 @@ namespace ET
                 else if (self.PlacementType == EUnitType.Building)
                 {
                     TeamType team = self.LSOwner().GetComponent<TeamComponent>().Type;
-                    lsUnit = LSUnitFactory.CreateBuilding(lsWorld, self.PlacementTableId, self.PlacementLevel, team);
+                    lsUnit = LSUnitFactory.CreateBuilding(lsWorld, self.PlacementTableId, team);
                 }
                 PlacementData placementData = lsUnit?.GetComponent<PlacementComponent>()?.GetPlacementData();
                 if (placementData != null)
@@ -100,15 +100,14 @@ namespace ET
             EventSystem.Instance.Publish(self.LSWorld(), new LSPlacementDragEnd() { Id = self.LSOwner().Id, Position = position });
         }
 
-        public static void RunCommandPlacementStart(this LSGridBuilderComponent self, EUnitType type, int tableId, int level)
-        {self.LSRoom()?.ProcessLog.LogFunction(73, self.LSParent().Id, tableId, level);
+        public static void RunCommandPlacementStart(this LSGridBuilderComponent self, EUnitType type, int tableId)
+        {
             self.PlacementTargetId = 0;
             self.PlacementRotation = 0;
             self.PlacementType = type;
             self.PlacementTableId = tableId;
-            self.PlacementLevel = level;
             self.PlacementDragOffset = new TSVector2(0, 0);
-            LSPlacementStart placementStart = new () { Id = self.LSOwner().Id, Type = type, TableId = tableId, Level = level };
+            LSPlacementStart placementStart = new () { Id = self.LSOwner().Id, Type = type, TableId = tableId };
             EventSystem.Instance.Publish(self.LSWorld(), placementStart);
         }
 
@@ -136,7 +135,6 @@ namespace ET
             self.PlacementRotation = 0;
             self.PlacementType = EUnitType.None;
             self.PlacementTableId = 0;
-            self.PlacementLevel = 0;
             self.PlacementDragOffset = new TSVector2(FP.MaxValue, FP.MaxValue);
         }
     }

@@ -81,7 +81,7 @@ namespace ET.Client
             }
         }
 
-        public static void OnPlacementStart(this LSViewGridBuilderComponent self, EUnitType type, int tableId, int level)
+        public static void OnPlacementStart(this LSViewGridBuilderComponent self, EUnitType type, int tableId)
         {
             self.OnPlacementCancel();
             int targetModel = 0;
@@ -91,7 +91,7 @@ namespace ET.Client
                     targetModel = TbBlock.Instance.Get(tableId).Model;
                     break;
                 case EUnitType.Building:
-                    targetModel = TbBuilding.Instance.Get(tableId, level).Model;
+                    targetModel = TbBuilding.Instance.Get(tableId).Model;
                     break;
             }
             if (targetModel == 0) {

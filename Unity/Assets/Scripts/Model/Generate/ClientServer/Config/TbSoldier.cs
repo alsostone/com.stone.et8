@@ -18,41 +18,36 @@ namespace ET
     [Config]
     public partial class TbSoldier : Singleton<TbSoldier>, IConfig
     {
+        private readonly Dictionary<int, TbSoldierRow> _dataMap;
         private readonly List<TbSoldierRow> _dataList;
-
-        private Dictionary<(int, int), TbSoldierRow> _dataMapUnion;
 
         public TbSoldier(ByteBuf _buf)
         {
+            _dataMap = new Dictionary<int, TbSoldierRow>();
             _dataList = new List<TbSoldierRow>();
 
-            for(int n = _buf.ReadSize() ; n > 0 ; --n)
+            for (int n = _buf.ReadSize(); n > 0; --n)
             {
                 TbSoldierRow _v;
                 _v = TbSoldierRow.DeserializeTbSoldierRow(_buf);
                 _dataList.Add(_v);
+                _dataMap.Add(_v.Id, _v);
             }
-            _dataMapUnion = new Dictionary<(int, int), TbSoldierRow>();
-            foreach(var _v in _dataList)
-            {
-                _dataMapUnion.Add((_v.Id, _v.Level), _v);
-            }
+
+            PostInit();
         }
 
+        public Dictionary<int, TbSoldierRow> DataMap => _dataMap;
         public List<TbSoldierRow> DataList => _dataList;
 
-        public TbSoldierRow GetOrDefault(int Id, int level)
+        public TbSoldierRow GetOrDefault(int key) => _dataMap.GetValueOrDefault(key);
+        public TbSoldierRow Get(int key)
         {
-            return _dataMapUnion.GetValueOrDefault((Id, level));
-        }
-    
-        public TbSoldierRow Get(int Id, int level)
-        {
-            if (_dataMapUnion.TryGetValue((Id, level), out var v))
+            if (_dataMap.TryGetValue(key,out var v))
             {
                 return v;
             }
-            ConfigLog.Error(this, (Id, level));
+            ConfigLog.Error(this,key);
             return null;
         }
 

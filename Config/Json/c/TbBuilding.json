@@ -1,7 +1,6 @@
 [
   {
-    "Id": 3001,
-    "level": 1,
+    "Id": 30011,
     "model": 30010001,
     "shape": [
       false,
@@ -64,8 +63,7 @@
     "random_bag_id": 0
   },
   {
-    "Id": 3002,
-    "level": 1,
+    "Id": 30021,
     "model": 30020001,
     "shape": [
       false,
@@ -128,8 +126,7 @@
     "random_bag_id": 0
   },
   {
-    "Id": 3003,
-    "level": 1,
+    "Id": 30031,
     "model": 30030001,
     "shape": [
       false,
@@ -192,8 +189,7 @@
     "random_bag_id": 0
   },
   {
-    "Id": 3004,
-    "level": 1,
+    "Id": 30041,
     "model": 30030001,
     "shape": [
       false,

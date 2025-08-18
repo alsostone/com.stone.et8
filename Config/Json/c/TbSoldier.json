@@ -1,7 +1,6 @@
 [
   {
-    "Id": 4001,
-    "level": 1,
+    "Id": 40011,
     "model": 40010001,
     "props": [
       [
@@ -36,8 +35,7 @@
     "random_bag_id": 0
   },
   {
-    "Id": 4001,
-    "level": 2,
+    "Id": 40012,
     "model": 40010001,
     "props": [
       [
@@ -72,8 +70,7 @@
     "random_bag_id": 0
   },
   {
-    "Id": 4001,
-    "level": 3,
+    "Id": 40013,
     "model": 40010001,
     "props": [
       [
@@ -108,8 +105,7 @@
     "random_bag_id": 0
   },
   {
-    "Id": 4002,
-    "level": 1,
+    "Id": 40021,
     "model": 40020001,
     "props": [
       [
@@ -144,8 +140,7 @@
     "random_bag_id": 0
   },
   {
-    "Id": 4002,
-    "level": 2,
+    "Id": 40022,
     "model": 40020001,
     "props": [
       [
@@ -180,8 +175,7 @@
     "random_bag_id": 0
   },
   {
-    "Id": 4002,
-    "level": 3,
+    "Id": 40023,
     "model": 40020001,
     "props": [
       [
@@ -216,8 +210,7 @@
     "random_bag_id": 0
   },
   {
-    "Id": 4003,
-    "level": 1,
+    "Id": 40031,
     "model": 40030001,
     "props": [
       [
@@ -252,8 +245,7 @@
     "random_bag_id": 0
   },
   {
-    "Id": 4003,
-    "level": 2,
+    "Id": 40032,
     "model": 40030001,
     "props": [
       [
@@ -288,8 +280,7 @@
     "random_bag_id": 0
   },
   {
-    "Id": 4003,
-    "level": 3,
+    "Id": 40033,
     "model": 40030001,
     "props": [
       [

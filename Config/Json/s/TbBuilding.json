@@ -1,7 +1,6 @@
 [
   {
-    "Id": 3001,
-    "level": 1,
+    "Id": 30011,
     "shape": [
       false,
       false,
@@ -63,8 +62,7 @@
     "random_bag_id": 0
   },
   {
-    "Id": 3002,
-    "level": 1,
+    "Id": 30021,
     "shape": [
       false,
       false,
@@ -126,8 +124,7 @@
     "random_bag_id": 0
   },
   {
-    "Id": 3003,
-    "level": 1,
+    "Id": 30031,
     "shape": [
       false,
       false,
@@ -189,8 +186,7 @@
     "random_bag_id": 0
   },
   {
-    "Id": 3004,
-    "level": 1,
+    "Id": 30041,
     "shape": [
       false,
       false,

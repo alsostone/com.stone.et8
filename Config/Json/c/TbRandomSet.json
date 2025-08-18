@@ -3,21 +3,21 @@
     "Id": 1,
     "items": [
       {
-        "id": 3001,
+        "id": 30011,
         "weight": 500,
         "type": 4,
         "count_min": 1,
         "count_max": 1
       },
       {
-        "id": 3002,
+        "id": 30021,
         "weight": 500,
         "type": 4,
         "count_min": 1,
         "count_max": 1
       },
       {
-        "id": 3003,
+        "id": 30031,
         "weight": 2000,
         "type": 4,
         "count_min": 1,
@@ -30,21 +30,21 @@
     "Id": 2,
     "items": [
       {
-        "id": 3001,
+        "id": 30011,
         "weight": 500,
         "type": 4,
         "count_min": 1,
         "count_max": 1
       },
       {
-        "id": 3002,
+        "id": 30021,
         "weight": 500,
         "type": 4,
         "count_min": 1,
         "count_max": 1
       },
       {
-        "id": 3003,
+        "id": 30031,
         "weight": 2000,
         "type": 4,
         "count_min": 1,
@@ -57,21 +57,21 @@
     "Id": 3,
     "items": [
       {
-        "id": 3001,
+        "id": 30011,
         "weight": 500,
         "type": 4,
         "count_min": 1,
         "count_max": 1
       },
       {
-        "id": 3002,
+        "id": 30021,
         "weight": 500,
         "type": 4,
         "count_min": 1,
         "count_max": 1
       },
       {
-        "id": 3003,
+        "id": 30031,
         "weight": 2000,
         "type": 4,
         "count_min": 1,
@@ -114,6 +114,486 @@
         "id": 5002,
         "weight": 500,
         "type": 16,
+        "count_min": 1,
+        "count_max": 1
+      }
+    ],
+    "xxx": 0
+  },
+  {
+    "Id": 4001,
+    "items": [
+      {
+        "id": 40011,
+        "weight": 500,
+        "type": 8,
+        "count_min": 1,
+        "count_max": 1
+      },
+      {
+        "id": 40021,
+        "weight": 500,
+        "type": 8,
+        "count_min": 1,
+        "count_max": 1
+      },
+      {
+        "id": 40031,
+        "weight": 200,
+        "type": 8,
+        "count_min": 1,
+        "count_max": 1
+      },
+      {
+        "id": 40012,
+        "weight": 100,
+        "type": 8,
+        "count_min": 1,
+        "count_max": 1
+      },
+      {
+        "id": 40022,
+        "weight": 100,
+        "type": 8,
+        "count_min": 1,
+        "count_max": 1
+      },
+      {
+        "id": 40032,
+        "weight": 50,
+        "type": 8,
+        "count_min": 1,
+        "count_max": 1
+      }
+    ],
+    "xxx": 0
+  },
+  {
+    "Id": 4002,
+    "items": [
+      {
+        "id": 40011,
+        "weight": 350,
+        "type": 8,
+        "count_min": 1,
+        "count_max": 1
+      },
+      {
+        "id": 40021,
+        "weight": 350,
+        "type": 8,
+        "count_min": 1,
+        "count_max": 1
+      },
+      {
+        "id": 40031,
+        "weight": 350,
+        "type": 8,
+        "count_min": 1,
+        "count_max": 1
+      },
+      {
+        "id": 40012,
+        "weight": 200,
+        "type": 8,
+        "count_min": 1,
+        "count_max": 1
+      },
+      {
+        "id": 40022,
+        "weight": 200,
+        "type": 8,
+        "count_min": 1,
+        "count_max": 1
+      },
+      {
+        "id": 40032,
+        "weight": 100,
+        "type": 8,
+        "count_min": 1,
+        "count_max": 1
+      }
+    ],
+    "xxx": 0
+  },
+  {
+    "Id": 4003,
+    "items": [
+      {
+        "id": 40011,
+        "weight": 200,
+        "type": 8,
+        "count_min": 1,
+        "count_max": 1
+      },
+      {
+        "id": 40021,
+        "weight": 200,
+        "type": 8,
+        "count_min": 1,
+        "count_max": 1
+      },
+      {
+        "id": 40031,
+        "weight": 200,
+        "type": 8,
+        "count_min": 1,
+        "count_max": 1
+      },
+      {
+        "id": 40012,
+        "weight": 200,
+        "type": 8,
+        "count_min": 1,
+        "count_max": 1
+      },
+      {
+        "id": 40022,
+        "weight": 200,
+        "type": 8,
+        "count_min": 1,
+        "count_max": 1
+      },
+      {
+        "id": 40032,
+        "weight": 100,
+        "type": 8,
+        "count_min": 1,
+        "count_max": 1
+      }
+    ],
+    "xxx": 0
+  },
+  {
+    "Id": 4004,
+    "items": [
+      {
+        "id": 40011,
+        "weight": 100,
+        "type": 8,
+        "count_min": 1,
+        "count_max": 1
+      },
+      {
+        "id": 40021,
+        "weight": 300,
+        "type": 8,
+        "count_min": 1,
+        "count_max": 1
+      },
+      {
+        "id": 40031,
+        "weight": 300,
+        "type": 8,
+        "count_min": 1,
+        "count_max": 1
+      },
+      {
+        "id": 40012,
+        "weight": 200,
+        "type": 8,
+        "count_min": 1,
+        "count_max": 1
+      },
+      {
+        "id": 40022,
+        "weight": 200,
+        "type": 8,
+        "count_min": 1,
+        "count_max": 1
+      },
+      {
+        "id": 40032,
+        "weight": 100,
+        "type": 8,
+        "count_min": 1,
+        "count_max": 1
+      }
+    ],
+    "xxx": 0
+  },
+  {
+    "Id": 4011,
+    "items": [
+      {
+        "id": 40011,
+        "weight": 500,
+        "type": 8,
+        "count_min": 1,
+        "count_max": 1
+      },
+      {
+        "id": 40021,
+        "weight": 500,
+        "type": 8,
+        "count_min": 1,
+        "count_max": 1
+      },
+      {
+        "id": 40031,
+        "weight": 200,
+        "type": 8,
+        "count_min": 1,
+        "count_max": 1
+      },
+      {
+        "id": 40012,
+        "weight": 100,
+        "type": 8,
+        "count_min": 1,
+        "count_max": 1
+      },
+      {
+        "id": 40022,
+        "weight": 100,
+        "type": 8,
+        "count_min": 1,
+        "count_max": 1
+      },
+      {
+        "id": 40032,
+        "weight": 50,
+        "type": 8,
+        "count_min": 1,
+        "count_max": 1
+      }
+    ],
+    "xxx": 0
+  },
+  {
+    "Id": 4012,
+    "items": [
+      {
+        "id": 40011,
+        "weight": 350,
+        "type": 8,
+        "count_min": 1,
+        "count_max": 1
+      },
+      {
+        "id": 40021,
+        "weight": 350,
+        "type": 8,
+        "count_min": 1,
+        "count_max": 1
+      },
+      {
+        "id": 40031,
+        "weight": 350,
+        "type": 8,
+        "count_min": 1,
+        "count_max": 1
+      },
+      {
+        "id": 40012,
+        "weight": 200,
+        "type": 8,
+        "count_min": 1,
+        "count_max": 1
+      },
+      {
+        "id": 40022,
+        "weight": 200,
+        "type": 8,
+        "count_min": 1,
+        "count_max": 1
+      },
+      {
+        "id": 40032,
+        "weight": 100,
+        "type": 8,
+        "count_min": 1,
+        "count_max": 1
+      }
+    ],
+    "xxx": 0
+  },
+  {
+    "Id": 4013,
+    "items": [
+      {
+        "id": 40011,
+        "weight": 200,
+        "type": 8,
+        "count_min": 1,
+        "count_max": 1
+      },
+      {
+        "id": 40021,
+        "weight": 200,
+        "type": 8,
+        "count_min": 1,
+        "count_max": 1
+      },
+      {
+        "id": 40031,
+        "weight": 200,
+        "type": 8,
+        "count_min": 1,
+        "count_max": 1
+      },
+      {
+        "id": 40012,
+        "weight": 200,
+        "type": 8,
+        "count_min": 1,
+        "count_max": 1
+      },
+      {
+        "id": 40022,
+        "weight": 200,
+        "type": 8,
+        "count_min": 1,
+        "count_max": 1
+      },
+      {
+        "id": 40032,
+        "weight": 100,
+        "type": 8,
+        "count_min": 1,
+        "count_max": 1
+      }
+    ],
+    "xxx": 0
+  },
+  {
+    "Id": 4014,
+    "items": [
+      {
+        "id": 40011,
+        "weight": 100,
+        "type": 8,
+        "count_min": 1,
+        "count_max": 1
+      },
+      {
+        "id": 40021,
+        "weight": 300,
+        "type": 8,
+        "count_min": 1,
+        "count_max": 1
+      },
+      {
+        "id": 40031,
+        "weight": 300,
+        "type": 8,
+        "count_min": 1,
+        "count_max": 1
+      },
+      {
+        "id": 40012,
+        "weight": 200,
+        "type": 8,
+        "count_min": 1,
+        "count_max": 1
+      },
+      {
+        "id": 40022,
+        "weight": 200,
+        "type": 8,
+        "count_min": 1,
+        "count_max": 1
+      },
+      {
+        "id": 40032,
+        "weight": 100,
+        "type": 8,
+        "count_min": 1,
+        "count_max": 1
+      }
+    ],
+    "xxx": 0
+  },
+  {
+    "Id": 4015,
+    "items": [
+      {
+        "id": 40012,
+        "weight": 200,
+        "type": 8,
+        "count_min": 1,
+        "count_max": 1
+      },
+      {
+        "id": 40022,
+        "weight": 200,
+        "type": 8,
+        "count_min": 1,
+        "count_max": 1
+      },
+      {
+        "id": 40032,
+        "weight": 100,
+        "type": 8,
+        "count_min": 1,
+        "count_max": 1
+      },
+      {
+        "id": 40013,
+        "weight": 200,
+        "type": 8,
+        "count_min": 1,
+        "count_max": 1
+      },
+      {
+        "id": 40023,
+        "weight": 200,
+        "type": 8,
+        "count_min": 1,
+        "count_max": 1
+      },
+      {
+        "id": 40033,
+        "weight": 100,
+        "type": 8,
+        "count_min": 1,
+        "count_max": 1
+      }
+    ],
+    "xxx": 0
+  },
+  {
+    "Id": 4016,
+    "items": [
+      {
+        "id": 40012,
+        "weight": 200,
+        "type": 8,
+        "count_min": 1,
+        "count_max": 1
+      },
+      {
+        "id": 40022,
+        "weight": 200,
+        "type": 8,
+        "count_min": 1,
+        "count_max": 1
+      },
+      {
+        "id": 40032,
+        "weight": 100,
+        "type": 8,
+        "count_min": 1,
+        "count_max": 1
+      },
+      {
+        "id": 40013,
+        "weight": 200,
+        "type": 8,
+        "count_min": 1,
+        "count_max": 1
+      },
+      {
+        "id": 40023,
+        "weight": 200,
+        "type": 8,
+        "count_min": 1,
+        "count_max": 1
+      },
+      {
+        "id": 40033,
+        "weight": 100,
+        "type": 8,
         "count_min": 1,
         "count_max": 1
       }

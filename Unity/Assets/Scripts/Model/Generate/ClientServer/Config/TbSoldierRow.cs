@@ -17,7 +17,6 @@ namespace ET
         public TbSoldierRow(ByteBuf _buf)
         {
             Id = _buf.ReadInt();
-            Level = _buf.ReadInt();
             Model = _buf.ReadInt();
             Model_Ref = null;
             {int n0 = System.Math.Min(_buf.ReadSize(), _buf.Size);Props = new System.Collections.Generic.Dictionary<NumericType, int>(n0 * 3 / 2);for(var i0 = 0 ; i0 < n0 ; i0++) { NumericType _k0;  _k0 = (NumericType)_buf.ReadInt(); int _v0;  _v0 = _buf.ReadInt();     Props.Add(_k0, _v0);}}
@@ -37,11 +36,6 @@ namespace ET
         /// ID
         /// </summary>
         public readonly int Id;
-
-        /// <summary>
-        /// 等级
-        /// </summary>
-        public readonly int Level;
 
         /// <summary>
         /// 模型
@@ -74,7 +68,6 @@ namespace ET
         public  void ResolveRef()
         {
             
-            
             Model_Ref = TbResource.Instance.GetOrDefault(Model);
             
             
@@ -85,7 +78,6 @@ namespace ET
         {
             return "{ "
             + "Id:" + Id + ","
-            + "level:" + Level + ","
             + "model:" + Model + ","
             + "props:" + Luban.StringUtil.CollectionToString(Props) + ","
             + "skills:" + Luban.StringUtil.CollectionToString(Skills) + ","

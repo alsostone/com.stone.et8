@@ -5,10 +5,9 @@ namespace ET
     public static partial class SoldierComponentSystem
     {
         [EntitySystem]
-        private static void Awake(this SoldierComponent self, int tableId, int level)
-        {self.LSRoom()?.ProcessLog.LogFunction(67, self.LSParent().Id, tableId, level);
+        private static void Awake(this SoldierComponent self, int tableId)
+        {
             self.TableId = tableId;
-            self.Level = level;
         }
         
     }

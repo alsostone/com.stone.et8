@@ -70,7 +70,7 @@ namespace ET
         
         public static LSUnit CreateSoldier(LSWorld lsWorld, int tableId, TSVector position, TSQuaternion rotation, TeamType teamType)
         {
-	        TbSoldierRow row = TbSoldier.Instance.Get(tableId, 1);
+	        TbSoldierRow row = TbSoldier.Instance.Get(tableId);
 	        LSUnitComponent lsUnitComponent = lsWorld.GetComponent<LSUnitComponent>();
 	        LSUnit lsUnit = lsUnitComponent.AddChild<LSUnit>();
 
@@ -78,7 +78,7 @@ namespace ET
 	        lsUnit.AddComponent<TypeComponent, EUnitType>(EUnitType.Soldier);
 	        lsUnit.AddComponent<FlagComponent>();
 	        lsUnit.AddComponent<TeamComponent, TeamType>(teamType);
-	        lsUnit.AddComponent<SoldierComponent, int, int>(tableId, 1);
+	        lsUnit.AddComponent<SoldierComponent, int>(tableId);
 	        
 	        PropComponent propComponent = lsUnit.AddComponent<PropComponent>();
 	        foreach (var prop in row.Props) {
@@ -133,23 +133,23 @@ namespace ET
         
         public static LSUnit CreateBuilding(LSWorld lsWorld, int tableId, TSVector position, TSQuaternion rotation, TeamType teamType)
         {
-	        LSUnit lsUnit = CreateBuilding(lsWorld, tableId, 1, teamType);
+	        LSUnit lsUnit = CreateBuilding(lsWorld, tableId, teamType);
 	        lsUnit.AddComponent<TransformComponent, TSVector, TSQuaternion>(position, rotation);
 	        
 	        EventSystem.Instance.Publish(lsWorld, new LSUnitCreate() {LSUnit = lsUnit});
 	        return lsUnit;
         }
         
-        public static LSUnit CreateBuilding(LSWorld lsWorld, int tableId, int level, TeamType teamType)
+        public static LSUnit CreateBuilding(LSWorld lsWorld, int tableId, TeamType teamType)
         {
-	        TbBuildingRow row = TbBuilding.Instance.Get(tableId, level);
+	        TbBuildingRow row = TbBuilding.Instance.Get(tableId);
 	        LSUnitComponent lsUnitComponent = lsWorld.GetComponent<LSUnitComponent>();
 	        LSUnit lsUnit = lsUnitComponent.AddChild<LSUnit>();
 
 	        lsUnit.AddComponent<TypeComponent, EUnitType>(EUnitType.Building);
 	        lsUnit.AddComponent<FlagComponent>();
 	        lsUnit.AddComponent<TeamComponent, TeamType>(teamType);
-	        lsUnit.AddComponent<BuildingComponent, int, int>(tableId, 1);
+	        lsUnit.AddComponent<BuildingComponent, int>(tableId);
 	        lsUnit.AddComponent<PlacementComponent, PlacedLayer, PlacedLayer, bool[]>(PlacedLayer.Building, PlacedLayer.Block, row.Shape);
 
 	        PropComponent propComponent = lsUnit.AddComponent<PropComponent>();
