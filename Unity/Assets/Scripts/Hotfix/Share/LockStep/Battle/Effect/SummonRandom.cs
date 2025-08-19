@@ -24,7 +24,7 @@ namespace ET
             
             // 通过 随机包/随机集 获得要召唤的单位
             var results = ObjectPool.Instance.Fetch<List<Tuple<EUnitType, int, int>>>();
-            RandomDropHelper.Random(target.GetRandom(), param[0], ref results);
+            RandomDropHelper.Random(target.GetRandom(), param[0], results);
             foreach (var tuple in results)
             {
                 for (var i = 0; i <= tuple.Item3; i++)

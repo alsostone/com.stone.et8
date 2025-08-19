@@ -6,7 +6,7 @@ namespace ET
 {
     public static class RandomDropHelper
     {
-        public static void Random(TSRandom random, int randomBagId, ref List<Tuple<EUnitType, int, int>> randomResults)
+        public static void Random(TSRandom random, int randomBagId, List<Tuple<EUnitType, int, int>> randomResults)
         {
             if (randomResults == null)
                 return;
@@ -20,7 +20,7 @@ namespace ET
             if (resRandomBag.IsRandomOne)
             {
                 if (items.Length == 1) {
-                    RandomSet(random, items[0].Id, items[0].Count, ref randomResults);
+                    RandomSet(random, items[0].Id, items[0].Count, randomResults);
                     return;
                 }
                 
@@ -33,7 +33,7 @@ namespace ET
                 foreach (ItemRandomBag itemRandomBag in items) {
                     randWeight -= itemRandomBag.Weight;
                     if (randWeight <= 0) {
-                        RandomSet(random, itemRandomBag.Id, itemRandomBag.Count, ref randomResults);
+                        RandomSet(random, itemRandomBag.Id, itemRandomBag.Count, randomResults);
                         return;
                     }
                 }
@@ -43,7 +43,7 @@ namespace ET
                 foreach (ItemRandomBag itemRandomBag in items)
                 {
                     if (random.Range(1, LSConstValue.Probability + 1) <= itemRandomBag.Weight) {
-                        RandomSet(random, itemRandomBag.Id, itemRandomBag.Count, ref randomResults);
+                        RandomSet(random, itemRandomBag.Id, itemRandomBag.Count, randomResults);
                     }
                 }
             }
@@ -56,7 +56,7 @@ namespace ET
         /// <param name="randomSetId"></param>
         /// <param name="randomCount">要获取几类物品，注意：不是几个哈</param>
         /// <param name="randomResults"></param>
-        private static void RandomSet(TSRandom random, int randomSetId, int randomCount, ref List<Tuple<EUnitType, int, int>> randomResults)
+        public static void RandomSet(TSRandom random, int randomSetId, int randomCount, List<Tuple<EUnitType, int, int>> randomResults)
         {
             var items = TbRandomSet.Instance.Get(randomSetId).Items;
             if (items.Length <= randomCount) {

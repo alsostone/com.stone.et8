@@ -12,6 +12,7 @@ namespace ET
 		public int CurrentMonsterCount;
 		
 		public int NextWaveFrame;
+		public int NextMonsterFrame;
 		
 		[BsonIgnore]
 		[MemoryPackIgnore]

@@ -40,58 +40,67 @@ namespace ST.GridBuilder
             FieldV2 v1 = new FieldV2(0, 0);
             int xLeft = (int)((position.x - half) / cellSize);
             int xRight = (int)((position.x + half) / cellSize);
-            if (xLeft >= 0 && xRight < xLength)
+
+            if (xLeft >= 0 && xLeft < xLength)
             {
-                CellData cellLeft = cells[xLeft + indexCurrent.z * xLength];
-                CellData cellRight = cells[xRight + indexCurrent.z * xLength];
+                if (xRight >= 0 && xRight < xLength)
+                {
+                    CellData cellLeft = cells[xLeft + indexCurrent.z * xLength];
+                    CellData cellRight = cells[xRight + indexCurrent.z * xLength];
                 
-                if (cellLeft.distance != int.MaxValue && cellRight.distance != int.MaxValue)
-                    v1 = cellLeft.direction.Lerp(cellRight.direction, (position.x - (cellLeft.index.x * cellSize + half)) / cellSize);
-                else if (cellLeft.distance != int.MaxValue)
-                    v1 = cellLeft.direction;
-                else if (cellRight.distance != int.MaxValue)
-                    v1 = cellRight.direction;
+                    if (cellLeft.distance != int.MaxValue && cellRight.distance != int.MaxValue)
+                        v1 = cellLeft.direction.Lerp(cellRight.direction, (position.x - (cellLeft.index.x * cellSize + half)) / cellSize);
+                    else if (cellLeft.distance != int.MaxValue)
+                        v1 = cellLeft.direction;
+                    else if (cellRight.distance != int.MaxValue)
+                        v1 = cellRight.direction;
+                }
+                else
+                {
+                    CellData cellLeft = cells[xLeft + indexCurrent.z * xLength];
+                    if (cellLeft.distance != int.MaxValue)
+                        v1 = cellLeft.direction;
+                }
             }
-            else if (xLeft < 0)
+            else if (xRight >= 0 && xRight < xLength)
             {
                 CellData cellRight = cells[xRight + indexCurrent.z * xLength];
                 if (cellRight.distance != int.MaxValue)
                     v1 = cellRight.direction;
             }
-            else if (xRight >= xLength)
-            {
-                CellData cellLeft = cells[xLeft + indexCurrent.z * xLength];
-                if (cellLeft.distance != int.MaxValue)
-                    v1 = cellLeft.direction;
-            }
+            
             
             FieldV2 v2 = new FieldV2(0, 0);
             int zTop = (int)((position.z + half) / cellSize);
             int zBottom = (int)((position.z - half) / cellSize);
-            if (zTop >= 0 && zBottom < zLength)
+            if (zTop >= 0 && zTop < zLength)
             {
-                CellData cellTop = cells[indexCurrent.x + zTop * xLength];
-                CellData cellBottom = cells[indexCurrent.x + zBottom * xLength];
+                if (zBottom >= 0 && zBottom < zLength)
+                {
+                    CellData cellTop = cells[indexCurrent.x + zTop * xLength];
+                    CellData cellBottom = cells[indexCurrent.x + zBottom * xLength];
                 
-                if (cellTop.distance != int.MaxValue && cellBottom.distance != int.MaxValue)
-                    v2 = cellTop.direction.Lerp(cellBottom.direction, (position.z - (cellTop.index.z * cellSize + half)) / cellSize);
-                else if (cellTop.distance != int.MaxValue)
-                    v2 = cellTop.direction;
-                else if (cellBottom.distance != int.MaxValue)
-                    v2 = cellBottom.direction;
+                    if (cellTop.distance != int.MaxValue && cellBottom.distance != int.MaxValue)
+                        v2 = cellTop.direction.Lerp(cellBottom.direction, (position.z - (cellTop.index.z * cellSize + half)) / cellSize);
+                    else if (cellTop.distance != int.MaxValue)
+                        v2 = cellTop.direction;
+                    else if (cellBottom.distance != int.MaxValue)
+                        v2 = cellBottom.direction;
+                }
+                else
+                {
+                    CellData cellTop = cells[indexCurrent.x + zTop * xLength];
+                    if (cellTop.distance != int.MaxValue)
+                        v2 = cellTop.direction;
+                }
             }
-            else if (zTop < 0)
+            else if (zBottom >= 0 && zBottom < zLength)
             {
                 CellData cellBottom = cells[indexCurrent.x + zBottom * xLength];
                 if (cellBottom.distance != int.MaxValue)
                     v2 = cellBottom.direction;
             }
-            else if (zBottom >= zLength)
-            {
-                CellData cellTop = cells[indexCurrent.x + zTop * xLength];
-                if (cellTop.distance != int.MaxValue)
-                    v2 = cellTop.direction;
-            }
+            
             return v1.Lerp(v2, (position.z - (indexCurrent.z * cellSize + half)) / cellSize).Normalize();
         }
 
