@@ -41,7 +41,7 @@ namespace ET
             {
                 int index = Math.Min(self.TbRow.RandomCounts.Length, self.CurrentWaveCount);
                 int limit = self.TbRow.RandomCounts[index - 1];
-                if (self.CurrentMonsterCount > limit)
+                if (self.CurrentMonsterCount >= limit)
                     return;
 
                 index = Math.Min(self.TbRow.RandomSets.Length, self.CurrentWaveCount);
@@ -54,7 +54,7 @@ namespace ET
                 RandomDropHelper.RandomSet(self.GetRandom(), randomSet, 1, results);
                 foreach (var tuple in results)
                 {
-                    for (var i = 0; i <= tuple.Item3; i++)
+                    for (var i = 0; i < tuple.Item3; i++)
                     {
                         TSVector2 v2 = self.GetRandom().GetRandomPointOnCircle(32);
                         TSVector position = new TSVector(v2.x, 0, v2.y);

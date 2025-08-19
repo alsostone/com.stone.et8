@@ -13,21 +13,13 @@ namespace ET
 
         protected override void DoStart()
         {
-            Blackboard.AddObserver(AIConstValue.HasEnemy, Guid);
             Clock.AddTimer(0, 0, -1, Guid);
         }
 
         protected override void DoStop()
         {
-            StopAndCleanUp(false);
-        }
-
-        public override void OnObservingChanged(BlackboardChangeType type)
-        {
-            if (!Blackboard.GetBool(AIConstValue.HasEnemy))
-            {
-                StopAndCleanUp(false);
-            }
+            Clock.RemoveTimer(Guid);
+            Stopped(false);
         }
 
         public override void OnTimerReached()
@@ -35,13 +27,6 @@ namespace ET
             LSUnit lsUnit = Agent as LSUnit;
             FieldMoveComponent fieldMoveComponent = lsUnit.GetComponent<FieldMoveComponent>();
             fieldMoveComponent.DoMove();
-        }
-
-        private void StopAndCleanUp(bool result)
-        {
-            Blackboard.RemoveObserver(AIConstValue.HasEnemy, Guid);
-            Clock.RemoveTimer(Guid);
-            Stopped(result);
         }
     }
 }

@@ -27,7 +27,7 @@ namespace ET
             RandomDropHelper.Random(target.GetRandom(), param[0], results);
             foreach (var tuple in results)
             {
-                for (var i = 0; i <= tuple.Item3; i++)
+                for (var i = 0; i < tuple.Item3; i++)
                 {
                     LSUnitFactory.SummonUnit(target.LSWorld(), tuple.Item1, tuple.Item2, targetTransform.Position + position,
                         targetTransform.Rotation, team);
