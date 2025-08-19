@@ -2,6 +2,7 @@ using TrueSync;
 
 namespace ET
 {
+    [LSEntitySystemOf(typeof(TransformComponent))]
     [EntitySystemOf(typeof(TransformComponent))]
     [FriendOf(typeof(TransformComponent))]
     public static partial class TransformComponentSystem
@@ -11,9 +12,19 @@ namespace ET
         {self.LSRoom()?.ProcessLog.LogFunction(43, self.LSParent().Id);
             self.Position = position;
             self.Rotation = rotation;
-            self.IsMoving = false;
         }
 
+        [LSEntitySystem]
+        private static void LSUpdate(this TransformComponent self)
+        {
+            if (self.IsMovingCurrent) {
+                self.IsMovingCurrent = false;
+            }
+            else if (self.IsMovingPrevious) {
+                self.SetMoving(false);
+            }
+        }
+        
         public static void Move(this TransformComponent self, TSVector2 forward)
         {self.LSRoom()?.ProcessLog.LogFunction(42, self.LSParent().Id);
             if (forward.sqrMagnitude < FP.EN4) {
@@ -39,9 +50,15 @@ namespace ET
 
         private static void SetMoving(this TransformComponent self, bool moving)
         {self.LSRoom()?.ProcessLog.LogFunction(70, self.LSParent().Id, moving ? 1 : 0);
-            if (moving == self.IsMoving) return;
-            self.IsMoving = moving;
-            EventSystem.Instance.Publish(self.LSWorld(), new LSUnitMoving() { Id = self.LSOwner().Id, IsMoving = self.IsMoving });
+            self.IsMovingCurrent = moving;
+            if (moving && !self.IsMovingPrevious) {
+                self.IsMovingPrevious = true;
+                EventSystem.Instance.Publish(self.LSWorld(), new LSUnitMoving() { Id = self.LSOwner().Id, IsMoving = true });
+            }
+            else if (!moving && self.IsMovingPrevious) {
+                self.IsMovingPrevious = false;
+                EventSystem.Instance.Publish(self.LSWorld(), new LSUnitMoving() { Id = self.LSOwner().Id, IsMoving = false });
+            }
         }
 
         public static void SetPosition(this TransformComponent self, TSVector position)

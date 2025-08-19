@@ -1,16 +1,15 @@
-﻿using System.Collections.Generic;
-using MemoryPack;
+﻿using MemoryPack;
 using MongoDB.Bson.Serialization.Attributes;
-using MongoDB.Bson.Serialization.Options;
 using TrueSync;
 
 namespace ET
 {
     [ComponentOf(typeof(LSUnit))]
     [MemoryPackable]
-    public partial class TransformComponent : LSEntity, IAwake<TSVector, TSQuaternion>, ISerializeToEntity
+    public partial class TransformComponent : LSEntity, IAwake<TSVector, TSQuaternion>, ILSUpdate, ISerializeToEntity
     {
-        public bool IsMoving;
+        public bool IsMovingCurrent;
+        public bool IsMovingPrevious;
         public TSVector Position { get; set; }
 
         [MemoryPackIgnore]
