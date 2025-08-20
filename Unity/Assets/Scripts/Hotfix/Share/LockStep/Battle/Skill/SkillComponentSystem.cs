@@ -30,17 +30,10 @@ namespace ET
             {
                 long id = self.mRunningSkills[index];
                 Skill skill = self.GetChild<Skill>(id);
-                if (skill == null)
-                {
+                if (skill == null || !skill.IsRunning) {
                     self.mRunningSkills.RemoveAt(index);
-                }
-                else
-                {
+                } else {
                     skill.StepRunning();
-                    if (!skill.IsRunning)
-                    {
-                        self.mRunningSkills.RemoveAt(index);
-                    }
                 }
             }
         }
@@ -79,6 +72,18 @@ namespace ET
                 skill?.ForceDone();
             }
             self.mRunningSkills.Clear();
+        }
+        
+        public static Skill GetRunningSkill(this SkillComponent self, ESkillType type)
+        {
+            for (int index = self.mRunningSkills.Count - 1; index >= 0; index--)
+            {
+                long id = self.mRunningSkills[index];
+                Skill skill = self.GetChild<Skill>(id);
+                if (skill != null && skill.TbSkillRow.SkillType == type)
+                    return skill;
+            }
+            return null;
         }
 
         public static bool TryCastSkill(this SkillComponent self, ESkillType type)

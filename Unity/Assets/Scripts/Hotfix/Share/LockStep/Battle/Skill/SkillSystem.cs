@@ -94,6 +94,9 @@ namespace ET
         
         public static void ForceDone(this Skill self)
         {self.LSRoom()?.ProcessLog.LogFunction(58, self.LSParent().Id);
+            if (!self.IsRunning) {
+                return;
+            }
             self.IsRunning = false;
             self.CurrentPoint = 0;
             self.SearchUnits.Clear();

@@ -18,7 +18,7 @@ namespace ET
     {
         public int SkillId;
         public bool IsOnlyOnce;
-        public bool IsRunning;
+        public bool IsRunning { get; set; }
         
         public int CastFrame;
         public int DurationFrame;
