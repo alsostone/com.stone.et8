@@ -13,7 +13,7 @@ namespace ET
 		    LSUnit lsUnit = lsUnitComponent.AddChildWithId<LSUnit>(LSConstValue.GlobalIdOffset);
 		    
 		    lsUnit.AddComponent<TypeComponent, EUnitType>(EUnitType.Global);
-		    lsUnit.AddComponent<PropComponent>();
+		    lsUnit.AddComponent<PropComponent, int>(0);
 		    return lsUnit;
 	    }
 
@@ -26,7 +26,7 @@ namespace ET
 		    lsUnit.AddComponent<TeamComponent, TeamType>(teamType);
 		    lsUnit.AddComponent<WorkQueueComponent>();
 		    
-		    PropComponent propComponent = lsUnit.AddComponent<PropComponent>();
+		    PropComponent propComponent = lsUnit.AddComponent<PropComponent, int>(0);
 		    propComponent.Set(NumericType.MaxGoldBase, 100, false);
 		    propComponent.Set(NumericType.MaxWoodBase, 100, false);
 		    propComponent.Set(NumericType.MaxPopulationBase, 20, false);
@@ -50,7 +50,7 @@ namespace ET
 	        lsUnit.AddComponent<TeamComponent, TeamType>(TeamType.TeamA);
 	        lsUnit.AddComponent<HeroComponent, int>(tableId);
 	        
-	        PropComponent propComponent = lsUnit.AddComponent<PropComponent>();
+	        PropComponent propComponent = lsUnit.AddComponent<PropComponent, int>(row.Radius);
 	        foreach (var prop in row.Props) {
 		        propComponent.Set(prop.Key, (FP)prop.Value / LSConstValue.PropValueScale, false);
 	        }
@@ -80,7 +80,7 @@ namespace ET
 	        lsUnit.AddComponent<TeamComponent, TeamType>(teamType);
 	        lsUnit.AddComponent<SoldierComponent, int>(tableId);
 	        
-	        PropComponent propComponent = lsUnit.AddComponent<PropComponent>();
+	        PropComponent propComponent = lsUnit.AddComponent<PropComponent, int>(row.Radius);
 	        foreach (var prop in row.Props) {
 		        propComponent.Set(prop.Key, (FP)prop.Value / LSConstValue.PropValueScale, false);
 	        }
@@ -119,7 +119,7 @@ namespace ET
 	        lsUnit.AddComponent<BlockComponent, int>(tableId);
 	        lsUnit.AddComponent<PlacementComponent, PlacedLayer, PlacedLayer, bool[]>(PlacedLayer.Block, PlacedLayer.Map | PlacedLayer.Block, row.Shape);
 	        
-	        PropComponent propComponent = lsUnit.AddComponent<PropComponent>();
+	        PropComponent propComponent = lsUnit.AddComponent<PropComponent, int>(5000);
 	        foreach (var prop in row.Props) {
 		        propComponent.Set(prop.Key, (FP)prop.Value / LSConstValue.PropValueScale, false);
 	        }
@@ -152,7 +152,7 @@ namespace ET
 	        lsUnit.AddComponent<BuildingComponent, int>(tableId);
 	        lsUnit.AddComponent<PlacementComponent, PlacedLayer, PlacedLayer, bool[]>(PlacedLayer.Building, PlacedLayer.Block, row.Shape);
 
-	        PropComponent propComponent = lsUnit.AddComponent<PropComponent>();
+	        PropComponent propComponent = lsUnit.AddComponent<PropComponent, int>(row.Radius);
 	        foreach (var prop in row.Props) {
 		        propComponent.Set(prop.Key, (FP)prop.Value / LSConstValue.PropValueScale, false);
 	        }

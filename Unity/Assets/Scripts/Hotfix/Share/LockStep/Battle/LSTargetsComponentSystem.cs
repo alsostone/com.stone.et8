@@ -58,9 +58,9 @@ namespace ET
                     }
                     if (target.Active)
                     {
+                        FP range2 = range + target.GetComponent<PropComponent>().Radius;
                         var dis = (target.GetComponent<TransformComponent>().Position - center).sqrMagnitude;
-                        var sqrRange = target.GetAttackSqrRange(range);
-                        if (sqrRange >= dis) {
+                        if ((range2 * range2) >= dis) {
                             results.Add(new SearchUnit() { Target = target, Distance = dis });
                         }
                     }

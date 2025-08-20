@@ -68,6 +68,29 @@
     ]
   },
   {
+    "Id": 300000010,
+    "name": "大本营子弹",
+    "group_id": 30000001,
+    "success_conds": [],
+    "failure_conds": [],
+    "action_type": 13,
+    "action_param": [
+      30000001,
+      0,
+      0,
+      0
+    ]
+  },
+  {
+    "Id": 300000011,
+    "name": "大本营子弹效果",
+    "group_id": 300000011,
+    "success_conds": [],
+    "failure_conds": [],
+    "action_type": 4,
+    "action_param": []
+  },
+  {
     "Id": 300100010,
     "name": "防御塔子弹",
     "group_id": 30010001,
@@ -75,7 +98,7 @@
     "failure_conds": [],
     "action_type": 13,
     "action_param": [
-      31000001,
+      30010001,
       0,
       0,
       0

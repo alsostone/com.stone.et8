@@ -62,7 +62,7 @@ namespace ET
         public TbTrackRow TrackId_Ref { get; private set; }
 
         /// <summary>
-        /// 技能资源ID
+        /// 子弹资源ID
         /// </summary>
         public readonly int ResourceId;
 

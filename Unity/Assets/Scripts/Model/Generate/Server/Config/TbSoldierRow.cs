@@ -17,6 +17,7 @@ namespace ET
         public TbSoldierRow(ByteBuf _buf)
         {
             Id = _buf.ReadInt();
+            Radius = _buf.ReadInt();
             {int n0 = System.Math.Min(_buf.ReadSize(), _buf.Size);Props = new System.Collections.Generic.Dictionary<NumericType, int>(n0 * 3 / 2);for(var i0 = 0 ; i0 < n0 ; i0++) { NumericType _k0;  _k0 = (NumericType)_buf.ReadInt(); int _v0;  _v0 = _buf.ReadInt();     Props.Add(_k0, _v0);}}
             {int __n0 = System.Math.Min(_buf.ReadSize(), _buf.Size);Skills = new int[__n0];for(var __index0 = 0 ; __index0 < __n0 ; __index0++) { int __e0;__e0 = _buf.ReadInt(); Skills[__index0] = __e0;}}
             RandomBagId = _buf.ReadInt();
@@ -34,6 +35,11 @@ namespace ET
         /// ID
         /// </summary>
         public readonly int Id;
+
+        /// <summary>
+        /// 半径
+        /// </summary>
+        public readonly int Radius;
 
         /// <summary>
         /// 属性类型
@@ -61,6 +67,7 @@ namespace ET
             
             
             
+            
             RandomBagId_Ref = TbRandomBag.Instance.GetOrDefault(RandomBagId);
         }
 
@@ -68,6 +75,7 @@ namespace ET
         {
             return "{ "
             + "Id:" + Id + ","
+            + "radius:" + Radius + ","
             + "props:" + Luban.StringUtil.CollectionToString(Props) + ","
             + "skills:" + Luban.StringUtil.CollectionToString(Skills) + ","
             + "randomBagId:" + RandomBagId + ","

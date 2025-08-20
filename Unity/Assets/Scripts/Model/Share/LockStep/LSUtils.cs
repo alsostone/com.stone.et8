@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using TrueSync;
 
 namespace ET
@@ -65,11 +66,17 @@ namespace ET
         {
             return (milliseconds / LSConstValue.UpdateInterval);
         }
-
-        public static FP GetAttackSqrRange(this LSUnit unit, FP range)
-        {
-            return range * range;
-        }
         
+        public static void Shuffle<T>(this IList<T> list, TSRandom random)
+        {
+            int n = list.Count;
+            while (n > 1)
+            {
+                n--;
+                int k = random.Next(0, n + 1);
+                (list[k], list[n]) = (list[n], list[k]);
+            }
+        }
+
     }
 }

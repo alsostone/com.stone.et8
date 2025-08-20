@@ -34,9 +34,25 @@ namespace ET
                     return;
                 }
             }
+
+            TSVector center = TSVector.zero;
+            TransformComponent transformComponent = owner.GetComponent<TransformComponent>();
+            if (transformComponent != null) {
+                center = transformComponent.Position;
+            }
             
-            FP range = res.Range * FP.EN4;
-            TSVector center = owner.GetComponent<TransformComponent>()?.Position ?? TSVector.zero;
+            FP range = FP.Zero;
+            if (res.Range > 0) {
+                range += res.Range * FP.EN4;
+            } else {
+                PropComponent propComponent = owner.GetComponent<PropComponent>();
+                if (propComponent != null)
+                {
+                    range += propComponent.Get(NumericType.AtkRange);
+                    range += propComponent.Radius;
+                }
+            }
+
             TeamType teamSelf = owner.GetComponent<TeamComponent>()?.Type ?? TeamType.None;
             
             LSTargetsComponent lsTargetsComponent = owner.LSWorld().GetComponent<LSTargetsComponent>();
@@ -58,7 +74,7 @@ namespace ET
                     lsTargetsComponent.GetAttackTargets(TeamType.None, center, range, results);
                     break;
                 case ESearchTargetTeam.Counter:
-                    owner.GetComponent<BeHitComponent>()?.GetCounterAttack(center, range * range, results);
+                    owner.GetComponent<BeHitComponent>()?.GetCounterAttack(center, range, results);
                     break;
                 default: throw new ArgumentOutOfRangeException();
             }
@@ -66,7 +82,7 @@ namespace ET
             FilterDirection(res, results, owner);
             FilterWithType(res.Type, results);
             FilterWithTableId(res.TableId, results);
-            FilterWithPriority(res.Priority, results);
+            FilterWithPriority(owner.GetRandom(), res.Priority, results);
             FilterCount(res.Count, results);
         }
         
@@ -120,7 +136,7 @@ namespace ET
             }
         }
         
-        private static void FilterWithPriority(ESearchTargetPriority priority, List<SearchUnit> results)
+        private static void FilterWithPriority(TSRandom random, ESearchTargetPriority priority, List<SearchUnit> results)
         {
             switch (priority) {
                 case ESearchTargetPriority.MaxDistance:
@@ -129,7 +145,11 @@ namespace ET
                 case ESearchTargetPriority.MinDistance:
                     results.Sort((x, y) => x.Distance.CompareTo(y.Distance));
                     break;
+                case ESearchTargetPriority.Random:
+                    results.Shuffle(random);
+                    break;
             }
         }
+        
     }
 }

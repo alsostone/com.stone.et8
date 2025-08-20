@@ -16,8 +16,10 @@ namespace ET
 
     [ComponentOf(typeof(LSUnit))]
     [MemoryPackable]
-    public partial class PropComponent: LSEntity, IAwake, ISerializeToEntity
+    public partial class PropComponent: LSEntity, IAwake<int>, ISerializeToEntity
     {
+        public FP Radius { get; set; }
+        
         [BsonDictionaryOptions(DictionaryRepresentation.ArrayOfArrays)]
         public Dictionary<NumericType, FP> NumericDic = new Dictionary<NumericType, FP>();
     }

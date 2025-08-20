@@ -8,7 +8,15 @@
     "finish_effect_id": 0
   },
   {
-    "Id": 31000001,
+    "Id": 30000001,
+    "name": "防御塔子弹",
+    "life": 10000,
+    "effect_group_id": 300000011,
+    "track_id": 3003,
+    "finish_effect_id": 0
+  },
+  {
+    "Id": 30010001,
     "name": "防御塔子弹",
     "life": 10000,
     "effect_group_id": 300100011,

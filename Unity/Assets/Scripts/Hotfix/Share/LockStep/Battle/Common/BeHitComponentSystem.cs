@@ -127,8 +127,8 @@ namespace ET
             }
         }
 
-        internal static void GetCounterAttack(this BeHitComponent self, TSVector center, FP sqrRange, List<SearchUnit> results)
-        {self.LSRoom()?.ProcessLog.LogFunction(23, self.LSParent().Id, sqrRange.V);
+        internal static void GetCounterAttack(this BeHitComponent self, TSVector center, FP range, List<SearchUnit> results)
+        {
             for (var i = self.Attackers.Count - 1; i >= 0; i--)
             {
                 var target = self.LSUnit(self.Attackers[i]);
@@ -136,8 +136,9 @@ namespace ET
                     self.Attackers.RemoveAt(i);
                 }
                 else if (target.Active) {
+                    FP range2 = range + target.GetComponent<PropComponent>().Radius;
                     var dis = (target.GetComponent<TransformComponent>().Position - center).sqrMagnitude;
-                    if (sqrRange >= dis) {
+                    if ((range2 * range2) >= dis) {
                         results.Add(new SearchUnit() { Target = target, Distance = dis });
                     }
                 }

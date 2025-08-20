@@ -40,6 +40,16 @@
     "priority": 1
   },
   {
+    "Id": 30000001,
+    "valid_forward": false,
+    "range": 0,
+    "team": 4,
+    "type": 9,
+    "table_id": [],
+    "count": 1,
+    "priority": 3
+  },
+  {
     "Id": 30010001,
     "valid_forward": false,
     "range": 50000,

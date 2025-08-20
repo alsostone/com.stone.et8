@@ -1,7 +1,144 @@
 [
   {
+    "Id": 30001,
+    "model": 30010001,
+    "radius": 10000,
+    "shape": [
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      true,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false
+    ],
+    "can_be_attack": true,
+    "props": [
+      [
+        10011,
+        500000
+      ],
+      [
+        10021,
+        500000
+      ],
+      [
+        10031,
+        5000
+      ],
+      [
+        10041,
+        0
+      ],
+      [
+        10051,
+        0
+      ],
+      [
+        10081,
+        100000
+      ],
+      [
+        10071,
+        50000
+      ]
+    ],
+    "skills": [
+      30000001
+    ],
+    "product_skill": 0,
+    "random_bag_id": 0
+  },
+  {
+    "Id": 30005,
+    "model": 30010001,
+    "radius": 10000,
+    "shape": [
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      true,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false
+    ],
+    "can_be_attack": true,
+    "props": [
+      [
+        10011,
+        500000
+      ],
+      [
+        10021,
+        500000
+      ],
+      [
+        10031,
+        5000
+      ],
+      [
+        10041,
+        0
+      ],
+      [
+        10051,
+        0
+      ],
+      [
+        10081,
+        100000
+      ],
+      [
+        10071,
+        50000
+      ]
+    ],
+    "skills": [
+      30000001
+    ],
+    "product_skill": 0,
+    "random_bag_id": 0
+  },
+  {
     "Id": 30011,
     "model": 30010001,
+    "radius": 5000,
     "shape": [
       false,
       false,
@@ -45,7 +182,7 @@
       ],
       [
         10041,
-        10000
+        0
       ],
       [
         10051,
@@ -69,6 +206,7 @@
   {
     "Id": 30021,
     "model": 30020001,
+    "radius": 5000,
     "shape": [
       false,
       false,
@@ -112,7 +250,7 @@
       ],
       [
         10041,
-        10000
+        0
       ],
       [
         10051,
@@ -136,6 +274,7 @@
   {
     "Id": 30031,
     "model": 30030001,
+    "radius": 5000,
     "shape": [
       false,
       false,
@@ -179,7 +318,7 @@
       ],
       [
         10041,
-        10000
+        0
       ],
       [
         10051,
@@ -203,6 +342,7 @@
   {
     "Id": 30041,
     "model": 30030001,
+    "radius": 5000,
     "shape": [
       false,
       false,
@@ -246,7 +386,7 @@
       ],
       [
         10041,
-        10000
+        0
       ],
       [
         10051,

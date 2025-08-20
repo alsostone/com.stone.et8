@@ -2,9 +2,16 @@ using TrueSync;
 
 namespace ET
 {
+    [EntitySystemOf(typeof(PropComponent))]
     [FriendOf(typeof(PropComponent))]
-    public static class PropComponentSystem
+    public static partial class PropComponentSystem
     {
+        [EntitySystem]
+        private static void Awake(this PropComponent self, int radius)
+        {
+            self.Radius = (FP)radius / LSConstValue.PropValueScale;
+        }
+        
         public static void AddRealProp(this PropComponent self, NumericType numericType, FP value)
         {self.LSRoom()?.ProcessLog.LogFunction(40, self.LSParent().Id, value.V);
             FP runtimeValue = self.Get(numericType);

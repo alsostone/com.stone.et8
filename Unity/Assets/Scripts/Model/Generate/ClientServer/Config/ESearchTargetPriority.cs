@@ -26,5 +26,10 @@ namespace ET
         /// </summary>
         MaxDistance = 2,
 
+        /// <summary>
+        /// 随机
+        /// </summary>
+        Random = 3,
+
     }
 }
