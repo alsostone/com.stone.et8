@@ -21,6 +21,7 @@ namespace ET
             TargetSearcher.Search(AIConstValue.AwarenessSearchEnemy, lsUnit, targets);
             this.Blackboard.SetBool(AIConstValue.HasEnemy, targets.Count > 0);
             this.Blackboard.SetInt(AIConstValue.HasEnemyCount, targets.Count);
+            this.Blackboard.SetLong(AIConstValue.HasEnemyEntityId, targets.Count > 0 ? targets[0].Target.Id : 0);
             targets.Clear();
             ObjectPool.Instance.Recycle(targets);
         }

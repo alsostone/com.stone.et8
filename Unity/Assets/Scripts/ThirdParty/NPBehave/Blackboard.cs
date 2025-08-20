@@ -34,6 +34,7 @@ namespace NPBehave
         [BsonElement("DB")][BsonIgnoreIfNull][MemoryPackInclude] private Dictionary<string, bool> dataBool;
         [BsonElement("DI")][BsonIgnoreIfNull][MemoryPackInclude] private Dictionary<string, int> dataInt;
         [BsonElement("DF")][BsonIgnoreIfNull][MemoryPackInclude] private Dictionary<string, FP> dataFloat;
+        [BsonElement("DL")][BsonIgnoreIfNull][MemoryPackInclude] private Dictionary<string, long> dataLong;
         
         [BsonElement("IS")][BsonIgnoreIfDefault][MemoryPackInclude] private bool isNotifying = false;
         [BsonElement("NF")][MemoryPackInclude] private List<Notification> notifications = new List<Notification>();
@@ -187,6 +188,36 @@ namespace NPBehave
                 }
             }
         }
+        
+        public void SetLong(string key, long value)
+        {
+            if (parent != null && parent.IsSetFloat(key))
+            {
+                parent.SetFloat(key, value);
+            }
+            else
+            {
+                if (dataLong == null)
+                {
+                    dataLong = new Dictionary<string, long>();
+                }
+                if (!dataLong.TryGetValue(key, out var dataValue))
+                {
+                    dataLong[key] = value;
+                    notifications.Add(new Notification(key, BlackboardChangeType.ADD));
+                    clock.AddTimer(FP.Zero, 0, Guid);
+                }
+                else
+                {
+                    if (!dataValue.Equals(value))
+                    {
+                        dataLong[key] = value;
+                        notifications.Add(new Notification(key, BlackboardChangeType.CHANGE));
+                        clock.AddTimer(FP.Zero, 0, Guid);
+                    }
+                }
+            }
+        }
         #endregion
         
         #region UnSet
@@ -219,6 +250,16 @@ namespace NPBehave
                 clock.AddTimer(FP.Zero, 0, Guid);
             }
         }
+        
+        public void UnSetLong(string key)
+        {
+            if (dataLong != null && dataLong.ContainsKey(key))
+            {
+                dataLong.Remove(key);
+                notifications.Add(new Notification(key, BlackboardChangeType.REMOVE));
+                clock.AddTimer(FP.Zero, 0, Guid);
+            }
+        }
         #endregion
         
         #region IsSet
@@ -233,6 +274,10 @@ namespace NPBehave
         public bool IsSetFloat(string key)
         {
             return dataFloat != null && (dataFloat.ContainsKey(key) || (parent != null && parent.IsSetFloat(key)));
+        }
+        public bool IsSetLong(string key)
+        {
+            return dataLong != null && (dataLong.ContainsKey(key) || (parent != null && parent.IsSetFloat(key)));
         }
         #endregion
 
@@ -270,6 +315,18 @@ namespace NPBehave
             if (parent != null)
             {
                 return parent.GetFloat(key);
+            }
+            return 0;
+        }
+        public long GetLong(string key)
+        {
+            if (dataLong != null && dataLong.TryGetValue(key, out var value))
+            {
+                return value;
+            }
+            if (parent != null)
+            {
+                return parent.GetLong(key);
             }
             return 0;
         }
@@ -319,6 +376,22 @@ namespace NPBehave
                 return;
             }
             foreach (var pair in dataFloat)
+            {
+                action(pair.Key, pair.Value);
+            }
+        }
+        
+        public void ForeachLong(System.Action<string, long> action)
+        {
+            if (parent != null)
+            {
+                parent.ForeachLong(action);
+            }
+            if (dataLong == null)
+            {
+                return;
+            }
+            foreach (var pair in dataLong)
             {
                 action(pair.Key, pair.Value);
             }

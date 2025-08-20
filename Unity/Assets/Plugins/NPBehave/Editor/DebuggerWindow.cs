@@ -187,6 +187,10 @@ namespace NPBehave
                     {
                         DrawKeyValue(key, value.ToString("F2"));
                     });
+                    blackboard.ForeachLong((key, value) =>
+                    {
+                        DrawKeyValue(key, value.ToString());
+                    });
                 }
                 EditorGUILayout.EndVertical();
             }

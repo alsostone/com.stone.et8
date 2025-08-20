@@ -23,7 +23,7 @@ namespace ET
                 {
                     case OperateCommandType.Move:
                         {
-                            self.MoveAxis = LSCommand.ParseCommandFloat24x2(command).normalized;
+                            self.MoveAxis = LSCommand.ParseCommandFloat24x2(command);
                             break;
                         }
                     case OperateCommandType.PlacementDragStart:

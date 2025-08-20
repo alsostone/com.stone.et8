@@ -14,8 +14,9 @@ namespace ET
                         new TaskFlowFieldMove()
                     ),
                     new Repeater(
-                        new Sequence(
-                            new ActionAttack(),
+                        new Selector(
+                            new RequestAttack(),
+                            new RequestMoveToTarget(),
                             new WaitSecond(FP.Half)
                         )
                     )

@@ -39,7 +39,7 @@ namespace ET
             
             self.SetMoving(true);
             PropComponent propComponent = self.LSOwner().GetComponent<PropComponent>();
-            TSVector2 v2 = forward * propComponent.Get(NumericType.Speed) * LSConstValue.UpdateInterval / LSConstValue.Milliseconds;
+            TSVector2 v2 = forward.normalized * propComponent.Get(NumericType.Speed) * LSConstValue.UpdateInterval / LSConstValue.Milliseconds;
             if (v2.LengthSquared() > FP.EN4)
             {
                 TSVector position = self.Position;

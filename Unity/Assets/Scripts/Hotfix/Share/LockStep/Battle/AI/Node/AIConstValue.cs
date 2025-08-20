@@ -7,5 +7,6 @@ namespace ET
 
         public const string HasEnemy = "HasEnemy";                  // 周围是否有敌人
         public const string HasEnemyCount = "HasEnemyCount";        // 周围敌人数量
+        public const string HasEnemyEntityId = "HasEnemyEntityId";  // 周围的第一个敌人Id
     }
 }

@@ -165,7 +165,7 @@ namespace ET
 	        if (row.ProductSkill > 0) {
 		        lsUnit.AddComponent<ProductComponent, int>(row.ProductSkill);
 	        }
-	        lsUnit.AddComponent<AIRootComponent, Node>(new Sequence(new ActionAttack(), new WaitSecond(FP.Half)));
+	        lsUnit.AddComponent<AIRootComponent, Node>(new Sequence(new RequestAttack(), new WaitSecond(FP.Half)));
 	        return lsUnit;
         }
         
