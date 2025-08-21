@@ -6,7 +6,7 @@ namespace ET
     {
         [EntitySystem]
         private static void Awake(this BuildingComponent self, int tableId)
-        {
+        {self.LSRoom()?.ProcessLog.LogFunction(107, self.LSParent().Id, tableId);
             self.TableId = tableId;
         }
         

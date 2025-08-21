@@ -8,7 +8,7 @@ namespace ET
     {
         [EntitySystem]
         private static void Awake(this PropComponent self, int radius)
-        {
+        {self.LSRoom()?.ProcessLog.LogFunction(96, self.LSParent().Id, radius);
             self.Radius = (FP)radius / LSConstValue.PropValueScale;
         }
         

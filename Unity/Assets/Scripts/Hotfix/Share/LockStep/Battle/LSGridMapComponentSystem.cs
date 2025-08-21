@@ -33,7 +33,7 @@ namespace ET
         }
 
         private static void ResetGridData(this LSGridMapComponent self, byte[] gridBytes)
-        {
+        {self.LSRoom()?.ProcessLog.LogFunction(90, self.LSParent().Id);
             self.GridData = MemoryPackSerializer.Deserialize<GridData>(gridBytes);
             self.GridData.SetDestination(new FieldV2(0, 0));
             EventSystem.Instance.Publish(self.LSWorld(), new LSGridDataReset() { GridData = self.GridData });

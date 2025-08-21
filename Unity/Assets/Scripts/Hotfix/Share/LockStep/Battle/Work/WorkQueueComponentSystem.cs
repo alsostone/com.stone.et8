@@ -14,7 +14,7 @@ namespace ET
         
         [LSEntitySystem]
         private static void LSUpdate(this WorkQueueComponent self)
-        {
+        {self.LSRoom()?.ProcessLog.LogFunction(112, self.LSParent().Id);
             PropComponent propComponent = self.LSOwner().GetComponent<PropComponent>();
             var workerCount = propComponent.Get(NumericType.Population).AsInt();
             var freeCount = workerCount - self.WorkerCount;
@@ -59,7 +59,7 @@ namespace ET
         }
 
         private static int SnatchingWorkers(this WorkQueueComponent self, int need, ref int indexBegin, int indexEnd)
-        {
+        {self.LSRoom()?.ProcessLog.LogFunction(111, self.LSParent().Id, need, indexBegin, indexEnd);
             var count = 0;
             for (; indexBegin < indexEnd; indexBegin++)
             {

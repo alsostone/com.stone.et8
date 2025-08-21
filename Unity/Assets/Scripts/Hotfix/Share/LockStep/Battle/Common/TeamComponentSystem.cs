@@ -11,12 +11,12 @@ namespace ET
         }
         
         public static TeamType GetFriendTeam(this TeamComponent self)
-        {
+        {self.LSRoom()?.ProcessLog.LogFunction(98, self.LSParent().Id);
             return self.Type;
         }
         
         public static TeamType GetEnemyTeam(this TeamComponent self)
-        {
+        {self.LSRoom()?.ProcessLog.LogFunction(97, self.LSParent().Id);
             if (self.Type == TeamType.TeamA)
             {
                 return TeamType.TeamB;

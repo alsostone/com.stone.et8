@@ -75,7 +75,7 @@ namespace ET
         }
         
         public static Skill GetRunningSkill(this SkillComponent self, ESkillType type)
-        {
+        {self.LSRoom()?.ProcessLog.LogFunction(105, self.LSParent().Id);
             for (int index = self.mRunningSkills.Count - 1; index >= 0; index--)
             {
                 long id = self.mRunningSkills[index];
@@ -131,7 +131,7 @@ namespace ET
         }
 
         public static bool TryCastSkill(this SkillComponent self, int id)
-        {
+        {self.LSRoom()?.ProcessLog.LogFunction(104, self.LSParent().Id, id);
             if (self.LSOwner().DeadMark > 0) { return false; }
             // if (!Enable) { return false; }
             

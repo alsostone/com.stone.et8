@@ -11,7 +11,7 @@ namespace ET
     {
         [EntitySystem]
         private static void Awake(this LSStageComponent self, int stageId)
-        {
+        {self.LSRoom()?.ProcessLog.LogFunction(93, self.LSParent().Id, stageId);
             self.TableId = stageId;
             self.CurrentWaveCount = 0;
             self.CurrentMonsterCount = 0;
@@ -22,7 +22,7 @@ namespace ET
         
         [LSEntitySystem]
         private static void LSUpdate(this LSStageComponent self)
-        {
+        {self.LSRoom()?.ProcessLog.LogFunction(92, self.LSParent().Id);
             if (self.CurrentWaveCount > self.TbRow.Count)
                 return;
             
@@ -56,7 +56,7 @@ namespace ET
                 {
                     for (var i = 0; i < tuple.Item3; i++)
                     {
-                        TSVector2 v2 = self.GetRandom().GetRandomPointOnCircle(32);
+                        TSVector2 v2 = self.GetRandomPointOnCircle(self.GetRandom(), 32);
                         TSVector position = new TSVector(v2.x, 0, v2.y);
                         TSQuaternion rotation = TSQuaternion.LookRotation(position, TSVector.up);
                         
@@ -69,9 +69,9 @@ namespace ET
             }
         }
         
-        private static TSVector2 GetRandomPointOnCircle(this TSRandom self, FP radius)
-        {
-            FP randomAngle = self.Range(0f, TSMath.Pi * 2f);
+        private static TSVector2 GetRandomPointOnCircle(this LSStageComponent self, TSRandom random, FP radius)
+        {self.LSRoom()?.ProcessLog.LogFunction(23, self.LSParent().Id, radius.V);
+            FP randomAngle = random.Range(0f, TSMath.Pi * 2f);
             FP x = radius * TSMath.Cos(randomAngle);
             FP y = radius * TSMath.Sin(randomAngle);
             return new TSVector2(x, y);

@@ -128,7 +128,7 @@ namespace ET
         }
 
         internal static void GetCounterAttack(this BeHitComponent self, TSVector center, FP range, List<SearchUnit> results)
-        {
+        {self.LSRoom()?.ProcessLog.LogFunction(94, self.LSParent().Id, range.V);
             for (var i = self.Attackers.Count - 1; i >= 0; i--)
             {
                 var target = self.LSUnit(self.Attackers[i]);

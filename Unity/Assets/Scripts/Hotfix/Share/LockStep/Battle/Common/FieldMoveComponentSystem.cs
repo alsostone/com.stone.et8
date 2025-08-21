@@ -14,7 +14,7 @@ namespace ET
         }
         
         public static void DoMove(this FieldMoveComponent self)
-        {
+        {self.LSRoom()?.ProcessLog.LogFunction(95, self.LSParent().Id);
             TransformComponent transformComponent = self.LSOwner().GetComponent<TransformComponent>();
             LSGridMapComponent gridMapComponent = self.LSWorld().GetComponent<LSGridMapComponent>();
 

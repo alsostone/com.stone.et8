@@ -116,7 +116,7 @@ namespace ET
         }
         
         private static bool TrySkillConsume(this Skill self)
-        {
+        {self.LSRoom()?.ProcessLog.LogFunction(106, self.LSParent().Id);
             var tbRow = self.TbSkillRow;
             switch (tbRow.ConsumeType)
             {

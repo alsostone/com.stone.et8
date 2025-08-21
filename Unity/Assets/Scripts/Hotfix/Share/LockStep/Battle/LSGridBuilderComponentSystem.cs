@@ -80,7 +80,7 @@ namespace ET
         }
 
         public static void RunCommandPlacementStart(this LSGridBuilderComponent self, EUnitType type, int tableId)
-        {
+        {self.LSRoom()?.ProcessLog.LogFunction(89, self.LSParent().Id, tableId);
             self.PlacementTargetId = 0;
             self.PlacementRotation = 0;
             self.PlacementType = type;

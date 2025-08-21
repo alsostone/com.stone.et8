@@ -16,7 +16,7 @@ namespace ET
 
         [LSEntitySystem]
         private static void LSUpdate(this TransformComponent self)
-        {
+        {self.LSRoom()?.ProcessLog.LogFunction(99, self.LSParent().Id);
             if (self.IsMovingCurrent) {
                 self.IsMovingCurrent = false;
             }
