@@ -91,6 +91,11 @@ namespace ET.Client
             lsUnitView.AddComponent<LSViewTransformComponent, Transform, bool>(unitGo.transform, false);
             lsUnitView.AddComponent<LSViewSkillComponent>();
             
+            var propComponent = lsUnit.GetComponent<PropComponent>();
+            float hp = propComponent.Get(NumericType.Hp).AsFloat();
+            float hpMax = propComponent.Get(NumericType.MaxHp).AsFloat();
+            lsUnitView.AddComponent<LSViewHudComponent, Vector3, Transform, float, float>(Vector3.up * 3.5f, unitGo.transform, hp, hpMax);
+            
             PlacementData placementData = lsUnit.GetComponent<PlacementComponent>().PlacementData;
             lsUnitView.AddComponent<LSViewPlacementComponent, PlacementData>(placementData);
         }

@@ -2,6 +2,7 @@
   {
     "Id": 30001,
     "radius": 10000,
+    "placed_layer": 1,
     "shape": [
       false,
       false,
@@ -14,13 +15,13 @@
       false,
       false,
       false,
-      false,
+      true,
       true,
       false,
       false,
       false,
-      false,
-      false,
+      true,
+      true,
       false,
       false,
       false,
@@ -69,6 +70,7 @@
   {
     "Id": 30005,
     "radius": 10000,
+    "placed_layer": 1,
     "shape": [
       false,
       false,
@@ -81,13 +83,13 @@
       false,
       false,
       false,
-      false,
+      true,
       true,
       false,
       false,
       false,
-      false,
-      false,
+      true,
+      true,
       false,
       false,
       false,
@@ -136,6 +138,7 @@
   {
     "Id": 30011,
     "radius": 5000,
+    "placed_layer": 2,
     "shape": [
       false,
       false,
@@ -203,6 +206,7 @@
   {
     "Id": 30021,
     "radius": 5000,
+    "placed_layer": 2,
     "shape": [
       false,
       false,
@@ -270,6 +274,7 @@
   {
     "Id": 30031,
     "radius": 5000,
+    "placed_layer": 2,
     "shape": [
       false,
       false,
@@ -337,6 +342,7 @@
   {
     "Id": 30041,
     "radius": 5000,
+    "placed_layer": 2,
     "shape": [
       false,
       false,

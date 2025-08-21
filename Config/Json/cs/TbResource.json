@@ -32,6 +32,14 @@
     "Url": "Assets/Bundles/Prefabs/Block/Block5T.prefab"
   },
   {
+    "Id": 30001001,
+    "Url": "Assets/Bundles/Prefabs/Building/CampTower.prefab"
+  },
+  {
+    "Id": 30005001,
+    "Url": "Assets/Bundles/Prefabs/Building/CampSoldier.prefab"
+  },
+  {
     "Id": 30010001,
     "Url": "Assets/Bundles/Unit/Skeleton1.prefab"
   },

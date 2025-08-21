@@ -116,7 +116,7 @@ namespace ST.GridBuilder
         private void GenerateDijkstraData(IndexV2 dest)
         {
             CellData cellData = GetCell(dest.x, dest.z);
-            if (cellData == null || cellData.IsFill) {
+            if (cellData == null || cellData.IsBlock()) {
                 return;
             }
 
@@ -129,28 +129,28 @@ namespace ST.GridBuilder
                 
                 if (current.index.x > 0) {
                     CellData neighbour = cells[current.index.x - 1 + current.index.z * xLength];
-                    if (!neighbour.IsFill && neighbour.distance == int.MaxValue) {
+                    if (!neighbour.IsBlock() && neighbour.distance == int.MaxValue) {
                         neighbour.distance = current.distance + 1;
                         visit.Enqueue(neighbour);
                     }
                 }
                 if (current.index.x < xLength - 1) {
                     CellData neighbour = cells[current.index.x + 1 + current.index.z * xLength];
-                    if (!neighbour.IsFill && neighbour.distance == int.MaxValue) {
+                    if (!neighbour.IsBlock() && neighbour.distance == int.MaxValue) {
                         neighbour.distance = current.distance + 1;
                         visit.Enqueue(neighbour);
                     }
                 }
                 if (current.index.z > 0) {
                     CellData neighbour = cells[current.index.x + (current.index.z - 1) * xLength];
-                    if (!neighbour.IsFill && neighbour.distance == int.MaxValue) {
+                    if (!neighbour.IsBlock() && neighbour.distance == int.MaxValue) {
                         neighbour.distance = current.distance + 1;
                         visit.Enqueue(neighbour);
                     }
                 }
                 if (current.index.z < zLength - 1) {
                     CellData neighbour = cells[current.index.x + (current.index.z + 1) * xLength];
-                    if (!neighbour.IsFill && neighbour.distance == int.MaxValue) {
+                    if (!neighbour.IsBlock() && neighbour.distance == int.MaxValue) {
                         neighbour.distance = current.distance + 1;
                         visit.Enqueue(neighbour);
                     }
@@ -201,7 +201,7 @@ namespace ST.GridBuilder
         private IndexV2 GetValidDestination(IndexV2 dest)
         {
             CellData cellData = GetCell(dest.x, dest.z);
-            if (cellData == null || cellData.IsFill)
+            if (cellData == null || cellData.IsBlock())
             {
                 // Find the nearest valid cell
                 int minDistance = int.MaxValue;
@@ -211,7 +211,7 @@ namespace ST.GridBuilder
                     for (int z = 0; z < zLength; z++)
                     {
                         CellData cell = GetCell(x, z);
-                        if (cell != null && !cell.IsFill)
+                        if (cell != null && !cell.IsBlock())
                         {
                             int distance = Math.Abs(x - dest.x) + Math.Abs(z - dest.z);
                             if (distance < minDistance)

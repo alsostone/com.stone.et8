@@ -17,6 +17,7 @@ namespace ET
         public TbBlockRow(ByteBuf _buf)
         {
             Id = _buf.ReadInt();
+            PlacedLayer = _buf.ReadInt();
             {int __n0 = System.Math.Min(_buf.ReadSize(), _buf.Size);Shape = new bool[__n0];for(var __index0 = 0 ; __index0 < __n0 ; __index0++) { bool __e0;__e0 = _buf.ReadBool(); Shape[__index0] = __e0;}}
             CanBeAttack = _buf.ReadBool();
             {int n0 = System.Math.Min(_buf.ReadSize(), _buf.Size);Props = new System.Collections.Generic.Dictionary<NumericType, int>(n0 * 3 / 2);for(var i0 = 0 ; i0 < n0 ; i0++) { NumericType _k0;  _k0 = (NumericType)_buf.ReadInt(); int _v0;  _v0 = _buf.ReadInt();     Props.Add(_k0, _v0);}}
@@ -35,7 +36,12 @@ namespace ET
         public readonly int Id;
 
         /// <summary>
-        /// 形状
+        /// 放置目标层
+        /// </summary>
+        public readonly int PlacedLayer;
+
+        /// <summary>
+        /// 放置形状
         /// </summary>
         public readonly bool[] Shape;
 
@@ -59,12 +65,14 @@ namespace ET
             
             
             
+            
         }
 
         public override string ToString()
         {
             return "{ "
             + "Id:" + Id + ","
+            + "placedLayer:" + PlacedLayer + ","
             + "shape:" + Luban.StringUtil.CollectionToString(Shape) + ","
             + "canBeAttack:" + CanBeAttack + ","
             + "props:" + Luban.StringUtil.CollectionToString(Props) + ","

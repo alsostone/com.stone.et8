@@ -29,8 +29,8 @@ namespace ET
             {
                 for (var i = 0; i < tuple.Item3; i++)
                 {
-                    LSUnitFactory.SummonUnit(target.LSWorld(), tuple.Item1, tuple.Item2, targetTransform.Position + position,
-                        targetTransform.Rotation, team);
+                    FP angle = targetTransform.Rotation.eulerAngles.y;
+                    LSUnitFactory.SummonUnit(target.LSWorld(), tuple.Item1, tuple.Item2, targetTransform.Position + position, angle.AsInt(), team);
                 }
             }
             results.Clear();

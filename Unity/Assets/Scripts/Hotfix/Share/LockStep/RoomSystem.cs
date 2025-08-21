@@ -30,17 +30,21 @@ namespace ET
             lsWorld.AddComponent<LSUnitComponent>();
 
             LSUnitFactory.CreateGlobal(lsWorld);
-            for (TeamType teamType = TeamType.None; teamType < TeamType.Max; ++teamType)
-            {
+            for (TeamType teamType = TeamType.None; teamType < TeamType.Max; ++teamType) {
                 LSUnitFactory.CreateTeam(lsWorld, teamType);
             }
             
-            for (int i = 0; i < matchInfo.UnitInfos.Count; ++i)
-            {
+            for (int i = 0; i < matchInfo.UnitInfos.Count; ++i) {
                 LockStepUnitInfo unitInfo = matchInfo.UnitInfos[i];
                 LSUnitFactory.CreateHero(lsWorld, 1001, unitInfo.Position, unitInfo.Rotation, unitInfo.PlayerId);
                 self.PlayerIds.Add(unitInfo.PlayerId);
             }
+            
+            // 创建基地 (测试用)
+            LSUnitFactory.CreateBuilding(lsWorld, lsStageComponent.TbRow.BaseCampTower, TSVector.zero, 0, TeamType.TeamA);
+            if (matchInfo.UnitInfos.Count > 1)
+                LSUnitFactory.CreateBuilding(lsWorld, lsStageComponent.TbRow.BaseCampSoldier, new TSVector(32, 0, 32), 0, TeamType.TeamB);
+
             
             // for (int i = 0; i < 10; ++i)
             // {

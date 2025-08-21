@@ -18,6 +18,10 @@ namespace ET
         {
             Id = _buf.ReadInt();
             SceneName = _buf.ReadString();
+            BaseCampTower = _buf.ReadInt();
+            BaseCampTower_Ref = null;
+            BaseCampSoldier = _buf.ReadInt();
+            BaseCampSoldier_Ref = null;
             Count = _buf.ReadInt();
             Delay = _buf.ReadInt();
             WaveInterval = _buf.ReadInt();
@@ -42,6 +46,20 @@ namespace ET
         /// 地图名称
         /// </summary>
         public readonly string SceneName;
+
+        /// <summary>
+        /// 塔防大本营
+        /// </summary>
+        public readonly int BaseCampTower;
+
+        public TbBuildingRow BaseCampTower_Ref { get; private set; }
+
+        /// <summary>
+        /// 兵防大本营
+        /// </summary>
+        public readonly int BaseCampSoldier;
+
+        public TbBuildingRow BaseCampSoldier_Ref { get; private set; }
 
         /// <summary>
         /// 波次数量
@@ -81,6 +99,8 @@ namespace ET
         {
             
             
+            BaseCampTower_Ref = TbBuilding.Instance.GetOrDefault(BaseCampTower);
+            BaseCampSoldier_Ref = TbBuilding.Instance.GetOrDefault(BaseCampSoldier);
             
             
             
@@ -94,6 +114,8 @@ namespace ET
             return "{ "
             + "Id:" + Id + ","
             + "sceneName:" + SceneName + ","
+            + "baseCampTower:" + BaseCampTower + ","
+            + "baseCampSoldier:" + BaseCampSoldier + ","
             + "count:" + Count + ","
             + "delay:" + Delay + ","
             + "waveInterval:" + WaveInterval + ","

@@ -1,6 +1,7 @@
 [
   {
     "Id": 2001,
+    "placed_layer": 3,
     "shape": [
       false,
       false,
@@ -42,6 +43,7 @@
   },
   {
     "Id": 2002,
+    "placed_layer": 3,
     "shape": [
       false,
       false,
@@ -83,6 +85,7 @@
   },
   {
     "Id": 2003,
+    "placed_layer": 3,
     "shape": [
       false,
       false,

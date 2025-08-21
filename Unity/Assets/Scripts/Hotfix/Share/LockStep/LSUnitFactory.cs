@@ -68,13 +68,13 @@ namespace ET
             return lsUnit;
         }
         
-        public static LSUnit CreateSoldier(LSWorld lsWorld, int tableId, TSVector position, TSQuaternion rotation, TeamType teamType)
+        public static LSUnit CreateSoldier(LSWorld lsWorld, int tableId, TSVector position, int angle, TeamType teamType)
         {
 	        TbSoldierRow row = TbSoldier.Instance.Get(tableId);
 	        LSUnitComponent lsUnitComponent = lsWorld.GetComponent<LSUnitComponent>();
 	        LSUnit lsUnit = lsUnitComponent.AddChild<LSUnit>();
 
-	        lsUnit.AddComponent<TransformComponent, TSVector, TSQuaternion>(position, rotation);
+	        lsUnit.AddComponent<TransformComponent, TSVector, TSQuaternion>(position, TSQuaternion.Euler(0, angle, 0));
 	        lsUnit.AddComponent<TypeComponent, EUnitType>(EUnitType.Soldier);
 	        lsUnit.AddComponent<FlagComponent>();
 	        lsUnit.AddComponent<TeamComponent, TeamType>(teamType);
@@ -98,26 +98,34 @@ namespace ET
 	        return lsUnit;
         }
         
-        public static LSUnit CreateBlock(LSWorld lsWorld, int tableId, TSVector position, TSQuaternion rotation, TeamType teamType)
-		{
-	        LSUnit lsUnit = CreateBlock(lsWorld, tableId, teamType);
-	        lsUnit.AddComponent<TransformComponent, TSVector, TSQuaternion>(position, rotation);
-	        
-	        EventSystem.Instance.Publish(lsWorld, new LSUnitCreate() {LSUnit = lsUnit});
-	        return lsUnit;
-		}
-        
-        public static LSUnit CreateBlock(LSWorld lsWorld, int tableId, TeamType teamType)
+        public static LSUnit CreateBlock(LSWorld lsWorld, int tableId, TSVector position, int angle, TeamType teamType)
         {
 	        TbBlockRow row = TbBlock.Instance.Get(tableId);
+	        PlacementData placementData = new PlacementData();
+	        placementData.placementType = PlacedLayer.Block;
+	        placementData.placedLayer = (PlacedLayer)row.PlacedLayer;
+	        placementData.rotation = 0;
+	        placementData.Rotation(row.Shape, placementData.points, angle / 90);
+	        
+	        // 判断是否能够放置到网格 不能则不创建
+	        LSGridMapComponent lsGridMapComponent = lsWorld.GetComponent<LSGridMapComponent>();
+	        IndexV2 index = lsGridMapComponent.ConvertToIndex(new TSVector2(position.x, position.z));
+	        GridData gridData = lsGridMapComponent.GetGridData();
+	        if (!gridData.CanPut(index.x, index.z, placementData))
+		        return null;
+
 	        LSUnitComponent lsUnitComponent = lsWorld.GetComponent<LSUnitComponent>();
 	        LSUnit lsUnit = lsUnitComponent.AddChild<LSUnit>();
-
+	        placementData.id = lsUnit.Id;
+	        gridData.Put(index.x, index.z, placementData);
+	        
+	        TSVector pos = lsGridMapComponent.GetPutPosition(placementData);
+	        lsUnit.AddComponent<TransformComponent, TSVector, TSQuaternion>(pos, TSQuaternion.Euler(0, angle, 0));
 	        lsUnit.AddComponent<TypeComponent, EUnitType>(EUnitType.Block);
 	        lsUnit.AddComponent<FlagComponent>();
 	        lsUnit.AddComponent<TeamComponent, TeamType>(teamType);
 	        lsUnit.AddComponent<BlockComponent, int>(tableId);
-	        lsUnit.AddComponent<PlacementComponent, PlacedLayer, PlacedLayer, bool[]>(PlacedLayer.Block, PlacedLayer.Map | PlacedLayer.Block, row.Shape);
+	        lsUnit.AddComponent<PlacementComponent, PlacementData>(placementData);
 	        
 	        PropComponent propComponent = lsUnit.AddComponent<PropComponent, int>(5000);
 	        foreach (var prop in row.Props) {
@@ -128,29 +136,39 @@ namespace ET
 	        lsUnit.AddComponent<DeathComponent, bool>(true);
 	        lsUnit.AddComponent<BuffComponent>();
 	        lsUnit.AddComponent<BeHitComponent>();
-	        return lsUnit;
-        }
-        
-        public static LSUnit CreateBuilding(LSWorld lsWorld, int tableId, TSVector position, TSQuaternion rotation, TeamType teamType)
-        {
-	        LSUnit lsUnit = CreateBuilding(lsWorld, tableId, teamType);
-	        lsUnit.AddComponent<TransformComponent, TSVector, TSQuaternion>(position, rotation);
 	        
 	        EventSystem.Instance.Publish(lsWorld, new LSUnitCreate() {LSUnit = lsUnit});
 	        return lsUnit;
         }
         
-        public static LSUnit CreateBuilding(LSWorld lsWorld, int tableId, TeamType teamType)
+        public static LSUnit CreateBuilding(LSWorld lsWorld, int tableId, TSVector position, int angle, TeamType teamType)
         {
 	        TbBuildingRow row = TbBuilding.Instance.Get(tableId);
+	        PlacementData placementData = new PlacementData();
+	        placementData.placementType = PlacedLayer.Building;
+	        placementData.placedLayer = (PlacedLayer)row.PlacedLayer;
+	        placementData.rotation = 0;
+	        placementData.Rotation(row.Shape, placementData.points, angle / 90);
+	        
+	        // 判断是否能够放置到网格 不能则不创建
+	        LSGridMapComponent lsGridMapComponent = lsWorld.GetComponent<LSGridMapComponent>();
+	        IndexV2 index = lsGridMapComponent.ConvertToIndex(new TSVector2(position.x, position.z));
+	        GridData gridData = lsGridMapComponent.GetGridData();
+	        if (!gridData.CanPut(index.x, index.z, placementData))
+		        return null;
+	        
 	        LSUnitComponent lsUnitComponent = lsWorld.GetComponent<LSUnitComponent>();
 	        LSUnit lsUnit = lsUnitComponent.AddChild<LSUnit>();
+	        placementData.id = lsUnit.Id;
+	        gridData.Put(index.x, index.z, placementData);
 
+	        TSVector pos = lsGridMapComponent.GetPutPosition(placementData);
+	        lsUnit.AddComponent<TransformComponent, TSVector, TSQuaternion>(pos, TSQuaternion.Euler(0, angle, 0));
 	        lsUnit.AddComponent<TypeComponent, EUnitType>(EUnitType.Building);
 	        lsUnit.AddComponent<FlagComponent>();
 	        lsUnit.AddComponent<TeamComponent, TeamType>(teamType);
 	        lsUnit.AddComponent<BuildingComponent, int>(tableId);
-	        lsUnit.AddComponent<PlacementComponent, PlacedLayer, PlacedLayer, bool[]>(PlacedLayer.Building, PlacedLayer.Block, row.Shape);
+	        lsUnit.AddComponent<PlacementComponent, PlacementData>(placementData);
 
 	        PropComponent propComponent = lsUnit.AddComponent<PropComponent, int>(row.Radius);
 	        foreach (var prop in row.Props) {
@@ -166,15 +184,17 @@ namespace ET
 		        lsUnit.AddComponent<ProductComponent, int>(row.ProductSkill);
 	        }
 	        lsUnit.AddComponent<AIRootComponent, Node>(new Sequence(new RequestAttack(), new WaitSecond(FP.Half)));
+	        
+	        EventSystem.Instance.Publish(lsWorld, new LSUnitCreate() {LSUnit = lsUnit});
 	        return lsUnit;
         }
         
-        public static LSUnit CreateDrop(LSWorld lsWorld, int tableId, TSVector position, TSQuaternion rotation, TeamType teamType)
+        public static LSUnit CreateDrop(LSWorld lsWorld, int tableId, TSVector position, int angle, TeamType teamType)
         {
 	        LSUnitComponent lsUnitComponent = lsWorld.GetComponent<LSUnitComponent>();
 	        LSUnit lsUnit = lsUnitComponent.AddChild<LSUnit>();
 
-	        lsUnit.AddComponent<TransformComponent, TSVector, TSQuaternion>(position, rotation);
+	        lsUnit.AddComponent<TransformComponent, TSVector, TSQuaternion>(position, TSQuaternion.Euler(0, angle, 0));
 	        lsUnit.AddComponent<TypeComponent, EUnitType>(EUnitType.Drop);
 	        lsUnit.AddComponent<DropComponent, int>(tableId);
 	        
@@ -214,18 +234,18 @@ namespace ET
 	        return lsUnit;
         }
         
-        public static void SummonUnit(LSWorld lsWorld, EUnitType type, int tableId, TSVector position, TSQuaternion rotation, TeamType teamType)
+        public static void SummonUnit(LSWorld lsWorld, EUnitType type, int tableId, TSVector position, int angle, TeamType teamType)
         {
 	        switch (type)
 	        {
 		        case EUnitType.Building:
-			        CreateBuilding(lsWorld, tableId, position, rotation, teamType);
+			        CreateBuilding(lsWorld, tableId, position, angle, teamType);
 			        break;
 		        case EUnitType.Soldier:
-			        CreateSoldier(lsWorld, tableId, position, rotation, teamType);
+			        CreateSoldier(lsWorld, tableId, position, angle, teamType);
 			        break;
 		        case EUnitType.Drop:
-			        CreateDrop(lsWorld, tableId, position, rotation, teamType);
+			        CreateDrop(lsWorld, tableId, position, angle, teamType);
 			        break;
 		        default: break;
 	        }

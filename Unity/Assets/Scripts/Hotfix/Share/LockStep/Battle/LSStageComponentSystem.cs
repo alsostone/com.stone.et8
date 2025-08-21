@@ -59,7 +59,9 @@ namespace ET
                         TSVector2 v2 = self.GetRandom().GetRandomPointOnCircle(32);
                         TSVector position = new TSVector(v2.x, 0, v2.y);
                         TSQuaternion rotation = TSQuaternion.LookRotation(position, TSVector.up);
-                        LSUnitFactory.SummonUnit(lsWorld, tuple.Item1, tuple.Item2, position, rotation, TeamType.TeamB);
+                        
+                        FP angle = rotation.eulerAngles.y;
+                        LSUnitFactory.SummonUnit(lsWorld, tuple.Item1, tuple.Item2, position, angle.AsInt(), TeamType.TeamB);
                     }
                 }
                 results.Clear();

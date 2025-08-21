@@ -23,8 +23,10 @@ namespace ET
             {
                 position = new TSVector(param[1], 0, 0) * FP.EN4;
             }
-            position = position.Rotation(targetTransform.Rotation.eulerAngles.y);
-            LSUnitFactory.CreateSoldier(target.LSWorld(), param[0], targetTransform.Position + position, targetTransform.Rotation, team);
+
+            FP angle = targetTransform.Rotation.eulerAngles.y;
+            position = position.Rotation(angle);
+            LSUnitFactory.CreateSoldier(target.LSWorld(), param[0], targetTransform.Position + position, angle.AsInt(), team);
         }
     }
 }

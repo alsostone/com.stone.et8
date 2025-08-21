@@ -7,13 +7,9 @@ namespace ET
     public static partial class PlacementComponentSystem
     {
         [EntitySystem]
-        private static void Awake(this PlacementComponent self, PlacedLayer type, PlacedLayer placedLayer, bool[] shape)
+        private static void Awake(this PlacementComponent self, PlacementData placementData)
         {self.LSRoom()?.ProcessLog.LogFunction(87, self.LSParent().Id);
-            self.PlacementData = new PlacementData();
-            self.PlacementData.placementType = type;
-            self.PlacementData.placedLayer = placedLayer;
-            self.PlacementData.rotation = 0;
-            self.PlacementData.Rotation(shape, self.PlacementData.points, 0);
+            self.PlacementData = placementData;
         }
 
         [EntitySystem]

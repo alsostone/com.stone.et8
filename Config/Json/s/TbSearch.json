@@ -104,7 +104,7 @@
     "valid_forward": false,
     "range": 15000,
     "team": 4,
-    "type": 9,
+    "type": 13,
     "table_id": [],
     "count": 1,
     "priority": 1
@@ -174,7 +174,7 @@
     "valid_forward": false,
     "range": 50000,
     "team": 4,
-    "type": 9,
+    "type": 13,
     "table_id": [],
     "count": 5,
     "priority": 0

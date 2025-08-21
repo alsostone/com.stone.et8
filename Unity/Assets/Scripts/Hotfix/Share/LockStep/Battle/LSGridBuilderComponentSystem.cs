@@ -42,15 +42,17 @@ namespace ET
         {self.LSRoom()?.ProcessLog.LogFunction(74, self.LSParent().Id);
             if (self.PlacementType == EUnitType.None && self.PlacementTargetId == 0)
                 return;
-            
+
+            position += self.PlacementDragOffset;
             LSWorld lsWorld = self.LSWorld();
-            LSGridMapComponent lsGridMapComponent = lsWorld.GetComponent<LSGridMapComponent>();
-            IndexV2 index = lsGridMapComponent.ConvertToIndex(position + self.PlacementDragOffset);
-            GridData gridData = lsGridMapComponent.GetGridData();
             
-            LSUnitComponent lsUnitComponent = lsWorld.GetComponent<LSUnitComponent>();
             if (self.PlacementTargetId > 0)
             {
+                LSGridMapComponent lsGridMapComponent = lsWorld.GetComponent<LSGridMapComponent>();
+                IndexV2 index = lsGridMapComponent.ConvertToIndex(position);
+                GridData gridData = lsGridMapComponent.GetGridData();
+                
+                LSUnitComponent lsUnitComponent = lsWorld.GetComponent<LSUnitComponent>();
                 LSUnit lsUnit = lsUnitComponent.GetChild<LSUnit>(self.PlacementTargetId);
                 PlacementData placementData = lsUnit?.GetComponent<PlacementComponent>()?.GetPlacementData();
                 if (placementData != null && gridData.CanPut(index.x, index.z, placementData) && gridData.CanTake(placementData))
@@ -63,37 +65,14 @@ namespace ET
             }
             else
             {
-                LSUnit lsUnit = null;
-                if (self.PlacementType == EUnitType.Block)
-                {
-                    TeamType team = self.LSOwner().GetComponent<TeamComponent>().Type;
-                    lsUnit = LSUnitFactory.CreateBlock(lsWorld, self.PlacementTableId, team);
+                TSVector pos = new(position.x, 0, position.y);
+                TeamType team = self.LSOwner().GetComponent<TeamComponent>().Type;
+                
+                if (self.PlacementType == EUnitType.Block) {
+                    LSUnitFactory.CreateBlock(lsWorld, self.PlacementTableId, pos, self.PlacementRotation * 90, team);
                 }
-                else if (self.PlacementType == EUnitType.Building)
-                {
-                    TeamType team = self.LSOwner().GetComponent<TeamComponent>().Type;
-                    lsUnit = LSUnitFactory.CreateBuilding(lsWorld, self.PlacementTableId, team);
-                }
-                PlacementData placementData = lsUnit?.GetComponent<PlacementComponent>()?.GetPlacementData();
-                if (placementData != null)
-                {
-                    placementData.Rotation(self.PlacementRotation);
-                    if (gridData.CanPut(index.x, index.z, placementData))
-                    {
-                        placementData.id = lsUnit.Id;
-                        gridData.Put(index.x, index.z, placementData);
-
-                        TSVector pos = lsGridMapComponent.GetPutPosition(placementData);
-                        TSQuaternion rot = TSQuaternion.Euler(0, placementData.rotation * 90, 0);
-                        lsUnit.AddComponent<TransformComponent, TSVector, TSQuaternion>(pos, rot);
-                        EventSystem.Instance.Publish(lsWorld, new LSUnitCreate() {LSUnit = lsUnit});
-                    }
-                    else {
-                        lsUnit.Dispose();
-                    }
-                }
-                else {
-                    lsUnit.Dispose();
+                else if (self.PlacementType == EUnitType.Building) {
+                    LSUnitFactory.CreateBuilding(lsWorld, self.PlacementTableId, pos, self.PlacementRotation * 90, team);
                 }
             }
             self.ClearPlacementData();

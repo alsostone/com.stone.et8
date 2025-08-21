@@ -75,6 +75,11 @@ namespace ST.GridBuilder
             }
             return true;
         }
+        
+        public bool IsBlock()
+        {
+            return isObstacle || (contentTypes.Count > 0 && contentTypes[0] == PlacedLayer.Block);
+        }
     }
 
 }

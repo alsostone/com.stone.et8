@@ -2,6 +2,8 @@
   {
     "Id": 1001,
     "scene_name": "Map1",
+    "base_camp_tower": 30001,
+    "base_camp_soldier": 30005,
     "count": 4,
     "delay": 2000,
     "wave_interval": 90000,
@@ -22,6 +24,8 @@
   {
     "Id": 1002,
     "scene_name": "Map1",
+    "base_camp_tower": 30001,
+    "base_camp_soldier": 30005,
     "count": 6,
     "delay": 2000,
     "wave_interval": 90000,
@@ -46,6 +50,8 @@
   {
     "Id": 1003,
     "scene_name": "Map2",
+    "base_camp_tower": 30001,
+    "base_camp_soldier": 30005,
     "count": 10,
     "delay": 2000,
     "wave_interval": 90000,
@@ -62,6 +68,8 @@
   {
     "Id": 1004,
     "scene_name": "Map2",
+    "base_camp_tower": 30001,
+    "base_camp_soldier": 30005,
     "count": 0,
     "delay": 2000,
     "wave_interval": 90000,

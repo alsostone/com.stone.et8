@@ -7,9 +7,9 @@ namespace ET.Client
         {
             Room room = clientScene.GetComponent<Room>();
             
+            room.AddComponent<LSViewGridMapComponent>();
             room.AddComponent<LSUnitViewComponent>();
             room.AddComponent<LSCameraComponent>();
-            room.AddComponent<LSViewGridMapComponent>();
 
             if (!room.IsReplay)
             {

@@ -2,6 +2,7 @@
   {
     "Id": 2001,
     "model": 20010001,
+    "placed_layer": 3,
     "shape": [
       false,
       false,
@@ -44,6 +45,7 @@
   {
     "Id": 2002,
     "model": 20020001,
+    "placed_layer": 3,
     "shape": [
       false,
       false,
@@ -86,6 +88,7 @@
   {
     "Id": 2003,
     "model": 20030001,
+    "placed_layer": 3,
     "shape": [
       false,
       false,

@@ -120,25 +120,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 4294967295
   m_IsActive: 1
---- !u!1 &12
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 126}
-  - component: {fileID: 338}
-  - component: {fileID: 430}
-  - component: {fileID: 239}
-  m_Layer: 14
-  m_Name: Cube
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 4294967295
-  m_IsActive: 1
 --- !u!1 &13
 GameObject:
   m_ObjectHideFlags: 0
@@ -246,25 +227,6 @@ GameObject:
   - component: {fileID: 344}
   - component: {fileID: 436}
   - component: {fileID: 245}
-  m_Layer: 14
-  m_Name: Cube
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 4294967295
-  m_IsActive: 1
---- !u!1 &19
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 133}
-  - component: {fileID: 345}
-  - component: {fileID: 437}
-  - component: {fileID: 246}
   m_Layer: 14
   m_Name: Cube
   m_TagString: Untagged
@@ -1712,21 +1674,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 160}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!4 &126
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 12}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 7.4845953, y: 30.101498, z: -21.93608}
-  m_LocalScale: {x: 3, y: 2, z: 3}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 160}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &127
 Transform:
   m_ObjectHideFlags: 0
@@ -1812,21 +1759,6 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 13.79195, y: 30.101498, z: -27.93608}
-  m_LocalScale: {x: 3, y: 2, z: 3}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 160}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!4 &133
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 19}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 7.79195, y: 30.101498, z: -27.93608}
   m_LocalScale: {x: 3, y: 2, z: 3}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -2246,7 +2178,6 @@ Transform:
   - {fileID: 131}
   - {fileID: 150}
   - {fileID: 134}
-  - {fileID: 133}
   - {fileID: 139}
   - {fileID: 157}
   - {fileID: 141}
@@ -2262,7 +2193,6 @@ Transform:
   - {fileID: 142}
   - {fileID: 135}
   - {fileID: 144}
-  - {fileID: 126}
   - {fileID: 145}
   - {fileID: 146}
   - {fileID: 154}
@@ -3098,48 +3028,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!23 &239
-MeshRenderer:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 12}
-  m_Enabled: 1
-  m_CastShadows: 1
-  m_ReceiveShadows: 1
-  m_DynamicOccludee: 1
-  m_StaticShadowCaster: 0
-  m_MotionVectors: 1
-  m_LightProbeUsage: 0
-  m_ReflectionProbeUsage: 1
-  m_RayTracingMode: 2
-  m_RayTraceProcedural: 0
-  m_RenderingLayerMask: 1
-  m_RendererPriority: 0
-  m_Materials:
-  - {fileID: 2100000, guid: 6d5adfb995cb79c438d8b1e6b5e5de91, type: 2}
-  m_StaticBatchInfo:
-    firstSubMesh: 0
-    subMeshCount: 0
-  m_StaticBatchRoot: {fileID: 0}
-  m_ProbeAnchor: {fileID: 0}
-  m_LightProbeVolumeOverride: {fileID: 0}
-  m_ScaleInLightmap: 1
-  m_ReceiveGI: 1
-  m_PreserveUVs: 0
-  m_IgnoreNormalsForChartDetection: 0
-  m_ImportantGI: 0
-  m_StitchLightmapSeams: 0
-  m_SelectedEditorRenderState: 3
-  m_MinimumChartSize: 4
-  m_AutoUVMaxDistance: 0.5
-  m_AutoUVMaxAngle: 89
-  m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
-  m_SortingOrder: 0
-  m_AdditionalVertexStreams: {fileID: 0}
 --- !u!23 &240
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -3357,48 +3245,6 @@ MeshRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 18}
-  m_Enabled: 1
-  m_CastShadows: 1
-  m_ReceiveShadows: 1
-  m_DynamicOccludee: 1
-  m_StaticShadowCaster: 0
-  m_MotionVectors: 1
-  m_LightProbeUsage: 0
-  m_ReflectionProbeUsage: 1
-  m_RayTracingMode: 2
-  m_RayTraceProcedural: 0
-  m_RenderingLayerMask: 1
-  m_RendererPriority: 0
-  m_Materials:
-  - {fileID: 2100000, guid: 6d5adfb995cb79c438d8b1e6b5e5de91, type: 2}
-  m_StaticBatchInfo:
-    firstSubMesh: 0
-    subMeshCount: 0
-  m_StaticBatchRoot: {fileID: 0}
-  m_ProbeAnchor: {fileID: 0}
-  m_LightProbeVolumeOverride: {fileID: 0}
-  m_ScaleInLightmap: 1
-  m_ReceiveGI: 1
-  m_PreserveUVs: 0
-  m_IgnoreNormalsForChartDetection: 0
-  m_ImportantGI: 0
-  m_StitchLightmapSeams: 0
-  m_SelectedEditorRenderState: 3
-  m_MinimumChartSize: 4
-  m_AutoUVMaxDistance: 0.5
-  m_AutoUVMaxAngle: 89
-  m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
-  m_SortingOrder: 0
-  m_AdditionalVertexStreams: {fileID: 0}
---- !u!23 &246
-MeshRenderer:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 19}
   m_Enabled: 1
   m_CastShadows: 1
   m_ReceiveShadows: 1
@@ -6340,14 +6186,6 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
---- !u!33 &338
-MeshFilter:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 12}
-  m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
 --- !u!33 &339
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -6395,14 +6233,6 @@ MeshFilter:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 18}
-  m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
---- !u!33 &345
-MeshFilter:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 19}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
 --- !u!33 &346
 MeshFilter:
@@ -6977,27 +6807,6 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
---- !u!65 &430
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 12}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!65 &431
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -7110,27 +6919,6 @@ BoxCollider:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 18}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
---- !u!65 &437
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 19}
   m_Material: {fileID: 0}
   m_IncludeLayers:
     serializedVersion: 2
@@ -8659,7 +8447,7 @@ Light:
   m_BounceIntensity: 1
   m_ColorTemperature: 6570
   m_UseColorTemperature: 0
-  m_BoundingSphereOverride: {x: 3.0481281e+32, y: 1.1483739e+37, z: 1.02e-43, w: 4e-45}
+  m_BoundingSphereOverride: {x: 0.5, y: 0.000061035, z: 39, w: 263.5}
   m_UseBoundingSphereOverride: 0
   m_UseViewFrustumForShadowCasterCull: 1
   m_ShadowRadius: 0
@@ -27622,7 +27410,7 @@ MonoBehaviour:
           V: 0
     - contentIds: 
       contentTypes: 
-      isObstacle: 1
+      isObstacle: 0
       index:
         x: 30
         z: 24
@@ -27634,7 +27422,7 @@ MonoBehaviour:
           V: 0
     - contentIds: 
       contentTypes: 
-      isObstacle: 1
+      isObstacle: 0
       index:
         x: 31
         z: 24
@@ -27646,7 +27434,7 @@ MonoBehaviour:
           V: 0
     - contentIds: 
       contentTypes: 
-      isObstacle: 1
+      isObstacle: 0
       index:
         x: 32
         z: 24
@@ -28390,7 +28178,7 @@ MonoBehaviour:
           V: 0
     - contentIds: 
       contentTypes: 
-      isObstacle: 1
+      isObstacle: 0
       index:
         x: 30
         z: 25
@@ -28402,7 +28190,7 @@ MonoBehaviour:
           V: 0
     - contentIds: 
       contentTypes: 
-      isObstacle: 1
+      isObstacle: 0
       index:
         x: 31
         z: 25
@@ -28414,7 +28202,7 @@ MonoBehaviour:
           V: 0
     - contentIds: 
       contentTypes: 
-      isObstacle: 1
+      isObstacle: 0
       index:
         x: 32
         z: 25
@@ -29158,7 +28946,7 @@ MonoBehaviour:
           V: 0
     - contentIds: 
       contentTypes: 
-      isObstacle: 1
+      isObstacle: 0
       index:
         x: 30
         z: 26
@@ -29170,7 +28958,7 @@ MonoBehaviour:
           V: 0
     - contentIds: 
       contentTypes: 
-      isObstacle: 1
+      isObstacle: 0
       index:
         x: 31
         z: 26
@@ -29182,7 +28970,7 @@ MonoBehaviour:
           V: 0
     - contentIds: 
       contentTypes: 
-      isObstacle: 1
+      isObstacle: 0
       index:
         x: 32
         z: 26
@@ -32218,7 +32006,7 @@ MonoBehaviour:
           V: 0
     - contentIds: 
       contentTypes: 
-      isObstacle: 1
+      isObstacle: 0
       index:
         x: 29
         z: 30
@@ -32230,7 +32018,7 @@ MonoBehaviour:
           V: 0
     - contentIds: 
       contentTypes: 
-      isObstacle: 1
+      isObstacle: 0
       index:
         x: 30
         z: 30
@@ -32242,7 +32030,7 @@ MonoBehaviour:
           V: 0
     - contentIds: 
       contentTypes: 
-      isObstacle: 1
+      isObstacle: 0
       index:
         x: 31
         z: 30
@@ -32254,7 +32042,7 @@ MonoBehaviour:
           V: 0
     - contentIds: 
       contentTypes: 
-      isObstacle: 1
+      isObstacle: 0
       index:
         x: 32
         z: 30
@@ -32986,7 +32774,7 @@ MonoBehaviour:
           V: 0
     - contentIds: 
       contentTypes: 
-      isObstacle: 1
+      isObstacle: 0
       index:
         x: 29
         z: 31
@@ -32998,7 +32786,7 @@ MonoBehaviour:
           V: 0
     - contentIds: 
       contentTypes: 
-      isObstacle: 1
+      isObstacle: 0
       index:
         x: 30
         z: 31
@@ -33010,7 +32798,7 @@ MonoBehaviour:
           V: 0
     - contentIds: 
       contentTypes: 
-      isObstacle: 1
+      isObstacle: 0
       index:
         x: 31
         z: 31
@@ -33022,7 +32810,7 @@ MonoBehaviour:
           V: 0
     - contentIds: 
       contentTypes: 
-      isObstacle: 1
+      isObstacle: 0
       index:
         x: 32
         z: 31
@@ -33754,7 +33542,7 @@ MonoBehaviour:
           V: 0
     - contentIds: 
       contentTypes: 
-      isObstacle: 1
+      isObstacle: 0
       index:
         x: 29
         z: 32
@@ -33766,7 +33554,7 @@ MonoBehaviour:
           V: 0
     - contentIds: 
       contentTypes: 
-      isObstacle: 1
+      isObstacle: 0
       index:
         x: 30
         z: 32
@@ -33778,7 +33566,7 @@ MonoBehaviour:
           V: 0
     - contentIds: 
       contentTypes: 
-      isObstacle: 1
+      isObstacle: 0
       index:
         x: 31
         z: 32
@@ -33790,7 +33578,7 @@ MonoBehaviour:
           V: 0
     - contentIds: 
       contentTypes: 
-      isObstacle: 1
+      isObstacle: 0
       index:
         x: 32
         z: 32
@@ -35384,8 +35172,8 @@ MonoBehaviour:
           V: 0
         z:
           V: 0
-    - contentIds: 0100000000000000
-      contentTypes: 02000000
+    - contentIds: 
+      contentTypes: 
       isObstacle: 0
       index:
         x: 37
@@ -35396,8 +35184,8 @@ MonoBehaviour:
           V: 0
         z:
           V: 0
-    - contentIds: 0100000000000000
-      contentTypes: 02000000
+    - contentIds: 
+      contentTypes: 
       isObstacle: 0
       index:
         x: 38
@@ -35408,8 +35196,8 @@ MonoBehaviour:
           V: 0
         z:
           V: 0
-    - contentIds: 0100000000000000
-      contentTypes: 02000000
+    - contentIds: 
+      contentTypes: 
       isObstacle: 0
       index:
         x: 39
@@ -35420,8 +35208,8 @@ MonoBehaviour:
           V: 0
         z:
           V: 0
-    - contentIds: 0100000000000000
-      contentTypes: 02000000
+    - contentIds: 
+      contentTypes: 
       isObstacle: 0
       index:
         x: 40
