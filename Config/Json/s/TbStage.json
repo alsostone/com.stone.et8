@@ -6,7 +6,7 @@
     "base_camp_soldier": 30005,
     "count": 4,
     "delay": 2000,
-    "wave_interval": 90000,
+    "wave_interval": 40000,
     "random_interval": 500,
     "random_counts": [
       20,
@@ -28,7 +28,7 @@
     "base_camp_soldier": 30005,
     "count": 6,
     "delay": 2000,
-    "wave_interval": 90000,
+    "wave_interval": 40000,
     "random_interval": 500,
     "random_counts": [
       20,
@@ -54,15 +54,23 @@
     "base_camp_soldier": 30005,
     "count": 10,
     "delay": 2000,
-    "wave_interval": 90000,
+    "wave_interval": 40000,
     "random_interval": 500,
     "random_counts": [
+      20,
+      20,
+      20,
+      20,
       20,
       20
     ],
     "random_sets": [
       4011,
-      4012
+      4012,
+      4013,
+      4014,
+      4015,
+      4016
     ]
   },
   {
@@ -72,7 +80,7 @@
     "base_camp_soldier": 30005,
     "count": 0,
     "delay": 2000,
-    "wave_interval": 90000,
+    "wave_interval": 40000,
     "random_interval": 500,
     "random_counts": [
       20,

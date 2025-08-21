@@ -6,8 +6,8 @@ package ET;
 message G2Match_Match // IRequest
 {
 	int32 RpcId = 1;
-	
 	int64 Id = 2;
+	int32 StageId = 3;
 }
 
 message Match2G_Match // IResponse

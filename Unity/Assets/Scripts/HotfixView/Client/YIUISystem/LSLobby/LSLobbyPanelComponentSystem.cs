@@ -35,7 +35,8 @@ namespace ET.Client
         
         private static void OnEventEnterMapAction(this LSLobbyPanelComponent self)
         {
-            EnterMapHelper.Match(self.Fiber()).Coroutine();
+            int stageId = 1003; // 测试关卡
+            EnterMapHelper.Match(self.Fiber(), stageId).Coroutine();
         }
         
         private static  void OnEventReplayAction(this LSLobbyPanelComponent self)

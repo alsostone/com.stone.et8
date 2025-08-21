@@ -22,11 +22,13 @@ namespace ET.Client
             }	
         }
         
-        public static async ETTask Match(Fiber fiber)
+        public static async ETTask Match(Fiber fiber, int stageId)
         {
             try
             {
-                G2C_Match g2CEnterMap = await fiber.Root.GetComponent<ClientSenderComponent>().Call(C2G_Match.Create()) as G2C_Match;
+                C2G_Match c2GMatch = C2G_Match.Create();
+                c2GMatch.StageId = stageId;
+                G2C_Match g2CEnterMap = await fiber.Root.GetComponent<ClientSenderComponent>().Call(c2GMatch) as G2C_Match;
             }
             catch (Exception e)
             {

@@ -5,6 +5,7 @@ package ET;
 message C2G_Match // ISessionRequest
 {
 	int32 RpcId = 1;
+	int32 StageId = 2;
 }
 
 message G2C_Match // ISessionResponse

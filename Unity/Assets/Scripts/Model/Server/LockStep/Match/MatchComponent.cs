@@ -5,7 +5,8 @@ namespace ET.Server
     [ComponentOf(typeof(Scene))]
     public class MatchComponent: Entity, IAwake
     {
-        public List<long> waitMatchPlayers = new List<long>();
+        public Dictionary<int, List<long>> waitStageMatchPlayers = new ();
+        public HashSet<long> waitMatchPlayers = new ();
     }
 
 }

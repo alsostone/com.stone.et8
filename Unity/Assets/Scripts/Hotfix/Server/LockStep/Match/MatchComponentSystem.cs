@@ -7,29 +7,31 @@ namespace ET.Server
     [FriendOf(typeof(MatchComponent))]
     public static partial class MatchComponentSystem
     {
-        public static async ETTask Match(this MatchComponent self, long playerId)
+        public static async ETTask Match(this MatchComponent self, long playerId, int stageId)
         {
             if (self.waitMatchPlayers.Contains(playerId))
-            {
                 return;
-            }
-            
-            self.waitMatchPlayers.Add(playerId);
 
-            if (self.waitMatchPlayers.Count < LSConstValue.MatchCount)
-            {
-                return;
+            self.waitMatchPlayers.Add(playerId);
+            if (!self.waitStageMatchPlayers.TryGetValue(stageId, out List<long> stagePlayers)) {
+                stagePlayers = new List<long>();
+                self.waitStageMatchPlayers[stageId] = stagePlayers;
             }
-            
+            stagePlayers.Add(playerId);
+
+            if (stagePlayers.Count < LSConstValue.MatchCount)
+                return;
+
             // 申请一个房间
             TbStartSceneRow tbStartSceneRow = RandomGenerator.RandomArray(TbStartScene.Instance.Maps);
             Match2Map_GetRoom match2MapGetRoom = Match2Map_GetRoom.Create();
-            match2MapGetRoom.StageId = 1001;
-            foreach (long id in self.waitMatchPlayers)
+            match2MapGetRoom.StageId = stageId;
+            foreach (long id in stagePlayers)
             {
                 match2MapGetRoom.PlayerIds.Add(id);
+                self.waitMatchPlayers.Remove(id);
             }
-            self.waitMatchPlayers.Clear();
+            stagePlayers.Clear();
 
             Scene root = self.Root();
             Map2Match_GetRoom map2MatchGetRoom = await root.GetComponent<MessageSender>().Call(

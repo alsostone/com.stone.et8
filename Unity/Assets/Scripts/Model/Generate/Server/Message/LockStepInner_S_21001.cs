@@ -22,6 +22,9 @@ namespace ET
         [MemoryPackOrder(1)]
         public long Id { get; set; }
 
+        [MemoryPackOrder(2)]
+        public int StageId { get; set; }
+
         public override void Dispose()
         {
             if (!this.IsFromPool)
@@ -31,6 +34,7 @@ namespace ET
 
             this.RpcId = default;
             this.Id = default;
+            this.StageId = default;
 
             ObjectPool.Instance.Recycle(this);
         }

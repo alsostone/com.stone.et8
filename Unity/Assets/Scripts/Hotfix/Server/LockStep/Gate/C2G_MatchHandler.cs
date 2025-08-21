@@ -11,6 +11,7 @@
 
 			G2Match_Match g2MatchMatch = G2Match_Match.Create();
 			g2MatchMatch.Id = player.Id;
+			g2MatchMatch.StageId = request.StageId;
 			await session.Root().GetComponent<MessageSender>().Call(tbStartSceneRow.ActorId, g2MatchMatch);
 		}
 	}
