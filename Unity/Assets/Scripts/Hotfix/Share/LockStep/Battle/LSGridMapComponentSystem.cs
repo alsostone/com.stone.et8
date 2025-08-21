@@ -13,9 +13,7 @@ namespace ET
         private static void Awake(this LSGridMapComponent self, string gridName)
         {self.LSRoom()?.ProcessLog.LogFunction(82, self.LSParent().Id);
             self.GridName = gridName;
-            byte[] gridBytes = FileComponent.Instance.Load(gridName);
-            self.GridData = MemoryPackSerializer.Deserialize<GridData>(gridBytes);
-            self.GridData.SetDestination(new FieldV2(0, 0));
+            self.ResetGridData(FileComponent.Instance.Load(gridName));
         }
         
         [EntitySystem]
@@ -24,9 +22,7 @@ namespace ET
             // 由于GridData是一个大数据结构，序列化会消耗较多时间且序列化后内存占用也大
             // 优化：由于对于格子数量来说，放入的数量是很小的，反序列化时再放入一遍消耗也不大，所以这里需要一个初始的取地图数据
             // 可以再优化，比如将GridData池化，有瓶颈时再说
-            byte[] gridBytes = FileComponent.Instance.Load(self.GridName);
-            self.GridData = MemoryPackSerializer.Deserialize<GridData>(gridBytes);
-            self.GridData.SetDestination(new FieldV2(0, 0));
+            self.ResetGridData(FileComponent.Instance.Load(self.GridName));
         }
         
         [LSEntitySystem]
@@ -34,6 +30,13 @@ namespace ET
         {self.LSRoom()?.ProcessLog.LogFunction(81, self.LSParent().Id);
             // 每帧更新时重置流场 有脏标记
             self.GridData.ResetFlowField();
+        }
+
+        private static void ResetGridData(this LSGridMapComponent self, byte[] gridBytes)
+        {
+            self.GridData = MemoryPackSerializer.Deserialize<GridData>(gridBytes);
+            self.GridData.SetDestination(new FieldV2(0, 0));
+            EventSystem.Instance.Publish(self.LSWorld(), new LSGridDataReset() { GridData = self.GridData });
         }
         
         public static GridData GetGridData(this LSGridMapComponent self)

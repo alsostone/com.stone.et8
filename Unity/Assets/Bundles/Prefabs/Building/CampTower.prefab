@@ -54,7 +54,7 @@ MonoBehaviour:
     x: 0
     z: 0
     rotation: 0
-    points: 00000000000000000000000101000000010100000000000000
+    points: 00000000000001010100000101010000010101000000000000
     isNew: 1
   previewMaterial: {fileID: 0}
 --- !u!136 &1999932460512586313
@@ -76,7 +76,7 @@ CapsuleCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 1
+  m_Radius: 1.5
   m_Height: 5
   m_Direction: 1
   m_Center: {x: 0, y: 1.5, z: 0}
@@ -108,7 +108,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 1.5, z: 0}
-  m_LocalScale: {x: 2, y: 1.5, z: 2}
+  m_LocalScale: {x: 3, y: 1.5, z: 3}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 146582365976954613}

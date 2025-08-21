@@ -13,6 +13,7 @@ namespace ST.GridBuilder
         [SerializeField, Min(0.01f)] public float yHeight = 0.01f;
 
         [SerializeField, HideInInspector] public GridData gridData = new();
+        [NonSerialized, HideInInspector] public GridData gridDataDraw = null;
 
         public IndexV2 ConvertToIndex(Vector3 position)
         {
@@ -85,32 +86,34 @@ namespace ST.GridBuilder
         private readonly List<Vector3> drawPoints = new List<Vector3>();
         void OnDrawGizmos()
         {
-            if (gridData.cells == null || gridData.cells.Length != gridData.xLength * gridData.zLength) {
+            if (gridDataDraw == null)
+                gridDataDraw = gridData;
+            if (gridDataDraw.cells == null || gridDataDraw.cells.Length != gridDataDraw.xLength * gridDataDraw.zLength) {
                 return;
             }
             drawPoints.Clear();
 
-            int xLength = gridData.xLength;
-            int zLength = gridData.zLength;
-            float size = gridData.cellSize;
+            int xLength = gridDataDraw.xLength;
+            int zLength = gridDataDraw.zLength;
+            float size = gridDataDraw.cellSize;
             
             Gizmos.color = Color.yellow;
             for (int x = 0; x < xLength + 1; x++)
             for (int z = 0; z < zLength; ++z)
             {
-                if ((x - 1 < 0 || gridData.cells[x - 1 + z * xLength].IsFill)
-                    && (x >= xLength || gridData.cells[x + z * xLength].IsFill)) {
+                if ((x - 1 < 0 || gridDataDraw.cells[x - 1 + z * xLength].IsFill)
+                    && (x >= xLength || gridDataDraw.cells[x + z * xLength].IsFill)) {
                     continue;
                 }
-                Vector3 start = GetPosition() + new Vector3(x * size, yOffset, z * size);
+                Vector3 start = new Vector3(gridDataDraw.xPosition + x * size, yOffset, gridDataDraw.zPosition + z * size);
                 drawPoints.Add(start);
                 
                 for (; z < zLength; ++z)
                 {
-                    Vector3 end = GetPosition() + new Vector3(x * size, yOffset, z * size);
+                    Vector3 end = new Vector3(gridDataDraw.xPosition + x * size, yOffset, gridDataDraw.zPosition + z * size);
                     drawPoints.Add(end);
-                    if ((x - 1 >= 0 && !gridData.cells[x - 1 + z * xLength].IsFill)
-                        || (x < xLength && !gridData.cells[x + z * xLength].IsFill)) {
+                    if ((x - 1 >= 0 && !gridDataDraw.cells[x - 1 + z * xLength].IsFill)
+                        || (x < xLength && !gridDataDraw.cells[x + z * xLength].IsFill)) {
                         continue;
                     }
                     Gizmos.DrawLine(start, end);
@@ -119,7 +122,7 @@ namespace ST.GridBuilder
 
                 if (z == zLength)
                 {
-                    Vector3 end = GetPosition() + new Vector3(x * size, yOffset, zLength * size);
+                    Vector3 end = new Vector3(gridDataDraw.xPosition + x * size, yOffset, gridDataDraw.zPosition + zLength * size);
                     drawPoints.Add(end);
                     Gizmos.DrawLine(start, end);
                 }
@@ -128,26 +131,26 @@ namespace ST.GridBuilder
             for (int z = 0; z < zLength + 1; z++)
             for (int x = 0; x < xLength; ++x)
             {
-                if ((z - 1 < 0 || gridData.cells[x + (z - 1) * xLength].IsFill)
-                    && (z >= zLength || gridData.cells[x + z * xLength].IsFill)) {
+                if ((z - 1 < 0 || gridDataDraw.cells[x + (z - 1) * xLength].IsFill)
+                    && (z >= zLength || gridDataDraw.cells[x + z * xLength].IsFill)) {
                     continue;
                 }
-                Vector3 start = GetPosition() + new Vector3(x * size, yOffset, z * size);
+                Vector3 start = new Vector3(gridDataDraw.xPosition + x * size, yOffset, gridDataDraw.zPosition + z * size);
                 
                 for (; x < xLength; ++x)
                 {
-                    if ((z - 1 >= 0 && !gridData.cells[x + (z - 1) * xLength].IsFill)
-                        || (z < zLength && !gridData.cells[x + z * xLength].IsFill)) {
+                    if ((z - 1 >= 0 && !gridDataDraw.cells[x + (z - 1) * xLength].IsFill)
+                        || (z < zLength && !gridDataDraw.cells[x + z * xLength].IsFill)) {
                         continue;
                     }
-                    Vector3 end = GetPosition() + new Vector3(x * size, yOffset, z * size);
+                    Vector3 end = new Vector3(gridDataDraw.xPosition + x * size, yOffset, gridDataDraw.zPosition + z * size);
                     Gizmos.DrawLine(start, end);
                     break;
                 }
 
                 if (x == xLength)
                 {
-                    Vector3 end = GetPosition() + new Vector3(xLength * size, yOffset, z * size);
+                    Vector3 end = new Vector3(gridDataDraw.xPosition + xLength * size, yOffset, gridDataDraw.zPosition + z * size);
                     Gizmos.DrawLine(start, end);
                 }
             }
@@ -164,18 +167,19 @@ namespace ST.GridBuilder
 
         private void OnDrawArrow()
         {
-            int xLength = gridData.xLength;
-            int zLength = gridData.zLength;
+            int xLength = gridDataDraw.xLength;
+            int zLength = gridDataDraw.zLength;
             for (int x = 0; x < xLength; ++x)
             for (int z = 0; z < zLength; z++)
             {
-                CellData data = gridData.cells[x + z * xLength];
+                CellData data = gridDataDraw.cells[x + z * xLength];
                 if (data.distance == 0 || data.distance == int.MaxValue)
                     continue;
 
+                Vector3 center = gridDataDraw.GetCellPosition(x, z).ToVector3();
                 Vector3 direction = data.direction.ToVector3().normalized;
-                Vector3 from = GetCellPosition(x, z) - direction * 0.25f;
-                Vector3 to = GetCellPosition(x, z) + direction * 0.25f;
+                Vector3 from = center - direction * 0.25f;
+                Vector3 to = center + direction * 0.25f;
                 
                 Gizmos.DrawLine(from, to);
                 Vector3 right = Quaternion.LookRotation(direction) * Quaternion.Euler(0, 180 + 20, 0) * new Vector3(0, 0, 1);

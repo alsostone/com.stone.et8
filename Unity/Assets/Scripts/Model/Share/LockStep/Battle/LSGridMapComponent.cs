@@ -12,6 +12,6 @@ namespace ET
 		
 		[MemoryPackIgnore]
 		[BsonIgnore]
-		public GridData GridData;
+		public GridData GridData { get; set; }
 	}
 }
