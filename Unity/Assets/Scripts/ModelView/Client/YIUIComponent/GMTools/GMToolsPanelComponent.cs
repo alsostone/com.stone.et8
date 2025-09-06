@@ -5,13 +5,12 @@ using System.Collections.Generic;
 
 namespace ET.Client
 {
-    /// <summary>
-    /// Author  YIUI
-    /// Date    2025.9.6
-    /// Desc
-    /// </summary>
     public partial class GMToolsPanelComponent: Entity
     {
+#if ENABLE_DEBUG
+        public ST.GmTools.GmToolsQuickBehaviour GmToolsQuickBehaviour;
+        public ST.GmTools.GmToolsBehaviour GmToolsBehaviour;
+#endif
 
     }
 }

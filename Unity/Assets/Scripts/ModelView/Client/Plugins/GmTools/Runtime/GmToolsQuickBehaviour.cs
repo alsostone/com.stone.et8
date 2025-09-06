@@ -5,13 +5,15 @@ using UnityEngine.EventSystems;
 
 namespace ST.GmTools
 {
+    [ET.EnableClass]
     public class GmToolsQuickBehaviour : MonoBehaviour
     {
         private float mWindowScale = 0;
-        private static readonly Vector2 WindowSize = new Vector2(820f, 460f);
+        [ET.StaticField] private static readonly Vector2 WindowSize = new Vector2(820f, 460f);
         private readonly Rect mDragRect = new Rect(0f, 0f, float.MaxValue, 20f);
         private Rect mWindowRect = new Rect();
         private IDrawView mView;
+        private EventSystem mCacheEventSystem;
 
         public void SetQuickView(IDrawView view)
         {
@@ -20,12 +22,14 @@ namespace ST.GmTools
         
         private void OnEnable()
         {
-            EventSystem.current.enabled = false;
+            mCacheEventSystem = EventSystem.current;
+            mCacheEventSystem.enabled = false;
         }
 
         private void OnDisable()
         {
-            EventSystem.current.enabled = true;
+            if (mCacheEventSystem)
+                mCacheEventSystem.enabled = true;
         }
         
         private void OnGUI()

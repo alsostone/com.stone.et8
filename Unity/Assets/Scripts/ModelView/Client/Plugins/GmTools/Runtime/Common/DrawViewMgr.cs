@@ -1,6 +1,7 @@
 ﻿#if ENABLE_DEBUG
 namespace ST.GmTools
 {
+    [ET.EnableClass]
     internal sealed class DrawViewMgr : IDrawViewMgr
     {
         private readonly DrawViewGroup mViewRoot;

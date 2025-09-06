@@ -5,11 +5,12 @@ using UnityEngine;
 
 namespace ST.GmTools
 {
+    [ET.EnableClass]
     public class GmToolsView
     {
         private readonly DrawViewMgr mDrawViewMgr;
-        private static int sGroupNumber;
-        private static readonly Dictionary<int, int> SelectGroupIndex = new Dictionary<int, int>();
+        [ET.StaticField] private static int sGroupNumber;
+        [ET.StaticField] private static readonly Dictionary<int, int> SelectGroupIndex = new Dictionary<int, int>();
         private readonly Action mOnCloseCallback; 
 
         public GmToolsView(Action closeCallback)

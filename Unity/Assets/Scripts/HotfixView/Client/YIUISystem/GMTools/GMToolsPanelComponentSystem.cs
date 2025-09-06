@@ -39,7 +39,12 @@ namespace ET.Client
         
         private static void OnEventOpenGmToolsAction(this GMToolsPanelComponent self)
         {
-            
+#if ENABLE_DEBUG
+            var quickBehaviour = self.ViewGO.GetComponent<ST.GmTools.GmToolsBehaviour>();
+            if (quickBehaviour == null)
+                quickBehaviour = self.ViewGO.AddComponent<ST.GmTools.GmToolsBehaviour>();
+            quickBehaviour.enabled = true;
+#endif
         }
         
         private static void OnEventOpenBatchAction(this GMToolsPanelComponent self)
@@ -49,7 +54,15 @@ namespace ET.Client
         
         private static void OnEventOpenStageAction(this GMToolsPanelComponent self)
         {
-            
+#if ENABLE_DEBUG
+            var quickBehaviour = self.ViewGO.GetComponent<ST.GmTools.GmToolsQuickBehaviour>();
+            if (quickBehaviour == null)
+            {
+                quickBehaviour = self.ViewGO.AddComponent<ST.GmTools.GmToolsQuickBehaviour>();
+                quickBehaviour.SetQuickView(new ST.GmTools.DrawViewStage());
+            }
+            quickBehaviour.enabled = true;
+#endif
         }
         #endregion YIUIEvent结束
     }

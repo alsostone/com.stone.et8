@@ -4,6 +4,7 @@ using System.Collections.Generic;
 
 namespace ST.GmTools
 {
+    [ET.EnableClass]
     public sealed class DrawViewGroup : IDrawViewGroup, IDrawView
     {
         private readonly List<KeyValuePair<string, IDrawView>> mDrawViews;

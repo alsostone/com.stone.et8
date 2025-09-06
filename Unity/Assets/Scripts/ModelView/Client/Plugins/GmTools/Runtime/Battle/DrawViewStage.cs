@@ -3,18 +3,14 @@ using UnityEngine;
 
 namespace ST.GmTools
 {
-    public sealed class DrawViewBattle : DrawViewScrollable
+    [ET.EnableClass]
+    public sealed class DrawViewStage : DrawViewScrollable
     {
-        public DrawViewBattle()
-        {
-        }
-
         protected override void OnDrawScrollableView()
         {
             GUILayout.BeginHorizontal();
             GUILayout.EndHorizontal();
         }
-        
     }
 }
 #endif

@@ -3,6 +3,7 @@ using UnityEditor;
 
 namespace ST.GmTools
 {
+    [ET.EnableClass]
     public class GmToolsWindow : EditorWindow
     {
         [MenuItem("ET/Open GmTools &g", false, 20)]

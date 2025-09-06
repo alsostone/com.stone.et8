@@ -3,6 +3,7 @@ using UnityEngine;
 
 namespace ST.GmTools
 {
+    [ET.EnableClass]
     public abstract class DrawViewScrollable : IDrawView
     {
         private Vector2 mScrollPosition = Vector2.zero;
