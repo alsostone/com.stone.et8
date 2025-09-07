@@ -7,7 +7,7 @@ namespace ET
 {
     [ComponentOf(typeof(LSUnit))]
     [MemoryPackable]
-    public partial class SkillComponent : LSEntity, IAwake<int[]>, IDestroy, ILSUpdate, ISerializeToEntity
+    public partial class SkillComponent : LSEntity, IAwake<int[], int[]>, IDestroy, ILSUpdate, ISerializeToEntity
     {
         [BsonDictionaryOptions(DictionaryRepresentation.ArrayOfArrays)]
         public Dictionary<long, long> IdSkillMap = new Dictionary<long, long>();

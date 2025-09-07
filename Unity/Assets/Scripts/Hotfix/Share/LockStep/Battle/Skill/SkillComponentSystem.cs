@@ -8,11 +8,21 @@ namespace ET
     public static partial class SkillComponentSystem
     {
         [EntitySystem]
-        private static void Awake(this SkillComponent self, int[] skillIds)
+        private static void Awake(this SkillComponent self, int[] normalIds, int[] activeIds)
         {self.LSRoom()?.ProcessLog.LogFunction(54, self.LSParent().Id);
-            foreach (int skillId in skillIds)
+            if (normalIds != null)
             {
-                self.AddSkill(skillId);
+                foreach (int skillId in normalIds)
+                {
+                    self.AddSkill(skillId);
+                }
+            }
+            if (activeIds != null)
+            {
+                foreach (int skillId in activeIds)
+                {
+                    self.AddSkill(skillId);
+                }
             }
         }
 

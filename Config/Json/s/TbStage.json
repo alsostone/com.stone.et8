@@ -1,6 +1,8 @@
 [
   {
     "Id": 1001,
+    "name": "共4波",
+    "fight_mode": 1,
     "scene_name": "Map1",
     "base_camp_tower": 30001,
     "base_camp_soldier": 30005,
@@ -23,6 +25,8 @@
   },
   {
     "Id": 1002,
+    "name": "共6波",
+    "fight_mode": 1,
     "scene_name": "Map1",
     "base_camp_tower": 30001,
     "base_camp_soldier": 30005,
@@ -49,6 +53,8 @@
   },
   {
     "Id": 1003,
+    "name": "共10波",
+    "fight_mode": 1,
     "scene_name": "Map2",
     "base_camp_tower": 30001,
     "base_camp_soldier": 30005,
@@ -75,6 +81,28 @@
   },
   {
     "Id": 1004,
+    "name": "无尽波",
+    "fight_mode": 1,
+    "scene_name": "Map2",
+    "base_camp_tower": 30001,
+    "base_camp_soldier": 30005,
+    "count": 0,
+    "delay": 2000,
+    "wave_interval": 40000,
+    "random_interval": 500,
+    "random_counts": [
+      20,
+      20
+    ],
+    "random_sets": [
+      4011,
+      4012
+    ]
+  },
+  {
+    "Id": 1005,
+    "name": "无尽波",
+    "fight_mode": 2,
     "scene_name": "Map2",
     "base_camp_tower": 30001,
     "base_camp_soldier": 30005,

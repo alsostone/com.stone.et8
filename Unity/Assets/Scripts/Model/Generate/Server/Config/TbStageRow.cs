@@ -17,6 +17,8 @@ namespace ET
         public TbStageRow(ByteBuf _buf)
         {
             Id = _buf.ReadInt();
+            Name = _buf.ReadString();
+            FightMode = (FightMode)_buf.ReadInt();
             SceneName = _buf.ReadString();
             BaseCampTower = _buf.ReadInt();
             BaseCampTower_Ref = null;
@@ -41,6 +43,16 @@ namespace ET
         /// ID
         /// </summary>
         public readonly int Id;
+
+        /// <summary>
+        /// 关卡名称
+        /// </summary>
+        public readonly string Name;
+
+        /// <summary>
+        /// 战斗模式
+        /// </summary>
+        public readonly FightMode FightMode;
 
         /// <summary>
         /// 地图名称
@@ -99,6 +111,8 @@ namespace ET
         {
             
             
+            
+            
             BaseCampTower_Ref = TbBuilding.Instance.GetOrDefault(BaseCampTower);
             BaseCampSoldier_Ref = TbBuilding.Instance.GetOrDefault(BaseCampSoldier);
             
@@ -113,6 +127,8 @@ namespace ET
         {
             return "{ "
             + "Id:" + Id + ","
+            + "name:" + Name + ","
+            + "fightMode:" + FightMode + ","
             + "sceneName:" + SceneName + ","
             + "baseCampTower:" + BaseCampTower + ","
             + "baseCampSoldier:" + BaseCampSoldier + ","

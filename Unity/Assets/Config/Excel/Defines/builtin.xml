@@ -152,4 +152,9 @@
         <var name="NotAttack" alias="禁止普通技能" value="2"/>
         <var name="NotActive" alias="禁止主动技能" value="4"/>
     </enum>
+    <enum name="FightMode" comment="战斗模式" unique="FALSE">
+        <var name="None" alias="" value="0"/>
+        <var name="PVE" alias="玩家和电脑" value="1"/>
+        <var name="PVP" alias="玩家和玩家" value="2"/>
+    </enum>
 </module>

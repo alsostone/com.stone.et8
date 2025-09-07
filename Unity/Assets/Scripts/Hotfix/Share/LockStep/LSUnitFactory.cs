@@ -59,7 +59,7 @@ namespace ET
 			lsUnit.AddComponent<DeathComponent, bool>(false);
 			lsUnit.AddComponent<BuffComponent>();
 			lsUnit.AddComponent<BeHitComponent>();
-			lsUnit.AddComponent<SkillComponent, int[]>(row.Skills);
+			lsUnit.AddComponent<SkillComponent, int[], int[]>(row.NormalSkills, row.ActiveSkills);
 			
 			lsUnit.AddComponent<LSGridBuilderComponent>();
 			lsUnit.AddComponent<LSCommandsRunComponent>();
@@ -89,7 +89,7 @@ namespace ET
 	        lsUnit.AddComponent<DeathComponent, bool>(true);
 	        lsUnit.AddComponent<BuffComponent>();
 	        lsUnit.AddComponent<BeHitComponent>();
-	        lsUnit.AddComponent<SkillComponent, int[]>(row.Skills);
+	        lsUnit.AddComponent<SkillComponent, int[], int[]>(row.Skills, null);
 	        
 	        lsUnit.AddComponent<FieldMoveComponent>();
 	        lsUnit.AddComponent<AIRootComponent, Node>(AIAutoAttackCenter.Gen());
@@ -179,7 +179,7 @@ namespace ET
 	        lsUnit.AddComponent<DeathComponent, bool>(true);
 	        lsUnit.AddComponent<BuffComponent>();
 	        lsUnit.AddComponent<BeHitComponent>();
-	        lsUnit.AddComponent<SkillComponent, int[]>(row.Skills);
+	        lsUnit.AddComponent<SkillComponent, int[], int[]>(row.Skills, null);
 	        if (row.ProductSkill > 0) {
 		        lsUnit.AddComponent<ProductComponent, int>(row.ProductSkill);
 	        }
