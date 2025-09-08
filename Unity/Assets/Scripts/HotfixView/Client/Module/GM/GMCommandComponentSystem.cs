@@ -21,6 +21,7 @@ namespace ET.Client
                 self.InitGMType();
                 self.Init();
                 YIUIMgrComponent.Inst.Root.OpenPanelAsync<GMPanelComponent>().Coroutine();
+                YIUIMgrComponent.Inst.Root.OpenPanelAsync<GMToolsPanelComponent>().Coroutine();
             }
         }
 

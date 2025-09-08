@@ -152,6 +152,14 @@
         <var name="NotAttack" alias="禁止普通技能" value="2"/>
         <var name="NotActive" alias="禁止主动技能" value="4"/>
     </enum>
+    <enum name="LockStepMode" comment="帧同步模式" unique="FALSE">
+        <var name="None" alias="" value="0"/>
+        <var name="ObserverFile" alias="本地文件" value="1"/>
+        <var name="ObserverReport" alias="在线战报" value="2"/>
+        <var name="Local" alias="本地单机" value="3"/>
+        <var name="Server" alias="多人联网" value="4"/>
+        <var name="Observer" alias="在线观战" value="5"/>
+    </enum>
     <enum name="FightMode" comment="战斗模式" unique="FALSE">
         <var name="None" alias="" value="0"/>
         <var name="PVE" alias="玩家和电脑" value="1"/>

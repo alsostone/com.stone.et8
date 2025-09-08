@@ -6,7 +6,7 @@ namespace ET.Client
     public static partial class LSSceneChangeHelper
     {
         // 场景切换协程
-        public static async ETTask SceneChangeTo(Scene root, LockStepMatchInfo matchInfo)
+        public static async ETTask SceneChangeTo(Scene root, LockStepMode lockStepMode, LockStepMatchInfo matchInfo)
         {
             root.RemoveComponent<Room>();
 
@@ -21,14 +21,18 @@ namespace ET.Client
             TbStageRow row = TbStage.Instance.Get(matchInfo.StageId);
             await EventSystem.Instance.PublishAsync(root, new LSSceneChangeStart() {SceneName = row.SceneName, IsReplay = false});
 
-            C2Room_LoadingProgress loadingProgress = C2Room_LoadingProgress.Create(true);
-            loadingProgress.Progress = 100;
-            root.GetComponent<ClientSenderComponent>().Send(loadingProgress);
+            // 联网模式发送加载100%消息 且等待战斗开始消息
+            long startTime = TimeInfo.Instance.ServerFrameTime();
+            if (lockStepMode == LockStepMode.Server) {
+                C2Room_LoadingProgress loadingProgress = C2Room_LoadingProgress.Create(true);
+                loadingProgress.Progress = 100;
+                root.GetComponent<ClientSenderComponent>().Send(loadingProgress);
+                
+                WaitType.Wait_Room2C_Start waitRoom2CStart = await root.GetComponent<ObjectWait>().Wait<WaitType.Wait_Room2C_Start>();
+                startTime = waitRoom2CStart.Message.StartTime;
+            }
             
-            // 等待Room2C_EnterMap消息
-            WaitType.Wait_Room2C_Start waitRoom2CStart = await root.GetComponent<ObjectWait>().Wait<WaitType.Wait_Room2C_Start>();
-
-            room.Start(waitRoom2CStart.Message.StartTime);
+            room.Start(startTime);
             
             // 这个事件中可以订阅取消loading
             EventSystem.Instance.Publish(root, new LSSceneInitFinish());

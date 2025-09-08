@@ -5,7 +5,7 @@ namespace ET.Client
     {
         protected override async ETTask Run(Scene root, Room2C_Enter message)
         {
-            await LSSceneChangeHelper.SceneChangeTo(root, message.MatchInfo);
+            await LSSceneChangeHelper.SceneChangeTo(root, LockStepMode.Server, message.MatchInfo);
         }
     }
 }
