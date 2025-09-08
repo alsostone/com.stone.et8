@@ -1,41 +1,55 @@
 ﻿#if ENABLE_DEBUG
 using System;
 using System.Collections.Generic;
+using UnityEngine;
 
 namespace ST.GmTools
 {
     [ET.EnableClass]
-    public sealed class DrawViewGroup : IDrawViewGroup, IDrawView
+    public sealed class DrawViewGroup : IDrawViewGroup
     {
         private readonly List<KeyValuePair<string, IDrawView>> mDrawViews;
         private int mSelectedIndex;
         private string[] mDrawViewNames;
+        private readonly Action mOnCloseCallback; 
 
-        public DrawViewGroup()
+        public DrawViewGroup(Action closeCallback = null)
         {
             mDrawViews = new List<KeyValuePair<string, IDrawView>>();
             mSelectedIndex = 0;
             mDrawViewNames = null;
+            mOnCloseCallback = closeCallback;
         }
 
         public int DrawViewCount => mDrawViews.Count;
 
-        public int SelectedIndex
-        {
-            get => mSelectedIndex;
-            set => mSelectedIndex = value;
-        }
-
         public IDrawView SelectedView => mSelectedIndex >= mDrawViews.Count ? null : mDrawViews[mSelectedIndex].Value;
 
-        public void OnDraw() { }
+        public void OnDraw()
+        {
+            GUILayout.BeginHorizontal();
+            mSelectedIndex = GUILayout.Toolbar(mSelectedIndex, mDrawViewNames, GUI.skin.button , GUILayout.Width(80f * mDrawViewNames.Length));
+            GUILayout.FlexibleSpace();
+            if (mOnCloseCallback != null && GUILayout.Button("关闭", GUILayout.Width(60))) {
+                mOnCloseCallback();
+            }
+            GUILayout.EndHorizontal();
+            mDrawViews[mSelectedIndex].Value.OnDraw();
+        }
+        
+        public void Close()
+        {
+            mOnCloseCallback?.Invoke();
+        }
 
         private void ResetViewNames()
         {
-            var num = 0;
             mDrawViewNames = new string[mDrawViews.Count];
-            foreach (var debuggerWindow in mDrawViews)
-                mDrawViewNames[num++] = debuggerWindow.Key;
+            for (int index = 0; index < mDrawViews.Count; index++)
+            {
+                var drawView = mDrawViews[index];
+                this.mDrawViewNames[index] = drawView.Key;
+            }
         }
 
         public string[] GetDrawViewNames() => mDrawViewNames;
@@ -61,8 +75,8 @@ namespace ST.GmTools
                 return SelectDrawViewInternal(path);
             var name = path.Substring(0, length);
             var path1 = path.Substring(length + 1);
-            var debuggerWindow = (DrawViewGroup) GetDrawViewInternal(name);
-            return debuggerWindow != null && SelectDrawViewInternal(name) && debuggerWindow.SelectDrawView(path1);
+            var viewGroup = (DrawViewGroup) GetDrawViewInternal(name);
+            return viewGroup != null && SelectDrawViewInternal(name) && viewGroup.SelectDrawView(path1);
         }
 
         public void RegisterDrawView(string path, IDrawView view)

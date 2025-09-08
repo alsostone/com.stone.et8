@@ -15,19 +15,27 @@ namespace ST.GmTools
             }
         }
         
-        private GmToolsView mView;
+        private DrawViewGroup mView;
         private void Awake()
         {
-            mView = new GmToolsView(null);
+            mView = GenGmToolsView();
         }
 
         private void OnGUI()
         {
             // 代码编译完成后局部变量被清空
             if (mView == null)
-                mView = new GmToolsView(null);
+                mView = GenGmToolsView();
             
-            mView.OnGUI();
+            mView.OnDraw();
+        }
+        
+        private DrawViewGroup GenGmToolsView()
+        {
+            DrawViewGroup drawViewGroup = new DrawViewGroup();
+            drawViewGroup.RegisterDrawView("Battle/Global", new DrawViewBattle());
+            drawViewGroup.SelectDrawView("Battle/Global");
+            return drawViewGroup;
         }
     }
 }

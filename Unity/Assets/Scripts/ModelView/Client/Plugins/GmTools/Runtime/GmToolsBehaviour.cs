@@ -12,13 +12,16 @@ namespace ST.GmTools
         [ET.StaticField] private static readonly Vector2 WindowSize = new Vector2(820f, 460f);
         private readonly Rect mDragRect = new Rect(0f, 0f, float.MaxValue, 20f);
         private Rect mWindowRect = new Rect();
-        private GmToolsView mView;
+        private DrawViewGroup mView;
         private EventSystem mCacheEventSystem;
 
         private void OnEnable()
         {
-            if (mView == null)
-                mView = new GmToolsView(() => { enabled = false; });
+            if (mView == null) {
+                mView = new DrawViewGroup(() => { enabled = false; });
+                mView.RegisterDrawView("Battle/Global", new DrawViewBattle());
+                mView.SelectDrawView("Battle/Global");
+            }
             mCacheEventSystem = EventSystem.current;
             mCacheEventSystem.enabled = false;
         }
@@ -47,7 +50,7 @@ namespace ST.GmTools
         {
             // 需求不可拖拽window防止乱拖后回不来
             // GUI.DragWindow(mDragRect);
-            mView.OnGUI();
+            mView.OnDraw();
         }
     }
     

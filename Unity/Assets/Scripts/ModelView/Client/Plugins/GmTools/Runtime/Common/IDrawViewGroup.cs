@@ -5,10 +5,6 @@ namespace ST.GmTools
     {
         int DrawViewCount { get; }
 
-        int SelectedIndex { get; set; }
-
-        IDrawView SelectedView { get; }
-
         string[] GetDrawViewNames();
 
         IDrawView GetDrawView(string path);
