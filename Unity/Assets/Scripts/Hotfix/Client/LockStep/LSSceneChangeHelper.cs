@@ -6,7 +6,7 @@ namespace ET.Client
     public static partial class LSSceneChangeHelper
     {
         // 场景切换协程
-        public static async ETTask SceneChangeTo(Scene root, LockStepMode lockStepMode, LockStepMatchInfo matchInfo)
+        public static async ETTask SceneChangeTo(Scene root, LockStepMode lockStepMode, LockStepMatchInfo matchInfo, long ownerPlayerId, long lookPlayerId)
         {
             root.RemoveComponent<Room>();
 
@@ -16,6 +16,7 @@ namespace ET.Client
             
             LSWorld lsWorld = new LSWorld(SceneType.LockStepClient);
             room.InitNewWorld(lsWorld, matchInfo);
+            room.InitLockStep(lockStepMode, ownerPlayerId, lookPlayerId);
 
             // 等待表现层订阅的事件完成
             TbStageRow row = TbStage.Instance.Get(matchInfo.StageId);
@@ -39,17 +40,17 @@ namespace ET.Client
         }
         
         // 场景切换协程
-        public static async ETTask SceneChangeToReplay(Scene root, Replay replay)
+        public static async ETTask SceneChangeToReplay(Scene root, Replay replay, long ownerPlayerId, long lookPlayerId)
         {
             root.RemoveComponent<Room>();
 
             Room room = root.AddComponent<Room>();
             room.StageId = replay.MatchInfo.StageId;
-            room.IsReplay = true;
             room.Replay = replay;
             
             LSWorld lsWorld = new LSWorld(SceneType.LockStepClient);
             room.InitNewWorld(lsWorld, replay.MatchInfo);
+            room.InitLockStep(LockStepMode.ObserverFile, ownerPlayerId, lookPlayerId);
             
             // 等待表现层订阅的事件完成
             TbStageRow row = TbStage.Instance.Get(replay.MatchInfo.StageId);
@@ -62,7 +63,7 @@ namespace ET.Client
         }
         
         // 场景切换协程
-        public static async ETTask SceneChangeToReconnect(Scene root, G2C_Reconnect message)
+        public static async ETTask SceneChangeToReconnect(Scene root, G2C_Reconnect message, long ownerPlayerId, long lookPlayerId)
         {
             root.RemoveComponent<Room>();
             
@@ -74,6 +75,8 @@ namespace ET.Client
             
             LSWorld lsWorld = MemoryPackHelper.Deserialize(typeof(LSWorld), message.LSWorldBytes, 0, message.LSWorldBytes.Length) as LSWorld;
             room.InitExsitWorld(lsWorld, message.MatchInfo);
+            room.InitLockStep(LockStepMode.Server, ownerPlayerId, lookPlayerId);
+
             LSClientHelper.RunLSRollbackSystem(room);
             
             // 等待表现层订阅的事件完成

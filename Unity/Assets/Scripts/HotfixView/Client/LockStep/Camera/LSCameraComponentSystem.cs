@@ -19,7 +19,7 @@ namespace ET.Client
 		{
 			// 摄像机每帧更新位置
 			Room room = self.GetParent<Room>();
-			if (room.IsReplay)
+			if (room.LockStepMode < LockStepMode.Local)
 			{
 				if (Input.GetKeyDown(KeyCode.Tab))
 				{
@@ -30,9 +30,11 @@ namespace ET.Client
 			}
 			else if (self.LookUnitView == null)
 			{
+				int seatIndex = room.GetLookSeatIndex();
 				List<EntityRef<LSUnitView>> views = room.GetComponent<LSUnitViewComponent>().PlayerViews;
-				byte seatIndex = room.GetSeatIndex(room.GetParent<Scene>().GetComponent<PlayerComponent>().MyId);
-				self.LookUnitView = views[seatIndex];
+				if (seatIndex >= 0 && seatIndex < views.Count) {
+					self.LookUnitView = views[seatIndex];
+				}
 			}
 			
 			if (self.LookUnitView == null)

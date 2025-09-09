@@ -73,17 +73,29 @@ namespace ET
             self.ProcessLog.LogFrameEnd();
         }
 
+        public static void InitLockStep(this Room self, LockStepMode lockStepMode, long ownerPlayerId, long lookPlayerId)
+        {
+            self.LockStepMode = lockStepMode;
+            self.OwnerPlayerId = ownerPlayerId;
+            self.LookPlayerId = lookPlayerId == 0 ? self.PlayerIds[0] : lookPlayerId;
+        }
+
         public static void Start(this Room self, long startTime)
         {
             self.StartTime = startTime;
             self.FixedTimeCounter = new FixedTimeCounter(startTime, 0, LSConstValue.UpdateInterval);
         }
 
-        public static byte GetSeatIndex(this Room self, long playerId)
+        public static int GetLookSeatIndex(this Room self)
         {
-            return (byte)self.PlayerIds.IndexOf(playerId);
+            return self.PlayerIds.IndexOf(self.LookPlayerId);
         }
-
+        
+        public static int GetOwnerSeatIndex(this Room self)
+        {
+            return self.PlayerIds.IndexOf(self.OwnerPlayerId);
+        }
+        
         public static void Update(this Room self, Room2C_FrameMessage frameMessage)
         {
             LSWorld lsWorld = self.LSWorld;
@@ -110,7 +122,7 @@ namespace ET
             lsWorld.Update();
             self.ProcessLog.LogFrameEnd();
             
-            if (!self.IsReplay)
+            if (self.LockStepMode >= LockStepMode.Local)
             {
                 // 保存当前帧场景数据
                 self.SaveLSWorld(lsWorld.Frame);

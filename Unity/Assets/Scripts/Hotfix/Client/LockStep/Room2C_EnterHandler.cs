@@ -5,7 +5,8 @@ namespace ET.Client
     {
         protected override async ETTask Run(Scene root, Room2C_Enter message)
         {
-            await LSSceneChangeHelper.SceneChangeTo(root, LockStepMode.Server, message.MatchInfo);
+            long ownerPlayerId = root.GetComponent<PlayerComponent>().MyId;
+            await LSSceneChangeHelper.SceneChangeTo(root, LockStepMode.Server, message.MatchInfo, ownerPlayerId, ownerPlayerId);
         }
     }
 }

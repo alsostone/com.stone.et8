@@ -17,5 +17,8 @@ namespace ET
         
         [MemoryPackOrder(4)]
         public byte[] LSWorldBytes; // 重连的战斗 MatchInfo为空 需使用LSWorldBytes
+        
+        [MemoryPackOrder(5)]
+        public long OwnerPlayerId; // 该录像的拥有者 无拥有者则为0
     }
 }

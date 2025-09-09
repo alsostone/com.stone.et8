@@ -73,8 +73,7 @@ namespace ET.Client
         
         public static void SaveReplay(Room room, string path)
         {
-            if (room.IsReplay)
-            {
+            if (room.LockStepMode >= LockStepMode.Local) {
                 return;
             }
             
@@ -85,8 +84,7 @@ namespace ET.Client
         
         public static void JumpReplay(Room room, int frame)
         {
-            if (!room.IsReplay)
-            {
+            if (room.LockStepMode >= LockStepMode.Local) {
                 return;
             }
 

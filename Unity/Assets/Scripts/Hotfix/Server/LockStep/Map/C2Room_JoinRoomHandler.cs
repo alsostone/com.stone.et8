@@ -39,6 +39,7 @@ namespace ET.Server
             
             LSWorld lsWorld = new LSWorld(SceneType.LockStepServer);
             room.InitNewWorld(lsWorld, matchInfo);
+            room.InitLockStep(LockStepMode.Server, 0, 0);
             
             Room2C_Enter room2CEnter = Room2C_Enter.Create();
             room2CEnter.MatchInfo = matchInfo;

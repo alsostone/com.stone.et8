@@ -45,7 +45,7 @@ namespace ET.Client
             
             Replay replay = MemoryPackHelper.Deserialize(typeof (Replay), bytes, 0, bytes.Length) as Replay;
             Log.Debug($"start replay: {replay.Snapshots.Count} {replay.FrameMessages.Count} {replay.MatchInfo.UnitInfos.Count}");
-            LSSceneChangeHelper.SceneChangeToReplay(self.Root(), replay).Coroutine();
+            LSSceneChangeHelper.SceneChangeToReplay(self.Root(), replay, replay.OwnerPlayerId, replay.OwnerPlayerId).Coroutine();
         }
         
         private static void OnEventReplayPathAction(this LSLobbyPanelComponent self, string p1)

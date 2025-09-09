@@ -1,3 +1,5 @@
+using System;
+
 namespace ET.Client
 {
     [Event(SceneType.LockStep)]
@@ -11,18 +13,32 @@ namespace ET.Client
             room.AddComponent<LSUnitViewComponent>();
             room.AddComponent<LSCameraComponent>();
 
-            if (!room.IsReplay)
+            switch (room.LockStepMode)
             {
-                long myId = room.Root().GetComponent<PlayerComponent>().MyId;
-                room.AddComponent<LSCommandsComponent, byte>(room.GetSeatIndex(myId));
-                room.AddComponent<LSOperaComponent>();
-                room.AddComponent<LSOperaDragComponent>();
-                room.AddComponent<LSClientUpdater>();
+                case LockStepMode.ObserverFile:
+                case LockStepMode.ObserverReport:
+                {
+                    room.AddComponent<LSReplayUpdater>();
+                    break;
+                }
+                case LockStepMode.Local:
+                case LockStepMode.Server:
+                {
+                    room.AddComponent<LSCommandsComponent, byte>((byte)room.GetOwnerSeatIndex());
+                    room.AddComponent<LSOperaComponent>();
+                    room.AddComponent<LSOperaDragComponent>();
+                    room.AddComponent<LSClientUpdater>();
+                    break;
+                }
+                case LockStepMode.Observer:
+                {
+                    room.AddComponent<LSClientUpdater>();
+                    break;
+                }
+                default:
+                    throw new ArgumentOutOfRangeException();
             }
-            else
-            {
-                room.AddComponent<LSReplayUpdater>();
-            }
+
             await YIUIMgrComponent.Inst.ClosePanelAsync<LSLobbyPanelComponent>();
             await ETTask.CompletedTask;
         }

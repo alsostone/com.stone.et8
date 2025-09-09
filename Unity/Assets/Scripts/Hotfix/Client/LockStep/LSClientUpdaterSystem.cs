@@ -17,7 +17,6 @@ namespace ET.Client
         {
             Room room = self.GetParent<Room>();
             long timeNow = TimeInfo.Instance.ServerNow();
-            Scene root = room.Root();
 
             int i = 0;
             while (timeNow >= room.FixedTimeCounter.FrameTime(room.PredictionFrame + 1))
@@ -26,11 +25,11 @@ namespace ET.Client
                     break;
 
                 ++room.PredictionFrame;
-                if (room.PredictionFrame % LSConstValue.FrameCountPerSecond == 0)
+                if (room.LockStepMode >= LockStepMode.Server && room.PredictionFrame % LSConstValue.FrameCountPerSecond == 0)
                 {
                     C2Room_TimeAdjust timeAdjust = C2Room_TimeAdjust.Create(true);
                     timeAdjust.Frame = room.PredictionFrame;
-                    root.GetComponent<ClientSenderComponent>().Send(timeAdjust);
+                    room.Root().GetComponent<ClientSenderComponent>().Send(timeAdjust);
                 }
                 
                 Room2C_FrameMessage frameMessage = self.GetFrameMessage(room.PredictionFrame);

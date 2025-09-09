@@ -5,7 +5,8 @@
     {
         protected override async ETTask Run(Scene root, G2C_Reconnect message)
         {
-            await LSSceneChangeHelper.SceneChangeToReconnect(root, message);
+            long ownerPlayerId = root.GetComponent<PlayerComponent>().MyId;
+            await LSSceneChangeHelper.SceneChangeToReconnect(root, message, ownerPlayerId, ownerPlayerId);
             await ETTask.CompletedTask;
         }
     }

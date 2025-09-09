@@ -2,6 +2,7 @@
 using UnityEngine;
 using YIUIFramework;
 using System.Collections.Generic;
+using TrueSync;
 
 namespace ET.Client
 {
@@ -39,7 +40,23 @@ namespace ET.Client
         
         private static void OnEventPveStartAction(this GMToolsStageViewComponent self)
         {
+            Fiber fiber = self.Fiber();
+            LockStepMatchInfo matchInfo = LockStepMatchInfo.Create();
+            matchInfo.StageId = 1001;
+            matchInfo.ActorId = new ActorId(fiber.Process, fiber.Id, self.InstanceId);
+            matchInfo.MatchTime = TimeInfo.Instance.ServerFrameTime();
+            matchInfo.Seed = (int)TimeInfo.Instance.ServerFrameTime();
+
+            long playerId = LSConstValue.PlayerIdOffset;
+            LockStepUnitInfo lockStepUnitInfo = LockStepUnitInfo.Create();
+            lockStepUnitInfo.PlayerId = playerId++;
+            lockStepUnitInfo.Position = new TSVector(20, 0, -10);
+            lockStepUnitInfo.Rotation = TSQuaternion.identity;
+            matchInfo.UnitInfos.Add(lockStepUnitInfo);
             
+            long ownerPlayerId = lockStepUnitInfo.PlayerId;
+            LSSceneChangeHelper.SceneChangeTo(self.Root(), LockStepMode.Local, matchInfo, ownerPlayerId, ownerPlayerId).Coroutine();
+            self.UIView.Close();
         }
         
         private static void OnEventCloseAction(this GMToolsStageViewComponent self)

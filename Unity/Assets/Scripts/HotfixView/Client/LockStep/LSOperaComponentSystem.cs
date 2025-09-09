@@ -46,15 +46,5 @@ namespace ET.Client
             }
         }
 
-        public static void SendCommandMeesage(this Room self, ulong command)
-        {
-            C2Room_FrameMessage sendFrameMessage = C2Room_FrameMessage.Create();
-            sendFrameMessage.Frame = self.PredictionFrame + 1;
-            sendFrameMessage.Command = command;
-            self.Root().GetComponent<ClientSenderComponent>().Send(sendFrameMessage);
-            
-            self.GetComponent<LSCommandsComponent>().AddCommand(self.PredictionFrame + 1, command);
-        }
-
     }
 }
