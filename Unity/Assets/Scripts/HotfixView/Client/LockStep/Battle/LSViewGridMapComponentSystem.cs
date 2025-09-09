@@ -10,23 +10,22 @@ namespace ET.Client
         private static void Awake(this LSViewGridMapComponent self)
         {
             self.GridMap = UnityEngine.Object.FindObjectOfType<GridMap>();
-            self.RebindGridDataDraw();
+            LSGridMapComponent lsGridMapComponent = self.Room().LSWorld.GetComponent<LSGridMapComponent>();
+            self.RebindGridDataDraw(lsGridMapComponent.GridData);
             
             self.GridMapIndicator = UnityEngine.Object.FindObjectOfType<GridMapIndicator>();
             if (self.GridMapIndicator)
                 self.GridMapIndicator.SetGridMap(self.GridMap);
         }
         
-        public static void RebindGridDataDraw(this LSViewGridMapComponent self)
+        public static void RebindGridDataDraw(this LSViewGridMapComponent self, GridData gridData)
         {
             if (self.GridMap == null)
                 return;
             
             // 表现层的GridData没有流场数据 因为表现层没必要维护它
             // 所以这里使用逻辑层的GridData来做绘制数据源
-            LSWorld lsWorld = self.Room().LSWorld;
-            LSGridMapComponent lsGridMapComponent = lsWorld.GetComponent<LSGridMapComponent>();
-            self.GridMap.gridDataDraw = lsGridMapComponent.GridData;
+            self.GridMap.gridDataDraw = gridData;
         }
         
     }
