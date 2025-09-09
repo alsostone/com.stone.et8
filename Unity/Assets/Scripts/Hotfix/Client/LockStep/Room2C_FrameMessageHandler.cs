@@ -10,9 +10,12 @@ namespace ET.Client
             using Room2C_FrameMessage _ = message;  // 让消息回到池中
             
             Room room = root.GetComponent<Room>();
-            FrameBuffer frameBuffer = room.FrameBuffer;
-
+            if (room.LockStepMode <= LockStepMode.Local)
+                return; // 防御 非联网模式不处理这个消息
+            
             ++room.AuthorityFrame;
+            FrameBuffer frameBuffer = room.FrameBuffer;
+            
             // 服务端返回的消息比预测的还早
             if (room.AuthorityFrame > room.PredictionFrame)
             {

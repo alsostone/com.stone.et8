@@ -13,6 +13,9 @@ namespace ET.Client
         {
             UploadFileAddressComponent fileAddressComponent = root.GetComponent<UploadFileAddressComponent>();
             Room room = root.GetComponent<Room>();
+            if (room.LockStepMode <= LockStepMode.Local)
+                return; // 防御 非联网模式不处理这个消息
+
             long myId = root.GetComponent<PlayerComponent>().MyId;
 
             Log.Error($"Hash Inconsistent. frame: {message.Frame}");

@@ -22,17 +22,24 @@ namespace ET.Client
                     break;
                 }
                 case LockStepMode.Local:
+                {
+                    room.AddComponent<LSCommandsComponent, byte>((byte)room.GetOwnerSeatIndex());
+                    room.AddComponent<LSOperaComponent>();
+                    room.AddComponent<LSOperaDragComponent>();
+                    room.AddComponent<LSClientLocalUpdater>();
+                    break;
+                }
                 case LockStepMode.Server:
                 {
                     room.AddComponent<LSCommandsComponent, byte>((byte)room.GetOwnerSeatIndex());
                     room.AddComponent<LSOperaComponent>();
                     room.AddComponent<LSOperaDragComponent>();
-                    room.AddComponent<LSClientUpdater>();
+                    room.AddComponent<LSClientServerUpdater>();
                     break;
                 }
                 case LockStepMode.Observer:
                 {
-                    room.AddComponent<LSClientUpdater>();
+                    room.AddComponent<LSClientServerUpdater>();
                     break;
                 }
                 default:

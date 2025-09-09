@@ -60,10 +60,10 @@ namespace ET.Client
         
         public static void SendHash(this Room self, int frame)
         {
-            if (frame > self.AuthorityFrame)
-            {
+            if (frame > self.AuthorityFrame) {
                 return;
             }
+            
             long hash = self.FrameBuffer.GetHash(frame);
             C2Room_CheckHash c2RoomCheckHash = C2Room_CheckHash.Create();
             c2RoomCheckHash.Frame = frame;
