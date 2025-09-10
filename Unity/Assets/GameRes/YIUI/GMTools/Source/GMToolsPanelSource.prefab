@@ -3341,22 +3341,50 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 988520492025159502, guid: 42cf93670ea934c04968341e85af9a17,
+        type: 3}
+      propertyPath: serializationData.Prefab
+      value: 
+      objectReference: {fileID: 988520492025159502, guid: 42cf93670ea934c04968341e85af9a17,
+        type: 3}
     - target: {fileID: 1731629889514105888, guid: 42cf93670ea934c04968341e85af9a17,
         type: 3}
       propertyPath: serializationData.Prefab
       value: 
       objectReference: {fileID: 1731629889514105888, guid: 42cf93670ea934c04968341e85af9a17,
         type: 3}
+    - target: {fileID: 2846892949982345533, guid: 42cf93670ea934c04968341e85af9a17,
+        type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 2933826960630125070, guid: 42cf93670ea934c04968341e85af9a17,
         type: 3}
       propertyPath: m_Name
       value: GMToolsStageView
+      objectReference: {fileID: 0}
+    - target: {fileID: 4436019235326000360, guid: 42cf93670ea934c04968341e85af9a17,
+        type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4506972084841265489, guid: 42cf93670ea934c04968341e85af9a17,
         type: 3}
       propertyPath: serializationData.Prefab
       value: 
       objectReference: {fileID: 4506972084841265489, guid: 42cf93670ea934c04968341e85af9a17,
+        type: 3}
+    - target: {fileID: 5070354302783698893, guid: 42cf93670ea934c04968341e85af9a17,
+        type: 3}
+      propertyPath: serializationData.Prefab
+      value: 
+      objectReference: {fileID: 5070354302783698893, guid: 42cf93670ea934c04968341e85af9a17,
+        type: 3}
+    - target: {fileID: 5397725503181401604, guid: 42cf93670ea934c04968341e85af9a17,
+        type: 3}
+      propertyPath: serializationData.Prefab
+      value: 
+      objectReference: {fileID: 5397725503181401604, guid: 42cf93670ea934c04968341e85af9a17,
         type: 3}
     - target: {fileID: 5607510737644709220, guid: 42cf93670ea934c04968341e85af9a17,
         type: 3}
@@ -3395,6 +3423,12 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 6510417244351967202}
     m_Modifications:
+    - target: {fileID: 592385125771427934, guid: 752dbc9ed95e44577918ec8c21c750b3,
+        type: 3}
+      propertyPath: serializationData.Prefab
+      value: 
+      objectReference: {fileID: 592385125771427934, guid: 752dbc9ed95e44577918ec8c21c750b3,
+        type: 3}
     - target: {fileID: 717468639882785711, guid: 752dbc9ed95e44577918ec8c21c750b3,
         type: 3}
       propertyPath: m_Pivot.x
@@ -3506,6 +3540,12 @@ PrefabInstance:
       propertyPath: m_Name
       value: GMToolsBatchView
       objectReference: {fileID: 0}
+    - target: {fileID: 8285217741182198952, guid: 752dbc9ed95e44577918ec8c21c750b3,
+        type: 3}
+      propertyPath: serializationData.Prefab
+      value: 
+      objectReference: {fileID: 8285217741182198952, guid: 752dbc9ed95e44577918ec8c21c750b3,
+        type: 3}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

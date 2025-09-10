@@ -21,6 +21,7 @@ namespace ET.Client
         [EntitySystem]
         private static async ETTask<bool> YIUIOpen(this GMToolsPanelComponent self)
         {
+            self.u_DataIsBattle.SetValue(false);
             await ETTask.CompletedTask;
             return true;
         }

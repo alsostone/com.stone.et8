@@ -21,12 +21,22 @@ namespace ET.Client
         public YIUIWindowComponent UIWindow => u_UIWindow;
         public EntityRef<YIUIViewComponent> u_UIView;
         public YIUIViewComponent UIView => u_UIView;
+        public TMPro.TMP_Dropdown u_ComFightMode;
+        public UnityEngine.UI.LoopVerticalScrollRect u_ComStageLoop;
+        public UnityEngine.UI.LoopVerticalScrollRect u_ComStageLoopSel;
+        public UnityEngine.UI.LoopVerticalScrollRect u_ComHeroLoopSel;
+        public UnityEngine.UI.LoopVerticalScrollRect u_ComHeroLoop;
+        public YIUIFramework.UIDataValueString u_DataTips;
+        public YIUIFramework.UIDataValueBool u_DataCanStart;
+        public YIUIFramework.UIDataValueBool u_DataCanMatch;
         public UIEventP0 u_EventClose;
         public UIEventHandleP0 u_EventCloseHandle;
         public UIEventP0 u_EventPveStart;
         public UIEventHandleP0 u_EventPveStartHandle;
         public UIEventP0 u_EventPvpStart;
         public UIEventHandleP0 u_EventPvpStartHandle;
+        public UIEventP1<int> u_EventFightMode;
+        public UIEventHandleP1<int> u_EventFightModeHandle;
 
     }
 }
