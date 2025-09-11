@@ -53,6 +53,8 @@ namespace ET
             // }
             
             // LSUnitFactory.CreateBuilding(lsWorld, 30041, new TSVector(19, 0, 1.5f * 5 + 5), TSQuaternion.identity, TeamType.TeamA);
+            
+            lsWorld.AddComponent<LSGameOverComponent, TbStageRow>(lsStageComponent.TbRow);
             self.ProcessLog.LogFrameEnd();
         }
 

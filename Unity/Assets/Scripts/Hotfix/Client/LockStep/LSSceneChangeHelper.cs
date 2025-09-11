@@ -20,7 +20,7 @@ namespace ET.Client
 
             // 等待表现层订阅的事件完成
             TbStageRow row = TbStage.Instance.Get(matchInfo.StageId);
-            await EventSystem.Instance.PublishAsync(root, new LSSceneChangeStart() {SceneName = row.SceneName, IsReplay = false});
+            await EventSystem.Instance.PublishAsync(root, new LSSceneChangeStart() {SceneName = row.SceneName});
 
             // 联网模式发送加载100%消息 且等待战斗开始消息
             long startTime = TimeInfo.Instance.ServerFrameTime();
@@ -54,7 +54,7 @@ namespace ET.Client
             
             // 等待表现层订阅的事件完成
             TbStageRow row = TbStage.Instance.Get(replay.MatchInfo.StageId);
-            await EventSystem.Instance.PublishAsync(root, new LSSceneChangeStart() {SceneName = row.SceneName, IsReplay = true});
+            await EventSystem.Instance.PublishAsync(root, new LSSceneChangeStart() {SceneName = row.SceneName});
             
             room.Start(TimeInfo.Instance.ServerFrameTime());
             
@@ -81,7 +81,7 @@ namespace ET.Client
             
             // 等待表现层订阅的事件完成
             TbStageRow row = TbStage.Instance.Get(message.MatchInfo.StageId);
-            await EventSystem.Instance.PublishAsync(root, new LSSceneChangeStart() {SceneName = row.SceneName, IsReplay = false});
+            await EventSystem.Instance.PublishAsync(root, new LSSceneChangeStart() {SceneName = row.SceneName});
             
             room.Start(message.StartTime);
             

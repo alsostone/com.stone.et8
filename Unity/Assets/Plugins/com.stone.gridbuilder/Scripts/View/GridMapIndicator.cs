@@ -19,6 +19,7 @@ namespace ST.GridBuilder
         private void Awake()
         {
             GameObject go = new GameObject("IndicatorPool");
+            DontDestroyOnLoad(go);
             poolGameObject = go.transform;
             go.SetActive(false);
         }

@@ -9,14 +9,15 @@ namespace ET.Client
         {
             Room room = clientScene.GetComponent<Room>();
             ResourcesLoaderComponent resourcesLoaderComponent = room.AddComponent<ResourcesLoaderComponent>();
-            room.AddComponent<YIUIRootComponent>();
+            YIUIRootComponent yiuiRootComponent = room.AddComponent<YIUIRootComponent>();
+            room.AddComponent<LSCacheSceneNameComponent, string>(SceneManager.GetActiveScene().name);
 
             // 创建loading界面
             
             
             // 创建房间UI
-            var viewIndex = args.IsReplay ? ELSRoomPanelViewEnum.ReplayView : ELSRoomPanelViewEnum.PlayView;
-            await room.GetComponent<YIUIRootComponent>().OpenPanelAsync<LSRoomPanelComponent, ELSRoomPanelViewEnum>(viewIndex);
+            var viewIndex = room.LockStepMode < LockStepMode.Local ? ELSRoomPanelViewEnum.ReplayView : ELSRoomPanelViewEnum.PlayView;
+            await yiuiRootComponent.OpenPanelAsync<LSRoomPanelComponent, ELSRoomPanelViewEnum>(viewIndex);
             
             // 加载场景资源
             await resourcesLoaderComponent.LoadSceneAsync($"Assets/Bundles/Scenes/{args.SceneName}.unity", LoadSceneMode.Single);
