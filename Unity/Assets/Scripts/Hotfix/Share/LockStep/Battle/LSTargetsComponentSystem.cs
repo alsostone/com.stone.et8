@@ -67,5 +67,12 @@ namespace ET
                 }
             }
         }
+
+        public static int GetAliveCount(this LSTargetsComponent self, TeamType teamFlag)
+        {
+            if (self.TeamLSUnitsMap.TryGetValue(teamFlag, out var targets))
+                return targets.Count;
+            return 0;
+        }
     }
 }

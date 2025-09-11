@@ -45,6 +45,7 @@ namespace ET
         public SceneType SceneType { get; set; } = SceneType.LockStepClient;
         
         public int Frame { get; set; }
+        public int EndFrame { get; set; } = -1;
 
         public void Update()
         {

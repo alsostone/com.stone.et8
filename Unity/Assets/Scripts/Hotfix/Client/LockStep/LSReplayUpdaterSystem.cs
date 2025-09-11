@@ -16,6 +16,10 @@ namespace ET.Client
         private static void Update(this LSReplayUpdater self)
         {
             Room room = self.GetParent<Room>();
+            if (room.LSWorld.EndFrame > 0 && room.AuthorityFrame >= room.LSWorld.EndFrame) {
+                return;
+            }
+            
             Fiber fiber = self.Fiber();
             long timeNow = TimeInfo.Instance.ServerNow();
 

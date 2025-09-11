@@ -101,6 +101,9 @@ namespace ET
         public static void Update(this Room self, Room2C_FrameMessage frameMessage)
         {
             LSWorld lsWorld = self.LSWorld;
+            if (lsWorld.EndFrame > 0 && lsWorld.Frame >= lsWorld.EndFrame) {
+                return;
+            }
             
             // 设置输入到每个LSUnit身上
             LSUnitComponent unitComponent = lsWorld.GetComponent<LSUnitComponent>();

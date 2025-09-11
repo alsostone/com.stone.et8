@@ -17,6 +17,10 @@ namespace ET.Server
         private static void Update(this LSServerUpdater self)
         {
             Room room = self.GetParent<Room>();
+            if (room.LSWorld.EndFrame > 0 && room.AuthorityFrame >= room.LSWorld.EndFrame) {
+                return;
+            }
+            
             long timeNow = TimeInfo.Instance.ServerFrameTime();
 
             int frame = room.AuthorityFrame + 1;

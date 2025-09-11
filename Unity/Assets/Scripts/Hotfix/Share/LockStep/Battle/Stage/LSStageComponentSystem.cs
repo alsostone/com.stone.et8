@@ -76,5 +76,10 @@ namespace ET
             FP y = radius * TSMath.Sin(randomAngle);
             return new TSVector2(x, y);
         }
+
+        public static bool CheckStageWaveEnd(this LSStageComponent self)
+        {
+            return self.CurrentWaveCount > self.TbRow.Count;
+        }
     }
 }

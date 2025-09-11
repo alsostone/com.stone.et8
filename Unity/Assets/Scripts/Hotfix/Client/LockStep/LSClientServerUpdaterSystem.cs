@@ -16,6 +16,10 @@ namespace ET.Client
         private static void Update(this LSClientServerUpdater self)
         {
             Room room = self.GetParent<Room>();
+            if (room.LSWorld.EndFrame > 0 && room.AuthorityFrame >= room.LSWorld.EndFrame) {
+                return;
+            }
+
             long timeNow = TimeInfo.Instance.ServerNow();
 
             int i = 0;
