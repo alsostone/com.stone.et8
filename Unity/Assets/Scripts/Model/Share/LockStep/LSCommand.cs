@@ -13,7 +13,9 @@ namespace ET
         PlacementStart,          // 放置新物体
         Button,         // 按钮指令
         Online,         // 上下线指令 服务器生成该指令
+#if ENABLE_DEBUG
         Gm,             // GM指令 正式服中丢弃该指令
+#endif
     }
     
     public enum CommandButtonType : byte
@@ -27,12 +29,14 @@ namespace ET
         Skill3,     // 技能3
         Skill4,     // 技能4
     }
-
+    
+#if ENABLE_DEBUG
     public enum CommandGMType : byte
     {
         Victory = 1,  // 结算胜利
         Failure = 2,  // 结算失败
     }
+#endif
 
     public static class LSCommand
     {
@@ -134,6 +138,30 @@ namespace ET
         {
             return (OperateCommandType)((command >> 48) & 0xFF);
         }
+        
+#if ENABLE_DEBUG
+        // 特别注意：对于GM类型的参数，将其保留40位参数位 外部拼接好
+        // 意为着原long取值范围需在-1099511627776 ~ 1099511627775 之间
+        public static ulong GenCommandGm(byte seatIndex, CommandGMType type, long param = 0)
+        {
+            ulong command = 0;
+            command |= (ulong)seatIndex << 56; // 前8位存储座位索引
+            command |= (ulong)OperateCommandType.Gm << 48; // 接下来的8位存储操作类型
+            command |= (ulong)type << 40; // 接下来的8位存储按钮类型
+            command |= (ulong)(param & 0xFFFFFFFFFF); // 后40位存储参数
+            return command;
+        }
+        
+        // 特别注意：对于GM类型的参数，将其保留40位参数位 外部拼接好
+        // 意为着原long取值范围需在-1099511627776 ~ 1099511627775 之间
+        public static (CommandGMType, long) ParseCommandGm(ulong command)
+        {
+            CommandGMType gmType = (CommandGMType)((command >> 40) & 0xFF);
+            ulong param = (command & 0xFFFFFFFFFF);
+            if ((param >> 39) == 1) param |= 0xFFFFFF000000000;
+            return (gmType, (long)param);
+        }
+#endif
         
     }
 }

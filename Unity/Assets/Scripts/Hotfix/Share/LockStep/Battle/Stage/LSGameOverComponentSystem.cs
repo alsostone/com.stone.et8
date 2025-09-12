@@ -20,9 +20,7 @@ namespace ET
             // A方单位的全部死亡则B方获胜
             if (lsTargetsComponent.GetAliveCount(TeamType.TeamA) == 0)
             {
-                lsWorld.EndFrame = lsWorld.Frame;
-                self.WinTeam = TeamType.TeamB;
-                EventSystem.Instance.Publish(lsWorld, new LSStageGameOver() {WinTeam = self.WinTeam});
+                self.SetGameOver(TeamType.TeamB);
                 return;
             }
             
@@ -33,8 +31,17 @@ namespace ET
             if (lsTargetsComponent.GetAliveCount(TeamType.TeamB) > 0)
                 return;
             
+            self.SetGameOver(TeamType.TeamA);
+        }
+        
+        public static void SetGameOver(this LSGameOverComponent self, TeamType winTeam)
+        {
+            LSWorld lsWorld = self.LSWorld();
+            if (lsWorld.EndFrame > 0 && lsWorld.EndFrame <= lsWorld.Frame)
+                return;
+            
             lsWorld.EndFrame = lsWorld.Frame;
-            self.WinTeam = TeamType.TeamA;
+            self.WinTeam = winTeam;
             EventSystem.Instance.Publish(lsWorld, new LSStageGameOver() {WinTeam = self.WinTeam});
         }
         

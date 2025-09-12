@@ -27,6 +27,10 @@ namespace ET.Client
         [EntitySystem]
         private static async ETTask<bool> YIUIOpen(this SettleStatViewComponent self)
         {
+            Room room = self.Room();
+            LSViewGameOverComponent viewGameOverComponent = room.GetComponent<LSViewGameOverComponent>();
+            self.u_DataIsWin.SetValue(viewGameOverComponent.IsWin);
+            
             await ETTask.CompletedTask;
             return true;
         }

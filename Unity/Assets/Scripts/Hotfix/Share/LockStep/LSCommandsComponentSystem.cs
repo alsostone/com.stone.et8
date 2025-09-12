@@ -94,16 +94,18 @@ namespace ET
                     commands.Add(command);
                     break;
                 }
+#if ENABLE_DEBUG
                 case OperateCommandType.Gm:
                 {
                     // GM指令时 若当前是否正式服直接丢弃
-                    if (Options.Instance.Develop != 0)
+                    //if (Options.Instance.Develop != 0)
                     {
                         List<ulong> commands = self.FramesCommandsNormal[index];
                         commands.Add(command);
                     }
                     break;
                 }
+#endif
                 default: break;
             }
         }

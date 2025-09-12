@@ -10,7 +10,7 @@ namespace ET.Client
     /// Date    2025.9.6
     /// Desc
     /// </summary>
-    public partial class GMToolsPanelComponent: Entity
+    public partial class GMToolsPanelComponent: Entity, IUpdate
     {
 
     }

@@ -57,6 +57,13 @@ namespace ET
                             self.RunCommandButton(unit, command);
                             break;
                         }
+#if ENABLE_DEBUG
+                    case OperateCommandType.Gm:
+                        {
+                            self.RunCommandGm(unit, command);
+                            break;
+                        }
+#endif
                 }
             }
             self.Commands.Clear();
@@ -92,6 +99,27 @@ namespace ET
                     }
             }
         }
-
+        
+#if ENABLE_DEBUG
+        private static void RunCommandGm(this LSCommandsRunComponent self, LSUnit unit, ulong command)
+        {
+            (CommandGMType, long) gm = LSCommand.ParseCommandGm(command);
+            switch (gm.Item1)
+            {
+                case CommandGMType.Victory:
+                {
+                    TeamType team = unit.GetComponent<TeamComponent>().GetFriendTeam();
+                    unit.LSWorld().GetComponent<LSGameOverComponent>().SetGameOver(team);
+                    break;
+                }
+                case CommandGMType.Failure:
+                {
+                    TeamType team = unit.GetComponent<TeamComponent>().GetEnemyTeam();
+                    unit.LSWorld().GetComponent<LSGameOverComponent>().SetGameOver(team);
+                    break;
+                }
+            }
+        }
+#endif
     }
 }
