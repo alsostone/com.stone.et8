@@ -61,7 +61,6 @@ namespace ET
 			lsUnit.AddComponent<BeHitComponent>();
 			lsUnit.AddComponent<SkillComponent, int[], int[]>(row.NormalSkills, row.ActiveSkills);
 			
-			lsUnit.AddComponent<LSGridBuilderComponent>();
 			lsUnit.AddComponent<LSCommandsRunComponent>();
 			
 			EventSystem.Instance.Publish(lsWorld, new LSUnitCreate() {LSUnit = lsUnit});

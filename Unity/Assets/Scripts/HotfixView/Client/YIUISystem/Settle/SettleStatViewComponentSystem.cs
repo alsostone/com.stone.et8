@@ -44,8 +44,8 @@ namespace ET.Client
             {
                 ResourcesLoaderComponent resourcesLoaderComponent = self.Root().GetComponent<ResourcesLoaderComponent>();
                 await resourcesLoaderComponent.LoadSceneAsync($"Assets/Bundles/Scenes/Empty.unity", LoadSceneMode.Single);
-                await YIUIMgrComponent.Inst.HomePanel<LoginPanelComponent>();
                 room.Dispose();
+                await YIUIMgrComponent.Inst.HomePanel<LoginPanelComponent>();
             }
             
             await ETTask.CompletedTask;

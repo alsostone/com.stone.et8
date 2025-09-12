@@ -9,10 +9,11 @@ namespace ET.Client
         {
             Room room = clientScene.GetComponent<Room>();
             
+            room.AddComponent<LSCameraComponent>();
             room.AddComponent<LSViewGameOverComponent>();
             room.AddComponent<LSViewGridMapComponent>();
+            room.AddComponent<LSViewGridBuilderComponent>();
             room.AddComponent<LSUnitViewComponent>();
-            room.AddComponent<LSCameraComponent>();
 
             switch (room.LockStepMode)
             {

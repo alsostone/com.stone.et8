@@ -16,7 +16,8 @@ namespace ET
         [LSEntitySystem]
         private static void LSUpdate(this LSCommandsRunComponent self)
         {
-            LSUnit unit = self.LSOwner();
+            LSUnit lsOwner = self.LSOwner();
+            TeamType teamPlacer = lsOwner.GetComponent<TeamComponent>().Type;
             foreach (ulong command in self.Commands)
             {
                 switch (LSCommand.ParseCommandType(command))
@@ -29,19 +30,19 @@ namespace ET
                     case OperateCommandType.PlacementDragStart:
                         {
                             long targetId = (long)LSCommand.ParseCommandLong48(command);
-                            unit.GetComponent<LSGridBuilderComponent>().RunCommandPlacementDragStart(targetId);
+                            self.LSWorld().GetComponent<LSGridBuilderComponent>().RunCommandPlacementDragStart(teamPlacer, targetId);
                             break;
                         }
                     case OperateCommandType.PlacementDrag:
                         {
                             TSVector2 pos = LSCommand.ParseCommandFloat24x2(command);
-                            unit.GetComponent<LSGridBuilderComponent>().RunCommandPlacementDrag(pos);
+                            self.LSWorld().GetComponent<LSGridBuilderComponent>().RunCommandPlacementDrag(teamPlacer, pos);
                             break;
                         }
                     case OperateCommandType.PlacementDragEnd:
                         {
                             TSVector2 pos = LSCommand.ParseCommandFloat24x2(command);
-                            unit.GetComponent<LSGridBuilderComponent>().RunCommandPlacementDragEnd(pos);
+                            self.LSWorld().GetComponent<LSGridBuilderComponent>().RunCommandPlacementDragEnd(teamPlacer, pos);
                             break;
                         }
                     case OperateCommandType.PlacementStart:
@@ -49,18 +50,18 @@ namespace ET
                             ulong param = LSCommand.ParseCommandLong48(command);
                             EUnitType type = (EUnitType)((param >> 32) & 0xFFFF);
                             int tableId = (int)(param & 0xFFFFFFFF);
-                            unit.GetComponent<LSGridBuilderComponent>().RunCommandPlacementStart(type, tableId);
+                            self.LSWorld().GetComponent<LSGridBuilderComponent>().RunCommandPlacementStart(teamPlacer, type, tableId);
                             break;
                         }
                     case OperateCommandType.Button:
                         {
-                            self.RunCommandButton(unit, command);
+                            self.RunCommandButton(lsOwner, command);
                             break;
                         }
 #if ENABLE_DEBUG
                     case OperateCommandType.Gm:
                         {
-                            self.RunCommandGm(unit, command);
+                            self.RunCommandGm(lsOwner, command);
                             break;
                         }
 #endif
@@ -68,29 +69,30 @@ namespace ET
             }
             self.Commands.Clear();
 
-            TransformComponent transformComponent = unit.GetComponent<TransformComponent>();
+            TransformComponent transformComponent = lsOwner.GetComponent<TransformComponent>();
             transformComponent.Move(self.MoveAxis);
         }
 
-        private static void RunCommandButton(this LSCommandsRunComponent self, LSUnit unit, ulong command)
+        private static void RunCommandButton(this LSCommandsRunComponent self, LSUnit lsOwner, ulong command)
         {
+            TeamType teamPlacer = lsOwner.GetComponent<TeamComponent>().Type;
             (CommandButtonType, long) button = LSCommand.ParseCommandButton(command);
             switch (button.Item1)
             {
                 case CommandButtonType.PlacementRotate:
-                    unit.GetComponent<LSGridBuilderComponent>().RunCommandPlacementRotate((int)button.Item2);
+                    self.LSWorld().GetComponent<LSGridBuilderComponent>().RunCommandPlacementRotate(teamPlacer, (int)button.Item2);
                     break;
                 case CommandButtonType.PlacementCancel:
-                    unit.GetComponent<LSGridBuilderComponent>().RunCommandPlacementCancel();
+                    self.LSWorld().GetComponent<LSGridBuilderComponent>().RunCommandPlacementCancel(teamPlacer);
                     break;
                 case CommandButtonType.Attack:
-                    unit.GetComponent<SkillComponent>().TryCastSkill(ESkillType.Normal);
+                    lsOwner.GetComponent<SkillComponent>().TryCastSkill(ESkillType.Normal);
                     break;
                 case CommandButtonType.Skill1:
-                    unit.GetComponent<SkillComponent>().TryCastSkill(ESkillType.Active, 0);
+                    lsOwner.GetComponent<SkillComponent>().TryCastSkill(ESkillType.Active, 0);
                     break;
                 case CommandButtonType.Skill2:
-                    unit.GetComponent<SkillComponent>().TryCastSkill(ESkillType.Active, 1);
+                    lsOwner.GetComponent<SkillComponent>().TryCastSkill(ESkillType.Active, 1);
                     break;
                 case CommandButtonType.Jump:
                     {
@@ -101,21 +103,21 @@ namespace ET
         }
         
 #if ENABLE_DEBUG
-        private static void RunCommandGm(this LSCommandsRunComponent self, LSUnit unit, ulong command)
+        private static void RunCommandGm(this LSCommandsRunComponent self, LSUnit lsOwner, ulong command)
         {
             (CommandGMType, long) gm = LSCommand.ParseCommandGm(command);
             switch (gm.Item1)
             {
                 case CommandGMType.Victory:
                 {
-                    TeamType team = unit.GetComponent<TeamComponent>().GetFriendTeam();
-                    unit.LSWorld().GetComponent<LSGameOverComponent>().SetGameOver(team);
+                    TeamType team = lsOwner.GetComponent<TeamComponent>().GetFriendTeam();
+                    lsOwner.LSWorld().GetComponent<LSGameOverComponent>().SetGameOver(team);
                     break;
                 }
                 case CommandGMType.Failure:
                 {
-                    TeamType team = unit.GetComponent<TeamComponent>().GetEnemyTeam();
-                    unit.LSWorld().GetComponent<LSGameOverComponent>().SetGameOver(team);
+                    TeamType team = lsOwner.GetComponent<TeamComponent>().GetEnemyTeam();
+                    lsOwner.LSWorld().GetComponent<LSGameOverComponent>().SetGameOver(team);
                     break;
                 }
             }

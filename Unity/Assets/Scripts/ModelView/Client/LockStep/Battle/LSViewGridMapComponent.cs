@@ -2,7 +2,7 @@
 
 namespace ET.Client
 {
-	[ComponentOf]
+	[ComponentOf(typeof(Room))]
 	public class LSViewGridMapComponent : Entity, IAwake
 	{
 		public GridMap GridMap { get; set; }

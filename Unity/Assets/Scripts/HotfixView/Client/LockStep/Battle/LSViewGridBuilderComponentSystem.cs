@@ -18,10 +18,10 @@ namespace ET.Client
         [EntitySystem]
         private static void Destroy(this LSViewGridBuilderComponent self)
         {
-            self.OnPlacementCancel();
+            self.OnPlacementCancel(TeamType.TeamA);
         }
         
-        public static void OnPlacementDragStart(this LSViewGridBuilderComponent self, long targetId)
+        public static void OnPlacementDragStart(this LSViewGridBuilderComponent self, TeamType teamPlacer, long targetId)
         {
             if (!self.DragPlacement)
             {
@@ -45,7 +45,7 @@ namespace ET.Client
             }
         }
 
-        public static void OnPlacementDrag(this LSViewGridBuilderComponent self, TSVector2 position)
+        public static void OnPlacementDrag(this LSViewGridBuilderComponent self, TeamType teamPlacer, TSVector2 position)
         {
             if (self.DragPlacement)
             {
@@ -68,12 +68,12 @@ namespace ET.Client
             }
         }
 
-        public static void OnPlacementDragEnd(this LSViewGridBuilderComponent self, TSVector2 position)
+        public static void OnPlacementDragEnd(this LSViewGridBuilderComponent self, TeamType teamPlacer, TSVector2 position)
         {
             if (self.DragPlacement)
             {
                 // 这里恢复原状即可 放置结果由逻辑层处理并通知给表现层
-                self.OnPlacementCancel();
+                self.OnPlacementCancel(teamPlacer);
                 LSViewGridMapComponent gridMapComponent = self.Room().GetComponent<LSViewGridMapComponent>();
                 if (gridMapComponent.GridMapIndicator) {
                     gridMapComponent.GridMapIndicator.ClearIndicator();
@@ -81,9 +81,9 @@ namespace ET.Client
             }
         }
 
-        public static void OnPlacementStart(this LSViewGridBuilderComponent self, EUnitType type, int tableId)
+        public static void OnPlacementStart(this LSViewGridBuilderComponent self, TeamType teamPlacer, EUnitType type, int tableId)
         {
-            self.OnPlacementCancel();
+            self.OnPlacementCancel(teamPlacer);
             int targetModel = 0;
             switch (type)
             {
@@ -117,7 +117,7 @@ namespace ET.Client
             }
         }
 
-        public static void OnPlacementRotate(this LSViewGridBuilderComponent self, int rotation)
+        public static void OnPlacementRotate(this LSViewGridBuilderComponent self, TeamType teamPlacer, int rotation)
         {
             if (self.DragPlacement)
             {
@@ -127,7 +127,7 @@ namespace ET.Client
             }
         }
 
-        public static void OnPlacementCancel(this LSViewGridBuilderComponent self)
+        public static void OnPlacementCancel(this LSViewGridBuilderComponent self, TeamType teamPlacer)
         {
             if (self.DragPlacement)
             {

@@ -8,14 +8,10 @@ namespace ET.Client
             var room = lsWorld.GetParent<Room>();
             if (room.IsRollback)
                 return; // 不响应回滚过程中的消息。原因：1.RollbackSystem还未执行，单位可能不存在；2.回滚相关的所有恢复操作都应由RollbackSystem处理。
-            var comp = room.GetComponent<LSUnitViewComponent>();
-            if (comp == null)
-                return;
-            var view = comp.GetChild<LSUnitView>(args.Id);
-            var builderComponent = view.GetComponent<LSViewGridBuilderComponent>();
+            var builderComponent = room.GetComponent<LSViewGridBuilderComponent>();
             if (builderComponent == null)
                 return;
-            builderComponent.OnPlacementDragStart(args.TargetId);
+            builderComponent.OnPlacementDragStart(args.TeamPlacer, args.TargetId);
             await ETTask.CompletedTask;
         }
     }
@@ -28,14 +24,10 @@ namespace ET.Client
             var room = lsWorld.GetParent<Room>();
             if (room.IsRollback)
                 return; // 不响应回滚过程中的消息。原因：1.RollbackSystem还未执行，单位可能不存在；2.回滚相关的所有恢复操作都应由RollbackSystem处理。
-            var comp = room.GetComponent<LSUnitViewComponent>();
-            if (comp == null)
-                return;
-            var view = comp.GetChild<LSUnitView>(args.Id);
-            var builderComponent = view.GetComponent<LSViewGridBuilderComponent>();
+            var builderComponent = room.GetComponent<LSViewGridBuilderComponent>();
             if (builderComponent == null)
                 return;
-            builderComponent.OnPlacementDrag(args.Position);
+            builderComponent.OnPlacementDrag(args.TeamPlacer, args.Position);
             await ETTask.CompletedTask;
         }
     }
@@ -48,14 +40,10 @@ namespace ET.Client
             var room = lsWorld.GetParent<Room>();
             if (room.IsRollback)
                 return; // 不响应回滚过程中的消息。原因：1.RollbackSystem还未执行，单位可能不存在；2.回滚相关的所有恢复操作都应由RollbackSystem处理。
-            var comp = room.GetComponent<LSUnitViewComponent>();
-            if (comp == null)
-                return;
-            var view = comp.GetChild<LSUnitView>(args.Id);
-            var builderComponent = view.GetComponent<LSViewGridBuilderComponent>();
+            var builderComponent = room.GetComponent<LSViewGridBuilderComponent>();
             if (builderComponent == null)
                 return;
-            builderComponent.OnPlacementDragEnd(args.Position);
+            builderComponent.OnPlacementDragEnd(args.TeamPlacer, args.Position);
             await ETTask.CompletedTask;
         }
     }
@@ -68,14 +56,10 @@ namespace ET.Client
             var room = lsWorld.GetParent<Room>();
             if (room.IsRollback)
                 return; // 不响应回滚过程中的消息。原因：1.RollbackSystem还未执行，单位可能不存在；2.回滚相关的所有恢复操作都应由RollbackSystem处理。
-            var comp = room.GetComponent<LSUnitViewComponent>();
-            if (comp == null)
-                return;
-            var view = comp.GetChild<LSUnitView>(args.Id);
-            var builderComponent = view.GetComponent<LSViewGridBuilderComponent>();
+            var builderComponent = room.GetComponent<LSViewGridBuilderComponent>();
             if (builderComponent == null)
                 return;
-            builderComponent.OnPlacementStart(args.Type, args.TableId);
+            builderComponent.OnPlacementStart(args.TeamPlacer, args.Type, args.TableId);
             await ETTask.CompletedTask;
         }
     }
@@ -88,14 +72,10 @@ namespace ET.Client
             var room = lsWorld.GetParent<Room>();
             if (room.IsRollback)
                 return; // 不响应回滚过程中的消息。原因：1.RollbackSystem还未执行，单位可能不存在；2.回滚相关的所有恢复操作都应由RollbackSystem处理。
-            var comp = room.GetComponent<LSUnitViewComponent>();
-            if (comp == null)
-                return;
-            var view = comp.GetChild<LSUnitView>(args.Id);
-            var builderComponent = view.GetComponent<LSViewGridBuilderComponent>();
+            var builderComponent = room.GetComponent<LSViewGridBuilderComponent>();
             if (builderComponent == null)
                 return;
-            builderComponent.OnPlacementRotate(args.Rotation);
+            builderComponent.OnPlacementRotate(args.TeamPlacer, args.Rotation);
             await ETTask.CompletedTask;
         }
     }
@@ -108,14 +88,10 @@ namespace ET.Client
             var room = lsWorld.GetParent<Room>();
             if (room.IsRollback)
                 return; // 不响应回滚过程中的消息。原因：1.RollbackSystem还未执行，单位可能不存在；2.回滚相关的所有恢复操作都应由RollbackSystem处理。
-            var comp = room.GetComponent<LSUnitViewComponent>();
-            if (comp == null)
-                return;
-            var view = comp.GetChild<LSUnitView>(args.Id);
-            var builderComponent = view.GetComponent<LSViewGridBuilderComponent>();
+            var builderComponent = room.GetComponent<LSViewGridBuilderComponent>();
             if (builderComponent == null)
                 return;
-            builderComponent.OnPlacementCancel();
+            builderComponent.OnPlacementCancel(args.TeamPlacer);
             await ETTask.CompletedTask;
         }
     }
