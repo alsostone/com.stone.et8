@@ -18,7 +18,7 @@ namespace ET.Client
 		private static void LateUpdate(this LSCameraComponent self)
 		{
 			// 摄像机每帧更新位置
-			Room room = self.GetParent<Room>();
+			Room room = self.Room();
 			if (room.LockStepMode < LockStepMode.Local)
 			{
 				if (Input.GetKeyDown(KeyCode.Tab))

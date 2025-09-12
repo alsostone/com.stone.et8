@@ -5,7 +5,7 @@ namespace ET.Client
     {
         protected override async ETTask Run(LSWorld lsWorld, LSGridDataReset args)
         {
-            Room room = lsWorld.GetParent<Room>();
+            Room room = lsWorld.Room();
             if (room == null)
                 return; // 在不一致上报日志文件时，不是Add到Room组件，所以room可能为空
             LSViewGridMapComponent gridMapComponent = room.GetComponent<LSViewGridMapComponent>();

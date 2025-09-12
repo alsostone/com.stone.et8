@@ -5,7 +5,7 @@ namespace ET.Client
     {
         protected override async ETTask Run(LSWorld lsWorld, LSUnitCreate args)
         {
-            var room = lsWorld.GetParent<Room>();
+            var room = lsWorld.Room();
             if (room.IsRollback)
                 return; // 不响应回滚过程中的消息。原因：1.RollbackSystem还未执行，单位可能不存在；2.回滚相关的所有恢复操作都应由RollbackSystem处理。
             var comp = room.GetComponent<LSUnitViewComponent>();
@@ -21,7 +21,7 @@ namespace ET.Client
     {
         protected override async ETTask Run(LSWorld lsWorld, LSUnitPlaced args)
         {
-            var room = lsWorld.GetParent<Room>();
+            var room = lsWorld.Room();
             if (room.IsRollback)
                 return; // 不响应回滚过程中的消息。原因：1.RollbackSystem还未执行，单位可能不存在；2.回滚相关的所有恢复操作都应由RollbackSystem处理。
             var comp = room.GetComponent<LSUnitViewComponent>();

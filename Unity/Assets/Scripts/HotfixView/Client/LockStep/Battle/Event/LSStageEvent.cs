@@ -5,7 +5,7 @@ namespace ET.Client
     {
         protected override async ETTask Run(LSWorld lsWorld, LSStageGameOver args)
         {
-            var room = lsWorld.GetParent<Room>();
+            var room = lsWorld.Room();
             
             // 显示结算界面
             YIUIRootComponent yiuiRootComponent = room.GetComponent<YIUIRootComponent>();

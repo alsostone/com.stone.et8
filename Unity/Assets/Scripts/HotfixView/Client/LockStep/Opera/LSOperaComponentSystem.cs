@@ -14,7 +14,7 @@ namespace ET.Client
         [EntitySystem]
         private static void Update(this LSOperaComponent self)
         {
-            Room room = self.GetParent<Room>();
+            Room room = self.Room();
 
             Vector2 axis = new Vector2(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical")).normalized;
             if (axis != self.Axis)
