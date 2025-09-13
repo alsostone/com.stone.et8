@@ -215,9 +215,12 @@ namespace ET
         public long PlayerId { get; set; }
 
         [MemoryPackOrder(1)]
-        public TrueSync.TSVector Position { get; set; }
+        public int HeroSkinId { get; set; }
 
         [MemoryPackOrder(2)]
+        public TrueSync.TSVector Position { get; set; }
+
+        [MemoryPackOrder(3)]
         public TrueSync.TSQuaternion Rotation { get; set; }
 
         public override void Dispose()
@@ -228,6 +231,7 @@ namespace ET
             }
 
             this.PlayerId = default;
+            this.HeroSkinId = default;
             this.Position = default;
             this.Rotation = default;
 

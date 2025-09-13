@@ -5,10 +5,10 @@ namespace ET
     public static partial class HeroComponentSystem
     {
         [EntitySystem]
-        private static void Awake(this HeroComponent self, int tableId)
-        {self.LSRoom()?.ProcessLog.LogFunction(66, self.LSParent().Id, tableId);
+        private static void Awake(this HeroComponent self, int tableId, int skinId)
+        {
             self.TableId = tableId;
-            self.SkinId = self.TbRow.Skin;
+            self.SkinId = skinId;
         }
         
     }

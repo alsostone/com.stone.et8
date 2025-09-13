@@ -57,5 +57,10 @@ namespace ET
         /// </summary>
         Team = 128,
 
+        /// <summary>
+        /// 玩家
+        /// </summary>
+        Player = 256,
+
     }
 }

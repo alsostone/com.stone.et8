@@ -46,8 +46,9 @@ message C2Room_LoadingProgress // IRoomMessage
 message LockStepUnitInfo
 {
 	int64 PlayerId = 1;
-	TrueSync.TSVector Position = 2;
-	TrueSync.TSQuaternion Rotation = 3;
+	int32 HeroSkinId = 2;
+	TrueSync.TSVector Position = 3;
+	TrueSync.TSQuaternion Rotation = 4;
 }
 
 message LockStepMatchInfo

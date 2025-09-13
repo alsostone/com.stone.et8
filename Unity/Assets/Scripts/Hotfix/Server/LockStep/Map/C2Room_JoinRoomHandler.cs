@@ -30,6 +30,7 @@ namespace ET.Server
             {
                 LockStepUnitInfo lockStepUnitInfo = LockStepUnitInfo.Create();
                 lockStepUnitInfo.PlayerId = playerId;
+                lockStepUnitInfo.HeroSkinId = 100201; // 操作的英雄ID 如果为0则是没有控制英雄单位
                 lockStepUnitInfo.Position = new TSVector(20, 0, -10);
                 lockStepUnitInfo.Rotation = TSQuaternion.identity;
                 matchInfo.UnitInfos.Add(lockStepUnitInfo);

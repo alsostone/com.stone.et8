@@ -16,8 +16,8 @@ namespace ET
         [LSEntitySystem]
         private static void LSUpdate(this LSCommandsRunComponent self)
         {
-            LSUnit lsOwner = self.LSOwner();
-            TeamType teamPlacer = lsOwner.GetComponent<TeamComponent>().Type;
+            LSUnit lsPlayer = self.LSOwner();
+            TeamType teamPlacer = lsPlayer.GetComponent<TeamComponent>().Type;
             foreach (ulong command in self.Commands)
             {
                 switch (LSCommand.ParseCommandType(command))
@@ -55,27 +55,25 @@ namespace ET
                         }
                     case OperateCommandType.Button:
                         {
-                            self.RunCommandButton(lsOwner, command);
+                            self.RunCommandButton(lsPlayer, command);
                             break;
                         }
 #if ENABLE_DEBUG
                     case OperateCommandType.Gm:
                         {
-                            self.RunCommandGm(lsOwner, command);
+                            self.RunCommandGm(lsPlayer, command);
                             break;
                         }
 #endif
                 }
             }
             self.Commands.Clear();
-
-            TransformComponent transformComponent = lsOwner.GetComponent<TransformComponent>();
-            transformComponent.Move(self.MoveAxis);
+            self.GetBindUnitComponent<TransformComponent>(lsPlayer)?.Move(self.MoveAxis);
         }
 
-        private static void RunCommandButton(this LSCommandsRunComponent self, LSUnit lsOwner, ulong command)
+        private static void RunCommandButton(this LSCommandsRunComponent self, LSUnit lsPlayer, ulong command)
         {
-            TeamType teamPlacer = lsOwner.GetComponent<TeamComponent>().Type;
+            TeamType teamPlacer = lsPlayer.GetComponent<TeamComponent>().Type;
             (CommandButtonType, long) button = LSCommand.ParseCommandButton(command);
             switch (button.Item1)
             {
@@ -86,42 +84,50 @@ namespace ET
                     self.LSWorld().GetComponent<LSGridBuilderComponent>().RunCommandPlacementCancel(teamPlacer);
                     break;
                 case CommandButtonType.Attack:
-                    lsOwner.GetComponent<SkillComponent>().TryCastSkill(ESkillType.Normal);
+                    self.GetBindUnitComponent<SkillComponent>(lsPlayer)?.TryCastSkill(ESkillType.Normal);
                     break;
                 case CommandButtonType.Skill1:
-                    lsOwner.GetComponent<SkillComponent>().TryCastSkill(ESkillType.Active, 0);
+                    self.GetBindUnitComponent<SkillComponent>(lsPlayer)?.TryCastSkill(ESkillType.Active, 0);
                     break;
                 case CommandButtonType.Skill2:
-                    lsOwner.GetComponent<SkillComponent>().TryCastSkill(ESkillType.Active, 1);
+                    self.GetBindUnitComponent<SkillComponent>(lsPlayer)?.TryCastSkill(ESkillType.Active, 1);
                     break;
-                case CommandButtonType.Jump:
-                    {
-                        //unit.GetComponent<LSJumpComponent>().Jump();
-                        break;
-                    }
+                default: break;
             }
         }
         
 #if ENABLE_DEBUG
-        private static void RunCommandGm(this LSCommandsRunComponent self, LSUnit lsOwner, ulong command)
+        private static void RunCommandGm(this LSCommandsRunComponent self, LSUnit lsPlayer, ulong command)
         {
             (CommandGMType, long) gm = LSCommand.ParseCommandGm(command);
             switch (gm.Item1)
             {
                 case CommandGMType.Victory:
                 {
-                    TeamType team = lsOwner.GetComponent<TeamComponent>().GetFriendTeam();
-                    lsOwner.LSWorld().GetComponent<LSGameOverComponent>().SetGameOver(team);
+                    TeamType team = lsPlayer.GetComponent<TeamComponent>().GetFriendTeam();
+                    self.LSWorld().GetComponent<LSGameOverComponent>().SetGameOver(team);
                     break;
                 }
                 case CommandGMType.Failure:
                 {
-                    TeamType team = lsOwner.GetComponent<TeamComponent>().GetEnemyTeam();
-                    lsOwner.LSWorld().GetComponent<LSGameOverComponent>().SetGameOver(team);
+                    TeamType team = lsPlayer.GetComponent<TeamComponent>().GetEnemyTeam();
+                    self.LSWorld().GetComponent<LSGameOverComponent>().SetGameOver(team);
                     break;
                 }
             }
         }
 #endif
+        
+        private static T GetBindUnitComponent<T>(this LSCommandsRunComponent self, LSUnit player) where T : LSEntity
+        {
+            PlayerComponent lsPlayerComponent = player.GetComponent<PlayerComponent>();
+            if (lsPlayerComponent.BindEntityId == 0)
+                return null;
+            
+            LSUnitComponent unitComponent = self.LSWorld().GetComponent<LSUnitComponent>();
+            LSUnit lsUnit = unitComponent.GetChild<LSUnit>(lsPlayerComponent.BindEntityId);
+            return lsUnit?.GetComponent<T>();
+        }
+
     }
 }

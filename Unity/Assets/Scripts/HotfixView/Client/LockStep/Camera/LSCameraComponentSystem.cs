@@ -23,18 +23,14 @@ namespace ET.Client
 			{
 				if (Input.GetKeyDown(KeyCode.Tab))
 				{
-					List<EntityRef<LSUnitView>> views = room.GetComponent<LSUnitViewComponent>().PlayerViews;
-					self.index = (self.index + 1) % views.Count;
-					self.LookUnitView = views[self.index];
+					self.index = (self.index + 1) % room.PlayerIds.Count;
+					self.LookUnitView = self.GetBindUnitView(self.index);
 				}
 			}
 			else if (self.LookUnitView == null)
 			{
 				int seatIndex = room.GetLookSeatIndex();
-				List<EntityRef<LSUnitView>> views = room.GetComponent<LSUnitViewComponent>().PlayerViews;
-				if (seatIndex >= 0 && seatIndex < views.Count) {
-					self.LookUnitView = views[seatIndex];
-				}
+				self.LookUnitView = self.GetBindUnitView(seatIndex);
 			}
 			
 			if (self.LookUnitView == null)
@@ -46,5 +42,17 @@ namespace ET.Client
 			self.Transform.position = new Vector3(pos.x, pos.y + 20, pos.z - 2.5f);
 		}
 		
+		private static LSUnitView GetBindUnitView(this LSCameraComponent self, int seatIndex)
+		{
+			Room room = self.Room();
+			LSUnitViewComponent lsUnitViewComponent = room.GetComponent<LSUnitViewComponent>();
+			LSUnitView lsPlayer = lsUnitViewComponent.GetChild<LSUnitView>(room.PlayerIds[seatIndex]);
+			
+			LSViewPlayerComponent lsViewPlayerComponent = lsPlayer.GetComponent<LSViewPlayerComponent>();
+			if (lsViewPlayerComponent.BindViewId == 0)
+				return null;
+			
+			return lsUnitViewComponent.GetChild<LSUnitView>(lsViewPlayerComponent.BindViewId);
+		}
 	}
 }

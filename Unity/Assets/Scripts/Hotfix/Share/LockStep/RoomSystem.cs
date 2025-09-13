@@ -37,7 +37,13 @@ namespace ET
             
             for (int i = 0; i < matchInfo.UnitInfos.Count; ++i) {
                 LockStepUnitInfo unitInfo = matchInfo.UnitInfos[i];
-                LSUnitFactory.CreateHero(lsWorld, 1001, unitInfo.Position, unitInfo.Rotation, unitInfo.PlayerId);
+                TeamType teamType = (TeamType)(i + 1);
+                
+                LSUnit lsHero = null;
+                if (unitInfo.HeroSkinId > 0) {
+                    lsHero = LSUnitFactory.CreateHero(lsWorld, unitInfo.HeroSkinId, unitInfo.Position, unitInfo.Rotation, teamType);
+                }
+                LSUnitFactory.CreatePlayer(lsWorld, unitInfo.PlayerId, teamType, lsHero?.Id ?? 0);
                 self.PlayerIds.Add(unitInfo.PlayerId);
             }
             

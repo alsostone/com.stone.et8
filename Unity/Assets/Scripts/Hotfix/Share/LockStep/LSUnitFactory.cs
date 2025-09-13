@@ -38,17 +38,34 @@ namespace ET
 		    return lsUnit;
 	    }
 	    
-        public static LSUnit CreateHero(LSWorld lsWorld, int tableId, TSVector position, TSQuaternion rotation, long playerId)
+	    // 把玩家和英雄拆分的意义：RTS类型的游戏中没有主控单位, 有主控单位时依靠绑定逻辑
+	    public static LSUnit CreatePlayer(LSWorld lsWorld, long playerId, TeamType teamType, long bindId = 0)
+	    {
+		    LSUnitComponent lsUnitComponent = lsWorld.GetComponent<LSUnitComponent>();
+		    LSUnit lsUnit = lsUnitComponent.AddChildWithId<LSUnit>(playerId);
+		    
+		    lsUnit.AddComponent<TypeComponent, EUnitType>(EUnitType.Player);
+		    lsUnit.AddComponent<TeamComponent, TeamType>(teamType);
+		    lsUnit.AddComponent<PlayerComponent, long>(bindId);
+		    
+		    lsUnit.AddComponent<LSCommandsRunComponent>();
+			
+		    EventSystem.Instance.Publish(lsWorld, new LSUnitCreate() {LSUnit = lsUnit});
+		    return lsUnit;
+	    }
+	    
+        public static LSUnit CreateHero(LSWorld lsWorld, int tableId, TSVector position, TSQuaternion rotation, TeamType teamType)
         {
-	        TbHeroRow row = TbHero.Instance.Get(tableId);
+	        TbHeroSkinRow skinRow = TbHeroSkin.Instance.Get(tableId);
+	        TbHeroRow row = TbHero.Instance.Get(skinRow.HeroId);
 	        LSUnitComponent lsUnitComponent = lsWorld.GetComponent<LSUnitComponent>();
-	        LSUnit lsUnit = lsUnitComponent.AddChildWithId<LSUnit>(playerId);
+	        LSUnit lsUnit = lsUnitComponent.AddChild<LSUnit>();
 
 	        lsUnit.AddComponent<TransformComponent, TSVector, TSQuaternion>(position, rotation);
 	        lsUnit.AddComponent<TypeComponent, EUnitType>(EUnitType.Hero);
 	        lsUnit.AddComponent<FlagComponent>();
-	        lsUnit.AddComponent<TeamComponent, TeamType>(TeamType.TeamA);
-	        lsUnit.AddComponent<HeroComponent, int>(tableId);
+	        lsUnit.AddComponent<TeamComponent, TeamType>(teamType);
+	        lsUnit.AddComponent<HeroComponent, int, int>(row.Id, skinRow.Id);
 	        
 	        PropComponent propComponent = lsUnit.AddComponent<PropComponent, int>(row.Radius);
 	        foreach (var prop in row.Props) {
@@ -60,8 +77,6 @@ namespace ET
 			lsUnit.AddComponent<BuffComponent>();
 			lsUnit.AddComponent<BeHitComponent>();
 			lsUnit.AddComponent<SkillComponent, int[], int[]>(row.NormalSkills, row.ActiveSkills);
-			
-			lsUnit.AddComponent<LSCommandsRunComponent>();
 			
 			EventSystem.Instance.Publish(lsWorld, new LSUnitCreate() {LSUnit = lsUnit});
             return lsUnit;

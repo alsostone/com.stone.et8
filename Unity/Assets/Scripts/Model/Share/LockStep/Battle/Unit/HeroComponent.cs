@@ -5,7 +5,7 @@ namespace ET
 {
     [ComponentOf(typeof(LSUnit))]
     [MemoryPackable]
-    public partial class HeroComponent : LSEntity, IAwake<int>, ISerializeToEntity
+    public partial class HeroComponent : LSEntity, IAwake<int, int>, ISerializeToEntity
     {
         public int TableId;
         public int SkinId;

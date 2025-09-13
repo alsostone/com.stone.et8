@@ -165,4 +165,16 @@
         <var name="PVE" alias="玩家和电脑" value="1"/>
         <var name="PVP" alias="玩家和玩家" value="2"/>
     </enum>
+    <enum name="EUnitType" comment="实体类型" unique="TRUE" flags="TRUE">
+        <var name="None" alias="" value="0"/>
+        <var name="Hero" alias="英雄" value="1"/>
+        <var name="Block" alias="地块" value="2"/>
+        <var name="Building" alias="建筑" value="4"/>
+        <var name="Soldier" alias="士兵" value="8"/>
+        <var name="Drop" alias="掉落" value="16"/>
+        <var name="Bullet" alias="子弹" value="32"/>
+        <var name="Global" alias="全局" value="64"/>
+        <var name="Team" alias="队伍" value="128"/>
+        <var name="Player" alias="玩家" value="256"/>
+    </enum>
 </module>

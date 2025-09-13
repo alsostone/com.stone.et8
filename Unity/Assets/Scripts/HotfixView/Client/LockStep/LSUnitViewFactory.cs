@@ -30,7 +30,18 @@ namespace ET.Client
                 case EUnitType.Bullet:
                     CreateBulletView(viewComponent, lsUnit);
                     break;
+                case EUnitType.Player:
+                    CreatePlayerView(viewComponent, lsUnit);
+                    break;
             }
+        }
+        
+        // 把玩家和英雄拆分的意义：RTS类型的游戏中没有主控单位, 有主控英雄时依靠绑定逻辑
+        private static void CreatePlayerView(LSUnitViewComponent viewComponent, LSUnit lsUnit)
+        {
+            ET.PlayerComponent playerComponent = lsUnit.GetComponent<ET.PlayerComponent>();
+            LSUnitView lsUnitView = viewComponent.AddChildWithId<LSUnitView, GameObject>(lsUnit.Id, null);
+            lsUnitView.AddComponent<LSViewPlayerComponent, long>(playerComponent.BindEntityId);
         }
 
         private static void CreateHeroView(LSUnitViewComponent viewComponent, LSUnit lsUnit)
@@ -45,7 +56,6 @@ namespace ET.Client
             GameObject unitGo = UnityEngine.Object.Instantiate(prefab, globalComponent.Unit, true);
 
             LSUnitView lsUnitView = viewComponent.AddChildWithId<LSUnitView, GameObject>(lsUnit.Id, unitGo);
-            viewComponent.PlayerViews.Add(lsUnitView);
             lsUnitView.AddComponent<LSAnimationComponent>();
             lsUnitView.AddComponent<LSViewTransformComponent, Transform, bool>(unitGo.transform, false);
             lsUnitView.AddComponent<LSViewSkillComponent>();
