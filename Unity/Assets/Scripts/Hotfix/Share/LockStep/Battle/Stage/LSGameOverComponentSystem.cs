@@ -26,7 +26,7 @@ namespace ET
             
             // 波次结束且B方单位全部死亡则A方获胜
             LSStageComponent lsStageComponent = lsWorld.GetComponent<LSStageComponent>();
-            if (!lsStageComponent.CheckStageWaveEnd())
+            if (!lsStageComponent.CheckAllWaveDone())
                 return;
             if (lsTargetsComponent.GetAliveCount(TeamType.TeamB) > 0)
                 return;
@@ -37,7 +37,7 @@ namespace ET
         public static void SetGameOver(this LSGameOverComponent self, TeamType winTeam)
         {
             LSWorld lsWorld = self.LSWorld();
-            if (lsWorld.EndFrame > 0 && lsWorld.EndFrame <= lsWorld.Frame)
+            if (lsWorld.EndFrame > 0)
                 return;
             
             lsWorld.EndFrame = lsWorld.Frame;

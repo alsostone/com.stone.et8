@@ -21,9 +21,9 @@ namespace ET
             FieldV2 position = new FieldV2(transformComponent.Position.x, transformComponent.Position.z);
             FieldV2 v2 = gridMapComponent.GetGridData().GetFieldVector(position);
             if (v2.x == 0 && v2.z == 0)
-                return;
-
-            transformComponent.Move(new TSVector2(v2.x, v2.z));
+                transformComponent.Move(new TSVector2(-position.x, -position.z));
+            else
+                transformComponent.Move(new TSVector2(v2.x, v2.z));
         }
         
     }

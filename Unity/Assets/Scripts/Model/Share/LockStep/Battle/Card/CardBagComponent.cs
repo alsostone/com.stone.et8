@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using MemoryPack;
 
 namespace ET
@@ -7,13 +8,6 @@ namespace ET
     [MemoryPackable]
     public partial class CardBagComponent: LSEntity, IAwake
     {
-        public List<CardItem> Items { get; private set; } = new List<CardItem>();
-    }
-    
-    public struct CardItem
-    {
-        public EUnitType Type;
-        public int TableId;
-        public int Count;
+        public List<Tuple<EUnitType, int, int>> Items { get; private set; } = new List<Tuple<EUnitType, int, int>>();
     }
 }

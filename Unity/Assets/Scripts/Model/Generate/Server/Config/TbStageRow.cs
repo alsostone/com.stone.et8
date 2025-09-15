@@ -30,6 +30,7 @@ namespace ET
             RandomInterval = _buf.ReadInt();
             {int __n0 = System.Math.Min(_buf.ReadSize(), _buf.Size);RandomCounts = new int[__n0];for(var __index0 = 0 ; __index0 < __n0 ; __index0++) { int __e0;__e0 = _buf.ReadInt(); RandomCounts[__index0] = __e0;}}
             {int __n0 = System.Math.Min(_buf.ReadSize(), _buf.Size);RandomSets = new int[__n0];for(var __index0 = 0 ; __index0 < __n0 ; __index0++) { int __e0;__e0 = _buf.ReadInt(); RandomSets[__index0] = __e0;}}
+            {int __n0 = System.Math.Min(_buf.ReadSize(), _buf.Size);RandomCards = new int[__n0];for(var __index0 = 0 ; __index0 < __n0 ; __index0++) { int __e0;__e0 = _buf.ReadInt(); RandomCards[__index0] = __e0;}}
 
             PostInit();
         }
@@ -103,6 +104,11 @@ namespace ET
         /// </summary>
         public readonly int[] RandomSets;
 
+        /// <summary>
+        /// 每波抽卡集
+        /// </summary>
+        public readonly int[] RandomCards;
+
 
         public const int __ID__ = 1006679722;
         public override int GetTypeId() => __ID__;
@@ -115,6 +121,7 @@ namespace ET
             
             BaseCampTower_Ref = TbBuilding.Instance.GetOrDefault(BaseCampTower);
             BaseCampSoldier_Ref = TbBuilding.Instance.GetOrDefault(BaseCampSoldier);
+            
             
             
             
@@ -138,6 +145,7 @@ namespace ET
             + "randomInterval:" + RandomInterval + ","
             + "randomCounts:" + Luban.StringUtil.CollectionToString(RandomCounts) + ","
             + "randomSets:" + Luban.StringUtil.CollectionToString(RandomSets) + ","
+            + "randomCards:" + Luban.StringUtil.CollectionToString(RandomCards) + ","
             + "}";
         }
 

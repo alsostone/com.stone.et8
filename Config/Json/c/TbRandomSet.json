@@ -599,5 +599,170 @@
       }
     ],
     "xxx": 0
+  },
+  {
+    "Id": 80001,
+    "items": [
+      {
+        "id": 30011,
+        "weight": 500,
+        "type": 4,
+        "count_min": 1,
+        "count_max": 1
+      },
+      {
+        "id": 30021,
+        "weight": 500,
+        "type": 4,
+        "count_min": 1,
+        "count_max": 1
+      },
+      {
+        "id": 30031,
+        "weight": 2000,
+        "type": 4,
+        "count_min": 1,
+        "count_max": 1
+      },
+      {
+        "id": 30041,
+        "weight": 2000,
+        "type": 4,
+        "count_min": 1,
+        "count_max": 1
+      },
+      {
+        "id": 2001,
+        "weight": 2000,
+        "type": 2,
+        "count_min": 1,
+        "count_max": 1
+      },
+      {
+        "id": 2002,
+        "weight": 2000,
+        "type": 2,
+        "count_min": 1,
+        "count_max": 1
+      },
+      {
+        "id": 2003,
+        "weight": 2000,
+        "type": 2,
+        "count_min": 1,
+        "count_max": 1
+      }
+    ],
+    "xxx": 0
+  },
+  {
+    "Id": 80002,
+    "items": [
+      {
+        "id": 30011,
+        "weight": 500,
+        "type": 4,
+        "count_min": 1,
+        "count_max": 1
+      },
+      {
+        "id": 30021,
+        "weight": 500,
+        "type": 4,
+        "count_min": 1,
+        "count_max": 1
+      },
+      {
+        "id": 30031,
+        "weight": 2000,
+        "type": 4,
+        "count_min": 1,
+        "count_max": 1
+      },
+      {
+        "id": 30041,
+        "weight": 2000,
+        "type": 4,
+        "count_min": 1,
+        "count_max": 1
+      },
+      {
+        "id": 2001,
+        "weight": 2000,
+        "type": 2,
+        "count_min": 1,
+        "count_max": 1
+      },
+      {
+        "id": 2002,
+        "weight": 2000,
+        "type": 2,
+        "count_min": 1,
+        "count_max": 1
+      },
+      {
+        "id": 2003,
+        "weight": 2000,
+        "type": 2,
+        "count_min": 1,
+        "count_max": 1
+      }
+    ],
+    "xxx": 0
+  },
+  {
+    "Id": 80003,
+    "items": [
+      {
+        "id": 30011,
+        "weight": 500,
+        "type": 4,
+        "count_min": 1,
+        "count_max": 1
+      },
+      {
+        "id": 30021,
+        "weight": 500,
+        "type": 4,
+        "count_min": 1,
+        "count_max": 1
+      },
+      {
+        "id": 30031,
+        "weight": 2000,
+        "type": 4,
+        "count_min": 1,
+        "count_max": 1
+      },
+      {
+        "id": 30041,
+        "weight": 2000,
+        "type": 4,
+        "count_min": 1,
+        "count_max": 1
+      },
+      {
+        "id": 2001,
+        "weight": 2000,
+        "type": 2,
+        "count_min": 1,
+        "count_max": 1
+      },
+      {
+        "id": 2002,
+        "weight": 2000,
+        "type": 2,
+        "count_min": 1,
+        "count_max": 1
+      },
+      {
+        "id": 2003,
+        "weight": 2000,
+        "type": 2,
+        "count_min": 1,
+        "count_max": 1
+      }
+    ],
+    "xxx": 0
   }
 ]

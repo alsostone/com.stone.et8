@@ -1,3 +1,4 @@
+using System;
 
 namespace ET
 {
@@ -10,33 +11,28 @@ namespace ET
         {
         }
         
-        public static void AddItem(this CardBagComponent self, CardItem item)
+        public static void AddItem(this CardBagComponent self, Tuple<EUnitType, int, int> item)
         {
             self.Items.Add(item);
         }
         
-        public static void RemoveItem(this CardBagComponent self, EUnitType type, int tableId, int count)
+        public static void RemoveItem(this CardBagComponent self, Tuple<EUnitType, int, int> item)
         {
             for (int i = 0; i < self.Items.Count; i++) {
-                CardItem item = self.Items[i];
-                if (item.Type == type && item.TableId == tableId)
+                Tuple<EUnitType, int, int> it = self.Items[i];
+                if (it.Item1 == item.Item1 && it.Item2 == item.Item2)
                 {
-                    if (item.Count > count) {
-                        item.Count -= count;
-                        self.Items[i] = item;
-                    } else {
-                        self.Items.RemoveAt(i);
-                    }
+                    self.Items.RemoveAt(i);
                     return;
                 }
             }
         }
         
-        public static CardItem? GetItem(this CardBagComponent self, EUnitType type, int tableId)
+        public static Tuple<EUnitType, int, int> GetItem(this CardBagComponent self, EUnitType type, int tableId)
         {
             for (int i = 0; i < self.Items.Count; i++) {
-                CardItem item = self.Items[i];
-                if (item.Type == type && item.TableId == tableId) {
+                Tuple<EUnitType, int, int> item = self.Items[i];
+                if (item.Item1 == type && item.Item2 == tableId) {
                     return item;
                 }
             }

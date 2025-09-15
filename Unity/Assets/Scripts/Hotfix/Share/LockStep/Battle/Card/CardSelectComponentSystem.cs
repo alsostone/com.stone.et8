@@ -1,5 +1,6 @@
-
+using System;
 using System.Collections.Generic;
+using TrueSync;
 
 namespace ET
 {
@@ -16,18 +17,38 @@ namespace ET
         [LSEntitySystem]
         private static void LSUpdate(this CardSelectComponent self)
         {
+            LSWorld lsWorld = self.LSWorld();
+            LSStageComponent lsStageComponent = lsWorld.GetComponent<LSStageComponent>();
+            if (!lsStageComponent.CheckWaveDone(self.CurrentSelectCount + 1))
+                return;
             
+            TeamComponent teamComponent = self.LSOwner().GetComponent<TeamComponent>();
+            LSTargetsComponent lsTargetsComponent = lsWorld.GetComponent<LSTargetsComponent>();
+            if (lsTargetsComponent.GetAliveCount(teamComponent.GetEnemyTeam()) > 0)
+                return;
+            
+            // 波次结束且敌方单位全部死亡则给于抽卡一次
+            self.CurrentSelectCount++;
+            int index = Math.Min(lsStageComponent.TbRow.RandomCards.Length, self.CurrentSelectCount);
+            int randomSet = lsStageComponent.TbRow.RandomCards[index - 1];
+            
+            var results = ObjectPool.Instance.Fetch<List<Tuple<EUnitType, int, int>>>();
+            RandomDropHelper.RandomSet(self.GetRandom(), randomSet, 3, results);
+            self.SelectCardQueue.Enqueue(results);
         }
         
         public static void TrySelectCard(this CardSelectComponent self, int index)
         {
             if (self.SelectCardQueue.Count <= 0)
                 return;
-            List<CardItem> items = self.SelectCardQueue.Dequeue();
-            if (index < 0 || index >= items.Count)
-                return;
+            
+            var items = self.SelectCardQueue.Dequeue();
+            index = Math.Min(items.Count - 1, index);
             CardBagComponent bagComponent = self.LSOwner().GetComponent<CardBagComponent>();
             bagComponent.AddItem(items[index]);
+            
+            items.Clear();
+            ObjectPool.Instance.Recycle(items);
         }
         
     }

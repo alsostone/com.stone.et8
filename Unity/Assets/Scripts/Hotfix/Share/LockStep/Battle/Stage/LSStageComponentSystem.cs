@@ -35,16 +35,14 @@ namespace ET
                 self.NextWaveFrame = lsWorld.Frame + self.TbRow.WaveInterval.Convert2Frame();
                 self.NextMonsterFrame = lsWorld.Frame;
             }
+            if (self.CurrentWaveCount == 0) {
+                return;
+            }
 
             // 波次开始后根据配置的刷怪数量刷怪
             if (lsWorld.Frame >= self.NextMonsterFrame)
             {
-                int index = Math.Min(self.TbRow.RandomCounts.Length, self.CurrentWaveCount);
-                int limit = self.TbRow.RandomCounts[index - 1];
-                if (self.CurrentMonsterCount >= limit)
-                    return;
-
-                index = Math.Min(self.TbRow.RandomSets.Length, self.CurrentWaveCount);
+                int index = Math.Min(self.TbRow.RandomSets.Length, self.CurrentWaveCount);
                 int randomSet = self.TbRow.RandomSets[index - 1];
                 
                 self.CurrentMonsterCount++;
@@ -66,6 +64,13 @@ namespace ET
                 }
                 results.Clear();
                 ObjectPool.Instance.Recycle(results);
+                
+                // 达到当前波次的最大刷怪数量则不再刷怪
+                index = Math.Min(self.TbRow.RandomCounts.Length, self.CurrentWaveCount);
+                int limit = self.TbRow.RandomCounts[index - 1];
+                if (self.CurrentMonsterCount >= limit) {
+                    self.NextMonsterFrame = int.MaxValue;
+                }
             }
         }
         
@@ -77,9 +82,22 @@ namespace ET
             return new TSVector2(x, y);
         }
 
-        public static bool CheckStageWaveEnd(this LSStageComponent self)
+        public static bool CheckAllWaveDone(this LSStageComponent self)
         {
-            return self.CurrentWaveCount > self.TbRow.Count;
+            if (self.TbRow.Count >= self.CurrentWaveCount)
+                return false;
+            if (self.NextMonsterFrame != int.MaxValue)
+                return false;
+            return true;
+        }
+        
+        public static bool CheckWaveDone(this LSStageComponent self, int wave)
+        {
+            if (self.CurrentWaveCount != wave)
+                return false;
+            if (self.NextMonsterFrame != int.MaxValue)
+                return false;
+            return true;
         }
     }
 }

@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using MemoryPack;
 
 namespace ET
@@ -7,6 +8,7 @@ namespace ET
     [MemoryPackable]
     public partial class CardSelectComponent: LSEntity, IAwake, ILSUpdate
     {
-        public Queue<List<CardItem>> SelectCardQueue { get; private set; } = new Queue<List<CardItem>>();
+        public int CurrentSelectCount;
+        public Queue<List<Tuple<EUnitType, int, int>>> SelectCardQueue { get; private set; } = new Queue<List<Tuple<EUnitType, int, int>>>();
     }
 }
