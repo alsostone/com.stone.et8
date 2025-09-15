@@ -22,6 +22,7 @@ namespace ET
     {
         PlacementRotate,    // 放置旋转
         PlacementCancel,    // 取消放置
+        CardSelect,         // 选牌
         Jump,       // 跳跃
         Attack,     // 攻击
         Skill1,     // 技能1

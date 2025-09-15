@@ -83,6 +83,9 @@ namespace ET
                 case CommandButtonType.PlacementCancel:
                     self.LSWorld().GetComponent<LSGridBuilderComponent>().RunCommandPlacementCancel(teamPlacer);
                     break;
+                case CommandButtonType.CardSelect:
+                    lsPlayer.GetComponent<CardSelectComponent>().TrySelectCard((int)button.Item2);
+                    break;
                 case CommandButtonType.Attack:
                     self.GetBindUnitComponent<SkillComponent>(lsPlayer)?.TryCastSkill(ESkillType.Normal);
                     break;

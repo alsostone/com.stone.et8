@@ -48,6 +48,8 @@ namespace ET
 		    lsUnit.AddComponent<TeamComponent, TeamType>(teamType);
 		    lsUnit.AddComponent<PlayerComponent, long>(bindId);
 		    
+		    lsUnit.AddComponent<CardBagComponent>();
+		    lsUnit.AddComponent<CardSelectComponent>();
 		    lsUnit.AddComponent<LSCommandsRunComponent>();
 			
 		    EventSystem.Instance.Publish(lsWorld, new LSUnitCreate() {LSUnit = lsUnit});
