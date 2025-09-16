@@ -48,7 +48,7 @@ namespace ET
             
             index = Math.Min(items.Count - 1, index);
             CardBagComponent bagComponent = self.LSOwner().GetComponent<CardBagComponent>();
-            bagComponent.AddCard(items[index]);
+            bagComponent.AddItem(items[index]);
             items.Clear();
             ObjectPool.Instance.Recycle(items);
             

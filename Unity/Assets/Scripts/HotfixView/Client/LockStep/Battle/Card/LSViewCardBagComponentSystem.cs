@@ -1,17 +1,35 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace ET.Client
 {
+    [LSEntitySystemOf(typeof(LSViewCardBagComponent))]
     [EntitySystemOf(typeof(LSViewCardBagComponent))]
     [FriendOf(typeof(LSViewCardBagComponent))]
     public static partial class LSViewCardBagComponentSystem
     {
-        public static void AddCard(this LSViewCardBagComponent self, EUnitType type, int tableId, int count)
+        [EntitySystem]
+        private static void Awake(this LSViewCardBagComponent self)
+        {
+            self.LSRollback();
+        }
+
+        [LSEntitySystem]
+        private static void LSRollback(this LSViewCardBagComponent self)
+        {
+            self.Items.Clear();
+            CardBagComponent bagComponent = self.LSViewOwner().GetUnit().GetComponent<CardBagComponent>();
+            foreach (var tuple in bagComponent.Items) {
+                self.AddItem(tuple.Item1, tuple.Item2, tuple.Item3);
+            }
+        }
+        
+        public static void AddItem(this LSViewCardBagComponent self, EUnitType type, int tableId, int count)
         {
             self.Items.Add(new Tuple<EUnitType, int, int>(type, tableId, count));
         }
         
-        public static void RemoveCard(this LSViewCardBagComponent self, EUnitType type, int tableId, int count)
+        public static void RemoveItem(this LSViewCardBagComponent self, EUnitType type, int tableId, int count)
         {
             for (int i = 0; i < self.Items.Count; i++) {
                 Tuple<EUnitType, int, int> it = self.Items[i];

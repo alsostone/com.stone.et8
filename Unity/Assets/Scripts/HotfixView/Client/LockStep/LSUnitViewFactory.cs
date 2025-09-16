@@ -42,6 +42,9 @@ namespace ET.Client
             ET.PlayerComponent playerComponent = lsUnit.GetComponent<ET.PlayerComponent>();
             LSUnitView lsUnitView = viewComponent.AddChildWithId<LSUnitView, GameObject>(lsUnit.Id, null);
             lsUnitView.AddComponent<LSViewPlayerComponent, long>(playerComponent.BindEntityId);
+            
+            lsUnitView.AddComponent<LSViewCardBagComponent>();
+            lsUnitView.AddComponent<LSViewCardSelectComponent>();
         }
 
         private static void CreateHeroView(LSUnitViewComponent viewComponent, LSUnit lsUnit)

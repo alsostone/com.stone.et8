@@ -14,5 +14,8 @@ namespace ET.Client
     {
         public string SaveName;
         public int PredictFrame = 0;
+
+        public int SelectCardCount;
+        public YIUILoopScroll<Tuple<EUnitType, int, int>, PlayCardItemComponent> CardLoop;
     }
 }

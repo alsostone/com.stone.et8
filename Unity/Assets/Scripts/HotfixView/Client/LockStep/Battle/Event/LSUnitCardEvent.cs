@@ -6,14 +6,17 @@ namespace ET.Client
         protected override async ETTask Run(LSWorld lsWorld, LSCardSelectAdd args)
         {
             var room = lsWorld.GetParent<Room>();
-            if (room == null)
-                return; // 在不一致上报日志文件时，不是Add到Room组件，所以room可能为空
+            if (room.IsRollback)
+                return; // 不响应回滚过程中的消息。原因：1.RollbackSystem还未执行，单位可能不存在；2.回滚相关的所有恢复操作都应由RollbackSystem处理。
             var comp = room.GetComponent<LSUnitViewComponent>();
             if (comp == null)
                 return;
             var view = comp.GetChild<LSUnitView>(args.Id);
             var viewCardSelectComponent = view.GetComponent<LSViewCardSelectComponent>();
             viewCardSelectComponent.AddCards(args.Cards);
+            
+            PlayViewComponent viewComponent = YIUIMgrComponent.Inst.GetPanelView<LSRoomPanelComponent, PlayViewComponent>();
+            viewComponent?.ResetSelectCards(viewCardSelectComponent.CardsQueue);
             await ETTask.CompletedTask;
         }
     }
@@ -24,14 +27,17 @@ namespace ET.Client
         protected override async ETTask Run(LSWorld lsWorld, LSCardSelectDone args)
         {
             var room = lsWorld.GetParent<Room>();
-            if (room == null)
-                return; // 在不一致上报日志文件时，不是Add到Room组件，所以room可能为空
+            if (room.IsRollback)
+                return; // 不响应回滚过程中的消息。原因：1.RollbackSystem还未执行，单位可能不存在；2.回滚相关的所有恢复操作都应由RollbackSystem处理。
             var comp = room.GetComponent<LSUnitViewComponent>();
             if (comp == null)
                 return;
             var view = comp.GetChild<LSUnitView>(args.Id);
             var viewCardSelectComponent = view.GetComponent<LSViewCardSelectComponent>();
             viewCardSelectComponent.SelectCards(args.Index);
+            
+            PlayViewComponent viewComponent = YIUIMgrComponent.Inst.GetPanelView<LSRoomPanelComponent, PlayViewComponent>();
+            viewComponent?.ResetSelectCards(viewCardSelectComponent.CardsQueue);
             await ETTask.CompletedTask;
         }
     }
@@ -42,14 +48,17 @@ namespace ET.Client
         protected override async ETTask Run(LSWorld lsWorld, LSCardBagAdd args)
         {
             var room = lsWorld.GetParent<Room>();
-            if (room == null)
-                return; // 在不一致上报日志文件时，不是Add到Room组件，所以room可能为空
+            if (room.IsRollback)
+                return; // 不响应回滚过程中的消息。原因：1.RollbackSystem还未执行，单位可能不存在；2.回滚相关的所有恢复操作都应由RollbackSystem处理。
             var comp = room.GetComponent<LSUnitViewComponent>();
             if (comp == null)
                 return;
             var view = comp.GetChild<LSUnitView>(args.Id);
             var viewCardBagComponent = view.GetComponent<LSViewCardBagComponent>();
-            viewCardBagComponent.AddCard(args.Type, args.TableId, args.Count);
+            viewCardBagComponent.AddItem(args.Type, args.TableId, args.Count);
+            
+            PlayViewComponent viewComponent = YIUIMgrComponent.Inst.GetPanelView<LSRoomPanelComponent, PlayViewComponent>();
+            viewComponent?.ResetBagCards(viewCardBagComponent.Items);
             await ETTask.CompletedTask;
         }
     }
@@ -60,14 +69,17 @@ namespace ET.Client
         protected override async ETTask Run(LSWorld lsWorld, LSCardBagRemove args)
         {
             var room = lsWorld.GetParent<Room>();
-            if (room == null)
-                return; // 在不一致上报日志文件时，不是Add到Room组件，所以room可能为空
+            if (room.IsRollback)
+                return; // 不响应回滚过程中的消息。原因：1.RollbackSystem还未执行，单位可能不存在；2.回滚相关的所有恢复操作都应由RollbackSystem处理。
             var comp = room.GetComponent<LSUnitViewComponent>();
             if (comp == null)
                 return;
             var view = comp.GetChild<LSUnitView>(args.Id);
             var viewCardBagComponent = view.GetComponent<LSViewCardBagComponent>();
-            viewCardBagComponent.RemoveCard(args.Type, args.TableId, args.Count);
+            viewCardBagComponent.RemoveItem(args.Type, args.TableId, args.Count);
+            
+            PlayViewComponent viewComponent = YIUIMgrComponent.Inst.GetPanelView<LSRoomPanelComponent, PlayViewComponent>();
+            viewComponent?.ResetBagCards(viewCardBagComponent.Items);
             await ETTask.CompletedTask;
         }
     }

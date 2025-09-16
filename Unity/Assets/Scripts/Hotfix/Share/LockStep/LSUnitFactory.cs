@@ -1,4 +1,6 @@
-﻿using NPBehave;
+﻿using System;
+using System.Collections.Generic;
+using NPBehave;
 using ST.GridBuilder;
 using TrueSync;
 
@@ -48,7 +50,14 @@ namespace ET
 		    lsUnit.AddComponent<TeamComponent, TeamType>(teamType);
 		    lsUnit.AddComponent<PlayerComponent, long>(bindId);
 		    
-		    lsUnit.AddComponent<CardBagComponent>();
+		    // 初始卡组 可以通过配置表来
+		    var cards = ObjectPool.Instance.Fetch<List<Tuple<EUnitType, int, int>>>();
+		    cards.Add(new Tuple<EUnitType, int, int>(EUnitType.Building, 30011, 1));
+		    cards.Add(new Tuple<EUnitType, int, int>(EUnitType.Building, 30021, 1));
+		    lsUnit.AddComponent<CardBagComponent, List<Tuple<EUnitType, int, int>>>(cards);
+		    cards.Clear();
+		    ObjectPool.Instance.Recycle(cards);
+		    
 		    lsUnit.AddComponent<CardSelectComponent>();
 		    lsUnit.AddComponent<LSCommandsRunComponent>();
 			

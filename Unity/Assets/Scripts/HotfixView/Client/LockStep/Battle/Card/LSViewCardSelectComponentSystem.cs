@@ -3,12 +3,35 @@ using System.Collections.Generic;
 
 namespace ET.Client
 {
+    [LSEntitySystemOf(typeof(LSViewCardSelectComponent))]
     [EntitySystemOf(typeof(LSViewCardSelectComponent))]
     [FriendOf(typeof(LSViewCardSelectComponent))]
     public static partial class LSViewCardSelectComponentSystem
     {
+        [EntitySystem]
+        private static void Awake(this LSViewCardSelectComponent self)
+        {
+            self.LSRollback();
+        }
+        
+
+        [LSEntitySystem]
+        private static void LSRollback(this LSViewCardSelectComponent self)
+        {
+            foreach (var items in self.CardsQueue) {
+                items.Clear();
+                ObjectPool.Instance.Recycle(items);
+            }
+            self.CardsQueue.Clear();
+            CardSelectComponent selectComponent = self.LSViewOwner().GetUnit().GetComponent<CardSelectComponent>();
+            foreach (var cards in selectComponent.CardsQueue) {
+                self.AddCards(cards);
+            }
+        }
+
         public static void AddCards(this LSViewCardSelectComponent self, List<Tuple<EUnitType, int, int>> cards)
         {
+            // 传入的参数都是逻辑层的，这里需要拷贝一份，防止逻辑层被回收
             var results = ObjectPool.Instance.Fetch<List<Tuple<EUnitType, int, int>>>();
             results.AddRange(cards);
             self.CardsQueue.Add(results);

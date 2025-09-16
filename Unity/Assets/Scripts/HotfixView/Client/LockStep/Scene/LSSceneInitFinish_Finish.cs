@@ -48,6 +48,11 @@ namespace ET.Client
                     throw new ArgumentOutOfRangeException();
             }
 
+            // 创建房间UI
+            YIUIRootComponent yiuiRootComponent = room.GetComponent<YIUIRootComponent>();
+            var viewIndex = room.LockStepMode < LockStepMode.Local ? ELSRoomPanelViewEnum.ReplayView : ELSRoomPanelViewEnum.PlayView;
+            await yiuiRootComponent.OpenPanelAsync<LSRoomPanelComponent, ELSRoomPanelViewEnum>(viewIndex);
+
             await YIUIMgrComponent.Inst.ClosePanelAsync<LSLobbyPanelComponent>();
             await ETTask.CompletedTask;
         }

@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 
 namespace ET
 {
@@ -7,17 +8,18 @@ namespace ET
     public static partial class CardBagComponentSystem
     {
         [EntitySystem]
-        private static void Awake(this CardBagComponent self)
+        private static void Awake(this CardBagComponent self, List<Tuple<EUnitType, int, int>> items)
         {
+            self.Items.AddRange(items);
         }
         
-        public static void AddCard(this CardBagComponent self, Tuple<EUnitType, int, int> item)
+        public static void AddItem(this CardBagComponent self, Tuple<EUnitType, int, int> item)
         {
             self.Items.Add(item);
             EventSystem.Instance.Publish(self.LSWorld(), new LSCardBagAdd() { Id = self.LSOwner().Id, Type = item.Item1, TableId = item.Item2, Count = item.Item3 });
         }
         
-        public static void RemoveCard(this CardBagComponent self, Tuple<EUnitType, int, int> item)
+        public static void RemoveItem(this CardBagComponent self, Tuple<EUnitType, int, int> item)
         {
             for (int i = 0; i < self.Items.Count; i++) {
                 Tuple<EUnitType, int, int> it = self.Items[i];

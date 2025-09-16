@@ -403,10 +403,10 @@ MonoBehaviour:
   PkgName: LSRoom
   ResName: LSRoomPanel
   UICodeType: 0
-  WindowOption: 0
+  WindowOption: 123904
   PanelLayer: 3
   PanelOption: 4
-  PanelStackOption: 2
+  PanelStackOption: 1
   ViewWindowType: 0
   ViewStackOption: 2
   CachePanelTime: 10

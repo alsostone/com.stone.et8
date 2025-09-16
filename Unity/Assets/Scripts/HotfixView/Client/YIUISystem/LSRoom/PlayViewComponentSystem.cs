@@ -17,6 +17,7 @@ namespace ET.Client
         [EntitySystem]
         private static void YIUIInitialize(this PlayViewComponent self)
         {
+            self.CardLoop = new YIUILoopScroll<Tuple<EUnitType, int, int>, PlayCardItemComponent>(self, self.u_ComCardsLoop, self.CardLoopping);
         }
         
         [EntitySystem]
@@ -38,10 +39,36 @@ namespace ET.Client
         [EntitySystem]
         private static async ETTask<bool> YIUIOpen(this PlayViewComponent self)
         {
+            Room room = self.Room();
+            LSUnitViewComponent lsUnitViewComponent = room.GetComponent<LSUnitViewComponent>();
+            LSUnitView lsPlayer = lsUnitViewComponent.GetChild<LSUnitView>(room.LookPlayerId);
+            
+            LSViewCardBagComponent viewCardBagComponent = lsPlayer.GetComponent<LSViewCardBagComponent>();
+            self.ResetBagCards(viewCardBagComponent.Items);
+            
+            LSViewCardSelectComponent viewCardSelectComponent = lsPlayer.GetComponent<LSViewCardSelectComponent>();
+            self.ResetSelectCards(viewCardSelectComponent.CardsQueue);
+            
             await ETTask.CompletedTask;
             return true;
         }
         
+        private static void CardLoopping(this PlayViewComponent self, int index, Tuple<EUnitType, int, int> data, PlayCardItemComponent item, bool select)
+        {
+            item.ResetItem(data);
+        }
+        
+        public static void ResetBagCards(this PlayViewComponent self, List<Tuple<EUnitType, int, int>> bagCards)
+        {
+            self.CardLoop.SetDataRefresh(bagCards);
+        }
+
+        public static void ResetSelectCards(this PlayViewComponent self, List<List<Tuple<EUnitType, int, int>>> selectCards)
+        {
+            self.SelectCardCount = selectCards.Count;
+            self.u_DataSelectCount.SetValue(selectCards.Count.ToString());
+        }
+
         #region YIUIEvent开始
         
         private static void OnEventSaveNameAction(this PlayViewComponent self, string p1)
@@ -58,6 +85,14 @@ namespace ET.Client
         {
             ulong cmd = LSCommand.GenCommandFloat24x2(0, OperateCommandType.Move, Random.Range(-1, 1), Random.Range(-1, 1));
             self.Room().SendCommandMeesage(cmd);
+        }
+        
+        private static void OnEventSelectCardAction(this PlayViewComponent self)
+        {
+            if (self.SelectCardCount > 0) {
+                ulong cmd = LSCommand.GenCommandButton(0, CommandButtonType.CardSelect, 1);
+                self.Room().SendCommandMeesage(cmd);
+            }
         }
         #endregion YIUIEvent结束
     }
