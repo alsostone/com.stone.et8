@@ -141,7 +141,7 @@
     "Id": 30011,
     "model": 30010001,
     "radius": 5000,
-    "placed_layer": 2,
+    "placed_layer": 3,
     "shape": [
       false,
       false,
@@ -210,7 +210,7 @@
     "Id": 30021,
     "model": 30020001,
     "radius": 5000,
-    "placed_layer": 2,
+    "placed_layer": 3,
     "shape": [
       false,
       false,
@@ -279,7 +279,7 @@
     "Id": 30031,
     "model": 30030001,
     "radius": 5000,
-    "placed_layer": 2,
+    "placed_layer": 3,
     "shape": [
       false,
       false,
@@ -348,7 +348,7 @@
     "Id": 30041,
     "model": 30030001,
     "radius": 5000,
-    "placed_layer": 2,
+    "placed_layer": 3,
     "shape": [
       false,
       false,

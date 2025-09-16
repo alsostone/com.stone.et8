@@ -14,7 +14,8 @@ namespace ET.Client
         {
             protected override void Run(LSViewSkillComponent self)
             {
-                self.LSViewOwner().GetComponent<LSAnimationComponent>().RemoveAnimation(self.TbSkillRow.AniNamePre, 1);
+                var animationComponent = self.LSViewOwner().GetComponent<LSAnimationComponent>();
+                animationComponent?.RemoveAnimation(self.TbSkillRow.AniNamePre, 1);
                 self.PlayAnimation();
             }
         }
@@ -24,7 +25,8 @@ namespace ET.Client
         {
             protected override void Run(LSViewSkillComponent self)
             {
-                self.LSViewOwner().GetComponent<LSAnimationComponent>().RemoveAnimation(self.TbSkillRow.AniName, 1);
+                var animationComponent = self.LSViewOwner().GetComponent<LSAnimationComponent>();
+                animationComponent?.RemoveAnimation(self.TbSkillRow.AniName, 1);
                 self.PlayAnimationAfter();
             }
         }
@@ -34,7 +36,8 @@ namespace ET.Client
         {
             protected override void Run(LSViewSkillComponent self)
             {
-                self.LSViewOwner().GetComponent<LSAnimationComponent>().RemoveAnimation(self.TbSkillRow.AniNameAfter, 1);
+                var animationComponent = self.LSViewOwner().GetComponent<LSAnimationComponent>();
+                animationComponent?.RemoveAnimation(self.TbSkillRow.AniNameAfter, 1);
                 self.TbSkillRow = null;
             }
         }
@@ -73,7 +76,8 @@ namespace ET.Client
             if (self.TbSkillRow.DurationPre > 0)
             {
                 self.IsSkillRunning = true;
-                self.LSViewOwner().GetComponent<LSAnimationComponent>().AddAnimation(self.TbSkillRow.AniNamePre, true);
+                var animationComponent = self.LSViewOwner().GetComponent<LSAnimationComponent>();
+                animationComponent?.AddAnimation(self.TbSkillRow.AniNamePre, true);
                 var tillTime = TimeInfo.Instance.ServerFrameTime() + self.TbSkillRow.DurationPre;
                 self.AniPreTimer = self.Root().GetComponent<TimerComponent>().NewOnceTimer(tillTime, TimerInvokeType.SkillAniPreTimer, self);
             }
@@ -88,7 +92,8 @@ namespace ET.Client
             if (self.TbSkillRow.AniName.Length > 0)
             {
                 self.IsSkillRunning = true;
-                self.LSViewOwner().GetComponent<LSAnimationComponent>().AddAnimation(self.TbSkillRow.AniName, true);
+                var animationComponent = self.LSViewOwner().GetComponent<LSAnimationComponent>();
+                animationComponent?.AddAnimation(self.TbSkillRow.AniName, true);
                 var tillTime = TimeInfo.Instance.ServerFrameTime() + self.TbSkillRow.Duration;
                 self.AniTimer = self.Root().GetComponent<TimerComponent>().NewOnceTimer(tillTime, TimerInvokeType.SkillAniTimer, self);
             }
@@ -103,7 +108,8 @@ namespace ET.Client
             if (self.TbSkillRow.AniNameAfter.Length > 0)
             {
                 self.IsSkillRunning = true;
-                self.LSViewOwner().GetComponent<LSAnimationComponent>().AddAnimation(self.TbSkillRow.AniNameAfter, true);
+                var animationComponent = self.LSViewOwner().GetComponent<LSAnimationComponent>();
+                animationComponent?.AddAnimation(self.TbSkillRow.AniNameAfter, true);
                 var tillTime = TimeInfo.Instance.ServerFrameTime() + self.TbSkillRow.DurationAfter;
                 self.AniAfterTimer = self.Root().GetComponent<TimerComponent>().NewOnceTimer(tillTime, TimerInvokeType.SkillAniAfterTimer, self);
             }

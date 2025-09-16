@@ -41,15 +41,15 @@
   },
   {
     "Id": 30010001,
-    "Url": "Assets/Bundles/Unit/Skeleton1.prefab"
+    "Url": "Assets/Bundles/Prefabs/Building/TowerAtk.prefab"
   },
   {
     "Id": 30020001,
-    "Url": "Assets/Bundles/Unit/Skeleton1.prefab"
+    "Url": "Assets/Bundles/Prefabs/Building/TowerDef.prefab"
   },
   {
     "Id": 30030001,
-    "Url": "Assets/Bundles/Unit/Skeleton1.prefab"
+    "Url": "Assets/Bundles/Prefabs/Building/TowerBlood.prefab"
   },
   {
     "Id": 40010001,

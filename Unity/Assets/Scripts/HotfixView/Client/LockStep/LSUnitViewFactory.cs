@@ -59,7 +59,10 @@ namespace ET.Client
             GameObject unitGo = UnityEngine.Object.Instantiate(prefab, globalComponent.Unit, true);
 
             LSUnitView lsUnitView = viewComponent.AddChildWithId<LSUnitView, GameObject>(lsUnit.Id, unitGo);
-            lsUnitView.AddComponent<LSAnimationComponent>();
+            Animation animation = unitGo.GetComponent<Animation>();
+            if (animation) {
+                lsUnitView.AddComponent<LSAnimationComponent, Animation>(animation);
+            }
             lsUnitView.AddComponent<LSViewTransformComponent, Transform, bool>(unitGo.transform, false);
             lsUnitView.AddComponent<LSViewSkillComponent>();
 
@@ -99,7 +102,10 @@ namespace ET.Client
             GameObject unitGo = UnityEngine.Object.Instantiate(prefab, globalComponent.Unit, true);
 
             LSUnitView lsUnitView = viewComponent.AddChildWithId<LSUnitView, GameObject>(lsUnit.Id, unitGo);
-            lsUnitView.AddComponent<LSAnimationComponent>();
+            Animation animation = unitGo.GetComponent<Animation>();
+            if (animation) {
+                lsUnitView.AddComponent<LSAnimationComponent, Animation>(animation);
+            }
             lsUnitView.AddComponent<LSViewTransformComponent, Transform, bool>(unitGo.transform, false);
             lsUnitView.AddComponent<LSViewSkillComponent>();
             
@@ -124,7 +130,10 @@ namespace ET.Client
             GameObject unitGo = UnityEngine.Object.Instantiate(prefab, globalComponent.Unit, true);
 
             LSUnitView lsUnitView = viewComponent.AddChildWithId<LSUnitView, GameObject>(lsUnit.Id, unitGo);
-            lsUnitView.AddComponent<LSAnimationComponent>();
+            Animation animation = unitGo.GetComponent<Animation>();
+            if (animation) {
+                lsUnitView.AddComponent<LSAnimationComponent, Animation>(animation);
+            }
             lsUnitView.AddComponent<LSViewTransformComponent, Transform, bool>(unitGo.transform, false);
             lsUnitView.AddComponent<LSViewSkillComponent>();
 

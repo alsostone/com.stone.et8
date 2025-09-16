@@ -13,7 +13,7 @@ namespace ET.Client
 	}
 	
 	[ComponentOf]
-	public class LSAnimationComponent : Entity, IAwake, IDestroy
+	public class LSAnimationComponent : Entity, IAwake<Animation>, IDestroy
 	{
 		public Animation Animation;
 		

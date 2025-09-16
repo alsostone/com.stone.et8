@@ -24,9 +24,9 @@ namespace ET.Client
 		}
 		
 		[EntitySystem]
-		private static void Awake(this LSAnimationComponent self)
+		private static void Awake(this LSAnimationComponent self, Animation animation)
 		{
-			self.Animation = self.GetParent<LSUnitView>().GameObject.GetComponent<Animation>();
+			self.Animation = animation;
 		}
 		
 		public static void PlayAnimtation(this LSAnimationComponent self, string name, bool force = false)

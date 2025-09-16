@@ -20,11 +20,13 @@ namespace ET.Client
             {
                 if (UnityEngine.EventSystems.EventSystem.current.IsPointerOverGameObject())
                     return;
+                self.isMouseDraging = true;
                 self.OnTouchBegin(Input.mousePosition);
             }
-            else if (Input.GetMouseButtonUp(0))
+            else if (self.isMouseDraging && Input.GetMouseButtonUp(0))
             {
                 self.OnTouchEnd(Input.mousePosition);
+                self.isMouseDraging = false;
             }
 #else
             for (int i = 0; i < Input.touchCount; i++)
@@ -63,11 +65,6 @@ namespace ET.Client
             if (Input.GetKeyDown(KeyCode.R))
             {
                 self.RotatePlacementObject(1);
-            }
-            if (Input.GetKeyDown(KeyCode.N))
-            {
-                int[] arr = new int[3] { 2001, 2002, 2003 };
-                self.SetPlacementObject(EUnitType.Block, arr[Random.Range(0, arr.Length)]);
             }
         }
         
