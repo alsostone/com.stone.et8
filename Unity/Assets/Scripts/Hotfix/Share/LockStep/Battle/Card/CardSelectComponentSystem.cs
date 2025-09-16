@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using TrueSync;
 
 namespace ET
 {
@@ -34,21 +33,26 @@ namespace ET
             
             var results = ObjectPool.Instance.Fetch<List<Tuple<EUnitType, int, int>>>();
             RandomDropHelper.RandomSet(self.GetRandom(), randomSet, 3, results);
-            self.SelectCardQueue.Enqueue(results);
+            self.CardsQueue.Add(results);
+            
+            EventSystem.Instance.Publish(self.LSWorld(), new LSCardSelectAdd() { Id = self.LSOwner().Id, Cards = results });
         }
         
         public static void TrySelectCard(this CardSelectComponent self, int index)
         {
-            if (self.SelectCardQueue.Count <= 0)
+            if (self.CardsQueue.Count <= 0)
                 return;
             
-            var items = self.SelectCardQueue.Dequeue();
+            var items = self.CardsQueue[0];
+            self.CardsQueue.RemoveAt(0);
+            
             index = Math.Min(items.Count - 1, index);
             CardBagComponent bagComponent = self.LSOwner().GetComponent<CardBagComponent>();
-            bagComponent.AddItem(items[index]);
-            
+            bagComponent.AddCard(items[index]);
             items.Clear();
             ObjectPool.Instance.Recycle(items);
+            
+            EventSystem.Instance.Publish(self.LSWorld(), new LSCardSelectDone() { Id = self.LSOwner().Id, Index = index });
         }
         
     }

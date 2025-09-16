@@ -8,6 +8,6 @@ namespace ET
     [MemoryPackable]
     public partial class CardBagComponent: LSEntity, IAwake
     {
-        public List<Tuple<EUnitType, int, int>> Items { get; private set; } = new List<Tuple<EUnitType, int, int>>();
+        public List<Tuple<EUnitType, int, int>> Items { get; private set; } = new ();
     }
 }
