@@ -1,13 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using MemoryPack;
+using MongoDB.Bson.Serialization.Attributes;
+using MongoDB.Bson.Serialization.Options;
 
 namespace ET
 {
     [ComponentOf(typeof(LSUnit))]
     [MemoryPackable]
-    public partial class CardBagComponent: LSEntity, IAwake<List<Tuple<EUnitType, int, int>>>
+    public partial class CardBagComponent: LSEntity, IAwake<List<LSRandomDropItem>>
     {
-        public List<Tuple<EUnitType, int, int>> Items { get; private set; } = new ();
+        [BsonDictionaryOptions(DictionaryRepresentation.ArrayOfArrays)]
+        public Dictionary<(EUnitType, int), int> ItemCountMap { get; } = new();
     }
 }

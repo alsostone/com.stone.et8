@@ -29,10 +29,10 @@ namespace ET.Client
             }
         }
 
-        public static void AddCards(this LSViewCardSelectComponent self, List<Tuple<EUnitType, int, int>> cards)
+        public static void AddCards(this LSViewCardSelectComponent self, List<LSRandomDropItem> cards)
         {
             // 传入的参数都是逻辑层的，这里需要拷贝一份，防止逻辑层被回收
-            var results = ObjectPool.Instance.Fetch<List<Tuple<EUnitType, int, int>>>();
+            var results = ObjectPool.Instance.Fetch<List<LSRandomDropItem>>();
             results.AddRange(cards);
             self.CardsQueue.Add(results);
         }

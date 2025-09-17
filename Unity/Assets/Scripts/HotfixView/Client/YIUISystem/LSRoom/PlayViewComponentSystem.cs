@@ -17,7 +17,7 @@ namespace ET.Client
         [EntitySystem]
         private static void YIUIInitialize(this PlayViewComponent self)
         {
-            self.CardLoop = new YIUILoopScroll<Tuple<EUnitType, int, int>, PlayCardItemComponent>(self, self.u_ComCardsLoop, self.CardLoopping);
+            self.CardLoop = new YIUILoopScroll<LSRandomDropItem, PlayCardItemComponent>(self, self.u_ComCardsLoop, self.CardLoopping);
         }
         
         [EntitySystem]
@@ -44,7 +44,7 @@ namespace ET.Client
             LSUnitView lsPlayer = lsUnitViewComponent.GetChild<LSUnitView>(room.LookPlayerId);
             
             LSViewCardBagComponent viewCardBagComponent = lsPlayer.GetComponent<LSViewCardBagComponent>();
-            self.ResetBagCards(viewCardBagComponent.Items);
+            self.ResetBagCards(viewCardBagComponent.ItemCountMap);
             
             LSViewCardSelectComponent viewCardSelectComponent = lsPlayer.GetComponent<LSViewCardSelectComponent>();
             self.ResetSelectCards(viewCardSelectComponent.CardsQueue);
@@ -53,17 +53,21 @@ namespace ET.Client
             return true;
         }
         
-        private static void CardLoopping(this PlayViewComponent self, int index, Tuple<EUnitType, int, int> data, PlayCardItemComponent item, bool select)
+        private static void CardLoopping(this PlayViewComponent self, int index, LSRandomDropItem data, PlayCardItemComponent item, bool select)
         {
             item.ResetItem(data);
         }
         
-        public static void ResetBagCards(this PlayViewComponent self, List<Tuple<EUnitType, int, int>> bagCards)
+        public static void ResetBagCards(this PlayViewComponent self, Dictionary<(EUnitType, int), int> bagCards)
         {
-            self.CardLoop.SetDataRefresh(bagCards);
+            self.Cards.Clear();
+            foreach (var pair in bagCards) {
+                self.Cards.Add(new LSRandomDropItem() { Type = pair.Key.Item1, TableId = pair.Key.Item2, Count = pair.Value });
+            }
+            self.CardLoop.SetDataRefresh(self.Cards);
         }
 
-        public static void ResetSelectCards(this PlayViewComponent self, List<List<Tuple<EUnitType, int, int>>> selectCards)
+        public static void ResetSelectCards(this PlayViewComponent self, List<List<LSRandomDropItem>> selectCards)
         {
             self.SelectCardCount = selectCards.Count;
             self.u_DataSelectCount.SetValue(selectCards.Count.ToString());

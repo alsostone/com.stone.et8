@@ -23,14 +23,14 @@ namespace ET
             position = position.Rotation(targetTransform.Rotation.eulerAngles.y);
             
             // 通过 随机包/随机集 获得要召唤的单位
-            var results = ObjectPool.Instance.Fetch<List<Tuple<EUnitType, int, int>>>();
+            var results = ObjectPool.Instance.Fetch<List<LSRandomDropItem>>();
             RandomDropHelper.Random(target.GetRandom(), param[0], results);
-            foreach (var tuple in results)
+            foreach (var item in results)
             {
-                for (var i = 0; i < tuple.Item3; i++)
+                for (var i = 0; i < item.Count; i++)
                 {
                     FP angle = targetTransform.Rotation.eulerAngles.y;
-                    LSUnitFactory.SummonUnit(target.LSWorld(), tuple.Item1, tuple.Item2, targetTransform.Position + position, angle.AsInt(), team);
+                    LSUnitFactory.SummonUnit(target.LSWorld(), item.Type, item.TableId, targetTransform.Position + position, angle.AsInt(), team);
                 }
             }
             results.Clear();

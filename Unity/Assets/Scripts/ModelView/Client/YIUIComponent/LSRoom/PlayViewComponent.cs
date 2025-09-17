@@ -16,6 +16,7 @@ namespace ET.Client
         public int PredictFrame = 0;
 
         public int SelectCardCount;
-        public YIUILoopScroll<Tuple<EUnitType, int, int>, PlayCardItemComponent> CardLoop;
+        public List<LSRandomDropItem> Cards = new();
+        public YIUILoopScroll<LSRandomDropItem, PlayCardItemComponent> CardLoop;
     }
 }

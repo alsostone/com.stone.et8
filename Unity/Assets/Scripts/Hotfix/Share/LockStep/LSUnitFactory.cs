@@ -51,10 +51,10 @@ namespace ET
 		    lsUnit.AddComponent<PlayerComponent, long>(bindId);
 		    
 		    // 初始卡组 可以通过配置表来
-		    var cards = ObjectPool.Instance.Fetch<List<Tuple<EUnitType, int, int>>>();
-		    cards.Add(new Tuple<EUnitType, int, int>(EUnitType.Building, 30011, 1));
-		    cards.Add(new Tuple<EUnitType, int, int>(EUnitType.Building, 30021, 1));
-		    lsUnit.AddComponent<CardBagComponent, List<Tuple<EUnitType, int, int>>>(cards);
+		    var cards = ObjectPool.Instance.Fetch<List<LSRandomDropItem>>();
+		    cards.Add(new LSRandomDropItem(EUnitType.Building, 30011, 1));
+		    cards.Add(new LSRandomDropItem(EUnitType.Building, 30021, 1));
+		    lsUnit.AddComponent<CardBagComponent, List<LSRandomDropItem>>(cards);
 		    cards.Clear();
 		    ObjectPool.Instance.Recycle(cards);
 		    

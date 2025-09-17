@@ -9,6 +9,6 @@ namespace ET
     public partial class CardSelectComponent: LSEntity, IAwake, ILSUpdate
     {
         public int CurrentSelectCount;
-        public List<List<Tuple<EUnitType, int, int>>> CardsQueue { get; private set; } = new ();
+        public List<List<LSRandomDropItem>> CardsQueue { get; private set; } = new ();
     }
 }

@@ -6,7 +6,7 @@ namespace ET
 {
     public static class RandomDropHelper
     {
-        public static void Random(TSRandom random, int randomBagId, List<Tuple<EUnitType, int, int>> randomResults)
+        public static void Random(TSRandom random, int randomBagId, List<LSRandomDropItem> randomResults)
         {
             if (randomResults == null)
                 return;
@@ -56,7 +56,7 @@ namespace ET
         /// <param name="randomSetId"></param>
         /// <param name="randomCount">要获取几类物品，注意：不是几个哈</param>
         /// <param name="randomResults"></param>
-        public static void RandomSet(TSRandom random, int randomSetId, int randomCount, List<Tuple<EUnitType, int, int>> randomResults)
+        public static void RandomSet(TSRandom random, int randomSetId, int randomCount, List<LSRandomDropItem> randomResults)
         {
             var items = TbRandomSet.Instance.Get(randomSetId).Items;
             if (items.Length <= randomCount) {
@@ -67,7 +67,7 @@ namespace ET
                     int count = itemRandomSet.CountMax > itemRandomSet.CountMin
                         ? random.Range(itemRandomSet.CountMin, itemRandomSet.CountMax + 1)
                         : itemRandomSet.CountMin;
-                    randomResults.Add(new Tuple<EUnitType, int, int>(itemRandomSet.Type, itemRandomSet.Id, count));
+                    randomResults.Add(new LSRandomDropItem(itemRandomSet.Type, itemRandomSet.Id, count));
                 }
 
                 return;
@@ -96,7 +96,7 @@ namespace ET
                         int count = items[j].CountMax > items[j].CountMin
                             ? random.Range(items[j].CountMin, items[j].CountMax + 1)
                             : items[j].CountMin;
-                        randomResults.Add(new Tuple<EUnitType, int, int>(items[j].Type, items[j].Id, count));
+                        randomResults.Add(new LSRandomDropItem(items[j].Type, items[j].Id, count));
                         alreadyRand.Add(j);
                         break;
                     }

@@ -24,16 +24,16 @@ namespace ET.Client
         {
         }
 
-        public static void ResetItem(this PlayCardItemComponent self, Tuple<EUnitType, int, int> data)
+        public static void ResetItem(this PlayCardItemComponent self, LSRandomDropItem data)
         {
             self.Data = data;
-            switch (data.Item1)
+            switch (data.Type)
             {
                 case EUnitType.Block:
-                    self.u_DataName.SetValue($"Block{data.Item2}");
+                    self.u_DataName.SetValue($"Block{data.TableId}");
                     break;
                 case EUnitType.Building:
-                    self.u_DataName.SetValue($"Building{data.Item2}");
+                    self.u_DataName.SetValue($"Building{data.TableId}");
                     break;
             }
         }
@@ -62,7 +62,7 @@ namespace ET.Client
         {
             Room room = self.Room();
             LSOperaDragComponent dragComponent = room.GetComponent<LSOperaDragComponent>();
-            dragComponent.SetPlacementObject(self.Data.Item1, self.Data.Item2);
+            dragComponent.SetPlacementObject(self.Data.Type, self.Data.TableId);
         }
         #endregion YIUIEvent结束
     }

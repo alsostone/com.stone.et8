@@ -48,18 +48,18 @@ namespace ET
                 self.CurrentMonsterCount++;
                 self.NextMonsterFrame = lsWorld.Frame + self.TbRow.RandomInterval.Convert2Frame();
                 
-                var results = ObjectPool.Instance.Fetch<List<Tuple<EUnitType, int, int>>>();
+                var results = ObjectPool.Instance.Fetch<List<LSRandomDropItem>>();
                 RandomDropHelper.RandomSet(self.GetRandom(), randomSet, 1, results);
-                foreach (var tuple in results)
+                foreach (var item in results)
                 {
-                    for (var i = 0; i < tuple.Item3; i++)
+                    for (var i = 0; i < item.Count; i++)
                     {
                         TSVector2 v2 = self.GetRandomPointOnCircle(self.GetRandom(), 32);
                         TSVector position = new TSVector(v2.x, 0, v2.y);
                         TSQuaternion rotation = TSQuaternion.LookRotation(position, TSVector.up);
                         
                         FP angle = rotation.eulerAngles.y;
-                        LSUnitFactory.SummonUnit(lsWorld, tuple.Item1, tuple.Item2, position, angle.AsInt(), TeamType.TeamB);
+                        LSUnitFactory.SummonUnit(lsWorld, item.Type, item.TableId, position, angle.AsInt(), TeamType.TeamB);
                     }
                 }
                 results.Clear();

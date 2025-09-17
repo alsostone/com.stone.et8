@@ -6,7 +6,7 @@ namespace ET
     public struct LSCardSelectAdd
     {
         public long Id;
-        public List<Tuple<EUnitType, int, int>> Cards;
+        public List<LSRandomDropItem> Cards;
     }
     
     public struct LSCardSelectDone
@@ -18,17 +18,13 @@ namespace ET
     public struct LSCardBagAdd
     {
         public long Id;
-        public EUnitType Type;
-        public int TableId;
-        public int Count;
+        public LSRandomDropItem Item;
     }
     
     public struct LSCardBagRemove
     {
         public long Id;
-        public EUnitType Type;
-        public int TableId;
-        public int Count;
+        public LSRandomDropItem Item;
     }
     
 }

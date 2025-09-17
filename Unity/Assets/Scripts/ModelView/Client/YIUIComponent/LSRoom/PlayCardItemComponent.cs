@@ -12,6 +12,6 @@ namespace ET.Client
     /// </summary>
     public partial class PlayCardItemComponent: Entity
     {
-        public Tuple<EUnitType, int, int> Data;
+        public LSRandomDropItem Data;
     }
 }

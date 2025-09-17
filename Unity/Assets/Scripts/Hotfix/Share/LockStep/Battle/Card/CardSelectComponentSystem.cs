@@ -31,7 +31,7 @@ namespace ET
             int index = Math.Min(lsStageComponent.TbRow.RandomCards.Length, self.CurrentSelectCount);
             int randomSet = lsStageComponent.TbRow.RandomCards[index - 1];
             
-            var results = ObjectPool.Instance.Fetch<List<Tuple<EUnitType, int, int>>>();
+            var results = ObjectPool.Instance.Fetch<List<LSRandomDropItem>>();
             RandomDropHelper.RandomSet(self.GetRandom(), randomSet, 3, results);
             self.CardsQueue.Add(results);
             

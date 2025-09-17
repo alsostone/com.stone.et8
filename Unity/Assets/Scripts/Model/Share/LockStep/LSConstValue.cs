@@ -22,5 +22,19 @@ namespace ET
         public const string LSWroldFolderName = "frame_lsworld";
         public const string LSWroldFolderNameSvr = "frame_lsworld_server";
     }
-
+    
+    public struct LSRandomDropItem
+    {
+        public LSRandomDropItem(EUnitType type, int tableId, int count)
+        {
+            this.Type = type;
+            this.TableId = tableId;
+            this.Count = count;
+        }
+        
+        public EUnitType Type;
+        public int TableId;
+        public int Count;
+    }
+    
 }
