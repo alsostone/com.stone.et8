@@ -17,7 +17,6 @@ namespace ET
         private static void LSUpdate(this LSCommandsRunComponent self)
         {
             LSUnit lsPlayer = self.LSOwner();
-            TeamType teamPlacer = lsPlayer.GetComponent<TeamComponent>().Type;
             foreach (ulong command in self.Commands)
             {
                 switch (LSCommand.ParseCommandType(command))
@@ -30,19 +29,19 @@ namespace ET
                     case OperateCommandType.PlacementDragStart:
                         {
                             long targetId = (long)LSCommand.ParseCommandLong48(command);
-                            self.LSWorld().GetComponent<LSGridBuilderComponent>().RunCommandPlacementDragStart(teamPlacer, targetId);
+                            self.LSWorld().GetComponent<LSGridBuilderComponent>().RunCommandPlacementDragStart(lsPlayer, targetId);
                             break;
                         }
                     case OperateCommandType.PlacementDrag:
                         {
                             TSVector2 pos = LSCommand.ParseCommandFloat24x2(command);
-                            self.LSWorld().GetComponent<LSGridBuilderComponent>().RunCommandPlacementDrag(teamPlacer, pos);
+                            self.LSWorld().GetComponent<LSGridBuilderComponent>().RunCommandPlacementDrag(lsPlayer, pos);
                             break;
                         }
                     case OperateCommandType.PlacementDragEnd:
                         {
                             TSVector2 pos = LSCommand.ParseCommandFloat24x2(command);
-                            self.LSWorld().GetComponent<LSGridBuilderComponent>().RunCommandPlacementDragEnd(teamPlacer, pos);
+                            self.LSWorld().GetComponent<LSGridBuilderComponent>().RunCommandPlacementDragEnd(lsPlayer, pos);
                             break;
                         }
                     case OperateCommandType.PlacementStart:
@@ -50,7 +49,7 @@ namespace ET
                             ulong param = LSCommand.ParseCommandLong48(command);
                             EUnitType type = (EUnitType)((param >> 32) & 0xFFFF);
                             int tableId = (int)(param & 0xFFFFFFFF);
-                            self.LSWorld().GetComponent<LSGridBuilderComponent>().RunCommandPlacementStart(teamPlacer, type, tableId);
+                            self.LSWorld().GetComponent<LSGridBuilderComponent>().RunCommandPlacementStart(lsPlayer, type, tableId);
                             break;
                         }
                     case OperateCommandType.Button:
