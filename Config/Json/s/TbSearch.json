@@ -62,7 +62,7 @@
   {
     "Id": 30010002,
     "valid_forward": false,
-    "range": 10000,
+    "range": 20000,
     "team": 4,
     "type": 9,
     "table_id": [],
@@ -102,7 +102,7 @@
   {
     "Id": 40000001,
     "valid_forward": false,
-    "range": 15000,
+    "range": 25000,
     "team": 4,
     "type": 13,
     "table_id": [],

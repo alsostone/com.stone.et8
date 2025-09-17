@@ -111,10 +111,10 @@
     "ani_name": "Attack",
     "ani_name_after": "",
     "duration_pre": 0,
-    "duration": 2567,
+    "duration": 200,
     "duration_after": 0,
     "trigger_array": [
-      1000
+      100
     ],
     "effect_group_id": 30010001,
     "release_condition_type": 0,
