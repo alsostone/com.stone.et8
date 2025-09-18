@@ -21,9 +21,11 @@ namespace ET.Client
     
     public struct OnCardDragStartEvent
     {
+        public TeamType TeamPlacer;
     }
     
     public struct OnCardDragEndEvent
     {
+        public TeamType TeamPlacer;
     }
 }
