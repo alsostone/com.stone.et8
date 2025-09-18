@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace ET.Client
 {
-	[ComponentOf(typeof(Room))]
+	[ComponentOf(typeof(LSUnitView))]
 	public class LSViewGridBuilderComponent : Entity, IAwake, IDestroy
 	{
 		public Placement DragPlacement;

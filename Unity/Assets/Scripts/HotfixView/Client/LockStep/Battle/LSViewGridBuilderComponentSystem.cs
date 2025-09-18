@@ -18,10 +18,10 @@ namespace ET.Client
         [EntitySystem]
         private static void Destroy(this LSViewGridBuilderComponent self)
         {
-            self.OnPlacementCancel(TeamType.TeamA);
+            self.OnPlacementCancel();
         }
         
-        public static void OnPlacementDragStart(this LSViewGridBuilderComponent self, TeamType teamPlacer, long targetId)
+        public static void OnPlacementDragStart(this LSViewGridBuilderComponent self, long targetId)
         {
             if (!self.DragPlacement)
             {
@@ -39,14 +39,14 @@ namespace ET.Client
                     self.DragUnitView = lsUnitView;
                     self.DragPlacement.SetPreviewMaterial();
                     self.DragOffset = new Vector3(0, float.MaxValue, 0);
-                    self.Fiber().UIEvent(new OnCardDragStartEvent() { TeamPlacer = teamPlacer }).Coroutine();
+                    self.Fiber().UIEvent(new OnCardDragStartEvent() { PlayerId = self.LSViewOwner().Id }).Coroutine();
                 } else {
                     placement.DoShake();
                 }
             }
         }
 
-        public static void OnPlacementDrag(this LSViewGridBuilderComponent self, TeamType teamPlacer, TSVector2 position)
+        public static void OnPlacementDrag(this LSViewGridBuilderComponent self, TSVector2 position)
         {
             if (self.DragPlacement)
             {
@@ -69,15 +69,15 @@ namespace ET.Client
             }
         }
 
-        public static void OnPlacementDragEnd(this LSViewGridBuilderComponent self, TeamType teamPlacer, TSVector2 position)
+        public static void OnPlacementDragEnd(this LSViewGridBuilderComponent self, TSVector2 position)
         {
             // 这里恢复原状即可 放置结果由逻辑层处理并通知给表现层
-            self.OnPlacementCancel(teamPlacer);
+            self.OnPlacementCancel();
         }
 
-        public static void OnPlacementStart(this LSViewGridBuilderComponent self, TeamType teamPlacer, EUnitType type, int tableId)
+        public static void OnPlacementStart(this LSViewGridBuilderComponent self, EUnitType type, int tableId)
         {
-            self.OnPlacementCancel(teamPlacer);
+            self.OnPlacementCancel();
             int targetModel = 0;
             switch (type)
             {
@@ -108,11 +108,11 @@ namespace ET.Client
                 self.DragPlacement = placement;
                 self.DragPlacement.SetPreviewMaterial();
                 self.DragOffset = Vector3.zero;
-                self.Fiber().UIEvent(new OnCardDragStartEvent() { TeamPlacer = teamPlacer }).Coroutine();
+                self.Fiber().UIEvent(new OnCardDragStartEvent() { PlayerId = self.LSViewOwner().Id }).Coroutine();
             }
         }
 
-        public static void OnPlacementRotate(this LSViewGridBuilderComponent self, TeamType teamPlacer, int rotation)
+        public static void OnPlacementRotate(this LSViewGridBuilderComponent self, int rotation)
         {
             if (self.DragPlacement)
             {
@@ -122,11 +122,11 @@ namespace ET.Client
             }
         }
 
-        public static void OnPlacementCancel(this LSViewGridBuilderComponent self, TeamType teamPlacer)
+        public static void OnPlacementCancel(this LSViewGridBuilderComponent self)
         {
             if (self.DragPlacement)
             {
-                self.Fiber().UIEvent(new OnCardDragEndEvent() { TeamPlacer = teamPlacer }).Coroutine();
+                self.Fiber().UIEvent(new OnCardDragEndEvent() { PlayerId = self.LSViewOwner().Id }).Coroutine();
                 self.DragPlacement.ResetPreviewMaterial();
                 if (self.DragPlacement.placementData.isNew) {
                     self.DragPlacement.Remove();

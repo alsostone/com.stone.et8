@@ -4,38 +4,38 @@ namespace ET
 {
     public struct LSPlacementDragStart
     {
-        public TeamType TeamPlacer;
+        public long Id;
         public long TargetId;
     }
     
     public struct LSPlacementDrag
     {
-        public TeamType TeamPlacer;
+        public long Id;
         public TSVector2 Position;
     }
     
     public struct LSPlacementDragEnd
     {
-        public TeamType TeamPlacer;
+        public long Id;
         public TSVector2 Position;
     }
     
     public struct LSPlacementStart
     {
-        public TeamType TeamPlacer;
+        public long Id;
         public EUnitType Type;
         public int TableId;
     }
     
     public struct LSPlacementRotate
     {
-        public TeamType TeamPlacer;
+        public long Id;
         public int Rotation;
     }
     
     public struct LSPlacementCancel
     {
-        public TeamType TeamPlacer;
+        public long Id;
     }
 }
 

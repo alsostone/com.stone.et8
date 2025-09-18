@@ -29,19 +29,19 @@ namespace ET
                     case OperateCommandType.PlacementDragStart:
                         {
                             long targetId = (long)LSCommand.ParseCommandLong48(command);
-                            self.LSWorld().GetComponent<LSGridBuilderComponent>().RunCommandPlacementDragStart(lsPlayer, targetId);
+                            lsPlayer.GetComponent<LSGridBuilderComponent>().RunCommandPlacementDragStart(targetId);
                             break;
                         }
                     case OperateCommandType.PlacementDrag:
                         {
                             TSVector2 pos = LSCommand.ParseCommandFloat24x2(command);
-                            self.LSWorld().GetComponent<LSGridBuilderComponent>().RunCommandPlacementDrag(lsPlayer, pos);
+                            lsPlayer.GetComponent<LSGridBuilderComponent>().RunCommandPlacementDrag(pos);
                             break;
                         }
                     case OperateCommandType.PlacementDragEnd:
                         {
                             TSVector2 pos = LSCommand.ParseCommandFloat24x2(command);
-                            self.LSWorld().GetComponent<LSGridBuilderComponent>().RunCommandPlacementDragEnd(lsPlayer, pos);
+                            lsPlayer.GetComponent<LSGridBuilderComponent>().RunCommandPlacementDragEnd(pos);
                             break;
                         }
                     case OperateCommandType.PlacementStart:
@@ -49,7 +49,7 @@ namespace ET
                             ulong param = LSCommand.ParseCommandLong48(command);
                             EUnitType type = (EUnitType)((param >> 32) & 0xFFFF);
                             int tableId = (int)(param & 0xFFFFFFFF);
-                            self.LSWorld().GetComponent<LSGridBuilderComponent>().RunCommandPlacementStart(lsPlayer, type, tableId);
+                            lsPlayer.GetComponent<LSGridBuilderComponent>().RunCommandPlacementStart(type, tableId);
                             break;
                         }
                     case OperateCommandType.Button:
@@ -77,10 +77,10 @@ namespace ET
             switch (button.Item1)
             {
                 case CommandButtonType.PlacementRotate:
-                    self.LSWorld().GetComponent<LSGridBuilderComponent>().RunCommandPlacementRotate(teamPlacer, (int)button.Item2);
+                    lsPlayer.GetComponent<LSGridBuilderComponent>().RunCommandPlacementRotate((int)button.Item2);
                     break;
                 case CommandButtonType.PlacementCancel:
-                    self.LSWorld().GetComponent<LSGridBuilderComponent>().RunCommandPlacementCancel(teamPlacer);
+                    lsPlayer.GetComponent<LSGridBuilderComponent>().RunCommandPlacementCancel();
                     break;
                 case CommandButtonType.CardSelect:
                     lsPlayer.GetComponent<CardSelectComponent>().TrySelectCard((int)button.Item2);

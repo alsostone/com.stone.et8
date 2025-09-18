@@ -3,7 +3,7 @@ using TrueSync;
 
 namespace ET
 {
-    [ComponentOf(typeof(LSWorld))]
+    [ComponentOf(typeof(LSUnit))]
     [MemoryPackable]
     public partial class LSGridBuilderComponent: LSEntity, IAwake, ISerializeToEntity
     {

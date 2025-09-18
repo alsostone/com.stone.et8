@@ -22,6 +22,7 @@ namespace ET.Client
             foreach (var pair in bagComponent.ItemCountMap) {
                 self.ItemCountMap[(pair.Key.Item1, pair.Key.Item2)] = pair.Value;
             }
+            self.Fiber().UIEvent(new OnCardViewResetEvent() { PlayerId = self.LSViewOwner().Id }).Coroutine();
         }
         
         public static void AddItem(this LSViewCardBagComponent self, LSRandomDropItem item)
@@ -31,6 +32,7 @@ namespace ET.Client
             } else {
                 self.ItemCountMap[(item.Type, item.TableId)] = item.Count;
             }
+            self.Fiber().UIEvent(new OnCardViewResetEvent() { PlayerId = self.LSViewOwner().Id }).Coroutine();
         }
         
         public static void RemoveItem(this LSViewCardBagComponent self, LSRandomDropItem item)
@@ -42,6 +44,7 @@ namespace ET.Client
                     self.ItemCountMap[(item.Type, item.TableId)] = count - item.Count;
                 }
             }
+            self.Fiber().UIEvent(new OnCardViewResetEvent() { PlayerId = self.LSViewOwner().Id }).Coroutine();
         }
     }
 }

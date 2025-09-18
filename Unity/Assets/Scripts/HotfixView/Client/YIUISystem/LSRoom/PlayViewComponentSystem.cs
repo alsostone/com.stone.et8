@@ -42,13 +42,10 @@ namespace ET.Client
             Room room = self.Room();
             LSUnitViewComponent lsUnitViewComponent = room.GetComponent<LSUnitViewComponent>();
             LSUnitView lsPlayer = lsUnitViewComponent.GetChild<LSUnitView>(room.LookPlayerId);
-            
-            LSViewCardBagComponent viewCardBagComponent = lsPlayer.GetComponent<LSViewCardBagComponent>();
-            self.ResetBagCards(viewCardBagComponent.ItemCountMap);
-            
             LSViewCardSelectComponent viewCardSelectComponent = lsPlayer.GetComponent<LSViewCardSelectComponent>();
             self.ResetSelectCards(viewCardSelectComponent.CardsQueue);
             
+            self.ResetBagCards();
             await ETTask.CompletedTask;
             return true;
         }
@@ -57,20 +54,35 @@ namespace ET.Client
         private static async ETTask YIUIEvent(this PlayViewComponent self, OnCardDragStartEvent message)
         {
             await ETTask.CompletedTask;
-            self.u_ComAlphaGroup.alpha = 0.3f;
+            if (message.PlayerId == self.Room().LookPlayerId)
+                self.u_ComAlphaGroup.alpha = 0.3f;
         }
         
         [EntitySystem]
         private static async ETTask YIUIEvent(this PlayViewComponent self, OnCardDragEndEvent message)
         {
             await ETTask.CompletedTask;
-            self.u_ComAlphaGroup.alpha = 1f;
+            if (message.PlayerId == self.Room().LookPlayerId)
+                self.u_ComAlphaGroup.alpha = 1f;
         }
         
-        public static void ResetBagCards(this PlayViewComponent self, Dictionary<(EUnitType, int), int> bagCards)
+        [EntitySystem]
+        private static async ETTask YIUIEvent(this PlayViewComponent self, OnCardViewResetEvent message)
         {
+            await ETTask.CompletedTask;
+            if (message.PlayerId == self.Room().LookPlayerId)
+                self.ResetBagCards();
+        }
+        
+        private static void ResetBagCards(this PlayViewComponent self)
+        {
+            Room room = self.Room();
+            LSUnitViewComponent lsUnitViewComponent = room.GetComponent<LSUnitViewComponent>();
+            LSUnitView lsPlayer = lsUnitViewComponent.GetChild<LSUnitView>(room.LookPlayerId);
+            LSViewCardBagComponent viewCardBagComponent = lsPlayer.GetComponent<LSViewCardBagComponent>();
+            
             self.CardsView.Clear();
-            foreach (var pair in bagCards)
+            foreach (var pair in viewCardBagComponent.ItemCountMap)
             {
                 var renderer = self.CardsView.CreateItemRenderer();
                 renderer.SetData(new PlayCardItemData() { Type = pair.Key.Item1, TableId = pair.Key.Item2 });

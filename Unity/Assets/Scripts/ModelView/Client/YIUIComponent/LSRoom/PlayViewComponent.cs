@@ -10,7 +10,7 @@ namespace ET.Client
     /// Date    2025.3.6
     /// Desc
     /// </summary>
-    public partial class PlayViewComponent: Entity, IUpdate, IYIUIEvent<OnCardDragStartEvent>, IYIUIEvent<OnCardDragEndEvent>
+    public partial class PlayViewComponent: Entity, IUpdate, IYIUIEvent<OnCardDragStartEvent>, IYIUIEvent<OnCardDragEndEvent>, IYIUIEvent<OnCardViewResetEvent>
     {
         public string SaveName;
         public int PredictFrame = 0;
@@ -21,11 +21,16 @@ namespace ET.Client
     
     public struct OnCardDragStartEvent
     {
-        public TeamType TeamPlacer;
+        public long PlayerId;
     }
     
     public struct OnCardDragEndEvent
     {
-        public TeamType TeamPlacer;
+        public long PlayerId;
+    }
+    
+    public struct OnCardViewResetEvent
+    {
+        public long PlayerId;
     }
 }

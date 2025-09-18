@@ -49,6 +49,7 @@ namespace ET
 		    lsUnit.AddComponent<TypeComponent, EUnitType>(EUnitType.Player);
 		    lsUnit.AddComponent<TeamComponent, TeamType>(teamType);
 		    lsUnit.AddComponent<PlayerComponent, long>(bindId);
+		    lsUnit.AddComponent<LSGridBuilderComponent>();
 		    
 		    // 初始卡组 可以通过配置表来
 		    var cards = ObjectPool.Instance.Fetch<List<LSRandomDropItem>>();

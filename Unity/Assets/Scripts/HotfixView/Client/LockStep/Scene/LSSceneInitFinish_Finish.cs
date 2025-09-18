@@ -12,7 +12,6 @@ namespace ET.Client
             room.AddComponent<LSCameraComponent>();
             room.AddComponent<LSViewGameOverComponent>();
             room.AddComponent<LSViewGridMapComponent>();
-            room.AddComponent<LSViewGridBuilderComponent>();
             room.AddComponent<LSUnitViewComponent>();
 
             switch (room.LockStepMode)

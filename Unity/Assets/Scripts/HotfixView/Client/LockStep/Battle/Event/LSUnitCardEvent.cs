@@ -56,9 +56,6 @@ namespace ET.Client
             var view = comp.GetChild<LSUnitView>(args.Id);
             var viewCardBagComponent = view.GetComponent<LSViewCardBagComponent>();
             viewCardBagComponent.AddItem(args.Item);
-            
-            PlayViewComponent viewComponent = YIUIMgrComponent.Inst.GetPanelView<LSRoomPanelComponent, PlayViewComponent>();
-            viewComponent?.ResetBagCards(viewCardBagComponent.ItemCountMap);
             await ETTask.CompletedTask;
         }
     }
@@ -77,9 +74,6 @@ namespace ET.Client
             var view = comp.GetChild<LSUnitView>(args.Id);
             var viewCardBagComponent = view.GetComponent<LSViewCardBagComponent>();
             viewCardBagComponent.RemoveItem(args.Item);
-            
-            PlayViewComponent viewComponent = YIUIMgrComponent.Inst.GetPanelView<LSRoomPanelComponent, PlayViewComponent>();
-            viewComponent?.ResetBagCards(viewCardBagComponent.ItemCountMap);
             await ETTask.CompletedTask;
         }
     }
