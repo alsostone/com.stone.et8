@@ -13,5 +13,6 @@ namespace ET.Client
     public partial class PlayCardItemComponent: Entity
     {
         public LSRandomDropItem Data;
+        public int PointerId = -1;
     }
 }

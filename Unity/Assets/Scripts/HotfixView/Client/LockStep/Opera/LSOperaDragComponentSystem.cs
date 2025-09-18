@@ -15,7 +15,7 @@ namespace ET.Client
         [EntitySystem]
         private static void Update(this LSOperaDragComponent self)
         {
-#if UNITY_EDITOR
+#if UNITY_STANDALONE || UNITY_EDITOR
             if (Input.GetMouseButtonDown(0))
             {
                 if (UnityEngine.EventSystems.EventSystem.current.IsPointerOverGameObject())
@@ -23,10 +23,21 @@ namespace ET.Client
                 self.isMouseDraging = true;
                 self.OnTouchBegin(Input.mousePosition);
             }
-            else if (self.isMouseDraging && Input.GetMouseButtonUp(0))
+            else if (self.isMouseDraging)
             {
-                self.OnTouchEnd(Input.mousePosition);
-                self.isMouseDraging = false;
+                if (Input.GetMouseButtonUp(0))
+                {
+                    self.OnTouchEnd(Input.mousePosition);
+                    self.isMouseDraging = false;
+                }
+                else
+                {
+                    self.OnTouchMove(Input.mousePosition);
+                }
+            }
+            if (!self.isOutsideDraging && !self.isMouseDraging)
+            {
+                self.OnTouchMove(Input.mousePosition);
             }
 #else
             for (int i = 0; i < Input.touchCount; i++)
@@ -52,12 +63,11 @@ namespace ET.Client
                     self.dragFingerId = -1;
                 }
             }
-#endif
-            if (self.dragFingerId == -1)
+            if (!self.isMouseMoveDisable && self.dragFingerId == -1)
             {
                 self.OnTouchMove(Input.mousePosition);
             }
-            
+#endif
             if (Input.GetKeyDown(KeyCode.Escape))
             {
                 self.CancelPlacementObject();
@@ -86,7 +96,7 @@ namespace ET.Client
             return false;
         }
 
-        private static void OnTouchMove(this LSOperaDragComponent self, Vector3 touchPosition)
+        public static void OnTouchMove(this LSOperaDragComponent self, Vector3 touchPosition)
         {
             if (self.isDraging)
             {
@@ -97,7 +107,7 @@ namespace ET.Client
             }
         }
 
-        private static void OnTouchEnd(this LSOperaDragComponent self, Vector3 touchPosition)
+        public static void OnTouchEnd(this LSOperaDragComponent self, Vector3 touchPosition)
         {
             if (self.isDraging)
             {
@@ -112,18 +122,20 @@ namespace ET.Client
                     self.Room().SendCommandMeesage(command);
                 }
                 self.isDraging = false;
+                self.isOutsideDraging = false;
             }
         }
         
-        public static void SetPlacementObject(this LSOperaDragComponent self, EUnitType type, int tableId)
+        public static void SetPlacementObject(this LSOperaDragComponent self, EUnitType type, int tableId, bool disableMouseMove)
         {
             ulong param = ((ulong)type << 32) | (uint)tableId;
             ulong command = LSCommand.GenCommandLong48(0, OperateCommandType.PlacementStart, param);
             self.Room().SendCommandMeesage(command);
             self.isDraging = true;
+            self.isOutsideDraging = disableMouseMove;
         }
 
-        public static void RotatePlacementObject(this LSOperaDragComponent self, int rotation = 1)
+        private static void RotatePlacementObject(this LSOperaDragComponent self, int rotation = 1)
         {
             if (self.isDraging)
             {
@@ -132,7 +144,7 @@ namespace ET.Client
             }
         }
         
-        public static void CancelPlacementObject(this LSOperaDragComponent self)
+        private static void CancelPlacementObject(this LSOperaDragComponent self)
         {
             if (self.isDraging)
             {

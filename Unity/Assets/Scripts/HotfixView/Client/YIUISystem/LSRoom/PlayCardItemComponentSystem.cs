@@ -42,27 +42,43 @@ namespace ET.Client
         private static void OnEventDragBeginAction(this PlayCardItemComponent self, object p1)
         {
             PointerEventData eventData = p1 as PointerEventData;
+            self.PointerId = eventData.pointerId;
             
+            Room room = self.Room();
+            LSOperaDragComponent dragComponent = room.GetComponent<LSOperaDragComponent>();
+            dragComponent.SetPlacementObject(self.Data.Type, self.Data.TableId, true);
+            dragComponent.OnTouchMove(eventData.position);
         }
 
         private static void OnEventDragAction(this PlayCardItemComponent self, object p1)
         {
             PointerEventData eventData = p1 as PointerEventData;
+            if (self.PointerId != eventData.pointerId)
+                return;
             
+            Room room = self.Room();
+            LSOperaDragComponent dragComponent = room.GetComponent<LSOperaDragComponent>();
+            dragComponent.OnTouchMove(eventData.position);
         }
         
         private static void OnEventDragEndAction(this PlayCardItemComponent self, object p1)
         {
             PointerEventData eventData = p1 as PointerEventData;
+            if (self.PointerId != eventData.pointerId)
+                return;
             
+            Room room = self.Room();
+            LSOperaDragComponent dragComponent = room.GetComponent<LSOperaDragComponent>();
+            dragComponent.OnTouchEnd(eventData.position);
         }
         
         private static void OnEventClickAction(this PlayCardItemComponent self)
         {
             Room room = self.Room();
             LSOperaDragComponent dragComponent = room.GetComponent<LSOperaDragComponent>();
-            dragComponent.SetPlacementObject(self.Data.Type, self.Data.TableId);
+            dragComponent.SetPlacementObject(self.Data.Type, self.Data.TableId, false);
         }
+        
         #endregion YIUIEvent结束
     }
 }
