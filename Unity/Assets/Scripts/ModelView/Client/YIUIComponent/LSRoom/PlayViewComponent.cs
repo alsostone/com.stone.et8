@@ -16,7 +16,6 @@ namespace ET.Client
         public int PredictFrame = 0;
 
         public int SelectCardCount;
-        public List<LSRandomDropItem> Cards = new();
-        public YIUILoopScroll<LSRandomDropItem, PlayCardItemComponent> CardLoop;
+        public YIUIListView<PlayCardItemComponent> CardsView;
     }
 }

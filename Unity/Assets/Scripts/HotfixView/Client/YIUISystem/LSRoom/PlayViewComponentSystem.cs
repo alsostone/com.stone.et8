@@ -17,7 +17,7 @@ namespace ET.Client
         [EntitySystem]
         private static void YIUIInitialize(this PlayViewComponent self)
         {
-            self.CardLoop = new YIUILoopScroll<LSRandomDropItem, PlayCardItemComponent>(self, self.u_ComCardsLoop, self.CardLoopping);
+            self.CardsView = new YIUIListView<PlayCardItemComponent>(self, self.u_ComCardsRoot);
         }
         
         [EntitySystem]
@@ -53,18 +53,13 @@ namespace ET.Client
             return true;
         }
         
-        private static void CardLoopping(this PlayViewComponent self, int index, LSRandomDropItem data, PlayCardItemComponent item, bool select)
-        {
-            item.ResetItem(data);
-        }
-        
         public static void ResetBagCards(this PlayViewComponent self, Dictionary<(EUnitType, int), int> bagCards)
         {
-            self.Cards.Clear();
+            self.CardsView.Clear();
             foreach (var pair in bagCards) {
-                self.Cards.Add(new LSRandomDropItem() { Type = pair.Key.Item1, TableId = pair.Key.Item2, Count = pair.Value });
+                var uiBase = self.CardsView.CreateItemRenderer();
+                uiBase.ResetItem(new LSRandomDropItem() { Type = pair.Key.Item1, TableId = pair.Key.Item2, Count = pair.Value });
             }
-            self.CardLoop.SetDataRefresh(self.Cards);
         }
 
         public static void ResetSelectCards(this PlayViewComponent self, List<List<LSRandomDropItem>> selectCards)

@@ -39,20 +39,19 @@ namespace ET.Client
         }
         
         #region YIUIEvent开始
-        
-        private static void OnEventDragEndAction(this PlayCardItemComponent self, object p1)
+        private static void OnEventDragBeginAction(this PlayCardItemComponent self, object p1)
         {
             PointerEventData eventData = p1 as PointerEventData;
             
         }
-        
+
         private static void OnEventDragAction(this PlayCardItemComponent self, object p1)
         {
             PointerEventData eventData = p1 as PointerEventData;
             
         }
         
-        private static void OnEventDragBeginAction(this PlayCardItemComponent self, object p1)
+        private static void OnEventDragEndAction(this PlayCardItemComponent self, object p1)
         {
             PointerEventData eventData = p1 as PointerEventData;
             

@@ -34,7 +34,7 @@ namespace ET.Client
             self.UIView.ViewWindowType = EViewWindowType.View;
             self.UIView.StackOption = EViewStackOption.VisibleTween;
 
-            self.u_ComCardsLoop = self.UIBase.ComponentTable.FindComponent<UnityEngine.UI.LoopHorizontalScrollRect>("u_ComCardsLoop");
+            self.u_ComCardsRoot = self.UIBase.ComponentTable.FindComponent<UnityEngine.RectTransform>("u_ComCardsRoot");
             self.u_DataPredictFrame = self.UIBase.DataTable.FindDataValue<YIUIFramework.UIDataValueString>("u_DataPredictFrame");
             self.u_DataSelectCount = self.UIBase.DataTable.FindDataValue<YIUIFramework.UIDataValueString>("u_DataSelectCount");
             self.u_EventSaveReplay = self.UIBase.EventTable.FindEvent<UIEventP0>("u_EventSaveReplay");

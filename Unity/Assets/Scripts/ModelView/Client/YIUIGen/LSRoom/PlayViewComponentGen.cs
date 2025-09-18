@@ -21,7 +21,7 @@ namespace ET.Client
         public YIUIWindowComponent UIWindow => u_UIWindow;
         public EntityRef<YIUIViewComponent> u_UIView;
         public YIUIViewComponent UIView => u_UIView;
-        public UnityEngine.UI.LoopHorizontalScrollRect u_ComCardsLoop;
+        public UnityEngine.RectTransform u_ComCardsRoot;
         public YIUIFramework.UIDataValueString u_DataPredictFrame;
         public YIUIFramework.UIDataValueString u_DataSelectCount;
         public UIEventP0 u_EventSaveReplay;
