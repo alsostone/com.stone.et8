@@ -55,29 +55,29 @@ namespace YIUIFramework
 
         public TItemRenderer CreateItemRenderer()
         {
-            var uiBase = m_UIBasePool.Get();
-            uiBase.GetParent<YIUIComponent>().OwnerRectTransform.SetParent(m_Owner, false);
-            ItemRenderers.Add(uiBase);
-            return uiBase;
+            var renderer = m_UIBasePool.Get();
+            renderer.GetParent<YIUIComponent>().OwnerRectTransform.SetParent(m_Owner, false);
+            ItemRenderers.Add(renderer);
+            return renderer;
         }
 
         public void RemoveItemRenderer(int index)
         {
             if (index < 0 || index >= ItemRenderers.Count)
                 return;
-            var uiBase = ItemRenderers[index];
+            var renderer = ItemRenderers[index];
             ItemRenderers.RemoveAt(index);
-            m_UIBasePool.Put(uiBase);
-            uiBase.GetParent<YIUIComponent>().OwnerRectTransform.SetParent(CacheRect, false);
+            m_UIBasePool.Put(renderer);
+            renderer.GetParent<YIUIComponent>().OwnerRectTransform.SetParent(CacheRect, false);
         }
 
         public void Clear()
         {
             for (var i = ItemRenderers.Count - 1; i >= 0; i--)
             {
-                var item = ItemRenderers[i];
-                m_UIBasePool.Put(item);
-                item.GetParent<YIUIComponent>().OwnerRectTransform.SetParent(CacheRect, false);
+                var renderer = ItemRenderers[i];
+                m_UIBasePool.Put(renderer);
+                renderer.GetParent<YIUIComponent>().OwnerRectTransform.SetParent(CacheRect, false);
             }
             ItemRenderers.Clear();
         }

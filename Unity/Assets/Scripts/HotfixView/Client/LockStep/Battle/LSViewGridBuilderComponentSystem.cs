@@ -70,15 +70,8 @@ namespace ET.Client
 
         public static void OnPlacementDragEnd(this LSViewGridBuilderComponent self, TeamType teamPlacer, TSVector2 position)
         {
-            if (self.DragPlacement)
-            {
-                // 这里恢复原状即可 放置结果由逻辑层处理并通知给表现层
-                self.OnPlacementCancel(teamPlacer);
-                LSViewGridMapComponent gridMapComponent = self.Room().GetComponent<LSViewGridMapComponent>();
-                if (gridMapComponent.GridMapIndicator) {
-                    gridMapComponent.GridMapIndicator.ClearIndicator();
-                }
-            }
+            // 这里恢复原状即可 放置结果由逻辑层处理并通知给表现层
+            self.OnPlacementCancel(teamPlacer);
         }
 
         public static void OnPlacementStart(this LSViewGridBuilderComponent self, TeamType teamPlacer, EUnitType type, int tableId)
@@ -140,6 +133,11 @@ namespace ET.Client
                 }
                 self.DragPlacement = null;
                 self.DragUnitView = null;
+            }
+            
+            LSViewGridMapComponent gridMapComponent = self.Room().GetComponent<LSViewGridMapComponent>();
+            if (gridMapComponent.GridMapIndicator) {
+                gridMapComponent.GridMapIndicator.ClearIndicator();
             }
         }
 

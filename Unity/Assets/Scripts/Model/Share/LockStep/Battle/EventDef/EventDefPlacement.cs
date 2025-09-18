@@ -18,6 +18,7 @@ namespace ET
     {
         public TeamType TeamPlacer;
         public TSVector2 Position;
+        public int Index;
     }
     
     public struct LSPlacementStart
@@ -25,6 +26,7 @@ namespace ET
         public TeamType TeamPlacer;
         public EUnitType Type;
         public int TableId;
+        public int Index;
     }
     
     public struct LSPlacementRotate
@@ -36,6 +38,7 @@ namespace ET
     public struct LSPlacementCancel
     {
         public TeamType TeamPlacer;
+        public int Index;
     }
 }
 

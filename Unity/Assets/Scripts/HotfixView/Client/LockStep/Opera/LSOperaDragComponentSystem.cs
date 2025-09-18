@@ -126,9 +126,9 @@ namespace ET.Client
             }
         }
         
-        public static void SetPlacementObject(this LSOperaDragComponent self, EUnitType type, int tableId, bool disableMouseMove)
+        public static void SetPlacementObject(this LSOperaDragComponent self, PlayCardItemData data, bool disableMouseMove)
         {
-            ulong param = ((ulong)type << 32) | (uint)tableId;
+            ulong param = (ulong)data.Index << 40 | ((ulong)data.Type << 32) | (uint)data.TableId;
             ulong command = LSCommand.GenCommandLong48(0, OperateCommandType.PlacementStart, param);
             self.Room().SendCommandMeesage(command);
             self.isDraging = true;

@@ -10,12 +10,22 @@ namespace ET.Client
     /// Date    2025.3.6
     /// Desc
     /// </summary>
-    public partial class PlayViewComponent: Entity, IUpdate
+    public partial class PlayViewComponent: Entity, IUpdate, IYIUIEvent<OnCardDragStartEvent>, IYIUIEvent<OnCardDragEndEvent>
     {
         public string SaveName;
         public int PredictFrame = 0;
 
         public int SelectCardCount;
         public YIUIListView<PlayCardItemComponent> CardsView;
+    }
+    
+    public struct OnCardDragStartEvent
+    {
+        public int Index;
+    }
+    
+    public struct OnCardDragEndEvent
+    {
+        public int Index;
     }
 }

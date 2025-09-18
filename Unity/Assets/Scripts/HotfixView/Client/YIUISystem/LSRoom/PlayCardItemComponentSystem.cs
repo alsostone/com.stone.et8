@@ -24,7 +24,7 @@ namespace ET.Client
         {
         }
 
-        public static void ResetItem(this PlayCardItemComponent self, LSRandomDropItem data)
+        public static void SetData(this PlayCardItemComponent self, PlayCardItemData data)
         {
             self.Data = data;
             switch (data.Type)
@@ -46,7 +46,7 @@ namespace ET.Client
             
             Room room = self.Room();
             LSOperaDragComponent dragComponent = room.GetComponent<LSOperaDragComponent>();
-            dragComponent.SetPlacementObject(self.Data.Type, self.Data.TableId, true);
+            dragComponent.SetPlacementObject(self.Data, true);
             dragComponent.OnTouchMove(eventData.position);
         }
 
@@ -76,7 +76,7 @@ namespace ET.Client
         {
             Room room = self.Room();
             LSOperaDragComponent dragComponent = room.GetComponent<LSOperaDragComponent>();
-            dragComponent.SetPlacementObject(self.Data.Type, self.Data.TableId, false);
+            dragComponent.SetPlacementObject(self.Data, false);
         }
         
         #endregion YIUIEvent结束

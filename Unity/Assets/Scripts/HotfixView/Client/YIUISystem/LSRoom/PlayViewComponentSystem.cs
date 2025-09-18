@@ -53,12 +53,29 @@ namespace ET.Client
             return true;
         }
         
+        [EntitySystem]
+        private static async ETTask YIUIEvent(this PlayViewComponent self, OnCardDragStartEvent message)
+        {
+            await ETTask.CompletedTask;
+            self.u_ComAlphaGroup.alpha = 0.6f;
+        }
+        
+        [EntitySystem]
+        private static async ETTask YIUIEvent(this PlayViewComponent self, OnCardDragEndEvent message)
+        {
+            await ETTask.CompletedTask;
+            self.u_ComAlphaGroup.alpha = 1f;
+        }
+        
         public static void ResetBagCards(this PlayViewComponent self, Dictionary<(EUnitType, int), int> bagCards)
         {
             self.CardsView.Clear();
-            foreach (var pair in bagCards) {
-                var uiBase = self.CardsView.CreateItemRenderer();
-                uiBase.ResetItem(new LSRandomDropItem() { Type = pair.Key.Item1, TableId = pair.Key.Item2, Count = pair.Value });
+
+            int index = 0;
+            foreach (var pair in bagCards)
+            {
+                var renderer = self.CardsView.CreateItemRenderer();
+                renderer.SetData(new PlayCardItemData() { Type = pair.Key.Item1, TableId = pair.Key.Item2, Index = index++ });
             }
         }
 

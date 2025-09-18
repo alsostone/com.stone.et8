@@ -1,8 +1,4 @@
-﻿using System;
-using UnityEngine;
-using YIUIFramework;
-using System.Collections.Generic;
-
+﻿
 namespace ET.Client
 {
     /// <summary>
@@ -12,7 +8,14 @@ namespace ET.Client
     /// </summary>
     public partial class PlayCardItemComponent: Entity
     {
-        public LSRandomDropItem Data;
+        public PlayCardItemData Data { get; set; }
         public int PointerId = -1;
+    }
+    
+    public struct PlayCardItemData
+    {
+        public EUnitType Type;
+        public int TableId;
+        public int Index;
     }
 }
