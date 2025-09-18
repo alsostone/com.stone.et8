@@ -57,7 +57,7 @@ namespace ET.Client
         private static async ETTask YIUIEvent(this PlayViewComponent self, OnCardDragStartEvent message)
         {
             await ETTask.CompletedTask;
-            self.u_ComAlphaGroup.alpha = 0.6f;
+            self.u_ComAlphaGroup.alpha = 0.3f;
         }
         
         [EntitySystem]
@@ -70,12 +70,10 @@ namespace ET.Client
         public static void ResetBagCards(this PlayViewComponent self, Dictionary<(EUnitType, int), int> bagCards)
         {
             self.CardsView.Clear();
-
-            int index = 0;
             foreach (var pair in bagCards)
             {
                 var renderer = self.CardsView.CreateItemRenderer();
-                renderer.SetData(new PlayCardItemData() { Type = pair.Key.Item1, TableId = pair.Key.Item2, Index = index++ });
+                renderer.SetData(new PlayCardItemData() { Type = pair.Key.Item1, TableId = pair.Key.Item2 });
             }
         }
 

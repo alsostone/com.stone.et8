@@ -12,7 +12,7 @@ namespace ET.Client
             if (builderComponent == null)
                 return;
             builderComponent.OnPlacementDragStart(args.TeamPlacer, args.TargetId);
-            await room.Fiber().UIEvent(new OnCardDragStartEvent() { Index = -1 });
+            await ETTask.CompletedTask;
         }
     }
     
@@ -44,7 +44,7 @@ namespace ET.Client
             if (builderComponent == null)
                 return;
             builderComponent.OnPlacementDragEnd(args.TeamPlacer, args.Position);
-            await room.Fiber().UIEvent(new OnCardDragEndEvent() { Index = args.Index });
+            await ETTask.CompletedTask;
         }
     }
     
@@ -60,7 +60,7 @@ namespace ET.Client
             if (builderComponent == null)
                 return;
             builderComponent.OnPlacementStart(args.TeamPlacer, args.Type, args.TableId);
-            await room.Fiber().UIEvent(new OnCardDragStartEvent() { Index = args.Index });
+            await ETTask.CompletedTask;
         }
     }
     
@@ -92,7 +92,7 @@ namespace ET.Client
             if (builderComponent == null)
                 return;
             builderComponent.OnPlacementCancel(args.TeamPlacer);
-            await room.Fiber().UIEvent(new OnCardDragEndEvent() { Index = args.Index });
+            await ETTask.CompletedTask;
         }
     }
 }

@@ -39,6 +39,7 @@ namespace ET.Client
                     self.DragUnitView = lsUnitView;
                     self.DragPlacement.SetPreviewMaterial();
                     self.DragOffset = new Vector3(0, float.MaxValue, 0);
+                    self.Fiber().UIEvent(new OnCardDragStartEvent()).Coroutine();
                 } else {
                     placement.DoShake();
                 }
@@ -107,6 +108,7 @@ namespace ET.Client
                 self.DragPlacement = placement;
                 self.DragPlacement.SetPreviewMaterial();
                 self.DragOffset = Vector3.zero;
+                self.Fiber().UIEvent(new OnCardDragStartEvent()).Coroutine();
             }
         }
 
@@ -124,6 +126,7 @@ namespace ET.Client
         {
             if (self.DragPlacement)
             {
+                self.Fiber().UIEvent(new OnCardDragEndEvent()).Coroutine();
                 self.DragPlacement.ResetPreviewMaterial();
                 if (self.DragPlacement.placementData.isNew) {
                     self.DragPlacement.Remove();
@@ -133,12 +136,13 @@ namespace ET.Client
                 }
                 self.DragPlacement = null;
                 self.DragUnitView = null;
+                
+                LSViewGridMapComponent gridMapComponent = self.Room().GetComponent<LSViewGridMapComponent>();
+                if (gridMapComponent.GridMapIndicator) {
+                    gridMapComponent.GridMapIndicator.ClearIndicator();
+                }
             }
             
-            LSViewGridMapComponent gridMapComponent = self.Room().GetComponent<LSViewGridMapComponent>();
-            if (gridMapComponent.GridMapIndicator) {
-                gridMapComponent.GridMapIndicator.ClearIndicator();
-            }
         }
 
     }

@@ -47,10 +47,9 @@ namespace ET
                     case OperateCommandType.PlacementStart:
                         {
                             ulong param = LSCommand.ParseCommandLong48(command);
-                            int index = (int)((param >> 40) & 0xFF);
-                            EUnitType type = (EUnitType)((param >> 32) & 0xFF);
+                            EUnitType type = (EUnitType)((param >> 32) & 0xFFFF);
                             int tableId = (int)(param & 0xFFFFFFFF);
-                            self.LSWorld().GetComponent<LSGridBuilderComponent>().RunCommandPlacementStart(lsPlayer, type, tableId, index);
+                            self.LSWorld().GetComponent<LSGridBuilderComponent>().RunCommandPlacementStart(lsPlayer, type, tableId);
                             break;
                         }
                     case OperateCommandType.Button:

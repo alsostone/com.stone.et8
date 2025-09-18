@@ -16,6 +16,5 @@ namespace ET.Client
     {
         public EUnitType Type;
         public int TableId;
-        public int Index;
     }
 }

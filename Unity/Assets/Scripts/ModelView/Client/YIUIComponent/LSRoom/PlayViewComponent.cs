@@ -21,11 +21,9 @@ namespace ET.Client
     
     public struct OnCardDragStartEvent
     {
-        public int Index;
     }
     
     public struct OnCardDragEndEvent
     {
-        public int Index;
     }
 }

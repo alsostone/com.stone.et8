@@ -52,17 +52,17 @@ namespace ET
             if (self.PlacementTargetId > 0)
             {
                 LSGridMapComponent lsGridMapComponent = lsWorld.GetComponent<LSGridMapComponent>();
-                IndexV2 indexV2 = lsGridMapComponent.ConvertToIndex(position);
+                IndexV2 index = lsGridMapComponent.ConvertToIndex(position);
                 GridData gridData = lsGridMapComponent.GetGridData();
                 
                 LSUnitComponent lsUnitComponent = lsWorld.GetComponent<LSUnitComponent>();
                 LSUnit lsUnit = lsUnitComponent.GetChild<LSUnit>(self.PlacementTargetId);
                 PlacementData placementData = lsUnit?.GetComponent<PlacementComponent>()?.GetPlacementData();
-                if (placementData != null && gridData.CanPut(indexV2.x, indexV2.z, placementData) && gridData.CanTake(placementData))
+                if (placementData != null && gridData.CanPut(index.x, index.z, placementData) && gridData.CanTake(placementData))
                 {
                     gridData.Take(placementData);
-                    gridData.Put(indexV2.x, indexV2.z, placementData);
-                    EventSystem.Instance.Publish(self.LSWorld(), new LSUnitPlaced() { Id = lsUnit.Id, X = indexV2.x, Z = indexV2.z });
+                    gridData.Put(index.x, index.z, placementData);
+                    EventSystem.Instance.Publish(self.LSWorld(), new LSUnitPlaced() { Id = lsUnit.Id, X = index.x, Z = index.z });
                     lsUnit.GetComponent<TransformComponent>().SetPosition(lsGridMapComponent.GetPutPosition(placementData));
                 }
             }
@@ -80,11 +80,11 @@ namespace ET
                     LSUnitFactory.CreateBuilding(lsWorld, self.PlacementTableId, pos, self.PlacementRotation * 90, teamPlacer);
                 }
             }
-            EventSystem.Instance.Publish(self.LSWorld(), new LSPlacementDragEnd() { TeamPlacer = teamPlacer, Position = position, Index = self.PlacementIndex });
+            EventSystem.Instance.Publish(self.LSWorld(), new LSPlacementDragEnd() { TeamPlacer = teamPlacer, Position = position });
             self.ClearPlacementData();
         }
 
-        public static void RunCommandPlacementStart(this LSGridBuilderComponent self, LSUnit lsPlayer, EUnitType type, int tableId, int index)
+        public static void RunCommandPlacementStart(this LSGridBuilderComponent self, LSUnit lsPlayer, EUnitType type, int tableId)
         {self.LSRoom()?.ProcessLog.LogFunction(89, self.LSParent().Id, tableId);
             // 放置新单位时需要判定卡包中是否有此卡牌
             CardBagComponent bagComponent = lsPlayer.GetComponent<CardBagComponent>();
@@ -95,10 +95,9 @@ namespace ET
             self.PlacementRotation = 0;
             self.PlacementType = type;
             self.PlacementTableId = tableId;
-            self.PlacementIndex = index;
             self.PlacementDragOffset = new TSVector2(0, 0);
             TeamType teamPlacer = lsPlayer.GetComponent<TeamComponent>().Type;
-            LSPlacementStart placementStart = new () { TeamPlacer = teamPlacer, Type = type, TableId = tableId, Index = index };
+            LSPlacementStart placementStart = new () { TeamPlacer = teamPlacer, Type = type, TableId = tableId };
             EventSystem.Instance.Publish(self.LSWorld(), placementStart);
         }
 
@@ -116,7 +115,7 @@ namespace ET
             if (self.PlacementType == EUnitType.None && self.PlacementTargetId == 0)
                 return;
 
-            EventSystem.Instance.Publish(self.LSWorld(), new LSPlacementCancel() { TeamPlacer = teamPlacer, Index = self.PlacementIndex });
+            EventSystem.Instance.Publish(self.LSWorld(), new LSPlacementCancel() { TeamPlacer = teamPlacer });
             self.ClearPlacementData();
         }
         
@@ -126,7 +125,6 @@ namespace ET
             self.PlacementRotation = 0;
             self.PlacementType = EUnitType.None;
             self.PlacementTableId = 0;
-            self.PlacementIndex = -1;
             self.PlacementDragOffset = new TSVector2(FP.MaxValue, FP.MaxValue);
         }
     }

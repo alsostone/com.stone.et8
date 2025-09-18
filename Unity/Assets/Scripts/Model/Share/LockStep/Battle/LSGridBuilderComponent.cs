@@ -11,7 +11,6 @@ namespace ET
         public int PlacementRotation;
         public EUnitType PlacementType;
         public int PlacementTableId;
-        public int PlacementIndex = -1;
         public TSVector2 PlacementDragOffset;
     }
 }
