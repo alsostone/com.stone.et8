@@ -126,9 +126,9 @@ namespace ET.Client
             }
         }
         
-        public static void SetPlacementObject(this LSOperaDragComponent self, int itemId, bool disableMouseMove)
+        public static void SetPlacementObject(this LSOperaDragComponent self, long itemId, bool disableMouseMove)
         {
-            ulong param = (uint)itemId;
+            ulong param = (ulong)itemId;
             ulong command = LSCommand.GenCommandLong48(0, OperateCommandType.PlacementStart, param);
             self.Room().SendCommandMeesage(command);
             self.isDraging = true;

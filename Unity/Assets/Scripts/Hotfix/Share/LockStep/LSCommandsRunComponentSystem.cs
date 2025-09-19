@@ -46,8 +46,7 @@ namespace ET
                         }
                     case OperateCommandType.PlacementStart:
                         {
-                            ulong param = LSCommand.ParseCommandLong48(command);
-                            int itemId = (int)(param & 0xFFFFFFFF);
+                            long itemId = (long)LSCommand.ParseCommandLong48(command);
                             lsPlayer.GetComponent<LSGridBuilderComponent>().RunCommandPlacementStart(itemId);
                             break;
                         }

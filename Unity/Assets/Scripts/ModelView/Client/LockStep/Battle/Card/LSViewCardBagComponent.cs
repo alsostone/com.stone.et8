@@ -7,6 +7,6 @@ namespace ET.Client
 	public class LSViewCardBagComponent : Entity, IAwake, ILSRollback
 	{
 		public List<CardBagItem> Items { get; } = new();
-		public Dictionary<int, CardBagItem> IdItemMap { get; } = new();
+		public Dictionary<long, CardBagItem> IdItemMap { get; } = new();
 	}
 }

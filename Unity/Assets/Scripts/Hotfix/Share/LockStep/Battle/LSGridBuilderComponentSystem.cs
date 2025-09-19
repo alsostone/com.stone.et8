@@ -86,7 +86,7 @@ namespace ET
             self.ClearPlacementData();
         }
 
-        public static void RunCommandPlacementStart(this LSGridBuilderComponent self, int itemId)
+        public static void RunCommandPlacementStart(this LSGridBuilderComponent self, long itemId)
         {
             // 放置新单位时需要判定卡包中是否有此卡牌
             LSUnit lsOwner = self.LSOwner();

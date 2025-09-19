@@ -23,7 +23,7 @@ namespace ET
     public struct LSPlacementStart
     {
         public long Id;
-        public int ItemId;
+        public long ItemId;
     }
     
     public struct LSPlacementRotate

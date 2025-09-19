@@ -9,7 +9,7 @@ namespace ET
     {
         public long PlacementTargetId;
         public int PlacementRotation;
-        public int PlacementItemId;
+        public long PlacementItemId;
         public TSVector2 PlacementDragOffset;
     }
 }

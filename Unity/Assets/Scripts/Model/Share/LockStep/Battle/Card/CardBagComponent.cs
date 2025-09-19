@@ -10,17 +10,16 @@ namespace ET
     public partial class CardBagComponent: LSEntity, IAwake<List<LSRandomDropItem>>, IDeserialize
     {
         public List<CardBagItem> Items { get; } = new();
-        public int ItemIdGenerator;
-        
+
         [BsonIgnore]
         [MemoryPackIgnore]
-        public Dictionary<int, CardBagItem> IdItemMap { get; } = new();
+        public Dictionary<long, CardBagItem> IdItemMap { get; } = new();
     }
     
     [EnableClass]
     public class CardBagItem : IPool
     {
-        public int Id;
+        public long Id;
         public EUnitType Type;
         public int TableId;
         public bool IsFromPool { get; set; }

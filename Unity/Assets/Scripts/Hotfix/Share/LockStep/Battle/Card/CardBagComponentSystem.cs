@@ -28,7 +28,7 @@ namespace ET
         {
             for (int i = 0; i < dropItem.Count; i++) {
                 CardBagItem bagItem = ObjectPool.Instance.Fetch<CardBagItem>();
-                bagItem.Id = ++self.ItemIdGenerator;
+                bagItem.Id = self.LSWorld().GetId();
                 bagItem.Type = dropItem.Type;
                 bagItem.TableId = dropItem.TableId;
                 self.Items.Add(bagItem);
@@ -37,7 +37,7 @@ namespace ET
             }
         }
         
-        public static void RemoveItem(this CardBagComponent self, int itemId)
+        public static void RemoveItem(this CardBagComponent self, long itemId)
         {
             if (self.IdItemMap.TryGetValue(itemId, out CardBagItem bagItem)) {
                 self.Items.Remove(bagItem);
@@ -47,12 +47,12 @@ namespace ET
             }
         }
         
-        public static bool HasItem(this CardBagComponent self, int itemId)
+        public static bool HasItem(this CardBagComponent self, long itemId)
         {
             return self.IdItemMap.ContainsKey(itemId);
         }
         
-        public static CardBagItem GetItem(this CardBagComponent self, int itemId)
+        public static CardBagItem GetItem(this CardBagComponent self, long itemId)
         {
             self.IdItemMap.TryGetValue(itemId, out CardBagItem bagItem);
             return bagItem;

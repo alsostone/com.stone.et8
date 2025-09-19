@@ -46,7 +46,7 @@ namespace ET.Client
             self.Fiber().UIEvent(new OnCardViewResetEvent() { PlayerId = self.LSViewOwner().Id }).Coroutine();
         }
         
-        public static void RemoveItem(this LSViewCardBagComponent self, int itemId)
+        public static void RemoveItem(this LSViewCardBagComponent self, long itemId)
         {
             for (int i = 0; i < self.Items.Count; i++) {
                 if (self.Items[i].Id == itemId) {
@@ -59,7 +59,7 @@ namespace ET.Client
             self.Fiber().UIEvent(new OnCardViewResetEvent() { PlayerId = self.LSViewOwner().Id }).Coroutine();
         }
         
-        public static CardBagItem GetItem(this LSViewCardBagComponent self, int itemId)
+        public static CardBagItem GetItem(this LSViewCardBagComponent self, long itemId)
         {
             self.IdItemMap.TryGetValue(itemId, out CardBagItem bagItem);
             return bagItem;

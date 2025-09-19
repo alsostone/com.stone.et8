@@ -24,7 +24,7 @@ namespace ET
     public struct LSCardBagRemove
     {
         public long Id;
-        public int ItemId;
+        public long ItemId;
     }
     
 }

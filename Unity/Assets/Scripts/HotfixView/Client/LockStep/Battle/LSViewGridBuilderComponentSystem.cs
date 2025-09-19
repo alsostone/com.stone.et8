@@ -75,7 +75,7 @@ namespace ET.Client
             self.OnPlacementCancel();
         }
 
-        public static void OnPlacementStart(this LSViewGridBuilderComponent self, int itemId)
+        public static void OnPlacementStart(this LSViewGridBuilderComponent self, long itemId)
         {
             self.OnPlacementCancel();
             int targetModel = 0;
