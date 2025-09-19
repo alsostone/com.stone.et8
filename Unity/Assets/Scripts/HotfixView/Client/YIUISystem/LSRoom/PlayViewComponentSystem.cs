@@ -101,6 +101,7 @@ namespace ET.Client
                 if (bagItem == null || renderer.ItemData.Id != bagItem.Id) {
                     self.CardsView.RemoveItemRenderer(indexOld);
                 } else {
+                    renderer.UIBase.OwnerRectTransform.SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, itemWidth);
                     renderer.SetPosition(new Vector3(itemWidth * indexOld, 0));
                     ++indexOld;
                 }
@@ -109,6 +110,7 @@ namespace ET.Client
             for (int indexNew = indexOld; indexNew < viewCardBagComponent.Items.Count; indexNew++) {
                 var bagItem = viewCardBagComponent.Items[indexNew];
                 PlayCardItemComponent renderer = self.CardsView.CreateItemRenderer();
+                renderer.UIBase.OwnerRectTransform.SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, itemWidth);
                 renderer.UIBase.OwnerRectTransform.localPosition = new Vector3(itemWidth * indexNew, 30);
                 renderer.SetData(bagItem, new Vector3(itemWidth * indexNew, 0));
             }
