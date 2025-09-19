@@ -2,6 +2,9 @@
 using UnityEngine;
 using YIUIFramework;
 using System.Collections.Generic;
+using DG.Tweening;
+using DG.Tweening.Core;
+using DG.Tweening.Plugins.Options;
 using Random = UnityEngine.Random;
 
 namespace ET.Client
@@ -55,7 +58,10 @@ namespace ET.Client
         {
             await ETTask.CompletedTask;
             if (message.PlayerId == self.Room().LookPlayerId)
-                self.u_ComAlphaGroup.alpha = 0.3f;
+            {
+                TweenerCore<float, float, FloatOptions> t = DOTween.To(() => self.u_ComAlphaGroup.alpha, x => self.u_ComAlphaGroup.alpha = x, 0.3f, 0.2f);
+                t.SetTarget(self.UIBase.OwnerRectTransform);
+            }
         }
         
         [EntitySystem]
@@ -63,7 +69,10 @@ namespace ET.Client
         {
             await ETTask.CompletedTask;
             if (message.PlayerId == self.Room().LookPlayerId)
-                self.u_ComAlphaGroup.alpha = 1f;
+            {
+                TweenerCore<float, float, FloatOptions> t = DOTween.To(() => self.u_ComAlphaGroup.alpha, x => self.u_ComAlphaGroup.alpha = x, 1.0f, 0.2f);
+                t.SetTarget(self.UIBase.OwnerRectTransform);
+            }
         }
         
         [EntitySystem]
@@ -81,11 +90,27 @@ namespace ET.Client
             LSUnitView lsPlayer = lsUnitViewComponent.GetChild<LSUnitView>(room.LookPlayerId);
             LSViewCardBagComponent viewCardBagComponent = lsPlayer.GetComponent<LSViewCardBagComponent>();
             
-            self.CardsView.Clear();
-            foreach (var pair in viewCardBagComponent.ItemCountMap)
+            float width = self.u_ComCardsRoot.rect.width;
+            float itemWidth = Math.Min(180, width / viewCardBagComponent.Items.Count);
+            
+            int indexOld = 0;
+            while (indexOld < self.CardsView.ItemRenderers.Count)
             {
-                var renderer = self.CardsView.CreateItemRenderer();
-                renderer.SetData(new PlayCardItemData() { Type = pair.Key.Item1, TableId = pair.Key.Item2 });
+                var renderer = self.CardsView.ItemRenderers[indexOld];
+                var bagItem = viewCardBagComponent.Items.Count > indexOld ? viewCardBagComponent.Items[indexOld] : null;
+                if (bagItem == null || renderer.ItemData.Id != bagItem.Id) {
+                    self.CardsView.RemoveItemRenderer(indexOld);
+                } else {
+                    renderer.SetPosition(new Vector3(itemWidth * indexOld, 0));
+                    ++indexOld;
+                }
+            }
+
+            for (int indexNew = indexOld; indexNew < viewCardBagComponent.Items.Count; indexNew++) {
+                var bagItem = viewCardBagComponent.Items[indexNew];
+                PlayCardItemComponent renderer = self.CardsView.CreateItemRenderer();
+                renderer.UIBase.OwnerRectTransform.localPosition = new Vector3(itemWidth * indexNew, 30);
+                renderer.SetData(bagItem, new Vector3(itemWidth * indexNew, 0));
             }
         }
 

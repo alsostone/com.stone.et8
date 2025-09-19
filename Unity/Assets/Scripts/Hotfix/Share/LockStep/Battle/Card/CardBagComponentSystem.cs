@@ -15,35 +15,47 @@ namespace ET
             }
         }
         
-        public static void AddItem(this CardBagComponent self, LSRandomDropItem item)
+        [EntitySystem]
+        private static void Deserialize(this CardBagComponent self)
         {
-            if (self.ItemCountMap.TryGetValue((item.Type, item.TableId), out int count)) {
-                self.ItemCountMap[(item.Type, item.TableId)] = count + item.Count;
-            } else {
-                self.ItemCountMap[(item.Type, item.TableId)] = item.Count;
+            self.IdItemMap.Clear();
+            foreach (CardBagItem bagItem in self.Items) {
+                self.IdItemMap[bagItem.Id] = bagItem;
             }
-            EventSystem.Instance.Publish(self.LSWorld(), new LSCardBagAdd() { Id = self.LSOwner().Id, Item = item });
         }
         
-        public static void RemoveItem(this CardBagComponent self, EUnitType type, int tableId, int count)
+        public static void AddItem(this CardBagComponent self, LSRandomDropItem dropItem)
         {
-            if (self.ItemCountMap.TryGetValue((type, tableId), out int has)) {
-                if (count >= has) {
-                    self.ItemCountMap.Remove((type, tableId));
-                } else if (count < has) {
-                    self.ItemCountMap[(type, tableId)] = has - count;
-                }
+            for (int i = 0; i < dropItem.Count; i++) {
+                CardBagItem bagItem = ObjectPool.Instance.Fetch<CardBagItem>();
+                bagItem.Id = ++self.ItemIdGenerator;
+                bagItem.Type = dropItem.Type;
+                bagItem.TableId = dropItem.TableId;
+                self.Items.Add(bagItem);
+                self.IdItemMap[bagItem.Id] = bagItem;
+                EventSystem.Instance.Publish(self.LSWorld(), new LSCardBagAdd() { Id = self.LSOwner().Id, Item = bagItem });
             }
-            LSRandomDropItem item = new LSRandomDropItem() { Type = type, TableId = tableId, Count = count };
-            EventSystem.Instance.Publish(self.LSWorld(), new LSCardBagRemove() { Id = self.LSOwner().Id, Item = item });
         }
         
-        public static int GetItemCount(this CardBagComponent self, EUnitType type, int tableId)
+        public static void RemoveItem(this CardBagComponent self, int itemId)
         {
-            if (self.ItemCountMap.TryGetValue((type, tableId), out int count)) {
-                return count;
+            if (self.IdItemMap.TryGetValue(itemId, out CardBagItem bagItem)) {
+                self.Items.Remove(bagItem);
+                self.IdItemMap.Remove(itemId);
+                ObjectPool.Instance.Recycle(bagItem);
+                EventSystem.Instance.Publish(self.LSWorld(), new LSCardBagRemove() { Id = self.LSOwner().Id, ItemId = itemId });
             }
-            return 0;
+        }
+        
+        public static bool HasItem(this CardBagComponent self, int itemId)
+        {
+            return self.IdItemMap.ContainsKey(itemId);
+        }
+        
+        public static CardBagItem GetItem(this CardBagComponent self, int itemId)
+        {
+            self.IdItemMap.TryGetValue(itemId, out CardBagItem bagItem);
+            return bagItem;
         }
         
     }

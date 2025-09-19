@@ -18,13 +18,13 @@ namespace ET
     public struct LSCardBagAdd
     {
         public long Id;
-        public LSRandomDropItem Item;
+        public CardBagItem Item;
     }
     
     public struct LSCardBagRemove
     {
         public long Id;
-        public LSRandomDropItem Item;
+        public int ItemId;
     }
     
 }

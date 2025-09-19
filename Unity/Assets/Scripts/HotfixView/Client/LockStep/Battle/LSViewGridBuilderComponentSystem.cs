@@ -75,17 +75,19 @@ namespace ET.Client
             self.OnPlacementCancel();
         }
 
-        public static void OnPlacementStart(this LSViewGridBuilderComponent self, EUnitType type, int tableId)
+        public static void OnPlacementStart(this LSViewGridBuilderComponent self, int itemId)
         {
             self.OnPlacementCancel();
             int targetModel = 0;
-            switch (type)
+            var viewCardBagComponent = self.LSViewOwner().GetComponent<LSViewCardBagComponent>();
+            var bagItem = viewCardBagComponent.GetItem(itemId);
+            switch (bagItem.Type)
             {
                 case EUnitType.Block:
-                    targetModel = TbBlock.Instance.Get(tableId).Model;
+                    targetModel = TbBlock.Instance.Get(bagItem.TableId).Model;
                     break;
                 case EUnitType.Building:
-                    targetModel = TbBuilding.Instance.Get(tableId).Model;
+                    targetModel = TbBuilding.Instance.Get(bagItem.TableId).Model;
                     break;
             }
             if (targetModel == 0) {

@@ -6,6 +6,7 @@ namespace ET.Client
 	[ComponentOf(typeof(LSUnitView))]
 	public class LSViewCardBagComponent : Entity, IAwake, ILSRollback
 	{
-		public Dictionary<(EUnitType, int), int> ItemCountMap { get; } = new();
+		public List<CardBagItem> Items { get; } = new();
+		public Dictionary<int, CardBagItem> IdItemMap { get; } = new();
 	}
 }

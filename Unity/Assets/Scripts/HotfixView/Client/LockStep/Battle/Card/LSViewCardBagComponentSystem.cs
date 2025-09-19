@@ -17,34 +17,52 @@ namespace ET.Client
         [LSEntitySystem]
         private static void LSRollback(this LSViewCardBagComponent self)
         {
-            self.ItemCountMap.Clear();
+            for (int i = 0; i < self.Items.Count; i++) {
+                ObjectPool.Instance.Recycle(self.Items[i]);
+            }
+            self.Items.Clear();
+            self.IdItemMap.Clear();
+            
             CardBagComponent bagComponent = self.LSViewOwner().GetUnit().GetComponent<CardBagComponent>();
-            foreach (var pair in bagComponent.ItemCountMap) {
-                self.ItemCountMap[(pair.Key.Item1, pair.Key.Item2)] = pair.Value;
+            foreach (var item in bagComponent.Items) {
+                var bagItem = ObjectPool.Instance.Fetch<CardBagItem>();
+                bagItem.Id = item.Id;
+                bagItem.Type = item.Type;
+                bagItem.TableId = item.TableId;
+                self.Items.Add(bagItem);
+                self.IdItemMap[bagItem.Id] = bagItem;
             }
             self.Fiber().UIEvent(new OnCardViewResetEvent() { PlayerId = self.LSViewOwner().Id }).Coroutine();
         }
         
-        public static void AddItem(this LSViewCardBagComponent self, LSRandomDropItem item)
+        public static void AddItem(this LSViewCardBagComponent self, CardBagItem item)
         {
-            if (self.ItemCountMap.TryGetValue((item.Type, item.TableId), out int count)) {
-                self.ItemCountMap[(item.Type, item.TableId)] = count + item.Count;
-            } else {
-                self.ItemCountMap[(item.Type, item.TableId)] = item.Count;
-            }
+            var bagItem = ObjectPool.Instance.Fetch<CardBagItem>();
+            bagItem.Id = item.Id;
+            bagItem.Type = item.Type;
+            bagItem.TableId = item.TableId;
+            self.Items.Add(bagItem);
+            self.IdItemMap[bagItem.Id] = bagItem;
             self.Fiber().UIEvent(new OnCardViewResetEvent() { PlayerId = self.LSViewOwner().Id }).Coroutine();
         }
         
-        public static void RemoveItem(this LSViewCardBagComponent self, LSRandomDropItem item)
+        public static void RemoveItem(this LSViewCardBagComponent self, int itemId)
         {
-            if (self.ItemCountMap.TryGetValue((item.Type, item.TableId), out int count)) {
-                if (item.Count >= count) {
-                    self.ItemCountMap.Remove((item.Type, item.TableId));
-                } else if (item.Count < count) {
-                    self.ItemCountMap[(item.Type, item.TableId)] = count - item.Count;
+            for (int i = 0; i < self.Items.Count; i++) {
+                if (self.Items[i].Id == itemId) {
+                    ObjectPool.Instance.Recycle(self.Items[i]);
+                    self.Items.RemoveAt(i);
+                    self.IdItemMap.Remove(itemId);
+                    break;
                 }
             }
             self.Fiber().UIEvent(new OnCardViewResetEvent() { PlayerId = self.LSViewOwner().Id }).Coroutine();
+        }
+        
+        public static CardBagItem GetItem(this LSViewCardBagComponent self, int itemId)
+        {
+            self.IdItemMap.TryGetValue(itemId, out CardBagItem bagItem);
+            return bagItem;
         }
     }
 }

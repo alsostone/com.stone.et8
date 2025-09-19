@@ -8,13 +8,7 @@ namespace ET.Client
     /// </summary>
     public partial class PlayCardItemComponent: Entity
     {
-        public PlayCardItemData Data { get; set; }
+        public CardBagItem ItemData { get; set; }
         public int PointerId = -1;
-    }
-    
-    public struct PlayCardItemData
-    {
-        public EUnitType Type;
-        public int TableId;
     }
 }

@@ -14,7 +14,7 @@ namespace ET
 
         public static void RunCommandPlacementDragStart(this LSGridBuilderComponent self, long targetId)
         {self.LSRoom()?.ProcessLog.LogFunction(76, self.LSParent().Id);
-            if (self.PlacementType == EUnitType.None && self.PlacementTargetId == 0)
+            if (self.PlacementItemId == 0 && self.PlacementTargetId == 0)
             {
                 self.PlacementTargetId = targetId;
                 self.PlacementDragOffset = new TSVector2(FP.MaxValue, FP.MaxValue);
@@ -24,7 +24,7 @@ namespace ET
 
         public static void RunCommandPlacementDrag(this LSGridBuilderComponent self, TSVector2 position)
         {self.LSRoom()?.ProcessLog.LogFunction(75, self.LSParent().Id);
-            if (self.PlacementType == EUnitType.None && self.PlacementTargetId == 0)
+            if (self.PlacementItemId == 0 && self.PlacementTargetId == 0)
                 return;
 
             // 第一个拖拽消息到达，记录偏移（因为单指令携带信息有限，本应在DragStart时记录）
@@ -40,7 +40,7 @@ namespace ET
 
         public static void RunCommandPlacementDragEnd(this LSGridBuilderComponent self, TSVector2 position)
         {self.LSRoom()?.ProcessLog.LogFunction(74, self.LSParent().Id);
-            if (self.PlacementType == EUnitType.None && self.PlacementTargetId == 0)
+            if (self.PlacementItemId == 0 && self.PlacementTargetId == 0)
                 return;
 
             LSUnit lsOwner = self.LSOwner();
@@ -67,42 +67,43 @@ namespace ET
             else
             {
                 // 放置新单位时需要消耗卡包中的卡牌
-                TeamType teamType = lsOwner.GetComponent<TeamComponent>().Type;
                 CardBagComponent bagComponent = lsOwner.GetComponent<CardBagComponent>();
-                bagComponent.RemoveItem(self.PlacementType, self.PlacementTableId, 1);
-                
-                TSVector pos = new(position.x, 0, position.y);
-                if (self.PlacementType == EUnitType.Block) {
-                    LSUnitFactory.CreateBlock(lsWorld, self.PlacementTableId, pos, self.PlacementRotation * 90, teamType);
-                }
-                else if (self.PlacementType == EUnitType.Building) {
-                    LSUnitFactory.CreateBuilding(lsWorld, self.PlacementTableId, pos, self.PlacementRotation * 90, teamType);
+                var item = bagComponent.GetItem(self.PlacementItemId);
+                if (item != null)
+                {
+                    TeamType teamType = lsOwner.GetComponent<TeamComponent>().Type;
+                    TSVector pos = new(position.x, 0, position.y);
+                    if (item.Type == EUnitType.Block) {
+                        LSUnitFactory.CreateBlock(lsWorld, item.TableId, pos, self.PlacementRotation * 90, teamType);
+                    }
+                    else if (item.Type == EUnitType.Building) {
+                        LSUnitFactory.CreateBuilding(lsWorld, item.TableId, pos, self.PlacementRotation * 90, teamType);
+                    }
+                    bagComponent.RemoveItem(self.PlacementItemId);
                 }
             }
             EventSystem.Instance.Publish(self.LSWorld(), new LSPlacementDragEnd() { Id = lsOwner.Id, Position = position });
             self.ClearPlacementData();
         }
 
-        public static void RunCommandPlacementStart(this LSGridBuilderComponent self, EUnitType type, int tableId)
-        {self.LSRoom()?.ProcessLog.LogFunction(89, self.LSParent().Id, tableId);
+        public static void RunCommandPlacementStart(this LSGridBuilderComponent self, int itemId)
+        {
             // 放置新单位时需要判定卡包中是否有此卡牌
             LSUnit lsOwner = self.LSOwner();
             CardBagComponent bagComponent = lsOwner.GetComponent<CardBagComponent>();
-            if (bagComponent.GetItemCount(type, tableId) <= 0)
+            if (!bagComponent.HasItem(itemId))
                 return;
             
             self.PlacementTargetId = 0;
             self.PlacementRotation = 0;
-            self.PlacementType = type;
-            self.PlacementTableId = tableId;
+            self.PlacementItemId = itemId;
             self.PlacementDragOffset = new TSVector2(0, 0);
-            LSPlacementStart placementStart = new () { Id = lsOwner.Id, Type = type, TableId = tableId };
-            EventSystem.Instance.Publish(self.LSWorld(), placementStart);
+            EventSystem.Instance.Publish(self.LSWorld(), new LSPlacementStart() { Id = lsOwner.Id, ItemId = itemId });
         }
 
         public static void RunCommandPlacementRotate(this LSGridBuilderComponent self, int rotation)
         {self.LSRoom()?.ProcessLog.LogFunction(72, self.LSParent().Id, rotation);
-            if (self.PlacementType == EUnitType.None)
+            if (self.PlacementItemId == 0)
                 return;
             
             self.PlacementRotation += rotation;
@@ -111,7 +112,7 @@ namespace ET
 
         public static void RunCommandPlacementCancel(this LSGridBuilderComponent self)
         {self.LSRoom()?.ProcessLog.LogFunction(71, self.LSParent().Id);
-            if (self.PlacementType == EUnitType.None && self.PlacementTargetId == 0)
+            if (self.PlacementItemId == 0 && self.PlacementTargetId == 0)
                 return;
 
             EventSystem.Instance.Publish(self.LSWorld(), new LSPlacementCancel() { Id = self.LSOwner().Id });
@@ -122,8 +123,7 @@ namespace ET
         {self.LSRoom()?.ProcessLog.LogFunction(14, self.LSParent().Id);
             self.PlacementTargetId = 0;
             self.PlacementRotation = 0;
-            self.PlacementType = EUnitType.None;
-            self.PlacementTableId = 0;
+            self.PlacementItemId = 0;
             self.PlacementDragOffset = new TSVector2(FP.MaxValue, FP.MaxValue);
         }
     }

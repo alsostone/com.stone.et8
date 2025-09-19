@@ -9,8 +9,7 @@ namespace ET
     {
         public long PlacementTargetId;
         public int PlacementRotation;
-        public EUnitType PlacementType;
-        public int PlacementTableId;
+        public int PlacementItemId;
         public TSVector2 PlacementDragOffset;
     }
 }

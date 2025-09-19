@@ -1,7 +1,5 @@
-﻿using System;
-using UnityEngine;
-using YIUIFramework;
-using System.Collections.Generic;
+﻿using UnityEngine;
+using DG.Tweening;
 using UnityEngine.EventSystems;
 
 namespace ET.Client
@@ -24,18 +22,24 @@ namespace ET.Client
         {
         }
 
-        public static void SetData(this PlayCardItemComponent self, PlayCardItemData data)
+        public static void SetData(this PlayCardItemComponent self, CardBagItem itemData, Vector3 position)
         {
-            self.Data = data;
-            switch (data.Type)
+            self.ItemData = itemData;
+            switch (itemData.Type)
             {
                 case EUnitType.Block:
-                    self.u_DataName.SetValue($"Block{data.TableId}");
+                    self.u_DataName.SetValue($"Block{itemData.TableId}");
                     break;
                 case EUnitType.Building:
-                    self.u_DataName.SetValue($"Building{data.TableId}");
+                    self.u_DataName.SetValue($"Building{itemData.TableId}");
                     break;
             }
+            self.SetPosition(position);
+        }
+        
+        public static void SetPosition(this PlayCardItemComponent self, Vector3 position)
+        {
+            self.UIBase.OwnerRectTransform.DOLocalMove(position, 0.2f);
         }
         
         #region YIUIEvent开始
@@ -46,7 +50,7 @@ namespace ET.Client
             
             Room room = self.Room();
             LSOperaDragComponent dragComponent = room.GetComponent<LSOperaDragComponent>();
-            dragComponent.SetPlacementObject(self.Data, true);
+            dragComponent.SetPlacementObject(self.ItemData.Id, true);
             dragComponent.OnTouchMove(eventData.position);
         }
 
@@ -76,7 +80,7 @@ namespace ET.Client
         {
             Room room = self.Room();
             LSOperaDragComponent dragComponent = room.GetComponent<LSOperaDragComponent>();
-            dragComponent.SetPlacementObject(self.Data, false);
+            dragComponent.SetPlacementObject(self.ItemData.Id, false);
         }
         
         #endregion YIUIEvent结束

@@ -73,7 +73,7 @@ namespace ET.Client
                 return;
             var view = comp.GetChild<LSUnitView>(args.Id);
             var viewCardBagComponent = view.GetComponent<LSViewCardBagComponent>();
-            viewCardBagComponent.RemoveItem(args.Item);
+            viewCardBagComponent.RemoveItem(args.ItemId);
             await ETTask.CompletedTask;
         }
     }
