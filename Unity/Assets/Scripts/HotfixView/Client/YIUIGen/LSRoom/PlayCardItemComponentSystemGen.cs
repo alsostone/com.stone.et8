@@ -27,6 +27,7 @@ namespace ET.Client
         {
             self.u_UIBase = self.GetParent<YIUIComponent>();
 
+            self.u_ComCardRoot = self.UIBase.ComponentTable.FindComponent<UnityEngine.RectTransform>("u_ComCardRoot");
             self.u_DataName = self.UIBase.DataTable.FindDataValue<YIUIFramework.UIDataValueString>("u_DataName");
             self.u_EventClick = self.UIBase.EventTable.FindEvent<UIEventP0>("u_EventClick");
             self.u_EventClickHandle = self.u_EventClick.Add(self.OnEventClickAction);
@@ -36,6 +37,16 @@ namespace ET.Client
             self.u_EventDragHandle = self.u_EventDrag.Add(self.OnEventDragAction);
             self.u_EventDragEnd = self.UIBase.EventTable.FindEvent<UIEventP1<object>>("u_EventDragEnd");
             self.u_EventDragEndHandle = self.u_EventDragEnd.Add(self.OnEventDragEndAction);
+            self.u_EventPress = self.UIBase.EventTable.FindEvent<UIEventP0>("u_EventPress");
+            self.u_EventPressHandle = self.u_EventPress.Add(self.OnEventPressAction);
+            self.u_EventClickDown = self.UIBase.EventTable.FindEvent<UIEventP0>("u_EventClickDown");
+            self.u_EventClickDownHandle = self.u_EventClickDown.Add(self.OnEventClickDownAction);
+            self.u_EventClickUp = self.UIBase.EventTable.FindEvent<UIEventP0>("u_EventClickUp");
+            self.u_EventClickUpHandle = self.u_EventClickUp.Add(self.OnEventClickUpAction);
+            self.u_EventClickEnter = self.UIBase.EventTable.FindEvent<UIEventP0>("u_EventClickEnter");
+            self.u_EventClickEnterHandle = self.u_EventClickEnter.Add(self.OnEventClickEnterAction);
+            self.u_EventClickExit = self.UIBase.EventTable.FindEvent<UIEventP0>("u_EventClickExit");
+            self.u_EventClickExitHandle = self.u_EventClickExit.Add(self.OnEventClickExitAction);
 
         }
     }

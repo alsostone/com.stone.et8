@@ -11,7 +11,7 @@ namespace ET.Client
         public bool isOutsideDraging = false;
         public bool isMouseDraging = false;
         
-        public bool isDraging = false;
+        public bool isDraging { get; set; } = false;
         public int dragFingerId = -1;
     }
 }

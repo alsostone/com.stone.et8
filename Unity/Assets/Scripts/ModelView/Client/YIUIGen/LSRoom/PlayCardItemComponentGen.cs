@@ -17,6 +17,7 @@ namespace ET.Client
 
         public EntityRef<YIUIComponent> u_UIBase;
         public YIUIComponent UIBase => u_UIBase;
+        public UnityEngine.RectTransform u_ComCardRoot;
         public YIUIFramework.UIDataValueString u_DataName;
         public UIEventP0 u_EventClick;
         public UIEventHandleP0 u_EventClickHandle;
@@ -26,6 +27,16 @@ namespace ET.Client
         public UIEventHandleP1<object> u_EventDragHandle;
         public UIEventP1<object> u_EventDragEnd;
         public UIEventHandleP1<object> u_EventDragEndHandle;
+        public UIEventP0 u_EventPress;
+        public UIEventHandleP0 u_EventPressHandle;
+        public UIEventP0 u_EventClickDown;
+        public UIEventHandleP0 u_EventClickDownHandle;
+        public UIEventP0 u_EventClickUp;
+        public UIEventHandleP0 u_EventClickUpHandle;
+        public UIEventP0 u_EventClickEnter;
+        public UIEventHandleP0 u_EventClickEnterHandle;
+        public UIEventP0 u_EventClickExit;
+        public UIEventHandleP0 u_EventClickExitHandle;
 
     }
 }

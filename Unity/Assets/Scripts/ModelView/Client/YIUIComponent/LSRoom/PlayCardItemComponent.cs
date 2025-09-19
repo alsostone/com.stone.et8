@@ -1,4 +1,5 @@
-﻿
+﻿using UnityEngine;
+
 namespace ET.Client
 {
     /// <summary>
@@ -6,9 +7,18 @@ namespace ET.Client
     /// Date    2025.9.16
     /// Desc
     /// </summary>
-    public partial class PlayCardItemComponent: Entity
+    public partial class PlayCardItemComponent: Entity, IYIUIEvent<OnCardItemHighlightEvent>
     {
         public CardBagItem ItemData { get; set; }
+        public Vector3 Position { get; set; }
         public int PointerId = -1;
+        
+        public bool IsClickDown = false;
+        public bool IsHighlight = false;
+    }
+    
+    public struct OnCardItemHighlightEvent
+    {
+        public long ItemId;
     }
 }
