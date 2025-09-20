@@ -5,6 +5,7 @@ using UnityEngine;
 
 namespace ET.Client
 {
+    [LSEntitySystemOf(typeof(LSViewGridBuilderComponent))]
     [EntitySystemOf(typeof(LSViewGridBuilderComponent))]
     [FriendOf(typeof(LSViewGridBuilderComponent))]
     [FriendOf(typeof(LSViewPlacementComponent))]
@@ -19,6 +20,15 @@ namespace ET.Client
         private static void Destroy(this LSViewGridBuilderComponent self)
         {
             self.OnPlacementCancel();
+        }
+        
+        [LSEntitySystem]
+        private static void LSRollback(this LSViewGridBuilderComponent self)
+        {
+            // 拖拽过程中逻辑层回滚可能会导致拖拽开始被取消（真实拖拽指令晚于预测指令），但被延后的拖拽开始指令终会被重新执行。
+            // 重新执行时由于判定了DragPlacement是否存在，表现层不会重复创建DragPlacement实例，不会有问题。
+            // 预测拖拽开始正常执行，若权威拖拽开始莫名丢失导致回滚，表现层有拖拽表现，但逻辑层没有拖拽状态，拖拽无效，表现层拖拽结束时会取消拖拽表现，问题不大。
+            // 而且由于表现层拖拽表现未发生改变也就不会闪烁，不处理回滚更优。
         }
         
         public static void OnPlacementDragStart(this LSViewGridBuilderComponent self, long targetId)
