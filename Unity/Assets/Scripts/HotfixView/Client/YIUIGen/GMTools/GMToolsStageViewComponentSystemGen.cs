@@ -32,7 +32,7 @@ namespace ET.Client
             self.u_UIView = self.UIBase.GetComponent<YIUIViewComponent>();
             self.UIWindow.WindowOption = EWindowOption.BanTween|EWindowOption.BanAwaitOpenTween|EWindowOption.BanAwaitCloseTween|EWindowOption.SkipOtherOpenTween|EWindowOption.SkipOtherCloseTween;
             self.UIView.ViewWindowType = EViewWindowType.View;
-            self.UIView.StackOption = EViewStackOption.None;
+            self.UIView.StackOption = EViewStackOption.Visible;
 
             self.u_ComFightMode = self.UIBase.ComponentTable.FindComponent<TMPro.TMP_Dropdown>("u_ComFightMode");
             self.u_ComStageLoop = self.UIBase.ComponentTable.FindComponent<UnityEngine.UI.LoopVerticalScrollRect>("u_ComStageLoop");

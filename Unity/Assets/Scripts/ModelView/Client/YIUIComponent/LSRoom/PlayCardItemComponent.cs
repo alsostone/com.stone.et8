@@ -13,6 +13,7 @@ namespace ET.Client
         public Vector3 Position { get; set; }
         public int PointerId = -1;
         
+        public bool IsCliickEnter = false;
         public bool IsClickDown = false;
         public bool IsHighlight = false;
     }

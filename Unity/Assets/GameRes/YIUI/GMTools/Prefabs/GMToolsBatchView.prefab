@@ -812,7 +812,7 @@ MonoBehaviour:
   PanelOption: 0
   PanelStackOption: 2
   ViewWindowType: 0
-  ViewStackOption: 0
+  ViewStackOption: 1
   CachePanelTime: 10
   Priority: 0
 --- !u!114 &8285217741182198952

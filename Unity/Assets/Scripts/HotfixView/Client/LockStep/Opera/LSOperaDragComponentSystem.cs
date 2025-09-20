@@ -151,6 +151,7 @@ namespace ET.Client
                 ulong command = LSCommand.GenCommandButton(0, CommandButtonType.PlacementCancel);
                 self.Room().SendCommandMeesage(command);
                 self.isDraging = false;
+                self.isOutsideDraging = false;
             }
         }
 

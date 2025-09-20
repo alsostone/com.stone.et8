@@ -33,6 +33,7 @@ namespace ET.Client
         
         public static void OnPlacementDragStart(this LSViewGridBuilderComponent self, long targetId)
         {
+            self.OnPlacementCancel();
             if (!self.DragPlacement)
             {
                 LSUnitViewComponent unitViewComponent = self.Room().GetComponent<LSUnitViewComponent>();

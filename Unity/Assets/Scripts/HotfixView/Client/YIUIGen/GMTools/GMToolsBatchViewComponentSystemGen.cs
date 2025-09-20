@@ -32,7 +32,7 @@ namespace ET.Client
             self.u_UIView = self.UIBase.GetComponent<YIUIViewComponent>();
             self.UIWindow.WindowOption = EWindowOption.BanTween|EWindowOption.BanAwaitOpenTween|EWindowOption.BanAwaitCloseTween|EWindowOption.SkipOtherOpenTween|EWindowOption.SkipOtherCloseTween;
             self.UIView.ViewWindowType = EViewWindowType.View;
-            self.UIView.StackOption = EViewStackOption.None;
+            self.UIView.StackOption = EViewStackOption.Visible;
 
             self.u_EventClose = self.UIBase.EventTable.FindEvent<UIEventP0>("u_EventClose");
             self.u_EventCloseHandle = self.u_EventClose.Add(self.OnEventCloseAction);

@@ -104,6 +104,8 @@ namespace ET.Client
         
         private static void OnEventClickEnterAction(this PlayCardItemComponent self)
         {
+            self.IsCliickEnter = true;
+            
             // 只要处于拖动中就不改变高亮状态（不论这个拖动是不是本Item发起的）
             // 因为拖动过程中 鼠标可能会经过其他Item
             LSOperaDragComponent dragComponent = self.Room().GetComponent<LSOperaDragComponent>();
@@ -119,13 +121,18 @@ namespace ET.Client
         
         private static void OnEventClickUpAction(this PlayCardItemComponent self)
         {
-            self.IsClickDown = false;
-            self.SetHighlight(false);
+            // self.IsClickDown = false; 只可以被长按设置false
+            // 当鼠标还在该Item内时 不取消高亮
+            if (!self.IsCliickEnter) {
+                self.SetHighlight(false);
+            }
         }
         
         private static void OnEventClickExitAction(this PlayCardItemComponent self)
         {
-            // 在按下时 由弹起事件取消高亮
+            self.IsCliickEnter = true;
+            
+            // 当处于在按下状态时 由点击弹起事件取消高亮
             if (!self.IsClickDown) {
                 self.SetHighlight(false);
             }

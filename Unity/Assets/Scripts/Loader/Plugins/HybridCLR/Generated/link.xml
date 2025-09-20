@@ -1,5 +1,15 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <linker>
+  <assembly fullname="DOTween">
+    <type fullname="DG.Tweening.Core.DOGetter`1" preserve="all" />
+    <type fullname="DG.Tweening.Core.DOSetter`1" preserve="all" />
+    <type fullname="DG.Tweening.Core.TweenerCore`3" preserve="all" />
+    <type fullname="DG.Tweening.DOTween" preserve="all" />
+    <type fullname="DG.Tweening.Plugins.Options.FloatOptions" preserve="all" />
+    <type fullname="DG.Tweening.Plugins.Options.VectorOptions" preserve="all" />
+    <type fullname="DG.Tweening.ShortcutExtensions" preserve="all" />
+    <type fullname="DG.Tweening.TweenSettingsExtensions" preserve="all" />
+  </assembly>
   <assembly fullname="DamageNumbersPro">
     <type fullname="FloatingTextSpawner" preserve="all" />
   </assembly>
@@ -143,6 +153,7 @@
     <type fullname="ET.ILog" preserve="all" />
     <type fullname="ET.IMHandler" preserve="all" />
     <type fullname="ET.IMessage" preserve="all" />
+    <type fullname="ET.IPool" preserve="all" />
     <type fullname="ET.IRequest" preserve="all" />
     <type fullname="ET.IResponse" preserve="all" />
     <type fullname="ET.IScene" preserve="all" />
@@ -178,7 +189,6 @@
     <type fullname="ET.Object" preserve="all" />
     <type fullname="ET.ObjectPool" preserve="all" />
     <type fullname="ET.OpcodeType" preserve="all" />
-    <type fullname="ET.Options" preserve="all" />
     <type fullname="ET.ProcessInnerSender" preserve="all" />
     <type fullname="ET.ProcessInnerSenderSystem" preserve="all" />
     <type fullname="ET.RandomGenerator" preserve="all" />
@@ -253,6 +263,7 @@
     <type fullname="NPBehave.BehaveWorld" preserve="all" />
     <type fullname="NPBehave.Blackboard" preserve="all" />
     <type fullname="NPBehave.BlackboardBool" preserve="all" />
+    <type fullname="NPBehave.Clock" preserve="all" />
     <type fullname="NPBehave.Container" preserve="all" />
     <type fullname="NPBehave.Decorator" preserve="all" />
     <type fullname="NPBehave.IAgent" preserve="all" />
@@ -269,6 +280,7 @@
     <type fullname="NPBehave.Sequence" preserve="all" />
     <type fullname="NPBehave.Service" preserve="all" />
     <type fullname="NPBehave.Stops" preserve="all" />
+    <type fullname="NPBehave.Task" preserve="all" />
     <type fullname="NPBehave.WaitSecond" preserve="all" />
     <type fullname="NPBehave.WaitUntilStopped" preserve="all" />
     <type fullname="ProcessLogMgr" preserve="all" />
@@ -307,7 +319,10 @@
     <type fullname="UnityEngine.Ray" preserve="all" />
     <type fullname="UnityEngine.Rect" preserve="all" />
     <type fullname="UnityEngine.RectTransform" preserve="all" />
+    <type fullname="UnityEngine.RectTransform/Axis" preserve="all" />
     <type fullname="UnityEngine.SceneManagement.LoadSceneMode" preserve="all" />
+    <type fullname="UnityEngine.SceneManagement.Scene" preserve="all" />
+    <type fullname="UnityEngine.SceneManagement.SceneManager" preserve="all" />
     <type fullname="UnityEngine.Time" preserve="all" />
     <type fullname="UnityEngine.Transform" preserve="all" />
     <type fullname="UnityEngine.Vector2" preserve="all" />
@@ -327,6 +342,9 @@
     <type fullname="UnityEngine.EventSystems.EventSystem" preserve="all" />
     <type fullname="UnityEngine.EventSystems.PointerEventData" preserve="all" />
     <type fullname="UnityEngine.UI.Toggle" preserve="all" />
+  </assembly>
+  <assembly fullname="UnityEngine.UIModule">
+    <type fullname="UnityEngine.CanvasGroup" preserve="all" />
   </assembly>
   <assembly fullname="YIUIFramework">
     <type fullname="ET.Client.IYIUIBind" preserve="all" />
@@ -360,6 +378,7 @@
     <type fullname="UnityEngine.UI.LoopHorizontalScrollRect" preserve="all" />
     <type fullname="UnityEngine.UI.LoopScrollRect" preserve="all" />
     <type fullname="UnityEngine.UI.LoopVerticalScrollRect" preserve="all" />
+    <type fullname="YIUIFramework.ArrPrefs`1" preserve="all" />
     <type fullname="YIUIFramework.EPanelLayer" preserve="all" />
     <type fullname="YIUIFramework.EPanelOption" preserve="all" />
     <type fullname="YIUIFramework.EPanelStackOption" preserve="all" />
@@ -370,6 +389,7 @@
     <type fullname="YIUIFramework.EWindowOption" preserve="all" />
     <type fullname="YIUIFramework.FloatPrefs" preserve="all" />
     <type fullname="YIUIFramework.IGroupKey" preserve="all" />
+    <type fullname="YIUIFramework.IntPrefs" preserve="all" />
     <type fullname="YIUIFramework.ObjAsyncCache`1" preserve="all" />
     <type fullname="YIUIFramework.ParamVo" preserve="all" />
     <type fullname="YIUIFramework.RedDotConfigData" preserve="all" />
@@ -399,6 +419,7 @@
     <type fullname="YIUIFramework.YIUIBindHelper" preserve="all" />
     <type fullname="YIUIFramework.YIUIBindVo" preserve="all" />
     <type fullname="YIUIFramework.YIUIFactory" preserve="all" />
+    <type fullname="YIUIFramework.YIUIListView`1" preserve="all" />
     <type fullname="YIUIFramework.YIUILoopScroll`2" preserve="all" />
     <type fullname="YIUIFramework.YIUILoopScroll`2/ListItemRenderer" preserve="all" />
     <type fullname="YIUIFramework.YIUILoopScroll`2/OnClickItemEvent" preserve="all" />
@@ -456,11 +477,8 @@
     <type fullname="System.Diagnostics.ConditionalAttribute" preserve="all" />
     <type fullname="System.Diagnostics.DebuggableAttribute" preserve="all" />
     <type fullname="System.Diagnostics.DebuggableAttribute/DebuggingModes" preserve="all" />
-    <type fullname="System.Diagnostics.DebuggerBrowsableAttribute" preserve="all" />
-    <type fullname="System.Diagnostics.DebuggerBrowsableState" preserve="all" />
     <type fullname="System.Diagnostics.DebuggerDisplayAttribute" preserve="all" />
     <type fullname="System.Diagnostics.DebuggerHiddenAttribute" preserve="all" />
-    <type fullname="System.Diagnostics.DebuggerStepThroughAttribute" preserve="all" />
     <type fullname="System.Enum" preserve="all" />
     <type fullname="System.Exception" preserve="all" />
     <type fullname="System.FlagsAttribute" preserve="all" />
@@ -516,7 +534,6 @@
     <type fullname="System.Threading.Tasks.Task" preserve="all" />
     <type fullname="System.Threading.Tasks.TaskFactory" preserve="all" />
     <type fullname="System.Threading.Tasks.Task`1" preserve="all" />
-    <type fullname="System.Tuple`3" preserve="all" />
     <type fullname="System.Type" preserve="all" />
     <type fullname="System.UInt16" preserve="all" />
     <type fullname="System.UInt32" preserve="all" />
