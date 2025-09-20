@@ -774,6 +774,11 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 575235020}
     m_Modifications:
+    - target: {fileID: 5718484689504413106, guid: ebf91879f6b2ac24c9eb142465d10137,
+        type: 3}
+      propertyPath: m_ScreenMatchMode
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 7675494843167802284, guid: ebf91879f6b2ac24c9eb142465d10137,
         type: 3}
       propertyPath: m_Name

@@ -43,7 +43,7 @@ namespace ET.Client
             for (int i = 0; i < Input.touchCount; i++)
             {
                 var touch = Input.GetTouch(i);
-                if (self.dragFingerId == -1 && touch.phase == UnityEngine.TouchPhase.Began)
+                if (self.dragFingerId == -1 && touch.phase == TouchPhase.Began)
                 {
                     if (UnityEngine.EventSystems.EventSystem.current.IsPointerOverGameObject(touch.fingerId))
                         continue;
@@ -53,17 +53,17 @@ namespace ET.Client
                         self.OnTouchMove(touch.position);
                     }
                 }
-                else if (touch.fingerId == self.dragFingerId && (touch.phase == UnityEngine.TouchPhase.Moved || touch.phase == UnityEngine.TouchPhase.Stationary))
+                else if (touch.fingerId == self.dragFingerId && (touch.phase == TouchPhase.Moved || touch.phase == TouchPhase.Stationary))
                 {
                     self.OnTouchMove(touch.position);
                 }
-                else if (touch.fingerId == self.dragFingerId && touch.phase == UnityEngine.TouchPhase.Ended)
+                else if (touch.fingerId == self.dragFingerId && touch.phase == TouchPhase.Ended)
                 {
                     self.OnTouchEnd(touch.position);
                     self.dragFingerId = -1;
                 }
             }
-            if (!self.isMouseMoveDisable && self.dragFingerId == -1)
+            if (!self.isOutsideDraging && self.dragFingerId == -1)
             {
                 self.OnTouchMove(Input.mousePosition);
             }
