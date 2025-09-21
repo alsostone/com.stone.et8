@@ -1,7 +1,5 @@
-﻿using System;
-using UnityEngine;
+﻿using System.Collections.Generic;
 using YIUIFramework;
-using System.Collections.Generic;
 
 namespace ET.Client
 {
@@ -10,12 +8,12 @@ namespace ET.Client
     /// Date    2025.3.6
     /// Desc
     /// </summary>
-    public partial class PlayViewComponent: Entity, IUpdate, IYIUIEvent<OnCardDragStartEvent>, IYIUIEvent<OnCardDragEndEvent>, IYIUIEvent<OnCardViewResetEvent>
+    public partial class PlayViewComponent: Entity, IUpdate, IYIUIEvent<OnCardDragStartEvent>, IYIUIEvent<OnCardDragEndEvent>, IYIUIEvent<OnCardViewResetEvent>, IYIUIEvent<OnCardSelectResetEvent>
     {
         public string SaveName;
         public int PredictFrame = 0;
 
-        public int SelectCardCount;
+        public List<List<LSRandomDropItem>> CachedCards;
         public YIUIListView<PlayCardItemComponent> CardsView;
     }
     
@@ -30,6 +28,11 @@ namespace ET.Client
     }
     
     public struct OnCardViewResetEvent
+    {
+        public long PlayerId;
+    }
+    
+    public struct OnCardSelectResetEvent
     {
         public long PlayerId;
     }

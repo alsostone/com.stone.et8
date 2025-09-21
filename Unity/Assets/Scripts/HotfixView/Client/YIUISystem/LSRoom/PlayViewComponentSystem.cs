@@ -42,12 +42,7 @@ namespace ET.Client
         [EntitySystem]
         private static async ETTask<bool> YIUIOpen(this PlayViewComponent self)
         {
-            Room room = self.Room();
-            LSUnitViewComponent lsUnitViewComponent = room.GetComponent<LSUnitViewComponent>();
-            LSUnitView lsPlayer = lsUnitViewComponent.GetChild<LSUnitView>(room.LookPlayerId);
-            LSViewCardSelectComponent viewCardSelectComponent = lsPlayer.GetComponent<LSViewCardSelectComponent>();
-            self.ResetSelectCards(viewCardSelectComponent.CardsQueue);
-            
+            self.ResetSelectCards();
             self.ResetBagCards();
             await ETTask.CompletedTask;
             return true;
@@ -83,6 +78,16 @@ namespace ET.Client
                 self.ResetBagCards();
         }
         
+        
+        [EntitySystem]
+        private static async ETTask YIUIEvent(this PlayViewComponent self, OnCardSelectResetEvent message)
+        {
+            await ETTask.CompletedTask;
+            if (message.PlayerId == self.Room().LookPlayerId)
+                self.ResetSelectCards();
+        }
+
+        
         private static void ResetBagCards(this PlayViewComponent self)
         {
             Room room = self.Room();
@@ -116,10 +121,15 @@ namespace ET.Client
             }
         }
 
-        public static void ResetSelectCards(this PlayViewComponent self, List<List<LSRandomDropItem>> selectCards)
+        private static void ResetSelectCards(this PlayViewComponent self)
         {
-            self.SelectCardCount = selectCards.Count;
-            self.u_DataSelectCount.SetValue(selectCards.Count.ToString());
+            Room room = self.Room();
+            LSUnitViewComponent lsUnitViewComponent = room.GetComponent<LSUnitViewComponent>();
+            LSUnitView lsPlayer = lsUnitViewComponent.GetChild<LSUnitView>(room.LookPlayerId);
+            LSViewCardSelectComponent viewCardSelectComponent = lsPlayer.GetComponent<LSViewCardSelectComponent>();
+            
+            self.CachedCards = viewCardSelectComponent.CardsQueue;
+            self.u_DataSelectCount.SetValue(self.CachedCards.Count.ToString());
         }
 
         #region YIUIEvent开始

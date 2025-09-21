@@ -23,10 +23,14 @@ namespace ET.Client
                 ObjectPool.Instance.Recycle(items);
             }
             self.CardsQueue.Clear();
+            
             CardSelectComponent selectComponent = self.LSViewOwner().GetUnit().GetComponent<CardSelectComponent>();
             foreach (var cards in selectComponent.CardsQueue) {
-                self.AddCards(cards);
+                var results = ObjectPool.Instance.Fetch<List<LSRandomDropItem>>();
+                results.AddRange(cards);
+                self.CardsQueue.Add(results);
             }
+            self.Fiber().UIEvent(new OnCardSelectResetEvent() { PlayerId = self.LSViewOwner().Id }).Coroutine();
         }
 
         public static void AddCards(this LSViewCardSelectComponent self, List<LSRandomDropItem> cards)
@@ -35,6 +39,7 @@ namespace ET.Client
             var results = ObjectPool.Instance.Fetch<List<LSRandomDropItem>>();
             results.AddRange(cards);
             self.CardsQueue.Add(results);
+            self.Fiber().UIEvent(new OnCardSelectResetEvent() { PlayerId = self.LSViewOwner().Id }).Coroutine();
         }
         
         public static void SelectCards(this LSViewCardSelectComponent self, int index)
@@ -46,6 +51,7 @@ namespace ET.Client
                 items.Clear();
                 ObjectPool.Instance.Recycle(items);
             }
+            self.Fiber().UIEvent(new OnCardSelectResetEvent() { PlayerId = self.LSViewOwner().Id }).Coroutine();
         }
     }
 }

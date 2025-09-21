@@ -14,9 +14,6 @@ namespace ET.Client
             var view = comp.GetChild<LSUnitView>(args.Id);
             var viewCardSelectComponent = view.GetComponent<LSViewCardSelectComponent>();
             viewCardSelectComponent.AddCards(args.Cards);
-            
-            PlayViewComponent viewComponent = YIUIMgrComponent.Inst.GetPanelView<LSRoomPanelComponent, PlayViewComponent>();
-            viewComponent?.ResetSelectCards(viewCardSelectComponent.CardsQueue);
             await ETTask.CompletedTask;
         }
     }
@@ -35,9 +32,6 @@ namespace ET.Client
             var view = comp.GetChild<LSUnitView>(args.Id);
             var viewCardSelectComponent = view.GetComponent<LSViewCardSelectComponent>();
             viewCardSelectComponent.SelectCards(args.Index);
-            
-            PlayViewComponent viewComponent = YIUIMgrComponent.Inst.GetPanelView<LSRoomPanelComponent, PlayViewComponent>();
-            viewComponent?.ResetSelectCards(viewCardSelectComponent.CardsQueue);
             await ETTask.CompletedTask;
         }
     }
