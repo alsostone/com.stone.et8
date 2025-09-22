@@ -55,19 +55,13 @@ namespace ET
 		    var cards = ObjectPool.Instance.Fetch<List<LSRandomDropItem>>();
 		    cards.Add(new LSRandomDropItem(EUnitType.Building, 30011, 1));
 		    cards.Add(new LSRandomDropItem(EUnitType.Building, 30021, 1));
-		    cards.Add(new LSRandomDropItem(EUnitType.Building, 30021, 1));
-		    cards.Add(new LSRandomDropItem(EUnitType.Building, 30021, 1));
-		    cards.Add(new LSRandomDropItem(EUnitType.Building, 30021, 1));
-		    cards.Add(new LSRandomDropItem(EUnitType.Building, 30021, 1));
-		    cards.Add(new LSRandomDropItem(EUnitType.Building, 30021, 1));
-		    cards.Add(new LSRandomDropItem(EUnitType.Building, 30021, 1));
-		    cards.Add(new LSRandomDropItem(EUnitType.Building, 30021, 1));
-		    cards.Add(new LSRandomDropItem(EUnitType.Building, 30021, 1));
 		    lsUnit.AddComponent<CardBagComponent, List<LSRandomDropItem>>(cards);
 		    cards.Clear();
 		    ObjectPool.Instance.Recycle(cards);
 		    
-		    lsUnit.AddComponent<CardSelectComponent>();
+		    CardSelectComponent cardSelectComponent = lsUnit.AddComponent<CardSelectComponent>();
+		    cardSelectComponent.RandomCards(1);
+		    cardSelectComponent.RandomCards(1);
 		    lsUnit.AddComponent<LSCommandsRunComponent>();
 			
 		    EventSystem.Instance.Publish(lsWorld, new LSUnitCreate() {LSUnit = lsUnit});

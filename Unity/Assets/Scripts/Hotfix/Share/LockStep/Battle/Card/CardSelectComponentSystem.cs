@@ -16,19 +16,24 @@ namespace ET
         [LSEntitySystem]
         private static void LSUpdate(this CardSelectComponent self)
         {
-            LSWorld lsWorld = self.LSWorld();
-            LSStageComponent lsStageComponent = lsWorld.GetComponent<LSStageComponent>();
+            LSStageComponent lsStageComponent = self.LSWorld().GetComponent<LSStageComponent>();
             if (!lsStageComponent.CheckWaveDone(self.CurrentSelectCount + 1))
                 return;
             
             TeamComponent teamComponent = self.LSOwner().GetComponent<TeamComponent>();
-            LSTargetsComponent lsTargetsComponent = lsWorld.GetComponent<LSTargetsComponent>();
+            LSTargetsComponent lsTargetsComponent = self.LSWorld().GetComponent<LSTargetsComponent>();
             if (lsTargetsComponent.GetAliveCount(teamComponent.GetEnemyTeam()) > 0)
                 return;
             
             // 波次结束且敌方单位全部死亡则给于抽卡一次
             self.CurrentSelectCount++;
-            int index = Math.Min(lsStageComponent.TbRow.RandomCards.Length, self.CurrentSelectCount);
+            self.RandomCards(self.CurrentSelectCount);
+        }
+        
+        public static void RandomCards(this CardSelectComponent self, int currentSelectCount)
+        {
+            LSStageComponent lsStageComponent = self.LSWorld().GetComponent<LSStageComponent>();
+            int index = Math.Min(lsStageComponent.TbRow.RandomCards.Length, currentSelectCount);
             int randomSet = lsStageComponent.TbRow.RandomCards[index - 1];
             
             var results = ObjectPool.Instance.Fetch<List<LSRandomDropItem>>();

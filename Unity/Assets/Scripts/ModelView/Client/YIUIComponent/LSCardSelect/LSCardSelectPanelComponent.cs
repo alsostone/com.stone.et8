@@ -10,10 +10,15 @@ namespace ET.Client
     /// Date    2025.9.20
     /// Desc
     /// </summary>
-    public partial class LSCardSelectPanelComponent: Entity, IYIUIOpen<List<LSRandomDropItem>, int>
+    public partial class LSCardSelectPanelComponent: Entity, IYIUIOpenTween, IYIUICloseTween, IYIUIEvent<OnCardSelectClickEvent>, IYIUIEvent<OnCardSelectResetEvent>
     {
-        public int SelectCount;
+        public bool IsClickDone { get; set; } = false;
+        public List<LSRandomDropItem> CachedCards;
         public YIUIListView<LSCardSelectItemComponent> CardsView;
     }
     
+    public struct OnCardSelectClickEvent
+    {
+        public int Index;
+    }
 }

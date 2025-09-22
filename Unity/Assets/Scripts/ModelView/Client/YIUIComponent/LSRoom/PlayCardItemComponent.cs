@@ -14,7 +14,7 @@ namespace ET.Client
         public int PointerId = -1;
         
         public bool IsCliickEnter = false;
-        public bool IsClickDown = false;
+        public bool IsClickPress = false;
         public bool IsHighlight = false;
     }
     

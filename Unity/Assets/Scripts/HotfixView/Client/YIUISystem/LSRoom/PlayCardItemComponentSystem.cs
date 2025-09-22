@@ -33,6 +33,7 @@ namespace ET.Client
         {
             self.ItemData = itemData;
             self.Position = position;
+            
             switch (itemData.Type)
             {
                 case EUnitType.Block:
@@ -42,13 +43,14 @@ namespace ET.Client
                     self.u_DataName.SetValue($"Building{itemData.TableId}");
                     break;
             }
+            self.UIBase.OwnerRectTransform.localPosition = position + new Vector3(0, 30);
             self.SetPosition(position);
         }
         
         public static void SetPosition(this PlayCardItemComponent self, Vector3 position)
         {
             self.Position = position;
-            self.UIBase.OwnerRectTransform.DOLocalMove(position, 0.2f);
+            self.UIBase.OwnerRectTransform.DOLocalMove(position, 0.25f);
         }
         
         private static void SetHighlight(this PlayCardItemComponent self, bool highlight)
@@ -58,12 +60,12 @@ namespace ET.Client
             
             self.IsHighlight = highlight;
             if (highlight) {
-                self.u_ComCardRoot.DOLocalMoveY(30, 0.2f);
+                self.u_ComCardRoot.DOLocalMoveY(30, 0.25f);
                 // 在此处可以发送选中该卡牌的指令给服务器，用来增加氛围感
                 // ...
             }
             else {
-                self.u_ComCardRoot.DOLocalMoveY(0, 0.2f);
+                self.u_ComCardRoot.DOLocalMoveY(0, 0.25f);
             }
         }
         
@@ -107,7 +109,6 @@ namespace ET.Client
             self.IsCliickEnter = true;
             
             // 只要处于拖动中就不改变高亮状态（不论这个拖动是不是本Item发起的）
-            // 因为拖动过程中 鼠标可能会经过其他Item
             LSOperaDragComponent dragComponent = self.Room().GetComponent<LSOperaDragComponent>();
             if (!dragComponent.isDraging) {
                 self.Fiber().UIEvent(new OnCardItemHighlightEvent() { ItemId = self.ItemData.Id }).Coroutine();
@@ -116,12 +117,11 @@ namespace ET.Client
 
         private static void OnEventClickDownAction(this PlayCardItemComponent self)
         {
-            self.IsClickDown = true;
+            self.IsClickPress = false;
         }
         
         private static void OnEventClickUpAction(this PlayCardItemComponent self)
         {
-            // self.IsClickDown = false; 只可以被长按设置false
             // 当鼠标还在该Item内时 不取消高亮
             if (!self.IsCliickEnter) {
                 self.SetHighlight(false);
@@ -130,10 +130,11 @@ namespace ET.Client
         
         private static void OnEventClickExitAction(this PlayCardItemComponent self)
         {
-            self.IsCliickEnter = true;
+            self.IsCliickEnter = false;
             
-            // 当处于在按下状态时 由点击弹起事件取消高亮
-            if (!self.IsClickDown) {
+            // 只要处于拖动中就不改变高亮状态（不论这个拖动是不是本Item发起的）
+            LSOperaDragComponent dragComponent = self.Room().GetComponent<LSOperaDragComponent>();
+            if (!dragComponent.isDraging) {
                 self.SetHighlight(false);
             }
         }
@@ -146,17 +147,18 @@ namespace ET.Client
                 // TipsHelper.OpenSync<TextTipsViewComponent>("no code");
                 
                 // 若是长按生效后 则不响应点击事件
-                // self.IsClickDown = false;
+                // self.IsClickPress = true;
             }
         }
 
         private static void OnEventClickAction(this PlayCardItemComponent self)
         {
             // 长按生效后 不响应点击事件（拖动时是否响应由面板配置）
-            if (self.IsClickDown) {
+            if (!self.IsClickPress) {
                 Room room = self.Room();
                 LSOperaDragComponent dragComponent = room.GetComponent<LSOperaDragComponent>();
                 dragComponent.SetPlacementObject(self.ItemData.Id, false);
+                self.SetHighlight(true);
             }
         }
         

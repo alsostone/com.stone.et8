@@ -1,7 +1,5 @@
-﻿using System;
-using UnityEngine;
-using YIUIFramework;
-using System.Collections.Generic;
+﻿using UnityEngine;
+using DG.Tweening;
 
 namespace ET.Client
 {
@@ -43,8 +41,7 @@ namespace ET.Client
         
         private static void OnEventClickAction(this LSCardSelectItemComponent self)
         {
-            ulong cmd = LSCommand.GenCommandButton(0, CommandButtonType.CardSelect, self.Index);
-            self.Room().SendCommandMeesage(cmd);
+            self.Fiber().UIEvent(new OnCardSelectClickEvent() { Index = self.Index }).Coroutine();
         }
         #endregion YIUIEvent结束
     }

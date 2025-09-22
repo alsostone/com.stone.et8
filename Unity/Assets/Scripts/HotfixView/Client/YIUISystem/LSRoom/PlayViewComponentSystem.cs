@@ -116,7 +116,6 @@ namespace ET.Client
                 var bagItem = viewCardBagComponent.Items[indexNew];
                 PlayCardItemComponent renderer = self.CardsView.CreateItemRenderer();
                 renderer.UIBase.OwnerRectTransform.SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, itemWidth);
-                renderer.UIBase.OwnerRectTransform.localPosition = new Vector3(itemWidth * indexNew, 30);
                 renderer.SetData(bagItem, new Vector3(itemWidth * indexNew, 0));
             }
         }
@@ -152,9 +151,9 @@ namespace ET.Client
         
         private static void OnEventSelectCardAction(this PlayViewComponent self)
         {
-            if (self.SelectCardCount > 0) {
-                ulong cmd = LSCommand.GenCommandButton(0, CommandButtonType.CardSelect, 1);
-                self.Room().SendCommandMeesage(cmd);
+            if (self.CachedCards.Count > 0) {
+                YIUIRootComponent yiuiRootComponent = self.Room().GetComponent<YIUIRootComponent>();
+                yiuiRootComponent.OpenPanelAsync<LSCardSelectPanelComponent>().Coroutine();
             }
         }
         #endregion YIUIEvent结束

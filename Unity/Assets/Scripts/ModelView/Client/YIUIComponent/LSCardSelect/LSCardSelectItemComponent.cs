@@ -12,7 +12,7 @@ namespace ET.Client
     /// </summary>
     public partial class LSCardSelectItemComponent: Entity
     {
-        public LSRandomDropItem ItemData;
+        public LSRandomDropItem ItemData { get; set; }
         public int Index;
     }
 }

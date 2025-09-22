@@ -22,6 +22,7 @@ namespace ET.Client
         public EntityRef<YIUIPanelComponent> u_UIPanel;
         public YIUIPanelComponent UIPanel => u_UIPanel;
         public UnityEngine.RectTransform u_ComCardSelectRoot;
+        public UnityEngine.UI.Image u_ComBackground;
 
     }
 }

@@ -38,6 +38,7 @@ namespace ET.Client
             self.UIPanel.CachePanelTime = 10;
 
             self.u_ComCardSelectRoot = self.UIBase.ComponentTable.FindComponent<UnityEngine.RectTransform>("u_ComCardSelectRoot");
+            self.u_ComBackground = self.UIBase.ComponentTable.FindComponent<UnityEngine.UI.Image>("u_ComBackground");
 
         }
     }
