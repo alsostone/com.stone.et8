@@ -72,6 +72,18 @@ namespace ET.Client
         {
             self.UIPanel.OpenViewAsync<GMToolsStageViewComponent>().Coroutine();
         }
+        
+        private static void OnEventCardSelectAction(this GMToolsPanelComponent self)
+        {
+#if ENABLE_DEBUG
+            var room = self.Root().GetComponent<Room>();
+            if (room != null)
+            {
+                ulong cmd = LSCommand.GenCommandGm(0, CommandGMType.CardSelect, 1);
+                room.SendCommandMeesage(cmd);
+            }
+#endif
+        }
         #endregion YIUIEvent结束
     }
 }

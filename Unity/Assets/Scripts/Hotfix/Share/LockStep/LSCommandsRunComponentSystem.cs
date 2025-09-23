@@ -114,6 +114,12 @@ namespace ET
                     self.LSWorld().GetComponent<LSGameOverComponent>().SetGameOver(team);
                     break;
                 }
+                case CommandGMType.CardSelect:
+                {
+                    CardSelectComponent selectComponent = lsPlayer.GetComponent<CardSelectComponent>();
+                    selectComponent.RandomCards((int)gm.Item2);
+                    break;
+                }
             }
         }
 #endif

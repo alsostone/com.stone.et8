@@ -11,8 +11,8 @@ namespace ET.Client
     /// </summary>
     public enum EGMToolsPanelViewEnum
     {
-        StageView = 1,
-        BatchView = 2,
+        GMToolsStageView = 1,
+        GMToolsBatchView = 2,
     }
     /// <summary>
     /// 由YIUI工具自动创建 请勿修改
@@ -40,6 +40,8 @@ namespace ET.Client
         public UIEventHandleP0 u_EventSetWinHandle;
         public UIEventP0 u_EventSetLose;
         public UIEventHandleP0 u_EventSetLoseHandle;
+        public UIEventP0 u_EventCardSelect;
+        public UIEventHandleP0 u_EventCardSelectHandle;
 
     }
 }

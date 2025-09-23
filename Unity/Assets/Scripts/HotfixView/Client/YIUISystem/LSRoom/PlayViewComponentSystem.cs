@@ -1,11 +1,9 @@
 ﻿using System;
 using UnityEngine;
 using YIUIFramework;
-using System.Collections.Generic;
 using DG.Tweening;
 using DG.Tweening.Core;
 using DG.Tweening.Plugins.Options;
-using Random = UnityEngine.Random;
 
 namespace ET.Client
 {
@@ -129,6 +127,16 @@ namespace ET.Client
             
             self.CachedCards = viewCardSelectComponent.CardsQueue;
             self.u_DataSelectCount.SetValue(self.CachedCards.Count.ToString());
+            
+            // 获得抽卡机会直接打开选择面板
+            if (self.CachedCards.Count > 0)
+            {
+                var panelComponent = YIUIMgrComponent.Inst.GetPanel<LSCardSelectPanelComponent>();
+                if (panelComponent == null || !panelComponent.UIBase.ActiveSelf) {
+                    YIUIRootComponent yiuiRootComponent = self.Room().GetComponent<YIUIRootComponent>();
+                    yiuiRootComponent.OpenPanelAsync<LSCardSelectPanelComponent>().Coroutine();
+                }
+            }
         }
 
         #region YIUIEvent开始
@@ -143,17 +151,15 @@ namespace ET.Client
             LSClientHelper.SaveReplay(self.Room(), self.SaveName);
         }
         
-        private static void OnEventTestMoveAction(this PlayViewComponent self)
-        {
-            ulong cmd = LSCommand.GenCommandFloat24x2(0, OperateCommandType.Move, Random.Range(-1, 1), Random.Range(-1, 1));
-            self.Room().SendCommandMeesage(cmd);
-        }
-        
         private static void OnEventSelectCardAction(this PlayViewComponent self)
         {
-            if (self.CachedCards.Count > 0) {
-                YIUIRootComponent yiuiRootComponent = self.Room().GetComponent<YIUIRootComponent>();
-                yiuiRootComponent.OpenPanelAsync<LSCardSelectPanelComponent>().Coroutine();
+            if (self.CachedCards.Count > 0)
+            {
+                var panelComponent = YIUIMgrComponent.Inst.GetPanel<LSCardSelectPanelComponent>();
+                if (panelComponent == null || !panelComponent.UIBase.ActiveSelf) {
+                    YIUIRootComponent yiuiRootComponent = self.Room().GetComponent<YIUIRootComponent>();
+                    yiuiRootComponent.OpenPanelAsync<LSCardSelectPanelComponent>().Coroutine();
+                }
             }
         }
         #endregion YIUIEvent结束

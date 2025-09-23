@@ -31,6 +31,7 @@ namespace ET.Client
         
         public static void SetData(this PlayCardItemComponent self, CardBagItem itemData, Vector3 position)
         {
+            self.IsHighlight = false;
             self.ItemData = itemData;
             self.Position = position;
             
@@ -43,6 +44,8 @@ namespace ET.Client
                     self.u_DataName.SetValue($"Building{itemData.TableId}");
                     break;
             }
+            
+            self.u_ComCardRoot.localPosition = Vector3.zero;
             self.UIBase.OwnerRectTransform.localPosition = position + new Vector3(0, 30);
             self.SetPosition(position);
         }

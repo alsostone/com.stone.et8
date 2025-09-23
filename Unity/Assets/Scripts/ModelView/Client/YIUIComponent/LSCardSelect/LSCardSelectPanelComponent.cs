@@ -13,7 +13,7 @@ namespace ET.Client
     public partial class LSCardSelectPanelComponent: Entity, IYIUIOpenTween, IYIUICloseTween, IYIUIEvent<OnCardSelectClickEvent>, IYIUIEvent<OnCardSelectResetEvent>
     {
         public bool IsClickDone { get; set; } = false;
-        public List<LSRandomDropItem> CachedCards;
+        public List<List<LSRandomDropItem>> CachedCards;
         public YIUIListView<LSCardSelectItemComponent> CardsView;
     }
     

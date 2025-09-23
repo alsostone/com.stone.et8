@@ -47,6 +47,8 @@ namespace ET.Client
             self.u_EventSetWinHandle = self.u_EventSetWin.Add(self.OnEventSetWinAction);
             self.u_EventSetLose = self.UIBase.EventTable.FindEvent<UIEventP0>("u_EventSetLose");
             self.u_EventSetLoseHandle = self.u_EventSetLose.Add(self.OnEventSetLoseAction);
+            self.u_EventCardSelect = self.UIBase.EventTable.FindEvent<UIEventP0>("u_EventCardSelect");
+            self.u_EventCardSelectHandle = self.u_EventCardSelect.Add(self.OnEventCardSelectAction);
 
         }
     }

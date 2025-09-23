@@ -27,7 +27,7 @@ namespace ET.Client
         private static async ETTask<bool> YIUIOpen(this LSCardSelectPanelComponent self)
         {
             await ETTask.CompletedTask;
-            self.ResetCardsView();
+            self.ResetCardsView(true);
             return true;
         }
         
@@ -53,23 +53,32 @@ namespace ET.Client
                 self.ResetCardsView();
         }
 
-        private static void ResetCardsView(this LSCardSelectPanelComponent self)
+        private static void ResetCardsView(this LSCardSelectPanelComponent self, bool force = false)
         {
             Room room = self.Room();
             LSUnitViewComponent lsUnitViewComponent = room.GetComponent<LSUnitViewComponent>();
             LSUnitView lsPlayer = lsUnitViewComponent.GetChild<LSUnitView>(room.LookPlayerId);
             LSViewCardSelectComponent viewCardSelectComponent = lsPlayer.GetComponent<LSViewCardSelectComponent>();
+            self.CachedCards = viewCardSelectComponent.CardsQueue;
 
             int indexNew = 0;
-            if (viewCardSelectComponent.CardsQueue.Count > 0)
+            if (self.CachedCards.Count > 0)
             {
-                self.CachedCards = viewCardSelectComponent.CardsQueue[0];
-                for (; indexNew < self.CachedCards.Count; indexNew++)
+                var cards = self.CachedCards[0];
+                for (; indexNew < cards.Count; indexNew++)
                 {
-                    var renderer = self.CardsView.ItemRenderers.Count > indexNew ? self.CardsView.ItemRenderers[indexNew] : self.CardsView.CreateItemRenderer();
-                    renderer.SetData(self.CachedCards[indexNew], indexNew);
-                    renderer.UIBase.OwnerRectTransform.localScale = new Vector3(0.8f, 0.8f, 0.8f);
-                    renderer.UIBase.OwnerRectTransform.DOScale(Vector3.one, 0.25f);
+                    LSCardSelectItemComponent renderer = null;
+                    if (self.CardsView.ItemRenderers.Count > indexNew) {
+                        renderer = self.CardsView.ItemRenderers[indexNew];
+                    } else {
+                        renderer = self.CardsView.CreateItemRenderer();
+                        force = true;
+                    }
+                    if (force) {
+                        renderer.UIBase.OwnerRectTransform.localScale = new Vector3(0.8f, 0.8f, 0.8f);
+                        renderer.UIBase.OwnerRectTransform.DOScale(Vector3.one, 0.25f);
+                    }
+                    renderer.SetData(cards[indexNew], indexNew);
                 }
             }
             
@@ -81,14 +90,11 @@ namespace ET.Client
         [EntitySystem]
         private static async ETTask YIUIEvent(this LSCardSelectPanelComponent self, OnCardSelectClickEvent message)
         {
-            await ETTask.CompletedTask;
-            if (self.CachedCards == null || message.Index < 0 || message.Index >= self.CachedCards.Count)
-                return;
-            
             ulong cmd = LSCommand.GenCommandButton(0, CommandButtonType.CardSelect, message.Index);
             self.Room().SendCommandMeesage(cmd);
-
             self.IsClickDone = true;
+            
+            // 播放抽卡选中动画 (放大选中卡牌，缩小其他卡牌)
             for (int index = 0; index < self.CardsView.ItemRenderers.Count; index++)
             {
                 var transform = self.CardsView.ItemRenderers[index].UIBase.OwnerRectTransform;
@@ -98,7 +104,19 @@ namespace ET.Client
                     transform.DOScale(new Vector3(0.5f, 0.5f, 0.5f), 0.35f);
                 }
             }
-            self.UIPanel.Close();
+
+            // 如果还有抽卡机会，继续抽卡 否则关闭面板
+            if (self.CachedCards.Count > 1)
+            {
+                await self.Root().GetComponent<TimerComponent>().WaitAsync(350);
+                self.CardsView.Clear();
+                await self.Root().GetComponent<TimerComponent>().WaitAsync(350);
+                self.ResetCardsView(true);
+            }
+            else {
+                self.UIPanel.Close();
+            }
+            self.IsClickDone = false;
         }
         
         #region YIUIEvent开始

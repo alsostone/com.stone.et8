@@ -36,6 +36,7 @@ namespace ET
     {
         Victory = 1,  // 结算胜利
         Failure = 2,  // 结算失败
+        CardSelect = 3, // 选牌
     }
 #endif
 

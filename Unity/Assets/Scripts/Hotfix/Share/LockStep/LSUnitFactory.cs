@@ -59,9 +59,7 @@ namespace ET
 		    cards.Clear();
 		    ObjectPool.Instance.Recycle(cards);
 		    
-		    CardSelectComponent cardSelectComponent = lsUnit.AddComponent<CardSelectComponent>();
-		    cardSelectComponent.RandomCards(1);
-		    cardSelectComponent.RandomCards(1);
+		    lsUnit.AddComponent<CardSelectComponent>();
 		    lsUnit.AddComponent<LSCommandsRunComponent>();
 			
 		    EventSystem.Instance.Publish(lsWorld, new LSUnitCreate() {LSUnit = lsUnit});
