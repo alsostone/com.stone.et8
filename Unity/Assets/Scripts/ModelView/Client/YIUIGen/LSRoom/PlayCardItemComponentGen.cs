@@ -31,8 +31,6 @@ namespace ET.Client
         public UIEventHandleP0 u_EventPressHandle;
         public UIEventP0 u_EventClickDown;
         public UIEventHandleP0 u_EventClickDownHandle;
-        public UIEventP0 u_EventClickUp;
-        public UIEventHandleP0 u_EventClickUpHandle;
         public UIEventP0 u_EventClickEnter;
         public UIEventHandleP0 u_EventClickEnterHandle;
         public UIEventP0 u_EventClickExit;

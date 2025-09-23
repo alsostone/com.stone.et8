@@ -26,7 +26,7 @@ namespace ET.Client
         private static async ETTask YIUIEvent(this PlayCardItemComponent self, OnCardItemHighlightEvent message)
         {
             await ETTask.CompletedTask;
-            self.SetHighlight(message.ItemId == self.ItemData.Id);
+            self.SetHighlight(self.IsCliickEnter || message.ItemId == self.ItemData.Id);
         }
         
         public static void SetData(this PlayCardItemComponent self, CardBagItem itemData, Vector3 position)
@@ -121,14 +121,6 @@ namespace ET.Client
         private static void OnEventClickDownAction(this PlayCardItemComponent self)
         {
             self.IsClickPress = false;
-        }
-        
-        private static void OnEventClickUpAction(this PlayCardItemComponent self)
-        {
-            // 当鼠标还在该Item内时 不取消高亮
-            if (!self.IsCliickEnter) {
-                self.SetHighlight(false);
-            }
         }
         
         private static void OnEventClickExitAction(this PlayCardItemComponent self)

@@ -139,6 +139,7 @@ namespace ET.Client
         {
             if (self.DragPlacement)
             {
+                self.Fiber().UIEvent(new OnCardItemHighlightEvent() { ItemId = -1 }).Coroutine();
                 self.Fiber().UIEvent(new OnCardDragEndEvent() { PlayerId = self.LSViewOwner().Id }).Coroutine();
                 self.DragPlacement.ResetPreviewMaterial();
                 if (self.DragPlacement.placementData.isNew) {

@@ -65,13 +65,16 @@ namespace ET
                 {
                     TeamType teamType = lsOwner.GetComponent<TeamComponent>().Type;
                     TSVector pos = new(position.x, 0, position.y);
+                    LSUnit lsUnit = null;
                     if (item.Type == EUnitType.Block) {
-                        LSUnitFactory.CreateBlock(lsWorld, item.TableId, pos, self.PlacementRotation * 90, teamType);
+                        lsUnit = LSUnitFactory.CreateBlock(lsWorld, item.TableId, pos, self.PlacementRotation * 90, teamType);
                     }
                     else if (item.Type == EUnitType.Building) {
-                        LSUnitFactory.CreateBuilding(lsWorld, item.TableId, pos, self.PlacementRotation * 90, teamType);
+                        lsUnit = LSUnitFactory.CreateBuilding(lsWorld, item.TableId, pos, self.PlacementRotation * 90, teamType);
                     }
-                    bagComponent.RemoveItem(self.PlacementItemId);
+                    if (lsUnit != null) {
+                        bagComponent.RemoveItem(self.PlacementItemId);
+                    }
                 }
             }
             self.ClearPlacementData();

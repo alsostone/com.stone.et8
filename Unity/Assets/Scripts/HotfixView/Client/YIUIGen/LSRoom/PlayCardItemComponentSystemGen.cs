@@ -41,8 +41,6 @@ namespace ET.Client
             self.u_EventPressHandle = self.u_EventPress.Add(self.OnEventPressAction);
             self.u_EventClickDown = self.UIBase.EventTable.FindEvent<UIEventP0>("u_EventClickDown");
             self.u_EventClickDownHandle = self.u_EventClickDown.Add(self.OnEventClickDownAction);
-            self.u_EventClickUp = self.UIBase.EventTable.FindEvent<UIEventP0>("u_EventClickUp");
-            self.u_EventClickUpHandle = self.u_EventClickUp.Add(self.OnEventClickUpAction);
             self.u_EventClickEnter = self.UIBase.EventTable.FindEvent<UIEventP0>("u_EventClickEnter");
             self.u_EventClickEnterHandle = self.u_EventClickEnter.Add(self.OnEventClickEnterAction);
             self.u_EventClickExit = self.UIBase.EventTable.FindEvent<UIEventP0>("u_EventClickExit");
