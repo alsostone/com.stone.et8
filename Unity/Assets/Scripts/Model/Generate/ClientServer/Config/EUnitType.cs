@@ -38,9 +38,9 @@ namespace ET
         Soldier = 8,
 
         /// <summary>
-        /// 掉落
+        /// 物品
         /// </summary>
-        Drop = 16,
+        Item = 16,
 
         /// <summary>
         /// 子弹

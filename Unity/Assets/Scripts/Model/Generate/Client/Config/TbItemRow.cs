@@ -12,9 +12,9 @@ using Luban;
 namespace ET
 {
     [EnableClass]
-    public sealed partial class TbDropRow : BeanBase
+    public sealed partial class TbItemRow : BeanBase
     {
-        public TbDropRow(ByteBuf _buf)
+        public TbItemRow(ByteBuf _buf)
         {
             Id = _buf.ReadInt();
             Model = _buf.ReadInt();
@@ -23,9 +23,9 @@ namespace ET
             PostInit();
         }
 
-        public static TbDropRow DeserializeTbDropRow(ByteBuf _buf)
+        public static TbItemRow DeserializeTbItemRow(ByteBuf _buf)
         {
-            return new TbDropRow(_buf);
+            return new TbItemRow(_buf);
         }
 
         /// <summary>
@@ -41,7 +41,7 @@ namespace ET
         public TbResourceRow Model_Ref { get; private set; }
 
 
-        public const int __ID__ = 1084762621;
+        public const int __ID__ = 1275247449;
         public override int GetTypeId() => __ID__;
 
         public  void ResolveRef()

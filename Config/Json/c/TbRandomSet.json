@@ -651,6 +651,20 @@
         "type": 2,
         "count_min": 1,
         "count_max": 1
+      },
+      {
+        "id": 5001,
+        "weight": 2000,
+        "type": 16,
+        "count_min": 1,
+        "count_max": 1
+      },
+      {
+        "id": 5002,
+        "weight": 2000,
+        "type": 16,
+        "count_min": 1,
+        "count_max": 1
       }
     ],
     "xxx": 0
@@ -706,6 +720,20 @@
         "type": 2,
         "count_min": 1,
         "count_max": 1
+      },
+      {
+        "id": 5001,
+        "weight": 2000,
+        "type": 16,
+        "count_min": 1,
+        "count_max": 1
+      },
+      {
+        "id": 5002,
+        "weight": 2000,
+        "type": 16,
+        "count_min": 1,
+        "count_max": 1
       }
     ],
     "xxx": 0
@@ -759,6 +787,20 @@
         "id": 2003,
         "weight": 2000,
         "type": 2,
+        "count_min": 1,
+        "count_max": 1
+      },
+      {
+        "id": 5001,
+        "weight": 2000,
+        "type": 16,
+        "count_min": 1,
+        "count_max": 1
+      },
+      {
+        "id": 5002,
+        "weight": 2000,
+        "type": 16,
         "count_min": 1,
         "count_max": 1
       }

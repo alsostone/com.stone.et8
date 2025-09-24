@@ -215,14 +215,14 @@ namespace ET
 	        return lsUnit;
         }
         
-        public static LSUnit CreateDrop(LSWorld lsWorld, int tableId, TSVector position, int angle, TeamType teamType)
+        public static LSUnit CreateItem(LSWorld lsWorld, int tableId, TSVector position, int angle, TeamType teamType)
         {
 	        LSUnitComponent lsUnitComponent = lsWorld.GetComponent<LSUnitComponent>();
 	        LSUnit lsUnit = lsUnitComponent.AddChild<LSUnit>();
 
 	        lsUnit.AddComponent<TransformComponent, TSVector, TSQuaternion>(position, TSQuaternion.Euler(0, angle, 0));
-	        lsUnit.AddComponent<TypeComponent, EUnitType>(EUnitType.Drop);
-	        lsUnit.AddComponent<DropComponent, int>(tableId);
+	        lsUnit.AddComponent<TypeComponent, EUnitType>(EUnitType.Item);
+	        lsUnit.AddComponent<ItemComponent, int>(tableId);
 	        
 	        EventSystem.Instance.Publish(lsWorld, new LSUnitCreate() {LSUnit = lsUnit});
 	        return lsUnit;
@@ -270,8 +270,8 @@ namespace ET
 		        case EUnitType.Soldier:
 			        CreateSoldier(lsWorld, tableId, position, angle, teamType);
 			        break;
-		        case EUnitType.Drop:
-			        CreateDrop(lsWorld, tableId, position, angle, teamType);
+		        case EUnitType.Item:
+			        CreateItem(lsWorld, tableId, position, angle, teamType);
 			        break;
 		        default: break;
 	        }

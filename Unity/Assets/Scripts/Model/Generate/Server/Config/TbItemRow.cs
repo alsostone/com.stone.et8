@@ -12,18 +12,18 @@ using Luban;
 namespace ET
 {
     [EnableClass]
-    public sealed partial class TbDropRow : BeanBase
+    public sealed partial class TbItemRow : BeanBase
     {
-        public TbDropRow(ByteBuf _buf)
+        public TbItemRow(ByteBuf _buf)
         {
             Id = _buf.ReadInt();
 
             PostInit();
         }
 
-        public static TbDropRow DeserializeTbDropRow(ByteBuf _buf)
+        public static TbItemRow DeserializeTbItemRow(ByteBuf _buf)
         {
-            return new TbDropRow(_buf);
+            return new TbItemRow(_buf);
         }
 
         /// <summary>
@@ -32,7 +32,7 @@ namespace ET
         public readonly int Id;
 
 
-        public const int __ID__ = 1084762621;
+        public const int __ID__ = 1275247449;
         public override int GetTypeId() => __ID__;
 
         public  void ResolveRef()

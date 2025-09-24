@@ -13,23 +13,23 @@ using System.Collections.Generic;
 namespace ET
 {
     /// <summary>
-    /// 建筑表
+    /// 物品表
     /// </summary>
     [Config]
-    public partial class TbDrop : Singleton<TbDrop>, IConfig
+    public partial class TbItem : Singleton<TbItem>, IConfig
     {
-        private readonly Dictionary<int, TbDropRow> _dataMap;
-        private readonly List<TbDropRow> _dataList;
+        private readonly Dictionary<int, TbItemRow> _dataMap;
+        private readonly List<TbItemRow> _dataList;
 
-        public TbDrop(ByteBuf _buf)
+        public TbItem(ByteBuf _buf)
         {
-            _dataMap = new Dictionary<int, TbDropRow>();
-            _dataList = new List<TbDropRow>();
+            _dataMap = new Dictionary<int, TbItemRow>();
+            _dataList = new List<TbItemRow>();
 
             for (int n = _buf.ReadSize(); n > 0; --n)
             {
-                TbDropRow _v;
-                _v = TbDropRow.DeserializeTbDropRow(_buf);
+                TbItemRow _v;
+                _v = TbItemRow.DeserializeTbItemRow(_buf);
                 _dataList.Add(_v);
                 _dataMap.Add(_v.Id, _v);
             }
@@ -37,11 +37,11 @@ namespace ET
             PostInit();
         }
 
-        public Dictionary<int, TbDropRow> DataMap => _dataMap;
-        public List<TbDropRow> DataList => _dataList;
+        public Dictionary<int, TbItemRow> DataMap => _dataMap;
+        public List<TbItemRow> DataList => _dataList;
 
-        public TbDropRow GetOrDefault(int key) => _dataMap.GetValueOrDefault(key);
-        public TbDropRow Get(int key)
+        public TbItemRow GetOrDefault(int key) => _dataMap.GetValueOrDefault(key);
+        public TbItemRow Get(int key)
         {
             if (_dataMap.TryGetValue(key,out var v))
             {

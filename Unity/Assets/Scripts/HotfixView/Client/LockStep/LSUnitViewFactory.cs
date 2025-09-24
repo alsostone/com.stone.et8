@@ -24,8 +24,8 @@ namespace ET.Client
                 case EUnitType.Soldier:
                     CreateSoldierView(viewComponent, lsUnit);
                     break;
-                case EUnitType.Drop:
-                    CreateDropView(viewComponent, lsUnit);
+                case EUnitType.Item:
+                    CreateItemView(viewComponent, lsUnit);
                     break;
                 case EUnitType.Bullet:
                     CreateBulletView(viewComponent, lsUnit);
@@ -144,12 +144,12 @@ namespace ET.Client
             lsUnitView.AddComponent<LSViewHudComponent, Vector3, Transform, float, float>(Vector3.up * 3.5f, unitGo.transform, hp, hpMax);
         }
 
-        private static void CreateDropView(LSUnitViewComponent viewComponent, LSUnit lsUnit)
+        private static void CreateItemView(LSUnitViewComponent viewComponent, LSUnit lsUnit)
         {
             Scene root = viewComponent.Root();
 
-            DropComponent dropComponent = lsUnit.GetComponent<DropComponent>();
-            TbResourceRow resourceRow = TbResource.Instance.Get(dropComponent.TbRow.Model);
+            ItemComponent itemComponent = lsUnit.GetComponent<ItemComponent>();
+            TbResourceRow resourceRow = TbResource.Instance.Get(itemComponent.TbRow.Model);
             GameObject prefab = root.GetComponent<ResourcesLoaderComponent>().LoadAssetSync<GameObject>(resourceRow.Url);
 
             GlobalComponent globalComponent = root.GetComponent<GlobalComponent>();

@@ -171,7 +171,7 @@
         <var name="Block" alias="地块" value="2"/>
         <var name="Building" alias="建筑" value="4"/>
         <var name="Soldier" alias="士兵" value="8"/>
-        <var name="Drop" alias="掉落" value="16"/>
+        <var name="Item" alias="物品" value="16"/>
         <var name="Bullet" alias="子弹" value="32"/>
         <var name="Global" alias="全局" value="64"/>
         <var name="Team" alias="队伍" value="128"/>
