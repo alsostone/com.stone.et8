@@ -90,7 +90,7 @@ namespace ET.Client
         [EntitySystem]
         private static async ETTask YIUIEvent(this LSCardSelectPanelComponent self, OnCardSelectClickEvent message)
         {
-            ulong cmd = LSCommand.GenCommandButton(0, CommandButtonType.CardSelect, message.Index);
+            LSCommandData cmd = LSCommand.GenCommandButton(0, CommandButtonType.CardSelect, message.Index);
             self.Room().SendCommandMeesage(cmd);
             self.IsClickDone = true;
             

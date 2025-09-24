@@ -17,36 +17,42 @@ namespace ET
         private static void LSUpdate(this LSCommandsRunComponent self)
         {
             LSUnit lsPlayer = self.LSOwner();
-            foreach (ulong command in self.Commands)
+            foreach (var command in self.Commands)
             {
                 switch (LSCommand.ParseCommandType(command))
                 {
                     case OperateCommandType.Move:
                         {
-                            self.MoveAxis = LSCommand.ParseCommandFloat24x2(command);
+                            self.MoveAxis = LSCommand.ParseCommandFloat2(command);
                             break;
                         }
                     case OperateCommandType.PlacementDragStart:
                         {
-                            long targetId = (long)LSCommand.ParseCommandLong48(command);
+                            long targetId = (long)LSCommand.ParseCommandLong(command);
                             lsPlayer.GetComponent<LSGridBuilderComponent>().RunCommandPlacementDragStart(targetId);
                             break;
                         }
                     case OperateCommandType.PlacementDrag:
                         {
-                            TSVector2 pos = LSCommand.ParseCommandFloat24x2(command);
+                            TSVector2 pos = LSCommand.ParseCommandFloat2(command);
                             lsPlayer.GetComponent<LSGridBuilderComponent>().RunCommandPlacementDrag(pos);
                             break;
                         }
+                    case OperateCommandType.PlacementTarget:
+                    {
+                        long itemTargetId = (long)LSCommand.ParseCommandLong(command);
+                        lsPlayer.GetComponent<LSGridBuilderComponent>().RunCommandPlacementItemTarget(itemTargetId);
+                        break;
+                    }
                     case OperateCommandType.PlacementDragEnd:
                         {
-                            TSVector2 pos = LSCommand.ParseCommandFloat24x2(command);
+                            TSVector2 pos = LSCommand.ParseCommandFloat2(command);
                             lsPlayer.GetComponent<LSGridBuilderComponent>().RunCommandPlacementDragEnd(pos);
                             break;
                         }
                     case OperateCommandType.PlacementStart:
                         {
-                            long itemId = (long)LSCommand.ParseCommandLong48(command);
+                            long itemId = (long)LSCommand.ParseCommandLong(command);
                             lsPlayer.GetComponent<LSGridBuilderComponent>().RunCommandPlacementStart(itemId);
                             break;
                         }
@@ -68,7 +74,7 @@ namespace ET
             self.GetBindUnitComponent<TransformComponent>(lsPlayer)?.Move(self.MoveAxis);
         }
 
-        private static void RunCommandButton(this LSCommandsRunComponent self, LSUnit lsPlayer, ulong command)
+        private static void RunCommandButton(this LSCommandsRunComponent self, LSUnit lsPlayer, LSCommandData command)
         {
             TeamType teamPlacer = lsPlayer.GetComponent<TeamComponent>().Type;
             (CommandButtonType, long) button = LSCommand.ParseCommandButton(command);
@@ -97,7 +103,7 @@ namespace ET
         }
         
 #if ENABLE_DEBUG
-        private static void RunCommandGm(this LSCommandsRunComponent self, LSUnit lsPlayer, ulong command)
+        private static void RunCommandGm(this LSCommandsRunComponent self, LSUnit lsPlayer, LSCommandData command)
         {
             (CommandGMType, long) gm = LSCommand.ParseCommandGm(command);
             switch (gm.Item1)

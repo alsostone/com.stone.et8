@@ -116,7 +116,7 @@ namespace ET
             
             LSCommandsRunComponent lsCommandsRunComponent = null;
             byte currentSeatIndex = 0;
-            foreach (ulong command in frameMessage.Commands)
+            foreach (var command in frameMessage.Commands)
             {
                 byte seatIndex = LSCommand.ParseCommandSeatIndex(command);
                 if (lsCommandsRunComponent == null || currentSeatIndex != seatIndex)

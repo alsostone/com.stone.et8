@@ -19,29 +19,29 @@ namespace ET.Client
             Vector2 axis = new Vector2(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical")).normalized;
             if (axis != self.Axis)
             {
-                ulong cmd = LSCommand.GenCommandFloat24x2(0, OperateCommandType.Move, axis.x, axis.y);
+                var cmd = LSCommand.GenCommandFloat2(0, OperateCommandType.Move, axis.x, axis.y);
                 room.SendCommandMeesage(cmd);
                 self.Axis = axis;
             }
             
             if (Input.GetKeyDown(KeyCode.J))
             {
-                ulong cmd = LSCommand.GenCommandButton(0, CommandButtonType.Attack);
+                var cmd = LSCommand.GenCommandButton(0, CommandButtonType.Attack);
                 room.SendCommandMeesage(cmd);
             }
             if (Input.GetKeyDown(KeyCode.K))
             {
-                ulong cmd = LSCommand.GenCommandButton(0, CommandButtonType.Skill1);
+                var cmd = LSCommand.GenCommandButton(0, CommandButtonType.Skill1);
                 room.SendCommandMeesage(cmd);
             }
             if (Input.GetKeyDown(KeyCode.L))
             {
-                ulong cmd = LSCommand.GenCommandButton(0, CommandButtonType.Skill2);
+                var cmd = LSCommand.GenCommandButton(0, CommandButtonType.Skill2);
                 room.SendCommandMeesage(cmd);
             }
             if (Input.GetKeyDown(KeyCode.Space))
             {
-                ulong cmd = LSCommand.GenCommandButton(0, CommandButtonType.Jump);
+                var cmd = LSCommand.GenCommandButton(0, CommandButtonType.Jump);
                 room.SendCommandMeesage(cmd);
             }
         }

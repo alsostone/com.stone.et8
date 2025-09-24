@@ -339,7 +339,7 @@ namespace ET
         /// / 操作指令 内含位处理
         /// </summary>
         [MemoryPackOrder(2)]
-        public ulong Command { get; set; }
+        public LSCommandData Command { get; set; }
 
         public override void Dispose()
         {
@@ -381,7 +381,7 @@ namespace ET
         /// / 操作指令 内含位处理
         /// </summary>
         [MemoryPackOrder(2)]
-        public List<ulong> Commands { get; set; } = new();
+        public List<LSCommandData> Commands { get; set; } = new();
 
         public override void Dispose()
         {

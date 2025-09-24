@@ -9,7 +9,7 @@ namespace ET.Client
             return entity.Parent.Parent as LSUnitView;
         }
 
-        public static void SendCommandMeesage(this Room self, ulong command)
+        public static void SendCommandMeesage(this Room self, LSCommandData command)
         {
             C2Room_FrameMessage sendFrameMessage = C2Room_FrameMessage.Create();
             sendFrameMessage.Frame = self.PredictionFrame + 1;

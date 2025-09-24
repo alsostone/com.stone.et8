@@ -86,7 +86,7 @@ namespace ET.Client
                 {
                     Placement buiding = target.GetComponent<Placement>();
                     if (buiding != null) {
-                        ulong command = LSCommand.GenCommandLong48(0, OperateCommandType.PlacementDragStart, (ulong)buiding.placementData.id);
+                        var command = LSCommand.GenCommandLong(0, OperateCommandType.PlacementDragStart, buiding.placementData.id);
                         self.Room().SendCommandMeesage(command);
                         self.isDraging = true;
                         return true;
@@ -101,7 +101,7 @@ namespace ET.Client
             if (self.isDraging)
             {
                 if (self.RaycastTerrain(touchPosition, out Vector3 pos)) {
-                    ulong command = LSCommand.GenCommandFloat24x2(0, OperateCommandType.PlacementDrag, pos.x, pos.z);
+                    var command = LSCommand.GenCommandFloat2(0, OperateCommandType.PlacementDrag, pos.x, pos.z);
                     self.Room().SendCommandMeesage(command);
                 }
             }
@@ -113,12 +113,12 @@ namespace ET.Client
             {
                 if (self.RaycastTerrain(touchPosition, out Vector3 pos))
                 {
-                    ulong command = LSCommand.GenCommandFloat24x2(0, OperateCommandType.PlacementDragEnd, pos.x, pos.z);
+                    var command = LSCommand.GenCommandFloat2(0, OperateCommandType.PlacementDragEnd, pos.x, pos.z);
                     self.Room().SendCommandMeesage(command);
                 }
                 else
                 {
-                    ulong command = LSCommand.GenCommandButton(0, CommandButtonType.PlacementCancel);
+                    var command = LSCommand.GenCommandButton(0, CommandButtonType.PlacementCancel);
                     self.Room().SendCommandMeesage(command);
                 }
                 self.isDraging = false;
@@ -128,8 +128,7 @@ namespace ET.Client
         
         public static void SetPlacementObject(this LSOperaDragComponent self, long itemId, bool disableMouseMove)
         {
-            ulong param = (ulong)itemId;
-            ulong command = LSCommand.GenCommandLong48(0, OperateCommandType.PlacementStart, param);
+            var command = LSCommand.GenCommandLong(0, OperateCommandType.PlacementStart, itemId);
             self.Room().SendCommandMeesage(command);
             self.isDraging = true;
             self.isOutsideDraging = disableMouseMove;
@@ -139,7 +138,7 @@ namespace ET.Client
         {
             if (self.isDraging)
             {
-                ulong command = LSCommand.GenCommandButton(0, CommandButtonType.PlacementRotate, rotation);
+                var command = LSCommand.GenCommandButton(0, CommandButtonType.PlacementRotate, rotation);
                 self.Room().SendCommandMeesage(command);
             }
         }
@@ -148,7 +147,7 @@ namespace ET.Client
         {
             if (self.isDraging)
             {
-                ulong command = LSCommand.GenCommandButton(0, CommandButtonType.PlacementCancel);
+                var command = LSCommand.GenCommandButton(0, CommandButtonType.PlacementCancel);
                 self.Room().SendCommandMeesage(command);
                 self.isDraging = false;
                 self.isOutsideDraging = false;

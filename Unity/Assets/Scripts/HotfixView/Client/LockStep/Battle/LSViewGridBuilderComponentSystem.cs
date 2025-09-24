@@ -80,7 +80,7 @@ namespace ET.Client
             }
         }
 
-        public static void OnPlacementDragEnd(this LSViewGridBuilderComponent self, TSVector2 position)
+        public static void OnPlacementDragEnd(this LSViewGridBuilderComponent self)
         {
             // 这里恢复原状即可 放置结果由逻辑层处理并通知给表现层
             self.OnPlacementCancel();

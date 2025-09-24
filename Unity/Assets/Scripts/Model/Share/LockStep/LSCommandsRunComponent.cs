@@ -9,6 +9,6 @@ namespace ET
     public partial class LSCommandsRunComponent: LSEntity, ILSUpdate, IAwake, ISerializeToEntity
     {
         public TSVector2 MoveAxis { get; set; }
-        public List<ulong> Commands { get; set; } = new ();
+        public List<LSCommandData> Commands { get; set; } = new ();
     }
 }

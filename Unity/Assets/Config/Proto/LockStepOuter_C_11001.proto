@@ -70,14 +70,14 @@ message C2Room_FrameMessage // IRoomMessage
 {
 	byte SeatIndex = 1;	/// 座位索引 不需要客户端赋值
 	int32 Frame = 2;			/// 帧号 服务器用来判定是否需要丢弃
-	uint64 Command = 3;		/// 操作指令 内含位处理
+	LSCommandData Command = 3;		/// 操作指令 内含位处理
 }
 
 message Room2C_FrameMessage // IMessage
 {
 	int32 Frame = 1;				/// 帧号 空帧不下发时不连续
 	int32 FrameIndex = 2;		/// 帧序号 必须连续
-	repeated uint64 Commands = 3;		/// 操作指令 内含位处理
+	repeated LSCommandData Commands = 3;		/// 操作指令 内含位处理
 }
 
 message C2Room_TimeAdjust // IRoomMessage

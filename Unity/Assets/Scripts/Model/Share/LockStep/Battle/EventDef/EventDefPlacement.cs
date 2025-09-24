@@ -17,7 +17,6 @@ namespace ET
     public struct LSPlacementDragEnd
     {
         public long Id;
-        public TSVector2 Position;
     }
     
     public struct LSPlacementStart

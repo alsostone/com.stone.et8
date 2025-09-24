@@ -10,7 +10,8 @@ namespace ET
         PlacementDragStart,      // 拖拽开始
         PlacementDrag,           // 拖拽
         PlacementDragEnd,        // 拖拽结束
-        PlacementStart,          // 放置新物体
+        PlacementStart,          // 放置开始
+        PlacementTarget,         // 目标Id (辅助PlacementDragEnd，为了节省指令空间)
         Button,         // 按钮指令
         Online,         // 上下线指令 服务器生成该指令
 #if ENABLE_DEBUG
@@ -39,129 +40,136 @@ namespace ET
         CardSelect = 3, // 选牌
     }
 #endif
+    
+    public struct LSCommandData
+    {
+        public uint Header;
+        public uint Param1;
+        public uint Param2;
+        
+        public static bool operator ==(LSCommandData left, LSCommandData right)
+        {
+            return left.Header == right.Header && left.Param1 == right.Param1 && left.Param2 == right.Param2;
+        }
+        public static bool operator !=(LSCommandData left, LSCommandData right)
+        {
+            return left.Header != right.Header || left.Param1 != right.Param1 || left.Param2 != right.Param2;
+        }
+    }
 
     public static class LSCommand
     {
-        /// 特别注意：对于2个float类型的参数，将其乘以1000并转换为整数再保留24位
-        /// 意为着原float取值范围需在-8388.608f ~ 8388.607f 之间
-        /// 遥杆值-1000~1000够用 如若传输特大世界坐标就不够用了，需再拓展
-        public static ulong GenCommandFloat24x2(byte seatIndex, OperateCommandType type, float param1 = 0, float param2 = 0)
+        /// 特别注意：对于2个float类型的参数，将其乘以1000并转换为整数
+        public static LSCommandData GenCommandFloat2(byte seatIndex, OperateCommandType type, float param1 = 0, float param2 = 0)
         {
-            ulong command = 0;
-            command |= (ulong)seatIndex << 56; // 前8位存储座位索引
-            command |= (ulong)type << 48; // 接下来的8位存储操作类型
-            command |= (ulong)((uint)(param1 * 1000) & 0xFFFFFF) << 24; // 接下来的24位存储param1
-            command |= (ulong)((uint)(param2 * 1000) & 0xFFFFFF) << 0; // 接下来的24位存储param2
-            return command;
-        }
-
-        /// 特别注意：对于2个int类型的参数，将其保留24位
-        /// 意为着原int取值范围需在-8388608 ~ 8388607 之间
-        public static ulong GenCommandInt24x2(byte seatIndex, OperateCommandType type, int param1 = 0, int param2 = 0)
-        {
-            ulong command = 0;
-            command |= (ulong)seatIndex << 56; // 前8位存储座位索引
-            command |= (ulong)type << 48; // 接下来的8位存储操作类型
-            command |= (ulong)((uint)param1 & 0xFFFFFF) << 24; // 接下来的24位存储param1
-            command |= (ulong)((uint)param2 & 0xFFFFFF) << 0; // 接下来的24位存储param2
+            LSCommandData command = new LSCommandData();
+            command.Header |= (uint)seatIndex << 24; // 前8位存储座位索引
+            command.Header |= (uint)type << 16; // 接下来的8位存储操作类型
+            
+            command.Param1 = (uint)(param1 * 1000);
+            command.Param2 = (uint)(param2 * 1000);
             return command;
         }
         
-        /// 特别注意：对于一个long类型的参数，将其保留48位
-        /// 意为着原long取值范围需在-281474976710656 ~ 281474976710655 之间
-        public static ulong GenCommandLong48(byte seatIndex, OperateCommandType type, ulong param)
+        public static LSCommandData GenCommandInt2(byte seatIndex, OperateCommandType type, int param1 = 0, int param2 = 0)
         {
-            ulong command = 0;
-            command |= (ulong)seatIndex << 56; // 前8位存储座位索引
-            command |= (ulong)type << 48; // 接下来的8位存储操作类型
-            command |= (ulong)(param & 0xFFFFFFFFFFFF); // 后48位存储参数
+            LSCommandData command = new LSCommandData();
+            command.Header |= (uint)seatIndex << 24; // 前8位存储座位索引
+            command.Header |= (uint)type << 16; // 接下来的8位存储操作类型
+            
+            command.Param1 = (uint)param1;
+            command.Param2 = (uint)param2;
             return command;
         }
         
-        // 特别注意：对于2个float类型的参数，将其乘以1000并转换为整数再保留24位
-        // 意为着原float取值范围需在-8388.608f ~ 8388.607f 之间
-        public static TSVector2 ParseCommandFloat24x2(ulong command)
+        public static LSCommandData GenCommandLong(byte seatIndex, OperateCommandType type, long param)
         {
-            uint i1 = (uint)((command >> 24) & 0x00FFFFFF);
-            uint i2 = (uint)(command & 0x00FFFFFF);
-            i1 = (i1 >> 23) == 1 ? i1 | 0xFF000000 : i1;
-            i2 = (i2 >> 23) == 1 ? i2 | 0xFF000000 : i2;
+            LSCommandData command = new LSCommandData();
+            command.Header |= (uint)seatIndex << 24; // 前8位存储座位索引
+            command.Header |= (uint)type << 16; // 接下来的8位存储操作类型
+            
+            command.Param1 = (uint)(((ulong)param >> 32) & 0xFFFFFFFF); // 存储高位参数
+            command.Param2 = (uint)((ulong)param & 0xFFFFFFFF); // 存储低位参数
+            return command;
+        }
+        
+        /// 特别注意：对于2个float类型的参数，将其乘以1000并转换为整数
+        public static TSVector2 ParseCommandFloat2(LSCommandData command)
+        {
+            int i1 = (int)command.Param1;
+            int i2 = (int)command.Param2;
             return new TSVector2(i1, i2) / 1000;
         }
         
-        /// 特别注意：对于一个long类型的参数，将其保留48位
-        /// 意为着原long取值范围需在-281474976710656 ~ 281474976710655 之间
-        public static ulong ParseCommandLong48(ulong command)
+        public static ulong ParseCommandLong(LSCommandData command)
         {
-            ulong param = (command & 0xFFFFFFFFFFFF);
-            if ((param >> 47) == 1) param |= 0xFFFF000000000000;
+            ulong param = (ulong)command.Param1 << 32;
+            param |= command.Param2;
             return param;
         }
         
-        // 特别注意：对于2个int类型的参数，将其保留24位
-        // 意为着原int取值范围需在-8388608 ~ 8388607 之间
-        public static (int, int) ParseCommandInt24x2(ulong command)
+        public static (int, int) ParseCommandInt2(LSCommandData command)
         {
-            uint i1 = (uint)((command >> 24) & 0xFFFFFF);
-            uint i2 = (uint)(command & 0xFFFFFF);
-            i1 = (i1 >> 23) == 1 ? i1 | 0xFF000000 : i1;
-            i2 = (i2 >> 23) == 1 ? i2 | 0xFF000000 : i2;
-            return ((int)i1, (int)i2);
+            int i1 = (int)command.Param1;
+            int i2 = (int)command.Param2;
+            return (i1, i2);
         }
         
-        /// 特别注意：对于按钮类型的参数，将其保留40位参数位 外部拼接好
-        /// 意为着原long取值范围需在-1099511627776 ~ 1099511627775 之间
-        public static ulong GenCommandButton(byte seatIndex, CommandButtonType type, long param = 0)
+        public static LSCommandData GenCommandButton(byte seatIndex, CommandButtonType type, long param = 0)
         {
-            ulong command = 0;
-            command |= (ulong)seatIndex << 56; // 前8位存储座位索引
-            command |= (ulong)OperateCommandType.Button << 48; // 接下来的8位存储操作类型
-            command |= (ulong)type << 40; // 接下来的8位存储按钮类型
-            command |= (ulong)(param & 0xFFFFFFFFFF); // 后40位存储参数
+            LSCommandData command = new LSCommandData();
+            command.Header |= (uint)seatIndex << 24; // 前8位存储座位索引
+            command.Header |= (uint)OperateCommandType.Button << 16; // 接下来的8位存储操作类型
+            command.Header |= (uint)type << 8; // 接下来的8位存储按钮类型
+            
+            command.Param1 = (uint)(((ulong)param >> 32) & 0xFFFFFFFF); // 存储高位参数
+            command.Param2 = (uint)((ulong)param & 0xFFFFFFFF); // 存储低位参数
             return command;
         }
 
         // 特别注意：对于按钮类型的参数，将其保留40位参数位 外部拼接好
         // 意为着原long取值范围需在-1099511627776 ~ 1099511627775 之间
-        public static (CommandButtonType, long) ParseCommandButton(ulong command)
+        public static (CommandButtonType, long) ParseCommandButton(LSCommandData command)
         {
-            CommandButtonType buttonType = (CommandButtonType)((command >> 40) & 0xFF);
-            ulong param = (command & 0xFFFFFFFFFF);
-            if ((param >> 39) == 1) param |= 0xFFFFFF000000000;
-            return (buttonType, (long)param);
+            CommandButtonType type = (CommandButtonType)((command.Header >> 8) & 0xFF);
+            ulong param = (ulong)command.Param1 << 32;
+            param |= command.Param2;
+            return (type, (long)param);
         }
         
-        public static byte ParseCommandSeatIndex(ulong command)
+        public static byte ParseCommandSeatIndex(LSCommandData command)
         {
-            return (byte)(command >> 56);
+            return (byte)(command.Header >> 24);
         }
         
-        public static OperateCommandType ParseCommandType(ulong command)
+        public static OperateCommandType ParseCommandType(LSCommandData command)
         {
-            return (OperateCommandType)((command >> 48) & 0xFF);
+            return (OperateCommandType)((command.Header >> 16) & 0xFF);
         }
         
 #if ENABLE_DEBUG
         // 特别注意：对于GM类型的参数，将其保留40位参数位 外部拼接好
         // 意为着原long取值范围需在-1099511627776 ~ 1099511627775 之间
-        public static ulong GenCommandGm(byte seatIndex, CommandGMType type, long param = 0)
+        public static LSCommandData GenCommandGm(byte seatIndex, CommandGMType type, long param = 0)
         {
-            ulong command = 0;
-            command |= (ulong)seatIndex << 56; // 前8位存储座位索引
-            command |= (ulong)OperateCommandType.Gm << 48; // 接下来的8位存储操作类型
-            command |= (ulong)type << 40; // 接下来的8位存储按钮类型
-            command |= (ulong)(param & 0xFFFFFFFFFF); // 后40位存储参数
+            LSCommandData command = new LSCommandData();
+            command.Header |= (uint)seatIndex << 24; // 前8位存储座位索引
+            command.Header |= (uint)OperateCommandType.Gm << 16; // 接下来的8位存储操作类型
+            command.Header |= (uint)type << 8; // 接下来的8位存储按钮类型
+            
+            command.Param1 = (uint)(((ulong)param >> 32) & 0xFFFFFFFF); // 存储高位参数
+            command.Param2 = (uint)((ulong)param & 0xFFFFFFFF); // 存储低位参数
             return command;
         }
         
         // 特别注意：对于GM类型的参数，将其保留40位参数位 外部拼接好
         // 意为着原long取值范围需在-1099511627776 ~ 1099511627775 之间
-        public static (CommandGMType, long) ParseCommandGm(ulong command)
+        public static (CommandGMType, long) ParseCommandGm(LSCommandData command)
         {
-            CommandGMType gmType = (CommandGMType)((command >> 40) & 0xFF);
-            ulong param = (command & 0xFFFFFFFFFF);
-            if ((param >> 39) == 1) param |= 0xFFFFFF000000000;
-            return (gmType, (long)param);
+            CommandGMType type = (CommandGMType)((command.Header >> 8) & 0xFF);
+            ulong param = (ulong)command.Param1 << 32;
+            param |= command.Param2;
+            return (type, (long)param);
         }
 #endif
         

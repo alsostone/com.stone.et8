@@ -40,7 +40,7 @@ namespace ET.Client
             var room = self.Root().GetComponent<Room>();
             if (room != null)
             {
-                ulong cmd = LSCommand.GenCommandGm(0, CommandGMType.Failure);
+                var cmd = LSCommand.GenCommandGm(0, CommandGMType.Failure);
                 room.SendCommandMeesage(cmd);
             }
 #endif
@@ -52,7 +52,7 @@ namespace ET.Client
             var room = self.Root().GetComponent<Room>();
             if (room != null)
             {
-                ulong cmd = LSCommand.GenCommandGm(0, CommandGMType.Victory);
+                var cmd = LSCommand.GenCommandGm(0, CommandGMType.Victory);
                 room.SendCommandMeesage(cmd);
             }
 #endif
@@ -79,7 +79,7 @@ namespace ET.Client
             var room = self.Root().GetComponent<Room>();
             if (room != null)
             {
-                ulong cmd = LSCommand.GenCommandGm(0, CommandGMType.CardSelect, 1);
+                LSCommandData cmd = LSCommand.GenCommandGm(0, CommandGMType.CardSelect, 1);
                 room.SendCommandMeesage(cmd);
             }
 #endif

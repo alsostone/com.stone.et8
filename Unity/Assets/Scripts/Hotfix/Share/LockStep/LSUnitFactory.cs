@@ -222,6 +222,7 @@ namespace ET
 
 	        lsUnit.AddComponent<TransformComponent, TSVector, TSQuaternion>(position, TSQuaternion.Euler(0, angle, 0));
 	        lsUnit.AddComponent<TypeComponent, EUnitType>(EUnitType.Item);
+	        lsUnit.AddComponent<TeamComponent, TeamType>(teamType);
 	        lsUnit.AddComponent<ItemComponent, int>(tableId);
 	        
 	        EventSystem.Instance.Publish(lsWorld, new LSUnitCreate() {LSUnit = lsUnit});
