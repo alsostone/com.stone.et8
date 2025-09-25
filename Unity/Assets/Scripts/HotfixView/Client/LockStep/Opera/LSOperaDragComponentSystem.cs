@@ -22,6 +22,9 @@ namespace ET.Client
                     return;
                 self.isMouseDraging = true;
                 self.OnTouchBegin(Input.mousePosition);
+                
+                // 若已是建造状态，点击场景时就要把预览物体移动到点击位置
+                self.OnTouchMove(Input.mousePosition);
             }
             else if (self.isMouseDraging)
             {
@@ -47,11 +50,11 @@ namespace ET.Client
                 {
                     if (UnityEngine.EventSystems.EventSystem.current.IsPointerOverGameObject(touch.fingerId))
                         continue;
-                    if (self.OnTouchBegin(touch.position))
-                    {
-                        self.dragFingerId = touch.fingerId;
-                        self.OnTouchMove(touch.position);
-                    }
+                    self.dragFingerId = touch.fingerId;
+                    self.OnTouchBegin(touch.position);
+
+                    // 若已是建造状态，点击场景时就要把预览物体移动到点击位置
+                    self.OnTouchMove(touch.position);
                 }
                 else if (touch.fingerId == self.dragFingerId && (touch.phase == TouchPhase.Moved || touch.phase == TouchPhase.Stationary))
                 {
@@ -62,10 +65,6 @@ namespace ET.Client
                     self.OnTouchEnd(touch.position);
                     self.dragFingerId = -1;
                 }
-            }
-            if (!self.isOutsideDraging && self.dragFingerId == -1)
-            {
-                self.OnTouchMove(Input.mousePosition);
             }
 #endif
             if (Input.GetKeyDown(KeyCode.Escape))
@@ -78,22 +77,20 @@ namespace ET.Client
             }
         }
         
-        private static bool OnTouchBegin(this LSOperaDragComponent self, Vector3 touchPosition)
+        private static void OnTouchBegin(this LSOperaDragComponent self, Vector3 touchPosition)
         {
             if (!self.isDraging)
             {
                 if (self.RaycastTarget(touchPosition, out GameObject target))
                 {
-                    Placement buiding = target.GetComponent<Placement>();
-                    if (buiding != null) {
-                        var command = LSCommand.GenCommandLong(0, OperateCommandType.PlacementDragStart, buiding.placementData.id);
+                    LSUnitView lsUnitView = target.GetComponent<LSUnitViewBehaviour>()?.LSUnitView;
+                    if (lsUnitView != null) {
+                        var command = LSCommand.GenCommandLong(0, OperateCommandType.PlacementDragStart, lsUnitView.Id);
                         self.Room().SendCommandMeesage(command);
                         self.isDraging = true;
-                        return true;
                     }
                 }
             }
-            return false;
         }
 
         public static void OnTouchMove(this LSOperaDragComponent self, Vector3 touchPosition)
@@ -104,6 +101,11 @@ namespace ET.Client
                     var command = LSCommand.GenCommandFloat2(0, OperateCommandType.PlacementDrag, pos.x, pos.z);
                     self.Room().SendCommandMeesage(command);
                 }
+            }
+            else if (self.RaycastTarget(touchPosition, out GameObject target))
+            {
+                LSUnitView lsUnitView = target.GetComponent<LSUnitViewBehaviour>()?.LSUnitView;
+                // TODO: 这里可以播放鼠标悬停到物体的特效 如描边高亮
             }
         }
 

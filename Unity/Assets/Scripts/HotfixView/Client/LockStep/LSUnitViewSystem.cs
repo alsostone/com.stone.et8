@@ -11,6 +11,11 @@ namespace ET.Client
         [EntitySystem]
         private static void Awake(this LSUnitView self, GameObject go)
         {
+            // 射线检测通过GameObject获取对应的LSUnitView
+            if (go) {
+                LSUnitViewBehaviour view = go.AddComponent<LSUnitViewBehaviour>();
+                view.LSUnitView = self;
+            }
             self.GameObject = go;
         }
         

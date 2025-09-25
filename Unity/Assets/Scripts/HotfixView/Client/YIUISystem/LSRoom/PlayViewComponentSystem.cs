@@ -88,10 +88,7 @@ namespace ET.Client
         
         private static void ResetBagCards(this PlayViewComponent self)
         {
-            Room room = self.Room();
-            LSUnitViewComponent lsUnitViewComponent = room.GetComponent<LSUnitViewComponent>();
-            LSUnitView lsPlayer = lsUnitViewComponent.GetChild<LSUnitView>(room.LookPlayerId);
-            LSViewCardBagComponent viewCardBagComponent = lsPlayer.GetComponent<LSViewCardBagComponent>();
+            LSViewCardBagComponent viewCardBagComponent = self.Room().GetLookPlayerComponent<LSViewCardBagComponent>();
             
             float width = self.u_ComCardsRoot.rect.width;
             float itemWidth = Math.Min(180, width / viewCardBagComponent.Items.Count);
@@ -120,10 +117,7 @@ namespace ET.Client
 
         private static void ResetSelectCards(this PlayViewComponent self)
         {
-            Room room = self.Room();
-            LSUnitViewComponent lsUnitViewComponent = room.GetComponent<LSUnitViewComponent>();
-            LSUnitView lsPlayer = lsUnitViewComponent.GetChild<LSUnitView>(room.LookPlayerId);
-            LSViewCardSelectComponent viewCardSelectComponent = lsPlayer.GetComponent<LSViewCardSelectComponent>();
+            LSViewCardSelectComponent viewCardSelectComponent = self.Room().GetLookPlayerComponent<LSViewCardSelectComponent>();
             
             self.CachedCards = viewCardSelectComponent.CardsQueue;
             self.u_DataSelectCount.SetValue(self.CachedCards.Count.ToString());

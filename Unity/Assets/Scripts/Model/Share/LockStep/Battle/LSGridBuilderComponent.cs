@@ -10,7 +10,6 @@ namespace ET
         public long PlacementTargetId;
         public int PlacementRotation;
         public long PlacementItemId;
-        public long PlacementItemTargetId;
         public TSVector2 PlacementDragOffset;
     }
 }

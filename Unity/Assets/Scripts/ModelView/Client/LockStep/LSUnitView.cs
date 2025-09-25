@@ -8,4 +8,10 @@ namespace ET
         public GameObject GameObject { get; set; }
         public EntityRef<LSUnit> Unit;
     }
+
+    [EnableClass]
+    public class LSUnitViewBehaviour : MonoBehaviour
+    {
+        public LSUnitView LSUnitView { get; set; }
+    }
 }

@@ -55,10 +55,7 @@ namespace ET.Client
 
         private static void ResetCardsView(this LSCardSelectPanelComponent self, bool force = false)
         {
-            Room room = self.Room();
-            LSUnitViewComponent lsUnitViewComponent = room.GetComponent<LSUnitViewComponent>();
-            LSUnitView lsPlayer = lsUnitViewComponent.GetChild<LSUnitView>(room.LookPlayerId);
-            LSViewCardSelectComponent viewCardSelectComponent = lsPlayer.GetComponent<LSViewCardSelectComponent>();
+            LSViewCardSelectComponent viewCardSelectComponent = self.Room().GetLookPlayerComponent<LSViewCardSelectComponent>();
             self.CachedCards = viewCardSelectComponent.CardsQueue;
 
             int indexNew = 0;

@@ -22,5 +22,12 @@ namespace ET.Client
             }
         }
 
+        public static T GetLookPlayerComponent<T>(this Room self) where T : Entity
+        {
+            LSUnitViewComponent lsUnitViewComponent = self.GetComponent<LSUnitViewComponent>();
+            LSUnitView lsPlayer = lsUnitViewComponent.GetChild<LSUnitView>(self.LookPlayerId);
+            return lsPlayer.GetComponent<T>();
+        }
+        
     }
 }

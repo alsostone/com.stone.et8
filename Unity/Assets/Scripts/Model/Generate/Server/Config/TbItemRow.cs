@@ -17,6 +17,10 @@ namespace ET
         public TbItemRow(ByteBuf _buf)
         {
             Id = _buf.ReadInt();
+            EffectGroupId = _buf.ReadInt();
+            EffectGroupId_Ref = null;
+            SearchTarget = _buf.ReadInt();
+            SearchTarget_Ref = null;
 
             PostInit();
         }
@@ -31,6 +35,20 @@ namespace ET
         /// </summary>
         public readonly int Id;
 
+        /// <summary>
+        /// 效果组ID
+        /// </summary>
+        public readonly int EffectGroupId;
+
+        public TbEffectRow EffectGroupId_Ref { get; private set; }
+
+        /// <summary>
+        /// 目标搜索
+        /// </summary>
+        public readonly int SearchTarget;
+
+        public TbSearchRow SearchTarget_Ref { get; private set; }
+
 
         public const int __ID__ = 1275247449;
         public override int GetTypeId() => __ID__;
@@ -38,12 +56,16 @@ namespace ET
         public  void ResolveRef()
         {
             
+            EffectGroupId_Ref = TbEffect.Instance.GetOrDefault(EffectGroupId);
+            SearchTarget_Ref = TbSearch.Instance.GetOrDefault(SearchTarget);
         }
 
         public override string ToString()
         {
             return "{ "
             + "Id:" + Id + ","
+            + "effectGroupId:" + EffectGroupId + ","
+            + "searchTarget:" + SearchTarget + ","
             + "}";
         }
 

@@ -38,12 +38,6 @@ namespace ET
                             lsPlayer.GetComponent<LSGridBuilderComponent>().RunCommandPlacementDrag(pos);
                             break;
                         }
-                    case OperateCommandType.PlacementTarget:
-                    {
-                        long itemTargetId = (long)LSCommand.ParseCommandLong(command);
-                        lsPlayer.GetComponent<LSGridBuilderComponent>().RunCommandPlacementItemTarget(itemTargetId);
-                        break;
-                    }
                     case OperateCommandType.PlacementDragEnd:
                         {
                             TSVector2 pos = LSCommand.ParseCommandFloat2(command);

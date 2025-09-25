@@ -5,11 +5,17 @@ namespace ET
 {
     public static class ItemExecutor
     {
-        public static bool Execute(LSUnit lsPlayer, long itemId, long itemTargetId)
+        public static bool TryExecute(LSUnit owner, TSVector center, int tableId)
         {
-            return true;
+            TbItemRow tbItemRow = TbItem.Instance.Get(tableId);
+            
+            List<SearchUnit> targets = ObjectPool.Instance.Fetch<List<SearchUnit>>();
+            TargetSearcher.Search(tbItemRow.SearchTarget, owner, center, TSVector.forward, targets);
+            bool isOk = targets.Count > 0;
+            
+            targets.Clear();
+            ObjectPool.Instance.Recycle(targets);
+            return isOk;
         }
-        
-
     }
 }

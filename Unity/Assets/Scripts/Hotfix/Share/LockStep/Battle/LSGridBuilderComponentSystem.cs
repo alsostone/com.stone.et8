@@ -33,12 +33,6 @@ namespace ET
             EventSystem.Instance.Publish(self.LSWorld(), new LSPlacementDrag() { Id = self.LSOwner().Id, Position = position });
         }
 
-        // 只为辅助PlacementDragEnd 必须在PlacementDragEnd执行前被执行 (所以要先生成该指令，发送指令时注意)
-        public static void RunCommandPlacementItemTarget(this LSGridBuilderComponent self, long itemTargetId)
-        {
-            self.PlacementItemTargetId = itemTargetId;
-        }
-        
         public static void RunCommandPlacementDragEnd(this LSGridBuilderComponent self, TSVector2 position)
         {self.LSRoom()?.ProcessLog.LogFunction(74, self.LSParent().Id);
             LSWorld lsWorld = self.LSWorld();
@@ -79,7 +73,7 @@ namespace ET
                         isOk = null != LSUnitFactory.CreateBuilding(lsWorld, item.TableId, pos, self.PlacementRotation * 90, teamType);
                     }
                     else if (item.Type == EUnitType.Item) {
-                        isOk = ItemExecutor.Execute(lsOwner, self.PlacementItemId, self.PlacementItemTargetId);
+                        isOk = ItemExecutor.TryExecute(lsOwner, pos, item.TableId);
                     }
                     if (isOk) {
                         bagComponent.RemoveItem(self.PlacementItemId);
@@ -123,7 +117,6 @@ namespace ET
             self.PlacementTargetId = 0;
             self.PlacementRotation = 0;
             self.PlacementItemId = 0;
-            self.PlacementItemTargetId = 0;
             self.PlacementDragOffset = new TSVector2(FP.MaxValue, FP.MaxValue);
         }
     }

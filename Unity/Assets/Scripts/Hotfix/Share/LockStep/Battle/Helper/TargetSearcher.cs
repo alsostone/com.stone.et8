@@ -10,6 +10,18 @@ namespace ET
     {
         public static void Search(int id, LSUnit owner, List<SearchUnit> results)
         {
+            TSVector center = TSVector.zero;
+            TSVector forward = TSVector.forward;
+            TransformComponent transformComponent = owner.GetComponent<TransformComponent>();
+            if (transformComponent != null) {
+                center = transformComponent.Position;
+                forward = transformComponent.Forward;
+            }
+            Search(id, owner, center, forward, results);
+        }
+        
+        public static void Search(int id, LSUnit owner, TSVector center, TSVector forward, List<SearchUnit> results)
+        {
             TbSearchRow res = TbSearch.Instance.Get(id);
             if (res == null) { return; }
 
@@ -35,12 +47,6 @@ namespace ET
                 }
             }
 
-            TSVector center = TSVector.zero;
-            TransformComponent transformComponent = owner.GetComponent<TransformComponent>();
-            if (transformComponent != null) {
-                center = transformComponent.Position;
-            }
-            
             FP range = FP.Zero;
             if (res.Range > 0) {
                 range += res.Range * FP.EN4;
@@ -79,20 +85,18 @@ namespace ET
                 default: throw new ArgumentOutOfRangeException();
             }
             
-            FilterDirection(res, results, owner);
+            FilterDirection(res, results, center, forward);
             FilterWithType(res.Type, results);
             FilterWithTableId(res.TableId, results);
             FilterWithPriority(owner.GetRandom(), res.Priority, results);
             FilterCount(res.Count, results);
         }
         
-        private static void FilterDirection(TbSearchRow res, IList<SearchUnit> results, LSUnit owner)
+        private static void FilterDirection(TbSearchRow res, IList<SearchUnit> results, TSVector center, TSVector forward)
         {
             if (!res.ValidForward) return;
-            var dir = owner.GetComponent<TransformComponent>().Forward;
-            var center = owner.GetComponent<TransformComponent>().Position;
             for (int idx = results.Count - 1; idx >= 0; idx--) {
-                if (TSVector.Dot(dir, results[idx].Target.GetComponent<TransformComponent>().Position - center) < 0) {
+                if (TSVector.Dot(forward, results[idx].Target.GetComponent<TransformComponent>().Position - center) < 0) {
                     results.RemoveAt(idx);
                 }
             }

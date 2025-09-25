@@ -11,7 +11,6 @@ namespace ET
         PlacementDrag,           // 拖拽
         PlacementDragEnd,        // 拖拽结束
         PlacementStart,          // 放置开始
-        PlacementTarget,         // 目标Id (辅助PlacementDragEnd，为了节省指令空间)
         Button,         // 按钮指令
         Online,         // 上下线指令 服务器生成该指令
 #if ENABLE_DEBUG

@@ -1,8 +1,12 @@
 [
   {
-    "Id": 5001
+    "Id": 5001,
+    "effect_group_id": 92000001,
+    "search_target": 92000001
   },
   {
-    "Id": 5002
+    "Id": 5002,
+    "effect_group_id": 92010001,
+    "search_target": 92010001
   }
 ]

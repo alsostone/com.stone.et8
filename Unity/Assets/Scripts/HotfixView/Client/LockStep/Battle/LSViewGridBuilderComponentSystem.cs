@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using ST.GridBuilder;
 using TrueSync;
 using UnityEngine;
@@ -34,27 +35,25 @@ namespace ET.Client
         public static void OnPlacementDragStart(this LSViewGridBuilderComponent self, long targetId)
         {
             self.OnPlacementCancel();
-            if (!self.DragPlacement)
-            {
-                LSUnitViewComponent unitViewComponent = self.Room().GetComponent<LSUnitViewComponent>();
-                LSUnitView lsUnitView = unitViewComponent.GetChild<LSUnitView>(targetId);
-                Placement placement = lsUnitView?.GetComponent<LSViewPlacementComponent>()?.Placement;
-                if (placement == null)
-                    return;
-                
-                LSViewGridMapComponent gridMapComponent = self.Room().GetComponent<LSViewGridMapComponent>();
-                if (gridMapComponent.GridMap.gridData.CanTake(placement.placementData))
-                {
-                    lsUnitView.GetComponent<LSViewTransformComponent>().SetTransformEnabled(false);
-                    self.DragPlacement = placement;
-                    self.DragUnitView = lsUnitView;
-                    self.DragPlacement.SetPreviewMaterial();
-                    self.DragOffset = new Vector3(0, float.MaxValue, 0);
-                    self.Fiber().UIEvent(new OnCardDragStartEvent() { PlayerId = self.LSViewOwner().Id }).Coroutine();
-                } else {
-                    placement.DoShake();
-                }
+
+            LSUnitViewComponent unitViewComponent = self.Room().GetComponent<LSUnitViewComponent>();
+            LSUnitView lsUnitView = unitViewComponent.GetChild<LSUnitView>(targetId);
+            Placement placement = lsUnitView?.GetComponent<LSViewPlacementComponent>()?.Placement;
+            if (placement == null)
+                return;
+            
+            LSViewGridMapComponent gridMapComponent = self.Room().GetComponent<LSViewGridMapComponent>();
+            if (!gridMapComponent.GridMap.gridData.CanTake(placement.placementData)) {
+                placement.DoShake();
+                return;
             }
+
+            lsUnitView.GetComponent<LSViewTransformComponent>().SetTransformEnabled(false);
+            self.DragPlacement = placement;
+            self.DragUnitView = lsUnitView;
+            self.DragPlacement.SetPreviewMaterial();
+            self.DragOffset = new Vector3(0, float.MaxValue, 0);
+            self.Fiber().UIEvent(new OnCardDragStartEvent() { PlayerId = self.LSViewOwner().Id }).Coroutine();
         }
 
         public static void OnPlacementDrag(this LSViewGridBuilderComponent self, TSVector2 position)
@@ -78,6 +77,18 @@ namespace ET.Client
                     gridMapComponent.GridMapIndicator.GenerateIndicator(index.x, index.z, targetLevel, self.DragPlacement.placementData);
                 }
             }
+            else if (self.DragItemRow != null)
+            {
+                Vector3 pos = new(position.x.AsFloat(), 0, position.y.AsFloat());
+                List<SearchUnit> targets = ObjectPool.Instance.Fetch<List<SearchUnit>>();
+                LSViewQuery.Search(self.DragItemRow.SearchTarget, self.LSViewOwner(), pos, targets);
+                // TODO: 设置物品使用目标高亮
+                
+                targets.Clear();
+                ObjectPool.Instance.Recycle(targets);
+            }
+            
+            // TODO: 更新箭头指向以及被指向单位展示
         }
 
         public static void OnPlacementDragEnd(this LSViewGridBuilderComponent self)
@@ -89,24 +100,58 @@ namespace ET.Client
         public static void OnPlacementStart(this LSViewGridBuilderComponent self, long itemId)
         {
             self.OnPlacementCancel();
-            int targetModel = 0;
-            var viewCardBagComponent = self.LSViewOwner().GetComponent<LSViewCardBagComponent>();
-            var bagItem = viewCardBagComponent.GetItem(itemId);
-            switch (bagItem.Type)
+            
+            LSViewCardBagComponent viewCardBagComponent = self.LSViewOwner().GetComponent<LSViewCardBagComponent>();
+            CardBagItem item = viewCardBagComponent.GetItem(itemId);
+            if (item == null)
+                return;
+
+            bool isPreviewOk = false;
+            switch (item.Type)
             {
                 case EUnitType.Block:
-                    targetModel = TbBlock.Instance.Get(bagItem.TableId).Model;
+                {
+                    TbBlockRow row = TbBlock.Instance.Get(item.TableId);
+                    isPreviewOk = self.CreatePlacementPreview(row.Model);
                     break;
+                }
                 case EUnitType.Building:
-                    targetModel = TbBuilding.Instance.Get(bagItem.TableId).Model;
+                {
+                    TbBuildingRow row = TbBuilding.Instance.Get(item.TableId);
+                    isPreviewOk = self.CreatePlacementPreview(row.Model);
                     break;
+                }
+                case EUnitType.Item:
+                {
+                    TbItemRow row = TbItem.Instance.Get(item.TableId);
+                    isPreviewOk = self.CreatePlacementArrow(row);
+                    break;
+                }
             }
-            if (targetModel == 0) {
-                return;
+
+            if (isPreviewOk) {
+                self.Fiber().UIEvent(new OnCardDragStartEvent() { PlayerId = self.LSViewOwner().Id }).Coroutine();
+            }
+        }
+        
+        private static bool CreatePlacementArrow(this LSViewGridBuilderComponent self, TbItemRow itemRow)
+        {
+            if (itemRow == null)
+                return false;
+            
+            // TODO: 创建箭头
+            self.DragItemRow = itemRow;
+            return true;
+        }
+        
+        private static bool CreatePlacementPreview(this LSViewGridBuilderComponent self, int targetModel)
+        {
+            TbResourceRow resourceRow = TbResource.Instance.Get(targetModel);
+            if (resourceRow == null) {
+                return false;
             }
             
             Scene root = self.Root();
-            TbResourceRow resourceRow = TbResource.Instance.Get(targetModel);
             GameObject prefab = root.GetComponent<ResourcesLoaderComponent>().LoadAssetSync<GameObject>(resourceRow.Url);
             GlobalComponent globalComponent = root.GetComponent<GlobalComponent>();
             GameObject go = UnityEngine.Object.Instantiate(prefab, new Vector3(0, 999999, 0), Quaternion.identity, globalComponent.Unit);
@@ -115,14 +160,13 @@ namespace ET.Client
             if (placement == null)
             {
                 UnityEngine.Object.DestroyImmediate(go);
+                return false;
             }
-            else
-            {
-                self.DragPlacement = placement;
-                self.DragPlacement.SetPreviewMaterial();
-                self.DragOffset = Vector3.zero;
-                self.Fiber().UIEvent(new OnCardDragStartEvent() { PlayerId = self.LSViewOwner().Id }).Coroutine();
-            }
+
+            self.DragPlacement = placement;
+            self.DragPlacement.SetPreviewMaterial();
+            self.DragOffset = Vector3.zero;
+            return true;
         }
 
         public static void OnPlacementRotate(this LSViewGridBuilderComponent self, int rotation)
@@ -139,8 +183,6 @@ namespace ET.Client
         {
             if (self.DragPlacement)
             {
-                self.Fiber().UIEvent(new OnCardItemHighlightEvent() { ItemId = -1 }).Coroutine();
-                self.Fiber().UIEvent(new OnCardDragEndEvent() { PlayerId = self.LSViewOwner().Id }).Coroutine();
                 self.DragPlacement.ResetPreviewMaterial();
                 if (self.DragPlacement.placementData.isNew) {
                     self.DragPlacement.Remove();
@@ -156,7 +198,15 @@ namespace ET.Client
                     gridMapComponent.GridMapIndicator.ClearIndicator();
                 }
             }
+            else if (self.DragItemRow != null)
+            {
+                // TODO: 取消物品使用目标高亮
+                self.DragItemRow = null;
+            }
             
+            // TODO: 删除箭头
+            
+            self.Fiber().UIEvent(new OnCardDragEndEvent() { PlayerId = self.LSViewOwner().Id }).Coroutine();
         }
 
     }

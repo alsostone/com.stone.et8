@@ -23,12 +23,21 @@ namespace ET.Client
         }
         
         [EntitySystem]
+        private static async ETTask YIUIEvent(this PlayCardItemComponent self, OnCardDragEndEvent message)
+        {
+            await ETTask.CompletedTask;
+            if (message.PlayerId == self.Room().LookPlayerId) {
+                self.SetHighlight(self.IsCliickEnter);
+            }
+        }
+        
+        [EntitySystem]
         private static async ETTask YIUIEvent(this PlayCardItemComponent self, OnCardItemHighlightEvent message)
         {
             await ETTask.CompletedTask;
-            self.SetHighlight(self.IsCliickEnter || message.ItemId == self.ItemData.Id);
+            self.SetHighlight(message.ItemId == self.ItemData.Id);
         }
-        
+
         public static void SetData(this PlayCardItemComponent self, CardBagItem itemData, Vector3 position)
         {
             self.IsHighlight = false;
@@ -42,6 +51,9 @@ namespace ET.Client
                     break;
                 case EUnitType.Building:
                     self.u_DataName.SetValue($"Building{itemData.TableId}");
+                    break;
+                case EUnitType.Item:
+                    self.u_DataName.SetValue($"Item{itemData.TableId}");
                     break;
             }
             

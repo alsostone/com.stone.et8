@@ -34,6 +34,9 @@ namespace ET.Client
                 case EUnitType.Building:
                     self.u_DataName.SetValue($"Building{itemData.TableId}");
                     break;
+                case EUnitType.Item:
+                    self.u_DataName.SetValue($"Item{itemData.TableId}");
+                    break;
             }
         }
         
