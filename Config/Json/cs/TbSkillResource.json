@@ -12,5 +12,19 @@
     "resource": 80010002,
     "sound_id": 0,
     "bind_point_type": 0
+  },
+  {
+    "Id": 70000001,
+    "name": "加血特效",
+    "resource": 70000001,
+    "sound_id": 0,
+    "bind_point_type": 0
+  },
+  {
+    "Id": 70000002,
+    "name": "加蓝特效",
+    "resource": 70000002,
+    "sound_id": 0,
+    "bind_point_type": 0
   }
 ]

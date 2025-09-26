@@ -5,6 +5,7 @@
     "group_id": 10010001,
     "success_conds": [],
     "failure_conds": [],
+    "fx": 0,
     "action_type": 4,
     "action_param": [
       40000
@@ -16,6 +17,7 @@
     "group_id": 10010101,
     "success_conds": [],
     "failure_conds": [],
+    "fx": 0,
     "action_type": 5,
     "action_param": [
       10010101
@@ -27,6 +29,7 @@
     "group_id": 100101011,
     "success_conds": [],
     "failure_conds": [],
+    "fx": 0,
     "action_type": 9,
     "action_param": [
       10073,
@@ -39,6 +42,7 @@
     "group_id": 10010201,
     "success_conds": [],
     "failure_conds": [],
+    "fx": 0,
     "action_type": 13,
     "action_param": [
       10010201
@@ -50,6 +54,7 @@
     "group_id": 100102011,
     "success_conds": [],
     "failure_conds": [],
+    "fx": 0,
     "action_type": 15,
     "action_param": [
       10010202,
@@ -62,6 +67,7 @@
     "group_id": 100102012,
     "success_conds": [],
     "failure_conds": [],
+    "fx": 0,
     "action_type": 4,
     "action_param": [
       20000
@@ -73,6 +79,7 @@
     "group_id": 30000001,
     "success_conds": [],
     "failure_conds": [],
+    "fx": 0,
     "action_type": 13,
     "action_param": [
       30000001,
@@ -87,6 +94,7 @@
     "group_id": 300000011,
     "success_conds": [],
     "failure_conds": [],
+    "fx": 0,
     "action_type": 4,
     "action_param": []
   },
@@ -96,6 +104,7 @@
     "group_id": 30010001,
     "success_conds": [],
     "failure_conds": [],
+    "fx": 0,
     "action_type": 13,
     "action_param": [
       30010001,
@@ -110,6 +119,7 @@
     "group_id": 300100011,
     "success_conds": [],
     "failure_conds": [],
+    "fx": 0,
     "action_type": 15,
     "action_param": [
       30010002,
@@ -122,6 +132,7 @@
     "group_id": 300100012,
     "success_conds": [],
     "failure_conds": [],
+    "fx": 0,
     "action_type": 4,
     "action_param": []
   },
@@ -131,6 +142,7 @@
     "group_id": 30020001,
     "success_conds": [],
     "failure_conds": [],
+    "fx": 0,
     "action_type": 11,
     "action_param": [
       40031,
@@ -145,6 +157,7 @@
     "group_id": 30030001,
     "success_conds": [],
     "failure_conds": [],
+    "fx": 0,
     "action_type": 5,
     "action_param": [
       30030001
@@ -156,6 +169,7 @@
     "group_id": 300300011,
     "success_conds": [],
     "failure_conds": [],
+    "fx": 0,
     "action_type": 9,
     "action_param": [
       10073,
@@ -168,6 +182,7 @@
     "group_id": 30040001,
     "success_conds": [],
     "failure_conds": [],
+    "fx": 0,
     "action_type": 12,
     "action_param": [
       3,
@@ -182,6 +197,7 @@
     "group_id": 30040101,
     "success_conds": [],
     "failure_conds": [],
+    "fx": 0,
     "action_type": 2,
     "action_param": [
       980,
@@ -194,6 +210,7 @@
     "group_id": 40000001,
     "success_conds": [],
     "failure_conds": [],
+    "fx": 0,
     "action_type": 4,
     "action_param": []
   },
@@ -203,6 +220,7 @@
     "group_id": 40000101,
     "success_conds": [],
     "failure_conds": [],
+    "fx": 0,
     "action_type": 4,
     "action_param": [
       30000
@@ -214,6 +232,7 @@
     "group_id": 92000001,
     "success_conds": [],
     "failure_conds": [],
+    "fx": 70000001,
     "action_type": 2,
     "action_param": [
       1,
@@ -226,6 +245,7 @@
     "group_id": 92010001,
     "success_conds": [],
     "failure_conds": [],
+    "fx": 70000002,
     "action_type": 2,
     "action_param": [
       2,

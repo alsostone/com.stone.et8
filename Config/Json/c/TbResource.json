@@ -72,6 +72,14 @@
     "Url": "Assets/Bundles/Prefabs/Common/Cube/CubeBlue.prefab"
   },
   {
+    "Id": 70000001,
+    "Url": "Assets/Bundles/Prefabs/Common/Effects/FxPlusHp.prefab"
+  },
+  {
+    "Id": 70000002,
+    "Url": "Assets/Bundles/Prefabs/Common/Effects/FxPlusMp.prefab"
+  },
+  {
     "Id": 80010001,
     "Url": "Assets/Bundles/Prefabs/Common/Bullet/BulletRed.prefab"
   },

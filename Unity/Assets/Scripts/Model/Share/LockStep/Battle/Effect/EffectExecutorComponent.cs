@@ -27,9 +27,20 @@ namespace ET
         public void Run(ESkillEffectType type, int[] param, LSUnit owner, LSUnit target, LSUnit carrier = null)
         {
             if (target == null) return;
-            if (effectExecutors.TryGetValue(type, out IEffectExecutor effectExecutor))
-            {
+            if (effectExecutors.TryGetValue(type, out IEffectExecutor effectExecutor)) {
                 effectExecutor.Run(param, owner, target, carrier);
+            }
+        }
+        
+        public void Run(TbEffectRow resEffect, LSUnit owner, LSUnit target, LSUnit carrier = null)
+        {
+            if (target == null) return;
+
+            if (effectExecutors.TryGetValue(resEffect.ActionType, out IEffectExecutor effectExecutor)) {
+                effectExecutor.Run(resEffect.ActionParam, owner, target, carrier);
+            }
+            if (resEffect.Fx > 0) {
+                EventSystem.Instance.Publish(target.LSWorld(), new LSUnitFx() { Id = target.Id, FxId = resEffect.Fx });
             }
         }
     }

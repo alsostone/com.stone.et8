@@ -69,5 +69,10 @@ namespace ET.Client
         {
             self.Enabled = enabled;
         }
+        
+        public static Transform GetAttachTransform(this LSViewTransformComponent self, EBindPointType attachPoint)
+        {
+            return self.Transform;
+        }
     }
 }

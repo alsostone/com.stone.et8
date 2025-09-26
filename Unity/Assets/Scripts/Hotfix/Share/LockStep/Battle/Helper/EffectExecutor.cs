@@ -15,7 +15,7 @@ namespace ET
             foreach (TbEffectRow resEffect in resEffects) {
                 for (int index = targets.Count - 1; index >= 0; index--) {
                     SearchUnit target = targets[index];
-                    EffectExecutorComponent.Instance.Run(resEffect.ActionType, resEffect.ActionParam, owner, target.Target);
+                    EffectExecutorComponent.Instance.Run(resEffect, owner, target.Target);
                 }
             }
         }
@@ -27,7 +27,7 @@ namespace ET
                 return;
             }
             foreach (TbEffectRow resEffect in resEffects) {
-                EffectExecutorComponent.Instance.Run(resEffect.ActionType, resEffect.ActionParam, owner, target);
+                EffectExecutorComponent.Instance.Run(resEffect, owner, target);
             }
         }
         
@@ -38,7 +38,7 @@ namespace ET
                 return;
             }
             foreach (TbEffectRow resEffect in resEffects) {
-                EffectExecutorComponent.Instance.Run(resEffect.ActionType, resEffect.ActionParam, owner, target, carrier);
+                EffectExecutorComponent.Instance.Run(resEffect, owner, target, carrier);
             }
         }
         

@@ -11,7 +11,9 @@ namespace ET
             
             List<SearchUnit> targets = ObjectPool.Instance.Fetch<List<SearchUnit>>();
             TargetSearcher.Search(tbItemRow.SearchTarget, owner, center, TSVector.forward, targets);
+            
             bool isOk = targets.Count > 0;
+            EffectExecutor.Execute(tbItemRow.EffectGroupId, owner, targets);
             
             targets.Clear();
             ObjectPool.Instance.Recycle(targets);

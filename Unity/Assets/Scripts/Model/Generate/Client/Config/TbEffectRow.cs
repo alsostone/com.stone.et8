@@ -21,6 +21,8 @@ namespace ET
             GroupId = _buf.ReadInt();
             {int __n0 = System.Math.Min(_buf.ReadSize(), _buf.Size);SuccessConds = new int[__n0];for(var __index0 = 0 ; __index0 < __n0 ; __index0++) { int __e0;__e0 = _buf.ReadInt(); SuccessConds[__index0] = __e0;}}
             {int __n0 = System.Math.Min(_buf.ReadSize(), _buf.Size);FailureConds = new int[__n0];for(var __index0 = 0 ; __index0 < __n0 ; __index0++) { int __e0;__e0 = _buf.ReadInt(); FailureConds[__index0] = __e0;}}
+            Fx = _buf.ReadInt();
+            Fx_Ref = null;
             ActionType = (ESkillEffectType)_buf.ReadInt();
             {int __n0 = System.Math.Min(_buf.ReadSize(), _buf.Size);ActionParam = new int[__n0];for(var __index0 = 0 ; __index0 < __n0 ; __index0++) { int __e0;__e0 = _buf.ReadInt(); ActionParam[__index0] = __e0;}}
 
@@ -58,6 +60,13 @@ namespace ET
         public readonly int[] FailureConds;
 
         /// <summary>
+        /// 播放特效
+        /// </summary>
+        public readonly int Fx;
+
+        public TbSkillResourceRow Fx_Ref { get; private set; }
+
+        /// <summary>
         /// 操作
         /// </summary>
         public readonly ESkillEffectType ActionType;
@@ -78,6 +87,7 @@ namespace ET
             
             
             
+            Fx_Ref = TbSkillResource.Instance.GetOrDefault(Fx);
             
             
         }
@@ -90,6 +100,7 @@ namespace ET
             + "groupId:" + GroupId + ","
             + "successConds:" + Luban.StringUtil.CollectionToString(SuccessConds) + ","
             + "failureConds:" + Luban.StringUtil.CollectionToString(FailureConds) + ","
+            + "fx:" + Fx + ","
             + "actionType:" + ActionType + ","
             + "actionParam:" + Luban.StringUtil.CollectionToString(ActionParam) + ","
             + "}";
