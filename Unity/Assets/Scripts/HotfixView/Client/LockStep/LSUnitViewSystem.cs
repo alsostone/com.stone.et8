@@ -13,7 +13,7 @@ namespace ET.Client
         {
             // 射线检测通过GameObject获取对应的LSUnitView
             if (go) {
-                LSUnitViewBehaviour view = go.AddComponent<LSUnitViewBehaviour>();
+                LSUnitViewBehaviour view = go.AddMissingComponent<LSUnitViewBehaviour>();
                 view.LSUnitView = self;
             }
             self.GameObject = go;
@@ -22,9 +22,9 @@ namespace ET.Client
         [EntitySystem]
         private static void Destroy(this LSUnitView self)
         {
-            if (self.GameObject != null)
+            if (self.GameObject)
             {
-                UnityEngine.Object.Destroy(self.GameObject);
+                self.Room().GetComponent<ResourcesPoolComponent>().Recycle(self.GameObject);
                 self.GameObject = null;
             }
         }

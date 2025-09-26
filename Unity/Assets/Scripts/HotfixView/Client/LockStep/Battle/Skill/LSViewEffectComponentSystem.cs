@@ -26,17 +26,15 @@ namespace ET.Client
             var fxRow = TbSkillResource.Instance.Get(fxId);
             if (fxRow == null)
                 return;
-            var resourceRow = TbResource.Instance.Get(fxRow.Resource);
-            if (resourceRow == null)
-                return;
+            
+            LSUnitView lsUnitView = self.LSViewOwner();
+            LSViewTransformComponent viewTransformComponent = lsUnitView.GetComponent<LSViewTransformComponent>();
+            Transform attachTransform = viewTransformComponent.GetAttachTransform(fxRow.BindPointType);
+            
+            // ResourcesPoolComponent poolComponent = self.Room().GetComponent<ResourcesPoolComponent>();
+            // GameObject prefab = await poolComponent.FetchAsync(fxRow.Resource, attachTransform);
             //
-            // LSUnitView lsUnitView = self.LSViewOwner();
-            // GameObject prefab = self.Root().GetComponent<ResourcesLoaderComponent>().LoadAssetSync<GameObject>(resourceRow.Url);
-            // LSViewTransformComponent viewTransformComponent = lsUnitView.GetComponent<LSViewTransformComponent>();
-            //
-            // Transform transform = viewTransformComponent.GetAttachTransform(fxRow.BindPointType);
-            // GameObject go = UnityEngine.Object.Instantiate(prefab, transform);
-            //
+            
 
 
         }

@@ -9,6 +9,7 @@ namespace ET.Client
         {
             Room room = clientScene.GetComponent<Room>();
             ResourcesLoaderComponent resourcesLoaderComponent = room.AddComponent<ResourcesLoaderComponent>();
+            room.AddComponent<ResourcesPoolComponent, ResourcesLoaderComponent>(resourcesLoaderComponent);
             room.AddComponent<YIUIRootComponent>();
             room.AddComponent<LSCacheSceneNameComponent, string>(SceneManager.GetActiveScene().name);
 

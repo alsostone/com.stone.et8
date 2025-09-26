@@ -110,10 +110,39 @@ namespace ET.Client
                 return;
             }
 
-            handler = self.package.LoadSceneAsync(location);
+            handler = self.package.LoadSceneAsync(location, loadSceneMode);
 
             await handler.Task;
             self.handlers.Add(location, handler);
+        }
+        
+        public static void ReleaseAsset(this ResourcesLoaderComponent self, string location)
+        {
+            if (self.handlers.TryGetValue(location, out var handler))
+            {
+                switch (handler)
+                {
+                    case AssetHandle handle:
+                        handle.Release();
+                        break;
+                    case AllAssetsHandle handle:
+                        handle.Release();
+                        break;
+                    case SubAssetsHandle handle:
+                        handle.Release();
+                        break;
+                    case RawFileHandle handle:
+                        handle.Release();
+                        break;
+                    case SceneHandle handle:
+                        if (!handle.IsMainScene())
+                        {
+                            handle.UnloadAsync();
+                        }
+                        break;
+                }
+                self.handlers.Remove(location);
+            }
         }
     }
 
