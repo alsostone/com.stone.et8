@@ -150,16 +150,15 @@ namespace ET.Client
             if (resourceRow == null) {
                 return false;
             }
-            
-            Scene root = self.Root();
-            GameObject prefab = root.GetComponent<ResourcesLoaderComponent>().LoadAssetSync<GameObject>(resourceRow.Url);
-            GlobalComponent globalComponent = root.GetComponent<GlobalComponent>();
-            GameObject go = UnityEngine.Object.Instantiate(prefab, new Vector3(0, 999999, 0), Quaternion.identity, globalComponent.Unit);
+
+            ResourcesPoolComponent poolComponent = self.Room().GetComponent<ResourcesPoolComponent>();
+            GlobalComponent globalComponent = self.Root().GetComponent<GlobalComponent>();
+            GameObject go = poolComponent.Fetch(resourceRow.Url, globalComponent.Unit, true);
             
             Placement placement = go.GetComponent<Placement>();
             if (placement == null)
             {
-                UnityEngine.Object.DestroyImmediate(go);
+                poolComponent.Recycle(go);
                 return false;
             }
 
@@ -185,7 +184,7 @@ namespace ET.Client
             {
                 self.DragPlacement.ResetPreviewMaterial();
                 if (self.DragPlacement.placementData.isNew) {
-                    self.DragPlacement.Remove();
+                    self.Room().GetComponent<ResourcesPoolComponent>().Recycle(self.DragPlacement.gameObject);
                 } else {
                     LSUnitView lsUnitView = (LSUnitView)self.DragUnitView;
                     lsUnitView?.GetComponent<LSViewTransformComponent>().SetTransformEnabled(true);

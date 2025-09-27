@@ -1,7 +1,7 @@
 using System;
 using UnityEngine;
 
-namespace ET.Client
+namespace ST.Mono
 {
     public static class GameObjectExtends
     {

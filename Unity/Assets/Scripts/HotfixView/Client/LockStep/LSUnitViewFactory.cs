@@ -61,7 +61,7 @@ namespace ET.Client
             }
             lsUnitView.AddComponent<LSViewTransformComponent, Transform, bool>(unitGo.transform, false);
             lsUnitView.AddComponent<LSViewSkillComponent>();
-            lsUnitView.AddComponent<LSViewEffectComponent>();
+            lsUnitView.AddComponent<EffectViewComponent>();
 
             var propComponent = lsUnit.GetComponent<PropComponent>();
             float hp = propComponent.Get(NumericType.Hp).AsFloat();
@@ -77,7 +77,7 @@ namespace ET.Client
 
             LSUnitView lsUnitView = viewComponent.AddChildWithId<LSUnitView, GameObject>(lsUnit.Id, unitGo);
             lsUnitView.AddComponent<LSViewTransformComponent, Transform, bool>(unitGo.transform, false);
-            lsUnitView.AddComponent<LSViewEffectComponent>();
+            lsUnitView.AddComponent<EffectViewComponent>();
 
             PlacementData placementData = lsUnit.GetComponent<PlacementComponent>().PlacementData;
             lsUnitView.AddComponent<LSViewPlacementComponent, PlacementData>(placementData);
@@ -96,7 +96,7 @@ namespace ET.Client
             }
             lsUnitView.AddComponent<LSViewTransformComponent, Transform, bool>(unitGo.transform, false);
             lsUnitView.AddComponent<LSViewSkillComponent>();
-            lsUnitView.AddComponent<LSViewEffectComponent>();
+            lsUnitView.AddComponent<EffectViewComponent>();
             
             var propComponent = lsUnit.GetComponent<PropComponent>();
             float hp = propComponent.Get(NumericType.Hp).AsFloat();
@@ -120,7 +120,7 @@ namespace ET.Client
             }
             lsUnitView.AddComponent<LSViewTransformComponent, Transform, bool>(unitGo.transform, false);
             lsUnitView.AddComponent<LSViewSkillComponent>();
-            lsUnitView.AddComponent<LSViewEffectComponent>();
+            lsUnitView.AddComponent<EffectViewComponent>();
 
             var propComponent = lsUnit.GetComponent<PropComponent>();
             float hp = propComponent.Get(NumericType.Hp).AsFloat();

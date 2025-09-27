@@ -63,10 +63,10 @@ namespace ET.Client
             return go;
         }
 
-        public static async ETTask<GameObject> FetchAsync(this ResourcesPoolComponent self, int tableId, Transform parent = null, bool worldPositionStays = false)
+        public static ETTask<GameObject> FetchAsync(this ResourcesPoolComponent self, int tableId, Transform parent = null, bool worldPositionStays = false)
         {
             TbResourceRow res = TbResource.Instance.Get(tableId);
-            return await self.FetchAsync(res.Url, parent, worldPositionStays);
+            return self.FetchAsync(res.Url, parent, worldPositionStays);
         }
 
         public static async ETTask<GameObject> FetchAsync(this ResourcesPoolComponent self, string location, Transform parent = null, bool worldPositionStays = false)
@@ -116,10 +116,10 @@ namespace ET.Client
             pool.EnsureIns(count);
         }
 
-        public static async ETTask PreloadAsync(this ResourcesPoolComponent self, int tableId, int count)
+        public static ETTask PreloadAsync(this ResourcesPoolComponent self, int tableId, int count)
         {
             TbResourceRow res = TbResource.Instance.Get(tableId);
-            await self.PreloadAsync(res.Url, count);
+            return self.PreloadAsync(res.Url, count);
         }
         
         public static async ETTask PreloadAsync(this ResourcesPoolComponent self, string location, int count)

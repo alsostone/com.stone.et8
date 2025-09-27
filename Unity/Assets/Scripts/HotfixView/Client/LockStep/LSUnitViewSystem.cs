@@ -13,7 +13,8 @@ namespace ET.Client
         {
             // 射线检测通过GameObject获取对应的LSUnitView
             if (go) {
-                LSUnitViewBehaviour view = go.AddMissingComponent<LSUnitViewBehaviour>();
+                LSUnitViewBehaviour view = go.GetComponent<LSUnitViewBehaviour>();
+                if (!view) { view = go.AddComponent<LSUnitViewBehaviour>(); }
                 view.LSUnitView = self;
             }
             self.GameObject = go;

@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace ET.Client
+namespace ST.Mono
 {
     public static class ParticleSystemExtends
     {
@@ -88,7 +88,7 @@ namespace ET.Client
             return (main = particle.main).startDelay.GetMaxValue() + Mathf.Max(main.duration, particle.main.startLifetime.GetMaxValue());
         }
         
-        public static float GetDuration(ParticleSystem[] particles, bool allowLoop = false)
+        public static float GetDuration(this ParticleSystem[] particles, bool allowLoop = false)
         {
             var duration = -1f;
             for (var i = 0; i < particles.Length; i++)

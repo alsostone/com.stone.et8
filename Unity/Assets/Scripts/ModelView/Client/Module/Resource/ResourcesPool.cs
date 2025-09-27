@@ -87,14 +87,14 @@ namespace ET.Client
         {
             var instanceId = go.GetInstanceID();
             if (!self.mCacheParticleSystem.TryGetValue(instanceId, out var particleSystems)) {
-                self.mCacheParticleSystem.Add(instanceId, new List<ParticleSystem>());
-                go.GetComponentsInChildren(true, self.mCacheParticleSystem[instanceId]);
-                particleSystems = self.mCacheParticleSystem[instanceId];
+                particleSystems = new List<ParticleSystem>();
+                go.GetComponentsInChildren(true, particleSystems);
+                self.mCacheParticleSystem.Add(instanceId, particleSystems);
             }
             foreach (var item in particleSystems)
             {
                 item.Clear(false);
-                item.Play();
+                item.Play(false);
             }
         }
     }

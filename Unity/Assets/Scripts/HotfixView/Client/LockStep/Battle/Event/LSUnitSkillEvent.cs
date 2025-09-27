@@ -67,7 +67,7 @@ namespace ET.Client
             if (comp == null)
                 return;
             var view = comp.GetChild<LSUnitView>(args.Id);
-            var viewEffectComponent = view.GetComponent<LSViewEffectComponent>();
+            var viewEffectComponent = view.GetComponent<EffectViewComponent>();
             if (viewEffectComponent == null)
                 return;
             await viewEffectComponent.PlayFx(args.FxId);
