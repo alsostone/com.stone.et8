@@ -10,25 +10,30 @@ namespace ET.Client
         [EntitySystem]
         private static void Awake(this EffectViewComponent self)
         {
-
+            self.idGenerator = 0;
         }
 
         [EntitySystem]
         private static void Destroy(this EffectViewComponent self)
         {
-            self.Effects.Clear();
+            self.effectViews.Clear();
+        }
+        
+        private static long GetId(this EffectViewComponent self)
+        {
+            return ++self.idGenerator;
         }
         
         public static async ETTask PlayFx(this EffectViewComponent self, int fxId)
         {
             EffectView view = null;
-            if (self.Effects.TryGetValue(fxId, out var @ref)) {
+            if (self.effectViews.TryGetValue(fxId, out var @ref)) {
                 view = @ref;
                 if (view != null) {
                     view.Reset();
                     return;
                 }
-                self.Effects.Remove(fxId);
+                self.effectViews.Remove(fxId);
             }
             
             var fxRow = TbSkillResource.Instance.Get(fxId);
@@ -40,8 +45,8 @@ namespace ET.Client
 
             ResourcesPoolComponent poolComponent = self.Room().GetComponent<ResourcesPoolComponent>();
             GameObject go = await poolComponent.FetchAsync(fxRow.Resource, attachTransform);
-            view = self.AddChild<EffectView, GameObject>(go);
-            self.Effects.Add(fxId, view);
+            view = self.AddChildWithId<EffectView, GameObject>(self.GetId(), go);
+            self.effectViews.Add(fxId, view);
         }
     }
 }
