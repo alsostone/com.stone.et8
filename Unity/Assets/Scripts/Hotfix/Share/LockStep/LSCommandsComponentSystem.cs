@@ -51,7 +51,7 @@ namespace ET
                     // 指令DragStart新来时，移除缓存的DragStart和Drag
                     var commands = self.FramesCommandsDrag[index];
                     for (int i = commands.Count - 1; i >= 0; i++) {
-                        OperateCommandType cmdType = (OperateCommandType)((command.Header >> 16) & 0xFF);
+                        OperateCommandType cmdType = (OperateCommandType)((commands[i].Header >> 16) & 0xFF);
                         if (cmdType == OperateCommandType.PlacementDragStart || cmdType == OperateCommandType.PlacementDrag)
                             commands.RemoveAt(i);
                     }
@@ -64,7 +64,7 @@ namespace ET
                     // 指令Drag和DragEnd新来时，移除缓存的Drag
                     var commands = self.FramesCommandsDrag[index];
                     for (int i = commands.Count - 1; i >= 0; i--) {
-                        OperateCommandType cmdType = (OperateCommandType)((command.Header >> 16) & 0xFF);
+                        OperateCommandType cmdType = (OperateCommandType)((commands[i].Header >> 16) & 0xFF);
                         if (cmdType == OperateCommandType.PlacementDrag)
                             commands.RemoveAt(i);
                     }

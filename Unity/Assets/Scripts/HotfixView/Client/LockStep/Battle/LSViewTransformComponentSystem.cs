@@ -50,8 +50,10 @@ namespace ET.Client
                 Quaternion rotationTo = transformComponent.Rotation.ToQuaternion();
                 Quaternion rotation = self.Transform.rotation;
                 float angle = Mathf.Abs(Quaternion.Angle(rotation, rotationTo));
-                float time = 1.0f / 720 * angle;
-                self.Transform.rotation = Quaternion.Lerp(rotation, rotationTo, Time.deltaTime / time);
+                if (angle > 0.1f) {
+                    float time = 1.0f / 720 * angle;
+                    self.Transform.rotation = Quaternion.Lerp(rotation, rotationTo, Time.deltaTime / time);
+                }
             }
         }
         

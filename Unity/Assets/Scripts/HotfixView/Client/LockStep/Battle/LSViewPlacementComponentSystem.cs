@@ -14,7 +14,7 @@ namespace ET.Client
 			{
 				LSViewGridMapComponent gridMapComponent = self.Room().GetComponent<LSViewGridMapComponent>();
 				self.Placement.placementData.id = placementData.id;
-				self.Placement.Rotation(placementData.rotation - self.Placement.placementData.rotation);
+				self.Placement.placementData.Rotation(placementData.rotation - self.Placement.placementData.rotation);
 				gridMapComponent.GridMap.gridData.Put(placementData.x, placementData.z, self.Placement.placementData);
 			}
 		}
