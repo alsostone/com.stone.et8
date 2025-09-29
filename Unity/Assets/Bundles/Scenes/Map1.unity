@@ -8581,7 +8581,7 @@ Transform:
   m_GameObject: {fileID: 1368445164}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -32, y: 0, z: -32}
+  m_LocalPosition: {x: -32, y: 0.01, z: -32}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -8609,8 +8609,6 @@ MonoBehaviour:
     m_Bits: 8192
   yHeight: 0.01
   gridData:
-    xPosition: -32
-    zPosition: -32
     xLength: 64
     zLength: 64
     cellSize: 1

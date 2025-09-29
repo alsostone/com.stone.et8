@@ -22,21 +22,7 @@ namespace ST.GridBuilder
                 return;
             }
             
-            Vector3 position = gridMap.transform.position;
-            gridMap.gridData.xPosition = (int)position.x;
-            gridMap.gridData.zPosition = (int)position.z;
-            
-            EditorGUI.BeginDisabledGroup(true);
             GUILayout.BeginHorizontal();
-            GUILayout.Label("xPosition", GUILayout.Width(EditorGUIUtility.labelWidth));
-            EditorGUILayout.IntField(gridMap.gridData.xPosition);
-            GUILayout.EndHorizontal();
-            GUILayout.BeginHorizontal();
-            GUILayout.Label("zPosition", GUILayout.Width(EditorGUIUtility.labelWidth));
-            EditorGUILayout.IntField(gridMap.gridData.zPosition);
-            GUILayout.EndHorizontal();
-            GUILayout.BeginHorizontal();
-            EditorGUI.EndDisabledGroup();
             GUILayout.Label("xLength", GUILayout.Width(EditorGUIUtility.labelWidth));
             gridMap.gridData.xLength = EditorGUILayout.IntSlider(gridMap.gridData.xLength, 10, 100);
             GUILayout.EndHorizontal();
@@ -85,9 +71,15 @@ namespace ST.GridBuilder
             
             if (GUILayout.Button("MemoryPack Serialize"))
             {
-                byte[] gridBytes = MemoryPackSerializer.Serialize(gridMap.gridData);
+                GridMapData data = new GridMapData
+                {
+                    position = gridMap.transform.position.ToTSVector(),
+                    rotation = gridMap.transform.eulerAngles.ToTSVector(),
+                    gridData = gridMap.gridData
+                };
+                byte[] gridMapBytes = MemoryPackSerializer.Serialize(data);
                 var folder = EditorUtility.OpenFolderPanel("Save Folder Select", Application.dataPath, "");
-                File.WriteAllBytes($"{folder}/{SceneManager.GetActiveScene().name}.bytes", gridBytes);
+                File.WriteAllBytes($"{folder}/{SceneManager.GetActiveScene().name}.bytes", gridMapBytes);
             }
         }
         
@@ -98,23 +90,21 @@ namespace ST.GridBuilder
             {
                 for (int z = 0; z < gridData.zLength; z++)
                 {
-                    Vector3 pos = gridMap.GetCellPosition(x, z);
-                    pos.y = gridMap.raycastHeight;
-
+                    Vector3 pos = new Vector3((x + 0.5f) * gridData.cellSize, 0, (z + 0.5f) * gridData.cellSize);
                     float offset = gridData.cellSize / 2.0f * gridMap.raycastFineness;
-                    if (Physics.Raycast(pos + new Vector3(-offset, 0, -offset), Vector3.down, out RaycastHit _, gridMap.raycastHeight, gridMap.obstacleMask))
+                    if (gridMap.Raycast(pos + new Vector3(-offset, 0, -offset), gridMap.obstacleMask))
                     {
                         gridData.SetObstacle(x, z, true);
                     }
-                    else if (Physics.Raycast(pos + new Vector3(offset, 0, -offset), Vector3.down, out RaycastHit _, gridMap.raycastHeight, gridMap.obstacleMask))
+                    else if (gridMap.Raycast(pos + new Vector3(offset, 0, -offset), gridMap.obstacleMask))
                     {
                         gridData.SetObstacle(x, z, true);
                     }
-                    else if (Physics.Raycast(pos + new Vector3(-offset, 0, offset), Vector3.down, out RaycastHit _, gridMap.raycastHeight, gridMap.obstacleMask))
+                    else if (gridMap.Raycast(pos + new Vector3(-offset, 0, offset), gridMap.obstacleMask))
                     {
                         gridData.SetObstacle(x, z, true);
                     }
-                    else if (Physics.Raycast(pos + new Vector3(offset, 0, offset), Vector3.down, out RaycastHit _, gridMap.raycastHeight, gridMap.obstacleMask))
+                    else if (gridMap.Raycast(pos + new Vector3(offset, 0, offset), gridMap.obstacleMask))
                     {
                         gridData.SetObstacle(x, z, true);
                     }
@@ -134,7 +124,7 @@ namespace ST.GridBuilder
 
                 placement.placementData.id = gridMap.gridData.GetNextGuid();
                 gridMap.gridData.Put(index.x, index.z, placement.placementData);
-                placement.SetPutPosition(gridMap.GetPutPosition(placement.placementData));
+                placement.SetPosition(gridMap.GetPutPosition(placement.placementData));
                 EditorUtility.SetDirty(placement);
             }
         }

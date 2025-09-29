@@ -30,13 +30,11 @@ namespace ST.GridBuilder
             return HashCode.Combine(x, z);
         }
     }
-    
+
     [MemoryPackable]
     [Serializable]
     public partial class GridData
     {
-        [MemoryPackInclude] public int xPosition = 0;
-        [MemoryPackInclude] public int zPosition = 0;
         [MemoryPackInclude] public int xLength = 16;
         [MemoryPackInclude] public int zLength = 16;
         [MemoryPackInclude] public int cellSize = 1;
@@ -71,10 +69,8 @@ namespace ST.GridBuilder
             }
         }
         
-        public IndexV2 ConvertToIndex(ref FieldV2 position)
+        public IndexV2 ConvertToIndex(FieldV2 position)
         {
-            position.x -= xPosition;
-            position.z -= zPosition;
             return new IndexV2((int)(position.x / cellSize), (int)(position.z / cellSize));
         }
         
@@ -85,11 +81,6 @@ namespace ST.GridBuilder
             return null;
         }
         
-        public FieldV2 GetCellPosition(int x, int z)
-        {
-            return new FieldV2(cellSize * (x + FP.Half) + xPosition, cellSize * (z + FP.Half) + zPosition);
-        }
-
         public bool IsInside(int x, int z)
         {
             return x >= 0 && z >= 0 && x < xLength && z < zLength;

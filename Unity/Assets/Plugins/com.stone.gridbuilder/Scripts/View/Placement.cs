@@ -61,20 +61,21 @@ namespace ST.GridBuilder
             return transform.position;
         }
         
-        public void SetMovePosition(Vector3 pos)
-        {
-            transform.position = pos + new Vector3(0, takeHeight, 0);
-        }
-        
-        public void SetPutPosition(Vector3 pos)
+        public void SetPosition(Vector3 pos)
         {
             transform.position = pos;
         }
 
-        public void Rotation(int r)
+        public void Rotation(int r, Quaternion parent)
         {
             placementData.Rotation(r);
-            transform.rotation = Quaternion.Euler(0, placementData.rotation * 90, 0);
+            transform.rotation = parent * Quaternion.Euler(0, placementData.rotation * 90, 0);
+        }
+
+        public void ResetRotation(Quaternion parent)
+        {
+            placementData.Rotation(-placementData.rotation);
+            transform.rotation = parent;
         }
 
         public void Remove()

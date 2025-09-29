@@ -33,7 +33,8 @@ namespace ST.GridBuilder
             int indexPosition = -1;
             int indexColor = -1;
             int indexIndices = -1;
-            
+
+            float size = gridData.cellSize;
             float gap = tileGap / 2.0f;
             for(int x1 = 0; x1 < gridData.xLength; x1++)
             {
@@ -47,11 +48,11 @@ namespace ST.GridBuilder
                     colors[++indexColor] = color;
                     colors[++indexColor] = color;
                     colors[++indexColor] = color;
-
-                    positions[++indexPosition] = gridMap.RaycastPosition(x1, z1) + new Vector3(gap, 0, gap);
-                    positions[++indexPosition] = gridMap.RaycastPosition(x1 + 1, z1) + new Vector3(-gap, 0, gap);
-                    positions[++indexPosition] = gridMap.RaycastPosition(x1 + 1, z1 + 1) + new Vector3(-gap, 0, -gap);
-                    positions[++indexPosition] = gridMap.RaycastPosition(x1, z1 + 1) + new Vector3(gap, 0, -gap);
+                    
+                    positions[++indexPosition] = gridMap.RaycastPosition(new Vector3(x1 * size + gap, 0, z1 * size + gap));
+                    positions[++indexPosition] = gridMap.RaycastPosition(new Vector3((x1 + 1) * size - gap, 0, z1 * size + gap));
+                    positions[++indexPosition] = gridMap.RaycastPosition(new Vector3((x1 + 1) * size - gap, 0, (z1 + 1) * size - gap));
+                    positions[++indexPosition] = gridMap.RaycastPosition(new Vector3(x1 * size + gap, 0, (z1 + 1) * size - gap));
                     
                     indices[++indexIndices] = indexPosition - 3;
                     indices[++indexIndices] = indexPosition - 1;

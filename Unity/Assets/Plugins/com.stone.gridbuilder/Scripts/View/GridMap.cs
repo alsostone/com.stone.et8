@@ -14,52 +14,48 @@ namespace ST.GridBuilder
 
         [SerializeField, HideInInspector] public GridData gridData = new();
         [NonSerialized, HideInInspector] public GridData gridDataDraw = null;
+        
+        public Quaternion GetGridRotation()
+        {
+            return transform.rotation;
+        }
 
         public IndexV2 ConvertToIndex(Vector3 position)
         {
-            FieldV2 pos = position.ToFieldV2();
-            return gridData.ConvertToIndex(ref pos);
-        }
-        
-        public Vector3 GetCellPosition(int x, int z)
-        {
-            return gridData.GetCellPosition(x, z).ToVector3();
+            position = transform.InverseTransformDirection(position - transform.position);
+            return gridData.ConvertToIndex(position.ToFieldV2());
         }
 
-        public Vector3 GetPosition()
-        {
-            return new Vector3(gridData.xPosition, 0, gridData.zPosition);
-        }
-        
         public void SetDestination(Vector3 position)
         {
+            position = transform.InverseTransformDirection(position - transform.position);
             gridData.SetDestination(position.ToFieldV2());
         }
 
         public Vector3 GetFieldVector(Vector3 position)
         {
-            return gridData.GetFieldVector(position.ToFieldV2()).ToVector3();
-        }
-        
-        public Vector3 RaycastPosition(int x, int z)
-        {
-            Vector3 pos = GetPosition() + new Vector3(gridData.cellSize * x, 0, gridData.cellSize * z);
-            if (Physics.Raycast(new Vector3(pos.x, raycastHeight, pos.z), Vector3.down, out RaycastHit hit, raycastHeight, terrainMask)) {
-                pos.y = hit.point.y + yHeight;
-            } else {
-                pos.y = yHeight;
-            }
-            return pos;
+            position = transform.InverseTransformDirection(position - transform.position);
+            FieldV2 v2 = gridData.GetFieldVector(position.ToFieldV2());
+            return transform.TransformDirection(v2.ToVector3());
         }
         
         public Vector3 RaycastPosition(Vector3 pos)
         {
-            if (Physics.Raycast(new Vector3(pos.x, raycastHeight, pos.z), Vector3.down, out RaycastHit hit, raycastHeight, terrainMask)) {
-                pos.y = hit.point.y + yHeight;
+            Transform tsf = transform;
+            var origin = tsf.position + tsf.TransformDirection(new Vector3(pos.x, raycastHeight - yHeight, pos.z));
+            if (Physics.Raycast(origin, -tsf.up, out RaycastHit hit, raycastHeight, terrainMask)) {
+                pos = hit.point + tsf.TransformDirection(new Vector3(0, yHeight, 0));
             } else {
-                pos.y = yHeight;
+                pos = tsf.position + tsf.TransformDirection(new Vector3(pos.x, pos.y + yHeight, pos.z));
             }
             return pos;
+        }
+        
+        public bool Raycast(Vector3 pos, LayerMask mask)
+        {
+            Transform tsf = transform;
+            var origin = tsf.position + tsf.TransformDirection(new Vector3(pos.x, raycastHeight, pos.z));
+            return Physics.Raycast(origin, -tsf.up, out RaycastHit hit, raycastHeight, mask);
         }
         
         public Vector3 GetPutPosition(PlacementData placementData)
@@ -70,19 +66,36 @@ namespace ST.GridBuilder
             float x = gridData.cellSize * (placementData.x + 0.5f);
             float y = gridData.cellSize * level;
             float z = gridData.cellSize * (placementData.z + 0.5f);
-            return GetPosition() + new Vector3(x, y, z);
+            var pos = transform.position + transform.TransformDirection(new Vector3(x, y, z));
+            return pos;
         }
         
-        public Vector3 GetLevelPosition(int x, int z, int level)
+        public Vector3 GetLevelPosition(int x, int z, int level, float height = 0)
         {
             float x1 = gridData.cellSize * (x + 0.5f);
-            float y1 = gridData.cellSize * level;
+            float y1 = gridData.cellSize * level + height;
             float z1 = gridData.cellSize * (z + 0.5f);
-            return GetPosition() + new Vector3(x1, y1, z1);
+            var pos = transform.position + transform.TransformDirection(new Vector3(x1, y1, z1));
+            return pos;
+        }
+
+        public Vector3 GetPosition(int x, int z, float height = 0)
+        {
+            float x1 = x * gridData.cellSize;
+            float z1 = z * gridData.cellSize;
+            var pos = transform.position + transform.TransformDirection(new Vector3(x1, height, z1));
+            return pos;
+        }
+        
+        public Vector3 GetCenterPosition(int x, int z, float height = 0)
+        {
+            float x1 = (x + 0.5f) * gridData.cellSize;
+            float z1 = (z + 0.5f) * gridData.cellSize;
+            var pos = transform.position + transform.TransformDirection(new Vector3(x1, height, z1));
+            return pos;
         }
         
     #if UNITY_EDITOR
-        private readonly float yOffset = 0.01f;
         private readonly List<Vector3> drawPoints = new List<Vector3>();
         void OnDrawGizmos()
         {
@@ -95,8 +108,7 @@ namespace ST.GridBuilder
 
             int xLength = gridDataDraw.xLength;
             int zLength = gridDataDraw.zLength;
-            float size = gridDataDraw.cellSize;
-            
+
             Gizmos.color = Color.yellow;
             for (int x = 0; x < xLength + 1; x++)
             for (int z = 0; z < zLength; ++z)
@@ -105,12 +117,12 @@ namespace ST.GridBuilder
                     && (x >= xLength || gridDataDraw.cells[x + z * xLength].IsFill)) {
                     continue;
                 }
-                Vector3 start = new Vector3(gridDataDraw.xPosition + x * size, yOffset, gridDataDraw.zPosition + z * size);
+                Vector3 start = GetPosition(x, z);
                 drawPoints.Add(start);
                 
                 for (; z < zLength; ++z)
                 {
-                    Vector3 end = new Vector3(gridDataDraw.xPosition + x * size, yOffset, gridDataDraw.zPosition + z * size);
+                    Vector3 end = GetPosition(x, z);
                     drawPoints.Add(end);
                     if ((x - 1 >= 0 && !gridDataDraw.cells[x - 1 + z * xLength].IsFill)
                         || (x < xLength && !gridDataDraw.cells[x + z * xLength].IsFill)) {
@@ -122,7 +134,7 @@ namespace ST.GridBuilder
 
                 if (z == zLength)
                 {
-                    Vector3 end = new Vector3(gridDataDraw.xPosition + x * size, yOffset, gridDataDraw.zPosition + zLength * size);
+                    Vector3 end = GetPosition(x, zLength);
                     drawPoints.Add(end);
                     Gizmos.DrawLine(start, end);
                 }
@@ -135,7 +147,7 @@ namespace ST.GridBuilder
                     && (z >= zLength || gridDataDraw.cells[x + z * xLength].IsFill)) {
                     continue;
                 }
-                Vector3 start = new Vector3(gridDataDraw.xPosition + x * size, yOffset, gridDataDraw.zPosition + z * size);
+                Vector3 start = GetPosition(x, z);
                 
                 for (; x < xLength; ++x)
                 {
@@ -143,14 +155,14 @@ namespace ST.GridBuilder
                         || (z < zLength && !gridDataDraw.cells[x + z * xLength].IsFill)) {
                         continue;
                     }
-                    Vector3 end = new Vector3(gridDataDraw.xPosition + x * size, yOffset, gridDataDraw.zPosition + z * size);
+                    Vector3 end = GetPosition(x, z);
                     Gizmos.DrawLine(start, end);
                     break;
                 }
 
                 if (x == xLength)
                 {
-                    Vector3 end = new Vector3(gridDataDraw.xPosition + xLength * size, yOffset, gridDataDraw.zPosition + z * size);
+                    Vector3 end = GetPosition(xLength, z);
                     Gizmos.DrawLine(start, end);
                 }
             }
@@ -176,10 +188,10 @@ namespace ST.GridBuilder
                 if (data.distance == 0 || data.distance == int.MaxValue)
                     continue;
 
-                Vector3 center = gridDataDraw.GetCellPosition(x, z).ToVector3();
-                Vector3 direction = data.direction.ToVector3().normalized;
-                Vector3 from = center - direction * 0.25f;
-                Vector3 to = center + direction * 0.25f;
+                Vector3 direction = new Vector3(data.direction.x.AsFloat(), 0, data.direction.z.AsFloat()).normalized;
+                direction = transform.TransformDirection(direction);
+                Vector3 from = GetCenterPosition(x, z) - direction * 0.25f;
+                Vector3 to = GetCenterPosition(x, z) + direction * 0.25f;
                 
                 Gizmos.DrawLine(from, to);
                 Vector3 right = Quaternion.LookRotation(direction) * Quaternion.Euler(0, 180 + 20, 0) * new Vector3(0, 0, 1);

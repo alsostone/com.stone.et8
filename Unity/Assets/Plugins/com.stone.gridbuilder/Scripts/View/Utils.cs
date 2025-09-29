@@ -14,5 +14,11 @@ namespace ST.GridBuilder
         {
             return new FieldV2((FP)v3.x, (FP)v3.z);
         }
+
+        public static TSVector ToTSVector(this Vector3 v3)
+        {
+            return new TSVector((FP)v3.x, (FP)v3.y, (FP)v3.z);
+        }
+        
     }
 }

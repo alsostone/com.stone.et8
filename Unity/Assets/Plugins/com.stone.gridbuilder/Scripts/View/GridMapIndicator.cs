@@ -69,7 +69,7 @@ namespace ST.GridBuilder
                             indicator = go.GetComponent<CellIndicator>();
                         }
                         indicators[(x1, z1)] = indicator;
-                        indicator.DoAdd(this, gridMap.GetLevelPosition(x1, z1, indicatorLevel) + new Vector3(0, gridMap.yHeight, 0));
+                        indicator.DoAdd(this, gridMap.GetLevelPosition(x1, z1, indicatorLevel));
                     }
                     keepIndicators.Add(indicator);
                     

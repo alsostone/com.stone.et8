@@ -102,7 +102,7 @@ namespace ST.GridBuilder
                 {
                     IndexV2 index = gridMap.ConvertToIndex(pos + dragOffset);
                     int targetLevel = gridMap.gridData.GetShapeLevelCount(index.x, index.z, dragPlacement.placementData);
-                    dragPlacement.SetMovePosition(gridMap.GetLevelPosition(index.x, index.z, targetLevel));
+                    dragPlacement.SetPosition(gridMap.GetLevelPosition(index.x, index.z, targetLevel, dragPlacement.takeHeight));
                     if (gridMapIndicator) {
                         gridMapIndicator.GenerateIndicator(index.x, index.z, targetLevel, dragPlacement.placementData);
                     }
@@ -132,20 +132,20 @@ namespace ST.GridBuilder
                             gridMap.gridData.Put(index.x, index.z, dragPlacement.placementData);
                             gridMap.gridData.ResetFlowField();
                         }
-                        dragPlacement.SetPutPosition(gridMap.GetPutPosition(dragPlacement.placementData));
+                        dragPlacement.SetPosition(gridMap.GetPutPosition(dragPlacement.placementData));
                     }
                     else {
                         if (dragPlacement.placementData.isNew) {
                             dragPlacement.Remove();
                         } else {
-                            dragPlacement.SetPutPosition(gridMap.GetPutPosition(dragPlacement.placementData));
+                            dragPlacement.SetPosition(gridMap.GetPutPosition(dragPlacement.placementData));
                         }
                     }
                 } else {
                     if (dragPlacement.placementData.isNew) {
                         dragPlacement.Remove();
                     } else {
-                        dragPlacement.SetPutPosition(gridMap.GetPutPosition(dragPlacement.placementData));
+                        dragPlacement.SetPosition(gridMap.GetPutPosition(dragPlacement.placementData));
                     }
                 }
                 dragPlacement = null;
@@ -163,11 +163,12 @@ namespace ST.GridBuilder
                 if (dragPlacement.placementData.isNew) {
                     dragPlacement.Remove();
                 } else {
-                    dragPlacement.SetPutPosition(gridMap.GetPutPosition(dragPlacement.placementData));
+                    dragPlacement.SetPosition(gridMap.GetPutPosition(dragPlacement.placementData));
                 }
             }
             if (placement) {
                 dragPlacement = placement;
+                dragPlacement.ResetRotation(gridMap.GetGridRotation());
                 dragPlacement.SetPreviewMaterial();
                 dragOffset = Vector3.zero;
             }
@@ -179,7 +180,7 @@ namespace ST.GridBuilder
             {
                 if (dragPlacement.placementData.isNew)
                 {
-                    dragPlacement.Rotation(1);
+                    dragPlacement.Rotation(1, gridMap.GetGridRotation());
                 }
                 else
                 {
@@ -196,7 +197,7 @@ namespace ST.GridBuilder
                 if (dragPlacement.placementData.isNew) {
                     dragPlacement.Remove();
                 } else {
-                    dragPlacement.SetPutPosition(gridMap.GetPutPosition(dragPlacement.placementData));
+                    dragPlacement.SetPosition(gridMap.GetPutPosition(dragPlacement.placementData));
                 }
                 dragPlacement = null;
                 dragOffset = Vector3.zero;

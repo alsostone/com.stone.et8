@@ -42,7 +42,7 @@ namespace ET
             if (self.PlacementTargetId > 0)
             {
                 LSGridMapComponent lsGridMapComponent = lsWorld.GetComponent<LSGridMapComponent>();
-                IndexV2 index = lsGridMapComponent.ConvertToIndex(position);
+                IndexV2 index = lsGridMapComponent.ConvertToIndex(new TSVector(position.x, 0, position.y));
                 GridData gridData = lsGridMapComponent.GetGridData();
                 
                 LSUnitComponent lsUnitComponent = lsWorld.GetComponent<LSUnitComponent>();

@@ -71,7 +71,7 @@ namespace ET.Client
                 
                 IndexV2 index = gridMap.ConvertToIndex(pos + self.DragOffset);
                 int targetLevel = gridMap.gridData.GetShapeLevelCount(index.x, index.z, self.DragPlacement.placementData);
-                self.DragPlacement.SetMovePosition(gridMap.GetLevelPosition(index.x, index.z, targetLevel));
+                self.DragPlacement.SetPosition(gridMap.GetLevelPosition(index.x, index.z, targetLevel, self.DragPlacement.takeHeight));
                 
                 if (gridMapComponent.GridMapIndicator) {
                     gridMapComponent.GridMapIndicator.GenerateIndicator(index.x, index.z, targetLevel, self.DragPlacement.placementData);
@@ -156,13 +156,14 @@ namespace ET.Client
             GameObject go = poolComponent.Fetch(resourceRow.Url, globalComponent.Unit, true);
             
             Placement placement = go.GetComponent<Placement>();
-            if (placement == null)
-            {
+            if (placement == null) {
                 poolComponent.Recycle(go);
                 return false;
             }
-
+            
+            LSViewGridMapComponent gridMapComponent = self.Room().GetComponent<LSViewGridMapComponent>();
             self.DragPlacement = placement;
+            self.DragPlacement.ResetRotation(gridMapComponent.GridMap.GetGridRotation());
             self.DragPlacement.SetPreviewMaterial();
             self.DragOffset = Vector3.zero;
             return true;
@@ -173,7 +174,8 @@ namespace ET.Client
             if (self.DragPlacement)
             {
                 if (self.DragPlacement.placementData.isNew) {
-                    self.DragPlacement.Rotation(rotation);
+                    LSViewGridMapComponent gridMapComponent = self.Room().GetComponent<LSViewGridMapComponent>();
+                    self.DragPlacement.Rotation(rotation, gridMapComponent.GridMap.GetGridRotation());
                 }
             }
         }
@@ -184,7 +186,8 @@ namespace ET.Client
             {
                 self.DragPlacement.ResetPreviewMaterial();
                 if (self.DragPlacement.placementData.isNew) {
-                    self.Room().GetComponent<ResourcesPoolComponent>().Recycle(self.DragPlacement.gameObject);
+                    ResourcesPoolComponent poolComponent = self.Room().GetComponent<ResourcesPoolComponent>();
+                    poolComponent.Recycle(self.DragPlacement.gameObject);
                 } else {
                     LSUnitView lsUnitView = (LSUnitView)self.DragUnitView;
                     lsUnitView?.GetComponent<LSViewTransformComponent>().SetTransformEnabled(true);

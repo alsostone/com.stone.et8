@@ -18,7 +18,7 @@ namespace ET
                 self.TargetPosition = targetPosition;
             } else {
                 self.Target = target.Id;
-                self.TargetPosition = target.GetComponent<TransformComponent>().Position;
+                self.TargetPosition = target.GetComponent<TransformComponent>().TransformPoint(new TSVector(0, 2, 0));
             }
             
             switch (self.TbTrackRow.TowardType)
@@ -26,14 +26,16 @@ namespace ET
                 case ETrackTowardType.Target:
                 case ETrackTowardType.Position:
                 {
-                    TransformComponent ownerTransform = self.LSOwner().GetComponent<TransformComponent>();
-                    self.CasterPosition = ownerTransform.Position;
+                    TransformComponent transformComponent = self.LSOwner().GetComponent<TransformComponent>();
+                    self.CasterPosition = transformComponent.TransformPoint(new TSVector(0, 2, 0));
             
                     // 起止点的中心叠加高度为控制点
                     TSVector dir = self.TargetPosition - self.CasterPosition;
-                    self.ControlPosition = self.CasterPosition + dir * ((FP)self.TbTrackRow.ControlFactor / LSConstValue.PropValueScale);
-                    FP y = ((FP)self.TbTrackRow.ControlHeight / LSConstValue.PropValueScale) + self.ControlPosition.y;
-                    self.ControlPosition = new TSVector(self.ControlPosition.x, y, self.ControlPosition.z);
+                    FP factor = (FP)self.TbTrackRow.ControlFactor / LSConstValue.PropValueScale;
+                    FP height = (FP)self.TbTrackRow.ControlHeight / LSConstValue.PropValueScale;
+                    TSVector control = dir * factor + transformComponent.TransformDirection(new TSVector(0, height, 0));
+                    
+                    self.ControlPosition = self.CasterPosition + control;
                     self.Duration = dir.magnitude / self.HorSpeed;
                     break;
                 }
@@ -60,7 +62,7 @@ namespace ET
                     // 防止目标死亡导致取不到目标位置
                     LSUnit target = self.LSUnit(self.Target);
                     if (target != null)
-                        self.TargetPosition = target.GetComponent<TransformComponent>().Position;
+                        self.TargetPosition = target.GetComponent<TransformComponent>().TransformPoint(new TSVector(0, 2, 0));
                     ownerTransform.Position = TSBezier.GetPoint(self.CasterPosition, self.ControlPosition, self.TargetPosition, self.EclipseTime / self.Duration);
                     break;
                 }

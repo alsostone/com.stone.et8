@@ -65,5 +65,23 @@ namespace ET
         {self.LSRoom()?.ProcessLog.LogFunction(85, self.LSParent().Id);
             self.Position = position;
         }
+        
+        public static TSVector TransformDirection(this TransformComponent self, TSVector position)
+        {
+            self.LSRoom()?.ProcessLog.LogIgnore();
+            return self.Rotation * position;
+        }
+        
+        public static TSVector TransformVector(this TransformComponent self, TSVector position)
+        {
+            self.LSRoom()?.ProcessLog.LogIgnore();
+            return self.Rotation * position;
+        }
+        
+        public static TSVector TransformPoint(this TransformComponent self, TSVector position)
+        {
+            self.LSRoom()?.ProcessLog.LogIgnore();
+            return self.Position + self.Rotation * position;
+        }
     }
 }

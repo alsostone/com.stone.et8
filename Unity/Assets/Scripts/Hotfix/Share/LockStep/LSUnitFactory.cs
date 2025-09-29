@@ -55,6 +55,7 @@ namespace ET
 		    var cards = ObjectPool.Instance.Fetch<List<LSRandomDropItem>>();
 		    cards.Add(new LSRandomDropItem(EUnitType.Building, 30011, 1));
 		    cards.Add(new LSRandomDropItem(EUnitType.Building, 30021, 1));
+		    cards.Add(new LSRandomDropItem(EUnitType.Block, 2003, 2));
 		    lsUnit.AddComponent<CardBagComponent, List<LSRandomDropItem>>(cards);
 		    cards.Clear();
 		    ObjectPool.Instance.Recycle(cards);
@@ -135,7 +136,7 @@ namespace ET
 	        
 	        // 判断是否能够放置到网格 不能则不创建
 	        LSGridMapComponent lsGridMapComponent = lsWorld.GetComponent<LSGridMapComponent>();
-	        IndexV2 index = lsGridMapComponent.ConvertToIndex(new TSVector2(position.x, position.z));
+	        IndexV2 index = lsGridMapComponent.ConvertToIndex(position);
 	        GridData gridData = lsGridMapComponent.GetGridData();
 	        if (!gridData.CanPut(index.x, index.z, placementData))
 		        return null;
@@ -178,7 +179,7 @@ namespace ET
 	        
 	        // 判断是否能够放置到网格 不能则不创建
 	        LSGridMapComponent lsGridMapComponent = lsWorld.GetComponent<LSGridMapComponent>();
-	        IndexV2 index = lsGridMapComponent.ConvertToIndex(new TSVector2(position.x, position.z));
+	        IndexV2 index = lsGridMapComponent.ConvertToIndex(position);
 	        GridData gridData = lsGridMapComponent.GetGridData();
 	        if (!gridData.CanPut(index.x, index.z, placementData))
 		        return null;

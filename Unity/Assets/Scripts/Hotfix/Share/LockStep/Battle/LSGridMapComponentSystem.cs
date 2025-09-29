@@ -34,8 +34,11 @@ namespace ET
 
         private static void ResetGridData(this LSGridMapComponent self, byte[] gridBytes)
         {self.LSRoom()?.ProcessLog.LogFunction(90, self.LSParent().Id);
-            self.GridData = MemoryPackSerializer.Deserialize<GridData>(gridBytes);
-            self.GridData.SetDestination(new FieldV2(0, 0));
+            GridMapData gridMapData = MemoryPackSerializer.Deserialize<GridMapData>(gridBytes);
+            self.GridPosition = gridMapData.position;
+            self.GridRotation = TSQuaternion.Euler(gridMapData.rotation);
+            self.GridData = gridMapData.gridData;
+            self.SetDestination(new TSVector(0, 0, 0));
             EventSystem.Instance.Publish(self.LSWorld(), new LSGridDataReset() { GridData = self.GridData });
         }
         
@@ -44,17 +47,35 @@ namespace ET
             return self.GridData;
         }
         
-        public static IndexV2 ConvertToIndex(this LSGridMapComponent self, TSVector2 position)
+        public static IndexV2 ConvertToIndex(this LSGridMapComponent self, TSVector position)
         {self.LSRoom()?.ProcessLog.LogFunction(79, self.LSParent().Id);
-            FieldV2 v2 = new FieldV2(position.x, position.y);
-            return self.GridData.ConvertToIndex(ref v2);
+            position = TSQuaternion.Inverse(self.GridRotation) * (position - self.GridPosition);
+            return self.GridData.ConvertToIndex(new FieldV2(position.x, position.z));
+        }
+        
+        public static void SetDestination(this LSGridMapComponent self, TSVector position)
+        {
+            position = TSQuaternion.Inverse(self.GridRotation) * (position - self.GridPosition);
+            self.GridData.SetDestination(new FieldV2(position.x, position.z));
+        }
+        
+        public static TSVector GetFieldVector(this LSGridMapComponent self, TSVector position)
+        {
+            position = TSQuaternion.Inverse(self.GridRotation) * (position - self.GridPosition);
+            FieldV2 v2 = self.GridData.GetFieldVector(new FieldV2(position.x, position.z));
+            return self.GridRotation * new TSVector(v2.x, 0, v2.z);
         }
 
         public static TSVector GetPutPosition(this LSGridMapComponent self, PlacementData placementData)
         {self.LSRoom()?.ProcessLog.LogFunction(78, self.LSParent().Id);
             int level = self.GridData.GetPointLevelCount(placementData.x, placementData.z, placementData);
-            FieldV2 v2 = self.GridData.GetCellPosition(placementData.x, placementData.z);
-            return new TSVector(v2.x, level * self.GridData.cellSize, v2.z);
+
+            int size = self.GridData.cellSize;
+            FP x = (placementData.x + FP.Half) * size;
+            FP y = level * size;
+            FP z = (placementData.z + FP.Half) * size;
+            TSVector pos = self.GridPosition + self.GridRotation * new TSVector(x, y, z);
+            return pos;
         }
 
         // 只允许反序列化时调用，战斗逻辑中应使用TryPut

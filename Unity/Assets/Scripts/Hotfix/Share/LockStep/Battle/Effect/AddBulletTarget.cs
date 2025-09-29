@@ -16,8 +16,8 @@ namespace ET
 			}else if (param.Length >= 2) {
 				position = new TSVector(param[1], 0, 0) * FP.EN4;
 			}
-			position = position.Rotation(ownerTransform.Rotation.eulerAngles.y);
-			LSUnitFactory.CreateBullet(owner.LSWorld(), param[0], ownerTransform.Position + position, owner, target);
+			position = ownerTransform.TransformPoint(position);
+			LSUnitFactory.CreateBullet(owner.LSWorld(), param[0], position, owner, target);
 		}
 	}
 }

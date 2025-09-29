@@ -17,13 +17,12 @@ namespace ET
         {self.LSRoom()?.ProcessLog.LogFunction(95, self.LSParent().Id);
             TransformComponent transformComponent = self.LSOwner().GetComponent<TransformComponent>();
             LSGridMapComponent gridMapComponent = self.LSWorld().GetComponent<LSGridMapComponent>();
-
-            FieldV2 position = new FieldV2(transformComponent.Position.x, transformComponent.Position.z);
-            FieldV2 v2 = gridMapComponent.GetGridData().GetFieldVector(position);
-            if (v2.x == 0 && v2.z == 0)
-                transformComponent.Move(new TSVector2(-position.x, -position.z));
+            
+            TSVector vector = gridMapComponent.GetFieldVector(transformComponent.Position);
+            if (vector.x == 0 && vector.z == 0)
+                transformComponent.Move(new TSVector2(-transformComponent.Position.x, -transformComponent.Position.z));
             else
-                transformComponent.Move(new TSVector2(v2.x, v2.z));
+                transformComponent.Move(new TSVector2(vector.x, vector.z));
         }
         
     }
