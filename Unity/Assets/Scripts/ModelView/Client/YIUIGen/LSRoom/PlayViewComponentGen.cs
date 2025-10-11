@@ -23,6 +23,7 @@ namespace ET.Client
         public YIUIViewComponent UIView => u_UIView;
         public UnityEngine.RectTransform u_ComCardsRoot;
         public UnityEngine.CanvasGroup u_ComAlphaGroup;
+        public UnityEngine.RectTransform u_ComArrowIndicator;
         public YIUIFramework.UIDataValueString u_DataPredictFrame;
         public YIUIFramework.UIDataValueString u_DataSelectCount;
         public UIEventP0 u_EventSaveReplay;

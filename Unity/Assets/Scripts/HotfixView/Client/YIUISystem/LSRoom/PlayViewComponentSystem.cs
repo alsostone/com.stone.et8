@@ -19,6 +19,7 @@ namespace ET.Client
         private static void YIUIInitialize(this PlayViewComponent self)
         {
             self.CardsView = new YIUIListView<PlayCardItemComponent>(self, self.u_ComCardsRoot);
+            self.u_ComArrowIndicator.localScale = Vector3.zero;
         }
         
         [EntitySystem]
@@ -53,7 +54,38 @@ namespace ET.Client
             if (message.PlayerId == self.Room().LookPlayerId)
             {
                 TweenerCore<float, float, FloatOptions> t = DOTween.To(() => self.u_ComAlphaGroup.alpha, x => self.u_ComAlphaGroup.alpha = x, 0.3f, 0.2f);
-                t.SetTarget(self.UIBase.OwnerRectTransform);
+                t.SetTarget(self.u_ComAlphaGroup);
+
+                if (message.ItemId > 0) {
+                    PlayCardItemComponent itemRenderer = null;
+                    foreach (PlayCardItemComponent renderer in self.CardsView.ItemRenderers)
+                    {
+                        if (renderer.ItemData.Id == message.ItemId) {
+                            itemRenderer = renderer;
+                            break;
+                        }
+                    }
+                    if (itemRenderer != null/* && itemRenderer.ItemData.Type == EUnitType.Item*/) {
+                        self.IsDragging = true;
+                        self.DragStartPosition = itemRenderer.UIBase.OwnerRectTransform.GetWorldCenter();
+                        self.u_ComArrowIndicator.position = self.DragStartPosition;
+                        self.u_ComArrowIndicator.localScale = Vector3.one;
+                    }
+                }
+            }
+        }
+        
+        [EntitySystem]
+        private static async ETTask YIUIEvent(this PlayViewComponent self, OnCardDragEvent message)
+        {
+            await ETTask.CompletedTask;
+            if (self.IsDragging && message.PlayerId == self.Room().LookPlayerId)
+            {
+                LSCameraComponent cameraComponent = self.Room().GetComponent<LSCameraComponent>();
+                Vector3 screenPos = cameraComponent.Camera.WorldToScreenPoint(message.Position);
+                RectTransformUtility.ScreenPointToWorldPointInRectangle (self.UIBase.OwnerRectTransform, screenPos, YIUIMgrComponent.Inst.UICamera, out Vector3 pos);
+                self.u_ComArrowIndicator.position = pos;
+                self.u_ComArrowIndicator.rotation = Quaternion.LookRotation(Vector3.forward, pos - self.DragStartPosition);
             }
         }
         
@@ -64,7 +96,12 @@ namespace ET.Client
             if (message.PlayerId == self.Room().LookPlayerId)
             {
                 TweenerCore<float, float, FloatOptions> t = DOTween.To(() => self.u_ComAlphaGroup.alpha, x => self.u_ComAlphaGroup.alpha = x, 1.0f, 0.2f);
-                t.SetTarget(self.UIBase.OwnerRectTransform);
+                t.SetTarget(self.u_ComAlphaGroup);
+                
+                if (self.IsDragging) {
+                    self.IsDragging = false;
+                    self.u_ComArrowIndicator.localScale = Vector3.zero;
+                }
             }
         }
         
