@@ -36,6 +36,11 @@ namespace ET.Client
                 self.PredictFrame = room.PredictionFrame;
                 self.u_DataPredictFrame.SetValue(room.PredictionFrame.ToString());
             }
+
+            if (self.IsDragging)
+            {
+                self.ArrowBodyAnimationStep();
+            }
         }
         
         [EntitySystem]
@@ -127,9 +132,27 @@ namespace ET.Client
 
         private static void ResetArrowBodyLength(this PlayViewComponent self, Vector3 start, Vector3 end)
         {
-            Vector2 sizeDelta = self.u_ComArrowBodyRectTransform.sizeDelta;
-            sizeDelta.y = Math.Max(0, Vector3.Distance(start, end) + self.u_ComArrowBodyRectTransform.localPosition.y);
-            self.u_ComArrowBodyRectTransform.sizeDelta = sizeDelta;
+            Vector2 sizeDelta = self.u_ComArrowBody.sizeDelta;
+            sizeDelta.y = Math.Max(0, Vector3.Distance(start, end) + self.u_ComArrowBody.localPosition.y);
+            self.u_ComArrowBody.sizeDelta = sizeDelta;
+        }
+        
+        private static void ArrowBodyAnimationStep(this PlayViewComponent self)
+        {
+            for (int i = 0; i < self.u_ComArrowBodyView.childCount; i++) {
+                RectTransform childTfm = self.u_ComArrowBodyView.GetChild(i) as RectTransform;
+                
+                Vector3 position = childTfm.localPosition;
+                position.y += Time.fixedDeltaTime * 20;
+                childTfm.localPosition = position;
+
+                if (position.y > childTfm.sizeDelta.y) {
+                    Transform lastTfm = self.u_ComArrowBodyView.GetChild(self.u_ComArrowBodyView.childCount - 1);
+                    position.y = lastTfm.localPosition.y - childTfm.sizeDelta.y - 5;
+                    childTfm.localPosition = position;
+                    childTfm.SetAsLastSibling();
+                }
+            }
         }
         
         private static void ResetBagCards(this PlayViewComponent self)
