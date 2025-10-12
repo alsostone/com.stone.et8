@@ -67,9 +67,8 @@ namespace ET.Client
                     }
                     if (itemRenderer != null/* && itemRenderer.ItemData.Type == EUnitType.Item*/) {
                         self.IsDragging = true;
-                        self.DragStartPosition = itemRenderer.UIBase.OwnerRectTransform.GetWorldCenter();
-                        self.u_ComArrowIndicator.position = self.DragStartPosition;
-                        self.u_ComArrowIndicator.localScale = Vector3.one;
+                        self.u_ComArrowIndicator.position = itemRenderer.UIBase.OwnerRectTransform.GetWorldCenter();
+                        self.DragStartPosition = self.u_ComArrowIndicator.localPosition;
                     }
                 }
             }
@@ -85,7 +84,11 @@ namespace ET.Client
                 Vector3 screenPos = cameraComponent.Camera.WorldToScreenPoint(message.Position);
                 RectTransformUtility.ScreenPointToWorldPointInRectangle (self.UIBase.OwnerRectTransform, screenPos, YIUIMgrComponent.Inst.UICamera, out Vector3 pos);
                 self.u_ComArrowIndicator.position = pos;
-                self.u_ComArrowIndicator.rotation = Quaternion.LookRotation(Vector3.forward, pos - self.DragStartPosition);
+                
+                Vector3 localPosition = self.u_ComArrowIndicator.localPosition;
+                self.u_ComArrowIndicator.rotation = Quaternion.LookRotation(Vector3.forward, localPosition - self.DragStartPosition);
+                self.u_ComArrowIndicator.localScale = Vector3.one;
+                self.ResetArrowBodyLength(self.DragStartPosition, localPosition);
             }
         }
         
@@ -122,6 +125,12 @@ namespace ET.Client
                 self.ResetSelectCards();
         }
 
+        private static void ResetArrowBodyLength(this PlayViewComponent self, Vector3 start, Vector3 end)
+        {
+            Vector2 sizeDelta = self.u_ComArrowBodyRectTransform.sizeDelta;
+            sizeDelta.y = Math.Max(0, Vector3.Distance(start, end) + self.u_ComArrowBodyRectTransform.localPosition.y);
+            self.u_ComArrowBodyRectTransform.sizeDelta = sizeDelta;
+        }
         
         private static void ResetBagCards(this PlayViewComponent self)
         {
