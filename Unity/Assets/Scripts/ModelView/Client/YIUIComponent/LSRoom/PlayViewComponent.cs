@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using YIUIFramework;
 
 namespace ET.Client
@@ -19,6 +20,7 @@ namespace ET.Client
         
         public bool IsDragging = false;
         public Vector3 DragStartPosition;
+        public Dictionary<Transform, Image> CachedBodyImages = new Dictionary<Transform, Image>();
     }
     
     public struct OnCardDragStartEvent

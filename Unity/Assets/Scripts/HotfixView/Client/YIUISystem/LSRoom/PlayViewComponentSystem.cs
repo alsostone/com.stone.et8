@@ -4,6 +4,7 @@ using YIUIFramework;
 using DG.Tweening;
 using DG.Tweening.Core;
 using DG.Tweening.Plugins.Options;
+using UnityEngine.UI;
 
 namespace ET.Client
 {
@@ -20,6 +21,12 @@ namespace ET.Client
         {
             self.CardsView = new YIUIListView<PlayCardItemComponent>(self, self.u_ComCardsRoot);
             self.u_ComArrowIndicator.localScale = Vector3.zero;
+            
+            self.CachedBodyImages.Clear();
+            for (int i = 0; i < self.u_ComArrowBodyView.childCount; i++) {
+                Transform childTfm = self.u_ComArrowBodyView.GetChild(i);
+                self.CachedBodyImages.Add(childTfm, childTfm.GetComponent<Image>());
+            }
         }
         
         [EntitySystem]
@@ -39,7 +46,7 @@ namespace ET.Client
 
             if (self.IsDragging)
             {
-                self.ArrowBodyAnimationStep();
+                self.ExecuteArrowBodyAnimationStep();
             }
         }
         
@@ -137,18 +144,25 @@ namespace ET.Client
             self.u_ComArrowBody.sizeDelta = sizeDelta;
         }
         
-        private static void ArrowBodyAnimationStep(this PlayViewComponent self)
+        private static void ExecuteArrowBodyAnimationStep(this PlayViewComponent self)
         {
+            Vector2 sizeDelta = self.u_ComArrowBody.sizeDelta;
             for (int i = 0; i < self.u_ComArrowBodyView.childCount; i++) {
                 RectTransform childTfm = self.u_ComArrowBodyView.GetChild(i) as RectTransform;
+                float height = childTfm.sizeDelta.y;
                 
                 Vector3 position = childTfm.localPosition;
-                position.y += Time.fixedDeltaTime * 20;
+                position.y += Time.deltaTime * 200;
                 childTfm.localPosition = position;
+                
+                Image image = self.CachedBodyImages[childTfm];
+                float alphaHead = Math.Clamp(-(position.y - height), 0, height * 4) / (height * 4);
+                float alphaTail = Math.Clamp(sizeDelta.y + position.y, 0, height * 3) / (height * 3);
+                image.color = new Color(1, 1, 1, Math.Min(alphaHead, alphaTail));
 
-                if (position.y > childTfm.sizeDelta.y) {
+                if (position.y > height) {
                     Transform lastTfm = self.u_ComArrowBodyView.GetChild(self.u_ComArrowBodyView.childCount - 1);
-                    position.y = lastTfm.localPosition.y - childTfm.sizeDelta.y - 5;
+                    position.y = lastTfm.localPosition.y - height - 5;
                     childTfm.localPosition = position;
                     childTfm.SetAsLastSibling();
                 }
