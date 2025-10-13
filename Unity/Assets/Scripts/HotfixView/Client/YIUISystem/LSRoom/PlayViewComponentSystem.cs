@@ -77,7 +77,7 @@ namespace ET.Client
                             break;
                         }
                     }
-                    if (itemRenderer != null/* && itemRenderer.ItemData.Type == EUnitType.Item*/) {
+                    if (itemRenderer != null && itemRenderer.ItemData.Type == EUnitType.Item) {
                         self.IsDragging = true;
                         self.u_ComArrowIndicator.position = itemRenderer.UIBase.OwnerRectTransform.GetWorldCenter();
                         self.DragStartPosition = self.u_ComArrowIndicator.localPosition;
