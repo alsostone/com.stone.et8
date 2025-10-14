@@ -47,13 +47,14 @@ namespace RVO
         internal Vector2 position_;
         internal Vector2 prefVelocity_;
         internal Vector2 velocity_;
-        internal int id_ = 0;
+        internal long id_ = 0;
         internal int maxNeighbors_ = 0;
         internal float maxSpeed_ = 0.0f;
         internal float neighborDist_ = 0.0f;
         internal float radius_ = 0.0f;
         internal float timeHorizon_ = 0.0f;
         internal float timeHorizonObst_ = 0.0f;
+        internal bool isRemoved = false;
 
         private Vector2 newVelocity_;
 
@@ -63,11 +64,14 @@ namespace RVO
         internal void computeNeighbors()
         {
             obstacleNeighbors_.Clear();
+            agentNeighbors_.Clear();
+            if (isRemoved) {
+                return;
+            }
+            
             float rangeSq = RVOMath.sqr(timeHorizonObst_ * maxSpeed_ + radius_);
             Simulator.Instance.kdTree_.computeObstacleNeighbors(this, rangeSq);
-
-            agentNeighbors_.Clear();
-
+            
             if (maxNeighbors_ > 0)
             {
                 rangeSq = RVOMath.sqr(neighborDist_);
@@ -81,6 +85,9 @@ namespace RVO
         internal void computeNewVelocity()
         {
             orcaLines_.Clear();
+            if (isRemoved) {
+                return;
+            }
 
             float invTimeHorizonObst = 1.0f / timeHorizonObst_;
 
@@ -430,7 +437,7 @@ namespace RVO
          */
         internal void insertAgentNeighbor(Agent agent, ref float rangeSq)
         {
-            if (this != agent)
+            if (this != agent && agent.isRemoved == false)
             {
                 float distSq = RVOMath.absSq(position_ - agent.position_);
 
@@ -494,6 +501,9 @@ namespace RVO
          */
         internal void update()
         {
+            if (isRemoved) {
+                return;
+            }
             velocity_ = newVelocity_;
             position_ += velocity_ * Simulator.Instance.timeStep_;
         }
