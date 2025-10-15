@@ -1,3 +1,17 @@
 {
-	"name": "RVO2"
+    "name": "RVO2",
+    "rootNamespace": "",
+    "references": [
+        "GUID:1aa3e8589868c80499255710874679c0",
+        "GUID:756335c0388f7114790e504ed368ae1d"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
 }

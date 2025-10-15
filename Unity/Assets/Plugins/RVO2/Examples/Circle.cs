@@ -41,29 +41,33 @@
 
 using System;
 using System.Collections.Generic;
+using TrueSync;
 
 namespace RVO
 {
     class Circle
     {
         /* Store the goals of the agents. */
-        readonly IList<Vector2> goals;
+        readonly IList<TSVector2> goals;
+        
+        readonly Simulator simulator;
 
         Circle()
         {
-            goals = new List<Vector2>();
+            goals = new List<TSVector2>();
+            simulator = new Simulator();
         }
 
         void setupScenario()
         {
             /* Specify the global time step of the simulation. */
-            Simulator.Instance.setTimeStep(0.25f);
+            simulator.setTimeStep(0.25f);
 
             /*
              * Specify the default parameters for agents that are subsequently
              * added.
              */
-            Simulator.Instance.setAgentDefaults(15.0f, 10, 10.0f, 10.0f, 1.5f, 2.0f, new Vector2(0.0f, 0.0f));
+            simulator.setAgentDefaults(15.0f, 10, 10.0f, 10.0f, 1.5f, 2.0f, new TSVector2(0.0f, 0.0f));
 
             /*
              * Add agents, specifying their start position, and store their
@@ -71,10 +75,10 @@ namespace RVO
              */
             for (int i = 0; i < 250; ++i)
             {
-                Simulator.Instance.addAgent(200.0f *
-                    new Vector2((float)Math.Cos(i * 2.0f * Math.PI / 250.0f),
+                simulator.addAgent(200.0f *
+                    new TSVector2((float)Math.Cos(i * 2.0f * Math.PI / 250.0f),
                         (float)Math.Sin(i * 2.0f * Math.PI / 250.0f)));
-                goals.Add(-Simulator.Instance.getAgentPosition(i));
+                goals.Add(-simulator.getAgentPosition(i));
             }
         }
 
@@ -82,12 +86,12 @@ namespace RVO
         void updateVisualization()
         {
             /* Output the current global time. */
-            Console.Write(Simulator.Instance.getGlobalTime());
+            Console.Write(simulator.getGlobalTime());
 
             /* Output the current position of all the agents. */
-            for (int i = 0; i < Simulator.Instance.getNumAgents(); ++i)
+            for (int i = 0; i < simulator.getNumAgents(); ++i)
             {
-                Console.Write(" {0}", Simulator.Instance.getAgentPosition(i));
+                Console.Write(" {0}", simulator.getAgentPosition(i));
             }
 
             Console.WriteLine();
@@ -100,25 +104,25 @@ namespace RVO
              * Set the preferred velocity to be a vector of unit magnitude
              * (speed) in the direction of the goal.
              */
-            for (int i = 0; i < Simulator.Instance.getNumAgents(); ++i)
+            for (int i = 0; i < simulator.getNumAgents(); ++i)
             {
-                Vector2 goalVector = goals[i] - Simulator.Instance.getAgentPosition(i);
+                TSVector2 goalVector = goals[i] - simulator.getAgentPosition(i);
 
                 if (RVOMath.absSq(goalVector) > 1.0f)
                 {
                     goalVector = RVOMath.normalize(goalVector);
                 }
 
-                Simulator.Instance.setAgentPrefVelocity(i, goalVector);
+                simulator.setAgentPrefVelocity(i, goalVector);
             }
         }
 
         bool reachedGoal()
         {
             /* Check if all agents have reached their goals. */
-            for (int i = 0; i < Simulator.Instance.getNumAgents(); ++i)
+            for (int i = 0; i < simulator.getNumAgents(); ++i)
             {
-                if (RVOMath.absSq(Simulator.Instance.getAgentPosition(i) - goals[i]) > Simulator.Instance.getAgentRadius(i) * Simulator.Instance.getAgentRadius(i))
+                if (RVOMath.absSq(simulator.getAgentPosition(i) - goals[i]) > simulator.getAgentRadius(i) * simulator.getAgentRadius(i))
                 {
                     return false;
                 }
@@ -141,7 +145,7 @@ namespace RVO
                 circle.updateVisualization();
 #endif
                 circle.setPreferredVelocities();
-                Simulator.Instance.doStep();
+                circle.simulator.doStep();
             }
             while (!circle.reachedGoal());
         }
