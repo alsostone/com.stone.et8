@@ -46,59 +46,8 @@ namespace RVO
         internal KdTree kdTree_;
         internal FP timeStep_;
 
-        private Agent defaultAgent_;
-        private FP globalTime_;
-
         private IList<int> freeIndexs_;
         private IDictionary<long, int> agentId2index_;
-
-        /**
-         * <summary>Adds a new agent with default properties to the simulation.
-         * </summary>
-         *
-         * <returns>The number of the agent, or -1 when the agent defaults have
-         * not been set.</returns>
-         *
-         * <param name="position">The two-dimensional starting position of this
-         * agent.</param>
-         * <param name="agentNo">External specified id</param>
-         */
-        public long addAgent(TSVector2 position, long agentNo = -1)
-        {
-            if (defaultAgent_ == null)
-            {
-                return -1;
-            }
-
-            int index = -1;
-            Agent agent = null;
-            if (freeIndexs_.Count > 0)
-            {
-                index = freeIndexs_[^1];
-                freeIndexs_.RemoveAt(freeIndexs_.Count - 1);
-                agent = agents_[index];
-            }
-            else
-            {
-                index = agents_.Count;
-                agent = new Agent();
-                agents_.Add(agent);
-            }
-
-            agent.id = agentNo == -1 ? agents_.Count : agentNo;
-            agent.maxNeighbors_ = defaultAgent_.maxNeighbors_;
-            agent.maxSpeed_ = defaultAgent_.maxSpeed_;
-            agent.neighborDist_ = defaultAgent_.neighborDist_;
-            agent.position = position;
-            agent.radius_ = defaultAgent_.radius_;
-            agent.timeHorizon_ = defaultAgent_.timeHorizon_;
-            agent.timeHorizonObst_ = defaultAgent_.timeHorizonObst_;
-            agent.velocity_ = defaultAgent_.velocity_;
-            agent.isRemoved = false;
-            agentId2index_.Add(agent.id, index);
-
-            return agent.id;
-        }
 
         /**
          * <summary>Adds a new agent to the simulation.</summary>
@@ -260,7 +209,7 @@ namespace RVO
          *
          * <returns>The global time after the simulation step.</returns>
          */
-        public FP doStep()
+        public void doStep()
         {
             kdTree_.buildAgentTree(agents_);
             
@@ -270,10 +219,6 @@ namespace RVO
                 agents_[i].computeNewVelocity(timeStep_);
                 agents_[i].update(timeStep_);
             }
-
-            globalTime_ += timeStep_;
-
-            return globalTime_;
         }
 
         /**
@@ -291,49 +236,7 @@ namespace RVO
         {
             return agents_[agentId2index_[agentNo]].agentNeighbors_[neighborNo].Value.id;
         }
-
-        /**
-         * <summary>Returns the maximum neighbor count of a specified agent.
-         * </summary>
-         *
-         * <returns>The present maximum neighbor count of the agent.</returns>
-         *
-         * <param name="agentNo">The number of the agent whose maximum neighbor
-         * count is to be retrieved.</param>
-         */
-        public int getAgentMaxNeighbors(long agentNo)
-        {
-            return agents_[agentId2index_[agentNo]].maxNeighbors_;
-        }
-
-        /**
-         * <summary>Returns the maximum speed of a specified agent.</summary>
-         *
-         * <returns>The present maximum speed of the agent.</returns>
-         *
-         * <param name="agentNo">The number of the agent whose maximum speed is
-         * to be retrieved.</param>
-         */
-        public FP getAgentMaxSpeed(long agentNo)
-        {
-            return agents_[agentId2index_[agentNo]].maxSpeed_;
-        }
-
-        /**
-         * <summary>Returns the maximum neighbor distance of a specified agent.
-         * </summary>
-         *
-         * <returns>The present maximum neighbor distance of the agent.
-         * </returns>
-         *
-         * <param name="agentNo">The number of the agent whose maximum neighbor
-         * distance is to be retrieved.</param>
-         */
-        public FP getAgentNeighborDist(long agentNo)
-        {
-            return agents_[agentId2index_[agentNo]].neighborDist_;
-        }
-
+        
         /**
          * <summary>Returns the count of agent neighbors taken into account to
          * compute the current velocity for the specified agent.</summary>
@@ -397,103 +300,6 @@ namespace RVO
         public IList<Line> getAgentOrcaLines(long agentNo)
         {
             return agents_[agentId2index_[agentNo]].orcaLines_;
-        }
-
-        /**
-         * <summary>Returns the two-dimensional position of a specified agent.
-         * </summary>
-         *
-         * <returns>The present two-dimensional position of the (center of the)
-         * agent.</returns>
-         *
-         * <param name="agentNo">The number of the agent whose two-dimensional
-         * position is to be retrieved.</param>
-         */
-        public TSVector2 getAgentPosition(long agentNo)
-        {
-            return agents_[agentId2index_[agentNo]].position;
-        }
-
-        /**
-         * <summary>Returns the two-dimensional preferred velocity of a
-         * specified agent.</summary>
-         *
-         * <returns>The present two-dimensional preferred velocity of the agent.
-         * </returns>
-         *
-         * <param name="agentNo">The number of the agent whose two-dimensional
-         * preferred velocity is to be retrieved.</param>
-         */
-        public TSVector2 getAgentPrefVelocity(long agentNo)
-        {
-            return agents_[agentId2index_[agentNo]].prefVelocity;
-        }
-
-        /**
-         * <summary>Returns the radius of a specified agent.</summary>
-         *
-         * <returns>The present radius of the agent.</returns>
-         *
-         * <param name="agentNo">The number of the agent whose radius is to be
-         * retrieved.</param>
-         */
-        public FP getAgentRadius(long agentNo)
-        {
-            return agents_[agentId2index_[agentNo]].radius_;
-        }
-
-        /**
-         * <summary>Returns the time horizon of a specified agent.</summary>
-         *
-         * <returns>The present time horizon of the agent.</returns>
-         *
-         * <param name="agentNo">The number of the agent whose time horizon is
-         * to be retrieved.</param>
-         */
-        public FP getAgentTimeHorizon(long agentNo)
-        {
-            return agents_[agentId2index_[agentNo]].timeHorizon_;
-        }
-
-        /**
-         * <summary>Returns the time horizon with respect to obstacles of a
-         * specified agent.</summary>
-         *
-         * <returns>The present time horizon with respect to obstacles of the
-         * agent.</returns>
-         *
-         * <param name="agentNo">The number of the agent whose time horizon with
-         * respect to obstacles is to be retrieved.</param>
-         */
-        public FP getAgentTimeHorizonObst(long agentNo)
-        {
-            return agents_[agentId2index_[agentNo]].timeHorizonObst_;
-        }
-
-        /**
-         * <summary>Returns the two-dimensional linear velocity of a specified
-         * agent.</summary>
-         *
-         * <returns>The present two-dimensional linear velocity of the agent.
-         * </returns>
-         *
-         * <param name="agentNo">The number of the agent whose two-dimensional
-         * linear velocity is to be retrieved.</param>
-         */
-        public TSVector2 getAgentVelocity(long agentNo)
-        {
-            return agents_[agentId2index_[agentNo]].velocity_;
-        }
-
-        /**
-         * <summary>Returns the global time of the simulation.</summary>
-         *
-         * <returns>The present global time of the simulation (zero initially).
-         * </returns>
-         */
-        public FP getGlobalTime()
-        {
-            return globalTime_;
         }
 
         /**
@@ -603,102 +409,6 @@ namespace RVO
             return kdTree_.queryVisibility(point1, point2, radius);
         }
 
-        public long queryNearAgent(TSVector2 point, FP radius)
-        {
-            if (getNumAgents() == 0)
-                return -1;
-            return kdTree_.queryNearAgent(point, radius);
-        }
-
-        /**
-         * <summary>Sets the default properties for any new agent that is added.
-         * </summary>
-         *
-         * <param name="neighborDist">The default maximum distance (center point
-         * to center point) to other agents a new agent takes into account in
-         * the navigation. The larger this number, the longer he running time of
-         * the simulation. If the number is too low, the simulation will not be
-         * safe. Must be non-negative.</param>
-         * <param name="maxNeighbors">The default maximum number of other agents
-         * a new agent takes into account in the navigation. The larger this
-         * number, the longer the running time of the simulation. If the number
-         * is too low, the simulation will not be safe.</param>
-         * <param name="timeHorizon">The default minimal amount of time for
-         * which a new agent's velocities that are computed by the simulation
-         * are safe with respect to other agents. The larger this number, the
-         * sooner an agent will respond to the presence of other agents, but the
-         * less freedom the agent has in choosing its velocities. Must be
-         * positive.</param>
-         * <param name="timeHorizonObst">The default minimal amount of time for
-         * which a new agent's velocities that are computed by the simulation
-         * are safe with respect to obstacles. The larger this number, the
-         * sooner an agent will respond to the presence of obstacles, but the
-         * less freedom the agent has in choosing its velocities. Must be
-         * positive.</param>
-         * <param name="radius">The default radius of a new agent. Must be
-         * non-negative.</param>
-         * <param name="maxSpeed">The default maximum speed of a new agent. Must
-         * be non-negative.</param>
-         * <param name="velocity">The default initial two-dimensional linear
-         * velocity of a new agent.</param>
-         */
-        public void setAgentDefaults(FP neighborDist, int maxNeighbors, FP timeHorizon, FP timeHorizonObst, FP radius, FP maxSpeed, TSVector2 velocity)
-        {
-            if (defaultAgent_ == null)
-            {
-                defaultAgent_ = new Agent();
-            }
-
-            defaultAgent_.maxNeighbors_ = maxNeighbors;
-            defaultAgent_.maxSpeed_ = maxSpeed;
-            defaultAgent_.neighborDist_ = neighborDist;
-            defaultAgent_.radius_ = radius;
-            defaultAgent_.timeHorizon_ = timeHorizon;
-            defaultAgent_.timeHorizonObst_ = timeHorizonObst;
-            defaultAgent_.velocity_ = velocity;
-        }
-        #region set Agent
-        /**
-         * <summary>Sets the maximum neighbor count of a specified agent.
-         * </summary>
-         *
-         * <param name="agentNo">The number of the agent whose maximum neighbor
-         * count is to be modified.</param>
-         * <param name="maxNeighbors">The replacement maximum neighbor count.
-         * </param>
-         */
-        public void setAgentMaxNeighbors(long agentNo, int maxNeighbors)
-        {
-            agents_[agentId2index_[agentNo]].maxNeighbors_ = maxNeighbors;
-        }
-
-        /**
-         * <summary>Sets the maximum speed of a specified agent.</summary>
-         *
-         * <param name="agentNo">The number of the agent whose maximum speed is
-         * to be modified.</param>
-         * <param name="maxSpeed">The replacement maximum speed. Must be
-         * non-negative.</param>
-         */
-        public void setAgentMaxSpeed(long agentNo, FP maxSpeed)
-        {
-            agents_[agentId2index_[agentNo]].maxSpeed_ = maxSpeed;
-        }
-
-        /**
-         * <summary>Sets the maximum neighbor distance of a specified agent.
-         * </summary>
-         *
-         * <param name="agentNo">The number of the agent whose maximum neighbor
-         * distance is to be modified.</param>
-         * <param name="neighborDist">The replacement maximum neighbor distance.
-         * Must be non-negative.</param>
-         */
-        public void setAgentNeighborDist(long agentNo, FP neighborDist)
-        {
-            agents_[agentId2index_[agentNo]].neighborDist_ = neighborDist;
-        }
-
         /**
          * <summary>Sets the two-dimensional position of a specified agent.
          * </summary>
@@ -728,72 +438,6 @@ namespace RVO
         }
 
         /**
-         * <summary>Sets the radius of a specified agent.</summary>
-         *
-         * <param name="agentNo">The number of the agent whose radius is to be
-         * modified.</param>
-         * <param name="radius">The replacement radius. Must be non-negative.
-         * </param>
-         */
-        public void setAgentRadius(long agentNo, FP radius)
-        {
-            agents_[agentId2index_[agentNo]].radius_ = radius;
-        }
-
-        /**
-         * <summary>Sets the time horizon of a specified agent with respect to
-         * other agents.</summary>
-         *
-         * <param name="agentNo">The number of the agent whose time horizon is
-         * to be modified.</param>
-         * <param name="timeHorizon">The replacement time horizon with respect
-         * to other agents. Must be positive.</param>
-         */
-        public void setAgentTimeHorizon(long agentNo, FP timeHorizon)
-        {
-            agents_[agentId2index_[agentNo]].timeHorizon_ = timeHorizon;
-        }
-
-        /**
-         * <summary>Sets the time horizon of a specified agent with respect to
-         * obstacles.</summary>
-         *
-         * <param name="agentNo">The number of the agent whose time horizon with
-         * respect to obstacles is to be modified.</param>
-         * <param name="timeHorizonObst">The replacement time horizon with
-         * respect to obstacles. Must be positive.</param>
-         */
-        public void setAgentTimeHorizonObst(long agentNo, FP timeHorizonObst)
-        {
-            agents_[agentId2index_[agentNo]].timeHorizonObst_ = timeHorizonObst;
-        }
-
-        /**
-         * <summary>Sets the two-dimensional linear velocity of a specified
-         * agent.</summary>
-         *
-         * <param name="agentNo">The number of the agent whose two-dimensional
-         * linear velocity is to be modified.</param>
-         * <param name="velocity">The replacement two-dimensional linear
-         * velocity.</param>
-         */
-        public void setAgentVelocity(long agentNo, TSVector2 velocity)
-        {
-            agents_[agentId2index_[agentNo]].velocity_ = velocity;
-        }
-        #endregion set Agent
-
-        /**
-         * <summary>Sets the global time of the simulation.</summary>
-         *
-         * <param name="globalTime">The global time of the simulation.</param>
-         */
-        public void setGlobalTime(FP globalTime)
-        {
-            globalTime_ = globalTime;
-        }
-
-        /**
          * <summary>Sets the time step of the simulation.</summary>
          *
          * <param name="timeStep">The time step of the simulation. Must be
@@ -810,10 +454,8 @@ namespace RVO
         public Simulator()
         {
             agents_ = new List<Agent>();
-            defaultAgent_ = null;
             kdTree_ = new KdTree();
             obstacles_ = new List<Obstacle>();
-            globalTime_ = FP.Zero;
             timeStep_ = FP.EN1;
 
             freeIndexs_ = new List<int>();
