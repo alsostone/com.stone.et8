@@ -184,22 +184,18 @@ namespace RVO
             agentId2index_.Remove(agents_[index].id);
         }
         
-        public IList<Agent> GetAgents()
+        public IList<Agent> GetAllAgents()
         {
             return agents_;
         }
-
-        /**
-         * <summary>Clears the simulation.</summary>
-         */
-        public void Clear()
+        
+        public void ClearAllAgents()
         {
             freeIndexs_.Clear();
             for (int index = 0; index < agents_.Count; index++) {
+                agents_[index].isRemoved = true;
                 freeIndexs_.Add(index);
             }
-
-            agents_.Clear();
             agentId2index_.Clear();
         }
 
