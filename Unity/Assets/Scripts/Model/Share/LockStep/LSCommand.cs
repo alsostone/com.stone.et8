@@ -1,3 +1,4 @@
+using System;
 using TrueSync;
 
 namespace ET
@@ -45,7 +46,22 @@ namespace ET
         public uint Header;
         public uint Param1;
         public uint Param2;
-        
+
+        public override int GetHashCode()
+        {
+            return HashCode.Combine(this.Header, this.Param1, this.Param2);
+        }
+
+        public bool Equals(LSCommandData other)
+        {
+            return this.Header == other.Header && this.Param1 == other.Param1 && this.Param2 == other.Param2;
+        }
+
+        public override bool Equals(object obj)
+        {
+            return obj is LSCommandData data && Equals(data);
+        }
+
         public static bool operator ==(LSCommandData left, LSCommandData right)
         {
             return left.Header == right.Header && left.Param1 == right.Param1 && left.Param2 == right.Param2;

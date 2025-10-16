@@ -5,8 +5,7 @@
         "Unity.ThirdParty",
         "Unity.Core",
         "Unity.Mathematics",
-        "MemoryPack",
-        "RVO2"
+        "MemoryPack"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],
