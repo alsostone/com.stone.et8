@@ -14,9 +14,11 @@ namespace ET
         
         public static void AddRealProp(this PropComponent self, NumericType numericType, FP value)
         {self.LSRoom()?.ProcessLog.LogFunction(40, self.LSParent().Id, value.V);
-            FP runtimeValue = self.Get(numericType);
-            FP maxValue = self.Get(numericType + LSConstValue.PropRuntime2MaxOffset);
-            value = TSMath.Min(runtimeValue + value, maxValue);
+            FP oldValue = self.Get(numericType);
+            if (numericType < NumericType.SpecialMax) {
+                FP maxValue = self.Get(numericType + LSConstValue.PropRuntime2MaxOffset);
+                value = TSMath.Min(oldValue + value, maxValue);
+            }
             value = TSMath.Max(value, 0);
             self.Set(numericType, value);
         }
@@ -31,14 +33,12 @@ namespace ET
 
             self.NumericDic[numericType] = value;
 
-            if (numericType >= NumericType.Max)
-            {
+            if (numericType >= NumericType.Max) {
                 self.Update(numericType, isPublicEvent);
                 return;
             }
 
-            if (isPublicEvent)
-            {
+            if (isPublicEvent) {
                 EventSystem.Instance.Publish(self.LSWorld(), new PropChange() { Id = self.LSOwner().Id, New = value, Old = oldValue, NumericType = numericType });
             }
         }
@@ -54,14 +54,12 @@ namespace ET
             value = oldValue + value;
             self.NumericDic[numericType] = value;
 
-            if (numericType >= NumericType.Max)
-            {
+            if (numericType >= NumericType.Max) {
                 self.Update(numericType, isPublicEvent);
                 return;
             }
 
-            if (isPublicEvent)
-            {
+            if (isPublicEvent) {
                 EventSystem.Instance.Publish(self.LSWorld(), new PropChange() { Id = self.LSOwner().Id, New = value, Old = oldValue, NumericType = numericType });
             }
         }

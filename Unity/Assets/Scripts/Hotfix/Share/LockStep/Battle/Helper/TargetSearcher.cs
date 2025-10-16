@@ -89,7 +89,16 @@ namespace ET
             FilterWithType(res.Type, results);
             FilterWithTableId(res.TableId, results);
             FilterWithPriority(owner.GetRandom(), res.Priority, results);
-            FilterCount(res.Count, results);
+
+            int targetCount = res.Count;
+            if (res.AddCountProp != NumericType.None) {
+                PropComponent propComponent = owner.GetComponent<PropComponent>();
+                if (propComponent != null) {
+                    int addCount = propComponent.Get(res.AddCountProp).AsInt();
+                    targetCount += addCount;
+                }
+            }
+            FilterCount(targetCount, results);
         }
         
         private static void FilterDirection(TbSearchRow res, IList<SearchUnit> results, TSVector center, TSVector forward)

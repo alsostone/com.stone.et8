@@ -2,13 +2,31 @@
   {
     "Id": 5001,
     "model": 50010001,
-    "effect_group_id": 92000001,
-    "search_target": 92000001
+    "effect_group_id": 50010001,
+    "search_target": 50010001
   },
   {
     "Id": 5002,
     "model": 50020001,
-    "effect_group_id": 92010001,
-    "search_target": 92010001
+    "effect_group_id": 50020001,
+    "search_target": 50020001
+  },
+  {
+    "Id": 5003,
+    "model": 50020001,
+    "effect_group_id": 50030001,
+    "search_target": 97010004
+  },
+  {
+    "Id": 5004,
+    "model": 50020001,
+    "effect_group_id": 50040001,
+    "search_target": 97010004
+  },
+  {
+    "Id": 5005,
+    "model": 50020001,
+    "effect_group_id": 50050001,
+    "search_target": 97010004
   }
 ]

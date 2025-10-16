@@ -53,10 +53,12 @@ namespace ET
 		    
 		    // 初始卡组 可以通过配置表来
 		    var cards = ObjectPool.Instance.Fetch<List<LSRandomDropItem>>();
-		    cards.Add(new LSRandomDropItem(EUnitType.Building, 30011, 1));
+		    cards.Add(new LSRandomDropItem(EUnitType.Building, 30021, 1));
 		    cards.Add(new LSRandomDropItem(EUnitType.Block, 2003, 2));
 		    cards.Add(new LSRandomDropItem(EUnitType.Item, 5001, 1));
-		    cards.Add(new LSRandomDropItem(EUnitType.Item, 5002, 1));
+		    cards.Add(new LSRandomDropItem(EUnitType.Item, 5003, 1));
+		    cards.Add(new LSRandomDropItem(EUnitType.Item, 5004, 1));
+		    cards.Add(new LSRandomDropItem(EUnitType.Item, 5005, 1));
 		    lsUnit.AddComponent<CardBagComponent, List<LSRandomDropItem>>(cards);
 		    cards.Clear();
 		    ObjectPool.Instance.Recycle(cards);

@@ -1,17 +1,23 @@
 <module name="">
     <enum name="NumericType" comment="属性类型" unique="TRUE">
-        <var name="Hp" alias="血量" value="1"/><!-- 加1000为血量最大值 约定不可更改 -->
-        <var name="Mp" alias="蓝量" value="2"/><!-- 加1000为蓝量最大值 约定不可更改 -->
+        <var name="None" alias="" value="0"/>
+        
+        <!-- 实时属性 约定加1000即为其最大值 添加时需要重点关注 -->
+        <var name="Hp" alias="血量" value="1"/>
+        <var name="Mp" alias="蓝量" value="2"/>
+        <var name="Gold" alias="金币" value="100"/>
+        <var name="Wood" alias="木材" value="101"/>
+        <var name="Population" alias="人口" value="102"/>
+        
+        <!-- 实时属性 无任何约定，可任意添加 -->
+        <var name="AddNormalTargetCount" alias="增加普攻目标" value="501"/>
 
-        <!-- 980~999：预留19个位置定义货币 -->
-        <var name="Gold" alias="金币" value="980"/>
-        <var name="Wood" alias="木材" value="981"/>
-        <var name="Population" alias="人口" value="982"/>
-
-        <!-- 1~999：实时属性 比如：当前血量、当前蓝量 -->
-        <!-- 1000~9999：5个养成属性的计算结果，任意1个相关的养成属性变化时根据公式计算并覆盖它 -->
-        <!-- 10000~99999：配置表、养成系统中真正做运算、配置的属性 -->
-        <var name="Max" alias="分隔属性" value="10000" comment="属性ID区间：10000~99999"/>
+        <var name="SpecialMax" alias="分隔特殊约定属性" value="500" comment="分隔特殊约定属性 1~499区间内的属性加1000对应他的最大值属性"/>
+        <var name="Max" alias="分隔父子属性" value="10000" comment="分隔父子属性 10000~99999区间内的属性变化时都要更新其父属性"/>
+        <!-- 实时属性 1~499：约定加1000即为其最大值 添加时需要重点关注 比如：当前血量、当前蓝量 -->
+        <!-- 实时属性 500~999：无任何约定，可任意添加 -->
+        <!-- 父属性 1000~9999：不能养成和配置修改，只能根据公式计算5个子属性获得 -->
+        <!-- 子属性 10000~99999：影响其对应父属性 -->
         <!-- 血量最大值 -->
         <var name="MaxHp" alias="生命值" value="1001"/>
         <var name="MaxHpBase" alias="生命值B" value="10011"/>
@@ -119,39 +125,42 @@
         <var name="CounterRateFinalPct" alias="反击率FP" value="10155"/>
         
         <!-- 金币上限 -->
-        <var name="MaxGold" alias="金币上限" value="1980"/>
-        <var name="MaxGoldBase" alias="金币上限B" value="19801"/>
-        <var name="MaxGoldBaseAdd" alias="金币上限BD" value="19802"/>
-        <var name="MaxGoldBasePct" alias="金币上限BP" value="19803"/>
-        <var name="MaxGoldFinalAdd" alias="金币上限FD" value="19804"/>
-        <var name="MaxGoldFinalPct" alias="金币上限FP" value="19805"/>
+        <var name="MaxGold" alias="金币上限" value="1100"/>
+        <var name="MaxGoldBase" alias="金币上限B" value="11001"/>
+        <var name="MaxGoldBaseAdd" alias="金币上限BD" value="11002"/>
+        <var name="MaxGoldBasePct" alias="金币上限BP" value="11003"/>
+        <var name="MaxGoldFinalAdd" alias="金币上限FD" value="11004"/>
+        <var name="MaxGoldFinalPct" alias="金币上限FP" value="11005"/>
         <!-- 木材上限 -->
-        <var name="MaxWood" alias="木材上限" value="1981"/>
-        <var name="MaxWoodBase" alias="木材上限B" value="19811"/>
-        <var name="MaxWoodBaseAdd" alias="木材上限BD" value="19812"/>
-        <var name="MaxWoodBasePct" alias="木材上限BP" value="19813"/>
-        <var name="MaxWoodFinalAdd" alias="木材上限FD" value="19814"/>
-        <var name="MaxWoodFinalPct" alias="木材上限FP" value="19815"/>
+        <var name="MaxWood" alias="木材上限" value="1101"/>
+        <var name="MaxWoodBase" alias="木材上限B" value="11011"/>
+        <var name="MaxWoodBaseAdd" alias="木材上限BD" value="11012"/>
+        <var name="MaxWoodBasePct" alias="木材上限BP" value="11013"/>
+        <var name="MaxWoodFinalAdd" alias="木材上限FD" value="11014"/>
+        <var name="MaxWoodFinalPct" alias="木材上限FP" value="11015"/>
         <!-- 人口上限 -->
-        <var name="MaxPopulation" alias="人口上限" value="1982"/>
-        <var name="MaxPopulationBase" alias="人口上限B" value="19821"/>
-        <var name="MaxPopulationBaseAdd" alias="人口上限BD" value="19822"/>
-        <var name="MaxPopulationBasePct" alias="人口上限BP" value="19823"/>
-        <var name="MaxPopulationFinalAdd" alias="人口上限FD" value="19824"/>
-        <var name="MaxPopulationFinalPct" alias="人口上限FP" value="19825"/>
+        <var name="MaxPopulation" alias="人口上限" value="1102"/>
+        <var name="MaxPopulationBase" alias="人口上限B" value="11021"/>
+        <var name="MaxPopulationBaseAdd" alias="人口上限BD" value="11022"/>
+        <var name="MaxPopulationBasePct" alias="人口上限BP" value="11023"/>
+        <var name="MaxPopulationFinalAdd" alias="人口上限FD" value="11024"/>
+        <var name="MaxPopulationFinalPct" alias="人口上限FP" value="11025"/>
     </enum>
+    
     <enum name="TeamType" comment="队伍类型" unique="TRUE">
         <var name="None" alias="" value="0"/>
         <var name="TeamA" alias="队伍A" value="1"/>
         <var name="TeamB" alias="队伍B" value="2"/>
         <var name="Max" alias="MAX" value="3"/>
     </enum>
+    
     <enum name="FlagRestrict" comment="禁止标签" unique="TRUE" flags="TRUE">
         <var name="None" alias="" value="0"/>
         <var name="NotMove" alias="禁止移动" value="1"/>
         <var name="NotAttack" alias="禁止普通技能" value="2"/>
         <var name="NotActive" alias="禁止主动技能" value="4"/>
     </enum>
+    
     <enum name="LockStepMode" comment="帧同步模式" unique="FALSE">
         <var name="None" alias="" value="0"/>
         <var name="ObserverFile" alias="本地文件" value="1"/>
@@ -160,11 +169,13 @@
         <var name="Server" alias="多人联网" value="4"/>
         <var name="Observer" alias="在线观战" value="5"/>
     </enum>
+    
     <enum name="FightMode" comment="战斗模式" unique="FALSE">
         <var name="None" alias="" value="0"/>
         <var name="PVE" alias="玩家和电脑" value="1"/>
         <var name="PVP" alias="玩家和玩家" value="2"/>
     </enum>
+    
     <enum name="EUnitType" comment="实体类型" unique="TRUE" flags="TRUE">
         <var name="None" alias="" value="0"/>
         <var name="Hero" alias="英雄" value="1"/>

@@ -14,6 +14,8 @@ namespace ET
     /// </summary>
     public enum NumericType
     {
+        None = 0,
+
         /// <summary>
         /// 血量
         /// </summary>
@@ -27,20 +29,30 @@ namespace ET
         /// <summary>
         /// 金币
         /// </summary>
-        Gold = 980,
+        Gold = 100,
 
         /// <summary>
         /// 木材
         /// </summary>
-        Wood = 981,
+        Wood = 101,
 
         /// <summary>
         /// 人口
         /// </summary>
-        Population = 982,
+        Population = 102,
 
         /// <summary>
-        /// 属性ID区间：10000~99999
+        /// 增加普攻目标
+        /// </summary>
+        AddNormalTargetCount = 501,
+
+        /// <summary>
+        /// 分隔特殊约定属性 1~499区间内的属性加1000对应他的最大值属性
+        /// </summary>
+        SpecialMax = 500,
+
+        /// <summary>
+        /// 分隔父子属性 10000~99999区间内的属性变化时都要更新其父属性
         /// </summary>
         Max = 10000,
 
@@ -497,92 +509,92 @@ namespace ET
         /// <summary>
         /// 金币上限
         /// </summary>
-        MaxGold = 1980,
+        MaxGold = 1100,
 
         /// <summary>
         /// 金币上限B
         /// </summary>
-        MaxGoldBase = 19801,
+        MaxGoldBase = 11001,
 
         /// <summary>
         /// 金币上限BD
         /// </summary>
-        MaxGoldBaseAdd = 19802,
+        MaxGoldBaseAdd = 11002,
 
         /// <summary>
         /// 金币上限BP
         /// </summary>
-        MaxGoldBasePct = 19803,
+        MaxGoldBasePct = 11003,
 
         /// <summary>
         /// 金币上限FD
         /// </summary>
-        MaxGoldFinalAdd = 19804,
+        MaxGoldFinalAdd = 11004,
 
         /// <summary>
         /// 金币上限FP
         /// </summary>
-        MaxGoldFinalPct = 19805,
+        MaxGoldFinalPct = 11005,
 
         /// <summary>
         /// 木材上限
         /// </summary>
-        MaxWood = 1981,
+        MaxWood = 1101,
 
         /// <summary>
         /// 木材上限B
         /// </summary>
-        MaxWoodBase = 19811,
+        MaxWoodBase = 11011,
 
         /// <summary>
         /// 木材上限BD
         /// </summary>
-        MaxWoodBaseAdd = 19812,
+        MaxWoodBaseAdd = 11012,
 
         /// <summary>
         /// 木材上限BP
         /// </summary>
-        MaxWoodBasePct = 19813,
+        MaxWoodBasePct = 11013,
 
         /// <summary>
         /// 木材上限FD
         /// </summary>
-        MaxWoodFinalAdd = 19814,
+        MaxWoodFinalAdd = 11014,
 
         /// <summary>
         /// 木材上限FP
         /// </summary>
-        MaxWoodFinalPct = 19815,
+        MaxWoodFinalPct = 11015,
 
         /// <summary>
         /// 人口上限
         /// </summary>
-        MaxPopulation = 1982,
+        MaxPopulation = 1102,
 
         /// <summary>
         /// 人口上限B
         /// </summary>
-        MaxPopulationBase = 19821,
+        MaxPopulationBase = 11021,
 
         /// <summary>
         /// 人口上限BD
         /// </summary>
-        MaxPopulationBaseAdd = 19822,
+        MaxPopulationBaseAdd = 11022,
 
         /// <summary>
         /// 人口上限BP
         /// </summary>
-        MaxPopulationBasePct = 19823,
+        MaxPopulationBasePct = 11023,
 
         /// <summary>
         /// 人口上限FD
         /// </summary>
-        MaxPopulationFinalAdd = 19824,
+        MaxPopulationFinalAdd = 11024,
 
         /// <summary>
         /// 人口上限FP
         /// </summary>
-        MaxPopulationFinalPct = 19825,
+        MaxPopulationFinalPct = 11025,
 
     }
 }

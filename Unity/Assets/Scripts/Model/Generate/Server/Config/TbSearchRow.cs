@@ -23,6 +23,7 @@ namespace ET
             Type = (EUnitType)_buf.ReadInt();
             {int __n0 = System.Math.Min(_buf.ReadSize(), _buf.Size);TableId = new int[__n0];for(var __index0 = 0 ; __index0 < __n0 ; __index0++) { int __e0;__e0 = _buf.ReadInt(); TableId[__index0] = __e0;}}
             Count = _buf.ReadInt();
+            AddCountProp = (NumericType)_buf.ReadInt();
             Priority = (ESearchTargetPriority)_buf.ReadInt();
 
             PostInit();
@@ -69,6 +70,11 @@ namespace ET
         public readonly int Count;
 
         /// <summary>
+        /// 加成数量的属性
+        /// </summary>
+        public readonly NumericType AddCountProp;
+
+        /// <summary>
         /// 优先级
         /// </summary>
         public readonly ESearchTargetPriority Priority;
@@ -79,6 +85,7 @@ namespace ET
 
         public  void ResolveRef()
         {
+            
             
             
             
@@ -99,6 +106,7 @@ namespace ET
             + "type:" + Type + ","
             + "tableId:" + Luban.StringUtil.CollectionToString(TableId) + ","
             + "count:" + Count + ","
+            + "addCountProp:" + AddCountProp + ","
             + "priority:" + Priority + ","
             + "}";
         }

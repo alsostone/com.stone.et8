@@ -206,7 +206,7 @@
   },
   {
     "Id": 400000010,
-    "name": "伤害植物-普攻",
+    "name": "普攻",
     "group_id": 40000001,
     "success_conds": [],
     "failure_conds": [],
@@ -216,7 +216,7 @@
   },
   {
     "Id": 400001010,
-    "name": "伤害植物-死亡自爆",
+    "name": "死亡自爆",
     "group_id": 40000101,
     "success_conds": [],
     "failure_conds": [],
@@ -227,9 +227,9 @@
     ]
   },
   {
-    "Id": 920000010,
+    "Id": 500100010,
     "name": "使用血瓶",
-    "group_id": 92000001,
+    "group_id": 50010001,
     "success_conds": [],
     "failure_conds": [],
     "fx": 70000001,
@@ -240,9 +240,9 @@
     ]
   },
   {
-    "Id": 920100010,
+    "Id": 500200010,
     "name": "使用蓝瓶",
-    "group_id": 92010001,
+    "group_id": 50020001,
     "success_conds": [],
     "failure_conds": [],
     "fx": 70000002,
@@ -250,6 +250,45 @@
     "action_param": [
       2,
       5000
+    ]
+  },
+  {
+    "Id": 500300010,
+    "name": "目标+1",
+    "group_id": 50030001,
+    "success_conds": [],
+    "failure_conds": [],
+    "fx": 70000001,
+    "action_type": 2,
+    "action_param": [
+      501,
+      10000
+    ]
+  },
+  {
+    "Id": 500400010,
+    "name": "攻击+100%",
+    "group_id": 50040001,
+    "success_conds": [],
+    "failure_conds": [],
+    "fx": 70000002,
+    "action_type": 9,
+    "action_param": [
+      10033,
+      10000
+    ]
+  },
+  {
+    "Id": 500500010,
+    "name": "攻速+100%",
+    "group_id": 50050001,
+    "success_conds": [],
+    "failure_conds": [],
+    "fx": 70000002,
+    "action_type": 9,
+    "action_param": [
+      10073,
+      10000
     ]
   }
 ]

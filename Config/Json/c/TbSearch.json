@@ -7,6 +7,7 @@
     "type": 9,
     "table_id": [],
     "count": 99,
+    "add_count_prop": 501,
     "priority": 1
   },
   {
@@ -17,6 +18,7 @@
     "type": 0,
     "table_id": [],
     "count": 0,
+    "add_count_prop": 0,
     "priority": 0
   },
   {
@@ -27,6 +29,7 @@
     "type": 9,
     "table_id": [],
     "count": 3,
+    "add_count_prop": 0,
     "priority": 1
   },
   {
@@ -37,6 +40,7 @@
     "type": 9,
     "table_id": [],
     "count": 99,
+    "add_count_prop": 0,
     "priority": 1
   },
   {
@@ -47,6 +51,7 @@
     "type": 9,
     "table_id": [],
     "count": 1,
+    "add_count_prop": 501,
     "priority": 3
   },
   {
@@ -57,6 +62,7 @@
     "type": 9,
     "table_id": [],
     "count": 1,
+    "add_count_prop": 501,
     "priority": 1
   },
   {
@@ -67,6 +73,7 @@
     "type": 9,
     "table_id": [],
     "count": 3,
+    "add_count_prop": 0,
     "priority": 1
   },
   {
@@ -77,6 +84,7 @@
     "type": 0,
     "table_id": [],
     "count": 0,
+    "add_count_prop": 0,
     "priority": 0
   },
   {
@@ -87,6 +95,7 @@
     "type": 4,
     "table_id": [],
     "count": 99,
+    "add_count_prop": 0,
     "priority": 0
   },
   {
@@ -97,6 +106,7 @@
     "type": 0,
     "table_id": [],
     "count": 0,
+    "add_count_prop": 0,
     "priority": 0
   },
   {
@@ -107,6 +117,7 @@
     "type": 13,
     "table_id": [],
     "count": 1,
+    "add_count_prop": 501,
     "priority": 1
   },
   {
@@ -117,26 +128,29 @@
     "type": 9,
     "table_id": [],
     "count": 99,
+    "add_count_prop": 0,
     "priority": 1
   },
   {
-    "Id": 92000001,
+    "Id": 50010001,
     "valid_forward": false,
     "range": 5000,
     "team": 2,
     "type": 5,
     "table_id": [],
     "count": 1,
+    "add_count_prop": 0,
     "priority": 1
   },
   {
-    "Id": 92010001,
+    "Id": 50020001,
     "valid_forward": false,
     "range": 5000,
     "team": 2,
     "type": 5,
     "table_id": [],
     "count": 1,
+    "add_count_prop": 0,
     "priority": 1
   },
   {
@@ -147,6 +161,7 @@
     "type": 0,
     "table_id": [],
     "count": 0,
+    "add_count_prop": 0,
     "priority": 0
   },
   {
@@ -157,6 +172,7 @@
     "type": 0,
     "table_id": [],
     "count": 0,
+    "add_count_prop": 0,
     "priority": 0
   },
   {
@@ -167,7 +183,19 @@
     "type": 0,
     "table_id": [],
     "count": 0,
+    "add_count_prop": 0,
     "priority": 0
+  },
+  {
+    "Id": 97010004,
+    "valid_forward": false,
+    "range": 5000,
+    "team": 2,
+    "type": 5,
+    "table_id": [],
+    "count": 1,
+    "add_count_prop": 0,
+    "priority": 1
   },
   {
     "Id": 98010001,
@@ -177,6 +205,7 @@
     "type": 13,
     "table_id": [],
     "count": 5,
+    "add_count_prop": 0,
     "priority": 0
   },
   {
@@ -187,6 +216,7 @@
     "type": 9,
     "table_id": [],
     "count": 5,
+    "add_count_prop": 0,
     "priority": 0
   }
 ]
