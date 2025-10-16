@@ -79,7 +79,6 @@ namespace ET
 	        lsUnit.AddComponent<TypeComponent, EUnitType>(EUnitType.Hero);
 	        lsUnit.AddComponent<FlagComponent>();
 	        lsUnit.AddComponent<TeamComponent, TeamType>(teamType);
-	        lsUnit.AddComponent<HeroComponent, int, int>(row.Id, skinRow.Id);
 	        
 	        PropComponent propComponent = lsUnit.AddComponent<PropComponent, int>(row.Radius);
 	        foreach (var prop in row.Props) {
@@ -87,6 +86,7 @@ namespace ET
 	        }
 	        EnsureRuntimeProp(propComponent);
 			
+	        lsUnit.AddComponent<HeroComponent, int, int>(row.Id, skinRow.Id);
 			lsUnit.AddComponent<DeathComponent, bool>(false);
 			lsUnit.AddComponent<BuffComponent>();
 			lsUnit.AddComponent<BeHitComponent>();
@@ -106,7 +106,6 @@ namespace ET
 	        lsUnit.AddComponent<TypeComponent, EUnitType>(EUnitType.Soldier);
 	        lsUnit.AddComponent<FlagComponent>();
 	        lsUnit.AddComponent<TeamComponent, TeamType>(teamType);
-	        lsUnit.AddComponent<SoldierComponent, int>(tableId);
 	        
 	        PropComponent propComponent = lsUnit.AddComponent<PropComponent, int>(row.Radius);
 	        foreach (var prop in row.Props) {
@@ -114,6 +113,7 @@ namespace ET
 	        }
 	        EnsureRuntimeProp(propComponent);
 
+	        lsUnit.AddComponent<SoldierComponent, int>(tableId);
 	        lsUnit.AddComponent<DeathComponent, bool>(true);
 	        lsUnit.AddComponent<BuffComponent>();
 	        lsUnit.AddComponent<BeHitComponent>();
@@ -152,7 +152,6 @@ namespace ET
 	        lsUnit.AddComponent<TypeComponent, EUnitType>(EUnitType.Block);
 	        lsUnit.AddComponent<FlagComponent>();
 	        lsUnit.AddComponent<TeamComponent, TeamType>(teamType);
-	        lsUnit.AddComponent<BlockComponent, int>(tableId);
 	        lsUnit.AddComponent<PlacementComponent, PlacementData>(placementData);
 	        
 	        PropComponent propComponent = lsUnit.AddComponent<PropComponent, int>(5000);
@@ -161,6 +160,7 @@ namespace ET
 	        }
 	        EnsureRuntimeProp(propComponent);
 
+	        lsUnit.AddComponent<BlockComponent, int>(tableId);
 	        lsUnit.AddComponent<DeathComponent, bool>(true);
 	        lsUnit.AddComponent<BuffComponent>();
 	        lsUnit.AddComponent<BeHitComponent>();
@@ -195,7 +195,6 @@ namespace ET
 	        lsUnit.AddComponent<TypeComponent, EUnitType>(EUnitType.Building);
 	        lsUnit.AddComponent<FlagComponent>();
 	        lsUnit.AddComponent<TeamComponent, TeamType>(teamType);
-	        lsUnit.AddComponent<BuildingComponent, int>(tableId);
 	        lsUnit.AddComponent<PlacementComponent, PlacementData>(placementData);
 
 	        PropComponent propComponent = lsUnit.AddComponent<PropComponent, int>(row.Radius);
@@ -204,6 +203,7 @@ namespace ET
 	        }
 	        EnsureRuntimeProp(propComponent);
 
+	        lsUnit.AddComponent<BuildingComponent, int>(tableId);
 	        lsUnit.AddComponent<DeathComponent, bool>(true);
 	        lsUnit.AddComponent<BuffComponent>();
 	        lsUnit.AddComponent<BeHitComponent>();

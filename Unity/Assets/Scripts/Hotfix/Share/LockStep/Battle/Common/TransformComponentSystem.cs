@@ -45,7 +45,28 @@ namespace ET
                 TSVector position = self.Position;
                 self.Position += new TSVector(v2.x, 0, v2.y);
                 self.Forward = self.Position - position;
+                LSRVO2Component rvo2Component = self.LSWorld().GetComponent<LSRVO2Component>();
+                rvo2Component.SetAgentPosition(self.LSOwner(), self.Position);
             }
+        }
+        
+        public static void RVOMove(this TransformComponent self, TSVector2 forward)
+        {
+            if (forward.sqrMagnitude < FP.EN4) {
+                self.SetMoving(false);
+                return;
+            }
+            FlagComponent flagComponent = self.LSOwner().GetComponent<FlagComponent>();
+            if (flagComponent.HasRestrict(FlagRestrict.NotMove)) {
+                self.SetMoving(false);
+                return;
+            }
+            
+            self.SetMoving(true);
+            PropComponent propComponent = self.LSOwner().GetComponent<PropComponent>();
+            TSVector2 v2 = forward.normalized * propComponent.Get(NumericType.Speed);
+            LSRVO2Component rvo2Component = self.LSWorld().GetComponent<LSRVO2Component>();
+            rvo2Component.setAgentPrefVelocity(self.LSOwner(), v2);
         }
 
         private static void SetMoving(this TransformComponent self, bool moving)
@@ -64,6 +85,8 @@ namespace ET
         public static void SetPosition(this TransformComponent self, TSVector position)
         {self.LSRoom()?.ProcessLog.LogFunction(85, self.LSParent().Id);
             self.Position = position;
+            LSRVO2Component rvo2Component = self.LSWorld().GetComponent<LSRVO2Component>();
+            rvo2Component.SetAgentPosition(self.LSOwner(), position);
         }
         
         public static TSVector TransformDirection(this TransformComponent self, TSVector position)

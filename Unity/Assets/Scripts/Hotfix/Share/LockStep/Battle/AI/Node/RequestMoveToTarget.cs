@@ -33,7 +33,7 @@ namespace ET
 
             FP x = transformTarget.Position.x - transformUnit.Position.x;
             FP z = transformTarget.Position.z - transformUnit.Position.z;
-            transformUnit.Move(new TSVector2(x, z));
+            transformUnit.RVOMove(new TSVector2(x, z));
             return Result.PROGRESS;
         }
     }
