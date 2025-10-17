@@ -20,9 +20,8 @@ namespace ET
             
             TSVector vector = gridMapComponent.GetFieldVector(transformComponent.Position);
             if (vector.x == 0 && vector.z == 0)
-                transformComponent.RVOMove(new TSVector2(-transformComponent.Position.x, -transformComponent.Position.z));
-            else
-                transformComponent.RVOMove(new TSVector2(vector.x, vector.z));
+                vector = TSVector.zero - transformComponent.Position;
+            transformComponent.RVOMove(new TSVector2(vector.x, vector.z));
         }
         
     }

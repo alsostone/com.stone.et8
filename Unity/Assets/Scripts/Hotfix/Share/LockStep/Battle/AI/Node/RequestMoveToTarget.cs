@@ -22,18 +22,22 @@ namespace ET
             if (lsTarget == null)
                 return Result.FAILED;
             
-            PropComponent propComponent = lsUnit.GetComponent<PropComponent>();
-            FP range = propComponent.Get(NumericType.AtkRange);
+            PropComponent propUnit = lsUnit.GetComponent<PropComponent>();
+            PropComponent propTarget = lsTarget.GetComponent<PropComponent>();
+            FP range = propUnit.Get(NumericType.AtkRange);
             
             // 如果目标在攻击范围内，则不需要移动
             TransformComponent transformUnit = lsUnit.GetComponent<TransformComponent>();
             TransformComponent transformTarget = lsTarget.GetComponent<TransformComponent>();
-            if (TSVector.SqrDistance(transformUnit.Position, transformTarget.Position) <= range * range * FP.Ratio(9, 10))
+            TSVector forward = transformTarget.Position - transformUnit.Position;
+            
+            FP distance = (transformUnit.Position - transformTarget.Position).magnitude - propUnit.Radius - propTarget.Radius;
+            if (distance <= range * FP.Ratio(9, 10)) {
+                transformUnit.Forward = forward;
                 return Result.SUCCESS;
-
-            FP x = transformTarget.Position.x - transformUnit.Position.x;
-            FP z = transformTarget.Position.z - transformUnit.Position.z;
-            transformUnit.RVOMove(new TSVector2(x, z));
+            }
+            
+            transformUnit.RVOMove(new TSVector2(forward.x, forward.z));
             return Result.PROGRESS;
         }
     }

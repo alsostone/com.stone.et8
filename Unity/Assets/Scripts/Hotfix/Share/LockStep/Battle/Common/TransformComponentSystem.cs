@@ -37,14 +37,14 @@ namespace ET
                 return;
             }
             
+            self.Forward = new TSVector(forward.x, 0, forward.y);
             self.SetMoving(true);
+            
             PropComponent propComponent = self.LSOwner().GetComponent<PropComponent>();
             TSVector2 v2 = forward.normalized * propComponent.Get(NumericType.Speed) * LSConstValue.UpdateInterval / LSConstValue.Milliseconds;
             if (v2.LengthSquared() > FP.EN4)
             {
-                TSVector position = self.Position;
                 self.Position += new TSVector(v2.x, 0, v2.y);
-                self.Forward = self.Position - position;
                 LSRVO2Component rvo2Component = self.LSWorld().GetComponent<LSRVO2Component>();
                 rvo2Component.SetAgentPosition(self.LSOwner(), self.Position);
             }
@@ -62,7 +62,9 @@ namespace ET
                 return;
             }
             
+            self.Forward = new TSVector(forward.x, 0, forward.y);
             self.SetMoving(true);
+            
             PropComponent propComponent = self.LSOwner().GetComponent<PropComponent>();
             TSVector2 v2 = forward.normalized * propComponent.Get(NumericType.Speed);
             LSRVO2Component rvo2Component = self.LSWorld().GetComponent<LSRVO2Component>();

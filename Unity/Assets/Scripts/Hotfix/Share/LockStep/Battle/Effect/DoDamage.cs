@@ -7,6 +7,7 @@ namespace ET
 	{
 		public void Run(int[] param, LSUnit owner, LSUnit target, LSUnit carrier = null)
 		{
+			if (owner == null) { return; }	// 伤害必须依赖攻击者 不然需要让子弹存储攻击者属性 按需求调整即可
 			FP attack = owner.GetComponent<PropComponent>().Get(NumericType.Atk);
 			if (param.Length > 0)
 			{

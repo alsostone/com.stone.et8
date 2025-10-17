@@ -36,9 +36,7 @@ namespace ET
                 TSVector position = new TSVector(agent.position.x, transformComponent.Position.y, agent.position.y);
                 if (TSVector.SqrDistance(transformComponent.Position, position) > FP.EN4)
                 {
-                    TSVector position2 = transformComponent.Position;
                     transformComponent.Position = position;
-                    transformComponent.Forward = position - position2;
                 }
             }
         }
@@ -51,7 +49,7 @@ namespace ET
             PropComponent propComponent = lsUnit.GetComponent<PropComponent>();
             FP speed = propComponent.Get(NumericType.Speed);
             
-            self.RVO2Simulator.addAgent(position, speed * 2, 10, 10.0f, 10.0f, propComponent.Radius, speed, TSVector2.zero, false, lsUnit.Id);
+            self.RVO2Simulator.addAgent(position, 3, 6, 4, 8, propComponent.Radius, speed, TSVector2.zero, false, lsUnit.Id);
         }
         
         public static void AddStaticAgent(this LSRVO2Component self, LSUnit lsUnit)
