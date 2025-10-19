@@ -39,6 +39,16 @@ namespace ST.GridBuilder
             return transform.TransformDirection(v2.ToVector3());
         }
         
+        // A* Pathfinding from start to to
+        // results: index list of path, use GetPosition(index.x, index.z) to convert to world position
+        public void Pathfinding(Vector3 start, Vector3 to, List<IndexV2> results)
+        {
+            Vector3 position = transform.position;
+            start = transform.InverseTransformDirection(start - position);
+            to = transform.InverseTransformDirection(to - position);
+            gridData.Pathfinding(start.ToFieldV2(), to.ToFieldV2(), results);
+        }
+        
         public Vector3 RaycastPosition(Vector3 pos)
         {
             Transform tsf = transform;
