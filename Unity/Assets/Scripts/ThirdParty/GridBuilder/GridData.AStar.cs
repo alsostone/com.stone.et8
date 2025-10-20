@@ -9,11 +9,17 @@ namespace ST.GridBuilder
         [MemoryPackIgnore] private PriorityQueue<CellData, int> frontier = new ();
         [MemoryPackIgnore] private HashSet<CellData> visited = new ();
         
+        private static readonly (int x, int z)[] Directions = 
+        {
+            (-1, 0), (1, 0), (0, -1), (0, 1), // Orthogonal directions
+            (-1, -1), (1, -1), (-1, 1), (1, 1) // Diagonal directions
+        };
+        
         public bool Pathfinding(FieldV2 start, FieldV2 to, List<IndexV2> results)
         {
             results.Clear();
 
-            IndexV2 startIndex = ConvertToIndex(start);
+            IndexV2 startIndex = GetValidDest(ConvertToIndex(start));
             CellData startCell = GetCell(startIndex.x, startIndex.z);
             if (startCell == null || startCell.IsFill) {
                 return false;
@@ -44,57 +50,24 @@ namespace ST.GridBuilder
                     break;
                 }
                 
-                int cost = current.distance + 1;
-                if (current.index.x > 0) {
-                    CellData neighbour = cells[current.index.x - 1 + current.index.z * xLength];
-                    if (!neighbour.IsFill) {
-                        if (neighbour.distance > cost) {
-                            neighbour.distance = cost;
-                            neighbour.prev = current;
-                        }
-                        if (!visited.Contains(neighbour)) {
-                            frontier.Enqueue(neighbour, cost + Heuristic(neighbour, dest));
-                            visited.Add(neighbour);
-                        }
+                foreach (var (dx, dz) in Directions) {
+                    int nx = current.index.x + dx;
+                    int nz = current.index.z + dz;
+                    if (nx < 0 || nx >= xLength || nz < 0 || nz >= zLength) {
+                        continue;
                     }
-                }
-                if (current.index.x < xLength - 1) {
-                    CellData neighbour = cells[current.index.x + 1 + current.index.z * xLength];
-                    if (!neighbour.IsFill) {
-                        if (neighbour.distance > cost) {
-                            neighbour.distance = cost;
-                            neighbour.prev = current;
-                        }
-                        if (!visited.Contains(neighbour)) {
-                            frontier.Enqueue(neighbour, cost + Heuristic(neighbour, dest));
-                            visited.Add(neighbour);
-                        }
+
+                    CellData neighbour = cells[nx + nz * xLength];
+                    if (neighbour.IsFill || visited.Contains(neighbour)) {
+                        continue;
                     }
-                }
-                if (current.index.z > 0) {
-                    CellData neighbour = cells[current.index.x + (current.index.z - 1) * xLength];
-                    if (!neighbour.IsFill) {
-                        if (neighbour.distance > cost) {
-                            neighbour.distance = cost;
-                            neighbour.prev = current;
-                        }
-                        if (!visited.Contains(neighbour)) {
-                            frontier.Enqueue(neighbour, cost + Heuristic(neighbour, dest));
-                            visited.Add(neighbour);
-                        }
-                    }
-                }
-                if (current.index.z < zLength - 1) {
-                    CellData neighbour = cells[current.index.x + (current.index.z + 1) * xLength];
-                    if (!neighbour.IsFill) {
-                        if (neighbour.distance > cost) {
-                            neighbour.distance = cost;
-                            neighbour.prev = current;
-                        }
-                        if (!visited.Contains(neighbour)) {
-                            frontier.Enqueue(neighbour, cost + Heuristic(neighbour, dest));
-                            visited.Add(neighbour);
-                        }
+
+                    int cost = current.distance + ((dx == 0 || dz == 0) ? 10000 : 14142); // Orthogonal or diagonal cost
+                    if (neighbour.distance > cost) {
+                        neighbour.distance = cost;
+                        neighbour.prev = current;
+                        frontier.Enqueue(neighbour, cost + Heuristic(neighbour, dest) * 10000);
+                        visited.Add(neighbour);
                     }
                 }
             }

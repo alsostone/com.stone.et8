@@ -39,7 +39,7 @@ namespace ET
             if (gridMapComponent.Pathfinding(transformComponent.Position, pos, self.PathPoints))
             {
                 // 成功找到路径，终点位置修正为目标位置
-                self.PathPoints[^1] = pos;
+                self.PathPoints[^1] = gridMapComponent.ClampPosition(pos);
             }
 
             // 忽略起点位置，使用当前位置为起点

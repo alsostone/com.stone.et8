@@ -92,6 +92,17 @@ namespace ET
             return false;
         }
 
+        // 限制位置在网格范围内
+        // 使用时机：为确保移动到目标点，寻路完成后把最后一个点替换成目标点（此时需要限制目标点在网格内，不然就走出界外了）
+        public static TSVector ClampPosition(this LSGridMapComponent self, TSVector position)
+        {
+            FP offset = self.GridData.cellSize * FP.Half;    // 偏移0.5能有效避免在边缘的抖动
+            position = TSQuaternion.Inverse(self.GridRotation) * (position - self.GridPosition);
+            position.x = TSMath.Clamp(position.x, offset, self.GridData.cellSize * self.GridData.xLength - offset);
+            position.z = TSMath.Clamp(position.z, offset, self.GridData.cellSize * self.GridData.zLength - offset);
+            return self.GridPosition + self.GridRotation * position;
+        }
+
         public static TSVector GetPutPosition(this LSGridMapComponent self, PlacementData placementData)
         {self.LSRoom()?.ProcessLog.LogFunction(78, self.LSParent().Id);
             int level = self.GridData.GetPointLevelCount(placementData.x, placementData.z, placementData);

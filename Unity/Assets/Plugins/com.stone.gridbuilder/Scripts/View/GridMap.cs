@@ -13,7 +13,8 @@ namespace ST.GridBuilder
         [SerializeField, Min(0.01f)] public float yHeight = 0.01f;
 
         [SerializeField, HideInInspector] public GridData gridData = new();
-        [NonSerialized, HideInInspector] public GridData gridDataDraw = null;
+        [NonSerialized] public GridData gridDataDraw = null;
+        [NonSerialized] private readonly List<IndexV2> pathPoints = new();
         
         public Quaternion GetGridRotation()
         {
@@ -39,14 +40,40 @@ namespace ST.GridBuilder
             return transform.TransformDirection(v2.ToVector3());
         }
         
-        // A* Pathfinding from start to to
-        // results: index list of path, use GetPosition(index.x, index.z) to convert to world position
-        public void Pathfinding(Vector3 start, Vector3 to, List<IndexV2> results)
+        public bool Pathfinding(Vector3 start, Vector3 to, List<Vector3> results)
         {
+            results.Clear();
+            
             Vector3 position = transform.position;
             start = transform.InverseTransformDirection(start - position);
             to = transform.InverseTransformDirection(to - position);
-            gridData.Pathfinding(start.ToFieldV2(), to.ToFieldV2(), results);
+            
+            // 寻路成功后，将路径点转换为世界坐标
+            if (gridData.Pathfinding(start.ToFieldV2(), to.ToFieldV2(), pathPoints))
+            {
+                int size = gridData.cellSize;
+                foreach (IndexV2 indexV2 in pathPoints)
+                {
+                    float x = (indexV2.x + 0.5f) * size;
+                    float z = (indexV2.z + 0.5f) * size;
+                    Vector3 pos = position + transform.TransformDirection(new Vector3(x, start.y, z));
+                    results.Add(pos);
+                }
+                return true;
+            }
+            
+            return false;
+        }
+        
+        // 限制位置在网格范围内
+        // 使用时机：为确保移动到目标点，寻路完成后把最后一个点替换成目标点（此时需要限制目标点在网格内，不然就走出界外了）
+        public Vector3 ClampPosition(Vector3 position)
+        {
+            float offset = gridData.cellSize * 0.5f;    // 偏移0.5能有效避免在边缘的抖动
+            position = transform.InverseTransformDirection(position - transform.position);
+            position.x = Math.Clamp(position.x, offset, gridData.cellSize * gridData.xLength - offset);
+            position.z = Math.Clamp(position.z, offset, gridData.cellSize * gridData.zLength - offset);
+            return transform.TransformDirection(position);
         }
         
         public Vector3 RaycastPosition(Vector3 pos)
