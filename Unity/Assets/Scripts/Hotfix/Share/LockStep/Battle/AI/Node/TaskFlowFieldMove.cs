@@ -25,8 +25,8 @@ namespace ET
         public override void OnTimerReached()
         {
             LSUnit lsUnit = Agent as LSUnit;
-            FieldMoveComponent fieldMoveComponent = lsUnit.GetComponent<FieldMoveComponent>();
-            fieldMoveComponent.DoMove();
+            MoveFlowFieldComponent flowFieldComponent = lsUnit.GetComponent<MoveFlowFieldComponent>();
+            flowFieldComponent.DoMove();
         }
     }
 }

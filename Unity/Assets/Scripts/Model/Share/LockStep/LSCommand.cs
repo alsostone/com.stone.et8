@@ -8,6 +8,7 @@ namespace ET
     {
         Invalid,        // 无效指令
         Move,           // 移动
+        RightDown,      // 鼠标右键按下
         PlacementDragStart,      // 拖拽开始
         PlacementDrag,           // 拖拽
         PlacementDragEnd,        // 拖拽结束

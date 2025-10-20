@@ -16,6 +16,12 @@ namespace ET.Client
         private static void Update(this LSOperaDragComponent self)
         {
 #if UNITY_STANDALONE || UNITY_EDITOR
+            if (Input.GetMouseButtonDown(1))
+            {
+                if (UnityEngine.EventSystems.EventSystem.current.IsPointerOverGameObject())
+                    return;
+                self.OnRightTouchDown(Input.mousePosition);
+            }
             if (Input.GetMouseButtonDown(0))
             {
                 if (UnityEngine.EventSystems.EventSystem.current.IsPointerOverGameObject())
@@ -74,6 +80,14 @@ namespace ET.Client
             if (Input.GetKeyDown(KeyCode.R))
             {
                 self.RotatePlacementObject(1);
+            }
+        }
+        
+        private static void OnRightTouchDown(this LSOperaDragComponent self, Vector3 touchPosition)
+        {
+            if (self.RaycastTerrain(touchPosition, out Vector3 pos)) {
+                var command = LSCommand.GenCommandFloat2(0, OperateCommandType.RightDown, pos.x, pos.z);
+                self.Room().SendCommandMeesage(command);
             }
         }
         

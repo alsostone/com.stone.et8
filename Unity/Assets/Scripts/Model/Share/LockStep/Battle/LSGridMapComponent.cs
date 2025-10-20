@@ -2,6 +2,7 @@
 using MongoDB.Bson.Serialization.Attributes;
 using ST.GridBuilder;
 using TrueSync;
+using System.Collections.Generic;
 
 namespace ET
 {
@@ -22,5 +23,9 @@ namespace ET
 		[MemoryPackIgnore]
 		[BsonIgnore]
 		public TSQuaternion GridRotation;
+		
+		[MemoryPackIgnore]
+		[BsonIgnore]
+		public List<IndexV2> PathPoints;
 	}
 }

@@ -93,6 +93,7 @@ namespace ET
 			lsUnit.AddComponent<BuffComponent>();
 			lsUnit.AddComponent<BeHitComponent>();
 			lsUnit.AddComponent<SkillComponent, int[], int[]>(row.NormalSkills, row.ActiveSkills);
+			lsUnit.AddComponent<MovePathFindingComponent>();
 			
 			EventSystem.Instance.Publish(lsWorld, new LSUnitCreate() {LSUnit = lsUnit});
             return lsUnit;
@@ -121,7 +122,7 @@ namespace ET
 	        lsUnit.AddComponent<BeHitComponent>();
 	        lsUnit.AddComponent<SkillComponent, int[], int[]>(row.Skills, null);
 	        
-	        lsUnit.AddComponent<FieldMoveComponent>();
+	        lsUnit.AddComponent<MoveFlowFieldComponent>();
 	        lsUnit.AddComponent<AIRootComponent, Node>(AIAutoAttackCenter.Gen());
 			
 	        EventSystem.Instance.Publish(lsWorld, new LSUnitCreate() {LSUnit = lsUnit});

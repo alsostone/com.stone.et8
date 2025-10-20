@@ -46,6 +46,15 @@ namespace ET
                     commands.Enqueue(command);
                     break;
                 }
+                case OperateCommandType.RightDown:
+                {
+                    // 鼠标按下指令 只保留最新的
+                    var commands = self.FramesCommandsMove[index];
+                    if (commands.Count > 0)
+                        commands.Dequeue();
+                    commands.Enqueue(command);
+                    break;
+                }
                 case OperateCommandType.PlacementDragStart:
                 {
                     // 指令DragStart新来时，移除缓存的DragStart和Drag

@@ -16,107 +16,118 @@ namespace ET
         [LSEntitySystem]
         private static void LSUpdate(this LSCommandsRunComponent self)
         {
-            LSUnit lsPlayer = self.LSOwner();
             foreach (var command in self.Commands)
             {
                 switch (LSCommand.ParseCommandType(command))
                 {
                     case OperateCommandType.Move:
-                        {
-                            self.MoveAxis = LSCommand.ParseCommandFloat2(command);
-                            break;
-                        }
+                    {
+                        self.IsRightDownMove = false;
+                        self.GetBindUnitComponent<MovePathFindingComponent>()?.Stop();
+                        self.MoveAxis = LSCommand.ParseCommandFloat2(command);
+                        break;
+                    }
+                    case OperateCommandType.RightDown:
+                    {
+                        self.IsRightDownMove = true;
+                        TSVector2 pos = LSCommand.ParseCommandFloat2(command);
+                        self.GetBindUnitComponent<MovePathFindingComponent>()?.PathFinding(pos);
+                        break;
+                    }
                     case OperateCommandType.PlacementDragStart:
-                        {
-                            long targetId = (long)LSCommand.ParseCommandLong(command);
-                            lsPlayer.GetComponent<LSGridBuilderComponent>().RunCommandPlacementDragStart(targetId);
-                            break;
-                        }
+                    {
+                        long targetId = (long)LSCommand.ParseCommandLong(command);
+                        self.LSOwner().GetComponent<LSGridBuilderComponent>().RunCommandPlacementDragStart(targetId);
+                        break;
+                    }
                     case OperateCommandType.PlacementDrag:
-                        {
-                            TSVector2 pos = LSCommand.ParseCommandFloat2(command);
-                            lsPlayer.GetComponent<LSGridBuilderComponent>().RunCommandPlacementDrag(pos);
-                            break;
-                        }
+                    {
+                        TSVector2 pos = LSCommand.ParseCommandFloat2(command);
+                        self.LSOwner().GetComponent<LSGridBuilderComponent>().RunCommandPlacementDrag(pos);
+                        break;
+                    }
                     case OperateCommandType.PlacementDragEnd:
-                        {
-                            TSVector2 pos = LSCommand.ParseCommandFloat2(command);
-                            lsPlayer.GetComponent<LSGridBuilderComponent>().RunCommandPlacementDragEnd(pos);
-                            break;
-                        }
+                    {
+                        TSVector2 pos = LSCommand.ParseCommandFloat2(command);
+                        self.LSOwner().GetComponent<LSGridBuilderComponent>().RunCommandPlacementDragEnd(pos);
+                        break;
+                    }
                     case OperateCommandType.PlacementStart:
-                        {
-                            long itemId = (long)LSCommand.ParseCommandLong(command);
-                            lsPlayer.GetComponent<LSGridBuilderComponent>().RunCommandPlacementStart(itemId);
-                            break;
-                        }
+                    {
+                        long itemId = (long)LSCommand.ParseCommandLong(command);
+                        self.LSOwner().GetComponent<LSGridBuilderComponent>().RunCommandPlacementStart(itemId);
+                        break;
+                    }
                     case OperateCommandType.Button:
-                        {
-                            self.RunCommandButton(lsPlayer, command);
-                            break;
-                        }
+                    {
+                        self.RunCommandButton(command);
+                        break;
+                    }
 #if ENABLE_DEBUG
                     case OperateCommandType.Gm:
-                        {
-                            self.RunCommandGm(lsPlayer, command);
-                            break;
-                        }
+                    {
+                        self.RunCommandGm(command);
+                        break;
+                    }
 #endif
                 }
             }
             self.Commands.Clear();
-            self.GetBindUnitComponent<TransformComponent>(lsPlayer)?.Move(self.MoveAxis);
+            
+            // 非右键点击移动时执行普通移动
+            if (!self.IsRightDownMove) {
+                self.GetBindUnitComponent<TransformComponent>()?.Move(self.MoveAxis);
+            }
         }
 
-        private static void RunCommandButton(this LSCommandsRunComponent self, LSUnit lsPlayer, LSCommandData command)
+        private static void RunCommandButton(this LSCommandsRunComponent self, LSCommandData command)
         {
-            TeamType teamPlacer = lsPlayer.GetComponent<TeamComponent>().Type;
             (CommandButtonType, long) button = LSCommand.ParseCommandButton(command);
             switch (button.Item1)
             {
                 case CommandButtonType.PlacementRotate:
-                    lsPlayer.GetComponent<LSGridBuilderComponent>().RunCommandPlacementRotate((int)button.Item2);
+                    self.LSOwner().GetComponent<LSGridBuilderComponent>().RunCommandPlacementRotate((int)button.Item2);
                     break;
                 case CommandButtonType.PlacementCancel:
-                    lsPlayer.GetComponent<LSGridBuilderComponent>().RunCommandPlacementCancel();
+                    self.LSOwner().GetComponent<LSGridBuilderComponent>().RunCommandPlacementCancel();
                     break;
                 case CommandButtonType.CardSelect:
-                    lsPlayer.GetComponent<CardSelectComponent>().TrySelectCard((int)button.Item2);
+                    self.LSOwner().GetComponent<CardSelectComponent>().TrySelectCard((int)button.Item2);
                     break;
                 case CommandButtonType.Attack:
-                    self.GetBindUnitComponent<SkillComponent>(lsPlayer)?.TryCastSkill(ESkillType.Normal);
+                    self.GetBindUnitComponent<SkillComponent>()?.TryCastSkill(ESkillType.Normal);
                     break;
                 case CommandButtonType.Skill1:
-                    self.GetBindUnitComponent<SkillComponent>(lsPlayer)?.TryCastSkill(ESkillType.Active, 0);
+                    self.GetBindUnitComponent<SkillComponent>()?.TryCastSkill(ESkillType.Active, 0);
                     break;
                 case CommandButtonType.Skill2:
-                    self.GetBindUnitComponent<SkillComponent>(lsPlayer)?.TryCastSkill(ESkillType.Active, 1);
+                    self.GetBindUnitComponent<SkillComponent>()?.TryCastSkill(ESkillType.Active, 1);
                     break;
                 default: break;
             }
         }
         
 #if ENABLE_DEBUG
-        private static void RunCommandGm(this LSCommandsRunComponent self, LSUnit lsPlayer, LSCommandData command)
+        private static void RunCommandGm(this LSCommandsRunComponent self, LSCommandData command)
         {
             (CommandGMType, long) gm = LSCommand.ParseCommandGm(command);
             switch (gm.Item1)
             {
                 case CommandGMType.Victory:
                 {
-                    TeamType team = lsPlayer.GetComponent<TeamComponent>().GetFriendTeam();
+                    TeamType team = self.LSOwner().GetComponent<TeamComponent>().GetFriendTeam();
                     self.LSWorld().GetComponent<LSGameOverComponent>().SetGameOver(team);
                     break;
                 }
                 case CommandGMType.Failure:
                 {
-                    TeamType team = lsPlayer.GetComponent<TeamComponent>().GetEnemyTeam();
+                    TeamType team = self.LSOwner().GetComponent<TeamComponent>().GetEnemyTeam();
                     self.LSWorld().GetComponent<LSGameOverComponent>().SetGameOver(team);
                     break;
                 }
                 case CommandGMType.CardSelect:
                 {
-                    CardSelectComponent selectComponent = lsPlayer.GetComponent<CardSelectComponent>();
+                    CardSelectComponent selectComponent = self.LSOwner().GetComponent<CardSelectComponent>();
                     selectComponent.RandomCards((int)gm.Item2);
                     break;
                 }
@@ -124,9 +135,9 @@ namespace ET
         }
 #endif
         
-        private static T GetBindUnitComponent<T>(this LSCommandsRunComponent self, LSUnit player) where T : LSEntity
+        private static T GetBindUnitComponent<T>(this LSCommandsRunComponent self) where T : LSEntity
         {
-            PlayerComponent lsPlayerComponent = player.GetComponent<PlayerComponent>();
+            PlayerComponent lsPlayerComponent = self.LSOwner().GetComponent<PlayerComponent>();
             if (lsPlayerComponent.BindEntityId == 0)
                 return null;
             

@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using MemoryPack;
 using ST.GridBuilder;
 using TrueSync;
@@ -14,6 +15,7 @@ namespace ET
         {self.LSRoom()?.ProcessLog.LogFunction(82, self.LSParent().Id);
             self.GridName = gridName;
             self.ResetGridData(FileComponent.Instance.Load(gridName));
+            self.PathPoints = new List<IndexV2>();
         }
         
         [EntitySystem]
@@ -64,6 +66,30 @@ namespace ET
             position = TSQuaternion.Inverse(self.GridRotation) * (position - self.GridPosition);
             FieldV2 v2 = self.GridData.GetFieldVector(new FieldV2(position.x, position.z));
             return self.GridRotation * new TSVector(v2.x, 0, v2.z);
+        }
+        
+        public static bool Pathfinding(this LSGridMapComponent self, TSVector start, TSVector to, List<TSVector> results)
+        {
+            results.Clear();
+            
+            start = TSQuaternion.Inverse(self.GridRotation) * (start - self.GridPosition);
+            to = TSQuaternion.Inverse(self.GridRotation) * (to - self.GridPosition);
+            
+            // 寻路成功后，将路径点转换为世界坐标
+            if (self.GridData.Pathfinding(new FieldV2(start.x, start.z), new FieldV2(to.x, to.z), self.PathPoints))
+            {
+                int size = self.GridData.cellSize;
+                foreach (IndexV2 indexV2 in self.PathPoints)
+                {
+                    FP x = (indexV2.x + FP.Half) * size;
+                    FP z = (indexV2.z + FP.Half) * size;
+                    TSVector pos = self.GridPosition + self.GridRotation * new TSVector(x, start.y, z);
+                    results.Add(pos);
+                }
+                return true;
+            }
+            
+            return false;
         }
 
         public static TSVector GetPutPosition(this LSGridMapComponent self, PlacementData placementData)

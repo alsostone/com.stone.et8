@@ -10,5 +10,6 @@ namespace ET
     {
         public TSVector2 MoveAxis { get; set; }
         public List<LSCommandData> Commands { get; set; } = new ();
+        public bool IsRightDownMove { get; set; }
     }
 }
