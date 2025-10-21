@@ -32,52 +32,16 @@ namespace ET.Client
             // 而且由于表现层拖拽表现未发生改变也就不会闪烁，不处理回滚更优。
         }
         
-        public static void OnPlacementDragStart(this LSViewGridBuilderComponent self, long targetId)
+        public static void OnTouchDragStart(this LSViewGridBuilderComponent self, TSVector2 position)
         {
-            self.OnPlacementCancel();
-
-            LSUnitViewComponent unitViewComponent = self.Room().GetComponent<LSUnitViewComponent>();
-            LSUnitView lsUnitView = unitViewComponent.GetChild<LSUnitView>(targetId);
-            Placement placement = lsUnitView?.GetComponent<LSViewPlacementComponent>()?.Placement;
-            if (placement == null)
-                return;
-            
-            LSViewGridMapComponent gridMapComponent = self.Room().GetComponent<LSViewGridMapComponent>();
-            if (!gridMapComponent.GridMap.gridData.CanTake(placement.placementData)) {
-                placement.DoShake();
-                return;
-            }
-
-            lsUnitView.GetComponent<LSViewTransformComponent>().SetTransformEnabled(false);
-            self.DragPlacement = placement;
-            self.DragUnitView = lsUnitView;
-            self.DragPlacement.SetPreviewMaterial();
-            self.DragOffset = new Vector3(0, float.MaxValue, 0);
-            
-            self.Fiber().UIEvent(new OnCardDragStartEvent() { PlayerId = self.LSViewOwner().Id }).Coroutine();
+            self.DragStartPosition = new(position.x.AsFloat(), 0, position.y.AsFloat());
+            self.TrySetPlacementDragPosition(self.DragStartPosition);
         }
 
-        public static void OnPlacementDrag(this LSViewGridBuilderComponent self, TSVector2 position)
+        public static void OnTouchDrag(this LSViewGridBuilderComponent self, TSVector2 position)
         {
             Vector3 pos = new(position.x.AsFloat(), 0, position.y.AsFloat());
-            if (self.DragPlacement)
-            {
-                LSViewGridMapComponent gridMapComponent = self.Room().GetComponent<LSViewGridMapComponent>();
-                GridMap gridMap = gridMapComponent.GridMap;
-                
-                // 第一个拖拽消息到达，记录偏移（因为单指令携带信息有限，本应在DragStart时记录）
-                if (Math.Abs(self.DragOffset.y - float.MaxValue) < float.Epsilon) {
-                    self.DragOffset = self.DragPlacement.GetPosition() - pos;
-                }
-                
-                IndexV2 index = gridMap.ConvertToIndex(pos + self.DragOffset);
-                int targetLevel = gridMap.gridData.GetShapeLevelCount(index.x, index.z, self.DragPlacement.placementData);
-                self.DragPlacement.SetPosition(gridMap.GetLevelPosition(index.x, index.z, targetLevel, self.DragPlacement.takeHeight));
-                
-                if (gridMapComponent.GridMapIndicator) {
-                    gridMapComponent.GridMapIndicator.GenerateIndicator(index.x, index.z, targetLevel, self.DragPlacement.placementData);
-                }
-            }
+            if (self.TrySetPlacementDragPosition(pos)) { }
             else if (self.DragItemRow != null)
             {
                 List<SearchUnit> targets = ObjectPool.Instance.Fetch<List<SearchUnit>>();
@@ -91,10 +55,36 @@ namespace ET.Client
             self.Fiber().UIEvent(new OnCardDragEvent() { PlayerId = self.LSViewOwner().Id, Position = pos }).Coroutine();
         }
 
-        public static void OnPlacementDragEnd(this LSViewGridBuilderComponent self)
+        public static void OnTouchDragEnd(this LSViewGridBuilderComponent self)
         {
             // 这里恢复原状即可 放置结果由逻辑层处理并通知给表现层
             self.OnPlacementCancel();
+        }
+
+        public static void OnPlacementDragStart(this LSViewGridBuilderComponent self, long targetId)
+        {
+            self.OnPlacementCancel();
+            
+            LSUnitViewComponent unitViewComponent = self.Room().GetComponent<LSUnitViewComponent>();
+            LSUnitView lsUnitView = unitViewComponent.GetChild<LSUnitView>(targetId);
+            Placement placement = lsUnitView?.GetComponent<LSViewPlacementComponent>()?.Placement;
+            if (placement == null)
+                return;
+            
+            LSViewGridMapComponent gridMapComponent = self.Room().GetComponent<LSViewGridMapComponent>();
+            if (!gridMapComponent.GridMap.gridData.CanTake(placement.placementData)) {
+                placement.DoShake();
+                return;
+            }
+            
+            lsUnitView.GetComponent<LSViewTransformComponent>().SetTransformEnabled(false);
+            self.DragPlacement = placement;
+            self.DragUnitView = lsUnitView;
+            self.DragPlacement.SetPreviewMaterial();
+            self.DragOffset = self.DragPlacement.GetPosition() - self.DragStartPosition;
+            self.TrySetPlacementDragPosition(self.DragStartPosition);
+            
+            self.Fiber().UIEvent(new OnCardDragStartEvent() { PlayerId = self.LSViewOwner().Id }).Coroutine();
         }
 
         public static void OnPlacementStart(this LSViewGridBuilderComponent self, long itemId)
@@ -179,7 +169,7 @@ namespace ET.Client
                     ResourcesPoolComponent poolComponent = self.Room().GetComponent<ResourcesPoolComponent>();
                     poolComponent.Recycle(self.DragPlacement.gameObject);
                 } else {
-                    LSUnitView lsUnitView = (LSUnitView)self.DragUnitView;
+                    LSUnitView lsUnitView = self.DragUnitView;
                     lsUnitView?.GetComponent<LSViewTransformComponent>().SetTransformEnabled(true);
                 }
                 self.DragPlacement = null;
@@ -198,6 +188,25 @@ namespace ET.Client
             
             self.Fiber().UIEvent(new OnCardDragEndEvent() { PlayerId = self.LSViewOwner().Id }).Coroutine();
         }
+        
+        private static bool TrySetPlacementDragPosition(this LSViewGridBuilderComponent self, Vector3 position)
+        {
+            if (self.DragPlacement)
+            {
+                LSViewGridMapComponent gridMapComponent = self.Room().GetComponent<LSViewGridMapComponent>();
+                GridMap gridMap = gridMapComponent.GridMap;
+                
+                IndexV2 index = gridMap.ConvertToIndex(position + self.DragOffset);
+                int targetLevel = gridMap.gridData.GetShapeLevelCount(index.x, index.z, self.DragPlacement.placementData);
+                self.DragPlacement.SetPosition(gridMap.GetLevelPosition(index.x, index.z, targetLevel, self.DragPlacement.takeHeight));
+                
+                if (gridMapComponent.GridMapIndicator) {
+                    gridMapComponent.GridMapIndicator.GenerateIndicator(index.x, index.z, targetLevel, self.DragPlacement.placementData);
+                }
+                return true;
+            }
 
+            return false;
+        }
     }
 }

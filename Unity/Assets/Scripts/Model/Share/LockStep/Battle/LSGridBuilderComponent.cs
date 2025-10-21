@@ -11,5 +11,6 @@ namespace ET
         public int PlacementRotation;
         public long PlacementItemId;
         public TSVector2 PlacementDragOffset;
+        public TSVector2 DragStartPosition;
     }
 }

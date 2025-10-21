@@ -27,29 +27,35 @@ namespace ET
                         self.MoveAxis = LSCommand.ParseCommandFloat2(command);
                         break;
                     }
-                    case OperateCommandType.RightDown:
+                    case OperateCommandType.MoveTo:
                     {
                         self.IsRightDownMove = true;
                         TSVector2 pos = LSCommand.ParseCommandFloat2(command);
                         self.GetBindUnitComponent<MovePathFindingComponent>()?.PathFinding(pos);
                         break;
                     }
+                    case OperateCommandType.TouchDragStart:
+                    {
+                        TSVector2 pos = LSCommand.ParseCommandFloat2(command);
+                        self.LSOwner().GetComponent<LSGridBuilderComponent>().RunCommandTouchDragStart(pos);
+                        break;
+                    }
+                    case OperateCommandType.TouchDrag:
+                    {
+                        TSVector2 pos = LSCommand.ParseCommandFloat2(command);
+                        self.LSOwner().GetComponent<LSGridBuilderComponent>().RunCommandTouchDrag(pos);
+                        break;
+                    }
+                    case OperateCommandType.TouchDragEnd:
+                    {
+                        TSVector2 pos = LSCommand.ParseCommandFloat2(command);
+                        self.LSOwner().GetComponent<LSGridBuilderComponent>().RunCommandTouchDragEnd(pos);
+                        break;
+                    }
                     case OperateCommandType.PlacementDragStart:
                     {
                         long targetId = (long)LSCommand.ParseCommandLong(command);
                         self.LSOwner().GetComponent<LSGridBuilderComponent>().RunCommandPlacementDragStart(targetId);
-                        break;
-                    }
-                    case OperateCommandType.PlacementDrag:
-                    {
-                        TSVector2 pos = LSCommand.ParseCommandFloat2(command);
-                        self.LSOwner().GetComponent<LSGridBuilderComponent>().RunCommandPlacementDrag(pos);
-                        break;
-                    }
-                    case OperateCommandType.PlacementDragEnd:
-                    {
-                        TSVector2 pos = LSCommand.ParseCommandFloat2(command);
-                        self.LSOwner().GetComponent<LSGridBuilderComponent>().RunCommandPlacementDragEnd(pos);
                         break;
                     }
                     case OperateCommandType.PlacementStart:

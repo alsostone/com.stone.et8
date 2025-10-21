@@ -12,29 +12,19 @@ namespace ET
         {
         }
 
-        public static void RunCommandPlacementDragStart(this LSGridBuilderComponent self, long targetId)
-        {self.LSRoom()?.ProcessLog.LogFunction(76, self.LSParent().Id);
-            self.ClearPlacementData();
-            
-            self.PlacementTargetId = targetId;
-            EventSystem.Instance.Publish(self.LSWorld(), new LSPlacementDragStart() { Id = self.LSOwner().Id, TargetId = targetId });
+        public static void RunCommandTouchDragStart(this LSGridBuilderComponent self, TSVector2 position)
+        {
+            self.DragStartPosition = position;
+            EventSystem.Instance.Publish(self.LSWorld(), new LSTouchDragStart() { Id = self.LSOwner().Id, Position = position });
         }
 
-        public static void RunCommandPlacementDrag(this LSGridBuilderComponent self, TSVector2 position)
-        {self.LSRoom()?.ProcessLog.LogFunction(75, self.LSParent().Id);
-            // 第一个拖拽消息到达，记录偏移（因为单指令携带信息有限，本应在DragStart时记录）
-            if (self.PlacementTargetId > 0 && FP.MaxValue.Equals(self.PlacementDragOffset.y)) {
-                LSUnitComponent lsUnitComponent = self.LSWorld().GetComponent<LSUnitComponent>();
-                TransformComponent transformComponent = lsUnitComponent.GetChild<LSUnit>(self.PlacementTargetId)?.GetComponent<TransformComponent>();
-                self.PlacementDragOffset = transformComponent != null
-                        ? new TSVector2(transformComponent.Position.x - position.x, transformComponent.Position.z - position.y)
-                        : new TSVector2(0, 0);
-            }
-            EventSystem.Instance.Publish(self.LSWorld(), new LSPlacementDrag() { Id = self.LSOwner().Id, Position = position });
+        public static void RunCommandTouchDrag(this LSGridBuilderComponent self, TSVector2 position)
+        {
+            EventSystem.Instance.Publish(self.LSWorld(), new LSTouchDrag() { Id = self.LSOwner().Id, Position = position });
         }
 
-        public static void RunCommandPlacementDragEnd(this LSGridBuilderComponent self, TSVector2 position)
-        {self.LSRoom()?.ProcessLog.LogFunction(74, self.LSParent().Id);
+        public static void RunCommandTouchDragEnd(this LSGridBuilderComponent self, TSVector2 position)
+        {
             LSWorld lsWorld = self.LSWorld();
             LSUnit lsOwner = self.LSOwner();
             position += self.PlacementDragOffset;
@@ -81,7 +71,21 @@ namespace ET
                 }
             }
             self.ClearPlacementData();
-            EventSystem.Instance.Publish(lsWorld, new LSPlacementDragEnd() { Id = lsOwner.Id });
+            EventSystem.Instance.Publish(lsWorld, new LSTouchDragEnd() { Id = lsOwner.Id });
+        }
+
+        public static void RunCommandPlacementDragStart(this LSGridBuilderComponent self, long targetId)
+        {
+            self.ClearPlacementData();
+            
+            // 拖拽已有单位时需要计算偏移量
+            LSUnitComponent lsUnitComponent = self.LSWorld().GetComponent<LSUnitComponent>();
+            TransformComponent transformComponent = lsUnitComponent.GetChild<LSUnit>(targetId)?.GetComponent<TransformComponent>();
+            self.PlacementDragOffset = transformComponent != null
+                    ? new TSVector2(transformComponent.Position.x - self.DragStartPosition.x, transformComponent.Position.z - self.DragStartPosition.y)
+                    : new TSVector2(0, 0);
+            self.PlacementTargetId = targetId;
+            EventSystem.Instance.Publish(self.LSWorld(), new LSPlacementDragStart() { Id = self.LSOwner().Id, TargetId = targetId });
         }
 
         public static void RunCommandPlacementStart(this LSGridBuilderComponent self, long itemId)

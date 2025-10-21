@@ -1,4 +1,3 @@
-using ST.GridBuilder;
 using UnityEngine;
 
 namespace ET.Client
@@ -27,10 +26,8 @@ namespace ET.Client
                 if (UnityEngine.EventSystems.EventSystem.current.IsPointerOverGameObject())
                     return;
                 self.isMouseDraging = true;
+                self.mousePosition = Input.mousePosition;
                 self.OnTouchBegin(Input.mousePosition);
-                
-                // 若已是建造状态，点击场景时就要把预览物体移动到点击位置
-                self.OnTouchMove(Input.mousePosition);
             }
             else if (self.isMouseDraging)
             {
@@ -39,8 +36,9 @@ namespace ET.Client
                     self.OnTouchEnd(Input.mousePosition);
                     self.isMouseDraging = false;
                 }
-                else
+                else if (self.mousePosition != Input.mousePosition)
                 {
+                    self.mousePosition = Input.mousePosition;
                     self.OnTouchMove(Input.mousePosition);
                 }
             }
@@ -58,11 +56,8 @@ namespace ET.Client
                         continue;
                     self.dragFingerId = touch.fingerId;
                     self.OnTouchBegin(touch.position);
-
-                    // 若已是建造状态，点击场景时就要把预览物体移动到点击位置
-                    self.OnTouchMove(touch.position);
                 }
-                else if (touch.fingerId == self.dragFingerId && (touch.phase == TouchPhase.Moved || touch.phase == TouchPhase.Stationary))
+                else if (touch.fingerId == self.dragFingerId && touch.phase == TouchPhase.Moved)
                 {
                     self.OnTouchMove(touch.position);
                 }
@@ -86,24 +81,50 @@ namespace ET.Client
         private static void OnRightTouchDown(this LSOperaDragComponent self, Vector3 touchPosition)
         {
             if (self.RaycastTerrain(touchPosition, out Vector3 pos)) {
-                var command = LSCommand.GenCommandFloat2(0, OperateCommandType.RightDown, pos.x, pos.z);
+                var command = LSCommand.GenCommandFloat2(0, OperateCommandType.MoveTo, pos.x, pos.z);
                 self.Room().SendCommandMeesage(command);
             }
         }
         
+        private static async ETTask ScanTouchLongPress(this LSOperaDragComponent self, Vector3 touchPosition)
+        {
+            self.longTouchPreesToken = new ETCancellationToken();
+            await self.Root().GetComponent<TimerComponent>().WaitAsync(600, self.longTouchPreesToken);
+            if (self.longTouchPreesToken.IsCancel()) {
+                return;
+            }
+            if (Vector3.Distance(touchPosition, self.mousePosition) > 10f) {
+                return;
+            }
+            if (self.RaycastTarget(touchPosition, out GameObject target))
+            {
+                LSUnitView lsUnitView = target.GetComponent<LSUnitViewBehaviour>()?.LSUnitView;
+                if (lsUnitView != null) {
+                    var command = LSCommand.GenCommandLong(0, OperateCommandType.PlacementDragStart, lsUnitView.Id);
+                    self.Room().SendCommandMeesage(command);
+                    self.isDraging = true;
+                }
+            }
+        }
+
         private static void OnTouchBegin(this LSOperaDragComponent self, Vector3 touchPosition)
         {
             if (!self.isDraging)
             {
-                if (self.RaycastTarget(touchPosition, out GameObject target))
+                if (self.RaycastTerrain(touchPosition, out Vector3 pos2))
                 {
-                    LSUnitView lsUnitView = target.GetComponent<LSUnitViewBehaviour>()?.LSUnitView;
-                    if (lsUnitView != null) {
-                        var command = LSCommand.GenCommandLong(0, OperateCommandType.PlacementDragStart, lsUnitView.Id);
-                        self.Room().SendCommandMeesage(command);
-                        self.isDraging = true;
-                    }
+                    var command = LSCommand.GenCommandFloat2(0, OperateCommandType.TouchDragStart, pos2.x, pos2.z);
+                    self.Room().SendCommandMeesage(command);
+                    self.isDraging = true;
                 }
+                self.longTouchPreesToken?.Cancel();
+                self.ScanTouchLongPress(touchPosition).Coroutine();
+            }
+            else if (self.RaycastTerrain(touchPosition, out Vector3 pos))
+            {
+                // 若已是建造状态，点击场景时就要把预览物体移动到点击位置 所以发送一个拖拽中
+                var command = LSCommand.GenCommandFloat2(0, OperateCommandType.TouchDrag, pos.x, pos.z);
+                self.Room().SendCommandMeesage(command);
             }
         }
 
@@ -112,7 +133,7 @@ namespace ET.Client
             if (self.isDraging)
             {
                 if (self.RaycastTerrain(touchPosition, out Vector3 pos)) {
-                    var command = LSCommand.GenCommandFloat2(0, OperateCommandType.PlacementDrag, pos.x, pos.z);
+                    var command = LSCommand.GenCommandFloat2(0, OperateCommandType.TouchDrag, pos.x, pos.z);
                     self.Room().SendCommandMeesage(command);
                 }
             }
@@ -129,7 +150,7 @@ namespace ET.Client
             {
                 if (self.RaycastTerrain(touchPosition, out Vector3 pos))
                 {
-                    var command = LSCommand.GenCommandFloat2(0, OperateCommandType.PlacementDragEnd, pos.x, pos.z);
+                    var command = LSCommand.GenCommandFloat2(0, OperateCommandType.TouchDragEnd, pos.x, pos.z);
                     self.Room().SendCommandMeesage(command);
                 }
                 else
@@ -139,6 +160,7 @@ namespace ET.Client
                 }
                 self.isDraging = false;
                 self.isOutsideDraging = false;
+                self.longTouchPreesToken?.Cancel();
             }
         }
         

@@ -46,47 +46,43 @@ namespace ET
                     commands.Enqueue(command);
                     break;
                 }
-                case OperateCommandType.RightDown:
+                case OperateCommandType.MoveTo:
                 {
                     // 鼠标按下指令 只保留最新的
                     var commands = self.FramesCommandsMove[index];
-                    if (commands.Count > 0)
-                        commands.Dequeue();
+                    commands.Clear();
                     commands.Enqueue(command);
                     break;
                 }
-                case OperateCommandType.PlacementDragStart:
+                case OperateCommandType.TouchDragStart:
                 {
                     // 指令DragStart新来时，移除缓存的DragStart和Drag
                     var commands = self.FramesCommandsDrag[index];
                     for (int i = commands.Count - 1; i >= 0; i++) {
                         OperateCommandType cmdType = (OperateCommandType)((commands[i].Header >> 16) & 0xFF);
-                        if (cmdType == OperateCommandType.PlacementDragStart || cmdType == OperateCommandType.PlacementDrag)
+                        if (cmdType == OperateCommandType.TouchDragStart || cmdType == OperateCommandType.TouchDrag)
                             commands.RemoveAt(i);
                     }
                     commands.Add(command);
                     break;
                 }
-                case OperateCommandType.PlacementDrag:
-                case OperateCommandType.PlacementDragEnd:
+                case OperateCommandType.TouchDrag:
+                case OperateCommandType.TouchDragEnd:
                 {
                     // 指令Drag和DragEnd新来时，移除缓存的Drag
                     var commands = self.FramesCommandsDrag[index];
                     for (int i = commands.Count - 1; i >= 0; i--) {
                         OperateCommandType cmdType = (OperateCommandType)((commands[i].Header >> 16) & 0xFF);
-                        if (cmdType == OperateCommandType.PlacementDrag)
+                        if (cmdType == OperateCommandType.TouchDrag)
                             commands.RemoveAt(i);
                     }
                     commands.Add(command);
                     break;
                 }
+                case OperateCommandType.PlacementDragStart:
                 case OperateCommandType.PlacementStart:
                 {
-                    // 开始放置时，移除缓存的拖拽指令和常规指令
                     var commands = self.FramesCommandsDrag[index];
-                    commands.Clear();
-                    commands = self.FramesCommandsNormal[index];
-                    commands.Clear();
                     commands.Add(command);
                     break;
                 }

@@ -10,5 +10,6 @@ namespace ET.Client
 		public TbItemRow DragItemRow;
 		public EntityRef<LSUnitView> DragUnitView;
 		public Vector3 DragOffset;
+		public Vector3 DragStartPosition;
 	}
 }
