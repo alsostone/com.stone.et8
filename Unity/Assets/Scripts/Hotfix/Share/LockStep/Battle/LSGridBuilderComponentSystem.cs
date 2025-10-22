@@ -14,7 +14,10 @@ namespace ET
 
         public static void RunCommandTouchDragStart(this LSGridBuilderComponent self, TSVector2 position)
         {
-            self.DragStartPosition = position;
+            SelectionComponent selectionComponent = self.LSOwner().GetComponent<SelectionComponent>();
+            selectionComponent.ClearSelection();
+            
+            self.DragStartPosition = new TSVector(position.x, 0, position.y);
             EventSystem.Instance.Publish(self.LSWorld(), new LSTouchDragStart() { Id = self.LSOwner().Id, Position = position });
         }
 
@@ -27,12 +30,12 @@ namespace ET
         {
             LSWorld lsWorld = self.LSWorld();
             LSUnit lsOwner = self.LSOwner();
-            position += self.PlacementDragOffset;
-            
+
+            TSVector positionV3 = new(position.x, 0, position.y);
             if (self.PlacementTargetId > 0)
             {
                 LSGridMapComponent lsGridMapComponent = lsWorld.GetComponent<LSGridMapComponent>();
-                IndexV2 index = lsGridMapComponent.ConvertToIndex(new TSVector(position.x, 0, position.y));
+                IndexV2 index = lsGridMapComponent.ConvertToIndex(positionV3 + self.PlacementDragOffset);
                 GridData gridData = lsGridMapComponent.GetGridData();
                 
                 LSUnitComponent lsUnitComponent = lsWorld.GetComponent<LSUnitComponent>();
@@ -54,21 +57,27 @@ namespace ET
                 if (item != null)
                 {
                     TeamType teamType = lsOwner.GetComponent<TeamComponent>().Type;
-                    TSVector pos = new(position.x, 0, position.y);
                     bool isOk = false;
                     if (item.Type == EUnitType.Block) {
-                        isOk = null != LSUnitFactory.CreateBlock(lsWorld, item.TableId, pos, self.PlacementRotation * 90, teamType);
+                        isOk = null != LSUnitFactory.CreateBlock(lsWorld, item.TableId, positionV3, self.PlacementRotation * 90, teamType);
                     }
                     else if (item.Type == EUnitType.Building) {
-                        isOk = null != LSUnitFactory.CreateBuilding(lsWorld, item.TableId, pos, self.PlacementRotation * 90, teamType);
+                        isOk = null != LSUnitFactory.CreateBuilding(lsWorld, item.TableId, positionV3, self.PlacementRotation * 90, teamType);
                     }
                     else if (item.Type == EUnitType.Item) {
-                        isOk = ItemExecutor.TryExecute(lsOwner, pos, item.TableId);
+                        isOk = ItemExecutor.TryExecute(lsOwner, positionV3, item.TableId);
                     }
                     if (isOk) {
                         bagComponent.RemoveItem(self.PlacementItemId);
                     }
                 }
+            }
+            else
+            {
+                SelectionComponent selectionComponent = lsOwner.GetComponent<SelectionComponent>();
+                TSBounds bounds = new TSBounds();
+                bounds.SetMinMax(TSVector.Min(self.DragStartPosition, positionV3), TSVector.Max(self.DragStartPosition, positionV3));
+                selectionComponent.SelectUnitsInBounds(bounds);
             }
             self.ClearPlacementData();
             EventSystem.Instance.Publish(lsWorld, new LSTouchDragEnd() { Id = lsOwner.Id });
@@ -81,9 +90,7 @@ namespace ET
             // 拖拽已有单位时需要计算偏移量
             LSUnitComponent lsUnitComponent = self.LSWorld().GetComponent<LSUnitComponent>();
             TransformComponent transformComponent = lsUnitComponent.GetChild<LSUnit>(targetId)?.GetComponent<TransformComponent>();
-            self.PlacementDragOffset = transformComponent != null
-                    ? new TSVector2(transformComponent.Position.x - self.DragStartPosition.x, transformComponent.Position.z - self.DragStartPosition.y)
-                    : new TSVector2(0, 0);
+            self.PlacementDragOffset = transformComponent != null ? transformComponent.Position - self.DragStartPosition : TSVector.zero;
             self.PlacementTargetId = targetId;
             EventSystem.Instance.Publish(self.LSWorld(), new LSPlacementDragStart() { Id = self.LSOwner().Id, TargetId = targetId });
         }
@@ -97,7 +104,7 @@ namespace ET
             CardBagComponent bagComponent = lsOwner.GetComponent<CardBagComponent>();
             if (bagComponent.HasItem(itemId)) {
                 self.PlacementItemId = itemId;
-                self.PlacementDragOffset = new TSVector2(0, 0);
+                self.PlacementDragOffset = TSVector.zero;
             }
             EventSystem.Instance.Publish(self.LSWorld(), new LSPlacementStart() { Id = lsOwner.Id, ItemId = itemId });
         }
@@ -121,7 +128,7 @@ namespace ET
             self.PlacementTargetId = 0;
             self.PlacementRotation = 0;
             self.PlacementItemId = 0;
-            self.PlacementDragOffset = new TSVector2(FP.MaxValue, FP.MaxValue);
+            self.PlacementDragOffset = TSVector.zero;
         }
     }
 }

@@ -7,6 +7,6 @@ namespace ET
     [MemoryPackable]
     public partial class TypeComponent : LSEntity, IAwake<EUnitType>, ISerializeToEntity
     {
-        public EUnitType Type;
+        public EUnitType Type { get; set; }
     }
 }

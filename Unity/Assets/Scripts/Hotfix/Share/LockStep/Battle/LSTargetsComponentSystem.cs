@@ -74,5 +74,30 @@ namespace ET
                 return targets.Count;
             return 0;
         }
+
+        public static void GetAttackTargets(this LSTargetsComponent self, TeamType teamFlag, EUnitType type, TSBounds bounds, List<long> results)
+        {
+            if (self.TeamLSUnitsMap.TryGetValue(teamFlag, out var targets))
+            {
+                for(int i = targets.Count - 1; i >= 0; i--)
+                {
+                    LSUnit target = targets[i];
+                    if (target == null || target.DeadMark > 0) {
+                        targets.RemoveAt(i);
+                        continue;
+                    }
+                    if (target.Active && (target.GetComponent<TypeComponent>().Type & type) != 0)
+                    {
+                        TSVector point = target.GetComponent<TransformComponent>().Position;
+                        TSVector min = bounds.min;
+                        TSVector max = bounds.max;
+                        if (min.x <= point.x && max.x >= point.x && min.z <= point.z && max.z >= point.z)
+                        {
+                            results.Add(target.Id);
+                        }
+                    }
+                }
+            }
+        }
     }
 }

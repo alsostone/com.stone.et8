@@ -43,6 +43,7 @@ namespace ET.Client
             LSUnitView lsUnitView = viewComponent.AddChildWithId<LSUnitView, GameObject>(lsUnit.Id, null);
             lsUnitView.AddComponent<LSViewPlayerComponent, long>(playerComponent.BindEntityId);
             lsUnitView.AddComponent<LSViewGridBuilderComponent>();
+            lsUnitView.AddComponent<LSViewSelectionComponent>();
             
             lsUnitView.AddComponent<LSViewCardBagComponent>();
             lsUnitView.AddComponent<LSViewCardSelectComponent>();
