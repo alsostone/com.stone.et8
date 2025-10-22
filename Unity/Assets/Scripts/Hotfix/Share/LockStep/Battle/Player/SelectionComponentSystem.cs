@@ -24,6 +24,7 @@ namespace ET
         public static void ClearSelection(this SelectionComponent self)
         {
             self.SelectedUnitIds.Clear();
+            EventSystem.Instance.Publish(self.LSWorld(), new LSSelectionChanged() { Id = self.LSOwner().Id, SelectionIds = self.SelectedUnitIds });
         }
         
         public static void MoveToPosition(this SelectionComponent self, TSVector2 position)
