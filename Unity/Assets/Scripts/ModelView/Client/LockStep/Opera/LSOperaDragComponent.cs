@@ -3,7 +3,7 @@ using UnityEngine;
 namespace ET.Client
 {
     [ComponentOf(typeof(Room))]
-    public class LSOperaDragComponent: Entity, IAwake, IUpdate
+    public class LSOperaDragComponent: Entity, IAwake, IUpdate, IDestroy
     {
         public float raycastDistance = 100.0f;
         public LayerMask terrainMask = 1 << LayerMask.NameToLayer("Map");

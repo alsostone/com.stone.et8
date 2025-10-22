@@ -133,6 +133,7 @@ namespace ET.Client
                 case EUnitType.Item:
                 {
                     self.DragItemRow = TbItem.Instance.Get(item.TableId);
+                    self.Fiber().UIEvent(new UICardDragStartEvent() { PlayerId = self.LSViewOwner().Id }).Coroutine();
                     self.Fiber().UIEvent(new UIArrowDragStartEvent() { PlayerId = self.LSViewOwner().Id, ItemId = itemId }).Coroutine();
                     break;
                 }
@@ -200,6 +201,7 @@ namespace ET.Client
             {
                 // TODO: 取消物品使用目标高亮
                 self.DragItemRow = null;
+                self.Fiber().UIEvent(new UICardDragEndEvent() { PlayerId = self.LSViewOwner().Id }).Coroutine();
                 self.Fiber().UIEvent(new UIArrowDragEndEvent() { PlayerId = self.LSViewOwner().Id }).Coroutine();
             }
             else if (self.IsSelectDragging)

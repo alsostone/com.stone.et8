@@ -77,7 +77,14 @@ namespace ET.Client
                 self.RotatePlacementObject(1);
             }
         }
-        
+
+        [EntitySystem]
+        private static void Destroy(this LSOperaDragComponent self)
+        {
+            self.longTouchPreesToken?.Cancel();
+            self.longTouchPreesToken = null;
+        }
+
         private static void OnRightTouchDown(this LSOperaDragComponent self, Vector3 touchPosition)
         {
             if (self.RaycastTerrain(touchPosition, out Vector3 pos)) {
@@ -91,8 +98,11 @@ namespace ET.Client
             self.longTouchPreesToken = new ETCancellationToken();
             await self.Root().GetComponent<TimerComponent>().WaitAsync(600, self.longTouchPreesToken);
             if (self.longTouchPreesToken.IsCancel()) {
+                self.longTouchPreesToken = null;
                 return;
             }
+            self.longTouchPreesToken.Cancel();
+            self.longTouchPreesToken = null;
             if (Vector3.Distance(touchPosition, self.mousePosition) > 10f) {
                 return;
             }
@@ -118,6 +128,7 @@ namespace ET.Client
                     self.isDraging = true;
                 }
                 self.longTouchPreesToken?.Cancel();
+                self.longTouchPreesToken = null;
                 self.ScanTouchLongPress(touchPosition).Coroutine();
             }
             else if (self.RaycastTerrain(touchPosition, out Vector3 pos))
@@ -161,6 +172,7 @@ namespace ET.Client
                 self.isDraging = false;
                 self.isOutsideDraging = false;
                 self.longTouchPreesToken?.Cancel();
+                self.longTouchPreesToken = null;
             }
         }
         
