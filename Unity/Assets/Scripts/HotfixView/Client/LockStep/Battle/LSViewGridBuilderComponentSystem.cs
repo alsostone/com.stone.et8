@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using ST.GridBuilder;
 using TrueSync;
@@ -35,13 +34,28 @@ namespace ET.Client
         public static void OnTouchDragStart(this LSViewGridBuilderComponent self, TSVector2 position)
         {
             self.DragStartPosition = new(position.x.AsFloat(), 0, position.y.AsFloat());
-            self.TrySetPlacementDragPosition(self.DragStartPosition);
+            if (self.DragPlacement)
+            {
+                self.SetPlacementDragPosition(self.DragStartPosition);
+            }
+            else if (self.DragItemRow != null)
+            {
+                // nothing to do
+            }
+            else
+            {
+                self.IsSelectDragging = true;
+                self.Fiber().UIEvent(new UISelectDragStartEvent() { PlayerId = self.LSViewOwner().Id, Position = self.DragStartPosition }).Coroutine();
+            }
         }
 
         public static void OnTouchDrag(this LSViewGridBuilderComponent self, TSVector2 position)
         {
             Vector3 pos = new(position.x.AsFloat(), 0, position.y.AsFloat());
-            if (self.TrySetPlacementDragPosition(pos)) { }
+            if (self.DragPlacement)
+            {
+                self.SetPlacementDragPosition(pos);
+            }
             else if (self.DragItemRow != null)
             {
                 List<SearchUnit> targets = ObjectPool.Instance.Fetch<List<SearchUnit>>();
@@ -50,9 +64,13 @@ namespace ET.Client
                 
                 targets.Clear();
                 ObjectPool.Instance.Recycle(targets);
+                
+                self.Fiber().UIEvent(new UIArrowDragEvent() { PlayerId = self.LSViewOwner().Id, Position = pos }).Coroutine();
             }
-
-            self.Fiber().UIEvent(new OnCardDragEvent() { PlayerId = self.LSViewOwner().Id, Position = pos }).Coroutine();
+            else if (self.IsSelectDragging)
+            {
+                self.Fiber().UIEvent(new UISelectDragEvent() { PlayerId = self.LSViewOwner().Id, Position = pos }).Coroutine();
+            }
         }
 
         public static void OnTouchDragEnd(this LSViewGridBuilderComponent self)
@@ -82,9 +100,9 @@ namespace ET.Client
             self.DragUnitView = lsUnitView;
             self.DragPlacement.SetPreviewMaterial();
             self.DragOffset = self.DragPlacement.GetPosition() - self.DragStartPosition;
-            self.TrySetPlacementDragPosition(self.DragStartPosition);
+            self.SetPlacementDragPosition(self.DragStartPosition);
             
-            self.Fiber().UIEvent(new OnCardDragStartEvent() { PlayerId = self.LSViewOwner().Id }).Coroutine();
+            self.Fiber().UIEvent(new UICardDragStartEvent() { PlayerId = self.LSViewOwner().Id }).Coroutine();
         }
 
         public static void OnPlacementStart(this LSViewGridBuilderComponent self, long itemId)
@@ -95,32 +113,29 @@ namespace ET.Client
             CardBagItem item = viewCardBagComponent.GetItem(itemId);
             if (item == null)
                 return;
-
-            bool isPreviewOk = false;
+            
             switch (item.Type)
             {
                 case EUnitType.Block:
                 {
                     TbBlockRow row = TbBlock.Instance.Get(item.TableId);
-                    isPreviewOk = self.CreatePlacementPreview(row.Model);
+                    if (self.CreatePlacementPreview(row.Model))
+                        self.Fiber().UIEvent(new UICardDragStartEvent() { PlayerId = self.LSViewOwner().Id }).Coroutine();
                     break;
                 }
                 case EUnitType.Building:
                 {
                     TbBuildingRow row = TbBuilding.Instance.Get(item.TableId);
-                    isPreviewOk = self.CreatePlacementPreview(row.Model);
+                    if (self.CreatePlacementPreview(row.Model))
+                        self.Fiber().UIEvent(new UICardDragStartEvent() { PlayerId = self.LSViewOwner().Id }).Coroutine();
                     break;
                 }
                 case EUnitType.Item:
                 {
                     self.DragItemRow = TbItem.Instance.Get(item.TableId);
-                    isPreviewOk = true;
+                    self.Fiber().UIEvent(new UIArrowDragStartEvent() { PlayerId = self.LSViewOwner().Id, ItemId = itemId }).Coroutine();
                     break;
                 }
-            }
-
-            if (isPreviewOk) {
-                self.Fiber().UIEvent(new OnCardDragStartEvent() { PlayerId = self.LSViewOwner().Id, ItemId = itemId }).Coroutine();
             }
         }
 
@@ -179,34 +194,33 @@ namespace ET.Client
                 if (gridMapComponent.GridMapIndicator) {
                     gridMapComponent.GridMapIndicator.ClearIndicator();
                 }
+                self.Fiber().UIEvent(new UICardDragEndEvent() { PlayerId = self.LSViewOwner().Id }).Coroutine();
             }
             else if (self.DragItemRow != null)
             {
                 // TODO: 取消物品使用目标高亮
                 self.DragItemRow = null;
+                self.Fiber().UIEvent(new UIArrowDragEndEvent() { PlayerId = self.LSViewOwner().Id }).Coroutine();
             }
-            
-            self.Fiber().UIEvent(new OnCardDragEndEvent() { PlayerId = self.LSViewOwner().Id }).Coroutine();
+            else if (self.IsSelectDragging)
+            {
+                self.IsSelectDragging = false;
+                self.Fiber().UIEvent(new UISelectDragEndEvent() { PlayerId = self.LSViewOwner().Id }).Coroutine();
+            }
         }
         
-        private static bool TrySetPlacementDragPosition(this LSViewGridBuilderComponent self, Vector3 position)
+        private static void SetPlacementDragPosition(this LSViewGridBuilderComponent self, Vector3 position)
         {
-            if (self.DragPlacement)
-            {
-                LSViewGridMapComponent gridMapComponent = self.Room().GetComponent<LSViewGridMapComponent>();
-                GridMap gridMap = gridMapComponent.GridMap;
-                
-                IndexV2 index = gridMap.ConvertToIndex(position + self.DragOffset);
-                int targetLevel = gridMap.gridData.GetShapeLevelCount(index.x, index.z, self.DragPlacement.placementData);
-                self.DragPlacement.SetPosition(gridMap.GetLevelPosition(index.x, index.z, targetLevel, self.DragPlacement.takeHeight));
-                
-                if (gridMapComponent.GridMapIndicator) {
-                    gridMapComponent.GridMapIndicator.GenerateIndicator(index.x, index.z, targetLevel, self.DragPlacement.placementData);
-                }
-                return true;
+            LSViewGridMapComponent gridMapComponent = self.Room().GetComponent<LSViewGridMapComponent>();
+            GridMap gridMap = gridMapComponent.GridMap;
+            
+            IndexV2 index = gridMap.ConvertToIndex(position + self.DragOffset);
+            int targetLevel = gridMap.gridData.GetShapeLevelCount(index.x, index.z, self.DragPlacement.placementData);
+            self.DragPlacement.SetPosition(gridMap.GetLevelPosition(index.x, index.z, targetLevel, self.DragPlacement.takeHeight));
+            
+            if (gridMapComponent.GridMapIndicator) {
+                gridMapComponent.GridMapIndicator.GenerateIndicator(index.x, index.z, targetLevel, self.DragPlacement.placementData);
             }
-
-            return false;
         }
     }
 }

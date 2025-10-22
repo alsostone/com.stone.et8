@@ -10,7 +10,10 @@ namespace ET.Client
     /// Date    2025.3.6
     /// Desc
     /// </summary>
-    public partial class PlayViewComponent: Entity, IUpdate, IYIUIEvent<OnCardDragStartEvent>, IYIUIEvent<OnCardDragEvent>, IYIUIEvent<OnCardDragEndEvent>, IYIUIEvent<OnCardViewResetEvent>, IYIUIEvent<OnCardSelectResetEvent>
+    public partial class PlayViewComponent: Entity, IUpdate, IYIUIEvent<OnCardViewResetEvent>, IYIUIEvent<OnCardSelectResetEvent>, 
+            IYIUIEvent<UICardDragStartEvent>, IYIUIEvent<UICardDragEndEvent>,
+            IYIUIEvent<UIArrowDragStartEvent>, IYIUIEvent<UIArrowDragEvent>, IYIUIEvent<UIArrowDragEndEvent>,
+            IYIUIEvent<UISelectDragStartEvent>, IYIUIEvent<UISelectDragEvent>, IYIUIEvent<UISelectDragEndEvent>
     {
         public string SaveName;
         public int PredictFrame = 0;
@@ -18,28 +21,58 @@ namespace ET.Client
         public List<List<LSRandomDropItem>> CachedCards;
         public YIUIListView<PlayCardItemComponent> CardsView;
         
-        public bool IsDragging = false;
-        public Vector3 DragStartPosition;
+        public bool IsArrowDragging = false;
+        public Vector3 ArrowDragStartPosition;
         public Dictionary<Transform, Image> CachedBodyImages = new Dictionary<Transform, Image>();
+        
+        public Vector3 SelectDragStartPosition;
     }
     
-    public struct OnCardDragStartEvent
+    public struct UICardDragStartEvent
+    {
+        public long PlayerId;
+    }
+    
+    public struct UICardDragEndEvent
+    {
+        public long PlayerId;
+    }
+    
+    public struct UIArrowDragStartEvent
     {
         public long PlayerId;
         public long ItemId;
     }
     
-    public struct OnCardDragEvent
+    public struct UIArrowDragEvent
     {
         public long PlayerId;
         public Vector3 Position;
     }
     
-    public struct OnCardDragEndEvent
+    public struct UIArrowDragEndEvent
     {
         public long PlayerId;
     }
+
+    public struct UISelectDragStartEvent
+    {
+        public long PlayerId;
+        public Vector3 Position;
+    }
     
+    public struct UISelectDragEvent
+    {
+        public long PlayerId;
+        public Vector3 Position;
+    }
+    
+    public struct UISelectDragEndEvent
+    {
+        public long PlayerId;
+        public Vector3 Position;
+    }
+
     public struct OnCardViewResetEvent
     {
         public long PlayerId;

@@ -23,7 +23,7 @@ namespace ET.Client
         }
         
         [EntitySystem]
-        private static async ETTask YIUIEvent(this PlayCardItemComponent self, OnCardDragEndEvent message)
+        private static async ETTask YIUIEvent(this PlayCardItemComponent self, UICardDragEndEvent message)
         {
             await ETTask.CompletedTask;
             if (message.PlayerId == self.Room().LookPlayerId) {

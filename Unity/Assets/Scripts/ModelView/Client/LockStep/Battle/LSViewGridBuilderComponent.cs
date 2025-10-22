@@ -11,5 +11,6 @@ namespace ET.Client
 		public EntityRef<LSUnitView> DragUnitView;
 		public Vector3 DragOffset;
 		public Vector3 DragStartPosition;
+		public bool IsSelectDragging = false;
 	}
 }

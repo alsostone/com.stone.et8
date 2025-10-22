@@ -26,6 +26,7 @@ namespace ET.Client
         public UnityEngine.RectTransform u_ComArrowIndicator;
         public UnityEngine.RectTransform u_ComArrowBody;
         public UnityEngine.RectTransform u_ComArrowBodyView;
+        public UnityEngine.RectTransform u_ComSelectIndicator;
         public YIUIFramework.UIDataValueString u_DataPredictFrame;
         public YIUIFramework.UIDataValueString u_DataSelectCount;
         public UIEventP0 u_EventSaveReplay;

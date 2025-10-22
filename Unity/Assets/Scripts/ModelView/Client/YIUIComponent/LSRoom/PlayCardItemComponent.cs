@@ -7,7 +7,7 @@ namespace ET.Client
     /// Date    2025.9.16
     /// Desc
     /// </summary>
-    public partial class PlayCardItemComponent: Entity, IYIUIEvent<OnCardDragEndEvent>, IYIUIEvent<OnCardItemHighlightEvent>
+    public partial class PlayCardItemComponent: Entity, IYIUIEvent<UICardDragEndEvent>, IYIUIEvent<OnCardItemHighlightEvent>
     {
         public CardBagItem ItemData { get; set; }
         public Vector3 Position { get; set; }
