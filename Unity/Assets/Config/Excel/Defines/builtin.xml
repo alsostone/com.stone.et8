@@ -159,6 +159,16 @@
         <var name="NotMove" alias="禁止移动" value="1"/>
         <var name="NotAttack" alias="禁止普通技能" value="2"/>
         <var name="NotActive" alias="禁止主动技能" value="4"/>
+        <var name="NotAIAlert" alias="禁止AI警戒" value="8"/>
+    </enum>
+
+    <enum name="FlagLabel" comment="普通标签" unique="FALSE">
+        <var name="None" alias="" value="0"/>
+        <var name="Count1" alias="数量1" value="1"/>
+        <var name="Count2" alias="数量2" value="2"/>
+        <var name="Count3" alias="数量3" value="3"/>
+        <var name="Count4" alias="数量4" value="4"/>
+        <var name="Count5" alias="数量5" value="5"/>
     </enum>
     
     <enum name="LockStepMode" comment="帧同步模式" unique="FALSE">

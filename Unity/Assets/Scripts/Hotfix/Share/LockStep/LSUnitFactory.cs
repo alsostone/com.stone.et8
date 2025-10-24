@@ -94,7 +94,7 @@ namespace ET
 			lsUnit.AddComponent<BuffComponent>();
 			lsUnit.AddComponent<BeHitComponent>();
 			lsUnit.AddComponent<SkillComponent, int[], int[]>(row.NormalSkills, row.ActiveSkills);
-			lsUnit.AddComponent<MovePathFindingComponent>();
+			lsUnit.AddComponent<MovePathFindingComponent, bool>(false);
 			
 			EventSystem.Instance.Publish(lsWorld, new LSUnitCreate() {LSUnit = lsUnit});
             return lsUnit;
@@ -122,10 +122,16 @@ namespace ET
 	        lsUnit.AddComponent<BuffComponent>();
 	        lsUnit.AddComponent<BeHitComponent>();
 	        lsUnit.AddComponent<SkillComponent, int[], int[]>(row.Skills, null);
-	        
-	        lsUnit.AddComponent<MoveFlowFieldComponent>();
-	        lsUnit.AddComponent<AIRootComponent, Node>(AIAutoAttackCenter.Gen());
-			
+
+	        // 我方怪物需要玩家控制才移动，敌方怪物由AI驱动移动
+	        if (teamType == TeamType.TeamA) {
+		        lsUnit.AddComponent<MovePathFindingComponent, bool>(true);
+		        lsUnit.AddComponent<AIRootComponent, Node>(AIAutoAttack.Gen());
+	        } else {
+		        lsUnit.AddComponent<MoveFlowFieldComponent>();
+		        lsUnit.AddComponent<AIRootComponent, Node>(AIAutoAttackCenter.Gen());
+	        }
+
 	        EventSystem.Instance.Publish(lsWorld, new LSUnitCreate() {LSUnit = lsUnit});
 	        return lsUnit;
         }

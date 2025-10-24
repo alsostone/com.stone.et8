@@ -10,10 +10,11 @@ namespace ET
             return new ServiceAwareness(FP.Half, FP.EN1,
                 new Selector(
                     
-                    new BlackboardBool(AIConstValue.HasEnemy, Operator.IS_EQUAL, true, Stops.IMMEDIATE_RESTART, 
+                    new BlackboardBool(AIConstValue.IsStateOfAlert, Operator.IS_EQUAL, true, Stops.IMMEDIATE_RESTART, 
                         new Repeater(
                             new Selector(
                                 new RequestAttack(),
+                                new RequestMoveToTarget(),
                                 new WaitSecond(FP.Half)
                             )
                         )

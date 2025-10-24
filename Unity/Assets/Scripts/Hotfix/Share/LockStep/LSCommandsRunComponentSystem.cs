@@ -31,7 +31,7 @@ namespace ET
                     {
                         self.IsRightDownMove = true;
                         TSVector2 pos = LSCommand.ParseCommandFloat2(command);
-                        self.LSOwner().GetComponent<SelectionComponent>().MoveToPosition(pos);
+                        self.LSOwner().GetComponent<SelectionComponent>().MoveToPosition(pos, false);
                         break;
                     }
                     case OperateCommandType.TouchDragStart:

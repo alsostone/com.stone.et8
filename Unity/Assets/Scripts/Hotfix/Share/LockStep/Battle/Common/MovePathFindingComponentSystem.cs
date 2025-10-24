@@ -9,8 +9,9 @@ namespace ET
     public static partial class MovePathFindingComponentSystem
     {
         [EntitySystem]
-        private static void Awake(this MovePathFindingComponent self)
+        private static void Awake(this MovePathFindingComponent self, bool isUseRVO)
         {
+            self.IsUseRVO = isUseRVO;
             self.PathPoints = new List<TSVector>();
         }
         
@@ -20,17 +21,27 @@ namespace ET
             if (self.PathPoints.Count > self.CurrentPathIndex)
             {
                 TransformComponent transformComponent = self.LSOwner().GetComponent<TransformComponent>();
-                TSVector dir = self.PathPoints[self.CurrentPathIndex] - transformComponent.Position;
-                transformComponent.Move(new TSVector2(dir.x, dir.z));
-
-                TSVector dir2 = self.PathPoints[self.CurrentPathIndex] - transformComponent.Position;
-                if (dir2.sqrMagnitude < FP.EN4 || TSVector.Dot(dir, dir2) <= 0) {
+                TSVector targetDir = self.PathPoints[self.CurrentPathIndex] - self.PathPoints[self.CurrentPathIndex - 1];
+                TSVector currentDir = self.PathPoints[self.CurrentPathIndex] - transformComponent.Position;
+                if (currentDir.sqrMagnitude < FP.EN4 || TSVector.Dot(targetDir, currentDir) <= 0)
+                {
                     self.CurrentPathIndex++;
+                    if (self.CurrentPathIndex >= self.PathPoints.Count) {
+                        self.Stop();
+                    }
+                }
+                
+                // 放在后面是因为RVO移动不能立即改变位置，需要等下一帧才能获取到最新位置
+                if (self.IsUseRVO) {
+                    transformComponent.RVOMove(new TSVector2(targetDir.x, targetDir.z));
+                } else {
+                    transformComponent.Move(new TSVector2(targetDir.x, targetDir.z));
                 }
             }
         }
         
-        public static void PathFinding(this MovePathFindingComponent self, TSVector2 position)
+        // isCanInterrupt 是否可以被打断，如果不可以被打断，则在移动过程中不会进入AI警戒状态
+        public static void PathFinding(this MovePathFindingComponent self, TSVector2 position, bool isCanInterrupt)
         {
             LSGridMapComponent gridMapComponent = self.LSWorld().GetComponent<LSGridMapComponent>();
             TransformComponent transformComponent = self.LSOwner().GetComponent<TransformComponent>();
@@ -40,6 +51,10 @@ namespace ET
             {
                 // 成功找到路径，终点位置修正为目标位置
                 self.PathPoints[^1] = gridMapComponent.ClampPosition(pos);
+                if (!isCanInterrupt && !self.IsRefrenceNotAIAlert) {
+                    self.IsRefrenceNotAIAlert = true;
+                    self.LSOwner().GetComponent<FlagComponent>().AddRestrict((int)FlagRestrict.NotAIAlert);
+                }
             }
 
             // 忽略起点位置，使用当前位置为起点
@@ -48,8 +63,14 @@ namespace ET
         
         public static void Stop(this MovePathFindingComponent self)
         {
-            self.PathPoints.Clear();
-            self.CurrentPathIndex = 0;
+            if (self.PathPoints.Count > 0) {
+                self.PathPoints.Clear();
+                self.CurrentPathIndex = 0;
+            }
+            if (self.IsRefrenceNotAIAlert) {
+                self.LSOwner().GetComponent<FlagComponent>().RemoveRestrict((int)FlagRestrict.NotAIAlert);
+                self.IsRefrenceNotAIAlert = false;
+            }
         }
     }
 }

@@ -10,32 +10,36 @@
 namespace ET
 {
     /// <summary>
-    /// 禁止标签
+    /// 普通标签
     /// </summary>
-    [System.Flags]
-    public enum FlagRestrict
+    public enum FlagLabel
     {
         None = 0,
 
         /// <summary>
-        /// 禁止移动
+        /// 数量1
         /// </summary>
-        NotMove = 1,
+        Count1 = 1,
 
         /// <summary>
-        /// 禁止普通技能
+        /// 数量2
         /// </summary>
-        NotAttack = 2,
+        Count2 = 2,
 
         /// <summary>
-        /// 禁止主动技能
+        /// 数量3
         /// </summary>
-        NotActive = 4,
+        Count3 = 3,
 
         /// <summary>
-        /// 禁止AI警戒
+        /// 数量4
         /// </summary>
-        NotAIAlert = 8,
+        Count4 = 4,
+
+        /// <summary>
+        /// 数量5
+        /// </summary>
+        Count5 = 5,
 
     }
 }

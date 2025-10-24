@@ -17,13 +17,27 @@ namespace ET
         {
             LSUnit lsUnit = Agent as LSUnit;
             
-            List<SearchUnit> targets = ObjectPool.Instance.Fetch<List<SearchUnit>>();
-            TargetSearcher.Search(AIConstValue.AwarenessSearchEnemy, lsUnit, targets);
-            this.Blackboard.SetBool(AIConstValue.HasEnemy, targets.Count > 0);
-            this.Blackboard.SetInt(AIConstValue.HasEnemyCount, targets.Count);
-            this.Blackboard.SetLong(AIConstValue.HasEnemyEntityId, targets.Count > 0 ? targets[0].Target.Id : 0);
-            targets.Clear();
-            ObjectPool.Instance.Recycle(targets);
+            if (lsUnit.GetComponent<FlagComponent>().HasRestrict(FlagRestrict.NotAIAlert))
+            {
+                this.Blackboard.SetBool(AIConstValue.IsStateOfAlert, false);
+            }
+            else
+            {
+                List<SearchUnit> targets = ObjectPool.Instance.Fetch<List<SearchUnit>>();
+                TargetSearcher.Search(AIConstValue.AwarenessSearchEnemy, lsUnit, targets);
+                if (targets.Count > 0)
+                {
+                    this.Blackboard.SetBool(AIConstValue.IsStateOfAlert, true);
+                    this.Blackboard.SetInt(AIConstValue.HasEnemyCount, targets.Count);
+                    this.Blackboard.SetLong(AIConstValue.HasEnemyEntityId, targets[0].Target.Id);
+                }
+                else
+                {
+                    this.Blackboard.SetBool(AIConstValue.IsStateOfAlert, false);
+                }
+                targets.Clear();
+                ObjectPool.Instance.Recycle(targets);
+            }
         }
     }
 }

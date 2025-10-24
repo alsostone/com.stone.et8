@@ -32,5 +32,10 @@ namespace ET
         /// </summary>
         NotActive = 4,
 
+        /// <summary>
+        /// 禁止AI警戒
+        /// </summary>
+        NotAIAlert = 8,
+
     }
 }

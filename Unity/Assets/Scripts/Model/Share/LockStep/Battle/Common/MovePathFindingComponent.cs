@@ -6,8 +6,11 @@ namespace ET
 {
     [ComponentOf(typeof(LSUnit))]
     [MemoryPackable]
-    public partial class MovePathFindingComponent : LSEntity, IAwake, ILSUpdate, ISerializeToEntity
+    public partial class MovePathFindingComponent : LSEntity, IAwake<bool>, ILSUpdate, ISerializeToEntity
     {
+        public bool IsUseRVO;
+        public bool IsRefrenceNotAIAlert;
+        
         public List<TSVector> PathPoints;
         public int CurrentPathIndex = 0;
     }
