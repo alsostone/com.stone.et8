@@ -40,9 +40,9 @@ namespace ET.Client
         {
             Room room = self.Room();
             LSCacheSceneNameComponent sceneNameComponent = room.GetComponent<LSCacheSceneNameComponent>();
-            if (sceneNameComponent.Name == "Init")
+            if (sceneNameComponent.Name is "Init" or "Empty")
             {
-                ResourcesLoaderComponent resourcesLoaderComponent = self.Root().GetComponent<ResourcesLoaderComponent>();
+                ResourcesLoaderComponent resourcesLoaderComponent = room.GetComponent<ResourcesLoaderComponent>();
                 await resourcesLoaderComponent.LoadSceneAsync($"Assets/Bundles/Scenes/Empty.unity", LoadSceneMode.Single);
                 room.Dispose();
                 await YIUIMgrComponent.Inst.HomePanel<LoginPanelComponent>();

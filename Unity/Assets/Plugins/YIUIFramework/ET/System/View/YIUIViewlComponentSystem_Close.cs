@@ -28,5 +28,19 @@
             var panel = self?.Parent?.Parent?.Parent?.GetComponent<YIUIPanelComponent>();
             await panel?.CloseAsync(tween, ignoreElse);
         }
+        
+        //标准view 可快捷home到指定panel 需要满足panel的结构 同步
+        public static void Home<T>(this YIUIViewComponent self, bool tween = true) where T : Entity
+        {
+            var panel = self?.Parent?.Parent?.Parent?.GetComponent<YIUIPanelComponent>();
+            panel?.Home<T>(tween);
+        }
+
+        //标准view 可快捷home到指定panel 需要满足panel的结构 同步
+        public static void Home(this YIUIViewComponent self, string homeName, bool tween = true)
+        {
+            var panel = self?.Parent?.Parent?.Parent?.GetComponent<YIUIPanelComponent>();
+            panel?.Home(homeName, tween);
+        }
     }
 }
