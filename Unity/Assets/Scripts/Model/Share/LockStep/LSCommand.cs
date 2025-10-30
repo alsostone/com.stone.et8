@@ -132,6 +132,26 @@ namespace ET
             return (i1, i2);
         }
         
+        public static LSCommandData GenCommandMoveTo(byte seatIndex, MovementMode movementMode, float param1 = 0, float param2 = 0)
+        {
+            LSCommandData command = new LSCommandData();
+            command.Header |= (uint)seatIndex << 24; // 前8位存储座位索引
+            command.Header |= (uint)OperateCommandType.MoveTo << 16; // 接下来的8位存储操作类型
+            command.Header |= (uint)movementMode << 8; // 接下来的8位存储移动模式
+            
+            command.Param1 = (uint)(param1 * 1000);
+            command.Param2 = (uint)(param2 * 1000);
+            return command;
+        }
+        
+        public static (MovementMode, TSVector2) ParseCommandMoveTo(LSCommandData command)
+        {
+            MovementMode movementMode = (MovementMode)((command.Header >> 8) & 0xFF);
+            int i1 = (int)command.Param1;
+            int i2 = (int)command.Param2;
+            return (movementMode, new TSVector2(i1, i2) / 1000);
+        }
+
         public static LSCommandData GenCommandButton(byte seatIndex, CommandButtonType type, long param = 0)
         {
             LSCommandData command = new LSCommandData();

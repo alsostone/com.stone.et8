@@ -27,7 +27,7 @@ namespace ET
             EventSystem.Instance.Publish(self.LSWorld(), new LSSelectionChanged() { Id = self.LSOwner().Id, SelectionIds = self.SelectedUnitIds });
         }
         
-        public static void MoveToPosition(this SelectionComponent self, TSVector2 position, bool isCanInterrupt)
+        public static void MoveToPosition(this SelectionComponent self, TSVector2 position, MovementMode movementMode)
         {
             if (self.SelectedUnitIds.Count == 0) {
                 return;
@@ -37,7 +37,7 @@ namespace ET
             {
                 LSUnit unit = unitComponent.GetChild<LSUnit>(id);
                 if (unit != null) {
-                    unit.GetComponent<MovePathFindingComponent>()?.PathFinding(position, isCanInterrupt);
+                    unit.GetComponent<MovePathFindingComponent>()?.PathFinding(position, movementMode);
                 }
             }
         }

@@ -15,12 +15,8 @@ namespace ET.Client
         private static void Update(this LSOperaDragComponent self)
         {
 #if UNITY_STANDALONE || UNITY_EDITOR
-            if (Input.GetMouseButtonDown(1))
-            {
-                if (UnityEngine.EventSystems.EventSystem.current.IsPointerOverGameObject())
-                    return;
-                self.OnRightTouchDown(Input.mousePosition);
-            }
+            self.HandleMouseMoveTo();
+            
             if (Input.GetMouseButtonDown(0))
             {
                 if (UnityEngine.EventSystems.EventSystem.current.IsPointerOverGameObject())
@@ -84,15 +80,30 @@ namespace ET.Client
             self.longTouchPreesToken?.Cancel();
             self.longTouchPreesToken = null;
         }
-
-        private static void OnRightTouchDown(this LSOperaDragComponent self, Vector3 touchPosition)
+        
+        private static void HandleMouseMoveTo(this LSOperaDragComponent self)
         {
-            if (self.RaycastTerrain(touchPosition, out Vector3 pos)) {
-                var command = LSCommand.GenCommandFloat2(0, OperateCommandType.MoveTo, pos.x, pos.z);
-                self.Room().SendCommandMeesage(command);
+            if (Input.GetKeyDown(KeyCode.A)) {
+                self.isKeyADown = true;
+            }
+            if (Input.GetKeyDown(KeyCode.Escape)) {
+                self.isKeyADown = false;
+            }
+            if (Input.GetMouseButtonDown(1))
+            {
+                MovementMode movementMode = self.isKeyADown ? MovementMode.AttackMove : MovementMode.Move;
+                self.isKeyADown = false;
+                
+                if (UnityEngine.EventSystems.EventSystem.current.IsPointerOverGameObject())
+                    return;
+                if (self.RaycastTerrain(Input.mousePosition, out Vector3 pos))
+                {
+                    var command = LSCommand.GenCommandMoveTo(0, movementMode, pos.x, pos.z);
+                    self.Room().SendCommandMeesage(command);
+                }
             }
         }
-        
+
         private static async ETTask ScanTouchLongPress(this LSOperaDragComponent self, Vector3 touchPosition)
         {
             self.longTouchPreesToken = new ETCancellationToken();

@@ -11,6 +11,7 @@ namespace ET.Client
         public Vector3 mousePosition;
         public bool isOutsideDraging = false;
         public bool isMouseDraging = false;
+        public bool isKeyADown = false;
         
         public bool isDraging { get; set; } = false;
         public int dragFingerId = -1;

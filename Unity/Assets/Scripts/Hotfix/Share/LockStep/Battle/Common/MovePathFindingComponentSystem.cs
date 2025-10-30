@@ -40,8 +40,7 @@ namespace ET
             }
         }
         
-        // isCanInterrupt 是否可以被打断，如果不可以被打断，则在移动过程中不会进入AI警戒状态
-        public static void PathFinding(this MovePathFindingComponent self, TSVector2 position, bool isCanInterrupt)
+        public static void PathFinding(this MovePathFindingComponent self, TSVector2 position, MovementMode movementMode)
         {
             LSGridMapComponent gridMapComponent = self.LSWorld().GetComponent<LSGridMapComponent>();
             TransformComponent transformComponent = self.LSOwner().GetComponent<TransformComponent>();
@@ -51,7 +50,7 @@ namespace ET
             {
                 // 成功找到路径，终点位置修正为目标位置
                 self.PathPoints[^1] = gridMapComponent.ClampPosition(pos);
-                if (!isCanInterrupt && !self.IsRefrenceNotAIAlert) {
+                if (movementMode == MovementMode.Move && !self.IsRefrenceNotAIAlert) {
                     self.IsRefrenceNotAIAlert = true;
                     self.LSOwner().GetComponent<FlagComponent>().AddRestrict((int)FlagRestrict.NotAIAlert);
                 }

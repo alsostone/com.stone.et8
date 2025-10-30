@@ -30,8 +30,8 @@ namespace ET
                     case OperateCommandType.MoveTo:
                     {
                         self.IsRightDownMove = true;
-                        TSVector2 pos = LSCommand.ParseCommandFloat2(command);
-                        self.LSOwner().GetComponent<SelectionComponent>().MoveToPosition(pos, false);
+                        (MovementMode, TSVector2) movement = LSCommand.ParseCommandMoveTo(command);
+                        self.LSOwner().GetComponent<SelectionComponent>().MoveToPosition(movement.Item2, movement.Item1);
                         break;
                     }
                     case OperateCommandType.TouchDragStart:

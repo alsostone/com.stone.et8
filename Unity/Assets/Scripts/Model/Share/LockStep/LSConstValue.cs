@@ -37,4 +37,9 @@ namespace ET
         public int Count;
     }
     
+    public enum MovementMode
+    {
+        Move,
+        AttackMove
+    }
 }
