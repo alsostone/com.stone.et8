@@ -11,6 +11,14 @@ namespace ET
         private static void Awake(this LSGridBuilderComponent self)
         {
         }
+        
+        public static void RunCommandEscape(this LSGridBuilderComponent self)
+        {
+            self.ClearPlacementData();
+            
+            SelectionComponent selectionComponent = self.LSOwner().GetComponent<SelectionComponent>();
+            selectionComponent.ClearSelection();
+        }
 
         public static void RunCommandTouchDragStart(this LSGridBuilderComponent self, TSVector2 position)
         {

@@ -66,7 +66,7 @@ namespace ET.Client
 #endif
             if (Input.GetKeyDown(KeyCode.Escape))
             {
-                self.CancelPlacementObject();
+                self.OnEscape();
             }
             if (Input.GetKeyDown(KeyCode.R))
             {
@@ -204,15 +204,16 @@ namespace ET.Client
             }
         }
         
-        private static void CancelPlacementObject(this LSOperaDragComponent self)
+        private static void OnEscape(this LSOperaDragComponent self)
         {
             if (self.isDraging)
             {
-                var command = LSCommand.GenCommandButton(0, CommandButtonType.PlacementCancel);
-                self.Room().SendCommandMeesage(command);
                 self.isDraging = false;
                 self.isOutsideDraging = false;
             }
+            
+            var command = LSCommand.GenCommandButton(0, CommandButtonType.Escape);
+            self.Room().SendCommandMeesage(command);
         }
 
         private static bool RaycastTerrain(this LSOperaDragComponent self, Vector3 position, out Vector3 pos)

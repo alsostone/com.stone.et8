@@ -91,6 +91,9 @@ namespace ET
             (CommandButtonType, long) button = LSCommand.ParseCommandButton(command);
             switch (button.Item1)
             {
+                case CommandButtonType.Escape:
+                    self.LSOwner().GetComponent<LSGridBuilderComponent>().RunCommandEscape();
+                    break;
                 case CommandButtonType.PlacementRotate:
                     self.LSOwner().GetComponent<LSGridBuilderComponent>().RunCommandPlacementRotate((int)button.Item2);
                     break;

@@ -23,6 +23,7 @@ namespace ET
     
     public enum CommandButtonType : byte
     {
+        Escape,        // 取消
         PlacementRotate,    // 放置旋转
         PlacementCancel,    // 取消放置
         CardSelect,         // 选牌
