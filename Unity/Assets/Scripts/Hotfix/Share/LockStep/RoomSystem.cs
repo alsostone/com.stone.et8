@@ -52,12 +52,20 @@ namespace ET
             if (matchInfo.UnitInfos.Count > 1)
                 LSUnitFactory.CreateBuilding(lsWorld, lsStageComponent.TbRow.BaseCampSoldier, new TSVector(32, 0, 32), 0, TeamType.TeamB);
 
+            // 创建我方士兵 (测试用)
+            int rows = 10;
+            int columns = 15;
+            FP spacing = FP.Half * 2;
+            FP width = (columns - 1) * spacing;
+            FP depth = (rows - 1) * spacing;
             
-            // for (int i = 0; i < 10; ++i)
-            // {
-            //     LSUnitFactory.CreateBuilding(lsWorld, i == 5 ? 30031 : 30011, new TSVector(11, 0, 1.5f * i + 5), TSQuaternion.Euler(0, 90, 0), TeamType.TeamA);
-            //     LSUnitFactory.CreateBuilding(lsWorld, 30021, new TSVector(14, 0, 1.5f * i + 5), TSQuaternion.identity, TeamType.TeamB);
-            // }
+            TSVector start = new TSVector(-10, 0, 0) - TSVector.right * (width * FP.Half) + TSVector.forward * (depth * FP.Half);
+            for (int row = 0; row < rows; ++row)
+            for (int col = 0; col < columns; ++col)
+            {
+                TSVector position = start + TSVector.right * (col * spacing) - TSVector.forward * (row * spacing);
+                LSUnitFactory.CreateSoldier(lsWorld, 40011, position, 0, TeamType.TeamA);
+            }
             
             // LSUnitFactory.CreateBuilding(lsWorld, 30041, new TSVector(19, 0, 1.5f * 5 + 5), TSQuaternion.identity, TeamType.TeamA);
             

@@ -1,5 +1,5 @@
-
 using System.Collections.Generic;
+using ST.GridBuilder;
 using TrueSync;
 
 namespace ET
@@ -33,13 +33,35 @@ namespace ET
                 return;
             }
             LSUnitComponent unitComponent = self.LSWorld().GetComponent<LSUnitComponent>();
+            List<LSUnit> units = ObjectPool.Instance.Fetch<List<LSUnit>>();
+            List<TSVector> positions = ObjectPool.Instance.Fetch<List<TSVector>>();
+
+            TSVector center = TSVector.zero;
             foreach (long id in self.SelectedUnitIds)
             {
                 LSUnit unit = unitComponent.GetChild<LSUnit>(id);
                 if (unit != null) {
-                    unit.GetComponent<MovePathFindingComponent>()?.PathFinding(position, movementMode);
+                    TransformComponent transformComponent = unit.GetComponent<TransformComponent>();
+                    positions.Add(transformComponent.Position);
+                    center += transformComponent.Position;
+                    units.Add(unit);
                 }
             }
+            center /= units.Count;
+            
+            TSVector destination = new TSVector(position.x, 0, position.y);
+            TSVector forward = (destination - center).normalized;
+            
+            FormationPack.FormationGridPack(positions, center, destination, FP.Half, forward, TSVector.up);
+            for (int index = 0; index < units.Count; index++) {
+                LSUnit unit = units[index];
+                unit.GetComponent<MovePathFindingComponent>()?.PathFinding(positions[index], movementMode);
+            }
+            
+            positions.Clear();
+            ObjectPool.Instance.Recycle(positions);
+            units.Clear();
+            ObjectPool.Instance.Recycle(units);
         }
         
     }

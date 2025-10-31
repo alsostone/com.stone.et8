@@ -40,16 +40,15 @@ namespace ET
             }
         }
         
-        public static void PathFinding(this MovePathFindingComponent self, TSVector2 position, MovementMode movementMode)
+        public static void PathFinding(this MovePathFindingComponent self, TSVector position, MovementMode movementMode)
         {
             LSGridMapComponent gridMapComponent = self.LSWorld().GetComponent<LSGridMapComponent>();
             TransformComponent transformComponent = self.LSOwner().GetComponent<TransformComponent>();
             
-            TSVector pos = new TSVector(position.x, transformComponent.Position.y, position.y);
-            if (gridMapComponent.Pathfinding(transformComponent.Position, pos, self.PathPoints))
+            if (gridMapComponent.Pathfinding(transformComponent.Position, position, self.PathPoints))
             {
                 // 成功找到路径，终点位置修正为目标位置
-                self.PathPoints[^1] = gridMapComponent.ClampPosition(pos);
+                self.PathPoints[^1] = gridMapComponent.ClampPosition(position);
                 if (movementMode == MovementMode.Move && !self.IsRefrenceNotAIAlert) {
                     self.IsRefrenceNotAIAlert = true;
                     self.LSOwner().GetComponent<FlagComponent>().AddRestrict((int)FlagRestrict.NotAIAlert);
