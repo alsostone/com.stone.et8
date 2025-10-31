@@ -17,14 +17,17 @@ namespace ET.Client
 		[EntitySystem]
 		private static void LateUpdate(this LSCameraComponent self)
 		{
+			self.OnDragScrolling();
+			self.OnLookAtTarget();
+			
 			// 摄像机每帧更新位置
 			Room room = self.Room();
 			if (room.LockStepMode < LockStepMode.Local)
 			{
 				if (Input.GetKeyDown(KeyCode.Tab))
 				{
-					self.index = (self.index + 1) % room.PlayerIds.Count;
-					self.LookUnitView = self.GetBindUnitView(self.index);
+					self.LookSeatIndex = (self.LookSeatIndex + 1) % room.PlayerIds.Count;
+					self.LookUnitView = self.GetBindUnitView(self.LookSeatIndex);
 				}
 			}
 			else if (self.LookUnitView == null)
@@ -33,13 +36,12 @@ namespace ET.Client
 				self.LookUnitView = self.GetBindUnitView(seatIndex);
 			}
 			
-			if (self.LookUnitView == null)
+			if (!self.IsDragging && self.LookUnitView != null && self.IsFlowTarget)
 			{
-				return;
+				self.LookPosition = self.LookUnitView.GetComponent<LSViewTransformComponent>().Transform.position;
 			}
-
-			Vector3 pos = self.LookUnitView.GetComponent<LSViewTransformComponent>().Transform.position;
-			self.Transform.position = new Vector3(pos.x, pos.y + 20, pos.z - 2.5f);
+			
+			self.Transform.position = self.LookPosition + new Vector3(0, 20, -2.5f);
 		}
 		
 		private static LSUnitView GetBindUnitView(this LSCameraComponent self, int seatIndex)
@@ -54,5 +56,55 @@ namespace ET.Client
 			
 			return lsUnitViewComponent.GetChild<LSUnitView>(lsViewPlayerComponent.BindViewId);
 		}
+		
+		private static void OnDragScrolling(this LSCameraComponent self)
+		{
+			Room room = self.Room();
+			LSUnitViewComponent lsUnitViewComponent = room.GetComponent<LSUnitViewComponent>();
+			LSUnitView lsPlayer = lsUnitViewComponent.GetChild<LSUnitView>(room.PlayerIds[self.LookSeatIndex]);
+			if (lsPlayer.GetComponent<LSViewSelectionComponent>().HasSelectedUnit())
+			{
+				// 有选中单位时禁止拖拽摄像机移动
+				return;
+			}
+			
+			if (Input.GetMouseButtonDown(1))
+			{
+				self.DragMousePosition = Input.mousePosition;
+				self.IsDragging = true;
+				return;
+			}
+			if (!Input.GetMouseButton(1) || Input.GetKeyDown(KeyCode.Escape))
+			{
+				self.IsDragging = false;
+				return;
+			}
+
+			if (self.IsDragging && Input.mousePosition != self.DragMousePosition)
+			{
+				Ray ray = self.Camera.ScreenPointToRay(Input.mousePosition);
+				if (self.DragGroundPlane.Raycast(ray, out float distance))
+				{
+					Vector3 end = ray.GetPoint(distance);
+					ray = self.Camera.ScreenPointToRay(self.DragMousePosition);
+					if (self.DragGroundPlane.Raycast(ray, out distance))
+					{
+						Vector3 start = ray.GetPoint(distance);
+						Vector3 direction = start - end;
+						self.LookPosition += direction * self.DragSpeedRatio;
+						self.DragMousePosition = Input.mousePosition;
+					}
+				}
+			}
+		}
+		
+		private static void OnLookAtTarget(this LSCameraComponent self)
+		{
+			if (Input.GetKeyDown(KeyCode.F))
+			{
+				self.IsFlowTarget = !self.IsFlowTarget;
+			}
+		}
+		
 	}
 }

@@ -38,6 +38,14 @@ namespace ET.Client
 			}
 		}
 
-		public int index;
+		public int LookSeatIndex;
+		
+		public bool IsFlowTarget = false;
+		public Vector3 LookPosition;
+		
+		public Vector3 DragMousePosition;
+		public bool IsDragging = false;
+		public Plane DragGroundPlane = new Plane(Vector3.up, Vector3.zero);
+		public float DragSpeedRatio = 0.5f;
 	}
 }

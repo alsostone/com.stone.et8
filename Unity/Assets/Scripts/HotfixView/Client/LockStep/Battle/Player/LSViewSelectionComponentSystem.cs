@@ -43,5 +43,9 @@ namespace ET.Client
             }
         }
         
+        public static bool HasSelectedUnit(this LSViewSelectionComponent self)
+        {
+            return self.SelectedIdSet.Count > 0;
+        }
     }
 }
