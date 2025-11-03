@@ -44,15 +44,14 @@ namespace ET
             {
                 LSGridMapComponent lsGridMapComponent = lsWorld.GetComponent<LSGridMapComponent>();
                 IndexV2 index = lsGridMapComponent.ConvertToIndex(positionV3 + self.PlacementDragOffset);
-                GridData gridData = lsGridMapComponent.GetGridData();
-                
+
                 LSUnitComponent lsUnitComponent = lsWorld.GetComponent<LSUnitComponent>();
                 LSUnit lsUnit = lsUnitComponent.GetChild<LSUnit>(self.PlacementTargetId);
                 PlacementData placementData = lsUnit?.GetComponent<PlacementComponent>()?.GetPlacementData();
-                if (placementData != null && gridData.CanPut(index.x, index.z, placementData) && gridData.CanTake(placementData))
+                if (placementData != null && lsGridMapComponent.CanPut(index.x, index.z, placementData) && lsGridMapComponent.CanTake(placementData))
                 {
-                    gridData.Take(placementData);
-                    gridData.Put(index.x, index.z, placementData);
+                    lsGridMapComponent.Take(placementData);
+                    lsGridMapComponent.Put(index.x, index.z, placementData);
                     EventSystem.Instance.Publish(self.LSWorld(), new LSUnitPlaced() { Id = lsUnit.Id, X = index.x, Z = index.z });
                     lsUnit.GetComponent<TransformComponent>().SetPosition(lsGridMapComponent.GetPutPosition(placementData));
                 }

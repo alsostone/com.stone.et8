@@ -11,14 +11,14 @@ namespace ET.Client
         {
             self.GridMap = UnityEngine.Object.FindObjectOfType<GridMap>();
             LSGridMapComponent lsGridMapComponent = self.Room().LSWorld.GetComponent<LSGridMapComponent>();
-            self.RebindGridDataDraw(lsGridMapComponent.GridData);
+            self.RebindGridDataDraw(lsGridMapComponent.GridData, lsGridMapComponent.GetDefaultFlowField());
             
             self.GridMapIndicator = UnityEngine.Object.FindObjectOfType<GridMapIndicator>();
             if (self.GridMapIndicator)
                 self.GridMapIndicator.SetGridMap(self.GridMap);
         }
         
-        public static void RebindGridDataDraw(this LSViewGridMapComponent self, GridData gridData)
+        public static void RebindGridDataDraw(this LSViewGridMapComponent self, GridData gridData, FlowFieldNode[] flowField)
         {
             if (self.GridMap == null)
                 return;
@@ -26,6 +26,7 @@ namespace ET.Client
             // 表现层的GridData没有流场数据 因为表现层没必要维护它
             // 所以这里使用逻辑层的GridData来做绘制数据源
             self.GridMap.gridDataDraw = gridData;
+            self.GridMap.flowFieldDraw = flowField;
         }
         
     }

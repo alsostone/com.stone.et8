@@ -1,5 +1,6 @@
 using MemoryPack;
 using NPBehave;
+using TrueSync;
 
 namespace ET
 {
@@ -13,11 +14,24 @@ namespace ET
 
         protected override void DoStart()
         {
-            Clock.AddTimer(0, 0, -1, Guid);
+            LSUnit lsUnit = Agent as LSUnit;
+            MoveFlowFieldComponent flowFieldComponent = lsUnit.GetComponent<MoveFlowFieldComponent>();
+            if (flowFieldComponent.TryMoveStart(0, TSVector.zero, MovementMode.AttackMove))
+            {
+                Stopped(false);
+            }
+            else
+            {
+                Clock.AddTimer(0, 0, -1, Guid);
+            }
         }
 
         protected override void DoStop()
         {
+            LSUnit lsUnit = Agent as LSUnit;
+            MoveFlowFieldComponent flowFieldComponent = lsUnit.GetComponent<MoveFlowFieldComponent>();
+            flowFieldComponent.Stop();
+            
             Clock.RemoveTimer(Guid);
             Stopped(false);
         }
@@ -26,7 +40,11 @@ namespace ET
         {
             LSUnit lsUnit = Agent as LSUnit;
             MoveFlowFieldComponent flowFieldComponent = lsUnit.GetComponent<MoveFlowFieldComponent>();
-            flowFieldComponent.DoMove();
+            if (flowFieldComponent.IsArrived())
+            {
+                Clock.RemoveTimer(Guid);
+                Stopped(true);
+            }
         }
     }
 }

@@ -123,14 +123,12 @@ namespace ST.GridBuilder
                         if (dragPlacement.placementData.isNew)
                         {
                             dragPlacement.placementData.id = gridMap.gridData.GetNextGuid();
-                            gridMap.gridData.Put(index.x, index.z, dragPlacement.placementData);
-                            gridMap.gridData.ResetFlowField();
+                            gridMap.Put(index.x, index.z, dragPlacement.placementData);
                         }
                         else if (index.x != dragPlacement.placementData.x || index.z != dragPlacement.placementData.z)
                         {
-                            gridMap.gridData.Take(dragPlacement.placementData);
-                            gridMap.gridData.Put(index.x, index.z, dragPlacement.placementData);
-                            gridMap.gridData.ResetFlowField();
+                            gridMap.Take(dragPlacement.placementData);
+                            gridMap.Put(index.x, index.z, dragPlacement.placementData);
                         }
                         dragPlacement.SetPosition(gridMap.GetPutPosition(dragPlacement.placementData));
                     }

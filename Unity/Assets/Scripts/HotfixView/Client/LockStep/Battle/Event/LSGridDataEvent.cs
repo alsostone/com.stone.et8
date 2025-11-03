@@ -10,7 +10,7 @@ namespace ET.Client
                 return; // 在不一致上报日志文件时，不是Add到Room组件，所以room可能为空
             LSViewGridMapComponent gridMapComponent = room.GetComponent<LSViewGridMapComponent>();
             if (gridMapComponent != null)
-                gridMapComponent.RebindGridDataDraw(args.GridData);
+                gridMapComponent.RebindGridDataDraw(args.GridData, args.FlowField);
             await ETTask.CompletedTask;
         }
     }

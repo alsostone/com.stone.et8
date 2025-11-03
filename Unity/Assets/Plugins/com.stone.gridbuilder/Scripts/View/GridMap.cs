@@ -14,8 +14,30 @@ namespace ST.GridBuilder
 
         [SerializeField, HideInInspector] public GridData gridData = new();
         [NonSerialized] public GridData gridDataDraw = null;
+        [NonSerialized] public FlowFieldNode[] flowFieldDraw;
         [NonSerialized] private readonly List<IndexV2> pathPoints = new();
+
+        [NonSerialized] private FlowFieldNode[] flowField;
+        [NonSerialized] private bool flowFieldDirty;
+        [NonSerialized] private FieldV2 flowFieldDestination;
+
+        // 逻辑层做寻路 表现层不需要 OnDrawGizmos时使用逻辑层的数据
+        // private void Awake()
+        // {
+        //     flowField = new FlowFieldNode[gridData.xLength * gridData.zLength];
+        //     SetDestination(Vector3.zero);
+        // }
         
+        // private void Update()
+        // {
+        //     if (flowFieldDirty)
+        //     {
+        //         flowFieldDirty = false;
+        //         gridData.ResetDijkstraData(flowField, flowFieldDestination);
+        //         gridData.GenerateDijkstraData(flowField);
+        //     }
+        // }
+
         public Quaternion GetGridRotation()
         {
             return transform.rotation;
@@ -30,13 +52,26 @@ namespace ST.GridBuilder
         public void SetDestination(Vector3 position)
         {
             position = transform.InverseTransformDirection(position - transform.position);
-            gridData.SetDestination(position.ToFieldV2());
+            flowFieldDestination = position.ToFieldV2();
+            flowFieldDirty = true;
         }
-
+        
+        public void GenerateFlowField(List<Vector3> position)
+        {
+            List<FieldV2> destinations = new List<FieldV2>();
+            foreach (var pos in position)
+            {
+                Vector3 localPos = transform.InverseTransformDirection(pos - transform.position);
+                destinations.Add(localPos.ToFieldV2());
+            }
+            gridData.ResetDijkstraData(flowField, destinations);
+            gridData.GenerateDijkstraData(flowField);
+        }
+        
         public Vector3 GetFieldVector(Vector3 position)
         {
             position = transform.InverseTransformDirection(position - transform.position);
-            FieldV2 v2 = gridData.GetFieldVector(position.ToFieldV2());
+            FieldV2 v2 = gridData.GetFieldVector(flowField, position.ToFieldV2());
             return transform.TransformDirection(v2.ToVector3());
         }
         
@@ -132,6 +167,18 @@ namespace ST.GridBuilder
             return pos;
         }
         
+        public void Put(int x, int z, PlacementData placementData)
+        {
+            gridData.Put(x, z, placementData);
+            flowFieldDirty = true;
+        }
+        
+        public void Take(PlacementData placementData)
+        {
+            gridData.Take(placementData);
+            flowFieldDirty = true;
+        }
+        
     #if UNITY_EDITOR
         private readonly List<Vector3> drawPoints = new List<Vector3>();
         void OnDrawGizmos()
@@ -216,12 +263,15 @@ namespace ST.GridBuilder
 
         private void OnDrawArrow()
         {
+            if (flowFieldDraw == null)
+                return;
+
             int xLength = gridDataDraw.xLength;
             int zLength = gridDataDraw.zLength;
             for (int x = 0; x < xLength; ++x)
             for (int z = 0; z < zLength; z++)
             {
-                CellData data = gridDataDraw.cells[x + z * xLength];
+                FlowFieldNode data = flowFieldDraw[x + z * xLength];
                 if (data.distance == 0 || data.distance == int.MaxValue)
                     continue;
 

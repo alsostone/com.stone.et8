@@ -5,6 +5,7 @@ namespace ET
     public struct LSGridDataReset
     {
         public GridData GridData;
+        public FlowFieldNode[] FlowField;
     }
     
 }

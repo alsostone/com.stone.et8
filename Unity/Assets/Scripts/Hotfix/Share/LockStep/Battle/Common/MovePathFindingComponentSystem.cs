@@ -40,7 +40,7 @@ namespace ET
             }
         }
         
-        public static void PathFinding(this MovePathFindingComponent self, TSVector position, MovementMode movementMode)
+        public static void SetDestination(this MovePathFindingComponent self, TSVector position, MovementMode movementMode)
         {
             LSGridMapComponent gridMapComponent = self.LSWorld().GetComponent<LSGridMapComponent>();
             TransformComponent transformComponent = self.LSOwner().GetComponent<TransformComponent>();

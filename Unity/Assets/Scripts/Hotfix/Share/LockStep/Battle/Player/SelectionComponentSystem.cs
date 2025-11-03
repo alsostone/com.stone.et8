@@ -32,8 +32,10 @@ namespace ET
             if (self.SelectedUnitIds.Count == 0) {
                 return;
             }
+            
+            LSGridMapComponent gridMapComponent = self.LSWorld().GetComponent<LSGridMapComponent>();
             LSUnitComponent unitComponent = self.LSWorld().GetComponent<LSUnitComponent>();
-            List<LSUnit> units = ObjectPool.Instance.Fetch<List<LSUnit>>();
+            List<MoveFlowFieldComponent> flowFieldComponents = ObjectPool.Instance.Fetch<List<MoveFlowFieldComponent>>();
             List<TSVector> positions = ObjectPool.Instance.Fetch<List<TSVector>>();
 
             TSVector center = TSVector.zero;
@@ -41,27 +43,30 @@ namespace ET
             {
                 LSUnit unit = unitComponent.GetChild<LSUnit>(id);
                 if (unit != null) {
+                    MoveFlowFieldComponent flowFieldComponent = unit.GetComponent<MoveFlowFieldComponent>();
+                    flowFieldComponent.Stop();
                     TransformComponent transformComponent = unit.GetComponent<TransformComponent>();
                     positions.Add(transformComponent.Position);
                     center += transformComponent.Position;
-                    units.Add(unit);
+                    flowFieldComponents.Add(flowFieldComponent);
                 }
             }
-            center /= units.Count;
+            center /= flowFieldComponents.Count;
             
             TSVector destination = new TSVector(position.x, 0, position.y);
             TSVector forward = (destination - center).normalized;
             
             FormationPack.FormationGridPack(positions, center, destination, FP.Half, forward, TSVector.up);
-            for (int index = 0; index < units.Count; index++) {
-                LSUnit unit = units[index];
-                unit.GetComponent<MovePathFindingComponent>()?.PathFinding(positions[index], movementMode);
+            int flowFieldIndex = gridMapComponent.GenerateFlowField(positions);
+            
+            for (int index = 0; index < flowFieldComponents.Count; index++) {
+                flowFieldComponents[index].MoveStart(flowFieldIndex, positions[index], movementMode);
             }
             
             positions.Clear();
             ObjectPool.Instance.Recycle(positions);
-            units.Clear();
-            ObjectPool.Instance.Recycle(units);
+            flowFieldComponents.Clear();
+            ObjectPool.Instance.Recycle(flowFieldComponents);
         }
         
     }

@@ -1,198 +1,198 @@
+using System;
 using System.Collections.Generic;
 using MemoryPack;
 using TrueSync;
 
 namespace ST.GridBuilder
 {
+    public struct FlowFieldNode
+    {
+        public int distance;
+        public FieldV2 direction;
+    }
+
     public partial class GridData
     {
-        [MemoryPackInclude] private bool isDirty = false;
-        [MemoryPackIgnore] private Queue<CellData> visit = new Queue<CellData>();
-        [MemoryPackInclude] private IndexV2 destination = new IndexV2(-1, -1);
+        [MemoryPackIgnore] private Queue<CellData> flowFieldVisit = new Queue<CellData>();
 
-        public void SetDestination(FieldV2 position)
-        {
-            destination = ConvertToIndex(position);
-            isDirty = true;
-        }
-        
-        public void ResetFlowField()
-        {
-            if (!isDirty) { return; }
-            
-            isDirty = false;
-            destination = GetValidDest(destination);
-            CellData dest = GetCell(destination.x, destination.z);
-            if (dest == null || dest.IsFill) {
-                return;
-            }
-
-            GenerateDijkstraData(dest);
-            GenerateFlowField();
-        }
-        
-        public FieldV2 GetFieldVector(FieldV2 position)
+        public FieldV2 GetFieldVector(FlowFieldNode[] flowField, FieldV2 position)
         {
             IndexV2 indexCurrent = ConvertToIndex(position);
             if (indexCurrent.x < 0 || indexCurrent.x >= xLength || indexCurrent.z < 0 || indexCurrent.z >= zLength) {
                 return new FieldV2(0, 0);
             }
-            FP half = (FP)cellSize / 2;
             
             FieldV2 v1 = new FieldV2(0, 0);
+            FieldV2 v2 = new FieldV2(0, 0);
+            FP half = (FP)cellSize / 2;
+            
             int xLeft = (int)((position.x - half) / cellSize);
             int xRight = (int)((position.x + half) / cellSize);
-
             if (xLeft >= 0 && xLeft < xLength)
             {
                 if (xRight >= 0 && xRight < xLength)
                 {
-                    CellData cellLeft = cells[xLeft + indexCurrent.z * xLength];
-                    CellData cellRight = cells[xRight + indexCurrent.z * xLength];
+                    FlowFieldNode left = flowField[xLeft + indexCurrent.z * xLength];
+                    FlowFieldNode right = flowField[xRight + indexCurrent.z * xLength];
                 
-                    if (cellLeft.distance != int.MaxValue && cellRight.distance != int.MaxValue)
-                        v1 = cellLeft.direction.Lerp(cellRight.direction, (position.x - (cellLeft.index.x * cellSize + half)) / cellSize);
-                    else if (cellLeft.distance != int.MaxValue)
-                        v1 = cellLeft.direction;
-                    else if (cellRight.distance != int.MaxValue)
-                        v1 = cellRight.direction;
+                    if (left.distance != int.MaxValue && right.distance != int.MaxValue)
+                        v1 = left.direction.Lerp(right.direction, (position.x - (xLeft * cellSize + half)) / cellSize);
+                    else if (left.distance != int.MaxValue)
+                        v1 = left.direction;
+                    else if (right.distance != int.MaxValue)
+                        v1 = right.direction;
                 }
                 else
                 {
-                    CellData cellLeft = cells[xLeft + indexCurrent.z * xLength];
-                    if (cellLeft.distance != int.MaxValue)
-                        v1 = cellLeft.direction;
+                    FlowFieldNode left = flowField[xLeft + indexCurrent.z * xLength];
+                    if (left.distance != int.MaxValue)
+                        v1 = left.direction;
                 }
             }
             else if (xRight >= 0 && xRight < xLength)
             {
-                CellData cellRight = cells[xRight + indexCurrent.z * xLength];
-                if (cellRight.distance != int.MaxValue)
-                    v1 = cellRight.direction;
+                FlowFieldNode right = flowField[xRight + indexCurrent.z * xLength];
+                if (right.distance != int.MaxValue)
+                    v1 = right.direction;
             }
             
             
-            FieldV2 v2 = new FieldV2(0, 0);
             int zTop = (int)((position.z + half) / cellSize);
             int zBottom = (int)((position.z - half) / cellSize);
             if (zTop >= 0 && zTop < zLength)
             {
                 if (zBottom >= 0 && zBottom < zLength)
                 {
-                    CellData cellTop = cells[indexCurrent.x + zTop * xLength];
-                    CellData cellBottom = cells[indexCurrent.x + zBottom * xLength];
+                    FlowFieldNode top = flowField[indexCurrent.x + zTop * xLength];
+                    FlowFieldNode bottom = flowField[indexCurrent.x + zBottom * xLength];
                 
-                    if (cellTop.distance != int.MaxValue && cellBottom.distance != int.MaxValue)
-                        v2 = cellTop.direction.Lerp(cellBottom.direction, (position.z - (cellTop.index.z * cellSize + half)) / cellSize);
-                    else if (cellTop.distance != int.MaxValue)
-                        v2 = cellTop.direction;
-                    else if (cellBottom.distance != int.MaxValue)
-                        v2 = cellBottom.direction;
+                    if (top.distance != int.MaxValue && bottom.distance != int.MaxValue)
+                        v2 = top.direction.Lerp(bottom.direction, (position.z - (zTop * cellSize + half)) / cellSize);
+                    else if (top.distance != int.MaxValue)
+                        v2 = top.direction;
+                    else if (bottom.distance != int.MaxValue)
+                        v2 = bottom.direction;
                 }
                 else
                 {
-                    CellData cellTop = cells[indexCurrent.x + zTop * xLength];
-                    if (cellTop.distance != int.MaxValue)
-                        v2 = cellTop.direction;
+                    FlowFieldNode top = flowField[indexCurrent.x + zTop * xLength];
+                    if (top.distance != int.MaxValue)
+                        v2 = top.direction;
                 }
             }
             else if (zBottom >= 0 && zBottom < zLength)
             {
-                CellData cellBottom = cells[indexCurrent.x + zBottom * xLength];
-                if (cellBottom.distance != int.MaxValue)
-                    v2 = cellBottom.direction;
+                FlowFieldNode bottom = flowField[indexCurrent.x + zBottom * xLength];
+                if (bottom.distance != int.MaxValue)
+                    v2 = bottom.direction;
             }
             
-            return v1.Lerp(v2, (position.z - (indexCurrent.z * cellSize + half)) / cellSize).Normalize();
+            return v1.Lerp(v2, (position.z - (indexCurrent.z * cellSize + half)) / cellSize);
         }
 
-        private void ClearDijkstraData()
+        public void ResetDijkstraData(FlowFieldNode[] flowField, FieldV2 destination)
         {
-            foreach (var cell in cells)
-            {
-                cell.distance = int.MaxValue;
-            }
-            visit.Clear();
-        }
-        
-        private void GenerateDijkstraData(CellData dest)
-        {
-            ClearDijkstraData();
-
-            visit.Enqueue(dest);
-            dest.distance = 0;
+            Array.Fill(flowField, new FlowFieldNode { distance = int.MaxValue, direction = new FieldV2(0, 0)});
+            flowFieldVisit.Clear();
+            visited.Clear();
             
-            while (visit.Count > 0)
+            IndexV2 indexV2 = ConvertToIndex(new FieldV2(destination.x, destination.z));
+            indexV2 = GetValidDest(indexV2);
+            
+            int index = indexV2.x + indexV2.z * xLength;
+            flowField[index].distance = 0;
+            flowFieldVisit.Enqueue(cells[index]);
+            visited.Add(cells[index]);
+        }
+
+        public void ResetDijkstraData(FlowFieldNode[] flowField, List<FieldV2> destinations)
+        {
+            Array.Fill(flowField, new FlowFieldNode { distance = int.MaxValue, direction = new FieldV2(0, 0)});
+            flowFieldVisit.Clear();
+            visited.Clear();
+            
+            foreach (FieldV2 dest in destinations)
             {
-                CellData current = visit.Dequeue();
+                IndexV2 indexV2 = ConvertToIndex(new FieldV2(dest.x, dest.z));
+                indexV2 = GetValidDest(indexV2);
                 
-                if (current.index.x > 0) {
-                    CellData neighbour = cells[current.index.x - 1 + current.index.z * xLength];
-                    if (!neighbour.IsBlock() && neighbour.distance == int.MaxValue) {
-                        neighbour.distance = current.distance + 1;
-                        visit.Enqueue(neighbour);
-                    }
-                }
-                if (current.index.x < xLength - 1) {
-                    CellData neighbour = cells[current.index.x + 1 + current.index.z * xLength];
-                    if (!neighbour.IsBlock() && neighbour.distance == int.MaxValue) {
-                        neighbour.distance = current.distance + 1;
-                        visit.Enqueue(neighbour);
-                    }
-                }
-                if (current.index.z > 0) {
-                    CellData neighbour = cells[current.index.x + (current.index.z - 1) * xLength];
-                    if (!neighbour.IsBlock() && neighbour.distance == int.MaxValue) {
-                        neighbour.distance = current.distance + 1;
-                        visit.Enqueue(neighbour);
-                    }
-                }
-                if (current.index.z < zLength - 1) {
-                    CellData neighbour = cells[current.index.x + (current.index.z + 1) * xLength];
-                    if (!neighbour.IsBlock() && neighbour.distance == int.MaxValue) {
-                        neighbour.distance = current.distance + 1;
-                        visit.Enqueue(neighbour);
-                    }
-                }
+                int index = indexV2.x + indexV2.z * xLength;
+                flowField[index].distance = 0;
+                flowFieldVisit.Enqueue(cells[index]);
+                visited.Add(cells[index]);
             }
         }
 
-        private void GenerateFlowField()
+        public void GenerateDijkstraData(FlowFieldNode[] flowField)
         {
-            for (int x = 0; x < xLength; x++)
-            for (int z = 0; z < zLength; z++)
+            while (flowFieldVisit.Count > 0)
             {
-                CellData cell = cells[x + z * xLength];
-                if (cell.distance == 0 || cell.distance == int.MaxValue)
-                    continue;
+                CellData current = flowFieldVisit.Dequeue();
+                int distance = flowField[current.index.x + current.index.z * xLength].distance;
                 
-                int distance = int.MaxValue;
-                for (int dx = -1; dx <= 1; dx++)
-                for (int dz = -1; dz <= 1; dz++)
-                {
-                    if (dx == 0 && dz == 0)
+                foreach (var (dx, dz) in OrthogonalDirections) {
+                    int nx = current.index.x + dx;
+                    int nz = current.index.z + dz;
+                    if (nx < 0 || nx >= xLength || nz < 0 || nz >= zLength) {
                         continue;
-                    
-                    int nx = x + dx;
-                    int nz = z + dz;
-                    if (nx < 0 || nz < 0 || nx >= xLength || nz >= zLength)
-                        continue;
-
-                    if (dx * dz != 0) {
-                        CellData diagonal1 = cells[nx + z * xLength];
-                        if (diagonal1.distance == int.MaxValue) 
-                            continue;
-                        CellData diagonal2 = cells[x + nz * xLength];
-                        if (diagonal2.distance == int.MaxValue) 
-                            continue;
                     }
-                    
+
+                    int index = nx + nz * xLength;
                     CellData neighbour = cells[nx + nz * xLength];
-                    if (neighbour.distance >= distance)
+                    if (neighbour.IsFill) {
                         continue;
+                    }
 
-                    distance = neighbour.distance;
-                    cell.direction = new FieldV2(neighbour.index.x - cell.index.x, neighbour.index.z - cell.index.z);
+                    int distance2 = distance + 10000;
+                    if (flowField[index].distance > distance2) {
+                        flowField[index] = new FlowFieldNode
+                        {
+                            distance = distance2,
+                            direction = new FieldV2(current.index.x - nx, current.index.z - nz)
+                        };
+                    }
+
+                    if (!visited.Contains(neighbour))
+                    {
+                        flowFieldVisit.Enqueue(neighbour);
+                        visited.Add(neighbour);
+                    }
+                }
+                
+                foreach (var (dx, dz) in DiagonalDirections) {
+                    int nx = current.index.x + dx;
+                    int nz = current.index.z + dz;
+                    if (nx < 0 || nx >= xLength || nz < 0 || nz >= zLength) {
+                        continue;
+                    }
+
+                    int index = nx + nz * xLength;
+                    CellData neighbour = cells[nx + nz * xLength];
+                    if (neighbour.IsFill) {
+                        continue;
+                    }
+                    
+                    // 若果斜对角方向有障碍物，则不允许斜线通过
+                    CellData side1 = cells[current.index.x + nz * xLength];
+                    CellData side2 = cells[nx + current.index.z * xLength];
+                    if (side1.IsFill || side2.IsFill) {
+                        continue;
+                    }
+
+                    int distance2 = distance + 14142;
+                    if (flowField[index].distance > distance2) {
+                        flowField[index] = new FlowFieldNode
+                        {
+                            distance = distance2,
+                            direction = new FieldV2(current.index.x - nx, current.index.z - nz)
+                        };
+                    }
+
+                    if (!visited.Contains(neighbour))
+                    {
+                        flowFieldVisit.Enqueue(neighbour);
+                        visited.Add(neighbour);
+                    }
                 }
             }
         }

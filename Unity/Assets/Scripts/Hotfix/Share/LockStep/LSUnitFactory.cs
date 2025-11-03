@@ -122,15 +122,8 @@ namespace ET
 	        lsUnit.AddComponent<BuffComponent>();
 	        lsUnit.AddComponent<BeHitComponent>();
 	        lsUnit.AddComponent<SkillComponent, int[], int[]>(row.Skills, null);
-
-	        // 我方怪物需要玩家控制才移动，敌方怪物由AI驱动移动
-	        if (teamType == TeamType.TeamA) {
-		        lsUnit.AddComponent<MovePathFindingComponent, bool>(true);
-		        lsUnit.AddComponent<AIRootComponent, Node>(AIAutoAttack.Gen());
-	        } else {
-		        lsUnit.AddComponent<MoveFlowFieldComponent>();
-		        lsUnit.AddComponent<AIRootComponent, Node>(AIAutoAttackCenter.Gen());
-	        }
+	        lsUnit.AddComponent<MoveFlowFieldComponent>();
+	        lsUnit.AddComponent<AIRootComponent, Node>(teamType == TeamType.TeamA ? AIAutoAttack.Gen() : AIAutoAttackCenter.Gen());
 
 	        EventSystem.Instance.Publish(lsWorld, new LSUnitCreate() {LSUnit = lsUnit});
 	        return lsUnit;
@@ -148,14 +141,13 @@ namespace ET
 	        // 判断是否能够放置到网格 不能则不创建
 	        LSGridMapComponent lsGridMapComponent = lsWorld.GetComponent<LSGridMapComponent>();
 	        IndexV2 index = lsGridMapComponent.ConvertToIndex(position);
-	        GridData gridData = lsGridMapComponent.GetGridData();
-	        if (!gridData.CanPut(index.x, index.z, placementData))
+	        if (!lsGridMapComponent.CanPut(index.x, index.z, placementData))
 		        return null;
 
 	        LSUnitComponent lsUnitComponent = lsWorld.GetComponent<LSUnitComponent>();
 	        LSUnit lsUnit = lsUnitComponent.AddChild<LSUnit>();
 	        placementData.id = lsUnit.Id;
-	        gridData.Put(index.x, index.z, placementData);
+	        lsGridMapComponent.Put(index.x, index.z, placementData);
 	        
 	        TSVector pos = lsGridMapComponent.GetPutPosition(placementData);
 	        lsUnit.AddComponent<TransformComponent, TSVector, TSQuaternion>(pos, TSQuaternion.Euler(0, angle, 0));
@@ -191,14 +183,13 @@ namespace ET
 	        // 判断是否能够放置到网格 不能则不创建
 	        LSGridMapComponent lsGridMapComponent = lsWorld.GetComponent<LSGridMapComponent>();
 	        IndexV2 index = lsGridMapComponent.ConvertToIndex(position);
-	        GridData gridData = lsGridMapComponent.GetGridData();
-	        if (!gridData.CanPut(index.x, index.z, placementData))
+	        if (!lsGridMapComponent.CanPut(index.x, index.z, placementData))
 		        return null;
 	        
 	        LSUnitComponent lsUnitComponent = lsWorld.GetComponent<LSUnitComponent>();
 	        LSUnit lsUnit = lsUnitComponent.AddChild<LSUnit>();
 	        placementData.id = lsUnit.Id;
-	        gridData.Put(index.x, index.z, placementData);
+	        lsGridMapComponent.Put(index.x, index.z, placementData);
 
 	        TSVector pos = lsGridMapComponent.GetPutPosition(placementData);
 	        lsUnit.AddComponent<TransformComponent, TSVector, TSQuaternion>(pos, TSQuaternion.Euler(0, angle, 0));

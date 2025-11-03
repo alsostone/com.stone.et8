@@ -14,8 +14,18 @@ namespace ET
         private static void Awake(this LSGridMapComponent self, string gridName)
         {self.LSRoom()?.ProcessLog.LogFunction(82, self.LSParent().Id);
             self.GridName = gridName;
+            
+            self.FlowFields = new List<FlowFieldNode[]>();
+            self.FreeFlowField = new Stack<int>();
+            self.FlowFieldIndexRef = new Dictionary<int, int>();
+
+            self.FlowFieldDefaultIndex = -1;
+            self.FlowFieldDirty = false;
+            self.FlowFieldDestination = new FieldV2(0, 0);
+                    
             self.ResetGridData(FileComponent.Instance.Load(gridName));
             self.PathPoints = new List<IndexV2>();
+            self.FlowFieldDestinations = new List<FieldV2>();
         }
         
         [EntitySystem]
@@ -30,8 +40,12 @@ namespace ET
         [LSEntitySystem]
         private static void LSUpdate(this LSGridMapComponent self)
         {self.LSRoom()?.ProcessLog.LogFunction(81, self.LSParent().Id);
-            // 每帧更新时重置流场 有脏标记
-            self.GridData.ResetFlowField();
+            if (self.FlowFieldDirty) {
+                self.FlowFieldDirty = false;
+                self.ReleaseFlowField(self.FlowFieldDefaultIndex);
+                self.FlowFieldDefaultIndex = self.GenerateFlowField(self.FlowFieldDestination);
+                EventSystem.Instance.Publish(self.LSWorld(), new LSGridDataReset() { GridData = self.GridData, FlowField = self.GetDefaultFlowField() });
+            }
         }
 
         private static void ResetGridData(this LSGridMapComponent self, byte[] gridBytes)
@@ -41,7 +55,7 @@ namespace ET
             self.GridRotation = TSQuaternion.Euler(gridMapData.rotation);
             self.GridData = gridMapData.gridData;
             self.SetDestination(new TSVector(0, 0, 0));
-            EventSystem.Instance.Publish(self.LSWorld(), new LSGridDataReset() { GridData = self.GridData });
+            EventSystem.Instance.Publish(self.LSWorld(), new LSGridDataReset() { GridData = self.GridData, FlowField = self.GetDefaultFlowField() });
         }
         
         public static GridData GetGridData(this LSGridMapComponent self)
@@ -55,16 +69,62 @@ namespace ET
             return self.GridData.ConvertToIndex(new FieldV2(position.x, position.z));
         }
         
-        public static void SetDestination(this LSGridMapComponent self, TSVector position)
+        private static void SetDestination(this LSGridMapComponent self, TSVector position)
         {
             position = TSQuaternion.Inverse(self.GridRotation) * (position - self.GridPosition);
-            self.GridData.SetDestination(new FieldV2(position.x, position.z));
+            self.FlowFieldDestination = new FieldV2(position.x, position.z);
+            self.FlowFieldDirty = true;
         }
         
-        public static TSVector GetFieldVector(this LSGridMapComponent self, TSVector position)
+        public static int GenerateFlowField(this LSGridMapComponent self, List<TSVector> positions)
         {
+            self.FlowFieldDestinations.Clear();
+            foreach (TSVector position in positions) {
+                TSVector localPos = TSQuaternion.Inverse(self.GridRotation) * (position - self.GridPosition);
+                self.FlowFieldDestinations.Add(new FieldV2(localPos.x, localPos.z));
+            }
+            
+            FlowFieldNode[] flowField;
+            if (self.FreeFlowField.TryPop(out int index)) {
+                flowField = self.FlowFields[index];
+            } else {
+                flowField = new FlowFieldNode[self.GridData.xLength * self.GridData.zLength];
+                self.FlowFields.Add(flowField);
+                index = self.FlowFields.Count - 1;
+            }
+            
+            self.GridData.ResetDijkstraData(flowField, self.FlowFieldDestinations);
+            self.GridData.GenerateDijkstraData(flowField);
+            self.FlowFieldIndexRef.Add(index, positions.Count);
+            
+            EventSystem.Instance.Publish(self.LSWorld(), new LSGridDataReset() { GridData = self.GridData, FlowField = self.GetFlowField(index) });
+            return index;
+        }
+        
+        public static void RemoveFlowFieldReference(this LSGridMapComponent self, int flowFieldIndex)
+        {
+            if (self.FlowFieldIndexRef.TryGetValue(flowFieldIndex, out int referenceCount))
+            {
+                if (referenceCount == 1)
+                {
+                    self.ReleaseFlowField(flowFieldIndex);
+                    self.FlowFieldIndexRef.Remove(flowFieldIndex);
+                }
+                else
+                {
+                    self.FlowFieldIndexRef[flowFieldIndex] = referenceCount - 1;
+                }
+            }
+        }
+        
+        public static TSVector GetFieldVector(this LSGridMapComponent self, int flowFieldIndex, TSVector position)
+        {
+            FlowFieldNode[] flowField = self.GetFlowField(flowFieldIndex);
+            if (flowField == null) {
+                return new TSVector(0, 0, 0);
+            }
             position = TSQuaternion.Inverse(self.GridRotation) * (position - self.GridPosition);
-            FieldV2 v2 = self.GridData.GetFieldVector(new FieldV2(position.x, position.z));
+            FieldV2 v2 = self.GridData.GetFieldVector(flowField, new FieldV2(position.x, position.z));
             return self.GridRotation * new TSVector(v2.x, 0, v2.z);
         }
         
@@ -114,11 +174,63 @@ namespace ET
             TSVector pos = self.GridPosition + self.GridRotation * new TSVector(x, y, z);
             return pos;
         }
-
-        // 只允许反序列化时调用，战斗逻辑中应使用TryPut
+        
+        public static bool CanPut(this LSGridMapComponent self, int x, int z, PlacementData placementData)
+        {
+            return self.GridData.CanPut(x, z, placementData);
+        }
+        
         public static void Put(this LSGridMapComponent self, int x, int z, PlacementData placementData)
         {self.LSRoom()?.ProcessLog.LogFunction(77, self.LSParent().Id, x, z);
             self.GridData.Put(x, z, placementData);
+            self.FlowFieldDirty = true;
         }
+
+        public static bool CanTake(this LSGridMapComponent self, PlacementData placementData)
+        {
+            return self.GridData.CanTake(placementData);
+        }
+        
+        public static void Take(this LSGridMapComponent self, PlacementData placementData)
+        {
+            self.GridData.Take(placementData);
+            self.FlowFieldDirty = true;
+        }
+        
+        public static FlowFieldNode[] GetDefaultFlowField(this LSGridMapComponent self)
+        {
+            return self.GetFlowField(self.FlowFieldDefaultIndex);
+        }
+        
+        private static FlowFieldNode[] GetFlowField(this LSGridMapComponent self, int index)
+        {
+            if (index < 0 || index >= self.FlowFields.Count)
+                return null;
+            return self.FlowFields[index];
+        }
+
+        private static void ReleaseFlowField(this LSGridMapComponent self, int index)
+        {
+            if (index < 0 || index >= self.FlowFields.Count)
+                return;
+            self.FreeFlowField.Push(index);
+        }
+        
+        private static int GenerateFlowField(this LSGridMapComponent self, FieldV2 destination)
+        {
+            FlowFieldNode[] flowField;
+            if (self.FreeFlowField.TryPop(out int index)) {
+                flowField = self.FlowFields[index];
+            } else {
+                flowField = new FlowFieldNode[self.GridData.xLength * self.GridData.zLength];
+                self.FlowFields.Add(flowField);
+                index = self.FlowFields.Count - 1;
+            }
+            
+            self.GridData.ResetDijkstraData(flowField, destination);
+            self.GridData.GenerateDijkstraData(flowField);
+            return index;
+        }
+
     }
 }

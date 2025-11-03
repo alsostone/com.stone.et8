@@ -12,20 +12,28 @@ namespace ET
 	{
 		public string GridName;
 		
-		[MemoryPackIgnore]
-		[BsonIgnore]
+		public List<FlowFieldNode[]> FlowFields;
+		public Stack<int> FreeFlowField;
+		public Dictionary<int, int> FlowFieldIndexRef;
+		
+		public int FlowFieldDefaultIndex;
+		public bool FlowFieldDirty;
+		public FieldV2 FlowFieldDestination;
+		
+		[MemoryPackIgnore, BsonIgnore]
 		public GridData GridData { get; set; }
 
-		[MemoryPackIgnore]
-		[BsonIgnore]
+		[MemoryPackIgnore, BsonIgnore]
 		public TSVector GridPosition;
 		
-		[MemoryPackIgnore]
-		[BsonIgnore]
+		[MemoryPackIgnore, BsonIgnore]
 		public TSQuaternion GridRotation;
 		
-		[MemoryPackIgnore]
-		[BsonIgnore]
+		[MemoryPackIgnore, BsonIgnore]
 		public List<IndexV2> PathPoints;
+		
+		[MemoryPackIgnore, BsonIgnore]
+		public List<FieldV2> FlowFieldDestinations;
+		
 	}
 }
