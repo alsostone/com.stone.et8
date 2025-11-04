@@ -59,7 +59,7 @@ namespace ET
         }
         
         public static GridData GetGridData(this LSGridMapComponent self)
-        {self.LSRoom()?.ProcessLog.LogFunction(80, self.LSParent().Id);
+        {
             return self.GridData;
         }
         

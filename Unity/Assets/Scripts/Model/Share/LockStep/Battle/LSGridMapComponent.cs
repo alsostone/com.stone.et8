@@ -19,9 +19,9 @@ namespace ET
 		public int FlowFieldDefaultIndex;
 		public bool FlowFieldDirty;
 		public FieldV2 FlowFieldDestination;
-		
+
 		[MemoryPackIgnore, BsonIgnore]
-		public GridData GridData { get; set; }
+		public GridData GridData;
 
 		[MemoryPackIgnore, BsonIgnore]
 		public TSVector GridPosition;

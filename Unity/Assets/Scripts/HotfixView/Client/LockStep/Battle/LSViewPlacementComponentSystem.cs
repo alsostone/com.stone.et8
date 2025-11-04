@@ -15,7 +15,7 @@ namespace ET.Client
 				LSViewGridMapComponent gridMapComponent = self.Room().GetComponent<LSViewGridMapComponent>();
 				self.Placement.placementData.id = placementData.id;
 				self.Placement.placementData.Rotation(placementData.rotation - self.Placement.placementData.rotation);
-				gridMapComponent.GridMap.Put(placementData.x, placementData.z, self.Placement.placementData);
+				gridMapComponent.Put(placementData.x, placementData.z, self.Placement.placementData);
 			}
 		}
 		
@@ -25,7 +25,7 @@ namespace ET.Client
 			if (self.Placement)
 			{
 				LSViewGridMapComponent gridMapComponent = self.Room().GetComponent<LSViewGridMapComponent>();
-				gridMapComponent.GridMap.Take(self.Placement.placementData);
+				gridMapComponent.Take(self.Placement.placementData);
 			}
 		}
 		
@@ -34,8 +34,8 @@ namespace ET.Client
 			if (self.Placement)
 			{
 				LSViewGridMapComponent gridMapComponent = self.Room().GetComponent<LSViewGridMapComponent>();
-				gridMapComponent.GridMap.Take(self.Placement.placementData);
-				gridMapComponent.GridMap.Put(x, z, self.Placement.placementData);
+				gridMapComponent.Take(self.Placement.placementData);
+				gridMapComponent.Put(x, z, self.Placement.placementData);
 			}
 		}
 	}

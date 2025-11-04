@@ -90,7 +90,7 @@ namespace ET.Client
                 return;
             
             LSViewGridMapComponent gridMapComponent = self.Room().GetComponent<LSViewGridMapComponent>();
-            if (!gridMapComponent.GridMap.gridData.CanTake(placement.placementData)) {
+            if (!gridMapComponent.CanTake(placement.placementData)) {
                 placement.DoShake();
                 return;
             }
@@ -159,7 +159,7 @@ namespace ET.Client
             
             LSViewGridMapComponent gridMapComponent = self.Room().GetComponent<LSViewGridMapComponent>();
             self.DragPlacement = placement;
-            self.DragPlacement.ResetRotation(gridMapComponent.GridMap.GetGridRotation());
+            self.DragPlacement.ResetRotation(gridMapComponent.GetGridRotation());
             self.DragPlacement.SetPreviewMaterial();
             self.DragOffset = Vector3.zero;
             return true;
@@ -171,7 +171,7 @@ namespace ET.Client
             {
                 if (self.DragPlacement.placementData.isNew) {
                     LSViewGridMapComponent gridMapComponent = self.Room().GetComponent<LSViewGridMapComponent>();
-                    self.DragPlacement.Rotation(rotation, gridMapComponent.GridMap.GetGridRotation());
+                    self.DragPlacement.Rotation(rotation, gridMapComponent.GetGridRotation());
                 }
             }
         }
@@ -214,11 +214,10 @@ namespace ET.Client
         private static void SetPlacementDragPosition(this LSViewGridBuilderComponent self, Vector3 position)
         {
             LSViewGridMapComponent gridMapComponent = self.Room().GetComponent<LSViewGridMapComponent>();
-            GridMap gridMap = gridMapComponent.GridMap;
-            
-            IndexV2 index = gridMap.ConvertToIndex(position + self.DragOffset);
-            int targetLevel = gridMap.gridData.GetShapeLevelCount(index.x, index.z, self.DragPlacement.placementData);
-            self.DragPlacement.SetPosition(gridMap.GetLevelPosition(index.x, index.z, targetLevel, self.DragPlacement.takeHeight));
+
+            IndexV2 index = gridMapComponent.ConvertToIndex(position + self.DragOffset);
+            int targetLevel = gridMapComponent.GetShapeLevelCount(index.x, index.z, self.DragPlacement.placementData);
+            self.DragPlacement.SetPosition(gridMapComponent.GetLevelPosition(index.x, index.z, targetLevel, self.DragPlacement.takeHeight));
             
             if (gridMapComponent.GridMapIndicator) {
                 gridMapComponent.GridMapIndicator.GenerateIndicator(index.x, index.z, targetLevel, self.DragPlacement.placementData);

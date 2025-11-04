@@ -33,6 +33,15 @@ namespace ProcessLog.Editor
         {
             "Deserialize",
         };
+        
+        //要屏蔽的方法名称前缀
+        public static string[] IgnoreFuncNamePrefixs =
+        {
+            "Get",
+            "Is",
+            "Has",
+            "Can"
+        };
 
         //要屏蔽的文件名
         public static string[] IgnoreFiles =
@@ -59,6 +68,11 @@ namespace ProcessLog.Editor
         {
             foreach (var name in IgnoreFuncNames) {
                 if (name.Equals(functionName)) {
+                    return true;
+                }
+            }
+            foreach (var prefix in IgnoreFuncNamePrefixs) {
+                if (functionName.StartsWith(prefix)) {
                     return true;
                 }
             }
