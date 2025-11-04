@@ -27,6 +27,8 @@ namespace ET
                 TargetSearcher.Search(AIConstValue.AwarenessSearchEnemy, lsUnit, targets);
                 if (targets.Count > 0)
                 {
+                    lsUnit.GetComponent<MoveFlowFieldComponent>()?.Stop();
+                    lsUnit.GetComponent<MovePathFindingComponent>()?.Stop();
                     this.Blackboard.SetBool(AIConstValue.IsStateOfAlert, true);
                     this.Blackboard.SetInt(AIConstValue.HasEnemyCount, targets.Count);
                     this.Blackboard.SetLong(AIConstValue.HasEnemyEntityId, targets[0].Target.Id);

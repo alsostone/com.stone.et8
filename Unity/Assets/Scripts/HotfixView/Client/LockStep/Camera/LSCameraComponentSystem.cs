@@ -59,9 +59,7 @@ namespace ET.Client
 		
 		private static void OnDragScrolling(this LSCameraComponent self)
 		{
-			Room room = self.Room();
-			LSUnitViewComponent lsUnitViewComponent = room.GetComponent<LSUnitViewComponent>();
-			LSUnitView lsPlayer = lsUnitViewComponent.GetChild<LSUnitView>(room.PlayerIds[self.LookSeatIndex]);
+			LSUnitView lsPlayer = self.LSUnitView(self.Room().LookPlayerId);
 			if (lsPlayer.GetComponent<LSViewSelectionComponent>().HasSelectedUnit())
 			{
 				// 有选中单位时禁止拖拽摄像机移动

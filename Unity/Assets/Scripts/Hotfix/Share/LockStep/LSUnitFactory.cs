@@ -94,7 +94,7 @@ namespace ET
 			lsUnit.AddComponent<BuffComponent>();
 			lsUnit.AddComponent<BeHitComponent>();
 			lsUnit.AddComponent<SkillComponent, int[], int[]>(row.NormalSkills, row.ActiveSkills);
-			lsUnit.AddComponent<MovePathFindingComponent, bool>(false);
+	        lsUnit.AddComponent<MoveFlowFieldComponent>();
 			
 			EventSystem.Instance.Publish(lsWorld, new LSUnitCreate() {LSUnit = lsUnit});
             return lsUnit;

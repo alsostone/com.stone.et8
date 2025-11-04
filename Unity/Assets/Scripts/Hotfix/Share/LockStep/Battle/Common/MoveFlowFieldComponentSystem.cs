@@ -21,7 +21,7 @@ namespace ET
             
             TransformComponent transformComponent = self.LSOwner().GetComponent<TransformComponent>();
             LSGridMapComponent gridMapComponent = self.LSWorld().GetComponent<LSGridMapComponent>();
-            if (TSVector.SqrDistance(transformComponent.Position, self.FlowFieldDestination) <= FP.EN2)
+            if (TSVector.SqrDistance(transformComponent.Position, self.FlowFieldDestination) <= FP.Ratio(4, 10))
             {
                 self.SetArrived();
                 return;

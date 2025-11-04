@@ -8,6 +8,12 @@ namespace ET.Client
                 return lsUnit;
             return entity.Parent.Parent as LSUnitView;
         }
+        
+        public static LSUnitView LSUnitView(this Entity entity, long id)
+        {
+            LSUnitViewComponent viewComponent = entity.Room().GetComponent<LSUnitViewComponent>();
+            return viewComponent?.GetChild<LSUnitView>(id);
+        }
 
         public static void SendCommandMeesage(this Room self, LSCommandData command)
         {
