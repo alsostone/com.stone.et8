@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using RVO;
 using TrueSync;
 
@@ -18,7 +19,9 @@ namespace ET
         [EntitySystem]
         private static void Deserialize(this LSRVO2Component self)
         {
+            // TODO: 可能导致不一致，因为恢复Agent时 它所在的List位置可能会发生变化，需要在simulator保证插入顺序 后续再处理
             self.RVO2Simulator.ClearAllAgents();
+            self.RVO2Simulator.ClearAllObstacles();
         }
         
         [LSEntitySystem]
@@ -66,9 +69,19 @@ namespace ET
             self.RVO2Simulator.removeAgent(lsUnit.Id);
         }
         
-        public static void SetAgentPosition(this LSRVO2Component self, LSUnit lsUnit, TSVector position)
+        public static void AddObstacle(this LSRVO2Component self, LSUnit lsUnit, List<TSVector2> vertices)
         {
-            self.RVO2Simulator.setAgentPosition(lsUnit.Id, new TSVector2(position.x, position.z));
+            self.RVO2Simulator.addObstacle(vertices, lsUnit.Id);
+        }
+        
+        public static void RemoveObstacle(this LSRVO2Component self, LSUnit lsUnit)
+        {
+            self.RVO2Simulator.removeObstacle(lsUnit.Id);
+        }
+
+        public static void SetAgentPosition(this LSRVO2Component self, LSUnit lsUnit, TSVector2 position)
+        {
+            self.RVO2Simulator.setAgentPosition(lsUnit.Id, position);
         }
         
         public static void setAgentPrefVelocity(this LSRVO2Component self, LSUnit lsUnit, TSVector2 velocity)

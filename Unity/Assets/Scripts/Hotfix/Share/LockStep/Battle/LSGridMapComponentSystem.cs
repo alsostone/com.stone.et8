@@ -174,6 +174,21 @@ namespace ET
             TSVector pos = self.GridPosition + self.GridRotation * new TSVector(x, y, z);
             return pos;
         }
+
+        private static void GenBoundary(this LSGridMapComponent self, PlacementData placementData, List<TSVector2> vertices)
+        {
+            placementData.GenLocalBoundary(vertices);
+            
+            int size = self.GridData.cellSize;
+            for (int i = 0; i < vertices.Count; i++) {
+                TSVector2 v2 = vertices[i];
+                FP x = (placementData.x + v2.x) * size;
+                FP z = (placementData.z + v2.y) * size;
+                
+                TSVector position = self.GridPosition + self.GridRotation * new TSVector(x, 0, z);
+                vertices[i] = new TSVector2(position.x, position.z);
+            }
+        }
         
         public static bool CanPut(this LSGridMapComponent self, int x, int z, PlacementData placementData)
         {
@@ -184,6 +199,26 @@ namespace ET
         {self.LSRoom()?.ProcessLog.LogFunction(77, self.LSParent().Id, x, z);
             self.GridData.Put(x, z, placementData);
             self.FlowFieldDirty = true;
+            
+            switch (placementData.placementType)
+            {
+                case PlacedLayer.Block:
+                {
+                    LSRVO2Component rvo2Component = self.LSWorld().GetComponent<LSRVO2Component>();
+                    List<TSVector2> vertices = ObjectPool.Instance.Fetch<List<TSVector2>>();
+                    self.GenBoundary(placementData, vertices);
+                    rvo2Component.AddObstacle(self.LSUnit(placementData.id), vertices);
+                    vertices.Clear();
+                    ObjectPool.Instance.Recycle(vertices);
+                    break;
+                }
+                case PlacedLayer.Building:
+                {
+                    LSRVO2Component rvo2Component = self.LSWorld().GetComponent<LSRVO2Component>();
+                    rvo2Component.AddStaticAgent(self.LSUnit(placementData.id));
+                    break;
+                }
+            }
         }
 
         public static bool CanTake(this LSGridMapComponent self, PlacementData placementData)
@@ -195,6 +230,20 @@ namespace ET
         {
             self.GridData.Take(placementData);
             self.FlowFieldDirty = true;
+            
+            switch (placementData.placementType)
+            {
+                case PlacedLayer.Block: {
+                    LSRVO2Component rvo2Component = self.LSWorld().GetComponent<LSRVO2Component>();
+                    rvo2Component.RemoveObstacle(self.LSUnit(placementData.id));
+                    break;
+                }
+                case PlacedLayer.Building: {
+                    LSRVO2Component rvo2Component = self.LSWorld().GetComponent<LSRVO2Component>();
+                    rvo2Component.RemoveAgent(self.LSUnit(placementData.id));
+                    break;
+                }
+            }
         }
         
         public static FlowFieldNode[] GetDefaultFlowField(this LSGridMapComponent self)

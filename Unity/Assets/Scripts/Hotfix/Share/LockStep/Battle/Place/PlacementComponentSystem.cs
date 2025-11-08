@@ -10,20 +10,26 @@ namespace ET
         private static void Awake(this PlacementComponent self, PlacementData placementData)
         {self.LSRoom()?.ProcessLog.LogFunction(87, self.LSParent().Id);
             self.PlacementData = placementData;
+            LSGridMapComponent gridMapComponent = self.LSWorld().GetComponent<LSGridMapComponent>();
+            gridMapComponent.Put(placementData.x, placementData.z, placementData);
         }
-
+        
+        [EntitySystem]
+        private static void Destroy(this PlacementComponent self)
+        {
+            LSGridMapComponent gridMapComponent = self.LSWorld().GetComponent<LSGridMapComponent>();
+            gridMapComponent.Take(self.PlacementData);
+         }
+        
         [EntitySystem]
         private static void Deserialize(this PlacementComponent self)
         {
-            if (self.PlacementData.id > 0)
-            {
-                LSGridMapComponent component = self.LSWorld().GetComponent<LSGridMapComponent>();
-                component.Put(self.PlacementData.x, self.PlacementData.z, self.PlacementData);
-            }
+            LSGridMapComponent gridMapComponent = self.LSWorld().GetComponent<LSGridMapComponent>();
+            gridMapComponent.Put(self.PlacementData.x, self.PlacementData.z, self.PlacementData);
         }
 
         public static PlacementData GetPlacementData(this PlacementComponent self)
-        {self.LSRoom()?.ProcessLog.LogFunction(86, self.LSParent().Id);
+        {
             return self.PlacementData;
         }
     }

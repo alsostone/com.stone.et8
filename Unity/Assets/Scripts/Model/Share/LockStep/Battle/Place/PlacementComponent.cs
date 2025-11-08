@@ -5,8 +5,8 @@ namespace ET
 {
     [ComponentOf(typeof(LSUnit))]
     [MemoryPackable]
-    public partial class PlacementComponent : LSEntity, IAwake<PlacementData>, IDeserialize, ISerializeToEntity
+    public partial class PlacementComponent : LSEntity, IAwake<PlacementData>, IDestroy, IDeserialize, ISerializeToEntity
     {
-        public PlacementData PlacementData { get; set; }
+        public PlacementData PlacementData;
     }
 }

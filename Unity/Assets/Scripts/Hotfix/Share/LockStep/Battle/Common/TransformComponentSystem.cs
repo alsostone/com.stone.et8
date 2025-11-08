@@ -46,7 +46,7 @@ namespace ET
             {
                 self.Position += new TSVector(v2.x, 0, v2.y);
                 LSRVO2Component rvo2Component = self.LSWorld().GetComponent<LSRVO2Component>();
-                rvo2Component.SetAgentPosition(self.LSOwner(), self.Position);
+                rvo2Component.SetAgentPosition(self.LSOwner(), new TSVector2(self.Position.x, self.Position.z));
             }
         }
         
@@ -87,8 +87,6 @@ namespace ET
         public static void SetPosition(this TransformComponent self, TSVector position)
         {self.LSRoom()?.ProcessLog.LogFunction(85, self.LSParent().Id);
             self.Position = position;
-            LSRVO2Component rvo2Component = self.LSWorld().GetComponent<LSRVO2Component>();
-            rvo2Component.SetAgentPosition(self.LSOwner(), position);
         }
         
         public static TSVector TransformDirection(this TransformComponent self, TSVector position)

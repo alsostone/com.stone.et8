@@ -80,8 +80,8 @@ namespace ET
 
 	        lsUnit.AddComponent<TransformComponent, TSVector, TSQuaternion>(position, rotation);
 	        lsUnit.AddComponent<TypeComponent, EUnitType>(EUnitType.Hero);
-	        lsUnit.AddComponent<FlagComponent>();
 	        lsUnit.AddComponent<TeamComponent, TeamType>(teamType);
+	        lsUnit.AddComponent<FlagComponent>();
 	        
 	        PropComponent propComponent = lsUnit.AddComponent<PropComponent, int>(row.Radius);
 	        foreach (var prop in row.Props) {
@@ -108,8 +108,8 @@ namespace ET
 
 	        lsUnit.AddComponent<TransformComponent, TSVector, TSQuaternion>(position, TSQuaternion.Euler(0, angle, 0));
 	        lsUnit.AddComponent<TypeComponent, EUnitType>(EUnitType.Soldier);
-	        lsUnit.AddComponent<FlagComponent>();
 	        lsUnit.AddComponent<TeamComponent, TeamType>(teamType);
+	        lsUnit.AddComponent<FlagComponent>();
 	        
 	        PropComponent propComponent = lsUnit.AddComponent<PropComponent, int>(row.Radius);
 	        foreach (var prop in row.Props) {
@@ -147,14 +147,14 @@ namespace ET
 	        LSUnitComponent lsUnitComponent = lsWorld.GetComponent<LSUnitComponent>();
 	        LSUnit lsUnit = lsUnitComponent.AddChild<LSUnit>();
 	        placementData.id = lsUnit.Id;
-	        lsGridMapComponent.Put(index.x, index.z, placementData);
+	        placementData.x = index.x;
+	        placementData.z = index.z;
 	        
 	        TSVector pos = lsGridMapComponent.GetPutPosition(placementData);
 	        lsUnit.AddComponent<TransformComponent, TSVector, TSQuaternion>(pos, TSQuaternion.Euler(0, angle, 0));
 	        lsUnit.AddComponent<TypeComponent, EUnitType>(EUnitType.Block);
-	        lsUnit.AddComponent<FlagComponent>();
 	        lsUnit.AddComponent<TeamComponent, TeamType>(teamType);
-	        lsUnit.AddComponent<PlacementComponent, PlacementData>(placementData);
+	        lsUnit.AddComponent<FlagComponent>();
 	        
 	        PropComponent propComponent = lsUnit.AddComponent<PropComponent, int>(5000);
 	        foreach (var prop in row.Props) {
@@ -162,6 +162,7 @@ namespace ET
 	        }
 	        EnsureRuntimeProp(propComponent);
 
+	        lsUnit.AddComponent<PlacementComponent, PlacementData>(placementData);
 	        lsUnit.AddComponent<BlockComponent, int>(tableId);
 	        lsUnit.AddComponent<DeathComponent, bool>(true);
 	        lsUnit.AddComponent<BuffComponent>();
@@ -189,14 +190,14 @@ namespace ET
 	        LSUnitComponent lsUnitComponent = lsWorld.GetComponent<LSUnitComponent>();
 	        LSUnit lsUnit = lsUnitComponent.AddChild<LSUnit>();
 	        placementData.id = lsUnit.Id;
-	        lsGridMapComponent.Put(index.x, index.z, placementData);
+	        placementData.x = index.x;
+	        placementData.z = index.z;
 
 	        TSVector pos = lsGridMapComponent.GetPutPosition(placementData);
 	        lsUnit.AddComponent<TransformComponent, TSVector, TSQuaternion>(pos, TSQuaternion.Euler(0, angle, 0));
 	        lsUnit.AddComponent<TypeComponent, EUnitType>(EUnitType.Building);
-	        lsUnit.AddComponent<FlagComponent>();
 	        lsUnit.AddComponent<TeamComponent, TeamType>(teamType);
-	        lsUnit.AddComponent<PlacementComponent, PlacementData>(placementData);
+	        lsUnit.AddComponent<FlagComponent>();
 
 	        PropComponent propComponent = lsUnit.AddComponent<PropComponent, int>(row.Radius);
 	        foreach (var prop in row.Props) {
@@ -204,6 +205,7 @@ namespace ET
 	        }
 	        EnsureRuntimeProp(propComponent);
 
+	        lsUnit.AddComponent<PlacementComponent, PlacementData>(placementData);
 	        lsUnit.AddComponent<BuildingComponent, int>(tableId);
 	        lsUnit.AddComponent<DeathComponent, bool>(true);
 	        lsUnit.AddComponent<BuffComponent>();

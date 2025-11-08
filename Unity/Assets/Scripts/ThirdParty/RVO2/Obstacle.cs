@@ -40,7 +40,7 @@ namespace RVO
      */
     internal class Obstacle
     {
-
+        internal bool isRemoved;
         internal Obstacle next_;
         internal Obstacle previous_;
         internal TSVector2 direction_;

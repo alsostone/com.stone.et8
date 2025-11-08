@@ -42,12 +42,16 @@ namespace RVO
     public class Simulator
     {
         internal IList<Agent> agents_;
-        internal IList<Obstacle> obstacles_;
+        internal List<Obstacle> obstacles_;
+        internal List<Obstacle> obstacles2_;
         internal KdTree kdTree_;
         internal FP timeStep_;
 
-        private IList<int> freeIndexs_;
-        private IDictionary<long, int> agentId2index_;
+        private bool obstacleDirty_ = false;
+        private readonly Queue<int> freeAgentIndexs_;
+        private readonly IDictionary<long, int> agentId2index_;
+        private readonly Queue<int> freeObstacleIndexs_;
+        private readonly IDictionary<long, int> obstacleId2index_;
 
         /**
          * <summary>Adds a new agent to the simulation.</summary>
@@ -85,14 +89,13 @@ namespace RVO
          * <param name="isStatic"></param>
          * <param name="agentNo">External specified id</param>
          */
-        public long addAgent(TSVector2 position, FP neighborDist, int maxNeighbors, FP timeHorizon, FP timeHorizonObst, FP radius, FP maxSpeed, TSVector2 velocity, bool isStatic, long agentNo = -1)
+        public void addAgent(TSVector2 position, FP neighborDist, int maxNeighbors, FP timeHorizon, FP timeHorizonObst, FP radius, FP maxSpeed, TSVector2 velocity, bool isStatic, long agentNo)
         {
             int index = -1;
             Agent agent = null;
-            if (freeIndexs_.Count > 0)
+            if (freeAgentIndexs_.Count > 0)
             {
-                index = freeIndexs_[^1];
-                freeIndexs_.RemoveAt(freeIndexs_.Count - 1);
+                index = freeAgentIndexs_.Dequeue();
                 agent = agents_[index];
             }
             else
@@ -102,7 +105,7 @@ namespace RVO
                 agents_.Add(agent);
             }
 
-            agent.id = agentNo == -1 ? agents_.Count : agentNo;
+            agent.id = agentNo;
             agent.maxNeighbors_ = maxNeighbors;
             agent.maxSpeed_ = maxSpeed;
             agent.neighborDist_ = neighborDist;
@@ -113,44 +116,62 @@ namespace RVO
             agent.velocity_ = velocity;
             agent.isRemoved = false;
             agent.isStatic = isStatic;
-            agentId2index_.Add(agent.id, index);
-
-            return agent.id;
+            agentId2index_.Add(agentNo, index);
         }
 
         /**
          * <summary>Adds a new obstacle to the simulation.</summary>
-         *
+         * 
          * <returns>The number of the first vertex of the obstacle, or -1 when
          * the number of vertices is less than two.</returns>
-         *
+         * 
          * <param name="vertices">List of the vertices of the polygonal obstacle
          * in counterclockwise order.</param>
-         *
+         * <param name="obstacleId"></param>
          * <remarks>To add a "negative" obstacle, e.g. a bounding polygon around
          * the environment, the vertices should be listed in clockwise order.
          * </remarks>
          */
-        public int addObstacle(IList<TSVector2> vertices)
+        public int addObstacle(IList<TSVector2> vertices, long obstacleId)
         {
             if (vertices.Count < 2)
             {
                 return -1;
             }
 
-            int obstacleNo = obstacles_.Count;
-
+            int obstacleNo = -1;
+            Obstacle previous = null;
+            
             for (int i = 0; i < vertices.Count; ++i)
             {
-                Obstacle obstacle = new();
-                obstacle.point_ = vertices[i];
-
-                if (i != 0)
+                int index = -1;
+                Obstacle obstacle = null;
+                if (freeObstacleIndexs_.Count > 0)
                 {
-                    obstacle.previous_ = obstacles_[obstacles_.Count - 1];
-                    obstacle.previous_.next_ = obstacle;
+                    index = freeObstacleIndexs_.Dequeue();
+                    obstacle = obstacles_[index];
+                }
+                else
+                {
+                    index = obstacles_.Count;
+                    obstacle = new Obstacle();
+                    obstacles_.Add(obstacle);
                 }
 
+                obstacle.id_ = index;
+                obstacle.point_ = vertices[i];
+                obstacle.isRemoved = false;
+
+                if (i == 0)
+                {
+                    obstacleNo = obstacle.id_;
+                }
+                else
+                {
+                    obstacle.previous_ = previous;
+                    obstacle.previous_.next_ = obstacle;
+                }
+                
                 if (i == vertices.Count - 1)
                 {
                     obstacle.next_ = obstacles_[obstacleNo];
@@ -167,23 +188,41 @@ namespace RVO
                 {
                     obstacle.convex_ = (RVOMath.leftOf(vertices[(i == 0 ? vertices.Count - 1 : i - 1)], vertices[i], vertices[(i == vertices.Count - 1 ? 0 : i + 1)]) >= FP.Zero);
                 }
-
-                obstacle.id_ = obstacles_.Count;
-                obstacles_.Add(obstacle);
+                
+                previous = obstacle;
             }
 
+            obstacleId2index_.Add(obstacleId, obstacleNo);
+            obstacleDirty_ = true;
             return obstacleNo;
         }
         
         public void removeAgent(long agentNo)
         {
             int index = agentId2index_[agentNo];
-            agents_[index].isRemoved = true;
+            Agent agent = agents_[index];
+            agent.isRemoved = true;
+            freeAgentIndexs_.Enqueue(index);
             
-            freeIndexs_.Add(index);
-            agentId2index_.Remove(agents_[index].id);
+            agentId2index_.Remove(agentNo);
         }
         
+        public void removeObstacle(long obstacleId)
+        {
+            int index = obstacleId2index_[obstacleId];
+            Obstacle obstacle = obstacles_[index];
+            Obstacle start = obstacle;
+            do
+            {
+                obstacle.isRemoved = true;
+                freeObstacleIndexs_.Enqueue(obstacle.id_);
+                obstacle = obstacle.next_;
+            } while (obstacle != start);
+            
+            obstacleId2index_.Remove(obstacleId);
+            obstacleDirty_ = true;
+        }
+
         public IList<Agent> GetAllAgents()
         {
             return agents_;
@@ -191,12 +230,23 @@ namespace RVO
         
         public void ClearAllAgents()
         {
-            freeIndexs_.Clear();
+            freeAgentIndexs_.Clear();
             for (int index = 0; index < agents_.Count; index++) {
                 agents_[index].isRemoved = true;
-                freeIndexs_.Add(index);
+                freeAgentIndexs_.Enqueue(index);
             }
             agentId2index_.Clear();
+        }
+        
+        public void ClearAllObstacles()
+        {
+            freeObstacleIndexs_.Clear();
+            for (int index = 0; index < obstacles_.Count; index++) {
+                obstacles_[index].isRemoved = true;
+                freeObstacleIndexs_.Enqueue(index);
+            }
+            obstacleId2index_.Clear();
+            obstacleDirty_ = true;
         }
 
         /**
@@ -207,6 +257,21 @@ namespace RVO
          */
         public void doStep()
         {
+            if (obstacleDirty_)
+            {
+                obstacles2_.Clear();
+                if (obstacles2_.Capacity < obstacles_.Count)
+                    obstacles2_.Capacity = obstacles_.Count;
+                foreach (Obstacle obstacle in obstacles_)
+                {
+                    if (!obstacle.isRemoved)
+                    {
+                        obstacles2_.Add(obstacle);
+                    }
+                }
+                kdTree_.buildObstacleTree(obstacles2_);
+                obstacleDirty_ = false;
+            }
             kdTree_.buildAgentTree(agents_);
             
             for (int i = 0; i < agents_.Count; ++i)
@@ -452,10 +517,13 @@ namespace RVO
             agents_ = new List<Agent>();
             kdTree_ = new KdTree();
             obstacles_ = new List<Obstacle>();
+            obstacles2_ = new List<Obstacle>();
             timeStep_ = FP.EN1;
 
-            freeIndexs_ = new List<int>();
+            freeAgentIndexs_ = new Queue<int>();
             agentId2index_ = new Dictionary<long, int>();
+            freeObstacleIndexs_ = new Queue<int>();
+            obstacleId2index_ = new Dictionary<long, int>();
         }
     }
 }

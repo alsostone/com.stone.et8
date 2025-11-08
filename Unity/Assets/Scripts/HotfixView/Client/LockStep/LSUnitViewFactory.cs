@@ -80,7 +80,7 @@ namespace ET.Client
             lsUnitView.AddComponent<LSViewTransformComponent, Transform, bool>(unitGo.transform, false);
             lsUnitView.AddComponent<EffectViewComponent>();
 
-            PlacementData placementData = lsUnit.GetComponent<PlacementComponent>().PlacementData;
+            PlacementData placementData = lsUnit.GetComponent<PlacementComponent>().GetPlacementData();
             lsUnitView.AddComponent<LSViewPlacementComponent, PlacementData>(placementData);
         }
 
@@ -104,7 +104,7 @@ namespace ET.Client
             float hpMax = propComponent.Get(NumericType.MaxHp).AsFloat();
             lsUnitView.AddComponent<LSViewHudComponent, Vector3, Transform, float, float>(Vector3.up * 3.5f, unitGo.transform, hp, hpMax);
             
-            PlacementData placementData = lsUnit.GetComponent<PlacementComponent>().PlacementData;
+            PlacementData placementData = lsUnit.GetComponent<PlacementComponent>().GetPlacementData();
             lsUnitView.AddComponent<LSViewPlacementComponent, PlacementData>(placementData);
         }
 
