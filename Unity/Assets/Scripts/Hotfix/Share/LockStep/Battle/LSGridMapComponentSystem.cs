@@ -55,6 +55,7 @@ namespace ET
             self.GridRotation = TSQuaternion.Euler(gridMapData.rotation);
             self.GridData = gridMapData.gridData;
             self.SetDestination(new TSVector(0, 0, 0));
+            self.SetObstaclesFromGridData();
             EventSystem.Instance.Publish(self.LSWorld(), new LSGridDataReset() { GridData = self.GridData, FlowField = self.GetDefaultFlowField() });
         }
         
@@ -74,6 +75,37 @@ namespace ET
             position = TSQuaternion.Inverse(self.GridRotation) * (position - self.GridPosition);
             self.FlowFieldDestination = new FieldV2(position.x, position.z);
             self.FlowFieldDirty = true;
+        }
+        
+        private static void SetObstaclesFromGridData(this LSGridMapComponent self)
+        {
+            LSRVO2Component rvo2Component = self.LSWorld().GetComponent<LSRVO2Component>();
+            
+            List<int> edges = ObjectPool.Instance.Fetch<List<int>>();
+            List<IndexV2> contours = ObjectPool.Instance.Fetch<List<IndexV2>>();
+            List<TSVector2> vertices = ObjectPool.Instance.Fetch<List<TSVector2>>();
+
+            self.GridData.GetObstaclesFirstEdge(edges);
+            for (int index = 0; index < edges.Count; index++)
+            {
+                Utils.GenLocalContours(self.GridData.cells, self.GridData.xLength, self.GridData.zLength, edges[index], contours);
+                foreach (IndexV2 v2 in contours)
+                {
+                    FP x = v2.x * self.GridData.cellSize;
+                    FP z = v2.z * self.GridData.cellSize;
+                    TSVector position = self.GridPosition + self.GridRotation * new TSVector(x, 0, z);
+                    vertices.Add(new TSVector2(position.x, position.z));
+                }
+    
+                rvo2Component.AddObstacle(-(index + 100), vertices);
+                vertices.Clear();
+                contours.Clear();
+            }
+
+            ObjectPool.Instance.Recycle(vertices);
+            ObjectPool.Instance.Recycle(contours);
+            edges.Clear();
+            ObjectPool.Instance.Recycle(edges);
         }
         
         public static int GenerateFlowField(this LSGridMapComponent self, List<TSVector> positions)
@@ -175,19 +207,22 @@ namespace ET
             return pos;
         }
 
-        private static void GenBoundary(this LSGridMapComponent self, PlacementData placementData, List<TSVector2> vertices)
+        private static void GenPlacementBoundary(this LSGridMapComponent self, PlacementData placementData, List<TSVector2> vertices)
         {
-            placementData.GenLocalBoundary(vertices);
+            List<IndexV2> contours = ObjectPool.Instance.Fetch<List<IndexV2>>();
+            Utils.GenLocalContours(placementData.points, PlacementData.width, PlacementData.height, placementData.GetFirstEdge(), contours);
             
-            int size = self.GridData.cellSize;
-            for (int i = 0; i < vertices.Count; i++) {
-                TSVector2 v2 = vertices[i];
-                FP x = (placementData.x + v2.x) * size;
-                FP z = (placementData.z + v2.y) * size;
-                
+            vertices.Clear();
+            foreach (IndexV2 v2 in contours)
+            {
+                FP x = (placementData.x + v2.x - PlacementData.xOffset) * self.GridData.cellSize;
+                FP z = (placementData.z + v2.z - PlacementData.zOffset) * self.GridData.cellSize;
                 TSVector position = self.GridPosition + self.GridRotation * new TSVector(x, 0, z);
-                vertices[i] = new TSVector2(position.x, position.z);
+                vertices.Add(new TSVector2(position.x, position.z));
             }
+
+            contours.Clear();
+            ObjectPool.Instance.Recycle(contours);
         }
         
         public static bool CanPut(this LSGridMapComponent self, int x, int z, PlacementData placementData)
@@ -206,7 +241,7 @@ namespace ET
                 {
                     LSRVO2Component rvo2Component = self.LSWorld().GetComponent<LSRVO2Component>();
                     List<TSVector2> vertices = ObjectPool.Instance.Fetch<List<TSVector2>>();
-                    self.GenBoundary(placementData, vertices);
+                    self.GenPlacementBoundary(placementData, vertices);
                     rvo2Component.AddObstacle(self.LSUnit(placementData.id), vertices);
                     vertices.Clear();
                     ObjectPool.Instance.Recycle(vertices);

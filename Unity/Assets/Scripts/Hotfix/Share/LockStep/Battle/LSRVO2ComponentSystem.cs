@@ -74,6 +74,11 @@ namespace ET
             self.RVO2Simulator.addObstacle(vertices, lsUnit.Id);
         }
         
+        public static void AddObstacle(this LSRVO2Component self, long obstacleId, List<TSVector2> vertices)
+        {
+            self.RVO2Simulator.addObstacle(vertices, obstacleId);
+        }
+        
         public static void RemoveObstacle(this LSRVO2Component self, LSUnit lsUnit)
         {
             self.RVO2Simulator.removeObstacle(lsUnit.Id);

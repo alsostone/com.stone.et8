@@ -315,5 +315,37 @@ namespace ST.GridBuilder
             return new IndexV2(-1, -1);
         }
         
+        public void GetObstaclesFirstEdge(List<int> results)
+        {
+            results.Clear();
+            visited.Clear();
+            
+            for (int x = 0; x < xLength; x++)
+            for (int z = 0; z < zLength; z++)
+            {
+                int index = x + z * xLength;
+                CellData current = cells[index];
+                if (current.isObstacle && !visited.Contains(current))
+                {
+                    MarkObstacleAndNeighbors(x, z);
+                    results.Add(index);
+                }
+            }
+        }
+        
+        private void MarkObstacleAndNeighbors(int x, int z)
+        {
+            CellData cell = GetCell(x, z);
+            if (cell == null || !cell.isObstacle || visited.Contains(cell))
+                return;
+            
+            visited.Add(cell);
+            foreach (var (dx, dz) in Directions)
+            {
+                int nx = x + dx;
+                int nz = z + dz;
+                MarkObstacleAndNeighbors(nx, nz);
+            }
+        }
     }
 }
