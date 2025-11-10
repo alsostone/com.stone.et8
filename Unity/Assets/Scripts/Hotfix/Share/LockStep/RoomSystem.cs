@@ -53,9 +53,9 @@ namespace ET
                 LSUnitFactory.CreateBuilding(lsWorld, lsStageComponent.TbRow.BaseCampSoldier, new TSVector(32, 0, 32), 0, TeamType.TeamB);
 
             // 创建我方士兵 (测试用)
-            int rows = 10;
-            int columns = 15;
-            FP spacing = FP.Half * 2;
+            int rows = 5;
+            int columns = 8;
+            FP spacing = FP.Half * 4;
             FP width = (columns - 1) * spacing;
             FP depth = (rows - 1) * spacing;
             
