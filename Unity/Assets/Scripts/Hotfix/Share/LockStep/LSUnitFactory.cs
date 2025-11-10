@@ -94,7 +94,7 @@ namespace ET
 			lsUnit.AddComponent<BuffComponent>();
 			lsUnit.AddComponent<BeHitComponent>();
 			lsUnit.AddComponent<SkillComponent, int[], int[]>(row.NormalSkills, row.ActiveSkills);
-	        lsUnit.AddComponent<MoveFlowFieldComponent>();
+	        lsUnit.AddComponent<MoveFlowFieldComponent, bool>(false);
 			
 			EventSystem.Instance.Publish(lsWorld, new LSUnitCreate() {LSUnit = lsUnit});
             return lsUnit;
@@ -122,7 +122,7 @@ namespace ET
 	        lsUnit.AddComponent<BuffComponent>();
 	        lsUnit.AddComponent<BeHitComponent>();
 	        lsUnit.AddComponent<SkillComponent, int[], int[]>(row.Skills, null);
-	        lsUnit.AddComponent<MoveFlowFieldComponent>();
+	        lsUnit.AddComponent<MoveFlowFieldComponent, bool>(true);
 	        lsUnit.AddComponent<AIRootComponent, Node>(teamType == TeamType.TeamA ? AIAutoAttack.Gen() : AIAutoAttackCenter.Gen());
 
 	        EventSystem.Instance.Publish(lsWorld, new LSUnitCreate() {LSUnit = lsUnit});
