@@ -121,9 +121,8 @@ namespace ET.Client
             {
                 LSUnitView lsUnitView = target.GetComponent<LSUnitViewBehaviour>()?.LSUnitView;
                 if (lsUnitView != null) {
-                    var command = LSCommand.GenCommandLong(0, OperateCommandType.PlacementDragStart, lsUnitView.Id);
+                    var command = LSCommand.GenCommandLong(0, OperateCommandType.PlacementDrag, lsUnitView.Id);
                     self.Room().SendCommandMeesage(command);
-                    self.isDraging = true;
                 }
             }
         }
@@ -132,15 +131,23 @@ namespace ET.Client
         {
             if (!self.isDraging)
             {
+                self.longTouchPreesToken?.Cancel();
+                self.longTouchPreesToken = null;
+                
+                // 若选框大小未达到一定范围 则选中的单位是当前点击位置的单位
+                if (self.RaycastTarget(touchPosition, out GameObject target)) {
+                    LSUnitView lsUnitView = target.GetComponent<LSUnitViewBehaviour>()?.LSUnitView;
+                    var command = LSCommand.GenCommandLong(0, OperateCommandType.TouchDown, lsUnitView?.Id ?? 0);
+                    self.Room().SendCommandMeesage(command);
+                    self.ScanTouchLongPress(touchPosition).Coroutine();
+                }
+
                 if (self.RaycastTerrain(touchPosition, out Vector3 pos2))
                 {
                     var command = LSCommand.GenCommandFloat2(0, OperateCommandType.TouchDragStart, pos2.x, pos2.z);
                     self.Room().SendCommandMeesage(command);
                     self.isDraging = true;
                 }
-                self.longTouchPreesToken?.Cancel();
-                self.longTouchPreesToken = null;
-                self.ScanTouchLongPress(touchPosition).Coroutine();
             }
             else if (self.RaycastTerrain(touchPosition, out Vector3 pos))
             {
@@ -189,7 +196,7 @@ namespace ET.Client
         
         public static void SetPlacementObject(this LSOperaDragComponent self, long itemId, bool disableMouseMove)
         {
-            var command = LSCommand.GenCommandLong(0, OperateCommandType.PlacementStart, itemId);
+            var command = LSCommand.GenCommandLong(0, OperateCommandType.PlacementNew, itemId);
             self.Room().SendCommandMeesage(command);
             self.isDraging = true;
             self.isOutsideDraging = disableMouseMove;

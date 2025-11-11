@@ -58,7 +58,7 @@ namespace ET
                 {
                     // 指令DragStart新来时，移除缓存的DragStart和Drag
                     var commands = self.FramesCommandsDrag[index];
-                    for (int i = commands.Count - 1; i >= 0; i++) {
+                    for (int i = commands.Count - 1; i >= 0; i--) {
                         OperateCommandType cmdType = (OperateCommandType)((commands[i].Header >> 16) & 0xFF);
                         if (cmdType == OperateCommandType.TouchDragStart || cmdType == OperateCommandType.TouchDrag)
                             commands.RemoveAt(i);
@@ -79,8 +79,9 @@ namespace ET
                     commands.Add(command);
                     break;
                 }
-                case OperateCommandType.PlacementDragStart:
-                case OperateCommandType.PlacementStart:
+                case OperateCommandType.TouchDown:
+                case OperateCommandType.PlacementDrag:
+                case OperateCommandType.PlacementNew:
                 {
                     var commands = self.FramesCommandsDrag[index];
                     commands.Add(command);

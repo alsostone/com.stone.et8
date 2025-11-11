@@ -7,6 +7,7 @@ namespace ET
     [MemoryPackable]
     public partial class LSGridBuilderComponent: LSEntity, IAwake, ISerializeToEntity
     {
+        public long TouchDownTargetId;
         public long PlacementTargetId;
         public int PlacementRotation;
         public long PlacementItemId;

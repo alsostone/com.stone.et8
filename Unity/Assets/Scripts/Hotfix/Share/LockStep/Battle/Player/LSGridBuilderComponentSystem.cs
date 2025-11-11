@@ -19,6 +19,11 @@ namespace ET
             SelectionComponent selectionComponent = self.LSOwner().GetComponent<SelectionComponent>();
             selectionComponent.ClearSelection();
         }
+        
+        public static void RunCommandTouchDown(this LSGridBuilderComponent self, long targetId)
+        {
+            self.TouchDownTargetId = targetId;
+        }
 
         public static void RunCommandTouchDragStart(this LSGridBuilderComponent self, TSVector2 position)
         {
@@ -81,16 +86,24 @@ namespace ET
             }
             else
             {
-                SelectionComponent selectionComponent = lsOwner.GetComponent<SelectionComponent>();
-                TSBounds bounds = new TSBounds();
-                bounds.SetMinMax(TSVector.Min(self.DragStartPosition, positionV3), TSVector.Max(self.DragStartPosition, positionV3));
-                selectionComponent.SelectUnitsInBounds(bounds);
+                if (TSVector.SqrDistance(self.DragStartPosition, positionV3) > FP.EN2)
+                {
+                    SelectionComponent selectionComponent = lsOwner.GetComponent<SelectionComponent>();
+                    TSBounds bounds = new TSBounds();
+                    bounds.SetMinMax(TSVector.Min(self.DragStartPosition, positionV3), TSVector.Max(self.DragStartPosition, positionV3));
+                    selectionComponent.SelectUnitsInBounds(bounds);
+                }
+                else
+                {
+                    SelectionComponent selectionComponent = lsOwner.GetComponent<SelectionComponent>();
+                    selectionComponent.SelectSingleUnit(self.TouchDownTargetId);
+                }
             }
             self.ClearPlacementData();
             EventSystem.Instance.Publish(lsWorld, new LSTouchDragEnd() { Id = lsOwner.Id });
         }
 
-        public static void RunCommandPlacementDragStart(this LSGridBuilderComponent self, long targetId)
+        public static void RunCommandPlacementDrag(this LSGridBuilderComponent self, long targetId)
         {
             self.ClearPlacementData();
             
@@ -102,7 +115,7 @@ namespace ET
             EventSystem.Instance.Publish(self.LSWorld(), new LSPlacementDragStart() { Id = self.LSOwner().Id, TargetId = targetId });
         }
 
-        public static void RunCommandPlacementStart(this LSGridBuilderComponent self, long itemId)
+        public static void RunCommandPlacementNew(this LSGridBuilderComponent self, long itemId)
         {
             self.ClearPlacementData();
             
@@ -132,6 +145,7 @@ namespace ET
         
         private static void ClearPlacementData(this LSGridBuilderComponent self)
         {self.LSRoom()?.ProcessLog.LogFunction(14, self.LSParent().Id);
+            self.TouchDownTargetId = 0;
             self.PlacementTargetId = 0;
             self.PlacementRotation = 0;
             self.PlacementItemId = 0;

@@ -15,10 +15,29 @@ namespace ET
         
         public static void SelectUnitsInBounds(this SelectionComponent self, TSBounds bounds)
         {
+            self.SelectedUnitIds.Clear();
+            
             LSTargetsComponent targetsComponent = self.LSWorld().GetComponent<LSTargetsComponent>();
             TeamType team = self.LSOwner().GetComponent<TeamComponent>().Type;
             targetsComponent.GetAttackTargets(team, EUnitType.Hero | EUnitType.Soldier, bounds, self.SelectedUnitIds);
             EventSystem.Instance.Publish(self.LSWorld(), new LSSelectionChanged() { Id = self.LSOwner().Id, SelectionIds = self.SelectedUnitIds });
+        }
+        
+        public static void SelectSingleUnit(this SelectionComponent self, long targetId)
+        {
+            self.SelectedUnitIds.Clear();
+            
+            LSUnit lsTarget = self.LSUnit(targetId);
+            if (lsTarget != null)
+            {
+                TeamType teamOwner = self.LSOwner().GetComponent<TeamComponent>().Type;
+                TeamType teamTarget = lsTarget.GetComponent<TeamComponent>().Type;
+                if (teamTarget == teamOwner)
+                {
+                    self.SelectedUnitIds.Add(targetId);
+                    EventSystem.Instance.Publish(self.LSWorld(), new LSSelectionChanged() { Id = self.LSOwner().Id, SelectionIds = self.SelectedUnitIds });
+                }
+            }
         }
         
         public static void ClearSelection(this SelectionComponent self)

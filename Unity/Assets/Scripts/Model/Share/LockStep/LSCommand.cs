@@ -9,11 +9,12 @@ namespace ET
         Invalid,        // 无效指令
         Move,           // 移动
         MoveTo,         // 移动到指定位置
+        TouchDown,         // 触摸按下
         TouchDragStart,      // 拖拽开始
         TouchDrag,           // 拖拽
         TouchDragEnd,        // 拖拽结束
-        PlacementDragStart,      // 拖拽开始
-        PlacementStart,          // 放置开始
+        PlacementDrag,          // 拖拽开始
+        PlacementNew,          // 放置开始
         Button,         // 按钮指令
         Online,         // 上下线指令 服务器生成该指令
 #if ENABLE_DEBUG

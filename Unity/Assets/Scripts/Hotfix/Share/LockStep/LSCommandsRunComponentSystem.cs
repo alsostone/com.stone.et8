@@ -34,6 +34,12 @@ namespace ET
                         self.LSOwner().GetComponent<SelectionComponent>().MoveToPosition(movement.Item2, movement.Item1);
                         break;
                     }
+                    case OperateCommandType.TouchDown:
+                    {
+                        long targetId = (long)LSCommand.ParseCommandLong(command);
+                        self.LSOwner().GetComponent<LSGridBuilderComponent>().RunCommandTouchDown(targetId);
+                        break;
+                    }
                     case OperateCommandType.TouchDragStart:
                     {
                         TSVector2 pos = LSCommand.ParseCommandFloat2(command);
@@ -52,16 +58,16 @@ namespace ET
                         self.LSOwner().GetComponent<LSGridBuilderComponent>().RunCommandTouchDragEnd(pos);
                         break;
                     }
-                    case OperateCommandType.PlacementDragStart:
+                    case OperateCommandType.PlacementDrag:
                     {
                         long targetId = (long)LSCommand.ParseCommandLong(command);
-                        self.LSOwner().GetComponent<LSGridBuilderComponent>().RunCommandPlacementDragStart(targetId);
+                        self.LSOwner().GetComponent<LSGridBuilderComponent>().RunCommandPlacementDrag(targetId);
                         break;
                     }
-                    case OperateCommandType.PlacementStart:
+                    case OperateCommandType.PlacementNew:
                     {
                         long itemId = (long)LSCommand.ParseCommandLong(command);
-                        self.LSOwner().GetComponent<LSGridBuilderComponent>().RunCommandPlacementStart(itemId);
+                        self.LSOwner().GetComponent<LSGridBuilderComponent>().RunCommandPlacementNew(itemId);
                         break;
                     }
                     case OperateCommandType.Button:
