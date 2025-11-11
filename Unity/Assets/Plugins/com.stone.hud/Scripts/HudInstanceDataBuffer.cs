@@ -9,6 +9,7 @@ namespace ST.HUD
         public Vector3 Position;
         public int NameIndex;
         public float Progress;
+        public Vector3 Color;
     }
 
     internal class HudInstanceDataBuffer

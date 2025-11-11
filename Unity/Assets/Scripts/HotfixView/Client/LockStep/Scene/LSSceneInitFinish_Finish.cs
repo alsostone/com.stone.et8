@@ -9,6 +9,7 @@ namespace ET.Client
         {
             Room room = clientScene.GetComponent<Room>();
             
+            room.AddComponent<LSSettingsComponent>();
             room.AddComponent<LSCameraComponent>();
             room.AddComponent<LSViewGameOverComponent>();
             room.AddComponent<LSViewGridMapComponent>();

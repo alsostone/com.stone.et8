@@ -83,14 +83,15 @@ namespace ST.HUD
             _instanceDataBuffer.SetData(index, data);
         }
 
-        public int AddInstance(Vector3 position, float progress = 1f)
+        public int AddInstance(Vector3 position, Color color, float progress = 1f)
         {
             var instanceData = new HudInstanceData
             {
                 Visible = 1,
                 Position = position,
                 NameIndex = -1,
-                Progress = progress
+                Progress = progress,
+                Color = new Vector3(color.r, color.g, color.b)
             };
             return _instanceDataBuffer.Insert(instanceData);
         }

@@ -6,6 +6,7 @@ struct InstanceData
     float3 position;
     int index;
     float progress;
+    float3 color;
 };
 
 matrix _VPMatrix;

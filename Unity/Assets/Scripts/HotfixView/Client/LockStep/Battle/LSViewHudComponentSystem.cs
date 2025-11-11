@@ -15,7 +15,8 @@ namespace ET.Client
             self.FollowTransform = follow;
             self.Hp = hp;
             self.MaxHp = hpMax;
-            self.HudInstance = HudRenderer.Instance.AddInstance(self.FollowTransform.position + offset, hp / hpMax);
+            Color color = self.Room().GetComponent<LSSettingsComponent>().GetHudColor(self.LSViewOwner());
+            self.HudInstance = HudRenderer.Instance.AddInstance(self.FollowTransform.position + offset, color, hp / hpMax);
         }
 
         [EntitySystem]

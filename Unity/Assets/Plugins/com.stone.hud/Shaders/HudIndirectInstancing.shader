@@ -50,6 +50,7 @@ Shader "ST/HudIndirectInstancing"
 			    float3 position;
 				int index;
 				float progress;
+				float3 color;
 			};
 			
 			StructuredBuffer<InstanceData> _instanceBuffer;
@@ -94,7 +95,7 @@ Shader "ST/HudIndirectInstancing"
                 o.vertex = UnityObjectToClipPos(float4(pos, 1.0));
             	
             	o.uv = TRANSFORM_TEX(v.uv, _FontTex);
-            	o.color = v.color;
+            	o.color = float4(data.color, v.color.a);
             	o.param = float2(data.index, data.progress);
 			    return o;
 			}
@@ -105,8 +106,7 @@ Shader "ST/HudIndirectInstancing"
 				fixed4 color1 = UNITY_SAMPLE_TEX2DARRAY(_FontTex, uv);
 				color1.a = lerp(color1.a, 0, step(i.param.x, 0));
 				
-				float t = step(i.param.y, i.uv.x);
-				fixed4 color2 = lerp(i.color, _Color, t);
+				const fixed4 color2 = lerp(i.color, _Color, step(i.param.y, i.uv.x));
 				
 				fixed4 col = lerp(color2, color1, step(i.color.a, 1.001));
                 clip(col.a - 0.01);
