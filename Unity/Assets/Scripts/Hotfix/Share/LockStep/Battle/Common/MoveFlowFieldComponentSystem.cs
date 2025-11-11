@@ -8,9 +8,8 @@ namespace ET
     public static partial class MoveFlowFieldComponentSystem
     {
         [EntitySystem]
-        private static void Awake(this MoveFlowFieldComponent self, bool isUseRVO2)
+        private static void Awake(this MoveFlowFieldComponent self)
         {
-            self.IsUesRVO2 = isUseRVO2;
         }
         
         [LSEntitySystem]
@@ -34,11 +33,7 @@ namespace ET
                 return;
             }
             
-            if (self.IsUesRVO2) {
-                transformComponent.RVOMove(new TSVector2(vector.x, vector.z));
-            } else {
-                transformComponent.Move(new TSVector2(vector.x, vector.z));
-            }
+            transformComponent.RVOMove(new TSVector2(vector.x, vector.z));
         }
         
         [EntitySystem]

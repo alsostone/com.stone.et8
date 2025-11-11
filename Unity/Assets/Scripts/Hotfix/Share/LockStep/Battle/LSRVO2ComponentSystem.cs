@@ -30,7 +30,7 @@ namespace ET
             self.RVO2Simulator.doStep();
             foreach (Agent agent in self.RVO2Simulator.GetAllAgents())
             {
-                if (agent.isRemoved || agent.isStatic) { continue; }
+                if (agent.isRemoved) { continue; }
                 agent.prefVelocity = TSVector2.zero;
                 
                 LSUnit lsUnit = self.LSUnit(agent.id);
@@ -52,7 +52,7 @@ namespace ET
             PropComponent propComponent = lsUnit.GetComponent<PropComponent>();
             FP speed = propComponent.Get(NumericType.Speed);
             
-            self.RVO2Simulator.addAgent(position, 2, 10, 5, 5, propComponent.Radius, speed, TSVector2.zero, false, lsUnit.Id);
+            self.RVO2Simulator.addAgent(position, FP.Two, 10, FP.Two, FP.EN2, propComponent.Radius, speed, TSVector2.zero, lsUnit.Id);
         }
         
         public static void AddStaticAgent(this LSRVO2Component self, LSUnit lsUnit)
@@ -61,7 +61,9 @@ namespace ET
             TSVector2 position = new(transformComponent.Position.x, transformComponent.Position.z);
             
             PropComponent propComponent = lsUnit.GetComponent<PropComponent>();
-            self.RVO2Simulator.addAgent(position, 0, 0, 0, 0, propComponent.Radius, 0, TSVector2.zero, true, lsUnit.Id);
+            FP speed = propComponent.Get(NumericType.Speed);
+            
+            self.RVO2Simulator.addAgent(position, FP.Two, 0, FP.EN2, FP.EN2, propComponent.Radius, speed, TSVector2.zero, lsUnit.Id);
         }
         
         public static void RemoveAgent(this LSRVO2Component self, LSUnit lsUnit)

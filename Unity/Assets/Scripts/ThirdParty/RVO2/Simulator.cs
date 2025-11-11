@@ -86,10 +86,9 @@ namespace RVO
          * non-negative.</param>
          * <param name="velocity">The initial two-dimensional linear velocity of
          * this agent.</param>
-         * <param name="isStatic"></param>
          * <param name="agentNo">External specified id</param>
          */
-        public void addAgent(TSVector2 position, FP neighborDist, int maxNeighbors, FP timeHorizon, FP timeHorizonObst, FP radius, FP maxSpeed, TSVector2 velocity, bool isStatic, long agentNo)
+        public void addAgent(TSVector2 position, FP neighborDist, int maxNeighbors, FP timeHorizon, FP timeHorizonObst, FP radius, FP maxSpeed, TSVector2 velocity, long agentNo)
         {
             int index = -1;
             Agent agent = null;
@@ -115,7 +114,6 @@ namespace RVO
             agent.timeHorizonObst_ = timeHorizonObst;
             agent.velocity_ = velocity;
             agent.isRemoved = false;
-            agent.isStatic = isStatic;
             agentId2index_.Add(agentNo, index);
         }
 

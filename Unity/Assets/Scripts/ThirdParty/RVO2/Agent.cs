@@ -46,7 +46,6 @@ namespace RVO
         public TSVector2 position;
         public TSVector2 prefVelocity;
         public bool isRemoved = false;
-        public bool isStatic = false;
         
         internal IList<KeyValuePair<FP, Agent>> agentNeighbors_ = new List<KeyValuePair<FP, Agent>>();
         internal IList<KeyValuePair<FP, Obstacle>> obstacleNeighbors_ = new List<KeyValuePair<FP, Obstacle>>();
@@ -67,9 +66,6 @@ namespace RVO
          */
         internal void computeNeighbors(KdTree kdTree)
         {
-            if (isStatic) {
-                return;
-            }
             obstacleNeighbors_.Clear();
             agentNeighbors_.Clear();
             if (isRemoved) {
@@ -91,9 +87,6 @@ namespace RVO
          */
         internal void computeNewVelocity(FP timeStep)
         {
-            if (isStatic) {
-                return;
-            }
             orcaLines_.Clear();
             if (isRemoved) {
                 return;
@@ -511,9 +504,6 @@ namespace RVO
          */
         internal void update(FP timeStep)
         {
-            if (isStatic) {
-                return;
-            }
             if (isRemoved) {
                 return;
             }
