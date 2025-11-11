@@ -16,7 +16,7 @@ namespace ET.Client
                 return;
             var view = comp.GetChild<LSUnitView>(args.Id);
             var transformComponent = view.GetComponent<LSViewTransformComponent>();
-            var position = transformComponent.Transform.position + Vector3.up;
+            var position = transformComponent.GetAttachPoint(AttachPoint.Head);
             switch (args.Type)
             {
                 case FloatingType.Damage:

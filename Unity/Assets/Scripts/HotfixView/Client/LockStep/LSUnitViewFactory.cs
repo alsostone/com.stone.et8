@@ -60,14 +60,16 @@ namespace ET.Client
             if (animation) {
                 lsUnitView.AddComponent<LSAnimationComponent, Animation>(animation);
             }
-            lsUnitView.AddComponent<LSViewTransformComponent, Transform, bool>(unitGo.transform, false);
+            
+            AttachPointCollector collector = unitGo.GetComponent<AttachPointCollector>();
+            lsUnitView.AddComponent<LSViewTransformComponent, Transform, AttachPointCollector, bool>(unitGo.transform, collector, false);
             lsUnitView.AddComponent<LSViewSkillComponent>();
             lsUnitView.AddComponent<EffectViewComponent>();
 
             var propComponent = lsUnit.GetComponent<PropComponent>();
             float hp = propComponent.Get(NumericType.Hp).AsFloat();
             float hpMax = propComponent.Get(NumericType.MaxHp).AsFloat();
-            lsUnitView.AddComponent<LSViewHudComponent, Vector3, Transform, float, float>(Vector3.up * 3.5f, unitGo.transform, hp, hpMax);
+            lsUnitView.AddComponent<LSViewHudComponent, Vector3, float, float>(Vector3.zero, hp, hpMax);
         }
 
         private static void CreateBlockView(LSUnitViewComponent viewComponent, LSUnit lsUnit)
@@ -77,7 +79,9 @@ namespace ET.Client
             GameObject unitGo = viewComponent.Room().GetComponent<ResourcesPoolComponent>().Fetch(blockComponent.TbRow.Model, globalComponent.Unit, true);
 
             LSUnitView lsUnitView = viewComponent.AddChildWithId<LSUnitView, GameObject>(lsUnit.Id, unitGo);
-            lsUnitView.AddComponent<LSViewTransformComponent, Transform, bool>(unitGo.transform, false);
+            
+            AttachPointCollector collector = unitGo.GetComponent<AttachPointCollector>();
+            lsUnitView.AddComponent<LSViewTransformComponent, Transform, AttachPointCollector, bool>(unitGo.transform, collector, false);
             lsUnitView.AddComponent<EffectViewComponent>();
 
             PlacementData placementData = lsUnit.GetComponent<PlacementComponent>().GetPlacementData();
@@ -95,14 +99,16 @@ namespace ET.Client
             if (animation) {
                 lsUnitView.AddComponent<LSAnimationComponent, Animation>(animation);
             }
-            lsUnitView.AddComponent<LSViewTransformComponent, Transform, bool>(unitGo.transform, false);
+            
+            AttachPointCollector collector = unitGo.GetComponent<AttachPointCollector>();
+            lsUnitView.AddComponent<LSViewTransformComponent, Transform, AttachPointCollector, bool>(unitGo.transform, collector, false);
             lsUnitView.AddComponent<LSViewSkillComponent>();
             lsUnitView.AddComponent<EffectViewComponent>();
             
             var propComponent = lsUnit.GetComponent<PropComponent>();
             float hp = propComponent.Get(NumericType.Hp).AsFloat();
             float hpMax = propComponent.Get(NumericType.MaxHp).AsFloat();
-            lsUnitView.AddComponent<LSViewHudComponent, Vector3, Transform, float, float>(Vector3.up * 3.5f, unitGo.transform, hp, hpMax);
+            lsUnitView.AddComponent<LSViewHudComponent, Vector3, float, float>(Vector3.zero, hp, hpMax);
             
             PlacementData placementData = lsUnit.GetComponent<PlacementComponent>().GetPlacementData();
             lsUnitView.AddComponent<LSViewPlacementComponent, PlacementData>(placementData);
@@ -119,14 +125,16 @@ namespace ET.Client
             if (animation) {
                 lsUnitView.AddComponent<LSAnimationComponent, Animation>(animation);
             }
-            lsUnitView.AddComponent<LSViewTransformComponent, Transform, bool>(unitGo.transform, false);
+            
+            AttachPointCollector collector = unitGo.GetComponent<AttachPointCollector>();
+            lsUnitView.AddComponent<LSViewTransformComponent, Transform, AttachPointCollector, bool>(unitGo.transform, collector, false);
             lsUnitView.AddComponent<LSViewSkillComponent>();
             lsUnitView.AddComponent<EffectViewComponent>();
 
             var propComponent = lsUnit.GetComponent<PropComponent>();
             float hp = propComponent.Get(NumericType.Hp).AsFloat();
             float hpMax = propComponent.Get(NumericType.MaxHp).AsFloat();
-            lsUnitView.AddComponent<LSViewHudComponent, Vector3, Transform, float, float>(Vector3.up * 3.5f, unitGo.transform, hp, hpMax);
+            lsUnitView.AddComponent<LSViewHudComponent, Vector3, float, float>(Vector3.zero, hp, hpMax);
         }
 
         private static void CreateItemView(LSUnitViewComponent viewComponent, LSUnit lsUnit)
@@ -136,7 +144,7 @@ namespace ET.Client
             GameObject unitGo = viewComponent.Room().GetComponent<ResourcesPoolComponent>().Fetch(itemComponent.TbRow.Model, globalComponent.Unit, true);
 
             LSUnitView lsUnitView = viewComponent.AddChildWithId<LSUnitView, GameObject>(lsUnit.Id, unitGo);
-            lsUnitView.AddComponent<LSViewTransformComponent, Transform, bool>(unitGo.transform, true);
+            lsUnitView.AddComponent<LSViewTransformComponent, Transform, AttachPointCollector, bool>(unitGo.transform, null, true);
         }
 
         private static void CreateBulletView(LSUnitViewComponent viewComponent, LSUnit lsUnit)
@@ -147,7 +155,7 @@ namespace ET.Client
             GameObject unitGo = viewComponent.Room().GetComponent<ResourcesPoolComponent>().Fetch(row.Resource, globalComponent.Unit, true);
 
             LSUnitView lsUnitView = viewComponent.AddChildWithId<LSUnitView, GameObject>(lsUnit.Id, unitGo);
-            lsUnitView.AddComponent<LSViewTransformComponent, Transform, bool>(unitGo.transform, true);
+            lsUnitView.AddComponent<LSViewTransformComponent, Transform, AttachPointCollector, bool>(unitGo.transform, null, true);
         }
 
     }

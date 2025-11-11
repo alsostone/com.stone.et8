@@ -4,7 +4,7 @@ using UnityEngine;
 namespace ET.Client
 {
 	[ComponentOf]
-	public class LSViewHudComponent : Entity, IAwake<Vector3, Transform, float, float>, IUpdate, IDestroy
+	public class LSViewHudComponent : Entity, IAwake<Vector3, float, float>, IUpdate, IDestroy
 	{
 		public int HudInstance;
 		public Vector3 Offset;

@@ -41,7 +41,7 @@ namespace ET.Client
 
             LSUnitView lsUnitView = self.LSViewOwner();
             LSViewTransformComponent viewTransformComponent = lsUnitView.GetComponent<LSViewTransformComponent>();
-            Transform attachTransform = viewTransformComponent.GetAttachTransform(fxRow.BindPointType);
+            Transform attachTransform = viewTransformComponent.GetAttachTransform((AttachPoint)fxRow.AttachPoint);
 
             ResourcesPoolComponent poolComponent = self.Room().GetComponent<ResourcesPoolComponent>();
             GameObject go = await poolComponent.FetchAsync(fxRow.Resource, attachTransform);

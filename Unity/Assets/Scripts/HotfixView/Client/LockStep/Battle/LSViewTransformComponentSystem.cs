@@ -9,9 +9,10 @@ namespace ET.Client
     public static partial class LSViewTransformComponentSystem
     {
         [EntitySystem]
-        private static void Awake(this LSViewTransformComponent self, Transform transform, bool uesViewRotation)
+        private static void Awake(this LSViewTransformComponent self, Transform transform, AttachPointCollector collector, bool uesViewRotation)
         {
             self.Transform = transform;
+            self.AttachPointCollector = collector;
             self.IsUesViewRotation = uesViewRotation;
             self.ResetTransfrom();
         }
@@ -72,8 +73,21 @@ namespace ET.Client
             self.Enabled = enabled;
         }
         
-        public static Transform GetAttachTransform(this LSViewTransformComponent self, EBindPointType attachPoint)
+        public static Vector3 GetAttachPoint(this LSViewTransformComponent self, AttachPoint attachPoint)
         {
+            if (self.AttachPointCollector != null)
+            {
+                return self.AttachPointCollector.GetAttachPoint(attachPoint).position;
+            }
+            return self.Transform.position;
+        }
+
+        public static Transform GetAttachTransform(this LSViewTransformComponent self, AttachPoint attachPoint)
+        {
+            if (self.AttachPointCollector != null)
+            {
+                return self.AttachPointCollector.GetAttachPoint(attachPoint);
+            }
             return self.Transform;
         }
     }

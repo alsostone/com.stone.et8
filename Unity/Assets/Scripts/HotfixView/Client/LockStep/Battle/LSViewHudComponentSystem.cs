@@ -9,10 +9,10 @@ namespace ET.Client
     public static partial class LSViewHudComponentSystem
     {
         [EntitySystem]
-        private static void Awake(this LSViewHudComponent self, Vector3 offset, Transform follow, float hp, float hpMax)
+        private static void Awake(this LSViewHudComponent self, Vector3 offset, float hp, float hpMax)
         {
             self.Offset = offset;
-            self.FollowTransform = follow;
+            self.FollowTransform = self.LSViewOwner().GetComponent<LSViewTransformComponent>().GetAttachTransform(AttachPoint.Head);
             self.Hp = hp;
             self.MaxHp = hpMax;
             Color color = self.Room().GetComponent<LSSettingsComponent>().GetHudColor(self.LSViewOwner());

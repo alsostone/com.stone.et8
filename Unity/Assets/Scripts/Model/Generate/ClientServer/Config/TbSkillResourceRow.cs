@@ -22,7 +22,7 @@ namespace ET
             Resource_Ref = null;
             SoundId = _buf.ReadInt();
             SoundId_Ref = null;
-            BindPointType = (EBindPointType)_buf.ReadInt();
+            AttachPoint = _buf.ReadInt();
 
             PostInit();
         }
@@ -59,7 +59,7 @@ namespace ET
         /// <summary>
         /// 挂点类型
         /// </summary>
-        public readonly EBindPointType BindPointType;
+        public readonly int AttachPoint;
 
 
         public const int __ID__ = 1091878537;
@@ -81,7 +81,7 @@ namespace ET
             + "name:" + Name + ","
             + "resource:" + Resource + ","
             + "soundId:" + SoundId + ","
-            + "bindPointType:" + BindPointType + ","
+            + "attachPoint:" + AttachPoint + ","
             + "}";
         }
 
