@@ -56,6 +56,9 @@ namespace ET
                     Distance = target.Distance
                 });
             }
+            if (targets.Count > 0) {
+                self.LSOwner().GetComponent<TransformComponent>().LookAt(targets[0].Target);
+            }
             targets.Clear();
             ObjectPool.Instance.Recycle(targets);
             return self.SearchUnits.Count;

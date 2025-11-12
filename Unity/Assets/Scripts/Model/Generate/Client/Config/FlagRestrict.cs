@@ -37,5 +37,10 @@ namespace ET
         /// </summary>
         NotAIAlert = 8,
 
+        /// <summary>
+        /// 禁止旋转
+        /// </summary>
+        NotRotate = 16,
+
     }
 }

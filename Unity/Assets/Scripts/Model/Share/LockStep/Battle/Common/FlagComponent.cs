@@ -7,7 +7,7 @@ namespace ET
 {
     [ComponentOf(typeof(LSUnit))]
     [MemoryPackable]
-    public partial class FlagComponent : LSEntity, IAwake, ISerializeToEntity
+    public partial class FlagComponent : LSEntity, IAwake, IAwake<int>, ISerializeToEntity
     {
         [BsonDictionaryOptions(DictionaryRepresentation.ArrayOfArrays)]
         public Dictionary<FlagRestrict, int> RestrictRefrence = new();

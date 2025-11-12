@@ -106,5 +106,18 @@ namespace ET
             self.LSRoom()?.ProcessLog.LogIgnore();
             return self.Position + self.Rotation * position;
         }
+        
+        public static void LookAt(this TransformComponent self, LSUnit lsTarget)
+        {
+            var flagComponent = self.LSOwner().GetComponent<FlagComponent>();
+            if (flagComponent.HasRestrict(FlagRestrict.NotRotate)) {
+                return;
+            }
+            
+            TSVector dir = lsTarget.GetComponent<TransformComponent>().Position - self.Position;
+            if (dir.sqrMagnitude > FP.EN4) {
+                self.Forward = dir;
+            }
+        }
     }
 }

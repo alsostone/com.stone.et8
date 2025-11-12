@@ -10,6 +10,12 @@ namespace ET
         private static void Awake(this FlagComponent self)
         {
         }
+        
+        [EntitySystem]
+        private static void Awake(this FlagComponent self, int mask)
+        {
+            self.AddRestrict(mask);
+        }
 
         public static void AddRestrict(this FlagComponent self, int mask)
         {self.LSRoom()?.ProcessLog.LogFunction(35, self.LSParent().Id, mask);

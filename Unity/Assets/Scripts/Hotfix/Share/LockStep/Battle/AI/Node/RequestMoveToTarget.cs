@@ -29,15 +29,14 @@ namespace ET
             // 如果目标在攻击范围内，则不需要移动
             TransformComponent transformUnit = lsUnit.GetComponent<TransformComponent>();
             TransformComponent transformTarget = lsTarget.GetComponent<TransformComponent>();
-            TSVector forward = transformTarget.Position - transformUnit.Position;
+            TSVector dir = transformTarget.Position - transformUnit.Position;
             
-            FP distance = (transformUnit.Position - transformTarget.Position).magnitude - propUnit.Radius - propTarget.Radius;
+            FP distance = dir.magnitude - propUnit.Radius - propTarget.Radius;
             if (distance <= range * FP.Ratio(9, 10)) {
-                transformUnit.Forward = forward;
                 return Result.SUCCESS;
             }
             
-            transformUnit.RVOMove(new TSVector2(forward.x, forward.z));
+            transformUnit.RVOMove(new TSVector2(dir.x, dir.z));
             return Result.PROGRESS;
         }
     }

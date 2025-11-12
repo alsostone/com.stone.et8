@@ -154,8 +154,8 @@ namespace ET
 	        lsUnit.AddComponent<TransformComponent, TSVector, TSQuaternion>(pos, TSQuaternion.Euler(0, angle, 0));
 	        lsUnit.AddComponent<TypeComponent, EUnitType>(EUnitType.Block);
 	        lsUnit.AddComponent<TeamComponent, TeamType>(teamType);
-	        lsUnit.AddComponent<FlagComponent>();
-	        
+	        lsUnit.AddComponent<FlagComponent, int>((int)FlagRestrict.NotRotate);
+
 	        PropComponent propComponent = lsUnit.AddComponent<PropComponent, int>(5000);
 	        foreach (var prop in row.Props) {
 		        propComponent.Set(prop.Key, (FP)prop.Value / LSConstValue.PropValueScale, false);
@@ -197,7 +197,7 @@ namespace ET
 	        lsUnit.AddComponent<TransformComponent, TSVector, TSQuaternion>(pos, TSQuaternion.Euler(0, angle, 0));
 	        lsUnit.AddComponent<TypeComponent, EUnitType>(EUnitType.Building);
 	        lsUnit.AddComponent<TeamComponent, TeamType>(teamType);
-	        lsUnit.AddComponent<FlagComponent>();
+	        lsUnit.AddComponent<FlagComponent, int>((int)FlagRestrict.NotRotate);
 
 	        PropComponent propComponent = lsUnit.AddComponent<PropComponent, int>(row.Radius);
 	        foreach (var prop in row.Props) {
