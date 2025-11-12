@@ -88,11 +88,15 @@
     "Url": "Assets/Bundles/Prefabs/Common/Bullet/BulletBlue.prefab"
   },
   {
-    "Id": 90010001,
-    "Url": "Assets/Bundles/Unit/Skeleton1.prefab"
+    "Id": 90000001,
+    "Url": "Assets/Bundles/Prefabs/Common/Effects/FxMouseSelected.prefab"
   },
   {
-    "Id": 90020001,
-    "Url": "Assets/Bundles/Unit/Skeleton1.prefab"
+    "Id": 90000002,
+    "Url": "Assets/Bundles/Prefabs/Common/Effects/FxMouseHover.prefab"
+  },
+  {
+    "Id": 90000003,
+    "Url": "Assets/Bundles/Prefabs/Common/Effects/FxMouseUesTarget.prefab"
   }
 ]

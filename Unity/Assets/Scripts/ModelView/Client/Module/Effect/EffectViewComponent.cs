@@ -6,6 +6,7 @@ namespace ET.Client
 	public class EffectViewComponent : Entity, IAwake, IDestroy
 	{
 		public long idGenerator;
-		public Dictionary<int, EntityRef<EffectView>> effectViews = new ();
+		public Dictionary<int, EntityRef<EffectView>> SkillEffectViews = new ();
+		public Dictionary<int, EntityRef<EffectView>> EffectViews = new ();
 	}
 }

@@ -9,5 +9,9 @@ namespace ET
         public const int SessionTimeoutTime = 30 * 1000;
         
         public const string UploadFolder = "/Users/stone/Library/Application Support/test/ET";
+        
+        public const int FxMouseSelectedResId = 90000001;
+        public const int FxMouseHoverResId = 90000002;
+        public const int FxMouseUesTargetResId = 90000003;
     }
 }

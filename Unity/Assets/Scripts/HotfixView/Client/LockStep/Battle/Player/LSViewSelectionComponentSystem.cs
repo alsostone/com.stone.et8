@@ -27,13 +27,13 @@ namespace ET.Client
                 if (!self.SelectedIdSet.Remove(selectId))
                 {
                     LSUnitView lsUnitView = lsUnitViewComponent.GetChild<LSUnitView>(selectId);
-                    // TODO: 新增选中效果
+                    lsUnitView?.GetComponent<EffectViewComponent>()?.PlayFx(ConstValue.FxMouseSelectedResId, AttachPoint.None).Coroutine();
                 }
             }
             foreach (long unselectId in self.SelectedIdSet)
             {
                 LSUnitView lsUnitView = lsUnitViewComponent.GetChild<LSUnitView>(unselectId);
-                // TODO: 取消选中效果
+                lsUnitView?.GetComponent<EffectViewComponent>()?.StopFx(ConstValue.FxMouseSelectedResId);
             }
             
             self.SelectedIdSet.Clear();
