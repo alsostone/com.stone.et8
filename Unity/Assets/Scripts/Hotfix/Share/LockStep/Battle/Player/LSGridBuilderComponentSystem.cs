@@ -105,11 +105,14 @@ namespace ET
 
         public static void RunCommandPlacementDrag(this LSGridBuilderComponent self, long targetId)
         {
+            LSUnit lsTarget = self.LSUnit(targetId);
+            if (lsTarget == null || lsTarget.GetComponent<PlacementComponent>() == null) {
+                return;
+            }
             self.ClearPlacementData();
             
             // 拖拽已有单位时需要计算偏移量
-            LSUnitComponent lsUnitComponent = self.LSWorld().GetComponent<LSUnitComponent>();
-            TransformComponent transformComponent = lsUnitComponent.GetChild<LSUnit>(targetId)?.GetComponent<TransformComponent>();
+            TransformComponent transformComponent = lsTarget.GetComponent<TransformComponent>();
             self.PlacementDragOffset = transformComponent != null ? transformComponent.Position - self.DragStartPosition : TSVector.zero;
             self.PlacementTargetId = targetId;
             EventSystem.Instance.Publish(self.LSWorld(), new LSPlacementDragStart() { Id = self.LSOwner().Id, TargetId = targetId });

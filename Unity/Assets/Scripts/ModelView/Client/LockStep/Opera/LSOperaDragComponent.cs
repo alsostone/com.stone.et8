@@ -17,5 +17,6 @@ namespace ET.Client
         public int dragFingerId = -1;
         
         public ETCancellationToken longTouchPreesToken;
+        public EntityRef<LSUnitView> HoverUnitView;
     }
 }

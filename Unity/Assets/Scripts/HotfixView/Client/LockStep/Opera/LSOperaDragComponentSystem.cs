@@ -120,7 +120,7 @@ namespace ET.Client
             if (self.RaycastTarget(touchPosition, out GameObject target))
             {
                 LSUnitView lsUnitView = target.GetComponent<LSUnitViewBehaviour>()?.LSUnitView;
-                if (lsUnitView != null) {
+                if (lsUnitView != null && lsUnitView.GetComponent<LSViewPlacementComponent>() != null) {
                     var command = LSCommand.GenCommandLong(0, OperateCommandType.PlacementDrag, lsUnitView.Id);
                     self.Room().SendCommandMeesage(command);
                 }
@@ -139,6 +139,8 @@ namespace ET.Client
                     LSUnitView lsUnitView = target.GetComponent<LSUnitViewBehaviour>()?.LSUnitView;
                     var command = LSCommand.GenCommandLong(0, OperateCommandType.TouchDown, lsUnitView?.Id ?? 0);
                     self.Room().SendCommandMeesage(command);
+                    
+                    self.SetHoverTarget(lsUnitView);
                     self.ScanTouchLongPress(touchPosition).Coroutine();
                 }
 
@@ -166,10 +168,31 @@ namespace ET.Client
                     self.Room().SendCommandMeesage(command);
                 }
             }
-            else if (self.RaycastTarget(touchPosition, out GameObject target))
+            else
             {
-                LSUnitView lsUnitView = target.GetComponent<LSUnitViewBehaviour>()?.LSUnitView;
-                // TODO: 这里可以播放鼠标悬停到物体的特效 如描边高亮
+                // 非拖拽状态下的才进行悬停检测 特别是在拖拽状态下要保持保持现状
+                LSUnitView hover = null;
+                if (self.RaycastTarget(touchPosition, out GameObject target))
+                {
+                    // 有选中单位时禁止悬停检测
+                    LSUnitView lsPlayer = self.LSUnitView(self.Room().LookPlayerId);
+                    if (!lsPlayer.GetComponent<LSViewSelectionComponent>().HasSelectedUnit())
+                    {
+                        hover = target.GetComponent<LSUnitViewBehaviour>()?.LSUnitView;
+                    }
+                }
+                self.SetHoverTarget(hover);
+            }
+        }
+        
+        private static void SetHoverTarget(this LSOperaDragComponent self, LSUnitView lsUnitView)
+        {
+            LSUnitView lastHover = self.HoverUnitView;
+            if (lastHover != lsUnitView)
+            {
+                lastHover?.GetComponent<EffectViewComponent>()?.StopFx(ConstValue.FxMouseHoverResId);
+                lsUnitView?.GetComponent<EffectViewComponent>()?.PlayFx(ConstValue.FxMouseHoverResId, AttachPoint.None).Coroutine();
+                self.HoverUnitView = lsUnitView;
             }
         }
 
