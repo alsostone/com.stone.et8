@@ -213,7 +213,8 @@ namespace RVO
             do
             {
                 obstacle.isRemoved = true;
-                freeObstacleIndexs_.Enqueue(obstacle.id_);
+                if (obstacle.id_ >= 0)  // 有可能是被拆分出来的，不可复用
+                    freeObstacleIndexs_.Enqueue(obstacle.id_);
                 obstacle = obstacle.next_;
             } while (obstacle != start);
             
