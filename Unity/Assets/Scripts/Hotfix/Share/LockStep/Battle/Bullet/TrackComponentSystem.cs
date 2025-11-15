@@ -10,7 +10,7 @@ namespace ET
     {
         [EntitySystem]
         private static void Awake(this TrackComponent self, int trackId, LSUnit target, TSVector targetPosition)
-        {self.LSRoom()?.ProcessLog.LogFunction(22, self.LSParent().Id, trackId, target.Id);
+        {self.LSRoom()?.ProcessLog.LogFunction(47, self.LSParent().Id, trackId, target.Id);
             self.TrackId = trackId;
             self.HorSpeed = (FP)self.TbTrackRow.HorSpeed / LSConstValue.PropValueScale;
             if (target == null) {
@@ -45,12 +45,12 @@ namespace ET
         
         [LSEntitySystem]
         private static void LSUpdate(this TrackComponent self)
-        {self.LSRoom()?.ProcessLog.LogFunction(21, self.LSParent().Id);
+        {self.LSRoom()?.ProcessLog.LogFunction(46, self.LSParent().Id);
             self.Tick();
         }
         
         private static void Tick(this TrackComponent self)
-        {self.LSRoom()?.ProcessLog.LogFunction(20, self.LSParent().Id);
+        {self.LSRoom()?.ProcessLog.LogFunction(45, self.LSParent().Id);
             self.EclipseTime += (FP)LSConstValue.UpdateInterval / LSConstValue.Milliseconds;
             
             TransformComponent ownerTransform = self.LSOwner().GetComponent<TransformComponent>();

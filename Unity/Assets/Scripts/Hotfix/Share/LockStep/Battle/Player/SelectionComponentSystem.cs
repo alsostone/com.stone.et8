@@ -14,7 +14,7 @@ namespace ET
         }
         
         public static void SelectUnitsInBounds(this SelectionComponent self, TSBounds bounds)
-        {
+        {self.LSRoom()?.ProcessLog.LogFunction(115, self.LSParent().Id);
             self.SelectedUnitIds.Clear();
             
             LSTargetsComponent targetsComponent = self.LSWorld().GetComponent<LSTargetsComponent>();
@@ -24,7 +24,7 @@ namespace ET
         }
         
         public static void SelectSingleUnit(this SelectionComponent self, long targetId)
-        {
+        {self.LSRoom()?.ProcessLog.LogFunction(114, self.LSParent().Id);
             self.SelectedUnitIds.Clear();
             
             LSUnit lsTarget = self.LSUnit(targetId);
@@ -41,13 +41,13 @@ namespace ET
         }
         
         public static void ClearSelection(this SelectionComponent self)
-        {
+        {self.LSRoom()?.ProcessLog.LogFunction(113, self.LSParent().Id);
             self.SelectedUnitIds.Clear();
             EventSystem.Instance.Publish(self.LSWorld(), new LSSelectionChanged() { Id = self.LSOwner().Id, SelectionIds = self.SelectedUnitIds });
         }
         
         public static void MoveToPosition(this SelectionComponent self, TSVector2 position, MovementMode movementMode)
-        {
+        {self.LSRoom()?.ProcessLog.LogFunction(112, self.LSParent().Id);
             if (self.SelectedUnitIds.Count == 0) {
                 return;
             }

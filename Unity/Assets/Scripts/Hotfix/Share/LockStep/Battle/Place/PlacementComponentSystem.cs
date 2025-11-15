@@ -8,7 +8,7 @@ namespace ET
     {
         [EntitySystem]
         private static void Awake(this PlacementComponent self, PlacementData placementData)
-        {self.LSRoom()?.ProcessLog.LogFunction(87, self.LSParent().Id);
+        {self.LSRoom()?.ProcessLog.LogFunction(99, self.LSParent().Id);
             self.PlacementData = placementData;
             LSGridMapComponent gridMapComponent = self.LSWorld().GetComponent<LSGridMapComponent>();
             gridMapComponent.Put(placementData.x, placementData.z, placementData);
@@ -16,7 +16,7 @@ namespace ET
         
         [EntitySystem]
         private static void Destroy(this PlacementComponent self)
-        {
+        {self.LSRoom()?.ProcessLog.LogFunction(98, self.LSParent().Id);
             LSGridMapComponent gridMapComponent = self.LSWorld().GetComponent<LSGridMapComponent>();
             gridMapComponent.Take(self.PlacementData);
          }

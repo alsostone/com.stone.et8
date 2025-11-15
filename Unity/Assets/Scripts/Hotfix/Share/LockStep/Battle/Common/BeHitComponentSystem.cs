@@ -10,7 +10,7 @@ namespace ET
     {
         [EntitySystem]
         private static void Awake(this BeHitComponent self)
-        {self.LSRoom()?.ProcessLog.LogFunction(30, self.LSParent().Id);
+        {self.LSRoom()?.ProcessLog.LogFunction(59, self.LSParent().Id);
             LSTargetsComponent component = self.LSWorld().GetComponent<LSTargetsComponent>();
             TeamType teamType = self.LSOwner().GetComponent<TeamComponent>().Type;
             component.AddTarget(teamType, self.LSOwner());
@@ -18,7 +18,7 @@ namespace ET
         
         [EntitySystem]
         private static void Destroy(this BeHitComponent self)
-        {self.LSRoom()?.ProcessLog.LogFunction(29, self.LSParent().Id);
+        {self.LSRoom()?.ProcessLog.LogFunction(58, self.LSParent().Id);
             self.Attackers.Clear();
         }
         
@@ -31,7 +31,7 @@ namespace ET
         }
         
         public static void BeHealing(this BeHitComponent self, LSUnit attacker, FP value)
-        {self.LSRoom()?.ProcessLog.LogFunction(27, self.LSParent().Id, attacker.Id, value.V);
+        {self.LSRoom()?.ProcessLog.LogFunction(57, self.LSParent().Id, attacker.Id, value.V);
             if (self.LSOwner().DeadMark > 0) { return; }
             
             PropComponent component = self.LSOwner().GetComponent<PropComponent>();
@@ -40,7 +40,7 @@ namespace ET
         }
 
         public static void BeDamage(this BeHitComponent self, LSUnit attacker, FP damage)
-        {self.LSRoom()?.ProcessLog.LogFunction(26, self.LSParent().Id, attacker.Id, damage.V);
+        {self.LSRoom()?.ProcessLog.LogFunction(56, self.LSParent().Id, attacker.Id, damage.V);
             if (self.LSOwner().DeadMark > 0) { return; }
             
             // 1. 优先处理闪避
@@ -100,7 +100,7 @@ namespace ET
         }
 
         private static void DeductHp(this BeHitComponent self, LSUnit attacker, FP value)
-        {self.LSRoom()?.ProcessLog.LogFunction(25, self.LSParent().Id, attacker.Id, value.V);
+        {self.LSRoom()?.ProcessLog.LogFunction(55, self.LSParent().Id, attacker.Id, value.V);
             PropComponent component = self.LSOwner().GetComponent<PropComponent>();
             FP hp = component.Get(NumericType.Hp);
             if (hp <= FP.EN1) { return; }
@@ -121,14 +121,14 @@ namespace ET
         }
         
         private static void AddAttacker(this BeHitComponent self, long attacker)
-        {self.LSRoom()?.ProcessLog.LogFunction(24, self.LSParent().Id);
+        {self.LSRoom()?.ProcessLog.LogFunction(54, self.LSParent().Id);
             if (!self.Attackers.Contains(attacker)) {
                 self.Attackers.Add(attacker);
             }
         }
 
         internal static void GetCounterAttack(this BeHitComponent self, TSVector center, FP range, List<SearchUnit> results)
-        {self.LSRoom()?.ProcessLog.LogFunction(94, self.LSParent().Id, range.V);
+        {
             for (var i = self.Attackers.Count - 1; i >= 0; i--)
             {
                 var target = self.LSUnit(self.Attackers[i]);

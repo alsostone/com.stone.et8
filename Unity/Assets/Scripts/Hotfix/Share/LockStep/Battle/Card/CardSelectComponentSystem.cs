@@ -15,7 +15,7 @@ namespace ET
         
         [LSEntitySystem]
         private static void LSUpdate(this CardSelectComponent self)
-        {
+        {self.LSRoom()?.ProcessLog.LogFunction(53, self.LSParent().Id);
             LSStageComponent lsStageComponent = self.LSWorld().GetComponent<LSStageComponent>();
             if (!lsStageComponent.CheckWaveDone(self.CurrentSelectCount + 1))
                 return;
@@ -31,7 +31,7 @@ namespace ET
         }
         
         public static void RandomCards(this CardSelectComponent self, int currentSelectCount)
-        {
+        {self.LSRoom()?.ProcessLog.LogFunction(52, self.LSParent().Id, currentSelectCount);
             LSStageComponent lsStageComponent = self.LSWorld().GetComponent<LSStageComponent>();
             int index = Math.Min(lsStageComponent.TbRow.RandomCards.Length, currentSelectCount);
             int randomSet = lsStageComponent.TbRow.RandomCards[index - 1];
@@ -44,7 +44,7 @@ namespace ET
         }
         
         public static void TrySelectCard(this CardSelectComponent self, int index)
-        {
+        {self.LSRoom()?.ProcessLog.LogFunction(51, self.LSParent().Id, index);
             if (self.CardsQueue.Count <= 0)
                 return;
             

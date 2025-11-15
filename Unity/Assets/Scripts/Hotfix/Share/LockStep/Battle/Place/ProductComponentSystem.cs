@@ -8,7 +8,7 @@ namespace ET
     {
         [EntitySystem]
         private static void Awake(this ProductComponent self, int productSkillId)
-        {self.LSRoom()?.ProcessLog.LogFunction(103, self.LSParent().Id, productSkillId);
+        {self.LSRoom()?.ProcessLog.LogFunction(101, self.LSParent().Id, productSkillId);
             SkillComponent skillComponent = self.LSOwner().GetComponent<SkillComponent>();
             Skill skill = skillComponent.AddSkill(productSkillId);
 
@@ -19,7 +19,7 @@ namespace ET
 
         [LSEntitySystem]
         private static void LSUpdate(this ProductComponent self)
-        {self.LSRoom()?.ProcessLog.LogFunction(102, self.LSParent().Id);
+        {self.LSRoom()?.ProcessLog.LogFunction(100, self.LSParent().Id);
             if (self.LSOwner().EnabledRef >= 0)
             {
                 if (self.LSWorld().Frame >= self.ProductFrame)

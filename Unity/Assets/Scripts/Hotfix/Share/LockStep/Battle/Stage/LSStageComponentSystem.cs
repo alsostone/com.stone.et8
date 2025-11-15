@@ -11,7 +11,7 @@ namespace ET
     {
         [EntitySystem]
         private static void Awake(this LSStageComponent self, int stageId)
-        {self.LSRoom()?.ProcessLog.LogFunction(93, self.LSParent().Id, stageId);
+        {self.LSRoom()?.ProcessLog.LogFunction(139, self.LSParent().Id, stageId);
             self.TableId = stageId;
             self.CurrentWaveCount = 0;
             self.CurrentMonsterCount = 0;
@@ -22,7 +22,7 @@ namespace ET
         
         [LSEntitySystem]
         private static void LSUpdate(this LSStageComponent self)
-        {self.LSRoom()?.ProcessLog.LogFunction(92, self.LSParent().Id);
+        {self.LSRoom()?.ProcessLog.LogFunction(138, self.LSParent().Id);
             if (self.CurrentWaveCount > self.TbRow.Count)
                 return;
             
@@ -75,7 +75,7 @@ namespace ET
         }
         
         private static TSVector2 GetRandomPointOnCircle(this LSStageComponent self, TSRandom random, FP radius)
-        {self.LSRoom()?.ProcessLog.LogFunction(23, self.LSParent().Id, radius.V);
+        {
             FP randomAngle = random.Range(0f, TSMath.Pi * 2f);
             FP x = radius * TSMath.Cos(randomAngle);
             FP y = radius * TSMath.Sin(randomAngle);
@@ -83,7 +83,7 @@ namespace ET
         }
 
         public static bool CheckAllWaveDone(this LSStageComponent self)
-        {
+        {self.LSRoom()?.ProcessLog.LogFunction(137, self.LSParent().Id);
             if (self.TbRow.Count >= self.CurrentWaveCount)
                 return false;
             if (self.NextMonsterFrame != int.MaxValue)
@@ -92,7 +92,7 @@ namespace ET
         }
         
         public static bool CheckWaveDone(this LSStageComponent self, int wave)
-        {
+        {self.LSRoom()?.ProcessLog.LogFunction(136, self.LSParent().Id, wave);
             if (self.CurrentWaveCount != wave)
                 return false;
             if (self.NextMonsterFrame != int.MaxValue)

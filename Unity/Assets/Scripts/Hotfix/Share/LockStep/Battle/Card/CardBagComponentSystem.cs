@@ -9,7 +9,7 @@ namespace ET
     {
         [EntitySystem]
         private static void Awake(this CardBagComponent self, List<LSRandomDropItem> items)
-        {
+        {self.LSRoom()?.ProcessLog.LogFunction(50, self.LSParent().Id);
             foreach (LSRandomDropItem item in items) {
                 self.AddItem(item);
             }
@@ -25,7 +25,7 @@ namespace ET
         }
         
         public static void AddItem(this CardBagComponent self, LSRandomDropItem dropItem)
-        {
+        {self.LSRoom()?.ProcessLog.LogFunction(49, self.LSParent().Id);
             for (int i = 0; i < dropItem.Count; i++) {
                 CardBagItem bagItem = ObjectPool.Instance.Fetch<CardBagItem>();
                 bagItem.Id = self.LSWorld().GetId();
@@ -38,7 +38,7 @@ namespace ET
         }
         
         public static void RemoveItem(this CardBagComponent self, long itemId)
-        {
+        {self.LSRoom()?.ProcessLog.LogFunction(48, self.LSParent().Id);
             if (self.IdItemMap.TryGetValue(itemId, out CardBagItem bagItem)) {
                 self.Items.Remove(bagItem);
                 self.IdItemMap.Remove(itemId);

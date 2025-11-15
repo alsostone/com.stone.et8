@@ -6,7 +6,7 @@ namespace ET
     {
         [EntitySystem]
         private static void Awake(this SoldierComponent self, int tableId)
-        {self.LSRoom()?.ProcessLog.LogFunction(108, self.LSParent().Id, tableId);
+        {self.LSRoom()?.ProcessLog.LogFunction(147, self.LSParent().Id, tableId);
             self.TableId = tableId;
             LSRVO2Component rvo2Component = self.LSWorld().GetComponent<LSRVO2Component>();
             rvo2Component.AddDynamicAgent(self.LSOwner());
@@ -14,7 +14,7 @@ namespace ET
         
         [EntitySystem]
         private static void Destroy(this SoldierComponent self)
-        {
+        {self.LSRoom()?.ProcessLog.LogFunction(146, self.LSParent().Id);
             LSRVO2Component rvo2Component = self.LSWorld().GetComponent<LSRVO2Component>();
             rvo2Component.RemoveAgent(self.LSOwner());
         }

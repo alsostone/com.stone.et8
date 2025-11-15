@@ -9,14 +9,14 @@ namespace ET
     {
         [EntitySystem]
         private static void Awake(this TransformComponent self, TSVector position, TSQuaternion rotation)
-        {self.LSRoom()?.ProcessLog.LogFunction(43, self.LSParent().Id);
+        {self.LSRoom()?.ProcessLog.LogFunction(94, self.LSParent().Id);
             self.Position = position;
             self.Rotation = rotation;
         }
 
         [LSEntitySystem]
         private static void LSUpdate(this TransformComponent self)
-        {self.LSRoom()?.ProcessLog.LogFunction(99, self.LSParent().Id);
+        {self.LSRoom()?.ProcessLog.LogFunction(93, self.LSParent().Id);
             if (self.IsMovingCurrent) {
                 self.IsMovingCurrent = false;
             }
@@ -26,7 +26,7 @@ namespace ET
         }
         
         public static void Move(this TransformComponent self, TSVector2 forward)
-        {self.LSRoom()?.ProcessLog.LogFunction(42, self.LSParent().Id);
+        {self.LSRoom()?.ProcessLog.LogFunction(92, self.LSParent().Id);
             if (forward.sqrMagnitude < FP.EN4) {
                 self.SetMoving(false);
                 return;
@@ -51,7 +51,7 @@ namespace ET
         }
         
         public static void RVOMove(this TransformComponent self, TSVector2 forward)
-        {
+        {self.LSRoom()?.ProcessLog.LogFunction(91, self.LSParent().Id);
             if (forward.sqrMagnitude < FP.EN4) {
                 self.SetMoving(false);
                 return;
@@ -72,7 +72,7 @@ namespace ET
         }
 
         private static void SetMoving(this TransformComponent self, bool moving)
-        {self.LSRoom()?.ProcessLog.LogFunction(70, self.LSParent().Id, moving ? 1 : 0);
+        {self.LSRoom()?.ProcessLog.LogFunction(90, self.LSParent().Id, moving ? 1 : 0);
             self.IsMovingCurrent = moving;
             if (moving && !self.IsMovingPrevious) {
                 self.IsMovingPrevious = true;
@@ -85,30 +85,27 @@ namespace ET
         }
 
         public static void SetPosition(this TransformComponent self, TSVector position)
-        {self.LSRoom()?.ProcessLog.LogFunction(85, self.LSParent().Id);
+        {self.LSRoom()?.ProcessLog.LogFunction(89, self.LSParent().Id);
             self.Position = position;
         }
         
         public static TSVector TransformDirection(this TransformComponent self, TSVector position)
-        {
-            self.LSRoom()?.ProcessLog.LogIgnore();
+        {self.LSRoom()?.ProcessLog.LogFunction(88, self.LSParent().Id);
             return self.Rotation * position;
         }
         
         public static TSVector TransformVector(this TransformComponent self, TSVector position)
-        {
-            self.LSRoom()?.ProcessLog.LogIgnore();
+        {self.LSRoom()?.ProcessLog.LogFunction(87, self.LSParent().Id);
             return self.Rotation * position;
         }
         
         public static TSVector TransformPoint(this TransformComponent self, TSVector position)
-        {
-            self.LSRoom()?.ProcessLog.LogIgnore();
+        {self.LSRoom()?.ProcessLog.LogFunction(86, self.LSParent().Id);
             return self.Position + self.Rotation * position;
         }
         
         public static void LookAt(this TransformComponent self, LSUnit lsTarget)
-        {
+        {self.LSRoom()?.ProcessLog.LogFunction(85, self.LSParent().Id, lsTarget.Id);
             var flagComponent = self.LSOwner().GetComponent<FlagComponent>();
             if (flagComponent.HasRestrict(FlagRestrict.NotRotate)) {
                 return;

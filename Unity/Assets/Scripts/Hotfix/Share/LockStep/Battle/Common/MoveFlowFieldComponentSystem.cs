@@ -14,7 +14,7 @@ namespace ET
         
         [LSEntitySystem]
         private static void LSUpdate(this MoveFlowFieldComponent self)
-        {
+        {self.LSRoom()?.ProcessLog.LogFunction(73, self.LSParent().Id);
             if (self.FlowFieldStatus != FlowFieldStatus.Moving)
                 return;
             
@@ -38,12 +38,12 @@ namespace ET
         
         [EntitySystem]
         private static void Destroy(this MoveFlowFieldComponent self)
-        {
+        {self.LSRoom()?.ProcessLog.LogFunction(72, self.LSParent().Id);
             self.Stop();
         }
         
         public static void Stop(this MoveFlowFieldComponent self)
-        {
+        {self.LSRoom()?.ProcessLog.LogFunction(71, self.LSParent().Id);
             if (self.FlowFieldStatus == FlowFieldStatus.Moving)
             {
                 LSGridMapComponent gridMapComponent = self.LSWorld().GetComponent<LSGridMapComponent>();
@@ -56,7 +56,7 @@ namespace ET
         }
         
         private static void SetArrived(this MoveFlowFieldComponent self)
-        {
+        {self.LSRoom()?.ProcessLog.LogFunction(70, self.LSParent().Id);
             if (self.FlowFieldStatus == FlowFieldStatus.Moving)
             {
                 LSGridMapComponent gridMapComponent = self.LSWorld().GetComponent<LSGridMapComponent>();
@@ -69,7 +69,7 @@ namespace ET
         }
         
         public static bool TryMoveStart(this MoveFlowFieldComponent self, int flowFieldIndex, TSVector destination, MovementMode movementMode = MovementMode.Move)
-        {
+        {self.LSRoom()?.ProcessLog.LogFunction(69, self.LSParent().Id, flowFieldIndex);
             if (self.FlowFieldStatus != FlowFieldStatus.None)
                 return false;
             
@@ -78,7 +78,7 @@ namespace ET
         }
         
         public static void MoveStart(this MoveFlowFieldComponent self, int flowFieldIndex, TSVector destination, MovementMode movementMode = MovementMode.Move)
-        {
+        {self.LSRoom()?.ProcessLog.LogFunction(68, self.LSParent().Id, flowFieldIndex);
             self.FlowFieldIndex = flowFieldIndex;
             self.FlowFieldDestination = destination;
             self.FlowFieldStatus = FlowFieldStatus.Moving;

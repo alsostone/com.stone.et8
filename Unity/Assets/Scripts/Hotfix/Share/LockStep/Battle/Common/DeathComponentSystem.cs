@@ -7,7 +7,7 @@ namespace ET
     {
         [EntitySystem]
         private static void Awake(this DeathComponent self, bool isDeadRelease)
-        {self.LSRoom()?.ProcessLog.LogFunction(32, self.LSParent().Id, isDeadRelease ? 1 : 0);
+        {self.LSRoom()?.ProcessLog.LogFunction(62, self.LSParent().Id, isDeadRelease ? 1 : 0);
             self.IsDeadRelease = isDeadRelease;
         }
         
@@ -18,7 +18,7 @@ namespace ET
 
         [LSEntitySystem]
         private static void LSUpdate(this DeathComponent self)
-        {self.LSRoom()?.ProcessLog.LogFunction(69, self.LSParent().Id);
+        {self.LSRoom()?.ProcessLog.LogFunction(61, self.LSParent().Id);
             LSUnit lsUnit = self.LSOwner();
             if (lsUnit.DeadMark == 1)
             {
@@ -40,7 +40,7 @@ namespace ET
         }
 
         private static void DoDeathReal(this DeathComponent self)
-        {self.LSRoom()?.ProcessLog.LogFunction(68, self.LSParent().Id);
+        {self.LSRoom()?.ProcessLog.LogFunction(60, self.LSParent().Id);
             // 死亡经验分配
             //ExpGetHelper.ExpGetDead(attacker, entity);
 

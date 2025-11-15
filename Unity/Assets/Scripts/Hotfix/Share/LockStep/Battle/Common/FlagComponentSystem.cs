@@ -13,12 +13,12 @@ namespace ET
         
         [EntitySystem]
         private static void Awake(this FlagComponent self, int mask)
-        {
+        {self.LSRoom()?.ProcessLog.LogFunction(67, self.LSParent().Id, mask);
             self.AddRestrict(mask);
         }
 
         public static void AddRestrict(this FlagComponent self, int mask)
-        {self.LSRoom()?.ProcessLog.LogFunction(35, self.LSParent().Id, mask);
+        {self.LSRoom()?.ProcessLog.LogFunction(66, self.LSParent().Id, mask);
             foreach (FlagRestrict flagRestrict in Enum.GetValues(typeof(FlagRestrict)))
             {
                 if ((mask & (int)flagRestrict) == (int)flagRestrict)
@@ -36,7 +36,7 @@ namespace ET
         }
         
         public static void RemoveRestrict(this FlagComponent self, int mask)
-        {self.LSRoom()?.ProcessLog.LogFunction(34, self.LSParent().Id, mask);
+        {self.LSRoom()?.ProcessLog.LogFunction(65, self.LSParent().Id, mask);
             foreach (FlagRestrict flagRestrict in Enum.GetValues(typeof(FlagRestrict)))
             {
                 if ((mask & (int)flagRestrict) == (int)flagRestrict)
@@ -54,7 +54,7 @@ namespace ET
         }
         
         public static bool HasRestrict(this FlagComponent self, FlagRestrict flagRestrict)
-        {self.LSRoom()?.ProcessLog.LogFunction(33, self.LSParent().Id);
+        {
             return self.RestrictRefrence.TryGetValue(flagRestrict, out var refCount) && refCount > 0;
         }
         
@@ -66,7 +66,7 @@ namespace ET
         }
         
         public static void AddBoolFlag(this FlagComponent self, FlagLabel label, int count = 1)
-        {
+        {self.LSRoom()?.ProcessLog.LogFunction(64, self.LSParent().Id, count);
             if (self.FlagLabels.TryGetValue(label, out var value)) {
                 self.FlagLabels[label] = value + count;
             } else {
@@ -75,7 +75,7 @@ namespace ET
         }
         
         public static void RemoveBoolFlag(this FlagComponent self, FlagLabel label, int count = 1)
-        {
+        {self.LSRoom()?.ProcessLog.LogFunction(63, self.LSParent().Id, count);
             if (self.FlagLabels.TryGetValue(label, out var value)) {
                 self.FlagLabels[label] = value - count;
             } else {

@@ -13,7 +13,7 @@ namespace ET
         
         [LSEntitySystem]
         private static void LSUpdate(this LSGameOverComponent self)
-        {
+        {self.LSRoom()?.ProcessLog.LogFunction(135, self.LSParent().Id);
             LSWorld lsWorld = self.LSWorld();
             LSTargetsComponent lsTargetsComponent = lsWorld.GetComponent<LSTargetsComponent>();
             
@@ -35,7 +35,7 @@ namespace ET
         }
         
         public static void SetGameOver(this LSGameOverComponent self, TeamType winTeam)
-        {
+        {self.LSRoom()?.ProcessLog.LogFunction(134, self.LSParent().Id);
             LSWorld lsWorld = self.LSWorld();
             if (lsWorld.EndFrame > 0)
                 return;

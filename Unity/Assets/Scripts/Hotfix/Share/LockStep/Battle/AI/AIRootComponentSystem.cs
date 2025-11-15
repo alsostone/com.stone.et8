@@ -10,7 +10,7 @@ namespace ET
     {
         [EntitySystem]
         private static void Awake(this AIRootComponent self, Node node)
-        {self.LSRoom()?.ProcessLog.LogFunction(5, self.LSParent().Id);
+        {self.LSRoom()?.ProcessLog.LogFunction(29, self.LSParent().Id);
             var worldComponent = self.LSWorld().GetComponent<AIWorldComponent>();
             self.AIRoot = new Root(worldComponent.BehaveWorld, node, self.LSOwner());
             
@@ -20,13 +20,13 @@ namespace ET
         }
 
         public static void Start(this AIRootComponent self)
-        {self.LSRoom()?.ProcessLog.LogFunction(83, self.LSParent().Id);
+        {self.LSRoom()?.ProcessLog.LogFunction(28, self.LSParent().Id);
             self.AIRoot.Start();
         }
 
         [EntitySystem]
         private static void Destroy(this AIRootComponent self)
-        {self.LSRoom()?.ProcessLog.LogFunction(4, self.LSParent().Id);
+        {self.LSRoom()?.ProcessLog.LogFunction(27, self.LSParent().Id);
             self.AIRoot.Stop();
             self.AIRoot.Dispose();
             self.AIRoot = null;

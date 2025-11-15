@@ -12,7 +12,7 @@ namespace ET
     {
         [EntitySystem]
         private static void Awake(this LSGridMapComponent self, string gridName)
-        {self.LSRoom()?.ProcessLog.LogFunction(82, self.LSParent().Id);
+        {self.LSRoom()?.ProcessLog.LogFunction(15, self.LSParent().Id);
             self.GridName = gridName;
             
             self.FlowFields = new List<FlowFieldNode[]>();
@@ -39,7 +39,7 @@ namespace ET
         
         [LSEntitySystem]
         private static void LSUpdate(this LSGridMapComponent self)
-        {self.LSRoom()?.ProcessLog.LogFunction(81, self.LSParent().Id);
+        {self.LSRoom()?.ProcessLog.LogFunction(14, self.LSParent().Id);
             if (self.FlowFieldDirty) {
                 self.FlowFieldDirty = false;
                 self.ReleaseFlowField(self.FlowFieldDefaultIndex);
@@ -49,7 +49,7 @@ namespace ET
         }
 
         private static void ResetGridData(this LSGridMapComponent self, byte[] gridBytes)
-        {self.LSRoom()?.ProcessLog.LogFunction(90, self.LSParent().Id);
+        {self.LSRoom()?.ProcessLog.LogFunction(13, self.LSParent().Id);
             GridMapData gridMapData = MemoryPackSerializer.Deserialize<GridMapData>(gridBytes);
             self.GridPosition = gridMapData.position;
             self.GridRotation = TSQuaternion.Euler(gridMapData.rotation);
@@ -65,20 +65,20 @@ namespace ET
         }
         
         public static IndexV2 ConvertToIndex(this LSGridMapComponent self, TSVector position)
-        {self.LSRoom()?.ProcessLog.LogFunction(79, self.LSParent().Id);
+        {self.LSRoom()?.ProcessLog.LogFunction(12, self.LSParent().Id);
             position = TSQuaternion.Inverse(self.GridRotation) * (position - self.GridPosition);
             return self.GridData.ConvertToIndex(new FieldV2(position.x, position.z));
         }
         
         private static void SetDestination(this LSGridMapComponent self, TSVector position)
-        {
+        {self.LSRoom()?.ProcessLog.LogFunction(11, self.LSParent().Id);
             position = TSQuaternion.Inverse(self.GridRotation) * (position - self.GridPosition);
             self.FlowFieldDestination = new FieldV2(position.x, position.z);
             self.FlowFieldDirty = true;
         }
         
         private static void SetObstaclesFromGridData(this LSGridMapComponent self)
-        {
+        {self.LSRoom()?.ProcessLog.LogFunction(10, self.LSParent().Id);
             LSRVO2Component rvo2Component = self.LSWorld().GetComponent<LSRVO2Component>();
             
             List<int> edges = ObjectPool.Instance.Fetch<List<int>>();
@@ -109,7 +109,7 @@ namespace ET
         }
         
         public static int GenerateFlowField(this LSGridMapComponent self, List<TSVector> positions)
-        {
+        {self.LSRoom()?.ProcessLog.LogFunction(9, self.LSParent().Id);
             self.FlowFieldDestinations.Clear();
             foreach (TSVector position in positions) {
                 TSVector localPos = TSQuaternion.Inverse(self.GridRotation) * (position - self.GridPosition);
@@ -134,7 +134,7 @@ namespace ET
         }
         
         public static void RemoveFlowFieldReference(this LSGridMapComponent self, int flowFieldIndex)
-        {
+        {self.LSRoom()?.ProcessLog.LogFunction(8, self.LSParent().Id, flowFieldIndex);
             if (self.FlowFieldIndexRef.TryGetValue(flowFieldIndex, out int referenceCount))
             {
                 if (referenceCount == 1)
@@ -161,7 +161,7 @@ namespace ET
         }
         
         public static bool Pathfinding(this LSGridMapComponent self, TSVector start, TSVector to, List<TSVector> results)
-        {
+        {self.LSRoom()?.ProcessLog.LogFunction(7, self.LSParent().Id);
             results.Clear();
             
             start = TSQuaternion.Inverse(self.GridRotation) * (start - self.GridPosition);
@@ -187,7 +187,7 @@ namespace ET
         // 限制位置在网格范围内
         // 使用时机：为确保移动到目标点，寻路完成后把最后一个点替换成目标点（此时需要限制目标点在网格内，不然就走出界外了）
         public static TSVector ClampPosition(this LSGridMapComponent self, TSVector position)
-        {
+        {self.LSRoom()?.ProcessLog.LogFunction(6, self.LSParent().Id);
             FP offset = self.GridData.cellSize * FP.Half;    // 偏移0.5能有效避免在边缘的抖动
             position = TSQuaternion.Inverse(self.GridRotation) * (position - self.GridPosition);
             position.x = TSMath.Clamp(position.x, offset, self.GridData.cellSize * self.GridData.xLength - offset);
@@ -196,7 +196,7 @@ namespace ET
         }
 
         public static TSVector GetPutPosition(this LSGridMapComponent self, PlacementData placementData)
-        {self.LSRoom()?.ProcessLog.LogFunction(78, self.LSParent().Id);
+        {
             int level = self.GridData.GetPointLevelCount(placementData.x, placementData.z, placementData);
 
             int size = self.GridData.cellSize;
@@ -208,7 +208,7 @@ namespace ET
         }
 
         private static void GenPlacementBoundary(this LSGridMapComponent self, PlacementData placementData, List<TSVector2> vertices)
-        {
+        {self.LSRoom()?.ProcessLog.LogFunction(5, self.LSParent().Id);
             List<IndexV2> contours = ObjectPool.Instance.Fetch<List<IndexV2>>();
             Utils.GenLocalContours(placementData.points, PlacementData.width, PlacementData.height, placementData.GetFirstEdge(), contours);
             
@@ -231,7 +231,7 @@ namespace ET
         }
         
         public static void Put(this LSGridMapComponent self, int x, int z, PlacementData placementData)
-        {self.LSRoom()?.ProcessLog.LogFunction(77, self.LSParent().Id, x, z);
+        {self.LSRoom()?.ProcessLog.LogFunction(4, self.LSParent().Id, x, z);
             self.GridData.Put(x, z, placementData);
             self.FlowFieldDirty = true;
             
@@ -262,7 +262,7 @@ namespace ET
         }
         
         public static void Take(this LSGridMapComponent self, PlacementData placementData)
-        {
+        {self.LSRoom()?.ProcessLog.LogFunction(3, self.LSParent().Id);
             self.GridData.Take(placementData);
             self.FlowFieldDirty = true;
             
@@ -294,14 +294,14 @@ namespace ET
         }
 
         private static void ReleaseFlowField(this LSGridMapComponent self, int index)
-        {
+        {self.LSRoom()?.ProcessLog.LogFunction(2, self.LSParent().Id, index);
             if (index < 0 || index >= self.FlowFields.Count)
                 return;
             self.FreeFlowField.Push(index);
         }
         
         private static int GenerateFlowField(this LSGridMapComponent self, FieldV2 destination)
-        {
+        {self.LSRoom()?.ProcessLog.LogFunction(1, self.LSParent().Id);
             FlowFieldNode[] flowField;
             if (self.FreeFlowField.TryPop(out int index)) {
                 flowField = self.FlowFields[index];

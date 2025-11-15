@@ -15,7 +15,7 @@ namespace ET
         }
 
         public static void AddTarget(this LSTargetsComponent self, TeamType teamType, LSUnit lsUnit)
-        {self.LSRoom()?.ProcessLog.LogFunction(3, self.LSParent().Id, lsUnit.Id);
+        {self.LSRoom()?.ProcessLog.LogFunction(26, self.LSParent().Id, lsUnit.Id);
             if (!self.TeamLSUnitsMap.TryGetValue(teamType, out List<EntityRef<LSUnit>> lsUnits))
             {
                 lsUnits = new List<EntityRef<LSUnit>>();
@@ -25,7 +25,7 @@ namespace ET
         }
         
         public static void GetAllAttackTargets(this LSTargetsComponent self, List<SearchUnit> results)
-        {self.LSRoom()?.ProcessLog.LogFunction(2, self.LSParent().Id);
+        {
             for (TeamType team = TeamType.None; team < TeamType.Max; team++)
             {
                 if (self.TeamLSUnitsMap.TryGetValue(team, out var targets))
@@ -46,7 +46,7 @@ namespace ET
         }
         
         public static void GetAttackTargets(this LSTargetsComponent self, TeamType teamFlag, TSVector center, FP range, List<SearchUnit> results)
-        {self.LSRoom()?.ProcessLog.LogFunction(1, self.LSParent().Id, range.V);
+        {
             if (self.TeamLSUnitsMap.TryGetValue(teamFlag, out var targets))
             {
                 for(int i = targets.Count - 1; i >= 0; i--)
