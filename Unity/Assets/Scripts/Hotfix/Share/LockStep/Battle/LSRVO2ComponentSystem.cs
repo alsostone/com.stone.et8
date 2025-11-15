@@ -87,12 +87,12 @@ namespace ET
         }
 
         public static void SetAgentPosition(this LSRVO2Component self, LSUnit lsUnit, TSVector2 position)
-        {self.LSRoom()?.ProcessLog.LogFunction(17, self.LSParent().Id, lsUnit.Id);
+        {self.LSRoom()?.ProcessLog.LogFunction(17, self.LSParent().Id, lsUnit.Id, position.x.V, position.y.V);
             self.RVO2Simulator.setAgentPosition(lsUnit.Id, position);
         }
         
         public static void setAgentPrefVelocity(this LSRVO2Component self, LSUnit lsUnit, TSVector2 velocity)
-        {self.LSRoom()?.ProcessLog.LogFunction(16, self.LSParent().Id, lsUnit.Id);
+        {self.LSRoom()?.ProcessLog.LogFunction(16, self.LSParent().Id, lsUnit.Id, velocity.x.V, velocity.y.V);
             self.RVO2Simulator.setAgentPrefVelocity(lsUnit.Id, velocity);
         }
 

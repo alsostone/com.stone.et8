@@ -9,7 +9,7 @@ namespace ET
     {
         [EntitySystem]
         private static void Awake(this TransformComponent self, TSVector position, TSQuaternion rotation)
-        {self.LSRoom()?.ProcessLog.LogFunction(94, self.LSParent().Id);
+        {self.LSRoom()?.ProcessLog.LogFunction(94, self.LSParent().Id, position.x.V, position.y.V, position.z.V);
             self.Position = position;
             self.Rotation = rotation;
         }
@@ -26,7 +26,7 @@ namespace ET
         }
         
         public static void Move(this TransformComponent self, TSVector2 forward)
-        {self.LSRoom()?.ProcessLog.LogFunction(92, self.LSParent().Id);
+        {self.LSRoom()?.ProcessLog.LogFunction(92, self.LSParent().Id, forward.x.V, forward.y.V);
             if (forward.sqrMagnitude < FP.EN4) {
                 self.SetMoving(false);
                 return;
@@ -51,7 +51,7 @@ namespace ET
         }
         
         public static void RVOMove(this TransformComponent self, TSVector2 forward)
-        {self.LSRoom()?.ProcessLog.LogFunction(91, self.LSParent().Id);
+        {self.LSRoom()?.ProcessLog.LogFunction(91, self.LSParent().Id, forward.x.V, forward.y.V);
             if (forward.sqrMagnitude < FP.EN4) {
                 self.SetMoving(false);
                 return;
@@ -85,22 +85,22 @@ namespace ET
         }
 
         public static void SetPosition(this TransformComponent self, TSVector position)
-        {self.LSRoom()?.ProcessLog.LogFunction(89, self.LSParent().Id);
+        {self.LSRoom()?.ProcessLog.LogFunction(89, self.LSParent().Id, position.x.V, position.y.V, position.z.V);
             self.Position = position;
         }
         
         public static TSVector TransformDirection(this TransformComponent self, TSVector position)
-        {self.LSRoom()?.ProcessLog.LogFunction(88, self.LSParent().Id);
+        {self.LSRoom()?.ProcessLog.LogFunction(88, self.LSParent().Id, position.x.V, position.y.V, position.z.V);
             return self.Rotation * position;
         }
         
         public static TSVector TransformVector(this TransformComponent self, TSVector position)
-        {self.LSRoom()?.ProcessLog.LogFunction(87, self.LSParent().Id);
+        {self.LSRoom()?.ProcessLog.LogFunction(87, self.LSParent().Id, position.x.V, position.y.V, position.z.V);
             return self.Rotation * position;
         }
         
         public static TSVector TransformPoint(this TransformComponent self, TSVector position)
-        {self.LSRoom()?.ProcessLog.LogFunction(86, self.LSParent().Id);
+        {self.LSRoom()?.ProcessLog.LogFunction(86, self.LSParent().Id, position.x.V, position.y.V, position.z.V);
             return self.Position + self.Rotation * position;
         }
         

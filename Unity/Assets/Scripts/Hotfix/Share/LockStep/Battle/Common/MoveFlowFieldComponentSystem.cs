@@ -69,7 +69,7 @@ namespace ET
         }
         
         public static bool TryMoveStart(this MoveFlowFieldComponent self, int flowFieldIndex, TSVector destination, MovementMode movementMode = MovementMode.Move)
-        {self.LSRoom()?.ProcessLog.LogFunction(69, self.LSParent().Id, flowFieldIndex);
+        {self.LSRoom()?.ProcessLog.LogFunction(69, self.LSParent().Id, flowFieldIndex, destination.x.V, destination.y.V, destination.z.V);
             if (self.FlowFieldStatus != FlowFieldStatus.None)
                 return false;
             
@@ -78,7 +78,7 @@ namespace ET
         }
         
         public static void MoveStart(this MoveFlowFieldComponent self, int flowFieldIndex, TSVector destination, MovementMode movementMode = MovementMode.Move)
-        {self.LSRoom()?.ProcessLog.LogFunction(68, self.LSParent().Id, flowFieldIndex);
+        {self.LSRoom()?.ProcessLog.LogFunction(68, self.LSParent().Id, flowFieldIndex, destination.x.V, destination.y.V, destination.z.V);
             self.FlowFieldIndex = flowFieldIndex;
             self.FlowFieldDestination = destination;
             self.FlowFieldStatus = FlowFieldStatus.Moving;

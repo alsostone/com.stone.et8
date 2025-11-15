@@ -26,7 +26,7 @@ namespace ET
         }
 
         public static void RunCommandTouchDragStart(this LSGridBuilderComponent self, TSVector2 position)
-        {self.LSRoom()?.ProcessLog.LogFunction(109, self.LSParent().Id);
+        {self.LSRoom()?.ProcessLog.LogFunction(109, self.LSParent().Id, position.x.V, position.y.V);
             SelectionComponent selectionComponent = self.LSOwner().GetComponent<SelectionComponent>();
             selectionComponent.ClearSelection();
             
@@ -35,12 +35,12 @@ namespace ET
         }
 
         public static void RunCommandTouchDrag(this LSGridBuilderComponent self, TSVector2 position)
-        {self.LSRoom()?.ProcessLog.LogFunction(108, self.LSParent().Id);
+        {self.LSRoom()?.ProcessLog.LogFunction(108, self.LSParent().Id, position.x.V, position.y.V);
             EventSystem.Instance.Publish(self.LSWorld(), new LSTouchDrag() { Id = self.LSOwner().Id, Position = position });
         }
 
         public static void RunCommandTouchDragEnd(this LSGridBuilderComponent self, TSVector2 position)
-        {self.LSRoom()?.ProcessLog.LogFunction(107, self.LSParent().Id);
+        {self.LSRoom()?.ProcessLog.LogFunction(107, self.LSParent().Id, position.x.V, position.y.V);
             LSWorld lsWorld = self.LSWorld();
             LSUnit lsOwner = self.LSOwner();
 

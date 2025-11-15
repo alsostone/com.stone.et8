@@ -205,12 +205,12 @@ namespace ProcessLog.Editor
                     functionData.ValidArgNames += name + ",";
                     functionData.ValidArgCount++;
                 }
-                else if (type.Equals("FPVector2")) {
+                else if (type.Equals("TSVector2")) {
                     codeText = codeText.Insert(codeText.Length - 2, $", {name}.x.V, {name}.y.V");
                     functionData.ValidArgNames += $"(FP){name}.X,(FP){name}.Y,";
                     functionData.ValidArgCount += 2;
                 }
-                else if (type.Equals("FPVector")) {
+                else if (type.Equals("TSVector")) {
                     codeText = codeText.Insert(codeText.Length - 2, $", {name}.x.V, {name}.y.V, {name}.z.V");
                     functionData.ValidArgNames += $"(FP){name}.X, (FP){name}.Y,(FP){name}.Z,";
                     functionData.ValidArgCount += 3;

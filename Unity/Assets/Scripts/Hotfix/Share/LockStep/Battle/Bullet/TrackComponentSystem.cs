@@ -10,7 +10,7 @@ namespace ET
     {
         [EntitySystem]
         private static void Awake(this TrackComponent self, int trackId, LSUnit target, TSVector targetPosition)
-        {self.LSRoom()?.ProcessLog.LogFunction(47, self.LSParent().Id, trackId, target.Id);
+        {self.LSRoom()?.ProcessLog.LogFunction(47, self.LSParent().Id, trackId, target.Id, targetPosition.x.V, targetPosition.y.V, targetPosition.z.V);
             self.TrackId = trackId;
             self.HorSpeed = (FP)self.TbTrackRow.HorSpeed / LSConstValue.PropValueScale;
             if (target == null) {

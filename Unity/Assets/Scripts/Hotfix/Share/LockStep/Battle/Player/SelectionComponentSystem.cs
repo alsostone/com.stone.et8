@@ -47,7 +47,7 @@ namespace ET
         }
         
         public static void MoveToPosition(this SelectionComponent self, TSVector2 position, MovementMode movementMode)
-        {self.LSRoom()?.ProcessLog.LogFunction(112, self.LSParent().Id);
+        {self.LSRoom()?.ProcessLog.LogFunction(112, self.LSParent().Id, position.x.V, position.y.V);
             if (self.SelectedUnitIds.Count == 0) {
                 return;
             }

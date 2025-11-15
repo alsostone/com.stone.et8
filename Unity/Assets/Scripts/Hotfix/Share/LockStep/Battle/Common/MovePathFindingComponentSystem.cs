@@ -41,7 +41,7 @@ namespace ET
         }
         
         public static void SetDestination(this MovePathFindingComponent self, TSVector position, MovementMode movementMode)
-        {self.LSRoom()?.ProcessLog.LogFunction(75, self.LSParent().Id);
+        {self.LSRoom()?.ProcessLog.LogFunction(75, self.LSParent().Id, position.x.V, position.y.V, position.z.V);
             LSGridMapComponent gridMapComponent = self.LSWorld().GetComponent<LSGridMapComponent>();
             TransformComponent transformComponent = self.LSOwner().GetComponent<TransformComponent>();
             

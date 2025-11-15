@@ -65,13 +65,13 @@ namespace ET
         }
         
         public static IndexV2 ConvertToIndex(this LSGridMapComponent self, TSVector position)
-        {self.LSRoom()?.ProcessLog.LogFunction(12, self.LSParent().Id);
+        {self.LSRoom()?.ProcessLog.LogFunction(12, self.LSParent().Id, position.x.V, position.y.V, position.z.V);
             position = TSQuaternion.Inverse(self.GridRotation) * (position - self.GridPosition);
             return self.GridData.ConvertToIndex(new FieldV2(position.x, position.z));
         }
         
         private static void SetDestination(this LSGridMapComponent self, TSVector position)
-        {self.LSRoom()?.ProcessLog.LogFunction(11, self.LSParent().Id);
+        {self.LSRoom()?.ProcessLog.LogFunction(11, self.LSParent().Id, position.x.V, position.y.V, position.z.V);
             position = TSQuaternion.Inverse(self.GridRotation) * (position - self.GridPosition);
             self.FlowFieldDestination = new FieldV2(position.x, position.z);
             self.FlowFieldDirty = true;
@@ -161,7 +161,7 @@ namespace ET
         }
         
         public static bool Pathfinding(this LSGridMapComponent self, TSVector start, TSVector to, List<TSVector> results)
-        {self.LSRoom()?.ProcessLog.LogFunction(7, self.LSParent().Id);
+        {self.LSRoom()?.ProcessLog.LogFunction(7, self.LSParent().Id, start.x.V, start.y.V, start.z.V, to.x.V, to.y.V, to.z.V);
             results.Clear();
             
             start = TSQuaternion.Inverse(self.GridRotation) * (start - self.GridPosition);
@@ -187,7 +187,7 @@ namespace ET
         // 限制位置在网格范围内
         // 使用时机：为确保移动到目标点，寻路完成后把最后一个点替换成目标点（此时需要限制目标点在网格内，不然就走出界外了）
         public static TSVector ClampPosition(this LSGridMapComponent self, TSVector position)
-        {self.LSRoom()?.ProcessLog.LogFunction(6, self.LSParent().Id);
+        {self.LSRoom()?.ProcessLog.LogFunction(6, self.LSParent().Id, position.x.V, position.y.V, position.z.V);
             FP offset = self.GridData.cellSize * FP.Half;    // 偏移0.5能有效避免在边缘的抖动
             position = TSQuaternion.Inverse(self.GridRotation) * (position - self.GridPosition);
             position.x = TSMath.Clamp(position.x, offset, self.GridData.cellSize * self.GridData.xLength - offset);
