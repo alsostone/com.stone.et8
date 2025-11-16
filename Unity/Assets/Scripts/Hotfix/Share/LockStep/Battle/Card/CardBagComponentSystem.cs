@@ -10,6 +10,7 @@ namespace ET
         [EntitySystem]
         private static void Awake(this CardBagComponent self, List<LSRandomDropItem> items)
         {self.LSRoom()?.ProcessLog.LogFunction(50, self.LSParent().Id);
+            self.Items = new List<CardBagItem>();
             foreach (LSRandomDropItem item in items) {
                 self.AddItem(item);
             }

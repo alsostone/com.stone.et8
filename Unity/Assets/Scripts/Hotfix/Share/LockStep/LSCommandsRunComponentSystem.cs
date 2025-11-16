@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using TrueSync;
 
 namespace ET
@@ -11,6 +12,7 @@ namespace ET
         private static void Awake(this LSCommandsRunComponent self)
         {
             self.MoveAxis = TSVector2.zero;
+            self.Commands = new List<LSCommandData>();
         }
 
         [LSEntitySystem]

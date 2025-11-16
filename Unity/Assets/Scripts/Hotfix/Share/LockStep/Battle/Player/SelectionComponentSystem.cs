@@ -11,6 +11,7 @@ namespace ET
         [EntitySystem]
         private static void Awake(this SelectionComponent self)
         {
+            self.SelectedUnitIds = new List<long>();
         }
         
         public static void SelectUnitsInBounds(this SelectionComponent self, TSBounds bounds)

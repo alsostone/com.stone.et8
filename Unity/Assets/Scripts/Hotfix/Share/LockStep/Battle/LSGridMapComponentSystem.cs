@@ -24,8 +24,6 @@ namespace ET
             self.FlowFieldDestination = new FieldV2(0, 0);
                     
             self.ResetGridData(FileComponent.Instance.Load(gridName));
-            self.PathPoints = new List<IndexV2>();
-            self.FlowFieldDestinations = new List<FieldV2>();
         }
         
         [EntitySystem]

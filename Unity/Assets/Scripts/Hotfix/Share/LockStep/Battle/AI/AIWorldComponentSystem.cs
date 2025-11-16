@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using TrueSync;
 
 namespace ET
@@ -12,6 +13,7 @@ namespace ET
         {self.LSRoom()?.ProcessLog.LogFunction(32, self.LSParent().Id);
             self.BehaveWorld = new NPBehave.BehaveWorld();
             self.BehaveWorld.SetRandom(self.GetRandom());
+            self.NeedStartUnits = new List<long>();
         }
         
         [EntitySystem]

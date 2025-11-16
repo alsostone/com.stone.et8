@@ -7,9 +7,9 @@ namespace ET
 {
     [ComponentOf(typeof(LSUnit))]
     [MemoryPackable]
-    public partial class CardBagComponent: LSEntity, IAwake<List<LSRandomDropItem>>, IDeserialize
+    public partial class CardBagComponent: LSEntity, IAwake<List<LSRandomDropItem>>, IDeserialize, ISerializeToEntity
     {
-        public List<CardBagItem> Items { get; } = new();
+        public List<CardBagItem> Items { get; set; }
 
         [BsonIgnore]
         [MemoryPackIgnore]
@@ -17,7 +17,8 @@ namespace ET
     }
     
     [EnableClass]
-    public class CardBagItem : IPool
+    [MemoryPackable]
+    public partial class CardBagItem : IPool
     {
         public long Id;
         public EUnitType Type;

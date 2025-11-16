@@ -24,7 +24,7 @@ namespace ET
         public int DurationFrame;
         public int CurrentPoint;
         
-        public List<SearchUnitPackable> SearchUnits = new List<SearchUnitPackable>(16);
+        public List<SearchUnitPackable> SearchUnits;
         
         [BsonIgnore]
         [MemoryPackIgnore]

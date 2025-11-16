@@ -7,6 +7,6 @@ namespace ET
 	[MemoryPackable]
 	public partial class SelectionComponent: LSEntity, IAwake, ISerializeToEntity
 	{
-		public List<long> SelectedUnitIds { get; set; } = new ();
+		public List<long> SelectedUnitIds { get; set; }
 	}
 }

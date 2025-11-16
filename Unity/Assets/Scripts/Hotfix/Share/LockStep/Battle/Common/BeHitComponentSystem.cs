@@ -11,6 +11,7 @@ namespace ET
         [EntitySystem]
         private static void Awake(this BeHitComponent self)
         {self.LSRoom()?.ProcessLog.LogFunction(59, self.LSParent().Id);
+            self.Attackers = new List<long>();
             LSTargetsComponent component = self.LSWorld().GetComponent<LSTargetsComponent>();
             TeamType teamType = self.LSOwner().GetComponent<TeamComponent>().Type;
             component.AddTarget(teamType, self.LSOwner());

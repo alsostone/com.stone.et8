@@ -11,6 +11,7 @@ namespace ET
         [EntitySystem]
         private static void Awake(this CardSelectComponent self)
         {
+            self.CardsQueue = new List<List<LSRandomDropItem>>();
         }
         
         [LSEntitySystem]

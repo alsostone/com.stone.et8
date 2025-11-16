@@ -30,10 +30,10 @@ namespace ET
 		public TSQuaternion GridRotation;
 		
 		[MemoryPackIgnore, BsonIgnore]
-		public List<IndexV2> PathPoints;
+		public List<IndexV2> PathPoints = new ();
 		
 		[MemoryPackIgnore, BsonIgnore]
-		public List<FieldV2> FlowFieldDestinations;
+		public List<FieldV2> FlowFieldDestinations = new ();
 		
 	}
 }

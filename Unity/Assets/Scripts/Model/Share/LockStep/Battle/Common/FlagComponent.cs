@@ -10,9 +10,9 @@ namespace ET
     public partial class FlagComponent : LSEntity, IAwake, IAwake<int>, ISerializeToEntity
     {
         [BsonDictionaryOptions(DictionaryRepresentation.ArrayOfArrays)]
-        public Dictionary<FlagRestrict, int> RestrictRefrence = new();
+        public Dictionary<FlagRestrict, int> RestrictRefrence;
         
         [BsonDictionaryOptions(DictionaryRepresentation.ArrayOfArrays)]
-        public Dictionary<FlagLabel, int> FlagLabels = new();
+        public Dictionary<FlagLabel, int> FlagLabels;
     }
 }

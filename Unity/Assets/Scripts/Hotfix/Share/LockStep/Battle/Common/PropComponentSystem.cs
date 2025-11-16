@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using TrueSync;
 
 namespace ET
@@ -9,6 +10,7 @@ namespace ET
         [EntitySystem]
         private static void Awake(this PropComponent self, int radius)
         {self.LSRoom()?.ProcessLog.LogFunction(83, self.LSParent().Id, radius);
+            self.NumericDic = new Dictionary<NumericType, FP>();
             self.Radius = (FP)radius / LSConstValue.PropValueScale;
         }
         

@@ -12,6 +12,7 @@ namespace ET
         [EntitySystem]
         private static void Awake(this Skill self, int skillId, bool isOnlyOnce)
         {self.LSRoom()?.ProcessLog.LogFunction(133, self.LSParent().Id, skillId, isOnlyOnce ? 1 : 0);
+            self.SearchUnits = new List<SearchUnitPackable>();
             self.SkillId = skillId;
             self.IsOnlyOnce = isOnlyOnce;
             self.CastFrame = int.MinValue;

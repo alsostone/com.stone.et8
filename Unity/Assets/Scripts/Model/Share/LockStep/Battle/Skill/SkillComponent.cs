@@ -10,11 +10,11 @@ namespace ET
     public partial class SkillComponent : LSEntity, IAwake<int[], int[]>, IDestroy, ILSUpdate, ISerializeToEntity
     {
         [BsonDictionaryOptions(DictionaryRepresentation.ArrayOfArrays)]
-        public Dictionary<long, long> IdSkillMap = new Dictionary<long, long>();
+        public Dictionary<long, long> IdSkillMap;
 
         [BsonDictionaryOptions(DictionaryRepresentation.ArrayOfArrays)]
-        public Dictionary<ESkillType, List<long>> TypeSkillsMap = new Dictionary<ESkillType, List<long>>();
+        public Dictionary<ESkillType, List<long>> TypeSkillsMap;
 
-        public List<long> mRunningSkills = new List<long>();
+        public List<long> mRunningSkills;
     }
 }

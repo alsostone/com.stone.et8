@@ -10,6 +10,9 @@ namespace ET
         [EntitySystem]
         private static void Awake(this SkillComponent self, int[] normalIds, int[] activeIds)
         {self.LSRoom()?.ProcessLog.LogFunction(125, self.LSParent().Id);
+            self.IdSkillMap = new Dictionary<long, long>();
+            self.TypeSkillsMap = new Dictionary<ESkillType, List<long>>();
+            self.mRunningSkills = new List<long>();
             if (normalIds != null)
             {
                 foreach (int skillId in normalIds)

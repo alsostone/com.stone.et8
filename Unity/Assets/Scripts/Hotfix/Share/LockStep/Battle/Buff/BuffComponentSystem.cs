@@ -11,7 +11,7 @@ namespace ET
         [EntitySystem]
         private static void Awake(this BuffComponent self)
         {
-            
+            self.IdBuffMap = new SortedDictionary<long, long>();
         }
         
         [EntitySystem]

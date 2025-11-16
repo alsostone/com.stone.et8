@@ -21,6 +21,6 @@ namespace ET
         public FP Radius { get; set; }
         
         [BsonDictionaryOptions(DictionaryRepresentation.ArrayOfArrays)]
-        public Dictionary<NumericType, FP> NumericDic = new Dictionary<NumericType, FP>();
+        public Dictionary<NumericType, FP> NumericDic;
     }
 }

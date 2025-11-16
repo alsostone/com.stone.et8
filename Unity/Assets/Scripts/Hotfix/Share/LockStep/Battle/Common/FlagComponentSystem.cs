@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 
 namespace ET
 {
@@ -9,6 +10,8 @@ namespace ET
         [EntitySystem]
         private static void Awake(this FlagComponent self)
         {
+            self.RestrictRefrence = new Dictionary<FlagRestrict, int>();
+            self.FlagLabels = new Dictionary<FlagLabel, int>();
         }
         
         [EntitySystem]
