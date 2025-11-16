@@ -150,4 +150,8 @@
 {"ID":149,"FileName":"WorkComponentSystem.cs","FuncName":"Awake","ArgTypes":"WorkComponent,int","ArgNames":"self,workerLimit","ValidArgNames":"Owner,workerLimit","ValidArgCount":2,"Comments":null}
 {"ID":150,"FileName":"WorkQueueComponentSystem.cs","FuncName":"SnatchingWorkers","ArgTypes":"WorkQueueComponent,int,int,int","ArgNames":"self,need,indexBegin,indexEnd","ValidArgNames":"Owner,need,indexBegin,indexEnd","ValidArgCount":4,"Comments":null}
 {"ID":151,"FileName":"WorkQueueComponentSystem.cs","FuncName":"LSUpdate","ArgTypes":"WorkQueueComponent","ArgNames":"self","ValidArgNames":"Owner","ValidArgCount":1,"Comments":null}
+{"ID":152,"FileName":"BuffComponentSystem.cs","FuncName":"Awake","ArgTypes":"BuffComponent","ArgNames":"self","ValidArgNames":"Owner","ValidArgCount":1,"Comments":null}
+{"ID":153,"FileName":"CardSelectComponentSystem.cs","FuncName":"Awake","ArgTypes":"CardSelectComponent","ArgNames":"self","ValidArgNames":"Owner","ValidArgCount":1,"Comments":null}
+{"ID":154,"FileName":"FlagComponentSystem.cs","FuncName":"Awake","ArgTypes":"FlagComponent","ArgNames":"self","ValidArgNames":"Owner","ValidArgCount":1,"Comments":null}
+{"ID":155,"FileName":"SelectionComponentSystem.cs","FuncName":"Awake","ArgTypes":"SelectionComponent","ArgNames":"self","ValidArgNames":"Owner","ValidArgCount":1,"Comments":null}
 ]

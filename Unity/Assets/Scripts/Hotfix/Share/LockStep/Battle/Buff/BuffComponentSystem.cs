@@ -10,7 +10,7 @@ namespace ET
     {
         [EntitySystem]
         private static void Awake(this BuffComponent self)
-        {
+        {self.LSRoom()?.ProcessLog.LogFunction(152, self.LSParent().Id);
             self.IdBuffMap = new SortedDictionary<long, long>();
         }
         

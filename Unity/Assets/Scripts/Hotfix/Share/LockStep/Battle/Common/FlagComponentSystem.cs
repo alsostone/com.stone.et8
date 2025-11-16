@@ -9,7 +9,7 @@ namespace ET
     {
         [EntitySystem]
         private static void Awake(this FlagComponent self)
-        {
+        {self.LSRoom()?.ProcessLog.LogFunction(154, self.LSParent().Id);
             self.RestrictRefrence = new Dictionary<FlagRestrict, int>();
             self.FlagLabels = new Dictionary<FlagLabel, int>();
         }
@@ -17,6 +17,8 @@ namespace ET
         [EntitySystem]
         private static void Awake(this FlagComponent self, int mask)
         {self.LSRoom()?.ProcessLog.LogFunction(67, self.LSParent().Id, mask);
+            self.RestrictRefrence = new Dictionary<FlagRestrict, int>();
+            self.FlagLabels = new Dictionary<FlagLabel, int>();
             self.AddRestrict(mask);
         }
 

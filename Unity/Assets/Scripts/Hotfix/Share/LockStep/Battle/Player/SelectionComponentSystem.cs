@@ -10,7 +10,7 @@ namespace ET
     {
         [EntitySystem]
         private static void Awake(this SelectionComponent self)
-        {
+        {self.LSRoom()?.ProcessLog.LogFunction(155, self.LSParent().Id);
             self.SelectedUnitIds = new List<long>();
         }
         

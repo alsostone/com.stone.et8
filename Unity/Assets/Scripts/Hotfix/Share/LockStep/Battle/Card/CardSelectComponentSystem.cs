@@ -10,7 +10,7 @@ namespace ET
     {
         [EntitySystem]
         private static void Awake(this CardSelectComponent self)
-        {
+        {self.LSRoom()?.ProcessLog.LogFunction(153, self.LSParent().Id);
             self.CardsQueue = new List<List<LSRandomDropItem>>();
         }
         
