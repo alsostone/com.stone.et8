@@ -90,9 +90,13 @@ public class ProcessLogMgr
         mCurrentFrameLog = null;
     }
 
-    public long GetCurrentFrameHash()
+    public long GetFrameHash(int frame)
     {
-        return mSum;
+        var frameLog = mAllFrameLog.GetLast(mFrameCount - frame - 1);
+        if (frameLog != null) {
+            return frameLog.Hash;
+        }
+        return 0;
     }
 
     public void SetLogEnable(bool enable)

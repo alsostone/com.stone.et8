@@ -64,7 +64,7 @@ namespace ET.Client
                 return;
             }
             
-            long hash = self.FrameBuffer.GetHash(frame);
+            long hash = self.ProcessLog.GetFrameHash(frame);
             C2Room_CheckHash c2RoomCheckHash = C2Room_CheckHash.Create();
             c2RoomCheckHash.Frame = frame;
             c2RoomCheckHash.Hash = hash;

@@ -91,7 +91,7 @@ namespace ProcessLog
         /// <summary>
         /// 返回队尾往前第N个元素
         /// </summary>
-        /// <param name="offset"></param>
+        /// <param name="offset">0表示最后一个元素</param>
         /// <returns></returns>
         public T GetLast(int offset)
         {

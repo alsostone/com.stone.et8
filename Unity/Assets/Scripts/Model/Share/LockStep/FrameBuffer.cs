@@ -9,36 +9,21 @@ namespace ET
         public int MaxFrame { get; private set; }
         private readonly List<Room2C_FrameMessage> frameMessages;
         private readonly List<MemoryBuffer> snapshots;
-        private readonly List<long> hashs;
 
         public FrameBuffer(int frame = 0, int capacity = LSConstValue.FrameCountPerSecond * 60)
         {
             this.MaxFrame = frame + LSConstValue.FrameCountPerSecond * 30;
             this.frameMessages = new List<Room2C_FrameMessage>(capacity);
             this.snapshots = new List<MemoryBuffer>(capacity);
-            this.hashs = new List<long>(capacity);
-            
+
             for (int i = 0; i < this.snapshots.Capacity; ++i)
             {
-                this.hashs.Add(0);
                 this.frameMessages.Add(Room2C_FrameMessage.Create());
                 MemoryBuffer memoryBuffer = new(204800);
                 memoryBuffer.SetLength(0);
                 memoryBuffer.Seek(0, SeekOrigin.Begin);
                 this.snapshots.Add(memoryBuffer);
             }
-        }
-
-        public void SetHash(int frame, long hash)
-        {
-            EnsureFrame(frame);
-            this.hashs[frame % this.frameMessages.Capacity] = hash;
-        }
-        
-        public long GetHash(int frame)
-        {
-            EnsureFrame(frame);
-            return this.hashs[frame % this.frameMessages.Capacity];
         }
 
         public bool CheckFrame(int frame)

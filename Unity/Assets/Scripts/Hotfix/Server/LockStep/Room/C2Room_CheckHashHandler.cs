@@ -14,7 +14,7 @@ namespace ET.Server
             if (roomPlayer.IsInconsistent)
                 return;
             
-            long hash = room.FrameBuffer.GetHash(message.Frame);
+            long hash = room.ProcessLog.GetFrameHash(message.Frame);
             if (message.Hash != hash)
             {
                 roomPlayer.IsInconsistent = true;

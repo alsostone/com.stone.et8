@@ -168,10 +168,6 @@ namespace ET
             
             MemoryPackHelper.Serialize(self.LSWorld, memoryBuffer);
             memoryBuffer.Seek(0, SeekOrigin.Begin);
-
-            long hash = memoryBuffer.GetBuffer().Hash(0, (int) memoryBuffer.Length);
-            
-            self.FrameBuffer.SetHash(frame, hash);
         }
 
         // 记录需要存档的数据
