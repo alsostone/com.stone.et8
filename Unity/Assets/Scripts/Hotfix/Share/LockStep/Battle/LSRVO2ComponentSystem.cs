@@ -20,8 +20,8 @@ namespace ET
         private static void Deserialize(this LSRVO2Component self)
         {
             // TODO: 可能导致不一致，因为恢复Agent时 它所在的List位置可能会发生变化，需要在simulator保证插入顺序 后续再处理
-            self.RVO2Simulator.ClearAllAgents();
-            self.RVO2Simulator.ClearAllObstacles();
+            self.RVO2Simulator = new Simulator();
+            self.RVO2Simulator.setTimeStep((FP)LSConstValue.UpdateInterval / LSConstValue.Milliseconds);
         }
         
         [LSEntitySystem]
