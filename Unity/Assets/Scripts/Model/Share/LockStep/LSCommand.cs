@@ -47,9 +47,9 @@ namespace ET
     
     public struct LSCommandData
     {
-        public uint Header;
-        public uint Param1;
-        public uint Param2;
+        public int Header;
+        public int Param1;
+        public int Param2;
 
         public override int GetHashCode()
         {
@@ -82,87 +82,81 @@ namespace ET
         public static LSCommandData GenCommandFloat2(byte seatIndex, OperateCommandType type, float param1 = 0, float param2 = 0)
         {
             LSCommandData command = new LSCommandData();
-            command.Header |= (uint)seatIndex << 24; // 前8位存储座位索引
-            command.Header |= (uint)type << 16; // 接下来的8位存储操作类型
+            command.Header |= seatIndex << 24; // 前8位存储座位索引
+            command.Header |= (int)type << 16; // 接下来的8位存储操作类型
             
-            command.Param1 = (uint)(param1 * 1000);
-            command.Param2 = (uint)(param2 * 1000);
+            command.Param1 = (int)(param1 * 1000);
+            command.Param2 = (int)(param2 * 1000);
             return command;
         }
         
         public static LSCommandData GenCommandInt2(byte seatIndex, OperateCommandType type, int param1 = 0, int param2 = 0)
         {
             LSCommandData command = new LSCommandData();
-            command.Header |= (uint)seatIndex << 24; // 前8位存储座位索引
-            command.Header |= (uint)type << 16; // 接下来的8位存储操作类型
+            command.Header |= seatIndex << 24; // 前8位存储座位索引
+            command.Header |= (int)type << 16; // 接下来的8位存储操作类型
             
-            command.Param1 = (uint)param1;
-            command.Param2 = (uint)param2;
+            command.Param1 = (int)param1;
+            command.Param2 = (int)param2;
             return command;
         }
         
         public static LSCommandData GenCommandLong(byte seatIndex, OperateCommandType type, long param)
         {
             LSCommandData command = new LSCommandData();
-            command.Header |= (uint)seatIndex << 24; // 前8位存储座位索引
-            command.Header |= (uint)type << 16; // 接下来的8位存储操作类型
+            command.Header |= seatIndex << 24; // 前8位存储座位索引
+            command.Header |= (int)type << 16; // 接下来的8位存储操作类型
             
-            command.Param1 = (uint)(((ulong)param >> 32) & 0xFFFFFFFF); // 存储高位参数
-            command.Param2 = (uint)((ulong)param & 0xFFFFFFFF); // 存储低位参数
+            command.Param1 = (int)((param >> 32) & 0xFFFFFFFF); // 存储高位参数
+            command.Param2 = (int)(param & 0xFFFFFFFF); // 存储低位参数
             return command;
         }
         
         /// 特别注意：对于2个float类型的参数，将其乘以1000并转换为整数
         public static TSVector2 ParseCommandFloat2(LSCommandData command)
         {
-            int i1 = (int)command.Param1;
-            int i2 = (int)command.Param2;
-            return new TSVector2(i1, i2) / 1000;
+            return new TSVector2(command.Param1, command.Param2) / 1000;
         }
         
-        public static ulong ParseCommandLong(LSCommandData command)
+        public static long ParseCommandLong(LSCommandData command)
         {
-            ulong param = (ulong)command.Param1 << 32;
-            param |= command.Param2;
+            long param = (long)command.Param1 << 32;
+            param |= (uint)command.Param2;
             return param;
         }
         
         public static (int, int) ParseCommandInt2(LSCommandData command)
         {
-            int i1 = (int)command.Param1;
-            int i2 = (int)command.Param2;
-            return (i1, i2);
+            return (command.Param1, command.Param2);
         }
         
         public static LSCommandData GenCommandMoveTo(byte seatIndex, MovementMode movementMode, float param1 = 0, float param2 = 0)
         {
             LSCommandData command = new LSCommandData();
-            command.Header |= (uint)seatIndex << 24; // 前8位存储座位索引
-            command.Header |= (uint)OperateCommandType.MoveTo << 16; // 接下来的8位存储操作类型
-            command.Header |= (uint)movementMode << 8; // 接下来的8位存储移动模式
+            command.Header |= seatIndex << 24; // 前8位存储座位索引
+            command.Header |= (int)OperateCommandType.MoveTo << 16; // 接下来的8位存储操作类型
+            command.Header |= (int)movementMode << 8; // 接下来的8位存储移动模式
             
-            command.Param1 = (uint)(param1 * 1000);
-            command.Param2 = (uint)(param2 * 1000);
+            command.Param1 = (int)(param1 * 1000);
+            command.Param2 = (int)(param2 * 1000);
             return command;
         }
         
         public static (MovementMode, TSVector2) ParseCommandMoveTo(LSCommandData command)
         {
             MovementMode movementMode = (MovementMode)((command.Header >> 8) & 0xFF);
-            int i1 = (int)command.Param1;
-            int i2 = (int)command.Param2;
-            return (movementMode, new TSVector2(i1, i2) / 1000);
+            return (movementMode, new TSVector2(command.Param1, command.Param2) / 1000);
         }
 
         public static LSCommandData GenCommandButton(byte seatIndex, CommandButtonType type, long param = 0)
         {
             LSCommandData command = new LSCommandData();
-            command.Header |= (uint)seatIndex << 24; // 前8位存储座位索引
-            command.Header |= (uint)OperateCommandType.Button << 16; // 接下来的8位存储操作类型
-            command.Header |= (uint)type << 8; // 接下来的8位存储按钮类型
+            command.Header |= seatIndex << 24; // 前8位存储座位索引
+            command.Header |= (int)OperateCommandType.Button << 16; // 接下来的8位存储操作类型
+            command.Header |= (int)type << 8; // 接下来的8位存储按钮类型
             
-            command.Param1 = (uint)(((ulong)param >> 32) & 0xFFFFFFFF); // 存储高位参数
-            command.Param2 = (uint)((ulong)param & 0xFFFFFFFF); // 存储低位参数
+            command.Param1 = (int)((param >> 32) & 0xFFFFFFFF); // 存储高位参数
+            command.Param2 = (int)(param & 0xFFFFFFFF); // 存储低位参数
             return command;
         }
 
@@ -171,9 +165,9 @@ namespace ET
         public static (CommandButtonType, long) ParseCommandButton(LSCommandData command)
         {
             CommandButtonType type = (CommandButtonType)((command.Header >> 8) & 0xFF);
-            ulong param = (ulong)command.Param1 << 32;
-            param |= command.Param2;
-            return (type, (long)param);
+            long param = (long)command.Param1 << 32;
+            param |= (uint)command.Param2;
+            return (type, param);
         }
         
         public static byte ParseCommandSeatIndex(LSCommandData command)
@@ -192,12 +186,12 @@ namespace ET
         public static LSCommandData GenCommandGm(byte seatIndex, CommandGMType type, long param = 0)
         {
             LSCommandData command = new LSCommandData();
-            command.Header |= (uint)seatIndex << 24; // 前8位存储座位索引
-            command.Header |= (uint)OperateCommandType.Gm << 16; // 接下来的8位存储操作类型
-            command.Header |= (uint)type << 8; // 接下来的8位存储按钮类型
+            command.Header |= seatIndex << 24; // 前8位存储座位索引
+            command.Header |= (int)OperateCommandType.Gm << 16; // 接下来的8位存储操作类型
+            command.Header |= (int)type << 8; // 接下来的8位存储按钮类型
             
-            command.Param1 = (uint)(((ulong)param >> 32) & 0xFFFFFFFF); // 存储高位参数
-            command.Param2 = (uint)((ulong)param & 0xFFFFFFFF); // 存储低位参数
+            command.Param1 = (int)((param >> 32) & 0xFFFFFFFF); // 存储高位参数
+            command.Param2 = (int)(param & 0xFFFFFFFF); // 存储低位参数
             return command;
         }
         
@@ -206,9 +200,9 @@ namespace ET
         public static (CommandGMType, long) ParseCommandGm(LSCommandData command)
         {
             CommandGMType type = (CommandGMType)((command.Header >> 8) & 0xFF);
-            ulong param = (ulong)command.Param1 << 32;
-            param |= command.Param2;
-            return (type, (long)param);
+            long param = (long)command.Param1 << 32;
+            param |= (uint)command.Param2;
+            return (type, param);
         }
 #endif
         

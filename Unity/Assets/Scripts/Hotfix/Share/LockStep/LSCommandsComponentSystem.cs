@@ -30,7 +30,7 @@ namespace ET
         public static void AddCommand(this LSCommandsComponent self, int frame, LSCommandData command)
         {
             // 覆盖座位索引 防止客户端模拟他人消息
-            command.Header |= (uint)self.SeatIndex << 24;
+            command.Header |= self.SeatIndex << 24;
             int index = frame % self.FramesCommandsNormal.Count;
             
             OperateCommandType type = (OperateCommandType)((command.Header >> 16) & 0xFF);

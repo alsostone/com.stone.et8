@@ -36,7 +36,7 @@ namespace ET
                     }
                     case OperateCommandType.TouchDown:
                     {
-                        long targetId = (long)LSCommand.ParseCommandLong(command);
+                        long targetId = LSCommand.ParseCommandLong(command);
                         self.LSOwner().GetComponent<LSGridBuilderComponent>().RunCommandTouchDown(targetId);
                         break;
                     }
@@ -60,13 +60,13 @@ namespace ET
                     }
                     case OperateCommandType.PlacementDrag:
                     {
-                        long targetId = (long)LSCommand.ParseCommandLong(command);
+                        long targetId = LSCommand.ParseCommandLong(command);
                         self.LSOwner().GetComponent<LSGridBuilderComponent>().RunCommandPlacementDrag(targetId);
                         break;
                     }
                     case OperateCommandType.PlacementNew:
                     {
-                        long itemId = (long)LSCommand.ParseCommandLong(command);
+                        long itemId = LSCommand.ParseCommandLong(command);
                         self.LSOwner().GetComponent<LSGridBuilderComponent>().RunCommandPlacementNew(itemId);
                         break;
                     }
