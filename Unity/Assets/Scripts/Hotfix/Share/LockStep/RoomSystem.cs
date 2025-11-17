@@ -25,7 +25,7 @@ namespace ET
             lsWorld.Frame = frame;
             
             LSStageComponent lsStageComponent = lsWorld.AddComponent<LSStageComponent, int>(matchInfo.StageId);
-            lsWorld.AddComponent<LSRVO2Component>();
+            lsWorld.AddComponentWithId<LSRVO2Component>(LSConstValue.RVO2ComponentId);
             lsWorld.AddComponent<LSGridMapComponent, string>($"Map/{lsStageComponent.TbRow.SceneName}.bytes");
             lsWorld.AddComponent<LSTargetsComponent>();
             lsWorld.AddComponent<AIWorldComponent>();

@@ -31,7 +31,6 @@ namespace ET
             foreach (Agent agent in self.RVO2Simulator.GetAllAgents())
             {
                 if (agent.isRemoved) { continue; }
-                agent.prefVelocity = TSVector2.zero;
                 
                 LSUnit lsUnit = self.LSUnit(agent.id);
                 TransformComponent transformComponent = lsUnit.GetComponent<TransformComponent>();

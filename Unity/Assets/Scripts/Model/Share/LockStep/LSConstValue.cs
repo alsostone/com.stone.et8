@@ -8,6 +8,7 @@ namespace ET
         public const int FrameCountPerSecond = Milliseconds / UpdateInterval;
         
         public const long GlobalIdOffset = long.MaxValue; // 约定特殊实体的ID 全局物体-0，中立队伍全局-1 队伍A全局-2 队伍B全局-3...
+        public const long RVO2ComponentId = long.MaxValue - 1000; // 作用为：更新后置，在每帧最后更新
         public const long PlayerIdOffset = long.MaxValue - 10000; // 约定玩家实体ID段（只在无法获得玩家Id的场景下使用）
         
         public const int PropValueScale = 10000;        // 属性配置放大比例

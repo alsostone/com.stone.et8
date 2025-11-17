@@ -80,6 +80,8 @@ namespace ET
             }
             else if (!moving && self.IsMovingPrevious) {
                 self.IsMovingPrevious = false;
+                LSRVO2Component rvo2Component = self.LSWorld().GetComponent<LSRVO2Component>();
+                rvo2Component.setAgentPrefVelocity(self.LSOwner(), TSVector2.zero);
                 EventSystem.Instance.Publish(self.LSWorld(), new LSUnitMoving() { Id = self.LSOwner().Id, IsMoving = false });
             }
         }
