@@ -197,29 +197,34 @@ namespace RVO
         
         public void removeAgent(long agentNo)
         {
-            int index = agentId2index_[agentNo];
-            Agent agent = agents_[index];
-            agent.isRemoved = true;
-            freeAgentIndexs_.Enqueue(index);
-            
-            agentId2index_.Remove(agentNo);
+            // 全局Dispose时也会调用removeAgent，此时agentId2index_已经被Clear
+            if (agentId2index_.TryGetValue(agentNo, out int index))
+            {
+                Agent agent = agents_[index];
+                agent.isRemoved = true;
+                freeAgentIndexs_.Enqueue(index);
+                agentId2index_.Remove(agentNo);
+            }
         }
         
         public void removeObstacle(long obstacleId)
         {
-            int index = obstacleId2index_[obstacleId];
-            Obstacle obstacle = obstacles_[index];
-            Obstacle start = obstacle;
-            do
+            // 全局Dispose时也会调用removeObstacle，此时obstacleId2index_已经被Clear
+            if (obstacleId2index_.TryGetValue(obstacleId, out int index))
             {
-                obstacle.isRemoved = true;
-                if (obstacle.id_ >= 0)  // 有可能是被拆分出来的，不可复用
-                    freeObstacleIndexs_.Enqueue(obstacle.id_);
-                obstacle = obstacle.next_;
-            } while (obstacle != start);
+                Obstacle obstacle = obstacles_[index];
+                Obstacle start = obstacle;
+                do
+                {
+                    obstacle.isRemoved = true;
+                    if (obstacle.id_ >= 0)  // 有可能是被拆分出来的，不可复用
+                        freeObstacleIndexs_.Enqueue(obstacle.id_);
+                    obstacle = obstacle.next_;
+                } while (obstacle != start);
             
-            obstacleId2index_.Remove(obstacleId);
-            obstacleDirty_ = true;
+                obstacleId2index_.Remove(obstacleId);
+                obstacleDirty_ = true;
+            }
         }
 
         public IList<Agent> GetAllAgents()
