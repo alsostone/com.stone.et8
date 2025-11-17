@@ -154,4 +154,7 @@
 {"ID":153,"FileName":"CardSelectComponentSystem.cs","FuncName":"Awake","ArgTypes":"CardSelectComponent","ArgNames":"self","ValidArgNames":"Owner","ValidArgCount":1,"Comments":null}
 {"ID":154,"FileName":"FlagComponentSystem.cs","FuncName":"Awake","ArgTypes":"FlagComponent","ArgNames":"self","ValidArgNames":"Owner","ValidArgCount":1,"Comments":null}
 {"ID":155,"FileName":"SelectionComponentSystem.cs","FuncName":"Awake","ArgTypes":"SelectionComponent","ArgNames":"self","ValidArgNames":"Owner","ValidArgCount":1,"Comments":null}
+{"ID":156,"FileName":"PlacementComponentSystem.cs","FuncName":"RemoveRVO2Object","ArgTypes":"PlacementComponent","ArgNames":"self","ValidArgNames":"Owner","ValidArgCount":1,"Comments":null}
+{"ID":157,"FileName":"PlacementComponentSystem.cs","FuncName":"AddRVO2Object","ArgTypes":"PlacementComponent","ArgNames":"self","ValidArgNames":"Owner","ValidArgCount":1,"Comments":null}
+{"ID":158,"FileName":"PlacementComponentSystem.cs","FuncName":"PutToPosition","ArgTypes":"PlacementComponent,TSVector","ArgNames":"self,position","ValidArgNames":"Owner,(FP)position.X, (FP)position.Y,(FP)position.Z","ValidArgCount":4,"Comments":null}
 ]

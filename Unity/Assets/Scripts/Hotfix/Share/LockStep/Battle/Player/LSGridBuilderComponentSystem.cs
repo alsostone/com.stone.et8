@@ -47,18 +47,11 @@ namespace ET
             TSVector positionV3 = new(position.x, 0, position.y);
             if (self.PlacementTargetId > 0)
             {
-                LSGridMapComponent lsGridMapComponent = lsWorld.GetComponent<LSGridMapComponent>();
-                IndexV2 index = lsGridMapComponent.ConvertToIndex(positionV3 + self.PlacementDragOffset);
-
-                LSUnitComponent lsUnitComponent = lsWorld.GetComponent<LSUnitComponent>();
-                LSUnit lsUnit = lsUnitComponent.GetChild<LSUnit>(self.PlacementTargetId);
-                PlacementData placementData = lsUnit?.GetComponent<PlacementComponent>()?.GetPlacementData();
-                if (placementData != null && lsGridMapComponent.CanPut(index.x, index.z, placementData) && lsGridMapComponent.CanTake(placementData))
+                LSUnit lsUnit = self.LSUnit(self.PlacementTargetId);
+                if (lsUnit != null)
                 {
-                    lsGridMapComponent.Take(placementData);
-                    lsGridMapComponent.Put(index.x, index.z, placementData);
-                    EventSystem.Instance.Publish(self.LSWorld(), new LSUnitPlaced() { Id = lsUnit.Id, X = index.x, Z = index.z });
-                    lsUnit.GetComponent<TransformComponent>().SetPosition(lsGridMapComponent.GetPutPosition(placementData));
+                    PlacementComponent placementComponent = lsUnit.GetComponent<PlacementComponent>();
+                    placementComponent?.PutToPosition(positionV3 + self.PlacementDragOffset);
                 }
             }
             else if (self.PlacementItemId > 0)
