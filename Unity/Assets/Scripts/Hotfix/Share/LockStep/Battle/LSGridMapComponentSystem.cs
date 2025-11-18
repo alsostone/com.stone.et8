@@ -19,11 +19,10 @@ namespace ET
             self.FreeFlowField = new Stack<int>();
             self.FlowFieldIndexRef = new Dictionary<int, int>();
 
-            self.FlowFieldDefaultIndex = -1;
-            self.FlowFieldDirty = false;
-            self.FlowFieldDestination = new FieldV2(0, 0);
-                    
             self.ResetGridData(FileComponent.Instance.Load(gridName));
+            
+            self.FlowFieldDefaultIndex = -1;
+            self.SetDestination(new TSVector(0, 0, 0));
         }
         
         [EntitySystem]
@@ -52,7 +51,6 @@ namespace ET
             self.GridPosition = gridMapData.position;
             self.GridRotation = TSQuaternion.Euler(gridMapData.rotation);
             self.GridData = gridMapData.gridData;
-            self.SetDestination(new TSVector(0, 0, 0));
             self.GenObstaclesFromGridData();
         }
         

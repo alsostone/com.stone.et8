@@ -34,6 +34,7 @@ namespace ProcessLog.Editor
         private static Regex ms_regexIgnoreCode = new Regex(@"\{\s*(self.LSRoom\(\)\?.ProcessLog.)(LogIgnore)\(([^\)]+\s*)?\)(\})?");
 
         //匹配手动插入的日志代码
+        //self.LSRoom()?.ProcessLog.LogFunction(0, ...);   /* comment */
         private static Regex ms_regexManualCode = new Regex(@"(?:self.LSRoom\(\)\?.ProcessLog.)(?:LogFunction)\(([^;]+\s*)?\)(?:\})?\s*;\s*\/\*(.)*\*\/");
 
         //匹配自动插入的日志代码
