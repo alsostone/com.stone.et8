@@ -1,5 +1,6 @@
 ﻿using MemoryPack;
 using MongoDB.Bson.Serialization.Attributes;
+using MongoDB.Bson.Serialization.Options;
 using ST.GridBuilder;
 using TrueSync;
 using System.Collections.Generic;
@@ -16,6 +17,7 @@ namespace ET
 
 		public List<FlowFieldNode[]> FlowFields;
 		public Stack<int> FreeFlowField;
+		[BsonDictionaryOptions(DictionaryRepresentation.ArrayOfArrays)]
 		public Dictionary<int, int> FlowFieldIndexRef;
 		
 		public int FlowFieldDefaultIndex;
