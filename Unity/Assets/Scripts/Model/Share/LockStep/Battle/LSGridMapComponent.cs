@@ -10,8 +10,10 @@ namespace ET
 	[MemoryPackable]
 	public partial class LSGridMapComponent: LSEntity, IAwake<string>, ILSUpdate, IDeserialize, ISerializeToEntity
 	{
-		public string GridName;
-		
+		public GridData GridData;
+		public TSVector GridPosition;
+		public TSQuaternion GridRotation;
+
 		public List<FlowFieldNode[]> FlowFields;
 		public Stack<int> FreeFlowField;
 		public Dictionary<int, int> FlowFieldIndexRef;
@@ -20,15 +22,6 @@ namespace ET
 		public bool FlowFieldDirty;
 		public FieldV2 FlowFieldDestination;
 
-		[MemoryPackIgnore, BsonIgnore]
-		public GridData GridData;
-
-		[MemoryPackIgnore, BsonIgnore]
-		public TSVector GridPosition;
-		
-		[MemoryPackIgnore, BsonIgnore]
-		public TSQuaternion GridRotation;
-		
 		[MemoryPackIgnore, BsonIgnore]
 		public List<IndexV2> PathPoints = new ();
 		

@@ -11,7 +11,6 @@
 {"ID":10,"FileName":"LSGridMapComponentSystem.cs","FuncName":"GenObstaclesFromGridData","ArgTypes":"LSGridMapComponent","ArgNames":"self","ValidArgNames":"Owner","ValidArgCount":1,"Comments":null}
 {"ID":11,"FileName":"LSGridMapComponentSystem.cs","FuncName":"SetDestination","ArgTypes":"LSGridMapComponent,TSVector","ArgNames":"self,position","ValidArgNames":"Owner,(FP)position.X, (FP)position.Y,(FP)position.Z","ValidArgCount":4,"Comments":null}
 {"ID":12,"FileName":"LSGridMapComponentSystem.cs","FuncName":"ConvertToIndex","ArgTypes":"LSGridMapComponent,TSVector","ArgNames":"self,position","ValidArgNames":"Owner,(FP)position.X, (FP)position.Y,(FP)position.Z","ValidArgCount":4,"Comments":null}
-{"ID":13,"FileName":"LSGridMapComponentSystem.cs","FuncName":"ResetGridData","ArgTypes":"LSGridMapComponent,byte[]","ArgNames":"self,gridBytes","ValidArgNames":"Owner","ValidArgCount":1,"Comments":null}
 {"ID":14,"FileName":"LSGridMapComponentSystem.cs","FuncName":"LSUpdate","ArgTypes":"LSGridMapComponent","ArgNames":"self","ValidArgNames":"Owner","ValidArgCount":1,"Comments":null}
 {"ID":15,"FileName":"LSGridMapComponentSystem.cs","FuncName":"Awake","ArgTypes":"LSGridMapComponent,string","ArgNames":"self,gridName","ValidArgNames":"Owner","ValidArgCount":1,"Comments":null}
 {"ID":16,"FileName":"LSRVO2ComponentSystem.cs","FuncName":"setAgentPrefVelocity","ArgTypes":"LSRVO2Component,LSUnit,TSVector2","ArgNames":"self,lsUnit,velocity","ValidArgNames":"Owner,lsUnit.Id,(FP)velocity.X,(FP)velocity.Y","ValidArgCount":4,"Comments":null}

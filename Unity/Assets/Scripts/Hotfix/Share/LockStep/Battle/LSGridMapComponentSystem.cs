@@ -13,25 +13,26 @@ namespace ET
         [EntitySystem]
         private static void Awake(this LSGridMapComponent self, string gridName)
         {self.LSRoom()?.ProcessLog.LogFunction(15, self.LSParent().Id);
-            self.GridName = gridName;
+            byte[] gridBytes = FileComponent.Instance.Load(gridName);
+            GridMapData gridMapData = MemoryPackSerializer.Deserialize<GridMapData>(gridBytes);
+            
+            self.GridData = gridMapData.gridData;
+            self.GridPosition = gridMapData.position;
+            self.GridRotation = TSQuaternion.Euler(gridMapData.rotation);
             
             self.FlowFields = new List<FlowFieldNode[]>();
             self.FreeFlowField = new Stack<int>();
             self.FlowFieldIndexRef = new Dictionary<int, int>();
 
-            self.ResetGridData(FileComponent.Instance.Load(gridName));
-            
             self.FlowFieldDefaultIndex = -1;
             self.SetDestination(new TSVector(0, 0, 0));
+            self.GenObstaclesFromGridData();
         }
         
         [EntitySystem]
         private static void Deserialize(this LSGridMapComponent self)
         {
-            // 由于GridData是一个大数据结构，序列化会消耗较多时间且序列化后内存占用也大
-            // 优化：由于对于格子数量来说，放入的数量是很小的，反序列化时再放入一遍消耗也不大，所以这里需要一个初始的取地图数据
-            // 可以再优化，比如将GridData池化，有瓶颈时再说
-            self.ResetGridData(FileComponent.Instance.Load(self.GridName));
+            self.GenObstaclesFromGridData();
         }
         
         [LSEntitySystem]
@@ -45,15 +46,6 @@ namespace ET
             }
         }
 
-        private static void ResetGridData(this LSGridMapComponent self, byte[] gridBytes)
-        {self.LSRoom()?.ProcessLog.LogFunction(13, self.LSParent().Id);
-            GridMapData gridMapData = MemoryPackSerializer.Deserialize<GridMapData>(gridBytes);
-            self.GridPosition = gridMapData.position;
-            self.GridRotation = TSQuaternion.Euler(gridMapData.rotation);
-            self.GridData = gridMapData.gridData;
-            self.GenObstaclesFromGridData();
-        }
-        
         public static GridData GetGridData(this LSGridMapComponent self)
         {
             return self.GridData;

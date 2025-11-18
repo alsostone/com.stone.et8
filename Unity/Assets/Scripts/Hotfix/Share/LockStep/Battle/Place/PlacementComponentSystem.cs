@@ -28,8 +28,6 @@ namespace ET
         [EntitySystem]
         private static void Deserialize(this PlacementComponent self)
         {
-            LSGridMapComponent gridMapComponent = self.LSWorld().GetComponent<LSGridMapComponent>();
-            gridMapComponent.Put(self.PlacementData.x, self.PlacementData.z, self.PlacementData);
             self.AddRVO2Object();
         }
 
