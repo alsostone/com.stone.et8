@@ -3,6 +3,7 @@ using UnityEngine;
 
 namespace ET.Client
 {
+    [LSEntitySystemOf(typeof(LSViewGridMapComponent))]
     [EntitySystemOf(typeof(LSViewGridMapComponent))]
     [FriendOf(typeof(LSViewGridMapComponent))]
     public static partial class LSViewGridMapComponentSystem
@@ -17,6 +18,13 @@ namespace ET.Client
             self.GridMapIndicator = UnityEngine.Object.FindObjectOfType<GridMapIndicator>();
             if (self.GridMapIndicator)
                 self.GridMapIndicator.SetGridMap(self.GridMap);
+        }
+        
+        [LSEntitySystem]
+        private static void LSRollback(this LSViewGridMapComponent self)
+        {
+            LSGridMapComponent lsGridMapComponent = self.Room().LSWorld.GetComponent<LSGridMapComponent>();
+            self.RebindGridDataDraw(lsGridMapComponent.GetGridData(), lsGridMapComponent.GetDefaultFlowField());
         }
         
         public static void RebindGridDataDraw(this LSViewGridMapComponent self, GridData gridData, FlowFieldNode[] flowField)

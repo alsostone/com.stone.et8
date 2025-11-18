@@ -53,8 +53,7 @@ namespace ET
             self.GridRotation = TSQuaternion.Euler(gridMapData.rotation);
             self.GridData = gridMapData.gridData;
             self.SetDestination(new TSVector(0, 0, 0));
-            self.SetObstaclesFromGridData();
-            EventSystem.Instance.Publish(self.LSWorld(), new LSGridDataReset() { GridData = self.GridData, FlowField = self.GetDefaultFlowField() });
+            self.GenObstaclesFromGridData();
         }
         
         public static GridData GetGridData(this LSGridMapComponent self)
@@ -75,7 +74,7 @@ namespace ET
             self.FlowFieldDirty = true;
         }
         
-        private static void SetObstaclesFromGridData(this LSGridMapComponent self)
+        private static void GenObstaclesFromGridData(this LSGridMapComponent self)
         {self.LSRoom()?.ProcessLog.LogFunction(10, self.LSParent().Id);
             LSRVO2Component rvo2Component = self.LSWorld().GetComponent<LSRVO2Component>();
             

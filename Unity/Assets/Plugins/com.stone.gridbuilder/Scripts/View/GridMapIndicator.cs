@@ -74,7 +74,7 @@ namespace ST.GridBuilder
                     keepIndicators.Add(indicator);
                     
                     float alpha = 0.25f;
-                    if (gridMap.gridData.IsInsideShape(x1 - x, z1 - z, placementData)) {
+                    if (gridData.IsInsideShape(x1 - x, z1 - z, placementData)) {
                         alpha = 1.0f;
                     }
                     
