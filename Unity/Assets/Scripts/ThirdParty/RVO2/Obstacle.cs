@@ -38,14 +38,12 @@ namespace RVO
     /**
      * <summary>Defines static obstacles in the simulation.</summary>
      */
-    internal class Obstacle
+    public class Obstacle
     {
-        internal bool isRemoved;
         internal Obstacle next_;
         internal Obstacle previous_;
         internal TSVector2 direction_;
         internal TSVector2 point_;
-        internal int id_;
         internal bool convex_;
     }
 }

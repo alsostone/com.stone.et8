@@ -19,7 +19,6 @@ namespace ET
         [EntitySystem]
         private static void Deserialize(this LSRVO2Component self)
         {
-            // TODO: 可能导致不一致，因为恢复Agent时 它所在的List位置可能会发生变化，需要在simulator保证插入顺序 后续再处理
             self.RVO2Simulator = new Simulator();
             self.RVO2Simulator.setTimeStep((FP)LSConstValue.UpdateInterval / LSConstValue.Milliseconds);
         }
@@ -30,8 +29,6 @@ namespace ET
             self.RVO2Simulator.doStep();
             foreach (Agent agent in self.RVO2Simulator.GetAllAgents())
             {
-                if (agent.isRemoved) { continue; }
-                
                 LSUnit lsUnit = self.LSUnit(agent.id);
                 TransformComponent transformComponent = lsUnit.GetComponent<TransformComponent>();
                 

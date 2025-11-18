@@ -156,44 +156,53 @@ namespace RVO
          */
         private const int MAX_LEAF_SIZE = 10;
 
-        private Agent[] agents_;
-        private AgentTreeNode[] agentTree_;
+        private readonly List<Agent> agents_ = new (128);
+        private readonly List<Obstacle> obstacles_ = new (64);
+        private AgentTreeNode[] agentTree_ = new AgentTreeNode[256];
         private ObstacleTreeNode obstacleTree_;
+        
+        internal void SetAgents(PoolLinkedList<long, Agent> agents)
+        {
+            int index = 0;
+            foreach (Agent agent in agents) {
+                agents_[index++] = agent;
+            }
+            for (int i = agents_.Count - 1; i >= index; i--) {
+                agents_.RemoveAt(i);
+            }
+            if (agents.Count * 2 > agentTree_.Length) {
+                agentTree_ = new AgentTreeNode[agents.Count * 2];
+            }
+        }
+        
+        internal void SetObstacles(PoolLinkedList<(long, int), Obstacle> obstacles)
+        {
+            int index = 0;
+            foreach (Obstacle obstacle in obstacles) {
+                obstacles_[index] = obstacle;
+            }
+            for (int i = obstacles_.Count - 1; i >= index; i--) {
+                obstacles_.RemoveAt(i);
+            }
+        }
 
         /**
          * <summary>Builds an agent k-D tree.</summary>
          */
-        internal void buildAgentTree(IList<Agent> agents)
+        internal void buildAgentTree()
         {
-            if (agents_ == null || agents_.Length != agents.Count)
+            if (agents_.Count != 0)
             {
-                agents_ = new Agent[agents.Count];
-
-                for (int i = 0; i < agents_.Length; ++i)
-                {
-                    agents_[i] = agents[i];
-                }
-
-                agentTree_ = new AgentTreeNode[2 * agents_.Length];
-
-                for (int i = 0; i < agentTree_.Length; ++i)
-                {
-                    agentTree_[i] = new AgentTreeNode();
-                }
-            }
-
-            if (agents_.Length != 0)
-            {
-                buildAgentTreeRecursive(0, agents_.Length, 0);
+                buildAgentTreeRecursive(0, agents_.Count, 0);
             }
         }
 
         /**
          * <summary>Builds an obstacle k-D tree.</summary>
          */
-        internal void buildObstacleTree(IList<Obstacle> obstacles)
+        internal void buildObstacleTree()
         {
-            obstacleTree_ = buildObstacleTreeRecursive(obstacles);
+            obstacleTree_ = buildObstacleTreeRecursive(obstacles_);
         }
 
         /**
@@ -287,9 +296,7 @@ namespace RVO
 
                     if (left < right)
                     {
-                        Agent tempAgent = agents_[left];
-                        agents_[left] = agents_[right - 1];
-                        agents_[right - 1] = tempAgent;
+                        (agents_[left], agents_[right - 1]) = (agents_[right - 1], agents_[left]);
                         ++left;
                         --right;
                     }
@@ -439,7 +446,6 @@ namespace RVO
                         newObstacle.next_ = obstacleJ2;
                         newObstacle.convex_ = true;
                         newObstacle.direction_ = obstacleJ1.direction_;
-                        newObstacle.id_ = -1;
 
                         obstacleJ1.next_ = newObstacle;
                         obstacleJ2.previous_ = newObstacle;

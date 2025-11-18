@@ -45,7 +45,6 @@ namespace RVO
         public long id = 0;
         public TSVector2 position;
         public TSVector2 prefVelocity;
-        public bool isRemoved = false;
         
         internal IList<KeyValuePair<FP, Agent>> agentNeighbors_ = new List<KeyValuePair<FP, Agent>>();
         internal IList<KeyValuePair<FP, Obstacle>> obstacleNeighbors_ = new List<KeyValuePair<FP, Obstacle>>();
@@ -68,10 +67,7 @@ namespace RVO
         {
             obstacleNeighbors_.Clear();
             agentNeighbors_.Clear();
-            if (isRemoved) {
-                return;
-            }
-            
+
             FP rangeSq = RVOMath.sqr(timeHorizonObst_ * maxSpeed_ + radius_);
             kdTree.computeObstacleNeighbors(this, rangeSq);
             
@@ -88,9 +84,6 @@ namespace RVO
         internal void computeNewVelocity(FP timeStep)
         {
             orcaLines_.Clear();
-            if (isRemoved) {
-                return;
-            }
 
             FP invTimeHorizonObst = FP.One / timeHorizonObst_;
 
@@ -440,7 +433,7 @@ namespace RVO
          */
         internal void insertAgentNeighbor(Agent agent, ref FP rangeSq)
         {
-            if (this != agent && agent.isRemoved == false)
+            if (this != agent)
             {
                 FP distSq = RVOMath.absSq(position - agent.position);
 
@@ -504,9 +497,6 @@ namespace RVO
          */
         internal void update(FP timeStep)
         {
-            if (isRemoved) {
-                return;
-            }
             velocity_ = newVelocity_;
             position += velocity_ * timeStep;
         }
