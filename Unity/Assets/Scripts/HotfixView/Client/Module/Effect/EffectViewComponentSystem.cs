@@ -73,8 +73,11 @@ namespace ET.Client
 
             ResourcesPoolComponent poolComponent = self.Room().GetComponent<ResourcesPoolComponent>();
             GameObject go = await poolComponent.FetchAsync(fxResource, attachTransform);
-            view = self.AddChildWithId<EffectView, GameObject>(self.GetId(), go);
-            self.EffectViews.Add(fxResource, view);
+            if (!self.EffectViews.ContainsKey(fxResource))  // 异步加载可能导致开始的TryGetValue未命中，这里再检查一次
+            {
+                view = self.AddChildWithId<EffectView, GameObject>(self.GetId(), go);
+                self.EffectViews.Add(fxResource, view);
+            }
         }
         
         public static void StopFx(this EffectViewComponent self, int fxResource)

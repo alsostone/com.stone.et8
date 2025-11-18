@@ -11,6 +11,7 @@ namespace ET
         public bool IsMovingCurrent;
         public bool IsMovingPrevious;
         public TSVector Position { get; set; }
+        public TSVector2 RVO2Velocity { get; set; }
 
         [MemoryPackIgnore]
         [BsonIgnore]

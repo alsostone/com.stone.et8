@@ -44,13 +44,13 @@ namespace RVO
     {
         public long id = 0;
         public TSVector2 position;
+        public TSVector2 velocity;
         public TSVector2 prefVelocity;
         
         internal IList<KeyValuePair<FP, Agent>> agentNeighbors_ = new List<KeyValuePair<FP, Agent>>();
         internal IList<KeyValuePair<FP, Obstacle>> obstacleNeighbors_ = new List<KeyValuePair<FP, Obstacle>>();
         internal IList<Line> orcaLines_ = new List<Line>();
 
-        internal TSVector2 velocity_;
         internal int maxNeighbors_ = 0;
         internal FP maxSpeed_ = FP.Zero;
         internal FP neighborDist_ = FP.Zero;
@@ -270,14 +270,14 @@ namespace RVO
                 /* Project current velocity on velocity obstacle. */
 
                 /* Check if current velocity is projected on cutoff circles. */
-                FP t = obstacle1 == obstacle2 ? FP.Half : ((velocity_ - leftCutOff) * cutOffVector) / RVOMath.absSq(cutOffVector);
-                FP tLeft = (velocity_ - leftCutOff) * leftLegDirection;
-                FP tRight = (velocity_ - rightCutOff) * rightLegDirection;
+                FP t = obstacle1 == obstacle2 ? FP.Half : ((velocity - leftCutOff) * cutOffVector) / RVOMath.absSq(cutOffVector);
+                FP tLeft = (velocity - leftCutOff) * leftLegDirection;
+                FP tRight = (velocity - rightCutOff) * rightLegDirection;
 
                 if ((t < FP.Zero && tLeft < FP.Zero) || (obstacle1 == obstacle2 && tLeft < FP.Zero && tRight < FP.Zero))
                 {
                     /* Project on left cut-off circle. */
-                    TSVector2 unitW = RVOMath.normalize(velocity_ - leftCutOff);
+                    TSVector2 unitW = RVOMath.normalize(velocity - leftCutOff);
 
                     line.direction = new TSVector2(unitW.y, -unitW.x);
                     line.point = leftCutOff + radius_ * invTimeHorizonObst * unitW;
@@ -288,7 +288,7 @@ namespace RVO
                 else if (t > FP.One && tRight < FP.Zero)
                 {
                     /* Project on right cut-off circle. */
-                    TSVector2 unitW = RVOMath.normalize(velocity_ - rightCutOff);
+                    TSVector2 unitW = RVOMath.normalize(velocity - rightCutOff);
 
                     line.direction = new TSVector2(unitW.y, -unitW.x);
                     line.point = rightCutOff + radius_ * invTimeHorizonObst * unitW;
@@ -301,9 +301,9 @@ namespace RVO
                  * Project on left leg, right leg, or cut-off line, whichever is
                  * closest to velocity.
                  */
-                FP distSqCutoff = (t < FP.Zero || t > FP.One || obstacle1 == obstacle2) ? FP.PositiveInfinity : RVOMath.absSq(velocity_ - (leftCutOff + t * cutOffVector));
-                FP distSqLeft = tLeft < FP.Zero ? FP.PositiveInfinity : RVOMath.absSq(velocity_ - (leftCutOff + tLeft * leftLegDirection));
-                FP distSqRight = tRight < FP.Zero ? FP.PositiveInfinity : RVOMath.absSq(velocity_ - (rightCutOff + tRight * rightLegDirection));
+                FP distSqCutoff = (t < FP.Zero || t > FP.One || obstacle1 == obstacle2) ? FP.PositiveInfinity : RVOMath.absSq(velocity - (leftCutOff + t * cutOffVector));
+                FP distSqLeft = tLeft < FP.Zero ? FP.PositiveInfinity : RVOMath.absSq(velocity - (leftCutOff + tLeft * leftLegDirection));
+                FP distSqRight = tRight < FP.Zero ? FP.PositiveInfinity : RVOMath.absSq(velocity - (rightCutOff + tRight * rightLegDirection));
 
                 if (distSqCutoff <= distSqLeft && distSqCutoff <= distSqRight)
                 {
@@ -351,7 +351,7 @@ namespace RVO
                 Agent other = agentNeighbors_[i].Value;
 
                 TSVector2 relativePosition = other.position - position;
-                TSVector2 relativeVelocity = velocity_ - other.velocity_;
+                TSVector2 relativeVelocity = velocity - other.velocity;
                 FP distSq = RVOMath.absSq(relativePosition);
                 FP combinedRadius = radius_ + other.radius_;
                 FP combinedRadiusSq = RVOMath.sqr(combinedRadius);
@@ -412,7 +412,7 @@ namespace RVO
                     u = (combinedRadius * invTimeStep - wLength) * unitW;
                 }
 
-                line.point = velocity_ + FP.Half * u;
+                line.point = velocity + FP.Half * u;
                 orcaLines_.Add(line);
             }
 
@@ -497,8 +497,8 @@ namespace RVO
          */
         internal void update(FP timeStep)
         {
-            velocity_ = newVelocity_;
-            position += velocity_ * timeStep;
+            velocity = newVelocity_;
+            position += velocity * timeStep;
         }
 
         /**

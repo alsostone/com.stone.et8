@@ -18,7 +18,7 @@ namespace ET
         
         [EntitySystem]
         private static void Destroy(this LSRVO2Component self)
-        {
+        {self.LSRoom()?.ProcessLog.LogFunction(13, self.LSParent().Id);
             // 清空RVO2模拟器才能确保其内部对象被下次复用
             self.RVO2Simulator.ClearAllAgents();
             self.RVO2Simulator.ClearAllObstacles();
@@ -39,12 +39,8 @@ namespace ET
             {
                 LSUnit lsUnit = self.LSUnit(agent.id);
                 TransformComponent transformComponent = lsUnit.GetComponent<TransformComponent>();
-                
-                TSVector position = new TSVector(agent.position.x, transformComponent.Position.y, agent.position.y);
-                if (TSVector.SqrDistance(transformComponent.Position, position) > FP.EN4)
-                {
-                    transformComponent.Position = position;
-                }
+                transformComponent.RVO2Velocity = agent.velocity;
+                transformComponent.Position = new TSVector(agent.position.x, transformComponent.Position.y, agent.position.y);
             }
         }
 
@@ -56,7 +52,7 @@ namespace ET
             PropComponent propComponent = lsUnit.GetComponent<PropComponent>();
             FP speed = propComponent.Get(NumericType.Speed);
             
-            self.RVO2Simulator.addAgent(position, FP.Two, 10, FP.Two, FP.EN2, propComponent.Radius, speed, TSVector2.zero, lsUnit.Id);
+            self.RVO2Simulator.addAgent(position, FP.Two, 10, FP.Two, FP.EN2, propComponent.Radius, speed, transformComponent.RVO2Velocity, lsUnit.Id);
         }
         
         public static void AddStaticAgent(this LSRVO2Component self, LSUnit lsUnit)
@@ -67,7 +63,7 @@ namespace ET
             PropComponent propComponent = lsUnit.GetComponent<PropComponent>();
             FP speed = propComponent.Get(NumericType.Speed);
             
-            self.RVO2Simulator.addAgent(position, FP.Two, 0, FP.EN2, FP.EN2, propComponent.Radius, speed, TSVector2.zero, lsUnit.Id);
+            self.RVO2Simulator.addAgent(position, FP.Two, 0, FP.EN2, FP.EN2, propComponent.Radius, speed, transformComponent.RVO2Velocity, lsUnit.Id);
         }
         
         public static void RemoveAgent(this LSRVO2Component self, LSUnit lsUnit)

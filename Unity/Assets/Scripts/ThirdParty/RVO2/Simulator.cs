@@ -95,7 +95,7 @@ namespace RVO
             agent.radius_ = radius;
             agent.timeHorizon_ = timeHorizon;
             agent.timeHorizonObst_ = timeHorizonObst;
-            agent.velocity_ = velocity;
+            agent.velocity = velocity;
             agentDirty_ = true;
         }
 
