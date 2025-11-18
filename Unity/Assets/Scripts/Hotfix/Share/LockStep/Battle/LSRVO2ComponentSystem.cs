@@ -17,6 +17,14 @@ namespace ET
         }
         
         [EntitySystem]
+        private static void Destroy(this LSRVO2Component self)
+        {
+            // 清空RVO2模拟器才能确保其内部对象被下次复用
+            self.RVO2Simulator.ClearAllAgents();
+            self.RVO2Simulator.ClearAllObstacles();
+        }
+
+        [EntitySystem]
         private static void Deserialize(this LSRVO2Component self)
         {
             self.RVO2Simulator = new Simulator();

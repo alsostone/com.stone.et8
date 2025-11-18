@@ -81,6 +81,16 @@ namespace RVO
         
         public void Clear()
         {
+            PoolLinkedNode<T> current = _head;
+            while (current != null)
+            {
+                var next = current.Next;
+                current.Previous = null;
+                current.Next = null;
+                _pool.Push(current);
+                current = next;
+            }
+
             _head = null;
             _tail = null;
             _idNodeMapping.Clear();
@@ -108,7 +118,6 @@ namespace RVO
 
             node.Previous = null;
             node.Next = null;
-            
             _pool.Push(node);
         }
         

@@ -163,12 +163,9 @@ namespace RVO
         
         internal void SetAgents(PoolLinkedList<long, Agent> agents)
         {
-            int index = 0;
+            agents_.Clear();
             foreach (Agent agent in agents) {
-                agents_[index++] = agent;
-            }
-            for (int i = agents_.Count - 1; i >= index; i--) {
-                agents_.RemoveAt(i);
+                agents_.Add(agent);
             }
             if (agents.Count * 2 > agentTree_.Length) {
                 agentTree_ = new AgentTreeNode[agents.Count * 2];
@@ -177,12 +174,9 @@ namespace RVO
         
         internal void SetObstacles(PoolLinkedList<(long, int), Obstacle> obstacles)
         {
-            int index = 0;
+            obstacles_.Clear();
             foreach (Obstacle obstacle in obstacles) {
-                obstacles_[index] = obstacle;
-            }
-            for (int i = obstacles_.Count - 1; i >= index; i--) {
-                obstacles_.RemoveAt(i);
+                obstacles_.Add(obstacle);
             }
         }
 
