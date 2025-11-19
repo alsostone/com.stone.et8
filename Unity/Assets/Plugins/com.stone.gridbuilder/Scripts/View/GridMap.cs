@@ -15,12 +15,14 @@ namespace ST.GridBuilder
         [SerializeField, HideInInspector] public GridData gridData = new();
         [NonSerialized] public GridData gridDataDraw = null;
         [NonSerialized] public FlowFieldNode[] flowFieldDraw;
-        [NonSerialized] private readonly List<IndexV2> pathPoints = new();
-
+        
         [NonSerialized] private FlowFieldNode[] flowField;
         [NonSerialized] private bool flowFieldDirty;
         [NonSerialized] private FieldV2 flowFieldDestination;
-
+        
+        private readonly List<IndexV2> pathPoints = new();
+        private readonly List<Vector3> drawPoints = new();
+        
         // 逻辑层做寻路 表现层不需要 OnDrawGizmos时使用逻辑层的数据
         // private void Awake()
         // {
@@ -179,17 +181,22 @@ namespace ST.GridBuilder
             flowFieldDirty = true;
         }
         
-    #if UNITY_EDITOR
-        private readonly List<Vector3> drawPoints = new List<Vector3>();
+#if UNITY_EDITOR
         void OnDrawGizmos()
         {
-            if (gridDataDraw == null)
-                gridDataDraw = gridData;
-            if (gridDataDraw.cells == null || gridDataDraw.cells.Length != gridDataDraw.xLength * gridDataDraw.zLength) {
-                return;
-            }
-            drawPoints.Clear();
+            gridDataDraw ??= gridData;
+            OnDrawGrid();
+            OnDrawArrow();
+        }
 
+        private void OnDrawGrid()
+        {
+            if (gridDataDraw == null || gridDataDraw.cells == null)
+                return;
+            if (gridDataDraw.cells.Length != gridDataDraw.xLength * gridDataDraw.zLength)
+                return;
+
+            drawPoints.Clear();
             int xLength = gridDataDraw.xLength;
             int zLength = gridDataDraw.zLength;
 
@@ -256,18 +263,17 @@ namespace ST.GridBuilder
             {
                 Gizmos.DrawSphere(point, 0.1f);
             }
-
-            Gizmos.color = Color.red;
-            OnDrawArrow();
         }
 
         private void OnDrawArrow()
         {
-            if (flowFieldDraw == null)
+            if (gridDataDraw == null || flowFieldDraw == null)
                 return;
 
             int xLength = gridDataDraw.xLength;
             int zLength = gridDataDraw.zLength;
+            
+            Gizmos.color = Color.red;
             for (int x = 0; x < xLength; ++x)
             for (int z = 0; z < zLength; z++)
             {

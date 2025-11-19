@@ -82,10 +82,8 @@ namespace ET.Client
             
             AttachPointCollector collector = unitGo.GetComponent<AttachPointCollector>();
             lsUnitView.AddComponent<LSViewTransformComponent, Transform, AttachPointCollector, bool>(unitGo.transform, collector, false);
+            lsUnitView.AddComponent<LSViewPlacementComponent>();
             lsUnitView.AddComponent<EffectViewComponent>();
-
-            PlacementData placementData = lsUnit.GetComponent<PlacementComponent>().GetPlacementData();
-            lsUnitView.AddComponent<LSViewPlacementComponent, PlacementData>(placementData);
         }
 
         private static void CreateBuildingView(LSUnitViewComponent viewComponent, LSUnit lsUnit)
@@ -102,6 +100,7 @@ namespace ET.Client
             
             AttachPointCollector collector = unitGo.GetComponent<AttachPointCollector>();
             lsUnitView.AddComponent<LSViewTransformComponent, Transform, AttachPointCollector, bool>(unitGo.transform, collector, false);
+            lsUnitView.AddComponent<LSViewPlacementComponent>();
             lsUnitView.AddComponent<LSViewSkillComponent>();
             lsUnitView.AddComponent<EffectViewComponent>();
             
@@ -109,9 +108,6 @@ namespace ET.Client
             float hp = propComponent.Get(NumericType.Hp).AsFloat();
             float hpMax = propComponent.Get(NumericType.MaxHp).AsFloat();
             lsUnitView.AddComponent<LSViewHudComponent, Vector3, float, float>(Vector3.zero, hp, hpMax);
-            
-            PlacementData placementData = lsUnit.GetComponent<PlacementComponent>().GetPlacementData();
-            lsUnitView.AddComponent<LSViewPlacementComponent, PlacementData>(placementData);
         }
 
         private static void CreateSoldierView(LSUnitViewComponent viewComponent, LSUnit lsUnit)

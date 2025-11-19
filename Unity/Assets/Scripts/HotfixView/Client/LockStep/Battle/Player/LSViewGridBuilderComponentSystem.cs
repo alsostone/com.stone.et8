@@ -42,7 +42,7 @@ namespace ET.Client
             {
                 // nothing to do
             }
-            else
+            else if (!self.IsSelectDragging)
             {
                 self.IsSelectDragging = true;
                 self.Fiber().UIEvent(new UISelectDragStartEvent() { PlayerId = self.LSViewOwner().Id, Position = self.DragStartPosition }).Coroutine();

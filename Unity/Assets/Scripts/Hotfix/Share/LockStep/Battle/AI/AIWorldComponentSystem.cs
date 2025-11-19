@@ -21,6 +21,7 @@ namespace ET
         {self.LSRoom()?.ProcessLog.LogFunction(31, self.LSParent().Id);
             self.BehaveWorld.Dispose();
             self.BehaveWorld = null;
+            self.NeedStartUnits.Clear();
         }
         
         [EntitySystem]
