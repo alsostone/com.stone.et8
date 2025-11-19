@@ -48,7 +48,7 @@ namespace RVO
         
         private bool agentDirty_ = false;
         private bool obstacleDirty_ = false;
-        
+
         /**
          * <summary>Adds a new agent to the simulation.</summary>
          * 
@@ -82,9 +82,10 @@ namespace RVO
          * non-negative.</param>
          * <param name="velocity">The initial two-dimensional linear velocity of
          * this agent.</param>
+         * <param name="prefVelocity"></param>
          * <param name="agentNo">External specified id</param>
          */
-        public void addAgent(TSVector2 position, FP neighborDist, int maxNeighbors, FP timeHorizon, FP timeHorizonObst, FP radius, FP maxSpeed, TSVector2 velocity, long agentNo)
+        public void addAgent(TSVector2 position, FP neighborDist, int maxNeighbors, FP timeHorizon, FP timeHorizonObst, FP radius, FP maxSpeed, TSVector2 velocity, TSVector2 prefVelocity, long agentNo)
         {
             Agent agent = agents_.Add(agentNo);
             agent.id = agentNo;
@@ -96,6 +97,7 @@ namespace RVO
             agent.timeHorizon_ = timeHorizon;
             agent.timeHorizonObst_ = timeHorizonObst;
             agent.velocity = velocity;
+            agent.prefVelocity = prefVelocity;
             agentDirty_ = true;
         }
 

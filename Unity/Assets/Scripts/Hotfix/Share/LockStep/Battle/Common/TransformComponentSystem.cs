@@ -66,9 +66,9 @@ namespace ET
             self.SetMoving(true);
             
             PropComponent propComponent = self.LSOwner().GetComponent<PropComponent>();
-            TSVector2 v2 = forward.normalized * propComponent.Get(NumericType.Speed);
+            self.RVO2PrefVelocity = forward.normalized * propComponent.Get(NumericType.Speed);
             LSRVO2Component rvo2Component = self.LSWorld().GetComponent<LSRVO2Component>();
-            rvo2Component.setAgentPrefVelocity(self.LSOwner(), v2);
+            rvo2Component.setAgentPrefVelocity(self.LSOwner(), self.RVO2PrefVelocity);
         }
 
         private static void SetMoving(this TransformComponent self, bool moving)
@@ -80,8 +80,9 @@ namespace ET
             }
             else if (!moving && self.IsMovingPrevious) {
                 self.IsMovingPrevious = false;
+                self.RVO2PrefVelocity = TSVector2.zero;
                 LSRVO2Component rvo2Component = self.LSWorld().GetComponent<LSRVO2Component>();
-                rvo2Component.setAgentPrefVelocity(self.LSOwner(), TSVector2.zero);
+                rvo2Component.setAgentPrefVelocity(self.LSOwner(), self.RVO2PrefVelocity);
                 EventSystem.Instance.Publish(self.LSWorld(), new LSUnitMoving() { Id = self.LSOwner().Id, IsMoving = false });
             }
         }

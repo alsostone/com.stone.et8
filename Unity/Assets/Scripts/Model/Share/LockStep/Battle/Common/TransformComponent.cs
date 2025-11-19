@@ -10,8 +10,10 @@ namespace ET
     {
         public bool IsMovingCurrent;
         public bool IsMovingPrevious;
+        
         public TSVector Position { get; set; }
-        public TSVector2 RVO2Velocity { get; set; }
+        public TSVector2 RVO2Velocity { get; set; }  // RVO2当前速度，回滚时需要使用故需缓存
+        public TSVector2 RVO2PrefVelocity { get; set; } // RVO2期望速度，回滚时需要使用故需缓存
 
         [MemoryPackIgnore]
         [BsonIgnore]

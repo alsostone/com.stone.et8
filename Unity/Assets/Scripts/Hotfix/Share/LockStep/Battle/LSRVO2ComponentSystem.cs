@@ -52,7 +52,7 @@ namespace ET
             PropComponent propComponent = lsUnit.GetComponent<PropComponent>();
             FP speed = propComponent.Get(NumericType.Speed);
             
-            self.RVO2Simulator.addAgent(position, FP.Two, 10, FP.Two, FP.EN2, propComponent.Radius, speed, transformComponent.RVO2Velocity, lsUnit.Id);
+            self.RVO2Simulator.addAgent(position, FP.Two, 10, FP.Two, FP.EN2, propComponent.Radius, speed, transformComponent.RVO2Velocity, transformComponent.RVO2PrefVelocity, lsUnit.Id);
         }
         
         public static void AddStaticAgent(this LSRVO2Component self, LSUnit lsUnit)
@@ -63,7 +63,7 @@ namespace ET
             PropComponent propComponent = lsUnit.GetComponent<PropComponent>();
             FP speed = propComponent.Get(NumericType.Speed);
             
-            self.RVO2Simulator.addAgent(position, FP.Two, 0, FP.EN2, FP.EN2, propComponent.Radius, speed, transformComponent.RVO2Velocity, lsUnit.Id);
+            self.RVO2Simulator.addAgent(position, FP.Two, 0, FP.EN2, FP.EN2, propComponent.Radius, speed, transformComponent.RVO2Velocity, transformComponent.RVO2PrefVelocity, lsUnit.Id);
         }
         
         public static void RemoveAgent(this LSRVO2Component self, LSUnit lsUnit)
