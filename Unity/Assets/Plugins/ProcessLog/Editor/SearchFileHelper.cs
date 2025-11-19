@@ -11,11 +11,26 @@ namespace ProcessLog.Editor
         /// 返回所有配置的需要自动插入代码的文件路径
         /// </summary>
         /// <returns></returns>
-        public static List<string> GetAllSearchFile()
+        public static List<string> GetAllSearchAutoFile()
         {
             var result = new List<string>();
             foreach (var path in ProcessLogSetting.SearchPaths) {
                 result.AddRange(SearchAllFilesWithSuffixs(Application.dataPath, path, ".cs", ProcessLogSetting.IgnoreFolders));
+            }
+
+            return result;
+        }
+        
+        /// <summary>
+        /// 返回所有配置的需要手动插入代码的文件路径
+        /// 手动插入代码的文件夹路径不会被屏蔽文件夹路径影响
+        /// </summary>
+        /// <returns></returns>
+        public static List<string> GetAllSearchManualFile()
+        {
+            var result = new List<string>();
+            foreach (var path in ProcessLogSetting.SearchPaths) {
+                result.AddRange(SearchAllFilesWithSuffixs(Application.dataPath, path, ".cs"));
             }
 
             return result;

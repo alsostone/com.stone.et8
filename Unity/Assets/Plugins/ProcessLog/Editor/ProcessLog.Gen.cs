@@ -35,7 +35,7 @@ namespace ProcessLog.Editor
 
         //匹配手动插入的日志代码
         //self.LSRoom()?.ProcessLog.LogFunction(0, ...);   /* comment */
-        private static Regex ms_regexManualCode = new Regex(@"(?:self.LSRoom\(\)\?.ProcessLog.)(?:LogFunction)\(([^;]+\s*)?\)(?:\})?\s*;\s*\/\*(.)*\*\/");
+        private static Regex ms_regexManualCode = new Regex(@"(?:\s*.LSRoom\(\)\?.ProcessLog.)(?:LogFunction)\(([^;]+\s*)?\)(?:\})?\s*;\s*\/\*(.)*\*\/");
 
         //匹配自动插入的日志代码
         private static Regex ms_regexAutoCode = new Regex(@"\s*(?:self.LSRoom\(\)\?.ProcessLog.)(?:LogFunction)\((?:[^\)]+\s*)?\)(\})?\s*;\s*\#(\w*)\#");
@@ -109,10 +109,8 @@ namespace ProcessLog.Editor
         private static void ResolveManualLog(string fullPath, LogSymbolFile symbolFile)
         {
             var fileName = Path.GetFileName(fullPath);
-            if (ProcessLogSetting.IgnoreFileName(fileName)) {
-                return;
-            }
 
+            var hasModify = false;
             var fullText = File.ReadAllText(fullPath, Utf8Encoding);
             var matchCollection = ms_regexFuncAll.Matches(fullText);
             for (var i = 0; i < matchCollection.Count; i++) {
@@ -151,11 +149,12 @@ namespace ProcessLog.Editor
                     else {
                         var logID = symbolFile.AddSymbolData(functionData);
                         fullText = ReplaceID(fullText, funcMatch.Index + manualMatches[j].Index, manualMatches[j].Length, logID);
+                        hasModify = true;
                     }
                 }
             }
-
-            File.WriteAllText(fullPath, fullText, Utf8Encoding);
+            if (hasModify)
+                File.WriteAllText(fullPath, fullText, Utf8Encoding);
         }
 
         /// <summary>

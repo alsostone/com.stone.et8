@@ -17,13 +17,22 @@ namespace ProcessLog.Editor
             var symbolFile = new LogSymbolFile();
             symbolFile.ReadSymbolFile(ProcessLogSetting.LogSymbolFile);
             
-            var allSearchFile = SearchFileHelper.GetAllSearchFile();
+            // 1 增量生成自动日志
+            var allSearchFile = SearchFileHelper.GetAllSearchAutoFile();
             for (var i = 0; i < allSearchFile.Count; i++) {
                 var filename = allSearchFile[i];
                 var path = RootDir + filename;
                 EditorUtility.DisplayProgressBar("Generate Auto Code & Symbol", filename, i / (float) allSearchFile.Count);
-                ResolveManualLog(path, symbolFile);
                 ResolveAutoLog(path, symbolFile);
+            }
+            
+            // 2 增量生成手动日志
+            allSearchFile = SearchFileHelper.GetAllSearchManualFile();
+            for (var i = 0; i < allSearchFile.Count; i++) {
+                var filename = allSearchFile[i];
+                var path = RootDir + filename;
+                EditorUtility.DisplayProgressBar("Generate Manual Code & Symbol", filename, i / (float) allSearchFile.Count);
+                ResolveManualLog(path, symbolFile);
             }
 
             symbolFile.CreateSymbolFile(ProcessLogSetting.LogSymbolFile);
@@ -40,21 +49,30 @@ namespace ProcessLog.Editor
             var allSearchFile = SearchFileHelper.GetAllFile();
             for (var i = 0; i < allSearchFile.Count; i++) {
                 var filename = allSearchFile[i];
-                EditorUtility.DisplayProgressBar("Remove Auto Code & Symbol", filename, i / (float) allSearchFile.Count * 2);
+                EditorUtility.DisplayProgressBar("Remove Auto Code & Symbol", filename, i / (float) allSearchFile.Count);
                 RemoveAutoCode(RootDir + filename);
             }
             LogSymbolFile.RemoveSymbolFile(ProcessLogSetting.LogSymbolFile);
-
-            // 2 生成全新日志
+            
             var symbolFile = new LogSymbolFile();
             symbolFile.ReadSymbolFile(ProcessLogSetting.LogSymbolFile);
-            allSearchFile = SearchFileHelper.GetAllSearchFile();
+
+            // 2 生成自动日志
+            allSearchFile = SearchFileHelper.GetAllSearchAutoFile();
             for (var i = 0; i < allSearchFile.Count; i++) {
                 var filename = allSearchFile[i];
                 var path = RootDir + filename;
-                EditorUtility.DisplayProgressBar("Generate Auto Code & Symbol", filename, i + allSearchFile.Count / (float) allSearchFile.Count * 2);
-                ResolveManualLog(path, symbolFile);
+                EditorUtility.DisplayProgressBar("Generate Auto Code & Symbol", filename, i / (float) allSearchFile.Count);
                 ResolveAutoLog(path, symbolFile);
+            }
+            
+            // 3 生成手动日志
+            allSearchFile = SearchFileHelper.GetAllSearchManualFile();
+            for (var i = 0; i < allSearchFile.Count; i++) {
+                var filename = allSearchFile[i];
+                var path = RootDir + filename;
+                EditorUtility.DisplayProgressBar("Generate Manual Code & Symbol", filename, i / (float) allSearchFile.Count);
+                ResolveManualLog(path, symbolFile);
             }
 
             symbolFile.CreateSymbolFile(ProcessLogSetting.LogSymbolFile);

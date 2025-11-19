@@ -8,12 +8,14 @@ using ProcessLog;
 public class ProcessLogMgr
 {
     private const int mProcessFrameLimit = 18000;
+    private const int mHashPrime = 16777619;     // FNV_prime
+    private const uint mHashOffsetBasis = 2166136261;	// offset_basis
     
     private int mFrameCount = 0;
     private int mLogEnableRef = 0;
     private readonly CircleQueue<LogFrameData> mAllFrameLog;
     
-    private long mSum;
+    private long mHash;
     private LogFrameData mCurrentFrameLog;
 
     public ProcessLogMgr(int frame)
@@ -37,7 +39,7 @@ public class ProcessLogMgr
     public void LogNextFrame()
     {
         if (mCurrentFrameLog != null) {
-            mCurrentFrameLog.Hash = mSum;
+            mCurrentFrameLog.Hash = mHash;
         }
         
         int frame = mFrameCount;
@@ -56,7 +58,7 @@ public class ProcessLogMgr
             
             mCurrentFrameLog.Clear();
             mCurrentFrameLog.FrameIndex = frame;
-            mSum = ~frame;
+            mHash = mHashOffsetBasis;
         }
     }
     
@@ -78,14 +80,14 @@ public class ProcessLogMgr
             mCurrentFrameLog = mAllFrameLog.GetLast(mFrameCount - frame - 1);
             mCurrentFrameLog.Clear();
             mCurrentFrameLog.FrameIndex = frame;
-            mSum = ~frame;
+            mHash = mHashOffsetBasis;
         }
     }
 
     public void LogFrameEnd()
     {
         if (mCurrentFrameLog != null) {
-            mCurrentFrameLog.Hash = mSum;
+            mCurrentFrameLog.Hash = mHash;
         }
         mCurrentFrameLog = null;
     }
@@ -234,7 +236,17 @@ public class ProcessLogMgr
             mCurrentFrameLog.Args.Add(arg9);
             mCurrentFrameLog.Args.Add(arg10);
         }
-        mSum = mSum + hash + arg1 + arg2 + arg3 + arg4 + arg5 + arg6 + arg7 + arg8 + arg9 + arg10;
+        mHash = (mHash ^ hash) * mHashPrime;
+        mHash = (mHash ^ arg1) * mHashPrime;
+        mHash = (mHash ^ arg2) * mHashPrime;
+        mHash = (mHash ^ arg3) * mHashPrime;
+        mHash = (mHash ^ arg4) * mHashPrime;
+        mHash = (mHash ^ arg5) * mHashPrime;
+        mHash = (mHash ^ arg6) * mHashPrime;
+        mHash = (mHash ^ arg7) * mHashPrime;
+        mHash = (mHash ^ arg8) * mHashPrime;
+        mHash = (mHash ^ arg9) * mHashPrime;
+        mHash = (mHash ^ arg10) * mHashPrime;
     }
 
     public void LogFunction(ushort hash, long arg1, long arg2, long arg3, long arg4, long arg5, long arg6, long arg7, long arg8, long arg9)
@@ -252,7 +264,16 @@ public class ProcessLogMgr
             mCurrentFrameLog.Args.Add(arg8);
             mCurrentFrameLog.Args.Add(arg9);
         }
-        mSum = mSum + hash + arg1 + arg2 + arg3 + arg4 + arg5 + arg6 + arg7 + arg8 + arg9;
+        mHash = (mHash ^ hash) * mHashPrime;
+        mHash = (mHash ^ arg1) * mHashPrime;
+        mHash = (mHash ^ arg2) * mHashPrime;
+        mHash = (mHash ^ arg3) * mHashPrime;
+        mHash = (mHash ^ arg4) * mHashPrime;
+        mHash = (mHash ^ arg5) * mHashPrime;
+        mHash = (mHash ^ arg6) * mHashPrime;
+        mHash = (mHash ^ arg7) * mHashPrime;
+        mHash = (mHash ^ arg8) * mHashPrime;
+        mHash = (mHash ^ arg9) * mHashPrime;
     }
 
     public void LogFunction(ushort hash, long arg1, long arg2, long arg3, long arg4, long arg5, long arg6, long arg7, long arg8)
@@ -269,7 +290,15 @@ public class ProcessLogMgr
             mCurrentFrameLog.Args.Add(arg7);
             mCurrentFrameLog.Args.Add(arg8);
         }
-        mSum = mSum + hash + arg1 + arg2 + arg3 + arg4 + arg5 + arg6 + arg7 + arg8;
+        mHash = (mHash ^ hash) * mHashPrime;
+        mHash = (mHash ^ arg1) * mHashPrime;
+        mHash = (mHash ^ arg2) * mHashPrime;
+        mHash = (mHash ^ arg3) * mHashPrime;
+        mHash = (mHash ^ arg4) * mHashPrime;
+        mHash = (mHash ^ arg5) * mHashPrime;
+        mHash = (mHash ^ arg6) * mHashPrime;
+        mHash = (mHash ^ arg7) * mHashPrime;
+        mHash = (mHash ^ arg8) * mHashPrime;
     }
 
     public void LogFunction(ushort hash, long arg1, long arg2, long arg3, long arg4, long arg5, long arg6, long arg7)
@@ -285,7 +314,14 @@ public class ProcessLogMgr
             mCurrentFrameLog.Args.Add(arg6);
             mCurrentFrameLog.Args.Add(arg7);
         }
-        mSum = mSum + hash + arg1 + arg2 + arg3 + arg4 + arg5 + arg6 + arg7;
+        mHash = (mHash ^ hash) * mHashPrime;
+        mHash = (mHash ^ arg1) * mHashPrime;
+        mHash = (mHash ^ arg2) * mHashPrime;
+        mHash = (mHash ^ arg3) * mHashPrime;
+        mHash = (mHash ^ arg4) * mHashPrime;
+        mHash = (mHash ^ arg5) * mHashPrime;
+        mHash = (mHash ^ arg6) * mHashPrime;
+        mHash = (mHash ^ arg7) * mHashPrime;
     }
 
     public void LogFunction(ushort hash, long arg1, long arg2, long arg3, long arg4, long arg5, long arg6)
@@ -300,7 +336,13 @@ public class ProcessLogMgr
             mCurrentFrameLog.Args.Add(arg5);
             mCurrentFrameLog.Args.Add(arg6);
         }
-        mSum = mSum + hash + arg1 + arg2 + arg3 + arg4 + arg5 + arg6;
+        mHash = (mHash ^ hash) * mHashPrime;
+        mHash = (mHash ^ arg1) * mHashPrime;
+        mHash = (mHash ^ arg2) * mHashPrime;
+        mHash = (mHash ^ arg3) * mHashPrime;
+        mHash = (mHash ^ arg4) * mHashPrime;
+        mHash = (mHash ^ arg5) * mHashPrime;
+        mHash = (mHash ^ arg6) * mHashPrime;
     }
 
     public void LogFunction(ushort hash, long arg1, long arg2, long arg3, long arg4, long arg5)
@@ -314,7 +356,12 @@ public class ProcessLogMgr
             mCurrentFrameLog.Args.Add(arg4);
             mCurrentFrameLog.Args.Add(arg5);
         }
-        mSum = mSum + hash + arg1 + arg2 + arg3 + arg4 + arg5;
+        mHash = (mHash ^ hash) * mHashPrime;
+        mHash = (mHash ^ arg1) * mHashPrime;
+        mHash = (mHash ^ arg2) * mHashPrime;
+        mHash = (mHash ^ arg3) * mHashPrime;
+        mHash = (mHash ^ arg4) * mHashPrime;
+        mHash = (mHash ^ arg5) * mHashPrime;
     }
 
     public void LogFunction(ushort hash, long arg1, long arg2, long arg3, long arg4)
@@ -327,7 +374,11 @@ public class ProcessLogMgr
             mCurrentFrameLog.Args.Add(arg3);
             mCurrentFrameLog.Args.Add(arg4);
         }
-        mSum = mSum + hash + arg1 + arg2 + arg3 + arg4;
+        mHash = (mHash ^ hash) * mHashPrime;
+        mHash = (mHash ^ arg1) * mHashPrime;
+        mHash = (mHash ^ arg2) * mHashPrime;
+        mHash = (mHash ^ arg3) * mHashPrime;
+        mHash = (mHash ^ arg4) * mHashPrime;
     }
 
     public void LogFunction(ushort hash, long arg1, long arg2, long arg3)
@@ -339,7 +390,10 @@ public class ProcessLogMgr
             mCurrentFrameLog.Args.Add(arg2);
             mCurrentFrameLog.Args.Add(arg3);
         }
-        mSum = mSum + hash + arg1 + arg2 + arg3;
+        mHash = (mHash ^ hash) * mHashPrime;
+        mHash = (mHash ^ arg1) * mHashPrime;
+        mHash = (mHash ^ arg2) * mHashPrime;
+        mHash = (mHash ^ arg3) * mHashPrime;
     }
 
     public void LogFunction(ushort hash, long arg1, long arg2)
@@ -350,7 +404,9 @@ public class ProcessLogMgr
             mCurrentFrameLog.Args.Add(arg1);
             mCurrentFrameLog.Args.Add(arg2);
         }
-        mSum = mSum + hash + arg1 + arg2;
+        mHash = (mHash ^ hash) * mHashPrime;
+        mHash = (mHash ^ arg1) * mHashPrime;
+        mHash = (mHash ^ arg2) * mHashPrime;
     }
 
     public void LogFunction(ushort hash, long arg1)
@@ -360,7 +416,8 @@ public class ProcessLogMgr
             mCurrentFrameLog.Ids.Add(hash);
             mCurrentFrameLog.Args.Add(arg1);
         }
-        mSum = mSum + hash + arg1;
+        mHash = (mHash ^ hash) * mHashPrime;
+        mHash = (mHash ^ arg1) * mHashPrime;
     }
 
     public void LogFunction(ushort hash)
@@ -369,7 +426,7 @@ public class ProcessLogMgr
         if (mCurrentFrameLog != null) {
             mCurrentFrameLog.Ids.Add(hash);
         }
-        mSum = mSum + hash;
+        mHash = (mHash ^ hash) * mHashPrime;
     }
 
     public void LogString(string str)
@@ -379,7 +436,7 @@ public class ProcessLogMgr
             mCurrentFrameLog.Ids.Add(9999);
             mCurrentFrameLog.Strings.Add(str);
         }
-        //mSum = mSum + str.GetHashCode();
+        mHash = (mHash ^ str.GetHashCode()) * mHashPrime;
     }
     
     public void LogStringForce(string str)
@@ -388,6 +445,7 @@ public class ProcessLogMgr
             mCurrentFrameLog.Ids.Add(9999);
             mCurrentFrameLog.Strings.Add(str);
         }
+        // 强制记录字符串不可影响Hash值
     }
     
     // 在函数第一行调用此方法不自动添加日志

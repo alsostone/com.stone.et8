@@ -32,8 +32,8 @@ namespace NPBehave
         [BsonDictionaryOptions(DictionaryRepresentation.ArrayOfArrays)]
         [BsonElement("AM")][MemoryPackInclude] private Dictionary<long, Timer> addTimers = new Dictionary<long, Timer>();
         [BsonElement("RM")][MemoryPackInclude] private HashSet<long> removeTimers = new HashSet<long>();
-        
-        [BsonElement("OB")][MemoryPackInclude] private HashSet<int> updateObservers = new HashSet<int>();
+        [BsonDictionaryOptions(DictionaryRepresentation.ArrayOfArrays)]
+        [BsonElement("OB")][MemoryPackInclude] private SortedDictionary<int, byte> updateObservers = new SortedDictionary<int, byte>();
         [BsonElement("AB")][MemoryPackInclude] private HashSet<int> addObservers = new HashSet<int>();
         [BsonElement("RB")][MemoryPackInclude] private HashSet<int> removeObservers = new HashSet<int>();
         
@@ -159,11 +159,11 @@ namespace NPBehave
         {
             if (!isInUpdate)
             {
-                updateObservers.Add(action);
+                updateObservers.Add(action, 0);
             }
             else
             {
-                if (!updateObservers.Contains(action))
+                if (!updateObservers.ContainsKey(action))
                 {
                     addObservers.Add(action);
                 }
@@ -182,7 +182,7 @@ namespace NPBehave
             }
             else
             {
-                if (updateObservers.Contains(action))
+                if (updateObservers.ContainsKey(action))
                 {
                     removeObservers.Add(action);
                 }
@@ -197,7 +197,7 @@ namespace NPBehave
         {
             if (!isInUpdate)
             {
-                return updateObservers.Contains(action);
+                return updateObservers.ContainsKey(action);
             }
             else
             {
@@ -211,7 +211,7 @@ namespace NPBehave
                 }
                 else
                 {
-                    return updateObservers.Contains(action);
+                    return updateObservers.ContainsKey(action);
                 }
             }
         }
@@ -223,9 +223,9 @@ namespace NPBehave
 
             foreach (var action in updateObservers)
             {
-                if (!removeObservers.Contains(action))
+                if (!removeObservers.Contains(action.Key))
                 {
-                    behaveWorld.GuidReceiverMapping[action].OnTimerReached();
+                    behaveWorld.GuidReceiverMapping[action.Key].OnTimerReached();
                 }
             }
             
@@ -255,7 +255,7 @@ namespace NPBehave
 
             foreach (var action in addObservers)
             {
-                updateObservers.Add(action);
+                updateObservers.Add(action, 0);
             }
             foreach (var action in removeObservers)
             {
