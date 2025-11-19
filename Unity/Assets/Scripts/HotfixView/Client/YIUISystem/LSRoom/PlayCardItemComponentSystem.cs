@@ -20,6 +20,10 @@ namespace ET.Client
         [EntitySystem]
         private static void Destroy(this PlayCardItemComponent self)
         {
+            if (self.ItemData != null) {
+                ObjectPool.Instance.Recycle(self.ItemData);
+                self.ItemData = null;
+            }
         }
         
         [EntitySystem]
@@ -41,19 +45,21 @@ namespace ET.Client
         public static void SetData(this PlayCardItemComponent self, CardBagItem itemData, Vector3 position)
         {
             self.IsHighlight = false;
-            self.ItemData = itemData;
+            if (self.ItemData != null)
+                ObjectPool.Instance.Recycle(self.ItemData);
+            self.ItemData = itemData.CreateCopy();
             self.Position = position;
             
-            switch (itemData.Type)
+            switch (self.ItemData.Type)
             {
                 case EUnitType.Block:
-                    self.u_DataName.SetValue($"Block{itemData.TableId}");
+                    self.u_DataName.SetValue($"Block{self.ItemData.TableId}");
                     break;
                 case EUnitType.Building:
-                    self.u_DataName.SetValue($"Building{itemData.TableId}");
+                    self.u_DataName.SetValue($"Building{self.ItemData.TableId}");
                     break;
                 case EUnitType.Item:
-                    self.u_DataName.SetValue($"Item{itemData.TableId}");
+                    self.u_DataName.SetValue($"Item{self.ItemData.TableId}");
                     break;
             }
             

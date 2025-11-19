@@ -25,10 +25,7 @@ namespace ET.Client
             
             CardBagComponent bagComponent = self.LSViewOwner().GetUnit().GetComponent<CardBagComponent>();
             foreach (var item in bagComponent.Items) {
-                var bagItem = ObjectPool.Instance.Fetch<CardBagItem>();
-                bagItem.Id = item.Id;
-                bagItem.Type = item.Type;
-                bagItem.TableId = item.TableId;
+                var bagItem = item.CreateCopy();
                 self.Items.Add(bagItem);
                 self.IdItemMap[bagItem.Id] = bagItem;
             }
@@ -37,10 +34,7 @@ namespace ET.Client
         
         public static void AddItem(this LSViewCardBagComponent self, CardBagItem item)
         {
-            var bagItem = ObjectPool.Instance.Fetch<CardBagItem>();
-            bagItem.Id = item.Id;
-            bagItem.Type = item.Type;
-            bagItem.TableId = item.TableId;
+            var bagItem = item.CreateCopy();
             self.Items.Add(bagItem);
             self.IdItemMap[bagItem.Id] = bagItem;
             self.Fiber().UIEvent(new OnCardViewResetEvent() { PlayerId = self.LSViewOwner().Id }).Coroutine();

@@ -23,6 +23,16 @@ namespace ET
         public long Id;
         public EUnitType Type;
         public int TableId;
+        
         public bool IsFromPool { get; set; }
+        
+        public CardBagItem CreateCopy()
+        {
+            CardBagItem copy = ObjectPool.Instance.Fetch<CardBagItem>();
+            copy.Id = this.Id;
+            copy.Type = this.Type;
+            copy.TableId = this.TableId;
+            return copy;
+        }
     }
 }
