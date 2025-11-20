@@ -19,13 +19,13 @@ namespace ET
         {
             if (authority.Commands.Count > 0)
             {
-                byte diffVersion = LSCommand.ParseCommandVersion(authority.Commands[^1]);
+                byte authVersion = LSCommand.ParseCommandVersion(authority.Commands[^1]);
                 for (int i = Commands.Count - 1; i >= 0; i--)
                 {
                     LSCommandData lsCommand = Commands[i];
                     byte cmdVersion = LSCommand.ParseCommandVersion(lsCommand);
-                    int forwardDis = (cmdVersion - diffVersion + 256) % 256;
-                    if (forwardDis == 0 || forwardDis > 128) // 过期指令
+                    int forwardDis = (cmdVersion - authVersion + 256) % 256;
+                    if (forwardDis == 0 || forwardDis > 128) // 相同和旧的指令均认定过期
                         continue;
                     to.Commands.Insert(0, lsCommand);
                 }
