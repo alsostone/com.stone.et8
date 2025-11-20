@@ -33,7 +33,7 @@ namespace ET
             command.Header |= self.SeatIndex << 24;
             int index = frame % self.FramesCommandsNormal.Count;
             
-            OperateCommandType type = (OperateCommandType)((command.Header >> 16) & 0xFF);
+            OperateCommandType type = LSCommand.ParseCommandType(command);
             switch (type)
             {
                 case OperateCommandType.Move:
@@ -56,11 +56,11 @@ namespace ET
                 }
                 case OperateCommandType.TouchDragStart:
                 {
-                    // 指令DragStart新来时，移除缓存的DragStart和Drag
+                    // 指令DragStart新来时，移除缓存的DragStart/Drag/DragEnd
                     var commands = self.FramesCommandsDrag[index];
                     for (int i = commands.Count - 1; i >= 0; i--) {
-                        OperateCommandType cmdType = (OperateCommandType)((commands[i].Header >> 16) & 0xFF);
-                        if (cmdType == OperateCommandType.TouchDragStart || cmdType == OperateCommandType.TouchDrag)
+                        OperateCommandType cmdType = LSCommand.ParseCommandType(commands[i]);
+                        if (cmdType >= OperateCommandType.TouchDragStart && cmdType <= OperateCommandType.TouchDragEnd)
                             commands.RemoveAt(i);
                     }
                     commands.Add(command);
@@ -69,11 +69,11 @@ namespace ET
                 case OperateCommandType.TouchDrag:
                 case OperateCommandType.TouchDragEnd:
                 {
-                    // 指令Drag和DragEnd新来时，移除缓存的Drag
+                    // 指令Drag和DragEnd新来时，移除缓存的Drag/DragEnd
                     var commands = self.FramesCommandsDrag[index];
                     for (int i = commands.Count - 1; i >= 0; i--) {
-                        OperateCommandType cmdType = (OperateCommandType)((commands[i].Header >> 16) & 0xFF);
-                        if (cmdType == OperateCommandType.TouchDrag)
+                        OperateCommandType cmdType = LSCommand.ParseCommandType(commands[i]);
+                        if (cmdType == OperateCommandType.TouchDrag || cmdType == OperateCommandType.TouchDragEnd)
                             commands.RemoveAt(i);
                     }
                     commands.Add(command);
@@ -83,7 +83,13 @@ namespace ET
                 case OperateCommandType.PlacementDrag:
                 case OperateCommandType.PlacementNew:
                 {
+                    // 其他拖动相关指令 只保留同类最新的
                     var commands = self.FramesCommandsDrag[index];
+                    for (int i = commands.Count - 1; i >= 0; i--) {
+                        OperateCommandType cmdType = LSCommand.ParseCommandType(commands[i]);
+                        if (cmdType == type)
+                            commands.RemoveAt(i);
+                    }
                     commands.Add(command);
                     break;
                 }
@@ -91,10 +97,10 @@ namespace ET
                 {
                     // 按钮指令新来时，移除缓存的低优先级按钮指令
                     var commands = self.FramesCommandsNormal[index];
-                    var button = (command.Header >> 8) & 0xFF;
+                    var button = LSCommand.ParseCommandSubType(command);
                     for (int i = commands.Count - 1; i >= 0; i--) {
-                        OperateCommandType cmdType = (OperateCommandType)((commands[i].Header >> 16) & 0xFF);
-                        if (cmdType == OperateCommandType.Button && button >= ((commands[i].Header >> 8) & 0xFF))
+                        OperateCommandType cmdType = LSCommand.ParseCommandType(commands[i]);
+                        if (cmdType == OperateCommandType.Button && button >= LSCommand.ParseCommandSubType(commands[i]))
                             commands.RemoveAt(i);
                     }
                     commands.Add(command);

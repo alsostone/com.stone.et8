@@ -33,11 +33,13 @@ namespace ET.Client
                 if (!message.Equals(predictionFrameMessage))
                 {
                     Log.Debug($"frame diff: {room.AuthorityFrame} {predictionFrameMessage} {message}");
+                    Room2C_FrameMessage nextFrameMessage = frameBuffer.GetFrameMessage(room.AuthorityFrame + 1);
+                    predictionFrameMessage.InsertTo(nextFrameMessage, message);
                     message.CopyTo(predictionFrameMessage);
-                    // 回滚到frameBuffer.AuthorityFrame
+
                     Log.Debug($"roll back start {room.AuthorityFrame}");
                     LSClientHelper.Rollback(room, room.AuthorityFrame);
-                    Log.Debug($"roll back finish {room.AuthorityFrame}");
+                    Log.Debug($"roll back finish {room.PredictionFrame}");
                 }
                 else // 对比成功
                 {
