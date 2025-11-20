@@ -14,7 +14,10 @@ namespace ET
             self.PlacementData = placementData;
             LSGridMapComponent gridMapComponent = self.LSWorld().GetComponent<LSGridMapComponent>();
             gridMapComponent.Put(placementData.x, placementData.z, placementData);
-            self.AddRVO2Object();
+            switch (self.PlacementData.placementType) {
+                case PlacedLayer.Block: self.AddRVO2Obstacle(); break;
+                case PlacedLayer.Building: self.AddRVO2Agent(); break;
+            }
         }
 
         [EntitySystem]
@@ -22,13 +25,19 @@ namespace ET
         {self.LSRoom()?.ProcessLog.LogFunction(98, self.LSParent().Id);
             LSGridMapComponent gridMapComponent = self.LSWorld().GetComponent<LSGridMapComponent>();
             gridMapComponent.Take(self.PlacementData);
-            self.RemoveRVO2Object();
+            switch (self.PlacementData.placementType) {
+                case PlacedLayer.Block: self.RemoveRVO2Obstacle(); break;
+                case PlacedLayer.Building: self.RemoveRVO2Agent(); break;
+            }
         }
 
         [EntitySystem]
         private static void Deserialize(this PlacementComponent self)
         {
-            self.AddRVO2Object();
+            switch (self.PlacementData.placementType) {
+                case PlacedLayer.Block: self.AddRVO2Obstacle(); break;
+                case PlacedLayer.Building: self.AddRVO2Agent(); break;
+            }
         }
 
         public static PlacementData GetPlacementData(this PlacementComponent self)
@@ -45,52 +54,56 @@ namespace ET
             {
                 lsGridMapComponent.Take(self.PlacementData);
                 lsGridMapComponent.Put(index.x, index.z, self.PlacementData);
-                self.RemoveRVO2Object();
-                self.AddRVO2Object();
                 EventSystem.Instance.Publish(self.LSWorld(), new LSUnitPlaced() { Id = lsOwner.Id, X = index.x, Z = index.z });
-                lsOwner.GetComponent<TransformComponent>().SetPosition(lsGridMapComponent.GetPutPosition(self.PlacementData));
+
+                var putPosition = lsGridMapComponent.GetPutPosition(self.PlacementData);
+                switch (self.PlacementData.placementType) {
+                    case PlacedLayer.Block:
+                        // 障碍物特殊，需要重新创建 且 Transform位置也要更新（而Agent会自动回写Transform位置）
+                        lsOwner.GetComponent<TransformComponent>().SetPosition(putPosition);
+                        self.RemoveRVO2Obstacle();
+                        self.AddRVO2Obstacle();
+                        break;
+                    case PlacedLayer.Building:
+                        self.SetRVO2AgentPosition(putPosition);
+                        break;
+                }
             }
         }
 
-        private static void AddRVO2Object(this PlacementComponent self)
-        {self.LSRoom()?.ProcessLog.LogFunction(157, self.LSParent().Id);
-            switch (self.PlacementData.placementType)
-            {
-                case PlacedLayer.Block:
-                {
-                    LSRVO2Component rvo2Component = self.LSWorld().GetComponent<LSRVO2Component>();
-                    List<TSVector2> vertices = ObjectPool.Instance.Fetch<List<TSVector2>>();
-                    self.LSWorld().GetComponent<LSGridMapComponent>().GenPlacementBoundary(self.PlacementData, vertices);
-                    rvo2Component.AddObstacle(self.LSUnit(self.PlacementData.id), vertices);
-                    vertices.Clear();
-                    ObjectPool.Instance.Recycle(vertices);
-                    break;
-                }
-                case PlacedLayer.Building:
-                {
-                    LSRVO2Component rvo2Component = self.LSWorld().GetComponent<LSRVO2Component>();
-                    rvo2Component.AddStaticAgent(self.LSUnit(self.PlacementData.id));
-                    break;
-                }
-            }
+        private static void AddRVO2Agent(this PlacementComponent self)
+        {
+            LSRVO2Component rvo2Component = self.LSWorld().GetComponent<LSRVO2Component>();
+            rvo2Component.AddStaticAgent(self.LSUnit(self.PlacementData.id));
         }
         
-        private static void RemoveRVO2Object(this PlacementComponent self)
-        {self.LSRoom()?.ProcessLog.LogFunction(156, self.LSParent().Id);
-            switch (self.PlacementData.placementType)
-            {
-                case PlacedLayer.Block: {
-                    LSRVO2Component rvo2Component = self.LSWorld().GetComponent<LSRVO2Component>();
-                    rvo2Component.RemoveObstacle(self.LSUnit(self.PlacementData.id));
-                    break;
-                }
-                case PlacedLayer.Building: {
-                    LSRVO2Component rvo2Component = self.LSWorld().GetComponent<LSRVO2Component>();
-                    rvo2Component.RemoveAgent(self.LSUnit(self.PlacementData.id));
-                    break;
-                }
-            }
+        private static void RemoveRVO2Agent(this PlacementComponent self)
+        {
+            LSRVO2Component rvo2Component = self.LSWorld().GetComponent<LSRVO2Component>();
+            rvo2Component.RemoveAgent(self.LSUnit(self.PlacementData.id));
         }
         
+        private static void SetRVO2AgentPosition(this PlacementComponent self, TSVector position)
+        {
+            LSRVO2Component rvo2Component = self.LSWorld().GetComponent<LSRVO2Component>();
+            rvo2Component.SetAgentPosition(self.LSUnit(self.PlacementData.id), new TSVector2(position.x, position.z));
+        }
+        
+        private static void AddRVO2Obstacle(this PlacementComponent self)
+        {
+            LSRVO2Component rvo2Component = self.LSWorld().GetComponent<LSRVO2Component>();
+            List<TSVector2> vertices = ObjectPool.Instance.Fetch<List<TSVector2>>();
+            self.LSWorld().GetComponent<LSGridMapComponent>().GenPlacementBoundary(self.PlacementData, vertices);
+            rvo2Component.AddObstacle(self.LSUnit(self.PlacementData.id), vertices);
+            vertices.Clear();
+            ObjectPool.Instance.Recycle(vertices);
+        }
+
+        private static void RemoveRVO2Obstacle(this PlacementComponent self)
+        {
+            LSRVO2Component rvo2Component = self.LSWorld().GetComponent<LSRVO2Component>();
+            rvo2Component.RemoveObstacle(self.LSUnit(self.PlacementData.id));
+        }
+
     }
 }

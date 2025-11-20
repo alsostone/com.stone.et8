@@ -19,7 +19,7 @@ namespace ET.Client
         [EntitySystem]
         private static void Destroy(this LSViewGridBuilderComponent self)
         {
-            self.OnPlacementCancel();
+            self.OnEscape();
         }
         
         [LSEntitySystem]
@@ -30,58 +30,88 @@ namespace ET.Client
             // 预测拖拽开始正常执行，若权威拖拽开始莫名丢失导致回滚，表现层有拖拽表现，但逻辑层没有拖拽状态，拖拽无效，表现层拖拽结束时会取消拖拽表现，问题不大。
             // 而且由于表现层拖拽表现未发生改变也就不会闪烁，不处理回滚更优。
         }
-        
+
+        public static void OnEscape(this LSViewGridBuilderComponent self)
+        {
+            if (self.DragPlacement)
+            {
+                self.DragPlacement.ResetPreviewMaterial();
+                if (self.DragPlacement.placementData.isNew) {
+                    ResourcesPoolComponent poolComponent = self.Room().GetComponent<ResourcesPoolComponent>();
+                    poolComponent.Recycle(self.DragPlacement.gameObject);
+                } else {
+                    LSUnitView lsUnitView = self.DragUnitView;
+                    lsUnitView?.GetComponent<LSViewTransformComponent>().SetTransformEnabled(true);
+                }
+                self.DragPlacement = null;
+                self.DragUnitView = null;
+                
+                LSViewGridMapComponent gridMapComponent = self.Room().GetComponent<LSViewGridMapComponent>();
+                if (gridMapComponent.GridMapIndicator) {
+                    gridMapComponent.GridMapIndicator.ClearIndicator();
+                }
+                self.Fiber().UIEvent(new UICardDragEndEvent() { PlayerId = self.LSViewOwner().Id }).Coroutine();
+            }
+            if (self.DragItemRow != null)
+            {
+                // TODO: 取消物品使用目标高亮
+                self.DragItemRow = null;
+                self.Fiber().UIEvent(new UICardDragEndEvent() { PlayerId = self.LSViewOwner().Id }).Coroutine();
+                self.Fiber().UIEvent(new UIArrowDragEndEvent() { PlayerId = self.LSViewOwner().Id }).Coroutine();
+            }
+            if (self.DragPlacement == null && self.DragItemRow == null)
+            {
+                self.Fiber().UIEvent(new UISelectDragEndEvent() { PlayerId = self.LSViewOwner().Id }).Coroutine();
+            }
+        }
+
         public static void OnTouchDragStart(this LSViewGridBuilderComponent self, TSVector2 position)
         {
-            self.DragStartPosition = new(position.x.AsFloat(), 0, position.y.AsFloat());
+            self.DragStartPosition = self.DragPosition = new(position.x.AsFloat(), 0, position.y.AsFloat());
             if (self.DragPlacement)
             {
                 self.SetPlacementDragPosition(self.DragStartPosition);
             }
-            else if (self.DragItemRow != null)
+            if (self.DragItemRow != null)
             {
-                // nothing to do
+                self.SetPlacementItemPosition(self.DragStartPosition);
             }
-            else if (!self.IsSelectDragging)
+            if (self.DragPlacement == null && self.DragItemRow == null)
             {
-                self.IsSelectDragging = true;
                 self.Fiber().UIEvent(new UISelectDragStartEvent() { PlayerId = self.LSViewOwner().Id, Position = self.DragStartPosition }).Coroutine();
             }
         }
 
         public static void OnTouchDrag(this LSViewGridBuilderComponent self, TSVector2 position)
         {
-            Vector3 pos = new(position.x.AsFloat(), 0, position.y.AsFloat());
+            self.DragPosition = new(position.x.AsFloat(), 0, position.y.AsFloat());
             if (self.DragPlacement)
             {
-                self.SetPlacementDragPosition(pos);
+                self.SetPlacementDragPosition(self.DragPosition);
             }
-            else if (self.DragItemRow != null)
+            if (self.DragItemRow != null)
             {
-                List<SearchUnit> targets = ObjectPool.Instance.Fetch<List<SearchUnit>>();
-                LSViewQuery.Search(self.DragItemRow.SearchTarget, self.LSViewOwner(), pos, targets);
-                // TODO: 设置物品使用目标高亮
-                
-                targets.Clear();
-                ObjectPool.Instance.Recycle(targets);
-                
-                self.Fiber().UIEvent(new UIArrowDragEvent() { PlayerId = self.LSViewOwner().Id, Position = pos }).Coroutine();
+                self.SetPlacementItemPosition(self.DragPosition);
             }
-            else if (self.IsSelectDragging)
+            if (self.DragPlacement == null && self.DragItemRow == null)
             {
-                self.Fiber().UIEvent(new UISelectDragEvent() { PlayerId = self.LSViewOwner().Id, Position = pos }).Coroutine();
+                self.Fiber().UIEvent(new UISelectDragEvent() { PlayerId = self.LSViewOwner().Id, Position = self.DragPosition }).Coroutine();
             }
         }
 
         public static void OnTouchDragEnd(this LSViewGridBuilderComponent self)
         {
-            // 这里恢复原状即可 放置结果由逻辑层处理并通知给表现层
-            self.OnPlacementCancel();
+            self.OnEscape();
         }
 
-        public static void OnPlacementDragStart(this LSViewGridBuilderComponent self, long targetId)
+        public static void OnTouchDragCancel(this LSViewGridBuilderComponent self)
         {
-            self.OnPlacementCancel();
+            self.OnEscape();
+        }
+
+        public static void OnPlacementDrag(this LSViewGridBuilderComponent self, long targetId)
+        {
+            self.OnEscape();
             
             LSUnitViewComponent unitViewComponent = self.Room().GetComponent<LSUnitViewComponent>();
             LSUnitView lsUnitView = unitViewComponent.GetChild<LSUnitView>(targetId);
@@ -100,14 +130,14 @@ namespace ET.Client
             self.DragUnitView = lsUnitView;
             self.DragPlacement.SetPreviewMaterial();
             self.DragOffset = self.DragPlacement.GetPosition() - self.DragStartPosition;
-            self.SetPlacementDragPosition(self.DragStartPosition);
+            self.SetPlacementDragPosition(self.DragPosition);
             
             self.Fiber().UIEvent(new UICardDragStartEvent() { PlayerId = self.LSViewOwner().Id }).Coroutine();
         }
 
-        public static void OnPlacementStart(this LSViewGridBuilderComponent self, long itemId)
+        public static void OnPlacementNew(this LSViewGridBuilderComponent self, long itemId)
         {
-            self.OnPlacementCancel();
+            self.OnEscape();
             
             LSViewCardBagComponent viewCardBagComponent = self.LSViewOwner().GetComponent<LSViewCardBagComponent>();
             CardBagItem item = viewCardBagComponent.GetItem(itemId);
@@ -176,39 +206,16 @@ namespace ET.Client
             }
         }
 
-        public static void OnPlacementCancel(this LSViewGridBuilderComponent self)
+        private static void SetPlacementItemPosition(this LSViewGridBuilderComponent self, Vector3 position)
         {
-            if (self.DragPlacement)
-            {
-                self.DragPlacement.ResetPreviewMaterial();
-                if (self.DragPlacement.placementData.isNew) {
-                    ResourcesPoolComponent poolComponent = self.Room().GetComponent<ResourcesPoolComponent>();
-                    poolComponent.Recycle(self.DragPlacement.gameObject);
-                } else {
-                    LSUnitView lsUnitView = self.DragUnitView;
-                    lsUnitView?.GetComponent<LSViewTransformComponent>().SetTransformEnabled(true);
-                }
-                self.DragPlacement = null;
-                self.DragUnitView = null;
+            List<SearchUnit> targets = ObjectPool.Instance.Fetch<List<SearchUnit>>();
+            LSViewQuery.Search(self.DragItemRow.SearchTarget, self.LSViewOwner(), position, targets);
+            // TODO: 设置物品使用目标高亮
                 
-                LSViewGridMapComponent gridMapComponent = self.Room().GetComponent<LSViewGridMapComponent>();
-                if (gridMapComponent.GridMapIndicator) {
-                    gridMapComponent.GridMapIndicator.ClearIndicator();
-                }
-                self.Fiber().UIEvent(new UICardDragEndEvent() { PlayerId = self.LSViewOwner().Id }).Coroutine();
-            }
-            else if (self.DragItemRow != null)
-            {
-                // TODO: 取消物品使用目标高亮
-                self.DragItemRow = null;
-                self.Fiber().UIEvent(new UICardDragEndEvent() { PlayerId = self.LSViewOwner().Id }).Coroutine();
-                self.Fiber().UIEvent(new UIArrowDragEndEvent() { PlayerId = self.LSViewOwner().Id }).Coroutine();
-            }
-            else if (self.IsSelectDragging)
-            {
-                self.IsSelectDragging = false;
-                self.Fiber().UIEvent(new UISelectDragEndEvent() { PlayerId = self.LSViewOwner().Id }).Coroutine();
-            }
+            targets.Clear();
+            ObjectPool.Instance.Recycle(targets);
+                
+            self.Fiber().UIEvent(new UIArrowDragEvent() { PlayerId = self.LSViewOwner().Id, Position = position }).Coroutine();
         }
         
         private static void SetPlacementDragPosition(this LSViewGridBuilderComponent self, Vector3 position)

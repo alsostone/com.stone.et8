@@ -127,9 +127,9 @@ namespace ET.Client
             }
         }
 
-        private static void OnTouchBegin(this LSOperaDragComponent self, Vector3 touchPosition)
+        public static void OnTouchBegin(this LSOperaDragComponent self, Vector3 touchPosition)
         {
-            if (!self.isDraging)
+            if (!self.isItemClicked)
             {
                 self.longTouchPreesToken?.Cancel();
                 self.longTouchPreesToken = null;
@@ -143,19 +143,12 @@ namespace ET.Client
                     self.SetHoverTarget(lsUnitView);
                     self.ScanTouchLongPress(touchPosition).Coroutine();
                 }
-
-                if (self.RaycastTerrain(touchPosition, out Vector3 pos2))
-                {
-                    var command = LSCommand.GenCommandFloat2(0, OperateCommandType.TouchDragStart, pos2.x, pos2.z);
-                    self.Room().SendCommandMeesage(command);
-                    self.isDraging = true;
-                }
             }
-            else if (self.RaycastTerrain(touchPosition, out Vector3 pos))
+            if (self.RaycastTerrain(touchPosition, out Vector3 pos))
             {
-                // 若已是建造状态，点击场景时就要把预览物体移动到点击位置 所以发送一个拖拽中
-                var command = LSCommand.GenCommandFloat2(0, OperateCommandType.TouchDrag, pos.x, pos.z);
+                var command = LSCommand.GenCommandFloat2(0, OperateCommandType.TouchDragStart, pos.x, pos.z);
                 self.Room().SendCommandMeesage(command);
+                self.isDraging = true;
             }
         }
 
@@ -207,11 +200,12 @@ namespace ET.Client
                 }
                 else
                 {
-                    var command = LSCommand.GenCommandButton(0, CommandButtonType.PlacementCancel);
+                    var command = LSCommand.GenCommandLong(0, OperateCommandType.TouchDragCancel, 0);
                     self.Room().SendCommandMeesage(command);
                 }
                 self.isDraging = false;
                 self.isOutsideDraging = false;
+                self.isItemClicked = false;
                 self.longTouchPreesToken?.Cancel();
                 self.longTouchPreesToken = null;
             }
@@ -221,13 +215,13 @@ namespace ET.Client
         {
             var command = LSCommand.GenCommandLong(0, OperateCommandType.PlacementNew, itemId);
             self.Room().SendCommandMeesage(command);
-            self.isDraging = true;
             self.isOutsideDraging = disableMouseMove;
+            self.isItemClicked = true;
         }
 
         private static void RotatePlacementObject(this LSOperaDragComponent self, int rotation = 1)
         {
-            if (self.isDraging)
+            if (self.isItemClicked)
             {
                 var command = LSCommand.GenCommandButton(0, CommandButtonType.PlacementRotate, rotation);
                 self.Room().SendCommandMeesage(command);
@@ -236,13 +230,10 @@ namespace ET.Client
         
         private static void OnEscape(this LSOperaDragComponent self)
         {
-            if (self.isDraging)
-            {
-                self.isDraging = false;
-                self.isOutsideDraging = false;
-            }
-            
-            var command = LSCommand.GenCommandButton(0, CommandButtonType.Escape);
+            self.isDraging = false;
+            self.isOutsideDraging = false;
+            self.isItemClicked = false;
+            var command = LSCommand.GenCommandLong(0, OperateCommandType.Escape, 0);
             self.Room().SendCommandMeesage(command);
         }
 
@@ -273,5 +264,9 @@ namespace ET.Client
             return false;
         }
 
+        public static bool IsOperaAllDone(this LSOperaDragComponent self)
+        {
+            return !self.isDraging && !self.isItemClicked;
+        }
     }
 }

@@ -2,6 +2,11 @@ using TrueSync;
 
 namespace ET
 {
+    public struct LSEscape
+    {
+        public long Id;
+    }
+    
     public struct LSTouchDragStart
     {
         public long Id;
@@ -19,13 +24,18 @@ namespace ET
         public long Id;
     }
     
-    public struct LSPlacementDragStart
+    public struct LSTouchDragCancel
+    {
+        public long Id;
+    }
+    
+    public struct LSPlacementDrag
     {
         public long Id;
         public long TargetId;
     }
 
-    public struct LSPlacementStart
+    public struct LSPlacementNew
     {
         public long Id;
         public long ItemId;
@@ -37,9 +47,5 @@ namespace ET
         public int Rotation;
     }
     
-    public struct LSPlacementCancel
-    {
-        public long Id;
-    }
 }
 

@@ -378,9 +378,13 @@ namespace RVO
          * <param name="position">The replacement of the two-dimensional
          * position.</param>
          */
-        public void setAgentPosition(long agentNo, TSVector2 position)
+        public bool setAgentPosition(long agentNo, TSVector2 position)
         {
-            agents_.Get(agentNo).position = position;
+            Agent agent = agents_.Get(agentNo);
+            if (agent == null)
+                return false;
+            agent.position = position;
+            return true;
         }
 
         /**
@@ -392,9 +396,13 @@ namespace RVO
          * <param name="prefVelocity">The replacement of the two-dimensional
          * preferred velocity.</param>
          */
-        public void setAgentPrefVelocity(long agentNo, TSVector2 prefVelocity)
+        public bool setAgentPrefVelocity(long agentNo, TSVector2 prefVelocity)
         {
-            agents_.Get(agentNo).prefVelocity = prefVelocity;
+            Agent agent = agents_.Get(agentNo);
+            if (agent == null)
+                return false;
+            agent.prefVelocity = prefVelocity;
+            return true;
         }
 
         /**

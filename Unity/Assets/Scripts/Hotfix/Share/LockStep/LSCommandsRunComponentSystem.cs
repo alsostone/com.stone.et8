@@ -22,6 +22,12 @@ namespace ET
             {
                 switch (LSCommand.ParseCommandType(command))
                 {
+                    case OperateCommandType.Escape:
+                    {
+                        self.LSOwner().GetComponent<LSGridBuilderComponent>().RunCommandEscape();
+                        self.LSOwner().GetComponent<SelectionComponent>().ClearSelection();
+                        break;
+                    }
                     case OperateCommandType.Move:
                     {
                         self.IsRightDownMove = false;
@@ -46,6 +52,7 @@ namespace ET
                     {
                         TSVector2 pos = LSCommand.ParseCommandFloat2(command);
                         self.LSOwner().GetComponent<LSGridBuilderComponent>().RunCommandTouchDragStart(pos);
+                        self.LSOwner().GetComponent<SelectionComponent>().ClearSelection();
                         break;
                     }
                     case OperateCommandType.TouchDrag:
@@ -58,6 +65,11 @@ namespace ET
                     {
                         TSVector2 pos = LSCommand.ParseCommandFloat2(command);
                         self.LSOwner().GetComponent<LSGridBuilderComponent>().RunCommandTouchDragEnd(pos);
+                        break;
+                    }
+                    case OperateCommandType.TouchDragCancel:
+                    {
+                        self.LSOwner().GetComponent<LSGridBuilderComponent>().RunCommandTouchDragCancel();
                         break;
                     }
                     case OperateCommandType.PlacementDrag:
@@ -99,14 +111,8 @@ namespace ET
             (CommandButtonType, long) button = LSCommand.ParseCommandButton(command);
             switch (button.Item1)
             {
-                case CommandButtonType.Escape:
-                    self.LSOwner().GetComponent<LSGridBuilderComponent>().RunCommandEscape();
-                    break;
                 case CommandButtonType.PlacementRotate:
                     self.LSOwner().GetComponent<LSGridBuilderComponent>().RunCommandPlacementRotate((int)button.Item2);
-                    break;
-                case CommandButtonType.PlacementCancel:
-                    self.LSOwner().GetComponent<LSGridBuilderComponent>().RunCommandPlacementCancel();
                     break;
                 case CommandButtonType.CardSelect:
                     self.LSOwner().GetComponent<CardSelectComponent>().TrySelectCard((int)button.Item2);

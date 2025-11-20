@@ -99,7 +99,7 @@ namespace ET.Client
             Room room = self.Room();
             LSOperaDragComponent dragComponent = room.GetComponent<LSOperaDragComponent>();
             dragComponent.SetPlacementObject(self.ItemData.Id, true);
-            dragComponent.OnTouchMove(eventData.position);
+            dragComponent.OnTouchBegin(eventData.position);
         }
 
         private static void OnEventDragAction(this PlayCardItemComponent self, object p1)
@@ -129,9 +129,9 @@ namespace ET.Client
         {
             self.IsCliickEnter = true;
             
-            // 只要处于拖动中就不改变高亮状态（不论这个拖动是不是本Item发起的）
+            // 操作未全部结束就不改变高亮状态（不论这个操作是不是本Item发起的）
             LSOperaDragComponent dragComponent = self.Room().GetComponent<LSOperaDragComponent>();
-            if (!dragComponent.isDraging) {
+            if (dragComponent.IsOperaAllDone()) {
                 self.Fiber().UIEvent(new OnCardItemHighlightEvent() { ItemId = self.ItemData.Id }).Coroutine();
             }
         }
@@ -145,9 +145,9 @@ namespace ET.Client
         {
             self.IsCliickEnter = false;
             
-            // 只要处于拖动中就不改变高亮状态（不论这个拖动是不是本Item发起的）
+            // 操作未全部结束就不改变高亮状态（不论这个操作是不是本Item发起的）
             LSOperaDragComponent dragComponent = self.Room().GetComponent<LSOperaDragComponent>();
-            if (!dragComponent.isDraging) {
+            if (dragComponent.IsOperaAllDone()) {
                 self.SetHighlight(false);
             }
         }
@@ -171,7 +171,7 @@ namespace ET.Client
                 Room room = self.Room();
                 LSOperaDragComponent dragComponent = room.GetComponent<LSOperaDragComponent>();
                 dragComponent.SetPlacementObject(self.ItemData.Id, false);
-                self.SetHighlight(true);
+                self.Fiber().UIEvent(new OnCardItemHighlightEvent() { ItemId = self.ItemData.Id }).Coroutine();
             }
         }
         

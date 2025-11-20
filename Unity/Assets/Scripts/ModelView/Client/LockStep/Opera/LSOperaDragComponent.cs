@@ -10,10 +10,11 @@ namespace ET.Client
         
         public Vector3 mousePosition;
         public bool isOutsideDraging = false;
+        public bool isItemClicked = false;
         public bool isMouseDraging = false;
         public bool isKeyADown = false;
         
-        public bool isDraging { get; set; } = false;
+        public bool isDraging = false;
         public int dragFingerId = -1;
         
         public ETCancellationToken longTouchPreesToken;

@@ -8,12 +8,14 @@ namespace ET
     public enum OperateCommandType : byte
     {
         Invalid,        // 无效指令
+        Escape,         // 取消
         Move,           // 移动
         MoveTo,         // 移动到指定位置
         TouchDown,         // 触摸按下
         TouchDragStart,      // 拖拽开始
         TouchDrag,           // 拖拽
         TouchDragEnd,        // 拖拽结束
+        TouchDragCancel,    // 拖拽取消
         PlacementDrag,          // 拖拽开始
         PlacementNew,          // 放置开始
         Button,         // 按钮指令
@@ -26,7 +28,6 @@ namespace ET
     public enum CommandButtonType : byte
     {
         PlacementRotate,    // 放置旋转
-        PlacementCancel,    // 取消放置
         CardSelect,         // 选牌
         Jump,       // 跳跃
         Attack,     // 攻击
@@ -34,7 +35,6 @@ namespace ET
         Skill2,     // 技能2
         Skill3,     // 技能3
         Skill4,     // 技能4
-        Escape,     // 取消
     }
     
 #if ENABLE_DEBUG
