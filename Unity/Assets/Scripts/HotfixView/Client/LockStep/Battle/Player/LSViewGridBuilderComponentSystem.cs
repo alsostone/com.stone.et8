@@ -33,6 +33,16 @@ namespace ET.Client
 
         public static void OnEscape(this LSViewGridBuilderComponent self)
         {
+            self.IsDragging = false;
+            self.StopAndClear();
+        }
+        
+        private static void StopAndClear(this LSViewGridBuilderComponent self)
+        {
+            if (self.DragPlacement == null && self.DragItemRow == null)
+            {
+                self.Fiber().UIEvent(new UISelectDragEndEvent() { PlayerId = self.LSViewOwner().Id }).Coroutine();
+            }
             if (self.DragPlacement)
             {
                 self.DragPlacement.ResetPreviewMaterial();
@@ -59,14 +69,11 @@ namespace ET.Client
                 self.Fiber().UIEvent(new UICardDragEndEvent() { PlayerId = self.LSViewOwner().Id }).Coroutine();
                 self.Fiber().UIEvent(new UIArrowDragEndEvent() { PlayerId = self.LSViewOwner().Id }).Coroutine();
             }
-            if (self.DragPlacement == null && self.DragItemRow == null)
-            {
-                self.Fiber().UIEvent(new UISelectDragEndEvent() { PlayerId = self.LSViewOwner().Id }).Coroutine();
-            }
         }
 
         public static void OnTouchDragStart(this LSViewGridBuilderComponent self, TSVector2 position)
         {
+            self.IsDragging = true;
             self.DragStartPosition = self.DragPosition = new(position.x.AsFloat(), 0, position.y.AsFloat());
             if (self.DragPlacement)
             {
@@ -111,7 +118,7 @@ namespace ET.Client
 
         public static void OnPlacementDrag(this LSViewGridBuilderComponent self, long targetId)
         {
-            self.OnEscape();
+            self.StopAndClear();
             
             LSUnitViewComponent unitViewComponent = self.Room().GetComponent<LSUnitViewComponent>();
             LSUnitView lsUnitView = unitViewComponent.GetChild<LSUnitView>(targetId);
@@ -137,7 +144,7 @@ namespace ET.Client
 
         public static void OnPlacementNew(this LSViewGridBuilderComponent self, long itemId)
         {
-            self.OnEscape();
+            self.StopAndClear();
             
             LSViewCardBagComponent viewCardBagComponent = self.LSViewOwner().GetComponent<LSViewCardBagComponent>();
             CardBagItem item = viewCardBagComponent.GetItem(itemId);
@@ -192,6 +199,14 @@ namespace ET.Client
             self.DragPlacement.ResetRotation(gridMapComponent.GetGridRotation());
             self.DragPlacement.SetPreviewMaterial();
             self.DragOffset = Vector3.zero;
+            
+            // 拖拽还没有开始时，把它放到屏幕外
+            if (!self.IsDragging) {
+                LSCameraComponent cameraComponent = self.Room().GetComponent<LSCameraComponent>();
+                self.DragPlacement.SetPosition(cameraComponent.Camera.transform.up * 1000f);
+            } else {
+                self.SetPlacementDragPosition(self.DragPosition);
+            }
             return true;
         }
 
