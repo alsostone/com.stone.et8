@@ -2,7 +2,7 @@
 
 namespace ET
 {
-	[EffectExecutor(ESkillEffectType.Research)]
+	[EffectExecutor(EffectActionType.Research)]
 	public class DoResearch : IEffectExecutor
 	{
 		public void Run(int[] param, LSUnit owner, LSUnit target, LSUnit carrier = null)

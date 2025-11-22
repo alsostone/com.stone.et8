@@ -1,6 +1,6 @@
 ﻿namespace ET
 {
-	[EffectExecutor(ESkillEffectType.AddRestrict)]
+	[EffectExecutor(EffectActionType.AddRestrict)]
 	public class AddRestrict : IEffectExecutor
 	{
 		public void Run(int[] param, LSUnit owner, LSUnit target, LSUnit carrier = null)

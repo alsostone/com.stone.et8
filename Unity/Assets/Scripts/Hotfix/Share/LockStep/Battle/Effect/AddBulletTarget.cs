@@ -2,7 +2,7 @@
 
 namespace ET
 {
-	[EffectExecutor(ESkillEffectType.AddBulletTarget)]
+	[EffectExecutor(EffectActionType.AddBulletTarget)]
 	public class AddBulletTarget : IEffectExecutor
 	{
 		public void Run(int[] param, LSUnit owner, LSUnit target, LSUnit carrier = null)

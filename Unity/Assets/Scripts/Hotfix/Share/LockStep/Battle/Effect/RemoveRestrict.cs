@@ -1,6 +1,6 @@
 ﻿namespace ET
 {
-	[EffectExecutor(ESkillEffectType.RemoveRestrict)]
+	[EffectExecutor(EffectActionType.RemoveRestrict)]
 	public class RemoveRestrict : IEffectExecutor
 	{
 		public void Run(int[] param, LSUnit owner, LSUnit target, LSUnit carrier = null)

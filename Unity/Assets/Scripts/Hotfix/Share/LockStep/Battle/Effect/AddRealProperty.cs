@@ -2,7 +2,7 @@
 
 namespace ET
 {
-	[EffectExecutor(ESkillEffectType.ChangePropertyReal)]
+	[EffectExecutor(EffectActionType.ChangePropertyReal)]
 	public class AddRealProperty : IEffectExecutor
 	{
 		public void Run(int[] param, LSUnit owner, LSUnit target, LSUnit carrier = null)

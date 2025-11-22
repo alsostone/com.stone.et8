@@ -2,7 +2,7 @@
 
 namespace ET
 {
-	[EffectExecutor(ESkillEffectType.Healing)]
+	[EffectExecutor(EffectActionType.Healing)]
 	public class DoHealing : IEffectExecutor
 	{
 		public void Run(int[] param, LSUnit owner, LSUnit target, LSUnit carrier = null)

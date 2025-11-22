@@ -2,7 +2,7 @@
 
 namespace ET
 {
-    [EffectExecutor(ESkillEffectType.SummonSoldier)]
+    [EffectExecutor(EffectActionType.SummonSoldier)]
     [FriendOf(typeof(TeamComponent))]
     public class SummonSoldier : IEffectExecutor
     {

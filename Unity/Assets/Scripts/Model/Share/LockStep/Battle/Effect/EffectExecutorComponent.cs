@@ -4,9 +4,9 @@ using System.Collections.Generic;
 namespace ET
 {
     [Code]
-    public class EffectExecutorComponent: Singleton<EffectExecutorComponent>, ISingletonAwake
+    public class EffectExecutorComponent : Singleton<EffectExecutorComponent>, ISingletonAwake
     {
-        private readonly Dictionary<ESkillEffectType, IEffectExecutor> effectExecutors = new();
+        private readonly Dictionary<EffectActionType, IEffectExecutor> effectExecutors = new();
         
         public void Awake()
         {
@@ -19,12 +19,12 @@ namespace ET
                 {
                     EffectExecutorAttribute effectExecutorAttribute = (EffectExecutorAttribute)attr;
                     IEffectExecutor effectExecutor = Activator.CreateInstance(type) as IEffectExecutor;
-                    this.effectExecutors.Add(effectExecutorAttribute.EffectType, effectExecutor);
+                    this.effectExecutors.Add(effectExecutorAttribute.ActionType, effectExecutor);
                 }
             }
         }
 
-        public void Run(ESkillEffectType type, int[] param, LSUnit owner, LSUnit target, LSUnit carrier = null)
+        public void Run(EffectActionType type, int[] param, LSUnit owner, LSUnit target, LSUnit carrier = null)
         {
             if (target == null) return;
             if (effectExecutors.TryGetValue(type, out IEffectExecutor effectExecutor)) {

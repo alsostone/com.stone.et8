@@ -1,14 +1,12 @@
-using System;
-
 namespace ET
 {
     public class EffectExecutorAttribute: BaseAttribute
     {
-        public ESkillEffectType EffectType { get; }
+        public EffectActionType ActionType { get; }
 
-        public EffectExecutorAttribute(ESkillEffectType type)
+        public EffectExecutorAttribute(EffectActionType type)
         {
-            this.EffectType = type;
+            this.ActionType = type;
         }
     }
 }

@@ -4,7 +4,7 @@ using TrueSync;
 
 namespace ET
 {
-    [EffectExecutor(ESkillEffectType.SummonRandom)]
+    [EffectExecutor(EffectActionType.SummonRandom)]
     [FriendOf(typeof(TeamComponent))]
     public class SummonRandom : IEffectExecutor
     {

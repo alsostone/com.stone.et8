@@ -2,7 +2,7 @@
 
 namespace ET
 {
-	[EffectExecutor(ESkillEffectType.AddProperty)]
+	[EffectExecutor(EffectActionType.AddProperty)]
 	public class AddProperty : IEffectExecutor
 	{
 		public void Run(int[] param, LSUnit owner, LSUnit target, LSUnit carrier = null)

@@ -23,7 +23,7 @@ namespace ET
             {int __n0 = System.Math.Min(_buf.ReadSize(), _buf.Size);FailureConds = new int[__n0];for(var __index0 = 0 ; __index0 < __n0 ; __index0++) { int __e0;__e0 = _buf.ReadInt(); FailureConds[__index0] = __e0;}}
             Fx = _buf.ReadInt();
             Fx_Ref = null;
-            ActionType = (ESkillEffectType)_buf.ReadInt();
+            ActionType = (EffectActionType)_buf.ReadInt();
             {int __n0 = System.Math.Min(_buf.ReadSize(), _buf.Size);ActionParam = new int[__n0];for(var __index0 = 0 ; __index0 < __n0 ; __index0++) { int __e0;__e0 = _buf.ReadInt(); ActionParam[__index0] = __e0;}}
 
             PostInit();
@@ -69,7 +69,7 @@ namespace ET
         /// <summary>
         /// 操作
         /// </summary>
-        public readonly ESkillEffectType ActionType;
+        public readonly EffectActionType ActionType;
 
         /// <summary>
         /// 操作参数

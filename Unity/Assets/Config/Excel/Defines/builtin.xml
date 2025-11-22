@@ -146,14 +146,33 @@
         <var name="MaxPopulationFinalAdd" alias="人口上限FD" value="11024"/>
         <var name="MaxPopulationFinalPct" alias="人口上限FP" value="11025"/>
     </enum>
-    
+
+    <enum name="EffectActionType" comment="效果操作类型" unique="TRUE">
+        <var name="None" alias="" value="0"/>
+        <var name="ChangePropertyReal" alias="实时属性改变" value="2" comment="比如：当前血量、当前蓝量，改变时会判定上限，最小0"/>
+        <var name="Healing" alias="治疗" value="3" comment="攻击力百分比+固定值"/>
+        <var name="Damage" alias="伤害" value="4" comment="攻击力百分比+固定值"/>
+        <var name="AddBuff" alias="添加Buff" value="5"/>
+        <var name="RemoveBuff" alias="移除Buff" value="6"/>
+        <var name="AddRestrict" alias="添加限制" value="7"/>
+        <var name="RemoveRestrict" alias="移除限制" value="8"/>
+        <var name="AddProperty" alias="增加属性" value="9" comment="增加子属性的值"/>
+        <var name="SubProperty" alias="降低属性" value="10" comment="降低子属性的值"/>
+        <var name="SummonSoldier" alias="召唤士兵" value="11"/>
+        <var name="SummonRandom" alias="随机召唤" value="12"/>
+        <var name="AddBulletTarget" alias="目标子弹" value="13"/>
+        <var name="AddBulletPosition" alias="位置子弹" value="14"/>
+        <var name="Research" alias="重新索敌" value="15" comment="以0索敌，执行1效果组"/>
+        <var name="ConditionBranch" alias="条件分支" value="16" comment="判定条件0，通过执行1效果组，否则执行2效果组"/>
+    </enum>
+
     <enum name="TeamType" comment="队伍类型" unique="TRUE">
         <var name="None" alias="" value="0"/>
         <var name="TeamA" alias="队伍A" value="1"/>
         <var name="TeamB" alias="队伍B" value="2"/>
         <var name="Max" alias="MAX" value="3"/>
     </enum>
-    
+
     <enum name="FlagRestrict" comment="禁止标签" unique="TRUE" flags="TRUE">
         <var name="None" alias="" value="0"/>
         <var name="NotMove" alias="禁止移动" value="1"/>

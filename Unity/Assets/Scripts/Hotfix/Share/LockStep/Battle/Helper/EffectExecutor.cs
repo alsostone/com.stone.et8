@@ -56,11 +56,14 @@ namespace ET
         private static void ReverseExecute(TbEffectRow tbEffectRow, LSUnit owner, LSUnit target)
         {
             switch (tbEffectRow.ActionType) {
-                case ESkillEffectType.AddProperty:
-                    EffectExecutorComponent.Instance.Run(ESkillEffectType.SubProperty, tbEffectRow.ActionParam, owner, target);
+                case EffectActionType.AddProperty:
+                    EffectExecutorComponent.Instance.Run(EffectActionType.SubProperty, tbEffectRow.ActionParam, owner, target);
                     break;
-                case ESkillEffectType.AddRestrict:
-                    EffectExecutorComponent.Instance.Run(ESkillEffectType.RemoveRestrict, tbEffectRow.ActionParam, owner, target);
+                case EffectActionType.AddRestrict:
+                    EffectExecutorComponent.Instance.Run(EffectActionType.RemoveRestrict, tbEffectRow.ActionParam, owner, target);
+                    break;
+                case EffectActionType.AddBuff:
+                    EffectExecutorComponent.Instance.Run(EffectActionType.RemoveBuff, tbEffectRow.ActionParam, owner, target);
                     break;
             }
         }

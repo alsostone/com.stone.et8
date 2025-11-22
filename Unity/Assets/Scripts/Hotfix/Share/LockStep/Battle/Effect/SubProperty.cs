@@ -2,7 +2,7 @@
 
 namespace ET
 {
-    [EffectExecutor(ESkillEffectType.SubProperty)]
+    [EffectExecutor(EffectActionType.SubProperty)]
     [FriendOf(typeof(TeamComponent))]
     public class SubProperty : IEffectExecutor
     {

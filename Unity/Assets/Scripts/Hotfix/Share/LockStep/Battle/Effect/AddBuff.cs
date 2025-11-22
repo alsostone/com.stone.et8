@@ -1,6 +1,6 @@
 ﻿namespace ET
 {
-	[EffectExecutor(ESkillEffectType.AddBuff)]
+	[EffectExecutor(EffectActionType.AddBuff)]
 	public class AddBuff : IEffectExecutor
 	{
 		public void Run(int[] param, LSUnit owner, LSUnit target, LSUnit carrier = null)

@@ -10,14 +10,14 @@
 namespace ET
 {
     /// <summary>
-    /// 效果类型
+    /// 效果操作类型
     /// </summary>
-    public enum ESkillEffectType
+    public enum EffectActionType
     {
         None = 0,
 
         /// <summary>
-        /// 实时属性改变
+        /// 比如：当前血量、当前蓝量，改变时会判定上限，最小0
         /// </summary>
         ChangePropertyReal = 2,
 
@@ -52,12 +52,12 @@ namespace ET
         RemoveRestrict = 8,
 
         /// <summary>
-        /// 增加属性
+        /// 增加子属性的值
         /// </summary>
         AddProperty = 9,
 
         /// <summary>
-        /// 降低属性
+        /// 降低子属性的值
         /// </summary>
         SubProperty = 10,
 
@@ -82,9 +82,14 @@ namespace ET
         AddBulletPosition = 14,
 
         /// <summary>
-        /// 重新索敌
+        /// 以0索敌，执行1效果组
         /// </summary>
         Research = 15,
+
+        /// <summary>
+        /// 判定条件0，通过执行1效果组，否则执行2效果组
+        /// </summary>
+        ConditionBranch = 16,
 
     }
 }
