@@ -77,8 +77,6 @@ namespace ET.Client
             room.InitExsitWorld(lsWorld, message.MatchInfo);
             room.InitLockStep(LockStepMode.Server, ownerPlayerId, lookPlayerId);
 
-            LSClientHelper.RunLSRollbackSystem(room);
-            
             // 等待表现层订阅的事件完成
             TbStageRow row = TbStage.Instance.Get(message.MatchInfo.StageId);
             await EventSystem.Instance.PublishAsync(root, new LSSceneChangeStart() {SceneName = row.SceneName});
