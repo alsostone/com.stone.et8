@@ -14,5 +14,6 @@ namespace ET.Client
 		public bool IsDragging;
 		public Vector3 DragStartPosition;
 		public Vector3 DragPosition;
+		public bool IsSelectDragging;
 	}
 }

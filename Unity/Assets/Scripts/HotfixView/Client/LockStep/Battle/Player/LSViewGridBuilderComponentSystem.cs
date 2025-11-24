@@ -39,10 +39,6 @@ namespace ET.Client
         
         private static void StopAndClear(this LSViewGridBuilderComponent self)
         {
-            if (self.DragPlacement == null && self.DragItemRow == null)
-            {
-                self.Fiber().UIEvent(new UISelectDragEndEvent() { PlayerId = self.LSViewOwner().Id }).Coroutine();
-            }
             if (self.DragPlacement)
             {
                 self.DragPlacement.ResetPreviewMaterial();
@@ -69,6 +65,11 @@ namespace ET.Client
                 self.Fiber().UIEvent(new UICardDragEndEvent() { PlayerId = self.LSViewOwner().Id }).Coroutine();
                 self.Fiber().UIEvent(new UIArrowDragEndEvent() { PlayerId = self.LSViewOwner().Id }).Coroutine();
             }
+            if (self.IsSelectDragging)
+            {
+                self.IsSelectDragging = false;
+                self.Fiber().UIEvent(new UISelectDragEndEvent() { PlayerId = self.LSViewOwner().Id }).Coroutine();
+            }
         }
 
         public static void OnTouchDragStart(this LSViewGridBuilderComponent self, TSVector2 position)
@@ -85,6 +86,7 @@ namespace ET.Client
             }
             if (self.DragPlacement == null && self.DragItemRow == null)
             {
+                self.IsSelectDragging = true;
                 self.Fiber().UIEvent(new UISelectDragStartEvent() { PlayerId = self.LSViewOwner().Id, Position = self.DragStartPosition }).Coroutine();
             }
         }
@@ -100,7 +102,7 @@ namespace ET.Client
             {
                 self.SetPlacementItemPosition(self.DragPosition);
             }
-            if (self.DragPlacement == null && self.DragItemRow == null)
+            if (self.IsSelectDragging)
             {
                 self.Fiber().UIEvent(new UISelectDragEvent() { PlayerId = self.LSViewOwner().Id, Position = self.DragPosition }).Coroutine();
             }
