@@ -1,63 +1,28 @@
-## 帧同步战斗系统
-### 目标
+# 帧同步战斗系统
+## 目标
 配套齐全（如调试工具、AI工具、各种插件）、客户端服务器代码共用、打通匹配到结算流程。
-#### 参考《帧同步战斗架构设计Ver.2》来设计。 [文档地址](https://zhuanlan.zhihu.com/p/1911184476500897969)
-当前：配置表、技能系统、AI系统、放置系统、不一致检测与定位、打包流程等已跑通。稳定版可见分支Release1.0。
 
-### 如何运行
-1. 切换到Init场景
-2. ET/Excel/XXX导表
-3. Lockstep模式 AWSD移动 J普攻 K、L技能。
+基于[《帧同步战斗架构设计Ver.2》](https://zhuanlan.zhihu.com/p/1911184476500897969)设计。
 
-### 战斗单位
-支持英雄、地块、建筑、小兵、掉落物等
+配套说明文档 [《开源帧同步战斗系统》](https://zhuanlan.zhihu.com/p/1976296247481619134)系列，逐步撰写中。
 
-单位配置表位置 `com.stone.et8/Unity/Assets/Config/Excel/Datas/Unit`
+## 稳定分支
+### Release1.0
+配置表、技能系统、AI系统、放置系统、不一致检测与定位、打包流程等已跑通。
+### Release2.0
+GMTools工具（快捷进入、退出战斗），抽卡、放置、使用物品的UI和相关表现特效，鼠标选区、FlowField集群寻路，全日志配置和更新。
 
-战斗单位均可在配置表中配置初始属性、技能等，详尽内容可直接查看配置表。
+## 如何运行
+1. 切换到Init场景 运行
+2. 左上角测试按钮`Open Stage`打开关卡选择面板，选择一个关卡，点击`PVE Game Start`开始战斗
 
-### 放置系统
-支持RTS类游戏中的建筑放置、拖拽系统功能，按N键创建地块，R键旋转，鼠标左键拖拽。
-
-### 技能系统
-由技能、BUFF、效果3者互相调用实现主逻辑，另索敌、子弹、轨迹独立配置以便复用。技能配置表位置 `com.stone.et8/Unity/Assets/Config/Excel/Datas/Skill`
-1. 技能配置 释放条件检测、CD、初始CD、消耗、前摇动作、持续动作、后摇动作、效果触发点、效果组、是否实时索敌；
-2. 效果实现 伤害、添加BUFF、属性改变、添加子弹、重新索敌(炮弹落地炸一圈)、召唤士兵、随机召唤(基于随机掉落包)；
-3. BUFF系统 支持持续时间、BUFF生效效果、Dot伤害效果、BUFF结束效果；
-4. 索敌系统 支持指定范围、队伍、类型、优先级；
-5. 移动轨迹 轨迹基于贝塞尔曲线，当前支持1个控制点(配置控制点趋近起终点比例和控制点高度偏移)，支持炸弹抛射；
-
-### AI系统
-基于NPBehave实现的行为树，并对其进行可序列化的再开发。项目链接在下边插件目录中。
-```csharp
-// 每间隔0.5秒攻击一次
-lsUnit.AddComponent<AIRootComponent, Node>(
-    new Sequence(new ActionAttack(), new WaitSecond(FP.Half))
-    );
-```
-该框架项目中的版本同时支持MongoDB.Bson和MemoryPack2种序列化。
-```csharp
-namespace NPBehave
-{
-    [MemoryPackable(GenerateType.NoGenerate)]
-    public abstract partial class Node : Receiver, IDisposable
-    {
-        [BsonElement][MemoryPackInclude] protected State currentState = State.INACTIVE;
-        
-        [BsonIgnore][MemoryPackIgnore] private string label;
-        [BsonIgnoreIfNull][BsonElement][MemoryPackInclude] public string Label { get => label; set => label = value; }
-        
-        [BsonIgnore][MemoryPackIgnore] private string name;
-        [BsonIgnore][MemoryPackIgnore] public string Name => name;
-...
-```
-## 基于YIUI-ET8.1拓展 包含Luban，YIUI，HybridCLR，YooAsset
-## 支持功能
+## 基于YIUI-ET8.1版本 包含Luban，YIUI，HybridCLR，YooAsset
+### 框架功能更改
 1.  移除ET的UI框架 使用YIUI框架实现所有UI
 2.  移除ET的打包流程 使用ET/Build/XXX 一键打各平台包
 3.  移除ET的导表流程 ET/Excel/XXX 一键导出Luban配置表
 
-## 打包自动流程
+### 打包自动流程
 ps: 首次打包需手动安装HybridCLR HybridCLR/Installer
     如果打包失败，多试几次，依旧报错再尝试解决。`一键打包只是流程整合，便于了解打包流程，并不能避免流程中某节点报错`。
 1. 切换目标平台
@@ -133,7 +98,7 @@ private static void AutomationBuild(BuildTarget buildTarget, EPlayMode playMode)
 }
 ```
 
-## Luban 配置表
+### Luban 配置表
 1. 修改表导出类名以Tb为前缀
 2. 导表分为4类 client/server/client_server/all 分别对应GlobalConfig中CodeMode的配置
 3. 把StartConfig相关的4个平台表，同类名但不同数据，依靠不生成类标签`[Config]`实现（不够优雅，先用着）
@@ -154,7 +119,7 @@ public static void ExcelAllExporter()
 #endif
 }
 ```
-## 插件目录
+### 插件目录
 项目中用到了以下插件，部分为付费插件，如商用请在Unity商店购买。此处只做学习研究使用，如有侵权请联系删除。
 
 1. 伤害飘字使用DamageNumbersPro [Unity商店地址](https://assetstore.unity.com/packages/2d/gui/damage-numbers-pro-186447)
@@ -162,7 +127,7 @@ public static void ExcelAllExporter()
 3. AI使用行为树NPBehave [GitHub地址](https://github.com/alsostone/NPBehave)
 4. 放置系统&流场寻路 [GitHub地址](https://github.com/alsostone/com.stone.gridbuilder)
 
-# Reference
+## Reference
 1. ET [ET8.1](https://github.com/egametang/ET/tree/release8.1)
 2. YIUI [YIUI-ET8.1](https://github.com/LiShengYang-yiyi/YIUI/tree/YIUI-ET8.1)
 3. X-ET7 [X-ET7 master](https://github.com/IcePower/X-ET7)

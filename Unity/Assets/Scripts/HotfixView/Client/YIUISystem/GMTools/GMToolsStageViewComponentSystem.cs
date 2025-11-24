@@ -63,7 +63,10 @@ namespace ET.Client
             if ((self.TipsMask & 1) == 1)
             {
                 self.u_DataTips.SetValue($"You need to click to select a stage");
-                return;
+            }
+            else
+            {
+                self.u_DataTips.SetValue(string.Empty);
             }
         }
         
