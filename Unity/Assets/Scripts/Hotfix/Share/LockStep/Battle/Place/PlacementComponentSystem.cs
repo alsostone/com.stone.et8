@@ -72,25 +72,25 @@ namespace ET
         }
 
         private static void AddRVO2Agent(this PlacementComponent self)
-        {
+        {self.LSRoom()?.ProcessLog.LogFunction(163, self.LSParent().Id);
             LSRVO2Component rvo2Component = self.LSWorld().GetComponent<LSRVO2Component>();
             rvo2Component.AddStaticAgent(self.LSUnit(self.PlacementData.id));
         }
         
         private static void RemoveRVO2Agent(this PlacementComponent self)
-        {
+        {self.LSRoom()?.ProcessLog.LogFunction(162, self.LSParent().Id);
             LSRVO2Component rvo2Component = self.LSWorld().GetComponent<LSRVO2Component>();
             rvo2Component.RemoveAgent(self.LSUnit(self.PlacementData.id));
         }
         
         private static void SetRVO2AgentPosition(this PlacementComponent self, TSVector position)
-        {
+        {self.LSRoom()?.ProcessLog.LogFunction(161, self.LSParent().Id, position.x.V, position.y.V, position.z.V);
             LSRVO2Component rvo2Component = self.LSWorld().GetComponent<LSRVO2Component>();
             rvo2Component.SetAgentPosition(self.LSUnit(self.PlacementData.id), new TSVector2(position.x, position.z));
         }
         
         private static void AddRVO2Obstacle(this PlacementComponent self)
-        {
+        {self.LSRoom()?.ProcessLog.LogFunction(160, self.LSParent().Id);
             LSRVO2Component rvo2Component = self.LSWorld().GetComponent<LSRVO2Component>();
             List<TSVector2> vertices = ObjectPool.Instance.Fetch<List<TSVector2>>();
             self.LSWorld().GetComponent<LSGridMapComponent>().GenPlacementBoundary(self.PlacementData, vertices);
@@ -100,7 +100,7 @@ namespace ET
         }
 
         private static void RemoveRVO2Obstacle(this PlacementComponent self)
-        {
+        {self.LSRoom()?.ProcessLog.LogFunction(159, self.LSParent().Id);
             LSRVO2Component rvo2Component = self.LSWorld().GetComponent<LSRVO2Component>();
             rvo2Component.RemoveObstacle(self.LSUnit(self.PlacementData.id));
         }

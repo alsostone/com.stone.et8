@@ -201,6 +201,7 @@
     <type fullname="ET.SchedulerType" preserve="all" />
     <type fullname="ET.ServiceType" preserve="all" />
     <type fullname="ET.Singleton`1" preserve="all" />
+    <type fullname="ET.StaticFieldAttribute" preserve="all" />
     <type fullname="ET.StringHashHelper" preserve="all" />
     <type fullname="ET.StringHelper" preserve="all" />
     <type fullname="ET.StructBsonSerialize`1" preserve="all" />
@@ -288,6 +289,7 @@
     <type fullname="NPBehave.WaitUntilStopped" preserve="all" />
     <type fullname="ProcessLogMgr" preserve="all" />
     <type fullname="RVO.Agent" preserve="all" />
+    <type fullname="RVO.PoolLinkedList`2" preserve="all" />
     <type fullname="RVO.Simulator" preserve="all" />
     <type fullname="ST.GridBuilder.CellData" preserve="all" />
     <type fullname="ST.GridBuilder.FieldV2" preserve="all" />

@@ -45,14 +45,15 @@ public class AOTGenericReferences : UnityEngine.MonoBehaviour
 	// ET.AEvent<object,ET.LSCardBagRemove>
 	// ET.AEvent<object,ET.LSCardSelectAdd>
 	// ET.AEvent<object,ET.LSCardSelectDone>
+	// ET.AEvent<object,ET.LSEscape>
 	// ET.AEvent<object,ET.LSGridDataReset>
-	// ET.AEvent<object,ET.LSPlacementCancel>
-	// ET.AEvent<object,ET.LSPlacementDragStart>
+	// ET.AEvent<object,ET.LSPlacementDrag>
+	// ET.AEvent<object,ET.LSPlacementNew>
 	// ET.AEvent<object,ET.LSPlacementRotate>
-	// ET.AEvent<object,ET.LSPlacementStart>
 	// ET.AEvent<object,ET.LSSelectionChanged>
 	// ET.AEvent<object,ET.LSStageGameOver>
 	// ET.AEvent<object,ET.LSTouchDrag>
+	// ET.AEvent<object,ET.LSTouchDragCancel>
 	// ET.AEvent<object,ET.LSTouchDragEnd>
 	// ET.AEvent<object,ET.LSTouchDragStart>
 	// ET.AEvent<object,ET.LSUnitCasting>
@@ -241,13 +242,13 @@ public class AOTGenericReferences : UnityEngine.MonoBehaviour
 	// ET.StateMachineWrap<ET.Client.LSCardSelectPanelComponentSystem.<YIUIEvent>d__8>
 	// ET.StateMachineWrap<ET.Client.LSCardSelectPanelComponentSystem.<YIUIOpen>d__5>
 	// ET.StateMachineWrap<ET.Client.LSCardSelectPanelComponentSystem.<YIUIOpenTween>d__6>
+	// ET.StateMachineWrap<ET.Client.LSEscapeEvent.<Run>d__0>
 	// ET.StateMachineWrap<ET.Client.LSGridDataResetEvent.<Run>d__0>
 	// ET.StateMachineWrap<ET.Client.LSLobbyPanelComponentSystem.<YIUIOpen>d__5>
 	// ET.StateMachineWrap<ET.Client.LSOperaDragComponentSystem.<ScanTouchLongPress>d__4>
-	// ET.StateMachineWrap<ET.Client.LSPlacementCancelEvent.<Run>d__0>
-	// ET.StateMachineWrap<ET.Client.LSPlacementDragStartEvent.<Run>d__0>
+	// ET.StateMachineWrap<ET.Client.LSPlacementDragEvent.<Run>d__0>
+	// ET.StateMachineWrap<ET.Client.LSPlacementNewEvent.<Run>d__0>
 	// ET.StateMachineWrap<ET.Client.LSPlacementRotateEvent.<Run>d__0>
-	// ET.StateMachineWrap<ET.Client.LSPlacementStartEvent.<Run>d__0>
 	// ET.StateMachineWrap<ET.Client.LSRoomPanelComponentSystem.<YIUIOpen>d__5>
 	// ET.StateMachineWrap<ET.Client.LSSceneChangeHelper.<SceneChangeTo>d__0>
 	// ET.StateMachineWrap<ET.Client.LSSceneChangeHelper.<SceneChangeToReconnect>d__2>
@@ -256,6 +257,7 @@ public class AOTGenericReferences : UnityEngine.MonoBehaviour
 	// ET.StateMachineWrap<ET.Client.LSSceneInitFinish_Finish.<Run>d__0>
 	// ET.StateMachineWrap<ET.Client.LSSelectionChangedEvent.<Run>d__0>
 	// ET.StateMachineWrap<ET.Client.LSStageGameOverEvent.<Run>d__0>
+	// ET.StateMachineWrap<ET.Client.LSTouchDragCancelEvent.<Run>d__0>
 	// ET.StateMachineWrap<ET.Client.LSTouchDragEndEvent.<Run>d__0>
 	// ET.StateMachineWrap<ET.Client.LSTouchDragEvent.<Run>d__0>
 	// ET.StateMachineWrap<ET.Client.LSTouchDragStartEvent.<Run>d__0>
@@ -445,6 +447,9 @@ public class AOTGenericReferences : UnityEngine.MonoBehaviour
 	// MongoDB.Bson.Serialization.Serializers.StructSerializerBase<Unity.Mathematics.float4>
 	// MongoDB.Bson.Serialization.Serializers.StructSerializerBase<Unity.Mathematics.quaternion>
 	// MongoDB.Bson.Serialization.Serializers.StructSerializerBase<object>
+	// RVO.PoolLinkedList.Enumerator<long,object>
+	// RVO.PoolLinkedList<long,object>
+	// RVO.PoolLinkedNode<object>
 	// System.Action<DotRecast.Detour.StraightPathItem>
 	// System.Action<ET.EntityRef<object>>
 	// System.Action<ET.LSCommandData>
@@ -1314,14 +1319,15 @@ public class AOTGenericReferences : UnityEngine.MonoBehaviour
 		// System.Void ET.ETAsyncTaskMethodBuilder.AwaitUnsafeOnCompleted<ET.ETTaskCompleted,ET.Client.FiberInit_NetClient.<Handle>d__0>(ET.ETTaskCompleted&,ET.Client.FiberInit_NetClient.<Handle>d__0&)
 		// System.Void ET.ETAsyncTaskMethodBuilder.AwaitUnsafeOnCompleted<ET.ETTaskCompleted,ET.Client.G2C_ReconnectHandler.<Run>d__0>(ET.ETTaskCompleted&,ET.Client.G2C_ReconnectHandler.<Run>d__0&)
 		// System.Void ET.ETAsyncTaskMethodBuilder.AwaitUnsafeOnCompleted<ET.ETTaskCompleted,ET.Client.LSCardSelectPanelComponentSystem.<YIUIEvent>d__8>(ET.ETTaskCompleted&,ET.Client.LSCardSelectPanelComponentSystem.<YIUIEvent>d__8&)
+		// System.Void ET.ETAsyncTaskMethodBuilder.AwaitUnsafeOnCompleted<ET.ETTaskCompleted,ET.Client.LSEscapeEvent.<Run>d__0>(ET.ETTaskCompleted&,ET.Client.LSEscapeEvent.<Run>d__0&)
 		// System.Void ET.ETAsyncTaskMethodBuilder.AwaitUnsafeOnCompleted<ET.ETTaskCompleted,ET.Client.LSGridDataResetEvent.<Run>d__0>(ET.ETTaskCompleted&,ET.Client.LSGridDataResetEvent.<Run>d__0&)
-		// System.Void ET.ETAsyncTaskMethodBuilder.AwaitUnsafeOnCompleted<ET.ETTaskCompleted,ET.Client.LSPlacementCancelEvent.<Run>d__0>(ET.ETTaskCompleted&,ET.Client.LSPlacementCancelEvent.<Run>d__0&)
-		// System.Void ET.ETAsyncTaskMethodBuilder.AwaitUnsafeOnCompleted<ET.ETTaskCompleted,ET.Client.LSPlacementDragStartEvent.<Run>d__0>(ET.ETTaskCompleted&,ET.Client.LSPlacementDragStartEvent.<Run>d__0&)
+		// System.Void ET.ETAsyncTaskMethodBuilder.AwaitUnsafeOnCompleted<ET.ETTaskCompleted,ET.Client.LSPlacementDragEvent.<Run>d__0>(ET.ETTaskCompleted&,ET.Client.LSPlacementDragEvent.<Run>d__0&)
+		// System.Void ET.ETAsyncTaskMethodBuilder.AwaitUnsafeOnCompleted<ET.ETTaskCompleted,ET.Client.LSPlacementNewEvent.<Run>d__0>(ET.ETTaskCompleted&,ET.Client.LSPlacementNewEvent.<Run>d__0&)
 		// System.Void ET.ETAsyncTaskMethodBuilder.AwaitUnsafeOnCompleted<ET.ETTaskCompleted,ET.Client.LSPlacementRotateEvent.<Run>d__0>(ET.ETTaskCompleted&,ET.Client.LSPlacementRotateEvent.<Run>d__0&)
-		// System.Void ET.ETAsyncTaskMethodBuilder.AwaitUnsafeOnCompleted<ET.ETTaskCompleted,ET.Client.LSPlacementStartEvent.<Run>d__0>(ET.ETTaskCompleted&,ET.Client.LSPlacementStartEvent.<Run>d__0&)
 		// System.Void ET.ETAsyncTaskMethodBuilder.AwaitUnsafeOnCompleted<ET.ETTaskCompleted,ET.Client.LSSceneInitFinish_Finish.<Run>d__0>(ET.ETTaskCompleted&,ET.Client.LSSceneInitFinish_Finish.<Run>d__0&)
 		// System.Void ET.ETAsyncTaskMethodBuilder.AwaitUnsafeOnCompleted<ET.ETTaskCompleted,ET.Client.LSSelectionChangedEvent.<Run>d__0>(ET.ETTaskCompleted&,ET.Client.LSSelectionChangedEvent.<Run>d__0&)
 		// System.Void ET.ETAsyncTaskMethodBuilder.AwaitUnsafeOnCompleted<ET.ETTaskCompleted,ET.Client.LSStageGameOverEvent.<Run>d__0>(ET.ETTaskCompleted&,ET.Client.LSStageGameOverEvent.<Run>d__0&)
+		// System.Void ET.ETAsyncTaskMethodBuilder.AwaitUnsafeOnCompleted<ET.ETTaskCompleted,ET.Client.LSTouchDragCancelEvent.<Run>d__0>(ET.ETTaskCompleted&,ET.Client.LSTouchDragCancelEvent.<Run>d__0&)
 		// System.Void ET.ETAsyncTaskMethodBuilder.AwaitUnsafeOnCompleted<ET.ETTaskCompleted,ET.Client.LSTouchDragEndEvent.<Run>d__0>(ET.ETTaskCompleted&,ET.Client.LSTouchDragEndEvent.<Run>d__0&)
 		// System.Void ET.ETAsyncTaskMethodBuilder.AwaitUnsafeOnCompleted<ET.ETTaskCompleted,ET.Client.LSTouchDragEvent.<Run>d__0>(ET.ETTaskCompleted&,ET.Client.LSTouchDragEvent.<Run>d__0&)
 		// System.Void ET.ETAsyncTaskMethodBuilder.AwaitUnsafeOnCompleted<ET.ETTaskCompleted,ET.Client.LSTouchDragStartEvent.<Run>d__0>(ET.ETTaskCompleted&,ET.Client.LSTouchDragStartEvent.<Run>d__0&)
@@ -1526,12 +1532,12 @@ public class AOTGenericReferences : UnityEngine.MonoBehaviour
 		// System.Void ET.ETAsyncTaskMethodBuilder.Start<ET.Client.LSCardSelectPanelComponentSystem.<YIUIEvent>d__10>(ET.Client.LSCardSelectPanelComponentSystem.<YIUIEvent>d__10&)
 		// System.Void ET.ETAsyncTaskMethodBuilder.Start<ET.Client.LSCardSelectPanelComponentSystem.<YIUIEvent>d__8>(ET.Client.LSCardSelectPanelComponentSystem.<YIUIEvent>d__8&)
 		// System.Void ET.ETAsyncTaskMethodBuilder.Start<ET.Client.LSCardSelectPanelComponentSystem.<YIUIOpenTween>d__6>(ET.Client.LSCardSelectPanelComponentSystem.<YIUIOpenTween>d__6&)
+		// System.Void ET.ETAsyncTaskMethodBuilder.Start<ET.Client.LSEscapeEvent.<Run>d__0>(ET.Client.LSEscapeEvent.<Run>d__0&)
 		// System.Void ET.ETAsyncTaskMethodBuilder.Start<ET.Client.LSGridDataResetEvent.<Run>d__0>(ET.Client.LSGridDataResetEvent.<Run>d__0&)
 		// System.Void ET.ETAsyncTaskMethodBuilder.Start<ET.Client.LSOperaDragComponentSystem.<ScanTouchLongPress>d__4>(ET.Client.LSOperaDragComponentSystem.<ScanTouchLongPress>d__4&)
-		// System.Void ET.ETAsyncTaskMethodBuilder.Start<ET.Client.LSPlacementCancelEvent.<Run>d__0>(ET.Client.LSPlacementCancelEvent.<Run>d__0&)
-		// System.Void ET.ETAsyncTaskMethodBuilder.Start<ET.Client.LSPlacementDragStartEvent.<Run>d__0>(ET.Client.LSPlacementDragStartEvent.<Run>d__0&)
+		// System.Void ET.ETAsyncTaskMethodBuilder.Start<ET.Client.LSPlacementDragEvent.<Run>d__0>(ET.Client.LSPlacementDragEvent.<Run>d__0&)
+		// System.Void ET.ETAsyncTaskMethodBuilder.Start<ET.Client.LSPlacementNewEvent.<Run>d__0>(ET.Client.LSPlacementNewEvent.<Run>d__0&)
 		// System.Void ET.ETAsyncTaskMethodBuilder.Start<ET.Client.LSPlacementRotateEvent.<Run>d__0>(ET.Client.LSPlacementRotateEvent.<Run>d__0&)
-		// System.Void ET.ETAsyncTaskMethodBuilder.Start<ET.Client.LSPlacementStartEvent.<Run>d__0>(ET.Client.LSPlacementStartEvent.<Run>d__0&)
 		// System.Void ET.ETAsyncTaskMethodBuilder.Start<ET.Client.LSSceneChangeHelper.<SceneChangeTo>d__0>(ET.Client.LSSceneChangeHelper.<SceneChangeTo>d__0&)
 		// System.Void ET.ETAsyncTaskMethodBuilder.Start<ET.Client.LSSceneChangeHelper.<SceneChangeToReconnect>d__2>(ET.Client.LSSceneChangeHelper.<SceneChangeToReconnect>d__2&)
 		// System.Void ET.ETAsyncTaskMethodBuilder.Start<ET.Client.LSSceneChangeHelper.<SceneChangeToReplay>d__1>(ET.Client.LSSceneChangeHelper.<SceneChangeToReplay>d__1&)
@@ -1539,6 +1545,7 @@ public class AOTGenericReferences : UnityEngine.MonoBehaviour
 		// System.Void ET.ETAsyncTaskMethodBuilder.Start<ET.Client.LSSceneInitFinish_Finish.<Run>d__0>(ET.Client.LSSceneInitFinish_Finish.<Run>d__0&)
 		// System.Void ET.ETAsyncTaskMethodBuilder.Start<ET.Client.LSSelectionChangedEvent.<Run>d__0>(ET.Client.LSSelectionChangedEvent.<Run>d__0&)
 		// System.Void ET.ETAsyncTaskMethodBuilder.Start<ET.Client.LSStageGameOverEvent.<Run>d__0>(ET.Client.LSStageGameOverEvent.<Run>d__0&)
+		// System.Void ET.ETAsyncTaskMethodBuilder.Start<ET.Client.LSTouchDragCancelEvent.<Run>d__0>(ET.Client.LSTouchDragCancelEvent.<Run>d__0&)
 		// System.Void ET.ETAsyncTaskMethodBuilder.Start<ET.Client.LSTouchDragEndEvent.<Run>d__0>(ET.Client.LSTouchDragEndEvent.<Run>d__0&)
 		// System.Void ET.ETAsyncTaskMethodBuilder.Start<ET.Client.LSTouchDragEvent.<Run>d__0>(ET.Client.LSTouchDragEvent.<Run>d__0&)
 		// System.Void ET.ETAsyncTaskMethodBuilder.Start<ET.Client.LSTouchDragStartEvent.<Run>d__0>(ET.Client.LSTouchDragStartEvent.<Run>d__0&)
@@ -1779,14 +1786,15 @@ public class AOTGenericReferences : UnityEngine.MonoBehaviour
 		// System.Void ET.EventSystem.Publish<object,ET.LSCardBagRemove>(object,ET.LSCardBagRemove)
 		// System.Void ET.EventSystem.Publish<object,ET.LSCardSelectAdd>(object,ET.LSCardSelectAdd)
 		// System.Void ET.EventSystem.Publish<object,ET.LSCardSelectDone>(object,ET.LSCardSelectDone)
+		// System.Void ET.EventSystem.Publish<object,ET.LSEscape>(object,ET.LSEscape)
 		// System.Void ET.EventSystem.Publish<object,ET.LSGridDataReset>(object,ET.LSGridDataReset)
-		// System.Void ET.EventSystem.Publish<object,ET.LSPlacementCancel>(object,ET.LSPlacementCancel)
-		// System.Void ET.EventSystem.Publish<object,ET.LSPlacementDragStart>(object,ET.LSPlacementDragStart)
+		// System.Void ET.EventSystem.Publish<object,ET.LSPlacementDrag>(object,ET.LSPlacementDrag)
+		// System.Void ET.EventSystem.Publish<object,ET.LSPlacementNew>(object,ET.LSPlacementNew)
 		// System.Void ET.EventSystem.Publish<object,ET.LSPlacementRotate>(object,ET.LSPlacementRotate)
-		// System.Void ET.EventSystem.Publish<object,ET.LSPlacementStart>(object,ET.LSPlacementStart)
 		// System.Void ET.EventSystem.Publish<object,ET.LSSelectionChanged>(object,ET.LSSelectionChanged)
 		// System.Void ET.EventSystem.Publish<object,ET.LSStageGameOver>(object,ET.LSStageGameOver)
 		// System.Void ET.EventSystem.Publish<object,ET.LSTouchDrag>(object,ET.LSTouchDrag)
+		// System.Void ET.EventSystem.Publish<object,ET.LSTouchDragCancel>(object,ET.LSTouchDragCancel)
 		// System.Void ET.EventSystem.Publish<object,ET.LSTouchDragEnd>(object,ET.LSTouchDragEnd)
 		// System.Void ET.EventSystem.Publish<object,ET.LSTouchDragStart>(object,ET.LSTouchDragStart)
 		// System.Void ET.EventSystem.Publish<object,ET.LSUnitCasting>(object,ET.LSUnitCasting)
@@ -1847,6 +1855,7 @@ public class AOTGenericReferences : UnityEngine.MonoBehaviour
 		// System.Void MemoryPack.MemoryPackReader.ReadUnmanaged<TrueSync.FP,TrueSync.FP>(TrueSync.FP&,TrueSync.FP&)
 		// System.Void MemoryPack.MemoryPackReader.ReadUnmanaged<TrueSync.FP>(TrueSync.FP&)
 		// System.Void MemoryPack.MemoryPackReader.ReadUnmanaged<TrueSync.TSQuaternion>(TrueSync.TSQuaternion&)
+		// System.Void MemoryPack.MemoryPackReader.ReadUnmanaged<TrueSync.TSVector,TrueSync.TSQuaternion>(TrueSync.TSVector&,TrueSync.TSQuaternion&)
 		// System.Void MemoryPack.MemoryPackReader.ReadUnmanaged<TrueSync.TSVector2>(TrueSync.TSVector2&)
 		// System.Void MemoryPack.MemoryPackReader.ReadUnmanaged<TrueSync.TSVector>(TrueSync.TSVector&)
 		// System.Void MemoryPack.MemoryPackReader.ReadUnmanaged<Unity.Mathematics.float3>(Unity.Mathematics.float3&)
@@ -1867,7 +1876,7 @@ public class AOTGenericReferences : UnityEngine.MonoBehaviour
 		// System.Void MemoryPack.MemoryPackReader.ReadUnmanaged<long,TrueSync.FP>(long&,TrueSync.FP&)
 		// System.Void MemoryPack.MemoryPackReader.ReadUnmanaged<long,TrueSync.TSVector2>(long&,TrueSync.TSVector2&)
 		// System.Void MemoryPack.MemoryPackReader.ReadUnmanaged<long,Unity.Mathematics.float3>(long&,Unity.Mathematics.float3&)
-		// System.Void MemoryPack.MemoryPackReader.ReadUnmanaged<long,byte,byte,TrueSync.TSVector,TrueSync.TSQuaternion>(long&,byte&,byte&,TrueSync.TSVector&,TrueSync.TSQuaternion&)
+		// System.Void MemoryPack.MemoryPackReader.ReadUnmanaged<long,byte,byte,TrueSync.TSVector,TrueSync.TSVector2,TrueSync.TSVector2,TrueSync.TSQuaternion>(long&,byte&,byte&,TrueSync.TSVector&,TrueSync.TSVector2&,TrueSync.TSVector2&,TrueSync.TSQuaternion&)
 		// System.Void MemoryPack.MemoryPackReader.ReadUnmanaged<long,byte,byte>(long&,byte&,byte&)
 		// System.Void MemoryPack.MemoryPackReader.ReadUnmanaged<long,byte>(long&,byte&)
 		// System.Void MemoryPack.MemoryPackReader.ReadUnmanaged<long,int,TrueSync.TSVector,TrueSync.TSQuaternion>(long&,int&,TrueSync.TSVector&,TrueSync.TSQuaternion&)
@@ -1875,6 +1884,7 @@ public class AOTGenericReferences : UnityEngine.MonoBehaviour
 		// System.Void MemoryPack.MemoryPackReader.ReadUnmanaged<long,int,byte,byte,int,int,int>(long&,int&,byte&,byte&,int&,int&,int&)
 		// System.Void MemoryPack.MemoryPackReader.ReadUnmanaged<long,int,byte,int,int>(long&,int&,byte&,int&,int&)
 		// System.Void MemoryPack.MemoryPackReader.ReadUnmanaged<long,int,int,Unity.Mathematics.float3,Unity.Mathematics.float3>(long&,int&,int&,Unity.Mathematics.float3&,Unity.Mathematics.float3&)
+		// System.Void MemoryPack.MemoryPackReader.ReadUnmanaged<long,int,int,byte>(long&,int&,int&,byte&)
 		// System.Void MemoryPack.MemoryPackReader.ReadUnmanaged<long,int,int,int,int,int>(long&,int&,int&,int&,int&,int&)
 		// System.Void MemoryPack.MemoryPackReader.ReadUnmanaged<long,int,int,int>(long&,int&,int&,int&)
 		// System.Void MemoryPack.MemoryPackReader.ReadUnmanaged<long,int,int,long,int,int,int>(long&,int&,int&,long&,int&,int&,int&)
@@ -1902,6 +1912,7 @@ public class AOTGenericReferences : UnityEngine.MonoBehaviour
 		// System.Void MemoryPack.MemoryPackWriter.WritePackable<object>(object&)
 		// System.Void MemoryPack.MemoryPackWriter.WriteUnmanaged<ET.SearchUnitPackable>(ET.SearchUnitPackable&)
 		// System.Void MemoryPack.MemoryPackWriter.WriteUnmanaged<TrueSync.FP,TrueSync.FP>(TrueSync.FP&,TrueSync.FP&)
+		// System.Void MemoryPack.MemoryPackWriter.WriteUnmanaged<TrueSync.TSVector,TrueSync.TSQuaternion>(TrueSync.TSVector&,TrueSync.TSQuaternion&)
 		// System.Void MemoryPack.MemoryPackWriter.WriteUnmanaged<Unity.Mathematics.quaternion,int>(Unity.Mathematics.quaternion&,int&)
 		// System.Void MemoryPack.MemoryPackWriter.WriteUnmanaged<byte>(byte&)
 		// System.Void MemoryPack.MemoryPackWriter.WriteUnmanaged<int,byte,ST.GridBuilder.FieldV2>(int&,byte&,ST.GridBuilder.FieldV2&)
@@ -1909,7 +1920,7 @@ public class AOTGenericReferences : UnityEngine.MonoBehaviour
 		// System.Void MemoryPack.MemoryPackWriter.WriteUnmanaged<int>(int&)
 		// System.Void MemoryPack.MemoryPackWriter.WriteUnmanaged<long,TrueSync.FP>(long&,TrueSync.FP&)
 		// System.Void MemoryPack.MemoryPackWriter.WriteUnmanaged<long,TrueSync.TSVector2>(long&,TrueSync.TSVector2&)
-		// System.Void MemoryPack.MemoryPackWriter.WriteUnmanaged<long,byte,byte,TrueSync.TSVector,TrueSync.TSQuaternion>(long&,byte&,byte&,TrueSync.TSVector&,TrueSync.TSQuaternion&)
+		// System.Void MemoryPack.MemoryPackWriter.WriteUnmanaged<long,byte,byte,TrueSync.TSVector,TrueSync.TSVector2,TrueSync.TSVector2,TrueSync.TSQuaternion>(long&,byte&,byte&,TrueSync.TSVector&,TrueSync.TSVector2&,TrueSync.TSVector2&,TrueSync.TSQuaternion&)
 		// System.Void MemoryPack.MemoryPackWriter.WriteUnmanaged<long,byte,byte>(long&,byte&,byte&)
 		// System.Void MemoryPack.MemoryPackWriter.WriteUnmanaged<long,byte>(long&,byte&)
 		// System.Void MemoryPack.MemoryPackWriter.WriteUnmanaged<long,int,TrueSync.TSVector,int,int>(long&,int&,TrueSync.TSVector&,int&,int&)
@@ -1940,6 +1951,7 @@ public class AOTGenericReferences : UnityEngine.MonoBehaviour
 		// System.Void MemoryPack.MemoryPackWriter.WriteUnmanagedWithObjectHeader<long,Unity.Mathematics.float3>(byte,long&,Unity.Mathematics.float3&)
 		// System.Void MemoryPack.MemoryPackWriter.WriteUnmanagedWithObjectHeader<long,int,TrueSync.TSVector,TrueSync.TSQuaternion>(byte,long&,int&,TrueSync.TSVector&,TrueSync.TSQuaternion&)
 		// System.Void MemoryPack.MemoryPackWriter.WriteUnmanagedWithObjectHeader<long,int,int,Unity.Mathematics.float3,Unity.Mathematics.float3>(byte,long&,int&,int&,Unity.Mathematics.float3&,Unity.Mathematics.float3&)
+		// System.Void MemoryPack.MemoryPackWriter.WriteUnmanagedWithObjectHeader<long,int,int,byte>(byte,long&,int&,int&,byte&)
 		// System.Void MemoryPack.MemoryPackWriter.WriteUnmanagedWithObjectHeader<long>(byte,long&)
 		// System.Void MemoryPack.MemoryPackWriter.WriteUnmanagedWithObjectHeader<uint>(byte,uint&)
 		// System.Void MemoryPack.MemoryPackWriter.WriteValue<byte>(byte&)
@@ -1957,7 +1969,7 @@ public class AOTGenericReferences : UnityEngine.MonoBehaviour
 		// object System.Collections.Generic.CollectionExtensions.GetValueOrDefault<int,object>(System.Collections.Generic.IReadOnlyDictionary<int,object>,int,object)
 		// bool System.Enum.TryParse<int>(string,bool,int&)
 		// bool System.Enum.TryParse<int>(string,int&)
-		// int System.HashCode.Combine<uint,uint,uint>(uint,uint,uint)
+		// int System.HashCode.Combine<int,int,int>(int,int,int)
 		// ET.RpcInfo[] System.Linq.Enumerable.ToArray<ET.RpcInfo>(System.Collections.Generic.IEnumerable<ET.RpcInfo>)
 		// System.Collections.Generic.HashSet<int> System.Linq.Enumerable.ToHashSet<int>(System.Collections.Generic.IEnumerable<int>)
 		// System.Collections.Generic.HashSet<int> System.Linq.Enumerable.ToHashSet<int>(System.Collections.Generic.IEnumerable<int>,System.Collections.Generic.IEqualityComparer<int>)

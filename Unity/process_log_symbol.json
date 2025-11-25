@@ -101,7 +101,7 @@
 {"ID":100,"FileName":"ProductComponentSystem.cs","FuncName":"LSUpdate","ArgTypes":"ProductComponent","ArgNames":"self","ValidArgNames":"Owner","ValidArgCount":1,"Comments":null}
 {"ID":101,"FileName":"ProductComponentSystem.cs","FuncName":"Awake","ArgTypes":"ProductComponent,int","ArgNames":"self,productSkillId","ValidArgNames":"Owner,productSkillId","ValidArgCount":2,"Comments":null}
 {"ID":102,"FileName":"LSGridBuilderComponentSystem.cs","FuncName":"ClearPlacementData","ArgTypes":"LSGridBuilderComponent","ArgNames":"self","ValidArgNames":"Owner","ValidArgCount":1,"Comments":null}
-{"ID":103,"FileName":"LSGridBuilderComponentSystem.cs","FuncName":"RunCommandPlacementCancel","ArgTypes":"LSGridBuilderComponent","ArgNames":"self","ValidArgNames":"Owner","ValidArgCount":1,"Comments":null}
+{"ID":103,"FileName":"LSGridBuilderComponentSystem.cs","FuncName":"RunCommandTouchDragCancel","ArgTypes":"LSGridBuilderComponent","ArgNames":"self","ValidArgNames":"Owner","ValidArgCount":1,"Comments":null}
 {"ID":104,"FileName":"LSGridBuilderComponentSystem.cs","FuncName":"RunCommandPlacementRotate","ArgTypes":"LSGridBuilderComponent,int","ArgNames":"self,rotation","ValidArgNames":"Owner,rotation","ValidArgCount":2,"Comments":null}
 {"ID":105,"FileName":"LSGridBuilderComponentSystem.cs","FuncName":"RunCommandPlacementNew","ArgTypes":"LSGridBuilderComponent,long","ArgNames":"self,itemId","ValidArgNames":"Owner","ValidArgCount":1,"Comments":null}
 {"ID":106,"FileName":"LSGridBuilderComponentSystem.cs","FuncName":"RunCommandPlacementDrag","ArgTypes":"LSGridBuilderComponent,long","ArgNames":"self,targetId","ValidArgNames":"Owner","ValidArgCount":1,"Comments":null}
@@ -154,7 +154,10 @@
 {"ID":153,"FileName":"CardSelectComponentSystem.cs","FuncName":"Awake","ArgTypes":"CardSelectComponent","ArgNames":"self","ValidArgNames":"Owner","ValidArgCount":1,"Comments":null}
 {"ID":154,"FileName":"FlagComponentSystem.cs","FuncName":"Awake","ArgTypes":"FlagComponent","ArgNames":"self","ValidArgNames":"Owner","ValidArgCount":1,"Comments":null}
 {"ID":155,"FileName":"SelectionComponentSystem.cs","FuncName":"Awake","ArgTypes":"SelectionComponent","ArgNames":"self","ValidArgNames":"Owner","ValidArgCount":1,"Comments":null}
-{"ID":156,"FileName":"PlacementComponentSystem.cs","FuncName":"RemoveRVO2Object","ArgTypes":"PlacementComponent","ArgNames":"self","ValidArgNames":"Owner","ValidArgCount":1,"Comments":null}
-{"ID":157,"FileName":"PlacementComponentSystem.cs","FuncName":"AddRVO2Object","ArgTypes":"PlacementComponent","ArgNames":"self","ValidArgNames":"Owner","ValidArgCount":1,"Comments":null}
 {"ID":158,"FileName":"PlacementComponentSystem.cs","FuncName":"PutToPosition","ArgTypes":"PlacementComponent,TSVector","ArgNames":"self,position","ValidArgNames":"Owner,(FP)position.X, (FP)position.Y,(FP)position.Z","ValidArgCount":4,"Comments":null}
+{"ID":159,"FileName":"PlacementComponentSystem.cs","FuncName":"RemoveRVO2Obstacle","ArgTypes":"PlacementComponent","ArgNames":"self","ValidArgNames":"Owner","ValidArgCount":1,"Comments":null}
+{"ID":160,"FileName":"PlacementComponentSystem.cs","FuncName":"AddRVO2Obstacle","ArgTypes":"PlacementComponent","ArgNames":"self","ValidArgNames":"Owner","ValidArgCount":1,"Comments":null}
+{"ID":161,"FileName":"PlacementComponentSystem.cs","FuncName":"SetRVO2AgentPosition","ArgTypes":"PlacementComponent,TSVector","ArgNames":"self,position","ValidArgNames":"Owner,(FP)position.X, (FP)position.Y,(FP)position.Z","ValidArgCount":4,"Comments":null}
+{"ID":162,"FileName":"PlacementComponentSystem.cs","FuncName":"RemoveRVO2Agent","ArgTypes":"PlacementComponent","ArgNames":"self","ValidArgNames":"Owner","ValidArgCount":1,"Comments":null}
+{"ID":163,"FileName":"PlacementComponentSystem.cs","FuncName":"AddRVO2Agent","ArgTypes":"PlacementComponent","ArgNames":"self","ValidArgNames":"Owner","ValidArgCount":1,"Comments":null}
 ]
