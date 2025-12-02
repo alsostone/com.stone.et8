@@ -5,7 +5,7 @@
     "life": 10000,
     "effect_group_id": 100102011,
     "track_id": 2002,
-    "resource_id": 10,
+    "resource_id": 80010001,
     "finish_effect_id": 0
   },
   {
@@ -14,7 +14,7 @@
     "life": 10000,
     "effect_group_id": 300000011,
     "track_id": 3003,
-    "resource_id": 10,
+    "resource_id": 80010001,
     "finish_effect_id": 0
   },
   {
@@ -23,7 +23,79 @@
     "life": 10000,
     "effect_group_id": 300100011,
     "track_id": 1002,
-    "resource_id": 10,
+    "resource_id": 80010001,
+    "finish_effect_id": 0
+  },
+  {
+    "Id": 80020001,
+    "name": "BulletCircle",
+    "life": 10000,
+    "effect_group_id": 0,
+    "track_id": 3004,
+    "resource_id": 80020001,
+    "finish_effect_id": 0
+  },
+  {
+    "Id": 80020002,
+    "name": "BulletFlower4",
+    "life": 10000,
+    "effect_group_id": 0,
+    "track_id": 2004,
+    "resource_id": 80020002,
+    "finish_effect_id": 0
+  },
+  {
+    "Id": 80020003,
+    "name": "BulletFlower5",
+    "life": 10000,
+    "effect_group_id": 0,
+    "track_id": 2004,
+    "resource_id": 80020003,
+    "finish_effect_id": 0
+  },
+  {
+    "Id": 80020004,
+    "name": "BulletHexagon",
+    "life": 10000,
+    "effect_group_id": 0,
+    "track_id": 3004,
+    "resource_id": 80020004,
+    "finish_effect_id": 0
+  },
+  {
+    "Id": 80020005,
+    "name": "BulletSnowflake",
+    "life": 10000,
+    "effect_group_id": 0,
+    "track_id": 2004,
+    "resource_id": 80020005,
+    "finish_effect_id": 0
+  },
+  {
+    "Id": 80020006,
+    "name": "BulletSquare",
+    "life": 10000,
+    "effect_group_id": 0,
+    "track_id": 3004,
+    "resource_id": 80020006,
+    "finish_effect_id": 0
+  },
+  {
+    "Id": 80020007,
+    "name": "BulletStar",
+    "life": 10000,
+    "effect_group_id": 0,
+    "track_id": 3004,
+    "resource_id": 80020007,
+    "finish_effect_id": 0
+  },
+  {
+    "Id": 80020008,
+    "name": "BulletTriangle",
+    "life": 10000,
+    "effect_group_id": 0,
+    "track_id": 3004,
+    "resource_id": 80020008,
     "finish_effect_id": 0
   }
 ]

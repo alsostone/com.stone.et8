@@ -1,29 +1,85 @@
 [
   {
-    "Id": 10,
-    "name": "防御塔攻击特效",
-    "resource": 80010001,
-    "sound_id": 0,
-    "attach_point": 2
-  },
-  {
-    "Id": 11,
-    "name": "远程植物攻击特效",
-    "resource": 80010002,
-    "sound_id": 0,
-    "attach_point": 2
-  },
-  {
     "Id": 70000001,
     "name": "加血特效",
     "resource": 70000001,
     "sound_id": 0,
-    "attach_point": 2
+    "attach_point": 0
   },
   {
     "Id": 70000002,
     "name": "加蓝特效",
     "resource": 70000002,
+    "sound_id": 0,
+    "attach_point": 0
+  },
+  {
+    "Id": 80010001,
+    "name": "BulletRed",
+    "resource": 80010001,
+    "sound_id": 0,
+    "attach_point": 2
+  },
+  {
+    "Id": 80010002,
+    "name": "BulletBlue",
+    "resource": 80010002,
+    "sound_id": 0,
+    "attach_point": 2
+  },
+  {
+    "Id": 80020001,
+    "name": "BulletCircle",
+    "resource": 80020001,
+    "sound_id": 0,
+    "attach_point": 2
+  },
+  {
+    "Id": 80020002,
+    "name": "BulletFlower4",
+    "resource": 80020002,
+    "sound_id": 0,
+    "attach_point": 2
+  },
+  {
+    "Id": 80020003,
+    "name": "BulletFlower5",
+    "resource": 80020003,
+    "sound_id": 0,
+    "attach_point": 2
+  },
+  {
+    "Id": 80020004,
+    "name": "BulletHexagon",
+    "resource": 80020004,
+    "sound_id": 0,
+    "attach_point": 2
+  },
+  {
+    "Id": 80020005,
+    "name": "BulletSnowflake",
+    "resource": 80020005,
+    "sound_id": 0,
+    "attach_point": 2
+  },
+  {
+    "Id": 80020006,
+    "name": "BulletSquare",
+    "resource": 80020006,
+    "sound_id": 0,
+    "attach_point": 2
+  },
+  {
+    "Id": 80020007,
+    "name": "BulletStar",
+    "resource": 80020007,
+    "sound_id": 0,
+    "attach_point": 2
+  },
+  {
+    "Id": 80020008,
+    "name": "BulletTriangle",
+    "resource": 80020008,
     "sound_id": 0,
     "attach_point": 2
   }

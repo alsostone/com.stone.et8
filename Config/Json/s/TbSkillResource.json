@@ -1,18 +1,50 @@
 [
   {
-    "Id": 10,
-    "name": "防御塔攻击特效"
-  },
-  {
-    "Id": 11,
-    "name": "远程植物攻击特效"
-  },
-  {
     "Id": 70000001,
     "name": "加血特效"
   },
   {
     "Id": 70000002,
     "name": "加蓝特效"
+  },
+  {
+    "Id": 80010001,
+    "name": "BulletRed"
+  },
+  {
+    "Id": 80010002,
+    "name": "BulletBlue"
+  },
+  {
+    "Id": 80020001,
+    "name": "BulletCircle"
+  },
+  {
+    "Id": 80020002,
+    "name": "BulletFlower4"
+  },
+  {
+    "Id": 80020003,
+    "name": "BulletFlower5"
+  },
+  {
+    "Id": 80020004,
+    "name": "BulletHexagon"
+  },
+  {
+    "Id": 80020005,
+    "name": "BulletSnowflake"
+  },
+  {
+    "Id": 80020006,
+    "name": "BulletSquare"
+  },
+  {
+    "Id": 80020007,
+    "name": "BulletStar"
+  },
+  {
+    "Id": 80020008,
+    "name": "BulletTriangle"
   }
 ]

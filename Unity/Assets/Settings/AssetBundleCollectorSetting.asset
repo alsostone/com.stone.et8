@@ -180,3 +180,16 @@ MonoBehaviour:
         FilterRuleName: CollectAll
         AssetTags: 
         UserData: 
+    - GroupName: Bullet
+      GroupDesc: 
+      AssetTags: "\u5B50\u5F39"
+      ActiveRuleName: EnableGroup
+      Collectors:
+      - CollectPath: Assets/Bundles/Prefabs/Bullet
+        CollectorGUID: db4b611157bad4ccbac365037453d9d7
+        CollectorType: 0
+        AddressRuleName: AddressByFileName
+        PackRuleName: PackDirectory
+        FilterRuleName: CollectPrefab
+        AssetTags: 
+        UserData: 

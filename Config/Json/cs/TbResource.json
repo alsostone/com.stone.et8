@@ -81,11 +81,43 @@
   },
   {
     "Id": 80010001,
-    "Url": "Assets/Bundles/Prefabs/Common/Bullet/BulletRed.prefab"
+    "Url": "Assets/Bundles/Prefabs/Bullet/BulletRed.prefab"
   },
   {
     "Id": 80010002,
-    "Url": "Assets/Bundles/Prefabs/Common/Bullet/BulletBlue.prefab"
+    "Url": "Assets/Bundles/Prefabs/Bullet/BulletBlue.prefab"
+  },
+  {
+    "Id": 80020001,
+    "Url": "Assets/Bundles/Prefabs/Bullet/BulletCircle.prefab"
+  },
+  {
+    "Id": 80020002,
+    "Url": "Assets/Bundles/Prefabs/Bullet/BulletFlower4.prefab"
+  },
+  {
+    "Id": 80020003,
+    "Url": "Assets/Bundles/Prefabs/Bullet/BulletFlower5.prefab"
+  },
+  {
+    "Id": 80020004,
+    "Url": "Assets/Bundles/Prefabs/Bullet/BulletHexagon.prefab"
+  },
+  {
+    "Id": 80020005,
+    "Url": "Assets/Bundles/Prefabs/Bullet/BulletSnowflake.prefab"
+  },
+  {
+    "Id": 80020006,
+    "Url": "Assets/Bundles/Prefabs/Bullet/BulletSquare.prefab"
+  },
+  {
+    "Id": 80020007,
+    "Url": "Assets/Bundles/Prefabs/Bullet/BulletStar.prefab"
+  },
+  {
+    "Id": 80020008,
+    "Url": "Assets/Bundles/Prefabs/Bullet/BulletTriangle.prefab"
   },
   {
     "Id": 90000001,
