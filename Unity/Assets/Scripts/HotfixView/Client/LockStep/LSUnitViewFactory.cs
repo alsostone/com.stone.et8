@@ -1,4 +1,5 @@
 using ST.GridBuilder;
+using TrueSync;
 using UnityEngine;
 
 namespace ET.Client
@@ -105,9 +106,11 @@ namespace ET.Client
             lsUnitView.AddComponent<EffectViewComponent>();
             
             var propComponent = lsUnit.GetComponent<PropComponent>();
-            float hp = propComponent.Get(NumericType.Hp).AsFloat();
-            float hpMax = propComponent.Get(NumericType.MaxHp).AsFloat();
-            lsUnitView.AddComponent<LSViewHudComponent, Vector3, float, float>(Vector3.zero, hp, hpMax);
+            FP hpMax = propComponent.Get(NumericType.MaxHp);
+            if (hpMax > FP.Epsilon) {
+                float hp = propComponent.Get(NumericType.Hp).AsFloat();
+                lsUnitView.AddComponent<LSViewHudComponent, Vector3, float, float>(Vector3.zero, hp, hpMax.AsFloat());
+            }
         }
 
         private static void CreateSoldierView(LSUnitViewComponent viewComponent, LSUnit lsUnit)
