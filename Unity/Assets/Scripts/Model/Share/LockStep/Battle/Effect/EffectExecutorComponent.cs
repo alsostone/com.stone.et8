@@ -26,7 +26,7 @@ namespace ET
 
         public void Run(EffectActionType type, int[] param, LSUnit owner, LSUnit target, LSUnit carrier = null)
         {
-            if (target == null) return;
+            if (target == null || target.DeadMark > 0) return;
             if (effectExecutors.TryGetValue(type, out IEffectExecutor effectExecutor)) {
                 effectExecutor.Run(param, owner, target, carrier);
             }
@@ -34,7 +34,7 @@ namespace ET
         
         public void Run(TbEffectRow resEffect, LSUnit owner, LSUnit target, LSUnit carrier = null)
         {
-            if (target == null) return;
+            if (target == null || target.DeadMark > 0) return;
 
             if (effectExecutors.TryGetValue(resEffect.ActionType, out IEffectExecutor effectExecutor)) {
                 effectExecutor.Run(resEffect.ActionParam, owner, target, carrier);

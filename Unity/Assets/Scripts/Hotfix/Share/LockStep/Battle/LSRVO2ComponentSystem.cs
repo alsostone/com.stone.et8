@@ -57,12 +57,14 @@ namespace ET
         
         public static void AddStaticAgent(this LSRVO2Component self, LSUnit lsUnit)
         {self.LSRoom()?.ProcessLog.LogFunction(22, self.LSParent().Id, lsUnit.Id);
+            PropComponent propComponent = lsUnit.GetComponent<PropComponent>();
+            if (propComponent.Radius < FP.Epsilon)
+                return;
+            
             TransformComponent transformComponent = lsUnit.GetComponent<TransformComponent>();
             TSVector2 position = new(transformComponent.Position.x, transformComponent.Position.z);
             
-            PropComponent propComponent = lsUnit.GetComponent<PropComponent>();
             FP speed = propComponent.Get(NumericType.Speed);
-            
             self.RVO2Simulator.addAgent(position, FP.Two, 0, FP.EN2, FP.EN2, propComponent.Radius, speed, transformComponent.RVO2Velocity, transformComponent.RVO2PrefVelocity, lsUnit.Id);
         }
         

@@ -164,8 +164,8 @@ namespace RVO
         
         public void removeAgent(long agentNo)
         {
-            agents_.Remove(agentNo);
-            agentDirty_ = true;
+            if (agents_.Remove(agentNo))
+                agentDirty_ = true;
         }
         
         public void removeObstacle(long obstacleId)
