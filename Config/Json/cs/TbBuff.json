@@ -34,6 +34,23 @@
     "finish_effect": 0
   },
   {
+    "Id": 30050001,
+    "name": "移动速度-20%",
+    "status_effect_type": 2,
+    "can_dead_clear": true,
+    "can_replace": true,
+    "overlap_type": 0,
+    "duration": 10000,
+    "delay": 0,
+    "interval": 0,
+    "max_layer": 3,
+    "effect_id": 0,
+    "scale": 0,
+    "enter_effect": 300500013,
+    "interval_effect": 0,
+    "finish_effect": 0
+  },
+  {
     "Id": 92020002,
     "name": "干旱降低水塔速度",
     "status_effect_type": 1,

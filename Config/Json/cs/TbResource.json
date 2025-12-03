@@ -41,15 +41,35 @@
   },
   {
     "Id": 30010001,
-    "Url": "Assets/Bundles/Prefabs/Building/TowerAtk.prefab"
+    "Url": "Assets/Bundles/Prefabs/Building/TowerCircle.prefab"
   },
   {
     "Id": 30020001,
-    "Url": "Assets/Bundles/Prefabs/Building/TowerDef.prefab"
+    "Url": "Assets/Bundles/Prefabs/Building/TowerFlower4.prefab"
   },
   {
     "Id": 30030001,
-    "Url": "Assets/Bundles/Prefabs/Building/TowerBlood.prefab"
+    "Url": "Assets/Bundles/Prefabs/Building/TowerFlower5.prefab"
+  },
+  {
+    "Id": 30040001,
+    "Url": "Assets/Bundles/Prefabs/Building/TowerHexagon.prefab"
+  },
+  {
+    "Id": 30050001,
+    "Url": "Assets/Bundles/Prefabs/Building/TowerSnowflake.prefab"
+  },
+  {
+    "Id": 30060001,
+    "Url": "Assets/Bundles/Prefabs/Building/TowerSquare.prefab"
+  },
+  {
+    "Id": 30070001,
+    "Url": "Assets/Bundles/Prefabs/Building/TowerStar.prefab"
+  },
+  {
+    "Id": 30080001,
+    "Url": "Assets/Bundles/Prefabs/Building/TowerTriangle.prefab"
   },
   {
     "Id": 40010001,

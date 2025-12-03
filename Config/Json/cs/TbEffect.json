@@ -100,36 +100,8 @@
   },
   {
     "Id": 300100010,
-    "name": "防御塔子弹",
+    "name": "TowerCircle",
     "group_id": 30010001,
-    "success_conds": [],
-    "failure_conds": [],
-    "fx": 0,
-    "action_type": 13,
-    "action_param": [
-      30010001,
-      0,
-      0,
-      0
-    ]
-  },
-  {
-    "Id": 300100011,
-    "name": "防御塔子弹效果",
-    "group_id": 300100011,
-    "success_conds": [],
-    "failure_conds": [],
-    "fx": 0,
-    "action_type": 15,
-    "action_param": [
-      30010002,
-      300100012
-    ]
-  },
-  {
-    "Id": 300100012,
-    "name": "防御塔子弹爆炸伤害",
-    "group_id": 300100012,
     "success_conds": [],
     "failure_conds": [],
     "fx": 0,
@@ -138,22 +110,20 @@
   },
   {
     "Id": 300200010,
-    "name": "兵营A召唤",
+    "name": "TowerFlower4 增加金币1个",
     "group_id": 30020001,
     "success_conds": [],
     "failure_conds": [],
     "fx": 0,
-    "action_type": 11,
+    "action_type": 2,
     "action_param": [
-      40031,
-      15000,
-      0,
-      0
+      980,
+      10000
     ]
   },
   {
     "Id": 300300010,
-    "name": "添加攻速BUFF",
+    "name": "TowerFlower5 添加攻速BUFF",
     "group_id": 30030001,
     "success_conds": [],
     "failure_conds": [],
@@ -165,7 +135,7 @@
   },
   {
     "Id": 300300011,
-    "name": "攻速加成100%",
+    "name": "TowerFlower5 攻速加成50%",
     "group_id": 300300011,
     "success_conds": [],
     "failure_conds": [],
@@ -173,36 +143,144 @@
     "action_type": 9,
     "action_param": [
       10073,
-      10000
+      5000
     ]
   },
   {
     "Id": 300400010,
-    "name": "资源塔产出资源",
+    "name": "TowerHexagon 子弹",
     "group_id": 30040001,
     "success_conds": [],
     "failure_conds": [],
     "fx": 0,
-    "action_type": 12,
+    "action_type": 13,
     "action_param": [
-      3,
-      15000,
-      0,
-      0
+      80020004
     ]
   },
   {
-    "Id": 300401010,
-    "name": "资源塔产出金币",
-    "group_id": 30040101,
+    "Id": 300400011,
+    "name": "TowerHexagon 子弹伤害",
+    "group_id": 300400011,
     "success_conds": [],
     "failure_conds": [],
     "fx": 0,
-    "action_type": 2,
+    "action_type": 4,
+    "action_param": []
+  },
+  {
+    "Id": 300500010,
+    "name": "TowerSnowflake 子弹",
+    "group_id": 30050001,
+    "success_conds": [],
+    "failure_conds": [],
+    "fx": 0,
+    "action_type": 13,
     "action_param": [
-      980,
-      10000
+      80020005
     ]
+  },
+  {
+    "Id": 300500011,
+    "name": "TowerSnowflake 子弹伤害",
+    "group_id": 300500011,
+    "success_conds": [],
+    "failure_conds": [],
+    "fx": 0,
+    "action_type": 4,
+    "action_param": []
+  },
+  {
+    "Id": 300500012,
+    "name": "TowerSnowflake 添加BUFF",
+    "group_id": 300500011,
+    "success_conds": [],
+    "failure_conds": [],
+    "fx": 0,
+    "action_type": 5,
+    "action_param": [
+      30050001
+    ]
+  },
+  {
+    "Id": 300500013,
+    "name": "TowerSnowflake 移速-20%",
+    "group_id": 300500013,
+    "success_conds": [],
+    "failure_conds": [],
+    "fx": 0,
+    "action_type": 10,
+    "action_param": [
+      10053,
+      2000
+    ]
+  },
+  {
+    "Id": 300600010,
+    "name": "TowerSquare",
+    "group_id": 30060001,
+    "success_conds": [],
+    "failure_conds": [],
+    "fx": 0,
+    "action_type": 4,
+    "action_param": []
+  },
+  {
+    "Id": 300700010,
+    "name": "TowerStar 子弹",
+    "group_id": 30070001,
+    "success_conds": [],
+    "failure_conds": [],
+    "fx": 0,
+    "action_type": 13,
+    "action_param": [
+      80020007
+    ]
+  },
+  {
+    "Id": 300700011,
+    "name": "TowerStar 爆炸索敌",
+    "group_id": 300700011,
+    "success_conds": [],
+    "failure_conds": [],
+    "fx": 0,
+    "action_type": 15,
+    "action_param": [
+      97040001,
+      300700012
+    ]
+  },
+  {
+    "Id": 300700012,
+    "name": "TowerStar 爆炸伤害",
+    "group_id": 300700012,
+    "success_conds": [],
+    "failure_conds": [],
+    "fx": 0,
+    "action_type": 4,
+    "action_param": []
+  },
+  {
+    "Id": 300800010,
+    "name": "TowerTriangle 子弹",
+    "group_id": 30080001,
+    "success_conds": [],
+    "failure_conds": [],
+    "fx": 0,
+    "action_type": 13,
+    "action_param": [
+      80020008
+    ]
+  },
+  {
+    "Id": 300800011,
+    "name": "TowerTriangle 子弹伤害",
+    "group_id": 300800011,
+    "success_conds": [],
+    "failure_conds": [],
+    "fx": 0,
+    "action_type": 4,
+    "action_param": []
   },
   {
     "Id": 400000010,

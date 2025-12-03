@@ -140,8 +140,8 @@
   {
     "Id": 30011,
     "model": 30010001,
-    "radius": 5000,
-    "placed_layer": 3,
+    "radius": 0,
+    "placed_layer": 2,
     "shape": [
       false,
       false,
@@ -169,27 +169,11 @@
       false,
       false
     ],
-    "can_be_attack": true,
+    "can_be_attack": false,
     "props": [
-      [
-        10011,
-        200000
-      ],
-      [
-        10021,
-        200000
-      ],
       [
         10031,
         10000
-      ],
-      [
-        10041,
-        0
-      ],
-      [
-        10051,
-        0
       ],
       [
         10081,
@@ -197,7 +181,7 @@
       ],
       [
         10071,
-        20000
+        10000
       ]
     ],
     "skills": [
@@ -209,8 +193,8 @@
   {
     "Id": 30021,
     "model": 30020001,
-    "radius": 5000,
-    "placed_layer": 3,
+    "radius": 0,
+    "placed_layer": 2,
     "shape": [
       false,
       false,
@@ -238,32 +222,8 @@
       false,
       false
     ],
-    "can_be_attack": true,
+    "can_be_attack": false,
     "props": [
-      [
-        10011,
-        200000
-      ],
-      [
-        10021,
-        200000
-      ],
-      [
-        10031,
-        10000
-      ],
-      [
-        10041,
-        0
-      ],
-      [
-        10051,
-        0
-      ],
-      [
-        10081,
-        50000
-      ],
       [
         10071,
         20000
@@ -278,8 +238,8 @@
   {
     "Id": 30031,
     "model": 30030001,
-    "radius": 5000,
-    "placed_layer": 3,
+    "radius": 0,
+    "placed_layer": 2,
     "shape": [
       false,
       false,
@@ -307,28 +267,8 @@
       false,
       false
     ],
-    "can_be_attack": true,
+    "can_be_attack": false,
     "props": [
-      [
-        10011,
-        200000
-      ],
-      [
-        10021,
-        200000
-      ],
-      [
-        10031,
-        10000
-      ],
-      [
-        10041,
-        0
-      ],
-      [
-        10051,
-        0
-      ],
       [
         10081,
         50000
@@ -346,9 +286,9 @@
   },
   {
     "Id": 30041,
-    "model": 30030001,
-    "radius": 5000,
-    "placed_layer": 3,
+    "model": 30040001,
+    "radius": 0,
+    "placed_layer": 2,
     "shape": [
       false,
       false,
@@ -376,27 +316,11 @@
       false,
       false
     ],
-    "can_be_attack": true,
+    "can_be_attack": false,
     "props": [
-      [
-        10011,
-        200000
-      ],
-      [
-        10021,
-        200000
-      ],
       [
         10031,
         10000
-      ],
-      [
-        10041,
-        0
-      ],
-      [
-        10051,
-        0
       ],
       [
         10081,
@@ -410,7 +334,219 @@
     "skills": [
       30040001
     ],
-    "product_skill": 30040101,
+    "product_skill": 0,
+    "random_bag_id": 0
+  },
+  {
+    "Id": 30051,
+    "model": 30050001,
+    "radius": 0,
+    "placed_layer": 2,
+    "shape": [
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      true,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false
+    ],
+    "can_be_attack": false,
+    "props": [
+      [
+        10031,
+        10000
+      ],
+      [
+        10081,
+        50000
+      ],
+      [
+        10071,
+        20000
+      ]
+    ],
+    "skills": [
+      30050001
+    ],
+    "product_skill": 0,
+    "random_bag_id": 0
+  },
+  {
+    "Id": 30061,
+    "model": 30060001,
+    "radius": 0,
+    "placed_layer": 2,
+    "shape": [
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      true,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false
+    ],
+    "can_be_attack": false,
+    "props": [
+      [
+        10031,
+        10000
+      ],
+      [
+        10081,
+        50000
+      ],
+      [
+        10071,
+        20000
+      ]
+    ],
+    "skills": [
+      30060001
+    ],
+    "product_skill": 0,
+    "random_bag_id": 0
+  },
+  {
+    "Id": 30071,
+    "model": 30070001,
+    "radius": 0,
+    "placed_layer": 2,
+    "shape": [
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      true,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false
+    ],
+    "can_be_attack": false,
+    "props": [
+      [
+        10031,
+        10000
+      ],
+      [
+        10081,
+        50000
+      ],
+      [
+        10071,
+        20000
+      ]
+    ],
+    "skills": [
+      30070001
+    ],
+    "product_skill": 0,
+    "random_bag_id": 0
+  },
+  {
+    "Id": 30081,
+    "model": 30080001,
+    "radius": 0,
+    "placed_layer": 2,
+    "shape": [
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      true,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false
+    ],
+    "can_be_attack": false,
+    "props": [
+      [
+        10031,
+        50000
+      ],
+      [
+        10081,
+        100000
+      ],
+      [
+        10071,
+        5000
+      ]
+    ],
+    "skills": [
+      30080001
+    ],
+    "product_skill": 0,
     "random_bag_id": 0
   }
 ]

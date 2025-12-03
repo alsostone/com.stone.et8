@@ -55,43 +55,10 @@
     "priority": 3
   },
   {
-    "Id": 30010001,
-    "valid_forward": false,
-    "range": 50000,
-    "team": 4,
-    "type": 9,
-    "table_id": [],
-    "count": 1,
-    "add_count_prop": 501,
-    "priority": 1
-  },
-  {
-    "Id": 30010002,
-    "valid_forward": false,
-    "range": 20000,
-    "team": 4,
-    "type": 9,
-    "table_id": [],
-    "count": 3,
-    "add_count_prop": 0,
-    "priority": 1
-  },
-  {
-    "Id": 30020001,
-    "valid_forward": false,
-    "range": 0,
-    "team": 1,
-    "type": 0,
-    "table_id": [],
-    "count": 0,
-    "add_count_prop": 0,
-    "priority": 0
-  },
-  {
     "Id": 30030001,
     "valid_forward": false,
-    "range": 20000,
-    "team": 2,
+    "range": 0,
+    "team": 3,
     "type": 4,
     "table_id": [],
     "count": 99,
@@ -99,13 +66,13 @@
     "priority": 0
   },
   {
-    "Id": 30040001,
+    "Id": 30060001,
     "valid_forward": false,
     "range": 0,
-    "team": 1,
-    "type": 0,
+    "team": 4,
+    "type": 9,
     "table_id": [],
-    "count": 0,
+    "count": 99,
     "add_count_prop": 0,
     "priority": 0
   },
@@ -154,6 +121,17 @@
     "priority": 1
   },
   {
+    "Id": 50030001,
+    "valid_forward": false,
+    "range": 5000,
+    "team": 2,
+    "type": 5,
+    "table_id": [],
+    "count": 1,
+    "add_count_prop": 0,
+    "priority": 1
+  },
+  {
     "Id": 97010001,
     "valid_forward": false,
     "range": 0,
@@ -187,15 +165,59 @@
     "priority": 0
   },
   {
-    "Id": 97010004,
+    "Id": 97020001,
     "valid_forward": false,
-    "range": 5000,
-    "team": 2,
-    "type": 5,
+    "range": 0,
+    "team": 1,
+    "type": 0,
+    "table_id": [],
+    "count": 0,
+    "add_count_prop": 0,
+    "priority": 0
+  },
+  {
+    "Id": 97030001,
+    "valid_forward": false,
+    "range": 0,
+    "team": 4,
+    "type": 9,
     "table_id": [],
     "count": 1,
     "add_count_prop": 0,
     "priority": 1
+  },
+  {
+    "Id": 97030002,
+    "valid_forward": false,
+    "range": 0,
+    "team": 4,
+    "type": 9,
+    "table_id": [],
+    "count": 99,
+    "add_count_prop": 0,
+    "priority": 0
+  },
+  {
+    "Id": 97040001,
+    "valid_forward": false,
+    "range": 10000,
+    "team": 4,
+    "type": 9,
+    "table_id": [],
+    "count": 99,
+    "add_count_prop": 0,
+    "priority": 0
+  },
+  {
+    "Id": 97040002,
+    "valid_forward": false,
+    "range": 20000,
+    "team": 4,
+    "type": 9,
+    "table_id": [],
+    "count": 99,
+    "add_count_prop": 0,
+    "priority": 0
   },
   {
     "Id": 98010001,

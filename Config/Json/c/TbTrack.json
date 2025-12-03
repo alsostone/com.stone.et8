@@ -8,6 +8,14 @@
     "toward_type": 2
   },
   {
+    "Id": 1004,
+    "name": "平射低速",
+    "hor_speed": 60000,
+    "control_factor": 0,
+    "control_height": 0,
+    "toward_type": 3
+  },
+  {
     "Id": 2002,
     "name": "固定位置中速子弹",
     "hor_speed": 80000,

@@ -51,7 +51,7 @@
     "Id": 80020004,
     "name": "BulletHexagon",
     "life": 10000,
-    "effect_group_id": 0,
+    "effect_group_id": 300400011,
     "track_id": 3004,
     "finish_effect_id": 0
   },
@@ -59,7 +59,7 @@
     "Id": 80020005,
     "name": "BulletSnowflake",
     "life": 10000,
-    "effect_group_id": 0,
+    "effect_group_id": 300500011,
     "track_id": 2004,
     "finish_effect_id": 0
   },
@@ -75,7 +75,7 @@
     "Id": 80020007,
     "name": "BulletStar",
     "life": 10000,
-    "effect_group_id": 0,
+    "effect_group_id": 300700011,
     "track_id": 3004,
     "finish_effect_id": 0
   },
@@ -83,7 +83,7 @@
     "Id": 80020008,
     "name": "BulletTriangle",
     "life": 10000,
-    "effect_group_id": 0,
+    "effect_group_id": 300800011,
     "track_id": 3004,
     "finish_effect_id": 0
   }

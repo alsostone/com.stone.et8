@@ -15,18 +15,18 @@
     "Id": 5003,
     "model": 50020001,
     "effect_group_id": 50030001,
-    "search_target": 97010004
+    "search_target": 50030001
   },
   {
     "Id": 5004,
     "model": 50020001,
     "effect_group_id": 50040001,
-    "search_target": 97010004
+    "search_target": 50030001
   },
   {
     "Id": 5005,
     "model": 50020001,
     "effect_group_id": 50050001,
-    "search_target": 97010004
+    "search_target": 50030001
   }
 ]
