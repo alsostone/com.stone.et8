@@ -245,7 +245,7 @@ namespace ET
 	        lsUnit.AddComponent<TeamComponent, TeamType>(caster.GetComponent<TeamComponent>().Type);
 	        BulletComponent bulletComponent = lsUnit.AddComponent<BulletComponent, int, LSUnit, LSUnit>(bulletId, caster, target);
 
-	        lsUnit.AddComponent<TrackComponent, int, LSUnit, TSVector>(bulletComponent.TbBulletRow.TrackId, target, TSVector.zero);
+	        lsUnit.AddComponent<TrackComponent, int, LSUnit>(bulletComponent.TbBulletRow.TrackId, target);
 	        EventSystem.Instance.Publish(lsWorld, new LSUnitCreate() { LSUnit = lsUnit });
 	        return lsUnit;
         }
@@ -261,7 +261,7 @@ namespace ET
 	        lsUnit.AddComponent<TeamComponent, TeamType>(caster.GetComponent<TeamComponent>().Type);
 	        BulletComponent bulletComponent = lsUnit.AddComponent<BulletComponent, int, LSUnit, LSUnit>(bulletId, caster, null);
 
-	        lsUnit.AddComponent<TrackComponent, int, LSUnit, TSVector>(bulletComponent.TbBulletRow.TrackId, null, targetPosition);
+	        lsUnit.AddComponent<TrackComponent, int, TSVector>(bulletComponent.TbBulletRow.TrackId, targetPosition);
 	        EventSystem.Instance.Publish(lsWorld, new LSUnitCreate() { LSUnit = lsUnit });
 	        return lsUnit;
         }
