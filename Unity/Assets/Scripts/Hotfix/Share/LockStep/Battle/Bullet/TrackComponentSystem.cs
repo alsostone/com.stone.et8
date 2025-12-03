@@ -1,3 +1,4 @@
+using System;
 using TrueSync;
 
 namespace ET
@@ -9,34 +10,63 @@ namespace ET
     public static partial class TrackComponentSystem
     {
         [EntitySystem]
-        private static void Awake(this TrackComponent self, int trackId, LSUnit target, TSVector targetPosition)
-        {self.LSRoom()?.ProcessLog.LogFunction(47, self.LSParent().Id, trackId, target.Id, targetPosition.x.V, targetPosition.y.V, targetPosition.z.V);
+        private static void Awake(this TrackComponent self, int trackId, LSUnit target)
+        {
             self.TrackId = trackId;
+            self.Target = target.Id;
             self.HorSpeed = (FP)self.TbTrackRow.HorSpeed / LSConstValue.PropValueScale;
-            if (target == null) {
-                self.Target = 0;
-                self.TargetPosition = targetPosition;
-            } else {
-                self.Target = target.Id;
-                self.TargetPosition = target.GetComponent<TransformComponent>().TransformPoint(new TSVector(0, 2, 0));
-            }
             
+            TransformComponent transformComponent = self.LSOwner().GetComponent<TransformComponent>();
+            self.CasterPosition = transformComponent.Position;  // 子弹的位置就是起始点 而位置由释放者决定
+
             switch (self.TbTrackRow.TowardType)
             {
                 case ETrackTowardType.Target:
+                {
+                    self.TargetPosition = target.GetComponent<TransformComponent>().GetAttachPoint(AttachPoint.Chest);
+                    self.ControlPosition = self.CalcControlPosition(transformComponent);
+                    break;
+                }
+                case ETrackTowardType.Direction:
+                {
+                    self.TargetPosition = (self.TargetPosition - self.CasterPosition).normalized;
+                    break;
+                }
                 case ETrackTowardType.Position:
                 {
-                    TransformComponent transformComponent = self.LSOwner().GetComponent<TransformComponent>();
-                    self.CasterPosition = transformComponent.TransformPoint(new TSVector(0, 2, 0));
+                    self.TargetPosition = target.GetComponent<TransformComponent>().Position;
+                    self.ControlPosition = self.CalcControlPosition(transformComponent);
+                    break;
+                }
+            }
+
+            self.Duration = TSVector.Distance(self.TargetPosition, self.CasterPosition) / self.HorSpeed;
+            self.Tick();
+        }
+
+        [EntitySystem]
+        private static void Awake(this TrackComponent self, int trackId, TSVector targetPosition)
+        {
+            self.TrackId = trackId;
+            self.Target = 0;
+            self.HorSpeed = (FP)self.TbTrackRow.HorSpeed / LSConstValue.PropValueScale;
+            self.TargetPosition = targetPosition;
             
-                    // 起止点的中心叠加高度为控制点
-                    TSVector dir = self.TargetPosition - self.CasterPosition;
-                    FP factor = (FP)self.TbTrackRow.ControlFactor / LSConstValue.PropValueScale;
-                    FP height = (FP)self.TbTrackRow.ControlHeight / LSConstValue.PropValueScale;
-                    TSVector control = dir * factor + transformComponent.TransformDirection(new TSVector(0, height, 0));
-                    
-                    self.ControlPosition = self.CasterPosition + control;
-                    self.Duration = dir.magnitude / self.HorSpeed;
+            TransformComponent transformComponent = self.LSOwner().GetComponent<TransformComponent>();
+            self.CasterPosition = transformComponent.Position;  // 子弹的位置就是起始点 而位置由释放者决定
+            self.Duration = TSVector.Distance(self.TargetPosition, self.CasterPosition) / self.HorSpeed;
+
+            switch (self.TbTrackRow.TowardType)
+            {
+                case ETrackTowardType.Direction:
+                {
+                    self.TargetPosition = (self.TargetPosition - self.CasterPosition).normalized;
+                    break;
+                }
+                case ETrackTowardType.Target:
+                case ETrackTowardType.Position:
+                {
+                    self.ControlPosition = self.CalcControlPosition(transformComponent);
                     break;
                 }
             }
@@ -47,6 +77,16 @@ namespace ET
         private static void LSUpdate(this TrackComponent self)
         {self.LSRoom()?.ProcessLog.LogFunction(46, self.LSParent().Id);
             self.Tick();
+        }
+        
+        private static TSVector CalcControlPosition(this TrackComponent self, TransformComponent ownerTransform)
+        {
+            // 起止点的中心叠加高度为控制点
+            TSVector dir = self.TargetPosition - ownerTransform.Position;
+            FP factor = (FP)self.TbTrackRow.ControlFactor / LSConstValue.PropValueScale;
+            FP height = (FP)self.TbTrackRow.ControlHeight / LSConstValue.PropValueScale;
+            TSVector control = dir * factor + ownerTransform.TransformDirection(new TSVector(0, height, 0));
+            return ownerTransform.Position + control;
         }
         
         private static void Tick(this TrackComponent self)
@@ -62,7 +102,7 @@ namespace ET
                     // 防止目标死亡导致取不到目标位置
                     LSUnit target = self.LSUnit(self.Target);
                     if (target != null)
-                        self.TargetPosition = target.GetComponent<TransformComponent>().TransformPoint(new TSVector(0, 2, 0));
+                        self.TargetPosition = target.GetComponent<TransformComponent>().GetAttachPoint(AttachPoint.Chest);
                     ownerTransform.Position = TSBezier.GetPoint(self.CasterPosition, self.ControlPosition, self.TargetPosition, self.EclipseTime / self.Duration);
                     break;
                 }

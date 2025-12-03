@@ -8,7 +8,7 @@ namespace ET
 {
     [ComponentOf(typeof(LSUnit))]
     [MemoryPackable]
-    public partial class TrackComponent : LSEntity, IAwake<int, LSUnit, TSVector>, ILSUpdate, ISerializeToEntity
+    public partial class TrackComponent : LSEntity, IAwake<int, LSUnit>, IAwake<int, TSVector>, ILSUpdate, ISerializeToEntity
     {
         public int TrackId;
         public long Target;

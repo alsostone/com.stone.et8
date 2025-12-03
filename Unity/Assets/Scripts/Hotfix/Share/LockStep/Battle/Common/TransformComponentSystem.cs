@@ -92,6 +92,11 @@ namespace ET
             self.Position = position;
         }
         
+        public static TSVector GetAttachPoint(this TransformComponent self, AttachPoint attachPoint)
+        {
+            return self.Position + self.Rotation * new TSVector(0, FP.Ratio(15, 10), 0);
+        }
+        
         public static TSVector TransformDirection(this TransformComponent self, TSVector position)
         {self.LSRoom()?.ProcessLog.LogFunction(88, self.LSParent().Id, position.x.V, position.y.V, position.z.V);
             return self.Rotation * position;

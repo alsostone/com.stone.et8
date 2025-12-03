@@ -76,7 +76,7 @@
     "name": "BulletStar",
     "life": 10000,
     "effect_group_id": 300700011,
-    "track_id": 3004,
+    "track_id": 2002,
     "finish_effect_id": 0
   },
   {
