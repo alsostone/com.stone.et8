@@ -24,6 +24,14 @@
     "finish_effect_id": 0
   },
   {
+    "Id": 40020001,
+    "name": "士兵子弹",
+    "life": 10000,
+    "effect_group_id": 400200011,
+    "track_id": 1004,
+    "finish_effect_id": 0
+  },
+  {
     "Id": 80020001,
     "name": "BulletCircle",
     "life": 10000,

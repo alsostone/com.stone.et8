@@ -283,16 +283,6 @@
     "action_param": []
   },
   {
-    "Id": 400000010,
-    "name": "普攻",
-    "group_id": 40000001,
-    "success_conds": [],
-    "failure_conds": [],
-    "fx": 0,
-    "action_type": 4,
-    "action_param": []
-  },
-  {
     "Id": 400001010,
     "name": "死亡自爆",
     "group_id": 40000101,
@@ -303,6 +293,41 @@
     "action_param": [
       30000
     ]
+  },
+  {
+    "Id": 400100010,
+    "name": "普攻",
+    "group_id": 40010001,
+    "success_conds": [],
+    "failure_conds": [],
+    "fx": 0,
+    "action_type": 4,
+    "action_param": []
+  },
+  {
+    "Id": 400200010,
+    "name": "发射子弹",
+    "group_id": 40020001,
+    "success_conds": [],
+    "failure_conds": [],
+    "fx": 0,
+    "action_type": 13,
+    "action_param": [
+      40020001,
+      0,
+      0,
+      0
+    ]
+  },
+  {
+    "Id": 400200011,
+    "name": "子弹效果",
+    "group_id": 400200011,
+    "success_conds": [],
+    "failure_conds": [],
+    "fx": 0,
+    "action_type": 4,
+    "action_param": []
   },
   {
     "Id": 500100010,
