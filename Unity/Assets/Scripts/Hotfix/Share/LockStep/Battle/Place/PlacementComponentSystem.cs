@@ -56,11 +56,13 @@ namespace ET
                 lsGridMapComponent.Put(index.x, index.z, self.PlacementData);
                 EventSystem.Instance.Publish(self.LSWorld(), new LSUnitPlaced() { Id = lsOwner.Id, X = index.x, Z = index.z });
 
-                var putPosition = lsGridMapComponent.GetPutPosition(self.PlacementData);
+                // 设置位置到TransformComponent
+                TSVector putPosition = lsGridMapComponent.GetPutPosition(self.PlacementData);
+                lsOwner.GetComponent<TransformComponent>().SetPosition(putPosition);
+                
+                // 更新RVO实体的位置 障碍物特殊，需要重新创建
                 switch (self.PlacementData.placementType) {
                     case PlacedLayer.Block:
-                        // 障碍物特殊，需要重新创建 且 Transform位置也要更新（而Agent会自动回写Transform位置）
-                        lsOwner.GetComponent<TransformComponent>().SetPosition(putPosition);
                         self.RemoveRVO2Obstacle();
                         self.AddRVO2Obstacle();
                         break;
