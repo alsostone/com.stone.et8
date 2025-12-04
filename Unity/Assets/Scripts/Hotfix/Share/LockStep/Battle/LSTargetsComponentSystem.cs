@@ -37,15 +37,13 @@ namespace ET
                             targets.RemoveAt(i);
                             continue;
                         }
-                        if (target.Active) {
-                            results.Add(new SearchUnit() { Target = target });
-                        }
+                        results.Add(new SearchUnit() { Target = target });
                     }
                 }
             }
         }
         
-        public static void GetAttackTargets(this LSTargetsComponent self, TeamType teamFlag, TSVector center, FP range, List<SearchUnit> results)
+        public static void GetAttackTargets(this LSTargetsComponent self, TeamType teamFlag, TSVector center, FP range, List<SearchUnit> results, LSUnit exclude = null)
         {
             if (self.TeamLSUnitsMap.TryGetValue(teamFlag, out var targets))
             {
@@ -56,7 +54,7 @@ namespace ET
                         targets.RemoveAt(i);
                         continue;
                     }
-                    if (target.Active)
+                    if (target != exclude)
                     {
                         FP range2 = range + target.GetComponent<PropComponent>().Radius;
                         var dis = (target.GetComponent<TransformComponent>().Position - center).sqrMagnitude;
@@ -86,7 +84,7 @@ namespace ET
                         targets.RemoveAt(i);
                         continue;
                     }
-                    if (target.Active && (target.GetComponent<TypeComponent>().Type & type) != 0)
+                    if ((target.GetComponent<TypeComponent>().Type & type) != 0)
                     {
                         TSVector point = target.GetComponent<TransformComponent>().Position;
                         TSVector min = bounds.min;

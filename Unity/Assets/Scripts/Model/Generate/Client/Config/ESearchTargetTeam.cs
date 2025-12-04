@@ -19,27 +19,22 @@ namespace ET
         /// <summary>
         /// 自己
         /// </summary>
-        SingleSelf = 1,
+        Self = 1,
 
         /// <summary>
         /// 友方含自己
         /// </summary>
-        Self = 2,
+        Friend = 2,
 
         /// <summary>
         /// 友方不含自己
         /// </summary>
-        Friend = 3,
+        FriendExcludeSelf = 3,
 
         /// <summary>
         /// 敌方队伍
         /// </summary>
         Enemy = 4,
-
-        /// <summary>
-        /// 非敌队伍
-        /// </summary>
-        NotEnemy = 5,
 
         /// <summary>
         /// 反击

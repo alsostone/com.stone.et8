@@ -27,7 +27,7 @@ namespace ET
 
             switch (res.Team)
             {
-                case ESearchTargetTeam.SingleSelf:
+                case ESearchTargetTeam.Self:
                     if (owner.GetComponent<BeHitComponent>() != null) {
                         results.Add(new SearchUnit() { Target = owner });
                     }
@@ -58,27 +58,27 @@ namespace ET
                     range += propComponent.Radius;
                 }
             }
-
-            TeamType teamSelf = owner.GetComponent<TeamComponent>()?.Type ?? TeamType.None;
             
             LSTargetsComponent lsTargetsComponent = owner.LSWorld().GetComponent<LSTargetsComponent>();
             switch (res.Team) {
                 case ESearchTargetTeam.All:
                     lsTargetsComponent.GetAllAttackTargets(results);
                     break;
-                case ESearchTargetTeam.Self:
-                    lsTargetsComponent.GetAttackTargets(teamSelf, center, range, results);
+                case ESearchTargetTeam.Friend: {
+                    TeamType team = owner.GetComponent<TeamComponent>().GetFriendTeam();
+                    lsTargetsComponent.GetAttackTargets(team, center, range, results);
                     break;
-                case ESearchTargetTeam.Enemy:
-                    for (TeamType i = TeamType.None; i < TeamType.Max; i++) {
-                        if (i != teamSelf)
-                            lsTargetsComponent.GetAttackTargets(i, center, range, results);
-                    }
+                }
+                case ESearchTargetTeam.FriendExcludeSelf: {
+                    TeamType team = owner.GetComponent<TeamComponent>().GetFriendTeam();
+                    lsTargetsComponent.GetAttackTargets(team, center, range, results, owner);
                     break;
-                case ESearchTargetTeam.NotEnemy:
-                    lsTargetsComponent.GetAttackTargets(teamSelf, center, range, results);
-                    lsTargetsComponent.GetAttackTargets(TeamType.None, center, range, results);
+                }
+                case ESearchTargetTeam.Enemy: {
+                    TeamType team = owner.GetComponent<TeamComponent>().GetEnemyTeam();
+                    lsTargetsComponent.GetAttackTargets(team, center, range, results);
                     break;
+                }
                 case ESearchTargetTeam.Counter:
                     owner.GetComponent<BeHitComponent>()?.GetCounterAttack(center, range, results);
                     break;

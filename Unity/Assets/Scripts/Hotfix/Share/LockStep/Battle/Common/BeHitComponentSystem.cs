@@ -133,15 +133,14 @@ namespace ET
             for (var i = self.Attackers.Count - 1; i >= 0; i--)
             {
                 var target = self.LSUnit(self.Attackers[i]);
-                if (target == null) {
+                if (target == null || target.DeadMark > 0) {
                     self.Attackers.RemoveAt(i);
+                    continue;
                 }
-                else if (target.Active) {
-                    FP range2 = range + target.GetComponent<PropComponent>().Radius;
-                    var dis = (target.GetComponent<TransformComponent>().Position - center).sqrMagnitude;
-                    if ((range2 * range2) >= dis) {
-                        results.Add(new SearchUnit() { Target = target, Distance = dis });
-                    }
+                FP range2 = range + target.GetComponent<PropComponent>().Radius;
+                var dis = (target.GetComponent<TransformComponent>().Position - center).sqrMagnitude;
+                if ((range2 * range2) >= dis) {
+                    results.Add(new SearchUnit() { Target = target, Distance = dis });
                 }
             }
         }
