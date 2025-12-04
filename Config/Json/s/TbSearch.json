@@ -1,19 +1,21 @@
 [
   {
     "Id": 10010001,
-    "valid_forward": true,
-    "range": 30000,
+    "shape": 1,
+    "shape_param": [
+      0
+    ],
     "team": 4,
     "type": 9,
     "table_id": [],
-    "count": 99,
+    "count": 0,
     "add_count_prop": 501,
     "priority": 1
   },
   {
     "Id": 10010101,
-    "valid_forward": false,
-    "range": 50000,
+    "shape": 0,
+    "shape_param": [],
     "team": 1,
     "type": 0,
     "table_id": [],
@@ -23,8 +25,11 @@
   },
   {
     "Id": 10010201,
-    "valid_forward": false,
-    "range": 50000,
+    "shape": 2,
+    "shape_param": [
+      50000,
+      45
+    ],
     "team": 4,
     "type": 9,
     "table_id": [],
@@ -34,19 +39,21 @@
   },
   {
     "Id": 10010202,
-    "valid_forward": false,
-    "range": 20000,
+    "shape": 1,
+    "shape_param": [
+      20000
+    ],
     "team": 4,
     "type": 9,
     "table_id": [],
-    "count": 99,
+    "count": 0,
     "add_count_prop": 0,
     "priority": 1
   },
   {
     "Id": 30000001,
-    "valid_forward": false,
-    "range": 0,
+    "shape": 1,
+    "shape_param": [],
     "team": 4,
     "type": 9,
     "table_id": [],
@@ -56,30 +63,36 @@
   },
   {
     "Id": 30030001,
-    "valid_forward": false,
-    "range": 0,
+    "shape": 3,
+    "shape_param": [
+      25000,
+      25000
+    ],
     "team": 2,
     "type": 4,
     "table_id": [],
-    "count": 99,
+    "count": 0,
     "add_count_prop": 0,
     "priority": 0
   },
   {
     "Id": 30060001,
-    "valid_forward": false,
-    "range": 0,
+    "shape": 4,
+    "shape_param": [
+      80000,
+      10000
+    ],
     "team": 4,
     "type": 9,
     "table_id": [],
-    "count": 99,
+    "count": 0,
     "add_count_prop": 0,
     "priority": 0
   },
   {
-    "Id": 40000001,
-    "valid_forward": false,
-    "range": 25000,
+    "Id": 40010001,
+    "shape": 1,
+    "shape_param": [],
     "team": 4,
     "type": 13,
     "table_id": [],
@@ -89,19 +102,23 @@
   },
   {
     "Id": 40000101,
-    "valid_forward": false,
-    "range": 15000,
+    "shape": 1,
+    "shape_param": [
+      15000
+    ],
     "team": 4,
     "type": 9,
     "table_id": [],
-    "count": 99,
+    "count": 0,
     "add_count_prop": 0,
     "priority": 1
   },
   {
     "Id": 50010001,
-    "valid_forward": false,
-    "range": 5000,
+    "shape": 1,
+    "shape_param": [
+      5000
+    ],
     "team": 2,
     "type": 5,
     "table_id": [],
@@ -111,8 +128,10 @@
   },
   {
     "Id": 50020001,
-    "valid_forward": false,
-    "range": 5000,
+    "shape": 1,
+    "shape_param": [
+      5000
+    ],
     "team": 2,
     "type": 5,
     "table_id": [],
@@ -122,8 +141,10 @@
   },
   {
     "Id": 50030001,
-    "valid_forward": false,
-    "range": 5000,
+    "shape": 1,
+    "shape_param": [
+      5000
+    ],
     "team": 2,
     "type": 5,
     "table_id": [],
@@ -133,8 +154,8 @@
   },
   {
     "Id": 97010001,
-    "valid_forward": false,
-    "range": 0,
+    "shape": 0,
+    "shape_param": [],
     "team": 8,
     "type": 0,
     "table_id": [],
@@ -144,8 +165,8 @@
   },
   {
     "Id": 97010002,
-    "valid_forward": false,
-    "range": 0,
+    "shape": 0,
+    "shape_param": [],
     "team": 9,
     "type": 0,
     "table_id": [],
@@ -155,8 +176,8 @@
   },
   {
     "Id": 97010003,
-    "valid_forward": false,
-    "range": 0,
+    "shape": 0,
+    "shape_param": [],
     "team": 10,
     "type": 0,
     "table_id": [],
@@ -166,8 +187,8 @@
   },
   {
     "Id": 97020001,
-    "valid_forward": false,
-    "range": 0,
+    "shape": 0,
+    "shape_param": [],
     "team": 1,
     "type": 0,
     "table_id": [],
@@ -177,8 +198,8 @@
   },
   {
     "Id": 97030001,
-    "valid_forward": false,
-    "range": 0,
+    "shape": 1,
+    "shape_param": [],
     "team": 4,
     "type": 13,
     "table_id": [],
@@ -188,41 +209,47 @@
   },
   {
     "Id": 97030002,
-    "valid_forward": false,
-    "range": 0,
+    "shape": 1,
+    "shape_param": [],
     "team": 4,
     "type": 13,
     "table_id": [],
-    "count": 99,
+    "count": 0,
     "add_count_prop": 0,
     "priority": 0
   },
   {
     "Id": 97040001,
-    "valid_forward": false,
-    "range": 10000,
+    "shape": 1,
+    "shape_param": [
+      10000
+    ],
     "team": 4,
     "type": 9,
     "table_id": [],
-    "count": 99,
+    "count": 0,
     "add_count_prop": 0,
     "priority": 0
   },
   {
     "Id": 97040002,
-    "valid_forward": false,
-    "range": 20000,
+    "shape": 1,
+    "shape_param": [
+      20000
+    ],
     "team": 4,
     "type": 9,
     "table_id": [],
-    "count": 99,
+    "count": 0,
     "add_count_prop": 0,
     "priority": 0
   },
   {
     "Id": 98010001,
-    "valid_forward": false,
-    "range": 50000,
+    "shape": 1,
+    "shape_param": [
+      50000
+    ],
     "team": 4,
     "type": 13,
     "table_id": [],
@@ -232,8 +259,10 @@
   },
   {
     "Id": 98010002,
-    "valid_forward": false,
-    "range": 30000,
+    "shape": 1,
+    "shape_param": [
+      30000
+    ],
     "team": 3,
     "type": 9,
     "table_id": [],

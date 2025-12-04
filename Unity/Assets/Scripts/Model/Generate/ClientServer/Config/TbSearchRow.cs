@@ -17,8 +17,8 @@ namespace ET
         public TbSearchRow(ByteBuf _buf)
         {
             Id = _buf.ReadInt();
-            ValidForward = _buf.ReadBool();
-            Range = _buf.ReadInt();
+            Shape = (ESearchTargetShape)_buf.ReadInt();
+            {int __n0 = System.Math.Min(_buf.ReadSize(), _buf.Size);ShapeParam = new int[__n0];for(var __index0 = 0 ; __index0 < __n0 ; __index0++) { int __e0;__e0 = _buf.ReadInt(); ShapeParam[__index0] = __e0;}}
             Team = (ESearchTargetTeam)_buf.ReadInt();
             Type = (EUnitType)_buf.ReadInt();
             {int __n0 = System.Math.Min(_buf.ReadSize(), _buf.Size);TableId = new int[__n0];for(var __index0 = 0 ; __index0 < __n0 ; __index0++) { int __e0;__e0 = _buf.ReadInt(); TableId[__index0] = __e0;}}
@@ -40,14 +40,14 @@ namespace ET
         public readonly int Id;
 
         /// <summary>
-        /// 是否朝向过滤
+        /// 形状
         /// </summary>
-        public readonly bool ValidForward;
+        public readonly ESearchTargetShape Shape;
 
         /// <summary>
-        /// 范围
+        /// 形状参数(范围)
         /// </summary>
-        public readonly int Range;
+        public readonly int[] ShapeParam;
 
         /// <summary>
         /// 队伍
@@ -100,8 +100,8 @@ namespace ET
         {
             return "{ "
             + "Id:" + Id + ","
-            + "validForward:" + ValidForward + ","
-            + "range:" + Range + ","
+            + "shape:" + Shape + ","
+            + "shapeParam:" + Luban.StringUtil.CollectionToString(ShapeParam) + ","
             + "team:" + Team + ","
             + "type:" + Type + ","
             + "tableId:" + Luban.StringUtil.CollectionToString(TableId) + ","

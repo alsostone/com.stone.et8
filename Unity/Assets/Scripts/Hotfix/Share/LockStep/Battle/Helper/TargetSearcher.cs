@@ -46,73 +46,85 @@ namespace ET
                     return;
                 }
             }
-
-            FP range = FP.Zero;
-            if (res.Range > 0) {
-                range += res.Range * FP.EN4;
-            } else {
-                PropComponent propComponent = owner.GetComponent<PropComponent>();
-                if (propComponent != null)
-                {
-                    range += propComponent.Get(NumericType.AtkRange);
-                    range += propComponent.Radius;
-                }
-            }
             
             LSTargetsComponent lsTargetsComponent = owner.LSWorld().GetComponent<LSTargetsComponent>();
+            FP range = GetSearchRange(res, owner);
+            
             switch (res.Team) {
-                case ESearchTargetTeam.All:
+                case ESearchTargetTeam.All: {
                     lsTargetsComponent.GetAllAttackTargets(results);
                     break;
+                }
                 case ESearchTargetTeam.Friend: {
                     TeamType team = owner.GetComponent<TeamComponent>().GetFriendTeam();
-                    lsTargetsComponent.GetAttackTargets(team, center, range, results);
+                    lsTargetsComponent.GetAttackTargetsWithShape(team, res, center, forward, range, results);
                     break;
                 }
                 case ESearchTargetTeam.FriendExcludeSelf: {
                     TeamType team = owner.GetComponent<TeamComponent>().GetFriendTeam();
-                    lsTargetsComponent.GetAttackTargets(team, center, range, results, owner);
+                    lsTargetsComponent.GetAttackTargetsWithShape(team, res, center, forward, range, results);
+                    for (int i = 0; i < results.Count; i++) {   // 排除自己的情形少 不要把判断放到获取目标的方法里去
+                        if (results[i].Target == owner) {
+                            results.RemoveAt(i);
+                        }
+                    }
                     break;
                 }
                 case ESearchTargetTeam.Enemy: {
                     TeamType team = owner.GetComponent<TeamComponent>().GetEnemyTeam();
-                    lsTargetsComponent.GetAttackTargets(team, center, range, results);
+                    lsTargetsComponent.GetAttackTargetsWithShape(team, res, center, forward, range, results);
                     break;
                 }
-                case ESearchTargetTeam.Counter:
+                case ESearchTargetTeam.Counter: {
                     owner.GetComponent<BeHitComponent>()?.GetCounterAttack(center, range, results);
                     break;
+                }
                 default: throw new ArgumentOutOfRangeException();
             }
             
-            FilterDirection(res, results, center, forward);
+            // 形状过滤不放在此处 获取目标时考虑形状更高效
             FilterWithType(res.Type, results);
             FilterWithTableId(res.TableId, results);
-            FilterWithPriority(owner.GetRandom(), res.Priority, results);
 
-            int targetCount = res.Count;
-            if (res.AddCountProp != NumericType.None) {
-                PropComponent propComponent = owner.GetComponent<PropComponent>();
-                if (propComponent != null) {
-                    int addCount = propComponent.Get(res.AddCountProp).AsInt();
-                    targetCount += addCount;
+            // 配置规则：数量未配置或<=0认为不限制数量
+            if (res.Count > 0) {
+                int targetCount = res.Count;
+                if (res.AddCountProp != NumericType.None) {
+                    PropComponent propComponent = owner.GetComponent<PropComponent>();
+                    if (propComponent != null) {
+                        int addCount = propComponent.Get(res.AddCountProp).AsInt();
+                        targetCount += addCount;
+                    }
                 }
+                FilterWithPriority(owner.GetRandom(), res.Priority, results);
+                FilterCount(targetCount, results);
             }
-            FilterCount(targetCount, results);
         }
         
-        private static void FilterDirection(TbSearchRow res, IList<SearchUnit> results, TSVector center, TSVector forward)
+        private static FP GetSearchRange(TbSearchRow res, LSUnit owner)
         {
-            if (!res.ValidForward) return;
-            for (int idx = results.Count - 1; idx >= 0; idx--) {
-                if (TSVector.Dot(forward, results[idx].Target.GetComponent<TransformComponent>().Position - center) < 0) {
-                    results.RemoveAt(idx);
-                }
+            FP range = 0;
+            PropComponent propComponent = owner.GetComponent<PropComponent>();
+            if (res.ShapeParam.Length > 0 && res.ShapeParam[0] > 0)
+            {
+                range += res.ShapeParam[0] * FP.EN4;
+                range += propComponent?.Radius ?? FP.Zero;
             }
+            else if (propComponent != null)
+            {
+                range += propComponent.Get(NumericType.AtkRange);
+                range += propComponent.Radius;
+            }
+            else
+            {
+                Log.Error($"TargetSearcher[{res.Id}] cannot find PropComponent");
+            }
+            return range;
         }
         
         private static void FilterCount(int count, IList<SearchUnit> results)
         {
+            if (results.Count <= count) { return; }
             for (int idx = results.Count - 1; idx >= count; idx--) {
                 results.RemoveAt(idx);
             }
