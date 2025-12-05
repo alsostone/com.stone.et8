@@ -51,6 +51,7 @@ namespace ET.Client
 
             ResourcesPoolComponent poolComponent = self.Room().GetComponent<ResourcesPoolComponent>();
             GameObject go = await poolComponent.FetchAsync(fxRow.Resource, attachTransform);
+            go.transform.localPosition = new Vector3(0, 0.01f, 0);  // 防止被地面遮挡
             view = self.AddChildWithId<ViewEffect, GameObject>(self.GetId(), go);
             self.SkillEffectViews.Add(fxId, view);
             return go;
@@ -74,6 +75,7 @@ namespace ET.Client
 
             ResourcesPoolComponent poolComponent = self.Room().GetComponent<ResourcesPoolComponent>();
             GameObject go = await poolComponent.FetchAsync(fxResource, attachTransform);
+            go.transform.localPosition = new Vector3(0, 0.01f, 0);  // 防止被地面遮挡
             if (!self.EffectViews.ContainsKey(fxResource))  // 异步加载可能导致开始的TryGetValue未命中，这里再检查一次
             {
                 view = self.AddChildWithId<ViewEffect, GameObject>(self.GetId(), go);
