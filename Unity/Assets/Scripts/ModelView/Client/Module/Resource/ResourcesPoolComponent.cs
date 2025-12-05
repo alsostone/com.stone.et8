@@ -88,6 +88,7 @@ namespace ET.Client
             var go = pool.Fetch();
             if (parent != null) {
                 go.transform.SetParent(parent, worldPositionStays);
+                go.transform.localPosition = new Vector3(0, 0.01f, 0);  // 防止被地面遮挡
             }
             self.mPoolOutObjects.Add(go.GetInstanceID(), location);
             return go;

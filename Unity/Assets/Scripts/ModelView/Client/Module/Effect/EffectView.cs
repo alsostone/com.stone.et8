@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace ET.Client
 {
-    [ChildOf(typeof(EffectViewComponent))]
+    [ChildOf(typeof(ViewEffectComponent))]
     public class EffectView : Entity, IAwake<GameObject>, IUpdate, IDestroy
     {
         public GameObject GameObject;

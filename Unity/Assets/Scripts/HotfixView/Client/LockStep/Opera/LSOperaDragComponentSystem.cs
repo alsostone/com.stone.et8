@@ -183,8 +183,16 @@ namespace ET.Client
             LSUnitView lastHover = self.HoverUnitView;
             if (lastHover != lsUnitView)
             {
-                lastHover?.GetComponent<EffectViewComponent>()?.StopFx(ConstValue.FxMouseHoverResId);
-                lsUnitView?.GetComponent<EffectViewComponent>()?.PlayFx(ConstValue.FxMouseHoverResId, AttachPoint.None).Coroutine();
+                if (lastHover != null)
+                {
+                    lastHover.GetComponent<ViewEffectComponent>()?.StopFx(ConstValue.FxMouseHoverResId);
+                    lastHover.GetComponent<ViewIndicatorComponent>()?.HideRangeIndicator();
+                }
+                if (lsUnitView != null)
+                {
+                    lsUnitView.GetComponent<ViewEffectComponent>()?.PlayFx(ConstValue.FxMouseHoverResId, AttachPoint.None).Coroutine();
+                    lsUnitView.GetComponent<ViewIndicatorComponent>()?.ShowRangeIndicator();
+                }
                 self.HoverUnitView = lsUnitView;
             }
         }

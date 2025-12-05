@@ -65,7 +65,7 @@ namespace ET.Client
             AttachPointCollector collector = unitGo.GetComponent<AttachPointCollector>();
             lsUnitView.AddComponent<LSViewTransformComponent, Transform, AttachPointCollector, bool>(unitGo.transform, collector, false);
             lsUnitView.AddComponent<LSViewSkillComponent>();
-            lsUnitView.AddComponent<EffectViewComponent>();
+            lsUnitView.AddComponent<ViewEffectComponent>();
 
             var propComponent = lsUnit.GetComponent<PropComponent>();
             float hp = propComponent.Get(NumericType.Hp).AsFloat();
@@ -84,7 +84,7 @@ namespace ET.Client
             AttachPointCollector collector = unitGo.GetComponent<AttachPointCollector>();
             lsUnitView.AddComponent<LSViewTransformComponent, Transform, AttachPointCollector, bool>(unitGo.transform, collector, false);
             lsUnitView.AddComponent<LSViewPlacementComponent>();
-            lsUnitView.AddComponent<EffectViewComponent>();
+            lsUnitView.AddComponent<ViewEffectComponent>();
         }
 
         private static void CreateBuildingView(LSUnitViewComponent viewComponent, LSUnit lsUnit)
@@ -103,9 +103,13 @@ namespace ET.Client
             lsUnitView.AddComponent<LSViewTransformComponent, Transform, AttachPointCollector, bool>(unitGo.transform, collector, false);
             lsUnitView.AddComponent<LSViewPlacementComponent>();
             lsUnitView.AddComponent<LSViewSkillComponent>();
-            lsUnitView.AddComponent<EffectViewComponent>();
+            lsUnitView.AddComponent<ViewEffectComponent>();
             
             var propComponent = lsUnit.GetComponent<PropComponent>();
+            if (buildingComponent.TbRow.RangeIndicator > 0) {
+                float range = propComponent.Get(NumericType.AtkRange).AsFloat();
+                lsUnitView.AddComponent<ViewIndicatorComponent, int, float>(buildingComponent.TbRow.RangeIndicator, range);
+            }
             FP hpMax = propComponent.Get(NumericType.MaxHp);
             if (hpMax > FP.Epsilon) {
                 float hp = propComponent.Get(NumericType.Hp).AsFloat();
@@ -128,7 +132,7 @@ namespace ET.Client
             AttachPointCollector collector = unitGo.GetComponent<AttachPointCollector>();
             lsUnitView.AddComponent<LSViewTransformComponent, Transform, AttachPointCollector, bool>(unitGo.transform, collector, false);
             lsUnitView.AddComponent<LSViewSkillComponent>();
-            lsUnitView.AddComponent<EffectViewComponent>();
+            lsUnitView.AddComponent<ViewEffectComponent>();
 
             var propComponent = lsUnit.GetComponent<PropComponent>();
             float hp = propComponent.Get(NumericType.Hp).AsFloat();

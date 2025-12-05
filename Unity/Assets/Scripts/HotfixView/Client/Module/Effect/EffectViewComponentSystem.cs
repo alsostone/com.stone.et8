@@ -2,19 +2,19 @@
 
 namespace ET.Client
 {
-    [EntitySystemOf(typeof(EffectViewComponent))]
-    [LSEntitySystemOf(typeof(EffectViewComponent))]
-    [FriendOf(typeof(EffectViewComponent))]
+    [EntitySystemOf(typeof(ViewEffectComponent))]
+    [LSEntitySystemOf(typeof(ViewEffectComponent))]
+    [FriendOf(typeof(ViewEffectComponent))]
     public static partial class EffectViewComponentSystem
     {
         [EntitySystem]
-        private static void Awake(this EffectViewComponent self)
+        private static void Awake(this ViewEffectComponent self)
         {
             self.idGenerator = 0;
         }
 
         [EntitySystem]
-        private static void Destroy(this EffectViewComponent self)
+        private static void Destroy(this ViewEffectComponent self)
         {
             self.SkillEffectViews.Clear();
             foreach (var @ref in self.EffectViews)
@@ -25,25 +25,25 @@ namespace ET.Client
             self.EffectViews.Clear();
         }
         
-        private static long GetId(this EffectViewComponent self)
+        private static long GetId(this ViewEffectComponent self)
         {
             return ++self.idGenerator;
         }
         
-        public static async ETTask PlayFx(this EffectViewComponent self, int fxId)
+        public static async ETTask<GameObject> PlayFx(this ViewEffectComponent self, int fxId)
         {
             EffectView view = null;
             if (self.SkillEffectViews.TryGetValue(fxId, out var @ref)) {
                 view = @ref;
                 if (view != null) {
                     view.Reset();
-                    return;
+                    return null;
                 }
                 self.SkillEffectViews.Remove(fxId);
             }
             
             var fxRow = TbSkillResource.Instance.Get(fxId);
-            if (fxRow == null) { return; }
+            if (fxRow == null) { return null; }
 
             LSUnitView lsUnitView = self.LSViewOwner();
             LSViewTransformComponent viewTransformComponent = lsUnitView.GetComponent<LSViewTransformComponent>();
@@ -53,16 +53,17 @@ namespace ET.Client
             GameObject go = await poolComponent.FetchAsync(fxRow.Resource, attachTransform);
             view = self.AddChildWithId<EffectView, GameObject>(self.GetId(), go);
             self.SkillEffectViews.Add(fxId, view);
+            return go;
         }
         
-        public static async ETTask PlayFx(this EffectViewComponent self, int fxResource, AttachPoint attachPoint)
+        public static async ETTask<GameObject> PlayFx(this ViewEffectComponent self, int fxResource, AttachPoint attachPoint)
         {
             EffectView view = null;
             if (self.EffectViews.TryGetValue(fxResource, out var @ref)) {
                 view = @ref;
                 if (view != null) {
                     view.Reset();
-                    return;
+                    return null;
                 }
                 self.EffectViews.Remove(fxResource);
             }
@@ -78,9 +79,10 @@ namespace ET.Client
                 view = self.AddChildWithId<EffectView, GameObject>(self.GetId(), go);
                 self.EffectViews.Add(fxResource, view);
             }
+            return go;
         }
         
-        public static void StopFx(this EffectViewComponent self, int fxResource)
+        public static void StopFx(this ViewEffectComponent self, int fxResource)
         {
             if (self.EffectViews.TryGetValue(fxResource, out var @ref)) {
                 EffectView view = @ref;

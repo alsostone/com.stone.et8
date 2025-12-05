@@ -27,13 +27,13 @@ namespace ET.Client
                 if (!self.SelectedIdSet.Remove(selectId))
                 {
                     LSUnitView lsUnitView = lsUnitViewComponent.GetChild<LSUnitView>(selectId);
-                    lsUnitView?.GetComponent<EffectViewComponent>()?.PlayFx(ConstValue.FxMouseSelectedResId, AttachPoint.None).Coroutine();
+                    lsUnitView?.GetComponent<ViewEffectComponent>()?.PlayFx(ConstValue.FxMouseSelectedResId, AttachPoint.None).Coroutine();
                 }
             }
             foreach (long unselectId in self.SelectedIdSet)
             {
                 LSUnitView lsUnitView = lsUnitViewComponent.GetChild<LSUnitView>(unselectId);
-                lsUnitView?.GetComponent<EffectViewComponent>()?.StopFx(ConstValue.FxMouseSelectedResId);
+                lsUnitView?.GetComponent<ViewEffectComponent>()?.StopFx(ConstValue.FxMouseSelectedResId);
             }
             
             self.SelectedIdSet.Clear();
