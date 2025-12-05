@@ -193,3 +193,16 @@ MonoBehaviour:
         FilterRuleName: CollectPrefab
         AssetTags: 
         UserData: 
+    - GroupName: Indicator
+      GroupDesc: 
+      AssetTags: "\u6307\u793A\u5668"
+      ActiveRuleName: EnableGroup
+      Collectors:
+      - CollectPath: Assets/Bundles/Prefabs/Indicator
+        CollectorGUID: 77914d9a95111424389831e8d8d0fbb1
+        CollectorType: 0
+        AddressRuleName: AddressByFileName
+        PackRuleName: PackDirectory
+        FilterRuleName: CollectPrefab
+        AssetTags: 
+        UserData: 

@@ -19,6 +19,8 @@ namespace ET
             Id = _buf.ReadInt();
             Model = _buf.ReadInt();
             Model_Ref = null;
+            RangeIndicator = _buf.ReadInt();
+            RangeIndicator_Ref = null;
             Radius = _buf.ReadInt();
             PlacedLayer = _buf.ReadInt();
             {int __n0 = System.Math.Min(_buf.ReadSize(), _buf.Size);Shape = new bool[__n0];for(var __index0 = 0 ; __index0 < __n0 ; __index0++) { bool __e0;__e0 = _buf.ReadBool(); Shape[__index0] = __e0;}}
@@ -49,6 +51,13 @@ namespace ET
         public readonly int Model;
 
         public TbResourceRow Model_Ref { get; private set; }
+
+        /// <summary>
+        /// 攻击范围指示器
+        /// </summary>
+        public readonly int RangeIndicator;
+
+        public TbResourceRow RangeIndicator_Ref { get; private set; }
 
         /// <summary>
         /// 半径
@@ -102,6 +111,7 @@ namespace ET
         {
             
             Model_Ref = TbResource.Instance.GetOrDefault(Model);
+            RangeIndicator_Ref = TbResource.Instance.GetOrDefault(RangeIndicator);
             
             
             
@@ -117,6 +127,7 @@ namespace ET
             return "{ "
             + "Id:" + Id + ","
             + "model:" + Model + ","
+            + "rangeIndicator:" + RangeIndicator + ","
             + "radius:" + Radius + ","
             + "placedLayer:" + PlacedLayer + ","
             + "shape:" + Luban.StringUtil.CollectionToString(Shape) + ","

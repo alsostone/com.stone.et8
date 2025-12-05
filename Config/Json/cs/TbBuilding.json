@@ -2,6 +2,7 @@
   {
     "Id": 30001,
     "model": 30001001,
+    "range_indicator": 70010001,
     "radius": 15000,
     "placed_layer": 1,
     "shape": [
@@ -71,6 +72,7 @@
   {
     "Id": 30005,
     "model": 30005001,
+    "range_indicator": 70010001,
     "radius": 15000,
     "placed_layer": 1,
     "shape": [
@@ -140,6 +142,7 @@
   {
     "Id": 30011,
     "model": 30010001,
+    "range_indicator": 70010001,
     "radius": 0,
     "placed_layer": 2,
     "shape": [
@@ -193,6 +196,7 @@
   {
     "Id": 30021,
     "model": 30020001,
+    "range_indicator": 0,
     "radius": 0,
     "placed_layer": 2,
     "shape": [
@@ -238,6 +242,7 @@
   {
     "Id": 30031,
     "model": 30030001,
+    "range_indicator": 70010002,
     "radius": 0,
     "placed_layer": 2,
     "shape": [
@@ -287,6 +292,7 @@
   {
     "Id": 30041,
     "model": 30040001,
+    "range_indicator": 70010001,
     "radius": 0,
     "placed_layer": 2,
     "shape": [
@@ -340,6 +346,7 @@
   {
     "Id": 30051,
     "model": 30050001,
+    "range_indicator": 70010001,
     "radius": 0,
     "placed_layer": 2,
     "shape": [
@@ -393,6 +400,7 @@
   {
     "Id": 30061,
     "model": 30060001,
+    "range_indicator": 70010003,
     "radius": 0,
     "placed_layer": 2,
     "shape": [
@@ -446,6 +454,7 @@
   {
     "Id": 30071,
     "model": 30070001,
+    "range_indicator": 70010001,
     "radius": 0,
     "placed_layer": 2,
     "shape": [
@@ -499,6 +508,7 @@
   {
     "Id": 30081,
     "model": 30080001,
+    "range_indicator": 70010001,
     "radius": 0,
     "placed_layer": 2,
     "shape": [

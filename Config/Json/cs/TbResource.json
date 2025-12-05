@@ -100,6 +100,18 @@
     "Url": "Assets/Bundles/Prefabs/Common/Effects/FxPlusMp.prefab"
   },
   {
+    "Id": 70010001,
+    "Url": "Assets/Bundles/Prefabs/Indicator/IndicatorCircle.prefab"
+  },
+  {
+    "Id": 70010002,
+    "Url": "Assets/Bundles/Prefabs/Indicator/IndicatorSquare.prefab"
+  },
+  {
+    "Id": 70010003,
+    "Url": "Assets/Bundles/Prefabs/Indicator/IndicatorCross.prefab"
+  },
+  {
     "Id": 80010001,
     "Url": "Assets/Bundles/Prefabs/Bullet/BulletRed.prefab"
   },
