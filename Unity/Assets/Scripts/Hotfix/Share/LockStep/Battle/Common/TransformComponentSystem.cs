@@ -119,7 +119,9 @@ namespace ET
                 return;
             }
             
-            TSVector dir = lsTarget.GetComponent<TransformComponent>().Position - self.Position;
+            TSVector position = lsTarget.GetComponent<TransformComponent>().Position;
+            position.y = self.Position.y;
+            TSVector dir = position - self.Position;
             if (dir.sqrMagnitude > FP.EN4) {
                 self.Forward = dir;
             }
