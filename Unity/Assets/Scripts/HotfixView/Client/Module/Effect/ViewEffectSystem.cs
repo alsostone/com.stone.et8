@@ -3,12 +3,12 @@ using UnityEngine;
 
 namespace ET.Client
 {
-    [EntitySystemOf(typeof(EffectView))]
-    [FriendOf(typeof(EffectView))]
-    public static partial class EffectViewSystem
+    [EntitySystemOf(typeof(ViewEffect))]
+    [FriendOf(typeof(ViewEffect))]
+    public static partial class ViewEffectSystem
     {
         [EntitySystem]
-        private static void Awake(this EffectView self, GameObject go)
+        private static void Awake(this ViewEffect self, GameObject go)
         {
             self.GameObject = go;
             self.IsLoop = false;
@@ -20,7 +20,7 @@ namespace ET.Client
         }
 
         [EntitySystem]
-        private static void Update(this EffectView self)
+        private static void Update(this ViewEffect self)
         {
             if (self.DurationTime <= 0) {
                 return;
@@ -37,13 +37,13 @@ namespace ET.Client
         }
         
         [EntitySystem]
-        private static void Destroy(this EffectView self)
+        private static void Destroy(this ViewEffect self)
         {
             var poolComponent = self.Room().GetComponent<ResourcesPoolComponent>();
             poolComponent.Recycle(self.GameObject);
         }
 
-        public static void Reset(this EffectView self)
+        public static void Reset(this ViewEffect self)
         {
             if (self.Mono) {
                 self.DurationTime = self.Mono.DurationTime;

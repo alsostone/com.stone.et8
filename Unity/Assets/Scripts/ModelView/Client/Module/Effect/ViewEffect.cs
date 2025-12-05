@@ -4,7 +4,7 @@ using UnityEngine;
 namespace ET.Client
 {
     [ChildOf(typeof(ViewEffectComponent))]
-    public class EffectView : Entity, IAwake<GameObject>, IUpdate, IDestroy
+    public class ViewEffect : Entity, IAwake<GameObject>, IUpdate, IDestroy
     {
         public GameObject GameObject;
         public bool IsLoop;

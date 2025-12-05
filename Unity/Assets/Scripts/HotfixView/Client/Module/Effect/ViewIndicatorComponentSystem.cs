@@ -5,7 +5,7 @@ namespace ET.Client
     [EntitySystemOf(typeof(ViewIndicatorComponent))]
     [LSEntitySystemOf(typeof(ViewIndicatorComponent))]
     [FriendOf(typeof(ViewIndicatorComponent))]
-    public static partial class IndicatorViewComponentSystem
+    public static partial class ViewIndicatorComponentSystem
     {
         [EntitySystem]
         private static void Awake(this ViewIndicatorComponent self, int rangeIndicator, float attackRange)

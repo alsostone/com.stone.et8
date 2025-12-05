@@ -5,7 +5,7 @@ namespace ET.Client
     [EntitySystemOf(typeof(ViewEffectComponent))]
     [LSEntitySystemOf(typeof(ViewEffectComponent))]
     [FriendOf(typeof(ViewEffectComponent))]
-    public static partial class EffectViewComponentSystem
+    public static partial class ViewEffectComponentSystem
     {
         [EntitySystem]
         private static void Awake(this ViewEffectComponent self)
@@ -19,7 +19,7 @@ namespace ET.Client
             self.SkillEffectViews.Clear();
             foreach (var @ref in self.EffectViews)
             {
-                EffectView view = @ref.Value;
+                ViewEffect view = @ref.Value;
                 view?.Dispose();
             }
             self.EffectViews.Clear();
@@ -32,7 +32,7 @@ namespace ET.Client
         
         public static async ETTask<GameObject> PlayFx(this ViewEffectComponent self, int fxId)
         {
-            EffectView view = null;
+            ViewEffect view = null;
             if (self.SkillEffectViews.TryGetValue(fxId, out var @ref)) {
                 view = @ref;
                 if (view != null) {
@@ -51,14 +51,14 @@ namespace ET.Client
 
             ResourcesPoolComponent poolComponent = self.Room().GetComponent<ResourcesPoolComponent>();
             GameObject go = await poolComponent.FetchAsync(fxRow.Resource, attachTransform);
-            view = self.AddChildWithId<EffectView, GameObject>(self.GetId(), go);
+            view = self.AddChildWithId<ViewEffect, GameObject>(self.GetId(), go);
             self.SkillEffectViews.Add(fxId, view);
             return go;
         }
         
         public static async ETTask<GameObject> PlayFx(this ViewEffectComponent self, int fxResource, AttachPoint attachPoint)
         {
-            EffectView view = null;
+            ViewEffect view = null;
             if (self.EffectViews.TryGetValue(fxResource, out var @ref)) {
                 view = @ref;
                 if (view != null) {
@@ -76,7 +76,7 @@ namespace ET.Client
             GameObject go = await poolComponent.FetchAsync(fxResource, attachTransform);
             if (!self.EffectViews.ContainsKey(fxResource))  // 异步加载可能导致开始的TryGetValue未命中，这里再检查一次
             {
-                view = self.AddChildWithId<EffectView, GameObject>(self.GetId(), go);
+                view = self.AddChildWithId<ViewEffect, GameObject>(self.GetId(), go);
                 self.EffectViews.Add(fxResource, view);
             }
             return go;
@@ -85,7 +85,7 @@ namespace ET.Client
         public static void StopFx(this ViewEffectComponent self, int fxResource)
         {
             if (self.EffectViews.TryGetValue(fxResource, out var @ref)) {
-                EffectView view = @ref;
+                ViewEffect view = @ref;
                 view?.Dispose();
                 self.EffectViews.Remove(fxResource);
             }
