@@ -56,8 +56,11 @@ namespace ET.Client
                     self.u_DataName.SetValue($"Block{self.ItemData.TableId}");
                     break;
                 case EUnitType.Building:
-                    self.u_DataName.SetValue($"Building{self.ItemData.TableId}");
+                {
+                    TbBuildingRow buildingRow = TbBuilding.Instance.Get(self.ItemData.TableId);
+                    self.u_DataName.SetValue(buildingRow.Desc);
                     break;
+                }
                 case EUnitType.Item:
                     self.u_DataName.SetValue($"Item{self.ItemData.TableId}");
                     break;
@@ -74,6 +77,11 @@ namespace ET.Client
             self.UIBase.OwnerRectTransform.DOLocalMove(position, 0.25f);
         }
         
+        public static void ResetSiblingIndex(this PlayCardItemComponent self, int index)
+        {
+            self.SiblingIndex = index;
+        }
+        
         private static void SetHighlight(this PlayCardItemComponent self, bool highlight)
         {
             if (self.IsHighlight == highlight)
@@ -82,11 +90,13 @@ namespace ET.Client
             self.IsHighlight = highlight;
             if (highlight) {
                 self.u_ComCardRoot.DOLocalMoveY(30, 0.25f);
+                self.UIBase.OwnerRectTransform.SetAsLastSibling();
                 // 在此处可以发送选中该卡牌的指令给服务器，用来增加氛围感
                 // ...
             }
             else {
                 self.u_ComCardRoot.DOLocalMoveY(0, 0.25f);
+                self.UIBase.OwnerRectTransform.SetSiblingIndex(self.SiblingIndex);
             }
         }
         

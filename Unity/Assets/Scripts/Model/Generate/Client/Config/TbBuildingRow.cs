@@ -17,6 +17,7 @@ namespace ET
         public TbBuildingRow(ByteBuf _buf)
         {
             Id = _buf.ReadInt();
+            Desc = _buf.ReadString();
             Model = _buf.ReadInt();
             Model_Ref = null;
             RangeIndicator = _buf.ReadInt();
@@ -44,6 +45,11 @@ namespace ET
         /// ID
         /// </summary>
         public readonly int Id;
+
+        /// <summary>
+        /// 说明
+        /// </summary>
+        public readonly string Desc;
 
         /// <summary>
         /// 模型
@@ -110,6 +116,7 @@ namespace ET
         public  void ResolveRef()
         {
             
+            
             Model_Ref = TbResource.Instance.GetOrDefault(Model);
             RangeIndicator_Ref = TbResource.Instance.GetOrDefault(RangeIndicator);
             
@@ -126,6 +133,7 @@ namespace ET
         {
             return "{ "
             + "Id:" + Id + ","
+            + "desc:" + Desc + ","
             + "model:" + Model + ","
             + "rangeIndicator:" + RangeIndicator + ","
             + "radius:" + Radius + ","

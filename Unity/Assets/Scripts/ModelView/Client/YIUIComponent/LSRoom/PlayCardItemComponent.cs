@@ -16,6 +16,7 @@ namespace ET.Client
         public bool IsCliickEnter = false;
         public bool IsClickPress = false;
         public bool IsHighlight = false;
+        public int SiblingIndex = -1;
     }
     
     public struct OnCardItemHighlightEvent

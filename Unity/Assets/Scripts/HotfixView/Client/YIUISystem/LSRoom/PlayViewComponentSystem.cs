@@ -247,6 +247,7 @@ namespace ET.Client
                 } else {
                     renderer.UIBase.OwnerRectTransform.SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, itemWidth);
                     renderer.SetPosition(new Vector3(itemWidth * indexOld, 0));
+                    renderer.ResetSiblingIndex(indexOld);
                     ++indexOld;
                 }
             }
@@ -256,6 +257,7 @@ namespace ET.Client
                 PlayCardItemComponent renderer = self.CardsView.CreateItemRenderer();
                 renderer.UIBase.OwnerRectTransform.SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, itemWidth);
                 renderer.SetData(bagItem, new Vector3(itemWidth * indexNew, 0));
+                renderer.ResetSiblingIndex(indexNew);
             }
         }
 
