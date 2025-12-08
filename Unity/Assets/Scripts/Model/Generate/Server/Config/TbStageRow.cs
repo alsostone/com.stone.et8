@@ -20,6 +20,7 @@ namespace ET
             Name = _buf.ReadString();
             FightMode = (FightMode)_buf.ReadInt();
             SceneName = _buf.ReadString();
+            InitData = _buf.ReadString();
             BaseCampTower = _buf.ReadInt();
             BaseCampTower_Ref = null;
             BaseCampSoldier = _buf.ReadInt();
@@ -61,6 +62,11 @@ namespace ET
         public readonly string SceneName;
 
         /// <summary>
+        /// 初始单位配置数据
+        /// </summary>
+        public readonly string InitData;
+
+        /// <summary>
         /// 塔防大本营
         /// </summary>
         public readonly int BaseCampTower;
@@ -100,7 +106,7 @@ namespace ET
         public readonly int[] RandomCounts;
 
         /// <summary>
-        /// 每波刷怪掉落集
+        /// 每波刷怪集
         /// </summary>
         public readonly int[] RandomSets;
 
@@ -115,6 +121,7 @@ namespace ET
 
         public  void ResolveRef()
         {
+            
             
             
             
@@ -137,6 +144,7 @@ namespace ET
             + "name:" + Name + ","
             + "fightMode:" + FightMode + ","
             + "sceneName:" + SceneName + ","
+            + "initData:" + InitData + ","
             + "baseCampTower:" + BaseCampTower + ","
             + "baseCampSoldier:" + BaseCampSoldier + ","
             + "count:" + Count + ","

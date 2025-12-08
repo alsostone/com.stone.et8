@@ -123,7 +123,12 @@ namespace ET
 	        lsUnit.AddComponent<BeHitComponent>();
 	        lsUnit.AddComponent<SkillComponent, int[], int[]>(row.Skills, null);
 	        lsUnit.AddComponent<MoveFlowFieldComponent>();
-	        lsUnit.AddComponent<AIRootComponent, Node>(teamType == TeamType.TeamA ? AIAutoAttack.Gen() : AIAutoAttackCenter.Gen());
+	        
+	        AIWorldComponent aiWorldComponent = lsWorld.GetComponent<AIWorldComponent>();
+	        Node node = aiWorldComponent.GenAINode(row.AiName);
+	        if (node != null) {
+		        lsUnit.AddComponent<AIRootComponent, Node>(node);
+	        }
 
 	        EventSystem.Instance.Publish(lsWorld, new LSUnitCreate() {LSUnit = lsUnit});
 	        return lsUnit;

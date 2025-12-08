@@ -23,7 +23,7 @@ namespace ET
         [LSEntitySystem]
         private static void LSUpdate(this LSStageComponent self)
         {self.LSRoom()?.ProcessLog.LogFunction(138, self.LSParent().Id);
-            if (self.CurrentWaveCount > self.TbRow.Count)
+            if (self.TbRow.Count == 0 || self.CurrentWaveCount > self.TbRow.Count)
                 return;
             
             // 波次根据配置的间隔递增

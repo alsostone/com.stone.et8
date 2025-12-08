@@ -1,5 +1,23 @@
 [
   {
+    "Id": 40001,
+    "model": 40010001,
+    "radius": 3000,
+    "props": [
+      [
+        10011,
+        500000
+      ],
+      [
+        10021,
+        200000
+      ]
+    ],
+    "skills": [],
+    "ai_name": "",
+    "random_bag_id": 0
+  },
+  {
     "Id": 40011,
     "model": 40010001,
     "radius": 3000,
@@ -37,6 +55,7 @@
       40000001,
       40000101
     ],
+    "ai_name": "AIAutoAttackCenter",
     "random_bag_id": 0
   },
   {
@@ -77,6 +96,7 @@
       40000001,
       40000101
     ],
+    "ai_name": "AIAutoAttackCenter",
     "random_bag_id": 0
   },
   {
@@ -117,6 +137,7 @@
       40000001,
       40000101
     ],
+    "ai_name": "AIAutoAttackCenter",
     "random_bag_id": 0
   },
   {
@@ -157,6 +178,7 @@
       40000001,
       40000101
     ],
+    "ai_name": "AIAutoAttackCenter",
     "random_bag_id": 0
   },
   {
@@ -197,6 +219,7 @@
       40000001,
       40000101
     ],
+    "ai_name": "AIAutoAttackCenter",
     "random_bag_id": 0
   },
   {
@@ -237,6 +260,7 @@
       40000001,
       40000101
     ],
+    "ai_name": "AIAutoAttackCenter",
     "random_bag_id": 0
   },
   {
@@ -277,6 +301,7 @@
       40000001,
       40000101
     ],
+    "ai_name": "AIAutoAttackCenter",
     "random_bag_id": 0
   },
   {
@@ -317,6 +342,7 @@
       40000001,
       40000101
     ],
+    "ai_name": "AIAutoAttackCenter",
     "random_bag_id": 0
   },
   {
@@ -357,6 +383,7 @@
       40000001,
       40000101
     ],
+    "ai_name": "AIAutoAttackCenter",
     "random_bag_id": 0
   }
 ]

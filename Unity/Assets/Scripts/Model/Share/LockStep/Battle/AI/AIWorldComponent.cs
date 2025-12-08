@@ -1,5 +1,8 @@
-﻿using MemoryPack;
+﻿using System;
+using MemoryPack;
 using System.Collections.Generic;
+using MongoDB.Bson.Serialization.Attributes;
+using NPBehave;
 
 namespace ET
 {
@@ -9,5 +12,8 @@ namespace ET
     {
         public NPBehave.BehaveWorld BehaveWorld;
         public List<long> NeedStartUnits { get; set; }
+        
+        [MemoryPackIgnore, BsonIgnore]
+        public Dictionary<string, Func<Node>> NodeFactory;
     }
 }

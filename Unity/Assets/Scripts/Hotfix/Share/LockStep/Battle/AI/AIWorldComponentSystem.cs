@@ -1,4 +1,6 @@
+using System;
 using System.Collections.Generic;
+using NPBehave;
 using TrueSync;
 
 namespace ET
@@ -14,6 +16,7 @@ namespace ET
             self.BehaveWorld = new NPBehave.BehaveWorld();
             self.BehaveWorld.SetRandom(self.GetRandom());
             self.NeedStartUnits = new List<long>();
+            self.GenAINodeFactory();
         }
         
         [EntitySystem]
@@ -28,6 +31,7 @@ namespace ET
         private static void Deserialize(this AIWorldComponent self)
         {
             self.BehaveWorld.SetRandom(self.GetRandom());
+            self.GenAINodeFactory();
         }
         
         [LSEntitySystem]
@@ -43,5 +47,20 @@ namespace ET
             }
         }
         
+        private static void GenAINodeFactory(this AIWorldComponent self)
+        {
+            self.NodeFactory = new Dictionary<string, Func<Node>>();
+            self.NodeFactory.Add("AIAutoAttack", AIAutoAttack.Gen);
+            self.NodeFactory.Add("AIAutoAttackCenter", AIAutoAttackCenter.Gen);
+        }
+        
+        public static Node GenAINode(this AIWorldComponent self, string aiName)
+        {
+            if (self.NodeFactory.TryGetValue(aiName, out Func<Node> func))
+            {
+                return func();
+            }
+            return null;
+        }
     }
 }
