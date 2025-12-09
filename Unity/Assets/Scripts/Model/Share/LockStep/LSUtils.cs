@@ -77,6 +77,11 @@ namespace ET
                 (list[k], list[n]) = (list[n], list[k]);
             }
         }
+        
+        public static TSVector IgnoreY(this TSVector vector)
+        {
+            return new TSVector(vector.x, FP.Zero, vector.z);
+        }
 
     }
 }

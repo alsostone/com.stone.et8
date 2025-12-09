@@ -10,7 +10,7 @@ namespace ET
             TbItemRow tbItemRow = TbItem.Instance.Get(tableId);
             
             List<SearchUnit> targets = ObjectPool.Instance.Fetch<List<SearchUnit>>();
-            TargetSearcher.Search(tbItemRow.SearchTarget, owner, center, TSVector.forward, targets);
+            TargetSearcher.Search(tbItemRow.SearchTarget, owner, center, TSVector.forward, TSVector.up, targets);
             
             bool isOk = targets.Count > 0;
             EffectExecutor.Execute(tbItemRow.EffectGroupId, owner, targets);

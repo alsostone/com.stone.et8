@@ -12,6 +12,7 @@ namespace ET
         {self.LSRoom()?.ProcessLog.LogFunction(94, self.LSParent().Id, position.x.V, position.y.V, position.z.V);
             self.Position = position;
             self.Rotation = rotation;
+            self.Upwards = rotation * TSVector.up;
         }
 
         [LSEntitySystem]

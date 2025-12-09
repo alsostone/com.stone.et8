@@ -12,18 +12,20 @@ namespace ET
         {
             TSVector center = TSVector.zero;
             TSVector forward = TSVector.forward;
+            TSVector up = TSVector.up;
             TransformComponent transformComponent = owner.GetComponent<TransformComponent>();
             if (transformComponent != null) {
                 center = transformComponent.Position;
                 forward = transformComponent.Forward;
+                up = transformComponent.Upwards;
             }
-            Search(id, owner, center, forward, results);
+            Search(id, owner, center, forward, up, results);
         }
         
-        public static void Search(int id, LSUnit owner, TSVector center, TSVector forward, List<SearchUnit> results)
+        public static FP Search(int id, LSUnit owner, TSVector center, TSVector forward, TSVector up, List<SearchUnit> results)
         {
             TbSearchRow res = TbSearch.Instance.Get(id);
-            if (res == null) { return; }
+            if (res == null) { return 0; }
 
             switch (res.Team)
             {
@@ -31,19 +33,19 @@ namespace ET
                     if (owner.GetComponent<BeHitComponent>() != null) {
                         results.Add(new SearchUnit() { Target = owner });
                     }
-                    return;
+                    return 0;
                 case ESearchTargetTeam.Global:
                     results.Add(new SearchUnit() { Target = owner.LSUnit(LSConstValue.GlobalIdOffset)});
-                    return;
+                    return 0;
                 case ESearchTargetTeam.FriendTeam: {
                     TeamType team = owner.GetComponent<TeamComponent>()?.GetFriendTeam() ?? TeamType.None;
                     results.Add(new SearchUnit() { Target = owner.LSTeamUnit(team) });
-                    return;
+                    return 0;
                 }
                 case ESearchTargetTeam.EnemyTeam: {
                     TeamType team = owner.GetComponent<TeamComponent>()?.GetEnemyTeam() ?? TeamType.None;
                     results.Add(new SearchUnit() { Target = owner.LSTeamUnit(team) });
-                    return;
+                    return 0;
                 }
             }
             
@@ -57,12 +59,12 @@ namespace ET
                 }
                 case ESearchTargetTeam.Friend: {
                     TeamType team = owner.GetComponent<TeamComponent>().GetFriendTeam();
-                    lsTargetsComponent.GetAttackTargetsWithShape(team, res, center, forward, range, results);
+                    lsTargetsComponent.GetAttackTargetsWithShape(team, res, center, forward, up, range, results);
                     break;
                 }
                 case ESearchTargetTeam.FriendExcludeSelf: {
                     TeamType team = owner.GetComponent<TeamComponent>().GetFriendTeam();
-                    lsTargetsComponent.GetAttackTargetsWithShape(team, res, center, forward, range, results);
+                    lsTargetsComponent.GetAttackTargetsWithShape(team, res, center, forward, up, range, results);
                     for (int i = 0; i < results.Count; i++) {   // 排除自己的情形少 不要把判断放到获取目标的方法里去
                         if (results[i].Target == owner) {
                             results.RemoveAt(i);
@@ -72,7 +74,7 @@ namespace ET
                 }
                 case ESearchTargetTeam.Enemy: {
                     TeamType team = owner.GetComponent<TeamComponent>().GetEnemyTeam();
-                    lsTargetsComponent.GetAttackTargetsWithShape(team, res, center, forward, range, results);
+                    lsTargetsComponent.GetAttackTargetsWithShape(team, res, center, forward, up, range, results);
                     break;
                 }
                 case ESearchTargetTeam.Counter: {
@@ -99,6 +101,8 @@ namespace ET
                 FilterWithPriority(owner.GetRandom(), res.Priority, results);
                 FilterCount(targetCount, results);
             }
+
+            return range;
         }
         
         private static FP GetSearchRange(TbSearchRow res, LSUnit owner)

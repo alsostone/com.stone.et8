@@ -36,5 +36,10 @@ namespace ET
         /// </summary>
         Cross = 4,
 
+        /// <summary>
+        /// 直线
+        /// </summary>
+        Line = 5,
+
     }
 }

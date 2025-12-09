@@ -11,6 +11,7 @@ namespace ET
         public bool IsMovingCurrent;
         public bool IsMovingPrevious;
         
+        public TSVector Upwards { get; set; }
         public TSVector Position { get; set; }
         public TSVector2 RVO2Velocity { get; set; }  // RVO2当前速度，回滚时需要使用故需缓存
         public TSVector2 RVO2PrefVelocity { get; set; } // RVO2期望速度，回滚时需要使用故需缓存
@@ -20,7 +21,7 @@ namespace ET
         public TSVector Forward
         {
             get => this.Rotation * TSVector.forward;
-            set => this.Rotation = TSQuaternion.LookRotation(value, TSVector.up);
+            set => this.Rotation = TSQuaternion.LookRotation(value, Upwards);
         }
         
         public TSQuaternion Rotation

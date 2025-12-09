@@ -9,7 +9,7 @@ namespace ET.Client
     {
         public static void Search(int id, LSUnitView owner, Vector3 center, List<SearchUnit> results)
         {
-            TargetSearcher.Search(id, owner.GetUnit(), center.ToTSVector(), TSVector.forward, results);
+            TargetSearcher.Search(id, owner.GetUnit(), center.ToTSVector(), TSVector.forward, TSVector.up, results);
         }
         
     }

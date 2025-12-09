@@ -225,6 +225,7 @@
         <var name="Sector" alias="扇形" value="2"/>
         <var name="Rectangle" alias="矩形" value="3"/>
         <var name="Cross" alias="十字" value="4"/>
+        <var name="Line" alias="直线" value="5"/>
     </enum>
     
     <enum name="ESearchTargetTeam" comment="索敌类型" unique="TRUE">

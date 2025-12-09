@@ -43,7 +43,7 @@ namespace ET
             }
         }
         
-        public static void GetAttackTargetsWithShape(this LSTargetsComponent self, TeamType teamFlag, TbSearchRow res, TSVector center, TSVector forward, FP range, List<SearchUnit> results)
+        public static void GetAttackTargetsWithShape(this LSTargetsComponent self, TeamType teamFlag, TbSearchRow res, TSVector center, TSVector forward, TSVector up, FP range, List<SearchUnit> results)
         {
             switch (res.Shape)
             {
@@ -52,13 +52,33 @@ namespace ET
                     self.GetAttackTargetsWithCircle(teamFlag, center, range, results);
                     break;
                 case ESearchTargetShape.Sector:
-                    self.GetAttackTargetsWithSector(teamFlag, res, center, forward, range, results);
+                    if (res.ShapeParam.Length >= 2) {
+                        int angle = res.ShapeParam[1];
+                        self.GetAttackTargetsWithSector(teamFlag, angle, center, forward, range, results);
+                    }
+                    else if (res.ShapeParam.Length >= 1) {
+                        self.GetAttackTargetsWithCircle(teamFlag, center, range, results);
+                    }
                     break;
                 case ESearchTargetShape.Rectangle:
-                    self.GetAttackTargetsWithRectangle(teamFlag, res, center, results);
+                    if (res.ShapeParam.Length >= 2) {
+                        FP width = res.ShapeParam[0] * FP.EN4;
+                        FP height = res.ShapeParam[1] * FP.EN4;
+                        self.GetAttackTargetsWithRectangle(teamFlag, width, height, center, results);
+                    }
                     break;
                 case ESearchTargetShape.Cross:
-                    self.GetAttackTargetsWithCross(teamFlag, res, center, results);
+                    if (res.ShapeParam.Length >= 2) {
+                        FP width = res.ShapeParam[0] * FP.EN4;
+                        FP height = res.ShapeParam[1] * FP.EN4;
+                        self.GetAttackTargetsWithCross(teamFlag, width, height, center, results);
+                    }
+                    break;
+                case ESearchTargetShape.Line:
+                    if (res.ShapeParam.Length >= 2) {
+                        FP width = res.ShapeParam[1] * FP.EN4;
+                        self.GetAttackTargetsWithLine(teamFlag, width, range, center, forward, up, results);
+                    }
                     break;
             }
         }
@@ -75,7 +95,8 @@ namespace ET
                         continue;
                     }
                     FP range2 = range + target.GetComponent<PropComponent>().Radius;
-                    var distance = (target.GetComponent<TransformComponent>().Position - center).sqrMagnitude;
+                    TSVector dir = (target.GetComponent<TransformComponent>().Position - center).IgnoreY();
+                    FP distance = dir.sqrMagnitude;
                     if (range2 * range2 >= distance) {
                         results.Add(new SearchUnit() { Target = target, Distance = distance });
                     }
@@ -83,11 +104,11 @@ namespace ET
             }
         }
         
-        private static void GetAttackTargetsWithSector(this LSTargetsComponent self, TeamType teamFlag, TbSearchRow res, TSVector center, TSVector forward, FP range, List<SearchUnit> results)
+        private static void GetAttackTargetsWithSector(this LSTargetsComponent self, TeamType teamFlag, int angle, TSVector center, TSVector forward, FP range, List<SearchUnit> results)
         {
             if (self.TeamLSUnitsMap.TryGetValue(teamFlag, out var targets))
             {
-                FP halfAngle = (res.ShapeParam.Length >= 2 ? res.ShapeParam[1] * FP.EN4 : 360) * FP.Half;
+                int halfAngle = angle / 2;
                 for(int i = targets.Count - 1; i >= 0; i--)
                 {
                     LSUnit target = targets[i];
@@ -95,13 +116,13 @@ namespace ET
                         targets.RemoveAt(i);
                         continue;
                     }
-                    TSVector dir = target.GetComponent<TransformComponent>().Position - center;
-                    FP distance = dir.sqrMagnitude;
                     FP range2 = range + target.GetComponent<PropComponent>().Radius;
+                    TSVector dir = (target.GetComponent<TransformComponent>().Position - center).IgnoreY();
+                    FP distance = dir.sqrMagnitude;
                     if (range2 * range2 >= distance)
                     {
-                        FP angle = TSVector.Angle(forward, dir.normalized);
-                        if (angle <= halfAngle) {
+                        FP angle2 = TSVector.Angle(forward, dir.normalized);
+                        if (angle2 <= halfAngle) {
                             results.Add(new SearchUnit() { Target = target, Distance = distance });
                         }
                     }
@@ -109,13 +130,12 @@ namespace ET
             }
         }
         
-        private static void GetAttackTargetsWithRectangle(this LSTargetsComponent self, TeamType teamFlag, TbSearchRow res, TSVector center, List<SearchUnit> results)
+        private static void GetAttackTargetsWithRectangle(this LSTargetsComponent self, TeamType teamFlag, FP width, FP height, TSVector center, List<SearchUnit> results)
         {
-            if (res.ShapeParam.Length < 2) return;
             if (self.TeamLSUnitsMap.TryGetValue(teamFlag, out var targets))
             {
-                FP halfWidth = res.ShapeParam[0] * FP.EN4 * FP.Half;
-                FP halfHeight = res.ShapeParam[1] * FP.EN4 * FP.Half;
+                FP halfWidth = width * FP.Half;
+                FP halfHeight = height * FP.Half;
                 for(int i = targets.Count - 1; i >= 0; i--)
                 {
                     LSUnit target = targets[i];
@@ -123,22 +143,20 @@ namespace ET
                         targets.RemoveAt(i);
                         continue;
                     }
-                    TSVector pos = target.GetComponent<TransformComponent>().Position;
-                    TSVector dir = pos - center;
+                    TSVector dir = (target.GetComponent<TransformComponent>().Position - center).IgnoreY();
                     if (FP.Abs(dir.x) <= halfWidth && FP.Abs(dir.z) <= halfHeight) {
-                        results.Add(new SearchUnit() { Target = target });
+                        results.Add(new SearchUnit() { Target = target, Distance = dir.sqrMagnitude});
                     }
                 }
             }
         }
         
-        private static void GetAttackTargetsWithCross(this LSTargetsComponent self, TeamType teamFlag, TbSearchRow res, TSVector center, List<SearchUnit> results)
+        private static void GetAttackTargetsWithCross(this LSTargetsComponent self, TeamType teamFlag, FP width, FP height, TSVector center, List<SearchUnit> results)
         {
-            if (res.ShapeParam.Length < 2) return;
             if (self.TeamLSUnitsMap.TryGetValue(teamFlag, out var targets))
             {
-                FP halfWidth1 = res.ShapeParam[0] * FP.EN4 * FP.Half;
-                FP halfHeight1 = res.ShapeParam[1] * FP.EN4 * FP.Half;
+                FP halfWidth1 = width * FP.Half;
+                FP halfHeight1 = height * FP.Half;
                 FP halfWidth2 = halfHeight1;
                 FP halfHeight2 = halfWidth1;
                 for(int i = targets.Count - 1; i >= 0; i--)
@@ -148,16 +166,39 @@ namespace ET
                         targets.RemoveAt(i);
                         continue;
                     }
-                    TSVector pos = target.GetComponent<TransformComponent>().Position;
-                    TSVector absDir = TSVector.Abs(pos - center);
+                    TSVector dir = (target.GetComponent<TransformComponent>().Position - center).IgnoreY();
+                    TSVector absDir = TSVector.Abs(dir);
                     if ((absDir.x <= halfWidth1 && absDir.z <= halfHeight1) ||
                         (absDir.x <= halfWidth2 && absDir.z <= halfHeight2)) {
-                        results.Add(new SearchUnit() { Target = target });
+                        results.Add(new SearchUnit() { Target = target, Distance = dir.sqrMagnitude });
                     }
                 }
             }
         }
         
+        private static void GetAttackTargetsWithLine(this LSTargetsComponent self, TeamType teamFlag, FP width, FP height, TSVector center, TSVector forward, TSVector up, List<SearchUnit> results)
+        {
+            if (self.TeamLSUnitsMap.TryGetValue(teamFlag, out var targets))
+            {
+                FP halfWidth = width * FP.Half;
+                TSVector right = TSVector.Cross(up, forward).normalized;
+                for(int i = targets.Count - 1; i >= 0; i--)
+                {
+                    LSUnit target = targets[i];
+                    if (target == null || target.DeadMark > 0) {
+                        targets.RemoveAt(i);
+                        continue;
+                    }
+                    TSVector dir = (target.GetComponent<TransformComponent>().Position - center).IgnoreY();
+                    FP forwardDist = TSVector.Dot(forward, dir);
+                    FP rightDist = TSVector.Dot(right, dir);
+                    if (FP.Abs(rightDist) <= halfWidth && forwardDist >= 0 && forwardDist <= height) {
+                        results.Add(new SearchUnit() { Target = target, Distance = dir.sqrMagnitude });
+                    }
+                }
+            }
+        }
+
         public static int GetAliveCount(this LSTargetsComponent self, TeamType teamFlag)
         {
             if (self.TeamLSUnitsMap.TryGetValue(teamFlag, out var targets))
