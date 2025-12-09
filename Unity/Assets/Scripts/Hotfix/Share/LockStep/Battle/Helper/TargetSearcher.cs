@@ -169,10 +169,10 @@ namespace ET
         {
             switch (priority) {
                 case ESearchTargetPriority.MaxDistance:
-                    results.Sort((x, y) => -x.Distance.CompareTo(y.Distance));
+                    results.Sort((x, y) => -x.SqrDistance.CompareTo(y.SqrDistance));
                     break;
                 case ESearchTargetPriority.MinDistance:
-                    results.Sort((x, y) => x.Distance.CompareTo(y.Distance));
+                    results.Sort((x, y) => x.SqrDistance.CompareTo(y.SqrDistance));
                     break;
                 case ESearchTargetPriority.Random:
                     results.Shuffle(random);

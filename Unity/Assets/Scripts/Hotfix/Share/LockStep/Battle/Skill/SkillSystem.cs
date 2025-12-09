@@ -54,7 +54,7 @@ namespace ET
                 self.SearchUnits.Add(new SearchUnitPackable
                 {
                     Target = target.Target.Id,
-                    Distance = target.Distance
+                    SqrDistance = target.SqrDistance
                 });
             }
             if (targets.Count > 0) {
@@ -208,7 +208,7 @@ namespace ET
                             TargetSearcher.Search(self.TbSkillRow.SearchTarget, self.LSOwner(), targets);
                         } else {
                             foreach (SearchUnitPackable searchUnit in self.SearchUnits) {
-                                targets.Add(new SearchUnit { Target = self.LSUnit(searchUnit.Target), Distance = searchUnit.Distance });
+                                targets.Add(new SearchUnit { Target = self.LSUnit(searchUnit.Target), SqrDistance = searchUnit.SqrDistance });
                             }
                         }
                         if (index == 0) { self.OnCastSuccess(); }
@@ -229,7 +229,7 @@ namespace ET
                         TargetSearcher.Search(self.TbSkillRow.SearchTarget, self.LSOwner(), targets);
                     } else {
                         foreach (SearchUnitPackable searchUnit in self.SearchUnits) {
-                            targets.Add(new SearchUnit { Target = self.LSUnit(searchUnit.Target), Distance = searchUnit.Distance });
+                            targets.Add(new SearchUnit { Target = self.LSUnit(searchUnit.Target), SqrDistance = searchUnit.SqrDistance });
                         }
                     }
                     if (index == 0) { self.OnCastSuccess(); }

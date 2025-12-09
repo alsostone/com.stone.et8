@@ -140,7 +140,7 @@ namespace ET
                 FP range2 = range + target.GetComponent<PropComponent>().Radius;
                 var dis = (target.GetComponent<TransformComponent>().Position - center).sqrMagnitude;
                 if ((range2 * range2) >= dis) {
-                    results.Add(new SearchUnit() { Target = target, Distance = dis });
+                    results.Add(new SearchUnit() { Target = target, SqrDistance = dis });
                 }
             }
         }

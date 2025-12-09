@@ -84,7 +84,7 @@
     "Id": 80020006,
     "name": "BulletSquare",
     "life": 10000,
-    "effect_group_id": 0,
+    "effect_group_id": 300600014,
     "track_id": 3004,
     "resource_id": 80020006,
     "finish_effect_id": 0

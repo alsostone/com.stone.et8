@@ -239,7 +239,32 @@ namespace ET
 	        return lsUnit;
         }
         
-        // 创建指向目标单位的子弹
+        // 创建固定朝向型子弹（波浪型）
+        public static LSUnit CreateBullet(LSWorld lsWorld, int bulletId, int angle, int searchId, LSUnit caster, LSUnit target)
+        {
+	        LSUnitComponent lsUnitComponent = lsWorld.GetComponent<LSUnitComponent>();
+	        LSUnit lsUnit = lsUnitComponent.AddChild<LSUnit>();
+
+	        TransformComponent targetTransform = target.GetComponent<TransformComponent>();
+	        TSQuaternion rotation = TSQuaternion.FromToRotation(TSVector.up, targetTransform.Upwards) * TSQuaternion.Euler(0, angle, 0);
+	        TransformComponent thisTransform = lsUnit.AddComponent<TransformComponent, TSVector, TSQuaternion>(targetTransform.Position, rotation);
+	        lsUnit.AddComponent<TypeComponent, EUnitType>(EUnitType.Bullet);
+	        lsUnit.AddComponent<TeamComponent, TeamType>(target.GetComponent<TeamComponent>().Type);
+	        
+	        // 创建子弹时把目标搜索出来 子弹决定命中时机（通过距离判定，非碰撞检测）
+	        List<SearchUnit> targets = ObjectPool.Instance.Fetch<List<SearchUnit>>();
+	        FP range = TargetSearcher.Search(searchId, target, thisTransform.Position, thisTransform.Forward, thisTransform.Upwards, targets);
+	        targets.Sort((x, y) => x.SqrDistance.CompareTo(y.SqrDistance));
+	        BulletComponent bulletComponent = lsUnit.AddComponent<BulletComponent, int, LSUnit, FP, List<SearchUnit>>(bulletId, caster, range, targets);
+	        targets.Clear();
+	        ObjectPool.Instance.Recycle(targets);
+
+	        lsUnit.AddComponent<TrackComponent, int, FP>(bulletComponent.TbBulletRow.TrackId, range);
+	        EventSystem.Instance.Publish(lsWorld, new LSUnitCreate() { LSUnit = lsUnit });
+	        return lsUnit;
+        }
+        
+        // 创建跟随目标单位的子弹
         public static LSUnit CreateBullet(LSWorld lsWorld, int bulletId, TSVector position, LSUnit caster, LSUnit target)
         {
 	        LSUnitComponent lsUnitComponent = lsWorld.GetComponent<LSUnitComponent>();
@@ -255,7 +280,7 @@ namespace ET
 	        return lsUnit;
         }
         
-        // 创建指向目标点的子弹
+        // 创建飞向固定位置的子弹
         public static LSUnit CreateBulletToPosition(LSWorld lsWorld, int bulletId, TSVector position, LSUnit caster, TSVector targetPosition)
         {
 	        LSUnitComponent lsUnitComponent = lsWorld.GetComponent<LSUnitComponent>();

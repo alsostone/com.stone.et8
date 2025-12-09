@@ -245,6 +245,20 @@
     "priority": 0
   },
   {
+    "Id": 97050001,
+    "shape": 5,
+    "shape_param": [
+      0,
+      10000
+    ],
+    "team": 4,
+    "type": 9,
+    "table_id": [],
+    "count": 0,
+    "add_count_prop": 0,
+    "priority": 0
+  },
+  {
     "Id": 98010001,
     "shape": 1,
     "shape_param": [

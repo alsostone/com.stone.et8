@@ -72,16 +72,6 @@ namespace ET
         SummonRandom = 12,
 
         /// <summary>
-        /// 目标子弹
-        /// </summary>
-        AddBulletTarget = 13,
-
-        /// <summary>
-        /// 位置子弹
-        /// </summary>
-        AddBulletPosition = 14,
-
-        /// <summary>
         /// 以0索敌，执行1效果组
         /// </summary>
         Research = 15,
@@ -90,6 +80,21 @@ namespace ET
         /// 判定条件0，通过执行1效果组，否则执行2效果组
         /// </summary>
         ConditionBranch = 16,
+
+        /// <summary>
+        /// 跟随目标直到命中
+        /// </summary>
+        AddBulletTarget = 17,
+
+        /// <summary>
+        /// 朝指定位置发射子弹
+        /// </summary>
+        AddBulletPosition = 18,
+
+        /// <summary>
+        /// 朝指定的方向发射子弹
+        /// </summary>
+        AddBulletDirection = 19,
 
     }
 }

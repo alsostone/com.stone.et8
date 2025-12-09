@@ -21,7 +21,6 @@ namespace ET
             HorSpeed = _buf.ReadInt();
             ControlFactor = _buf.ReadInt();
             ControlHeight = _buf.ReadInt();
-            TowardType = (ETrackTowardType)_buf.ReadInt();
 
             PostInit();
         }
@@ -56,18 +55,12 @@ namespace ET
         /// </summary>
         public readonly int ControlHeight;
 
-        /// <summary>
-        /// 朝向类型
-        /// </summary>
-        public readonly ETrackTowardType TowardType;
-
 
         public const int __ID__ = 970967357;
         public override int GetTypeId() => __ID__;
 
         public  void ResolveRef()
         {
-            
             
             
             
@@ -83,7 +76,6 @@ namespace ET
             + "horSpeed:" + HorSpeed + ","
             + "controlFactor:" + ControlFactor + ","
             + "controlHeight:" + ControlHeight + ","
-            + "towardType:" + TowardType + ","
             + "}";
         }
 

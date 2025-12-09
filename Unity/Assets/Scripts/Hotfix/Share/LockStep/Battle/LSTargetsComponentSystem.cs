@@ -98,7 +98,7 @@ namespace ET
                     TSVector dir = (target.GetComponent<TransformComponent>().Position - center).IgnoreY();
                     FP distance = dir.sqrMagnitude;
                     if (range2 * range2 >= distance) {
-                        results.Add(new SearchUnit() { Target = target, Distance = distance });
+                        results.Add(new SearchUnit() { Target = target, SqrDistance = distance });
                     }
                 }
             }
@@ -123,7 +123,7 @@ namespace ET
                     {
                         FP angle2 = TSVector.Angle(forward, dir.normalized);
                         if (angle2 <= halfAngle) {
-                            results.Add(new SearchUnit() { Target = target, Distance = distance });
+                            results.Add(new SearchUnit() { Target = target, SqrDistance = distance });
                         }
                     }
                 }
@@ -145,7 +145,7 @@ namespace ET
                     }
                     TSVector dir = (target.GetComponent<TransformComponent>().Position - center).IgnoreY();
                     if (FP.Abs(dir.x) <= halfWidth && FP.Abs(dir.z) <= halfHeight) {
-                        results.Add(new SearchUnit() { Target = target, Distance = dir.sqrMagnitude});
+                        results.Add(new SearchUnit() { Target = target, SqrDistance = dir.sqrMagnitude});
                     }
                 }
             }
@@ -170,7 +170,7 @@ namespace ET
                     TSVector absDir = TSVector.Abs(dir);
                     if ((absDir.x <= halfWidth1 && absDir.z <= halfHeight1) ||
                         (absDir.x <= halfWidth2 && absDir.z <= halfHeight2)) {
-                        results.Add(new SearchUnit() { Target = target, Distance = dir.sqrMagnitude });
+                        results.Add(new SearchUnit() { Target = target, SqrDistance = dir.sqrMagnitude });
                     }
                 }
             }
@@ -193,7 +193,7 @@ namespace ET
                     FP forwardDist = TSVector.Dot(forward, dir);
                     FP rightDist = TSVector.Dot(right, dir);
                     if (FP.Abs(rightDist) <= halfWidth && forwardDist >= 0 && forwardDist <= height) {
-                        results.Add(new SearchUnit() { Target = target, Distance = dir.sqrMagnitude });
+                        results.Add(new SearchUnit() { Target = target, SqrDistance = dir.sqrMagnitude });
                     }
                 }
             }

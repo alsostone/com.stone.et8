@@ -38,12 +38,12 @@
   },
   {
     "Id": 100102010,
-    "name": "英雄 3目标子弹伤害",
+    "name": "英雄 3跟随目标子弹伤害",
     "group_id": 10010201,
     "success_conds": [],
     "failure_conds": [],
     "fx": 0,
-    "action_type": 13,
+    "action_type": 18,
     "action_param": [
       10010201,
       0,
@@ -83,7 +83,7 @@
     "success_conds": [],
     "failure_conds": [],
     "fx": 0,
-    "action_type": 13,
+    "action_type": 17,
     "action_param": [
       30000001,
       0,
@@ -156,7 +156,7 @@
     "success_conds": [],
     "failure_conds": [],
     "fx": 0,
-    "action_type": 13,
+    "action_type": 17,
     "action_param": [
       80020004,
       0,
@@ -181,7 +181,7 @@
     "success_conds": [],
     "failure_conds": [],
     "fx": 0,
-    "action_type": 13,
+    "action_type": 17,
     "action_param": [
       80020005,
       0,
@@ -226,8 +226,64 @@
   },
   {
     "Id": 300600010,
-    "name": "TowerSquare",
+    "name": "TowerSquare 子弹",
     "group_id": 30060001,
+    "success_conds": [],
+    "failure_conds": [],
+    "fx": 0,
+    "action_type": 19,
+    "action_param": [
+      80020006,
+      0,
+      97050001
+    ]
+  },
+  {
+    "Id": 300600011,
+    "name": "TowerSquare 子弹",
+    "group_id": 30060001,
+    "success_conds": [],
+    "failure_conds": [],
+    "fx": 0,
+    "action_type": 19,
+    "action_param": [
+      80020006,
+      90,
+      97050001
+    ]
+  },
+  {
+    "Id": 300600012,
+    "name": "TowerSquare 子弹",
+    "group_id": 30060001,
+    "success_conds": [],
+    "failure_conds": [],
+    "fx": 0,
+    "action_type": 19,
+    "action_param": [
+      80020006,
+      180,
+      97050001
+    ]
+  },
+  {
+    "Id": 300600013,
+    "name": "TowerSquare 子弹",
+    "group_id": 30060001,
+    "success_conds": [],
+    "failure_conds": [],
+    "fx": 0,
+    "action_type": 19,
+    "action_param": [
+      80020006,
+      270,
+      97050001
+    ]
+  },
+  {
+    "Id": 300600014,
+    "name": "TowerSquare 子弹伤害",
+    "group_id": 300600014,
     "success_conds": [],
     "failure_conds": [],
     "fx": 0,
@@ -241,7 +297,7 @@
     "success_conds": [],
     "failure_conds": [],
     "fx": 0,
-    "action_type": 13,
+    "action_type": 18,
     "action_param": [
       80020007,
       0,
@@ -279,7 +335,7 @@
     "success_conds": [],
     "failure_conds": [],
     "fx": 0,
-    "action_type": 13,
+    "action_type": 17,
     "action_param": [
       80020008,
       0,
@@ -326,7 +382,7 @@
     "success_conds": [],
     "failure_conds": [],
     "fx": 0,
-    "action_type": 13,
+    "action_type": 17,
     "action_param": [
       40020001,
       0,

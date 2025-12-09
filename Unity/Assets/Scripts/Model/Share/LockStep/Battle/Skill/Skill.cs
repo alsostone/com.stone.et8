@@ -9,7 +9,7 @@ namespace ET
     public partial struct SearchUnitPackable
     {
         public long Target;
-        public FP Distance;
+        public FP SqrDistance;
     }
     
     [ChildOf(typeof(SkillComponent))]
