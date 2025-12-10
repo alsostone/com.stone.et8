@@ -36,12 +36,11 @@ namespace ET
         }
 
         [EntitySystem]
-        private static void Awake(this BulletComponent self, int bulletId, LSUnit caster, TSVector targetPosition)
+        private static void Awake(this BulletComponent self, int bulletId, LSUnit caster)
         {
             self.BulletId = bulletId;
             self.OverFrame = self.LSWorld().Frame + self.TbBulletRow.Life.Convert2Frame();
             self.Caster = caster.Id;
-            self.TargetPosition = targetPosition;
         }
 
         [LSEntitySystem]
@@ -86,21 +85,27 @@ namespace ET
         private static void OnReachTarget(this BulletComponent self, bool reach)
         {self.LSRoom()?.ProcessLog.LogFunction(42, self.LSParent().Id, reach ? 1 : 0);
             if (reach) {
+                LSUnit owner = self.LSOwner();
+                LSUnit caster = self.LSUnit(self.Caster);
+                
                 if (self.SearchUnits != null && self.SearchUnits.Count > 0)
                 {
                     for (int index = self.HitSearchIndex; index < self.SearchUnits.Count; index++)
                     {
                         SearchUnitPackable searchUnitPackable = self.SearchUnits[index];
                         LSUnit target = self.LSUnit(searchUnitPackable.Target);
-                        LSUnit caster = self.LSUnit(self.Caster);
-                        EffectExecutor.Execute(self.TbBulletRow.EffectGroupId, caster, target, self.LSOwner());
+                        EffectExecutor.Execute(self.TbBulletRow.EffectGroupId, caster, target, owner);
                     }
                 }
                 else if (self.Target != 0)
                 {
-                    LSUnit caster = self.LSUnit(self.Caster);
                     LSUnit target = self.LSUnit(self.Target);
-                    EffectExecutor.Execute(self.TbBulletRow.EffectGroupId, caster, target, self.LSOwner());
+                    EffectExecutor.Execute(self.TbBulletRow.EffectGroupId, caster, target, owner);
+                }
+                else
+                {
+                    // 没有目标的子弹(固定位置型)用于范围伤害，必须接重新索敌效果，所以谁作为Target都可以，它不会被用到
+                    EffectExecutor.Execute(self.TbBulletRow.EffectGroupId, caster, caster, owner);
                 }
             }
             EventSystem.Instance.Publish(self.LSWorld(), new LSUnitRemove() { Id = self.LSOwner().Id });

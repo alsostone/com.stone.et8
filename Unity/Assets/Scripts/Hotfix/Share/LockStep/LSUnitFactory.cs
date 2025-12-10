@@ -291,7 +291,7 @@ namespace ET
 	        lsUnit.AddComponent<TransformComponent, TSVector, TSQuaternion>(position, TSQuaternion.identity);
 	        lsUnit.AddComponent<TypeComponent, EUnitType>(EUnitType.Bullet);
 	        lsUnit.AddComponent<TeamComponent, TeamType>(caster.GetComponent<TeamComponent>().Type);
-	        BulletComponent bulletComponent = lsUnit.AddComponent<BulletComponent, int, LSUnit, TSVector>(bulletId, caster, targetPosition);
+	        BulletComponent bulletComponent = lsUnit.AddComponent<BulletComponent, int, LSUnit>(bulletId, caster);
 
 	        TbBulletRow row = bulletComponent.TbBulletRow;
 	        lsUnit.AddComponent<TrackComponent, int, int, int, TSVector>(row.HorSpeed, row.ControlFactor, row.ControlHeight, targetPosition);
