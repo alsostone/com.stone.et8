@@ -17,7 +17,7 @@ namespace ET
 				position = new TSVector(param[1], 0, 0) * FP.EN4;
 			}
 			position = ownerTransform.TransformPoint(position);
-			TSVector targetPosition = target?.GetComponent<TransformComponent>()?.Position ?? TSVector.zero;
+			TSVector targetPosition = target.GetComponent<TransformComponent>().Position;
 			LSUnitFactory.CreateBulletToPosition(owner.LSWorld(), param[0], position, owner, targetPosition);
 		}
 	}

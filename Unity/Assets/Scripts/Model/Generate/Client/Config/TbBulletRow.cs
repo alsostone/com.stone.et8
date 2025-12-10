@@ -18,10 +18,11 @@ namespace ET
         {
             Id = _buf.ReadInt();
             Name = _buf.ReadString();
+            HorSpeed = _buf.ReadInt();
+            ControlFactor = _buf.ReadInt();
+            ControlHeight = _buf.ReadInt();
             Life = _buf.ReadInt();
             EffectGroupId = _buf.ReadInt();
-            TrackId = _buf.ReadInt();
-            TrackId_Ref = null;
             ResourceId = _buf.ReadInt();
             ResourceId_Ref = null;
             FinishEffectId = _buf.ReadInt();
@@ -45,6 +46,21 @@ namespace ET
         public readonly string Name;
 
         /// <summary>
+        /// 水平速度
+        /// </summary>
+        public readonly int HorSpeed;
+
+        /// <summary>
+        /// 控制点万分比
+        /// </summary>
+        public readonly int ControlFactor;
+
+        /// <summary>
+        /// 控制点高度
+        /// </summary>
+        public readonly int ControlHeight;
+
+        /// <summary>
         /// 生存时间
         /// </summary>
         public readonly int Life;
@@ -53,13 +69,6 @@ namespace ET
         /// 效果组ID
         /// </summary>
         public readonly int EffectGroupId;
-
-        /// <summary>
-        /// 轨迹ID
-        /// </summary>
-        public readonly int TrackId;
-
-        public TbTrackRow TrackId_Ref { get; private set; }
 
         /// <summary>
         /// 子弹资源ID
@@ -83,7 +92,9 @@ namespace ET
             
             
             
-            TrackId_Ref = TbTrack.Instance.GetOrDefault(TrackId);
+            
+            
+            
             ResourceId_Ref = TbSkillResource.Instance.GetOrDefault(ResourceId);
             
         }
@@ -93,9 +104,11 @@ namespace ET
             return "{ "
             + "Id:" + Id + ","
             + "name:" + Name + ","
+            + "horSpeed:" + HorSpeed + ","
+            + "controlFactor:" + ControlFactor + ","
+            + "controlHeight:" + ControlHeight + ","
             + "life:" + Life + ","
             + "effectGroupId:" + EffectGroupId + ","
-            + "trackId:" + TrackId + ","
             + "resourceId:" + ResourceId + ","
             + "finishEffectId:" + FinishEffectId + ","
             + "}";

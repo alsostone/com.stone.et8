@@ -18,7 +18,6 @@ namespace ET
         {
             Id = _buf.ReadInt();
             EffectGroupId = _buf.ReadInt();
-            EffectGroupId_Ref = null;
             SearchTarget = _buf.ReadInt();
             SearchTarget_Ref = null;
 
@@ -40,8 +39,6 @@ namespace ET
         /// </summary>
         public readonly int EffectGroupId;
 
-        public TbEffectRow EffectGroupId_Ref { get; private set; }
-
         /// <summary>
         /// 目标搜索
         /// </summary>
@@ -56,7 +53,7 @@ namespace ET
         public  void ResolveRef()
         {
             
-            EffectGroupId_Ref = TbEffect.Instance.GetOrDefault(EffectGroupId);
+            
             SearchTarget_Ref = TbSearch.Instance.GetOrDefault(SearchTarget);
         }
 

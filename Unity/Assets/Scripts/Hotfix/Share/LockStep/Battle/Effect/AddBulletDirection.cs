@@ -9,7 +9,7 @@
 
 			int angle = param[1];
 			int searchId = param[2];
-			LSUnitFactory.CreateBullet(owner.LSWorld(), param[0], angle, searchId, owner, target);
+			LSUnitFactory.CreateBulletToDirection(owner.LSWorld(), param[0], angle, searchId, owner, target);
 		}
 	}
 }

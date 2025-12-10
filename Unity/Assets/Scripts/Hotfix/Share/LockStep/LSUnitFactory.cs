@@ -240,7 +240,7 @@ namespace ET
         }
         
         // 创建固定朝向型子弹（波浪型）
-        public static LSUnit CreateBullet(LSWorld lsWorld, int bulletId, int angle, int searchId, LSUnit caster, LSUnit target)
+        public static LSUnit CreateBulletToDirection(LSWorld lsWorld, int bulletId, int angle, int searchId, LSUnit caster, LSUnit target)
         {
 	        LSUnitComponent lsUnitComponent = lsWorld.GetComponent<LSUnitComponent>();
 	        LSUnit lsUnit = lsUnitComponent.AddChild<LSUnit>();
@@ -255,17 +255,18 @@ namespace ET
 	        List<SearchUnit> targets = ObjectPool.Instance.Fetch<List<SearchUnit>>();
 	        FP range = TargetSearcher.Search(searchId, target, thisTransform.Position, thisTransform.Forward, thisTransform.Upwards, targets);
 	        targets.Sort((x, y) => x.SqrDistance.CompareTo(y.SqrDistance));
-	        BulletComponent bulletComponent = lsUnit.AddComponent<BulletComponent, int, LSUnit, FP, List<SearchUnit>>(bulletId, caster, range, targets);
+	        BulletComponent bulletComponent = lsUnit.AddComponent<BulletComponent, int, LSUnit, List<SearchUnit>>(bulletId, caster, targets);
 	        targets.Clear();
 	        ObjectPool.Instance.Recycle(targets);
 
-	        lsUnit.AddComponent<TrackComponent, int, FP>(bulletComponent.TbBulletRow.TrackId, range);
+	        TbBulletRow row = bulletComponent.TbBulletRow;
+	        lsUnit.AddComponent<TrackComponent, int, int, int, FP>(row.HorSpeed, row.ControlFactor, row.ControlHeight, range);
 	        EventSystem.Instance.Publish(lsWorld, new LSUnitCreate() { LSUnit = lsUnit });
 	        return lsUnit;
         }
         
         // 创建跟随目标单位的子弹
-        public static LSUnit CreateBullet(LSWorld lsWorld, int bulletId, TSVector position, LSUnit caster, LSUnit target)
+        public static LSUnit CreateBulletFollowTarget(LSWorld lsWorld, int bulletId, TSVector position, LSUnit caster, LSUnit target)
         {
 	        LSUnitComponent lsUnitComponent = lsWorld.GetComponent<LSUnitComponent>();
 	        LSUnit lsUnit = lsUnitComponent.AddChild<LSUnit>();
@@ -275,7 +276,8 @@ namespace ET
 	        lsUnit.AddComponent<TeamComponent, TeamType>(caster.GetComponent<TeamComponent>().Type);
 	        BulletComponent bulletComponent = lsUnit.AddComponent<BulletComponent, int, LSUnit, LSUnit>(bulletId, caster, target);
 
-	        lsUnit.AddComponent<TrackComponent, int, LSUnit>(bulletComponent.TbBulletRow.TrackId, target);
+	        TbBulletRow row = bulletComponent.TbBulletRow;
+	        lsUnit.AddComponent<TrackComponent, int, int, int, LSUnit>(row.HorSpeed, row.ControlFactor, row.ControlHeight, target);
 	        EventSystem.Instance.Publish(lsWorld, new LSUnitCreate() { LSUnit = lsUnit });
 	        return lsUnit;
         }
@@ -289,9 +291,10 @@ namespace ET
 	        lsUnit.AddComponent<TransformComponent, TSVector, TSQuaternion>(position, TSQuaternion.identity);
 	        lsUnit.AddComponent<TypeComponent, EUnitType>(EUnitType.Bullet);
 	        lsUnit.AddComponent<TeamComponent, TeamType>(caster.GetComponent<TeamComponent>().Type);
-	        BulletComponent bulletComponent = lsUnit.AddComponent<BulletComponent, int, LSUnit, LSUnit>(bulletId, caster, null);
+	        BulletComponent bulletComponent = lsUnit.AddComponent<BulletComponent, int, LSUnit, TSVector>(bulletId, caster, targetPosition);
 
-	        lsUnit.AddComponent<TrackComponent, int, TSVector>(bulletComponent.TbBulletRow.TrackId, targetPosition);
+	        TbBulletRow row = bulletComponent.TbBulletRow;
+	        lsUnit.AddComponent<TrackComponent, int, int, int, TSVector>(row.HorSpeed, row.ControlFactor, row.ControlHeight, targetPosition);
 	        EventSystem.Instance.Publish(lsWorld, new LSUnitCreate() { LSUnit = lsUnit });
 	        return lsUnit;
         }

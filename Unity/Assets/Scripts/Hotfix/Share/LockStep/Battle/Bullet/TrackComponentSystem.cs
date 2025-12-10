@@ -10,10 +10,9 @@ namespace ET
     public static partial class TrackComponentSystem
     {
         [EntitySystem]
-        private static void Awake(this TrackComponent self, int trackId, FP distance)
+        private static void Awake(this TrackComponent self, int speed, int controlFactor, int controlHeight, FP distance)
         {
-            self.TrackId = trackId;
-            self.HorSpeed = (FP)self.TbTrackRow.HorSpeed / LSConstValue.PropValueScale;
+            self.HorSpeed = (FP)speed / LSConstValue.PropValueScale;
             self.TowardType = ETrackTowardType.Direction;
             
             TransformComponent transformComponent = self.LSOwner().GetComponent<TransformComponent>();
@@ -21,10 +20,10 @@ namespace ET
             self.TargetPosition = self.CasterPosition + transformComponent.Forward * distance;
             
             // 起止点的中心叠加高度为控制点
-            if (self.TbTrackRow.ControlHeight > 0) {
+            if (controlHeight > 0) {
                 TSVector dir = self.TargetPosition - self.CasterPosition;
-                FP factor = (FP)self.TbTrackRow.ControlFactor / LSConstValue.PropValueScale;
-                FP height = (FP)self.TbTrackRow.ControlHeight / LSConstValue.PropValueScale;
+                FP factor = (FP)controlFactor / LSConstValue.PropValueScale;
+                FP height = (FP)controlHeight / LSConstValue.PropValueScale;
                 TSVector control = dir * factor + transformComponent.TransformDirection(new TSVector(0, height, 0));
                 self.ControlPosition = self.CasterPosition + control;
                 self.Duration = distance / self.HorSpeed;
@@ -35,12 +34,11 @@ namespace ET
         }
         
         [EntitySystem]
-        private static void Awake(this TrackComponent self, int trackId, LSUnit target)
+        private static void Awake(this TrackComponent self, int speed, int controlFactor, int controlHeight, LSUnit target)
         {
             self.Target = target.Id;
             
-            self.TrackId = trackId;
-            self.HorSpeed = (FP)self.TbTrackRow.HorSpeed / LSConstValue.PropValueScale;
+            self.HorSpeed = (FP)speed / LSConstValue.PropValueScale;
             self.TowardType = ETrackTowardType.Target;
             
             TransformComponent transformComponent = self.LSOwner().GetComponent<TransformComponent>();
@@ -48,10 +46,10 @@ namespace ET
             self.TargetPosition = target.GetComponent<TransformComponent>().GetAttachPoint(AttachPoint.Chest);
             
             // 起止点的中心叠加高度为控制点
-            if (self.TbTrackRow.ControlHeight > 0) {
+            if (controlHeight > 0) {
                 TSVector dir = self.TargetPosition - self.CasterPosition;
-                FP factor = (FP)self.TbTrackRow.ControlFactor / LSConstValue.PropValueScale;
-                FP height = (FP)self.TbTrackRow.ControlHeight / LSConstValue.PropValueScale;
+                FP factor = (FP)controlFactor / LSConstValue.PropValueScale;
+                FP height = (FP)controlHeight / LSConstValue.PropValueScale;
                 TSVector control = dir * factor + transformComponent.TransformDirection(new TSVector(0, height, 0));
                 self.ControlPosition = self.CasterPosition + control;
                 self.Duration = dir.magnitude / self.HorSpeed;
@@ -62,10 +60,9 @@ namespace ET
         }
 
         [EntitySystem]
-        private static void Awake(this TrackComponent self, int trackId, TSVector targetPosition)
+        private static void Awake(this TrackComponent self, int speed, int controlFactor, int controlHeight, TSVector targetPosition)
         {
-            self.TrackId = trackId;
-            self.HorSpeed = (FP)self.TbTrackRow.HorSpeed / LSConstValue.PropValueScale;
+            self.HorSpeed = (FP)speed / LSConstValue.PropValueScale;
             self.TowardType = ETrackTowardType.Position;
             
             TransformComponent transformComponent = self.LSOwner().GetComponent<TransformComponent>();
@@ -73,10 +70,10 @@ namespace ET
             self.TargetPosition = targetPosition;
             
             // 起止点的中心叠加高度为控制点
-            if (self.TbTrackRow.ControlHeight > 0) {
+            if (controlHeight > 0) {
                 TSVector dir = self.TargetPosition - self.CasterPosition;
-                FP factor = (FP)self.TbTrackRow.ControlFactor / LSConstValue.PropValueScale;
-                FP height = (FP)self.TbTrackRow.ControlHeight / LSConstValue.PropValueScale;
+                FP factor = (FP)controlFactor / LSConstValue.PropValueScale;
+                FP height = (FP)controlHeight / LSConstValue.PropValueScale;
                 TSVector control = dir * factor + transformComponent.TransformDirection(new TSVector(0, height, 0));
                 self.ControlPosition = self.CasterPosition + control;
                 self.Duration = dir.magnitude / self.HorSpeed;

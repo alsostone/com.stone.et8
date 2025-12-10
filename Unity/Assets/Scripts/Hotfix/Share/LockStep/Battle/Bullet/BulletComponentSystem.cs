@@ -10,16 +10,7 @@ namespace ET
     public static partial class BulletComponentSystem
     {
         [EntitySystem]
-        private static void Awake(this BulletComponent self, int bulletId, LSUnit caster, LSUnit target)
-        {self.LSRoom()?.ProcessLog.LogFunction(44, self.LSParent().Id, bulletId, caster.Id, target.Id);
-            self.BulletId = bulletId;
-            self.OverFrame = self.LSWorld().Frame + self.TbBulletRow.Life.Convert2Frame();
-            self.Caster = caster.Id;
-            self.Target = target.Id;
-        }
-        
-        [EntitySystem]
-        private static void Awake(this BulletComponent self, int bulletId, LSUnit caster, FP range, List<SearchUnit> targets)
+        private static void Awake(this BulletComponent self, int bulletId, LSUnit caster, List<SearchUnit> targets)
         {
             self.BulletId = bulletId;
             self.OverFrame = self.LSWorld().Frame + self.TbBulletRow.Life.Convert2Frame();
@@ -35,6 +26,24 @@ namespace ET
             }
         }
         
+        [EntitySystem]
+        private static void Awake(this BulletComponent self, int bulletId, LSUnit caster, LSUnit target)
+        {self.LSRoom()?.ProcessLog.LogFunction(44, self.LSParent().Id, bulletId, caster.Id, target.Id);
+            self.BulletId = bulletId;
+            self.OverFrame = self.LSWorld().Frame + self.TbBulletRow.Life.Convert2Frame();
+            self.Caster = caster.Id;
+            self.Target = target.Id;
+        }
+
+        [EntitySystem]
+        private static void Awake(this BulletComponent self, int bulletId, LSUnit caster, TSVector targetPosition)
+        {
+            self.BulletId = bulletId;
+            self.OverFrame = self.LSWorld().Frame + self.TbBulletRow.Life.Convert2Frame();
+            self.Caster = caster.Id;
+            self.TargetPosition = targetPosition;
+        }
+
         [LSEntitySystem]
         private static void LSUpdate(this BulletComponent self)
         {self.LSRoom()?.ProcessLog.LogFunction(43, self.LSParent().Id);
@@ -87,7 +96,7 @@ namespace ET
                         EffectExecutor.Execute(self.TbBulletRow.EffectGroupId, caster, target, self.LSOwner());
                     }
                 }
-                else
+                else if (self.Target != 0)
                 {
                     LSUnit caster = self.LSUnit(self.Caster);
                     LSUnit target = self.LSUnit(self.Target);

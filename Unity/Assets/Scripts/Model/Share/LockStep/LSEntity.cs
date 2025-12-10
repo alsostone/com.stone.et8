@@ -25,6 +25,11 @@ namespace ET
         {
             return this.AddComponentWithId<K, P1, P2, P3>(this.GetId(), p1, p2, p3, isFromPool);
         }
+        
+        public new K AddComponent<K, P1, P2, P3, P4>(P1 p1, P2 p2, P3 p3, P4 p4, bool isFromPool = false) where K : LSEntity, IAwake<P1, P2, P3, P4>, new()
+        {
+            return this.AddComponentWithId<K, P1, P2, P3, P4>(this.GetId(), p1, p2, p3, p4, isFromPool);
+        }
 
         [EnableAccessEntiyChild]
         public new T AddChild<T>(bool isFromPool = false) where T : LSEntity, IAwake
