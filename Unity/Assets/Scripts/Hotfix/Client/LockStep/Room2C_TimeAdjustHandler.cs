@@ -1,3 +1,5 @@
+using System;
+
 namespace ET.Client
 {
     [MessageHandler(SceneType.LockStep)]
@@ -12,19 +14,8 @@ namespace ET.Client
                 return; // 防御 非联网模式不处理这个消息
             
             int diff = message.DiffTime - LSConstValue.UpdateInterval;  // 额外慢一帧 以确保客户端快于服务器一帧
-            int newInterval = (1000 + diff) * LSConstValue.UpdateInterval / 1000;
-
-            if (newInterval < 40)
-            {
-                newInterval = 40;
-            }
-
-            if (newInterval > 66)
-            {
-                newInterval = 66;
-            }
-            
-            room.FixedTimeCounter.ChangeInterval(newInterval, room.PredictionFrame);
+            int interval = (1000 + diff) * LSConstValue.UpdateInterval / 1000;
+            room.FixedTimeCounter.ChangeInterval(Math.Clamp(interval, 40, 66), room.PredictionFrame);
             await ETTask.CompletedTask;
         }
     }

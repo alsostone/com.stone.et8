@@ -33,6 +33,7 @@ namespace ET.Client
                 await fileAddressComponent.UploadFile(message.LSProcessBytes, LSConstValue.ProcessFolderNameSvr, filename);
             }
             
+#if ENABLE_FRAME_SNAPSHOT
             // 如果服务器返回LSWorld，则保存双端的LSWorld到文件
             if (message.LSWorldBytes != null)
             {
@@ -47,6 +48,7 @@ namespace ET.Client
                     await fileAddressComponent.UploadFile(serverWorld.ToJson().ToUtf8(), LSConstValue.LSWroldFolderNameSvr, filename);
                 }
             }
+#endif
             await ETTask.CompletedTask;
         }
         

@@ -1,4 +1,4 @@
-using System.Collections.Generic;
+using System.IO;
 
 namespace ET.Server
 {
@@ -8,13 +8,10 @@ namespace ET.Server
         protected override async ETTask Run(Scene root, G2Room_Reconnect request, Room2G_Reconnect response)
         {
             Room room = root.GetComponent<Room>();
-
-            int frame = room.AuthorityFrame;
-            byte[] bytes = room.FrameBuffer.Snapshot(frame).ToArray();
             
             response.StartTime = room.StartTime;
             response.MatchInfo = room.Replay.MatchInfo;
-            response.LSWorldBytes = bytes;
+            response.LSWorldBytes = room.GetLSWorldBytes();
             
             await ETTask.CompletedTask;
         }

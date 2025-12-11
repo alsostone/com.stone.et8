@@ -49,10 +49,10 @@ namespace ET
             }
             
             // 创建基地 (测试用)
-            LSUnitFactory.CreateBuilding(lsWorld, lsStageComponent.TbRow.BaseCampTower, TSVector.zero, 0, TeamType.TeamA);
+                LSUnitFactory.CreateBuilding(lsWorld, lsStageComponent.TbRow.BaseCampTower, TSVector.zero, 0, TeamType.TeamA);
             if (matchInfo.UnitInfos.Count > 1)
                 LSUnitFactory.CreateBuilding(lsWorld, lsStageComponent.TbRow.BaseCampSoldier, new TSVector(32, 0, 32), 0, TeamType.TeamB);
-
+            
             // 创建我方士兵 (测试用)
             int rows = 5;
             int columns = 8;
@@ -145,12 +145,14 @@ namespace ET
             
             if (self.LockStepMode >= LockStepMode.Local)
             {
-                // 保存当前帧场景数据
-                self.SaveLSWorld(lsWorld.Frame);
-                self.Record(lsWorld.Frame);
+#if ENABLE_FRAME_SNAPSHOT
+                self.SaveLSWorld();
+#endif
+                self.Record();
             }
         }
         
+#if ENABLE_FRAME_SNAPSHOT
         public static LSWorld GetLSWorld(this Room self, int frame)
         {
             MemoryBuffer memoryBuffer = self.FrameBuffer.Snapshot(frame);
@@ -159,34 +161,51 @@ namespace ET
             memoryBuffer.Seek(0, SeekOrigin.Begin);
             return lsWorld;
         }
-
-        private static void SaveLSWorld(this Room self, int frame)
+#endif
+        public static byte[] GetLSWorldBytes(this Room self)
         {
-            MemoryBuffer memoryBuffer = self.FrameBuffer.Snapshot(frame);
+#if ENABLE_FRAME_SNAPSHOT
+            MemoryBuffer buffer = room.FrameBuffer.Snapshot(self.LSWorld.Frame);
+            buffer.Seek(0, SeekOrigin.Begin);
+            return buffer.ToArray();
+#else
+            MemoryBuffer buffer = ObjectPool.Instance.Fetch<MemoryBuffer>();
+            buffer.Seek(0, SeekOrigin.Begin);
+            MemoryPackHelper.Serialize(self.LSWorld, buffer);
+            buffer.Seek(0, SeekOrigin.Begin);
+            byte[] bytes = buffer.ToArray();
+            ObjectPool.Instance.Recycle(buffer);
+            return bytes;
+#endif
+        }
+        
+#if ENABLE_FRAME_SNAPSHOT
+        private static void SaveLSWorld(this Room self)
+        {
+            MemoryBuffer memoryBuffer = self.FrameBuffer.Snapshot(self.LSWorld.Frame);
             memoryBuffer.Seek(0, SeekOrigin.Begin);
             memoryBuffer.SetLength(0);
             
             MemoryPackHelper.Serialize(self.LSWorld, memoryBuffer);
             memoryBuffer.Seek(0, SeekOrigin.Begin);
         }
-
+#endif
         // 记录需要存档的数据
-        public static void Record(this Room self, int frame)
+        public static void Record(this Room self)
         {
-            if (frame > self.AuthorityFrame)
-            {
+            if (self.LSWorld.Frame > self.AuthorityFrame) {
                 return;
             }
-            Room2C_FrameMessage frameMessage = self.FrameBuffer.GetFrameMessage(frame);
+            Room2C_FrameMessage frameMessage = self.FrameBuffer.GetFrameMessage(self.LSWorld.Frame);
             Room2C_FrameMessage saveFrameMessage = Room2C_FrameMessage.Create();
             frameMessage.CopyTo(saveFrameMessage);
             self.Replay.FrameMessages.Add(saveFrameMessage);
-            if (frame % LSConstValue.SaveLSWorldFrameCount == 0)
-            {
-                MemoryBuffer memoryBuffer = self.FrameBuffer.Snapshot(frame);
-                byte[] bytes = memoryBuffer.ToArray();
-                self.Replay.Snapshots.Add(bytes);
+            
+#if ENABLE_FRAME_SNAPSHOT
+            if (self.LSWorld.Frame % LSConstValue.SaveLSWorldFrameCount == 0) {
+                self.Replay.Snapshots.Add(self.GetLSWorldBytes());
             }
+#endif
         }
     }
 }

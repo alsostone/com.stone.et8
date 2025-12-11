@@ -30,32 +30,62 @@ namespace ET.Client
             }
         }
         
+#if ENABLE_FRAME_SNAPSHOT
         // 回滚
-        public static void Rollback(Room room, int frame)
+        public static void Rollback(Room room, int authorityFrame, int predictionFrame)
         {
             room.IsRollback = true;
             
             room.ProcessLog.SetLogEnable(false);
             room.LSWorld.Dispose();
-            room.LSWorld = room.GetLSWorld(frame - 1);
+            room.LSWorld = room.GetLSWorld(authorityFrame - 1);
             room.ProcessLog.SetLogEnable(true);
             
-            FrameBuffer frameBuffer = room.FrameBuffer;
-            Room2C_FrameMessage authorityFrameMessage = frameBuffer.GetFrameMessage(frame);
-            
-            // 执行AuthorityFrame
-            room.Update(authorityFrameMessage);
-            room.SendHash(frame);
-            
-            // 重新执行预测的帧
-            for (int i = room.AuthorityFrame + 1; i <= room.PredictionFrame; ++i)
-            {
-                Room2C_FrameMessage frameMessage = frameBuffer.GetFrameMessage(i);
+            for (int i = authorityFrame; i <= predictionFrame; ++i) {
+                Room2C_FrameMessage frameMessage = room.FrameBuffer.GetFrameMessage(i);
                 room.Update(frameMessage);
             }
             
             RunLSRollbackSystem(room);
             room.IsRollback = false;
+        }
+#endif
+        private static bool RollbackReplay(Room room, int toFrame)
+        {
+            if (toFrame == room.AuthorityFrame) {
+                return false;
+            }
+
+            int fromFrame = 0;
+            if (room.Replay.Snapshots.Count > 0)
+            {
+                int index = toFrame / LSConstValue.SaveLSWorldFrameCount;
+                fromFrame = index * LSConstValue.SaveLSWorldFrameCount + 1;
+                room.IsRollback = true;
+                room.ProcessLog.SetLogEnable(false);
+                room.LSWorld.Dispose();
+                byte[] bytes = room.Replay.Snapshots[index];
+                room.LSWorld = MemoryPackHelper.Deserialize(typeof(LSWorld), bytes, 0, bytes.Length) as LSWorld;
+                room.ProcessLog.SetLogEnable(true);
+            }
+            else
+            {
+                // 没有快照不能回滚到之前的帧（因为需从零帧开始执行，耗时随帧数变化，暂无必要）
+                if (toFrame < room.AuthorityFrame) {
+                    return false;
+                }
+                fromFrame = room.AuthorityFrame + 1;
+                room.IsRollback = true;
+            }
+
+            for (int i = fromFrame; i <= toFrame; ++i) {
+                Room2C_FrameMessage frameMessage = room.Replay.FrameMessages[i];
+                room.Update(frameMessage);
+            }
+            
+            RunLSRollbackSystem(room);
+            room.IsRollback = false;
+            return true;
         }
         
         public static void SendHash(this Room self, int frame)
@@ -93,22 +123,17 @@ namespace ET.Client
                 frame = room.Replay.FrameMessages.Count - 1;
             }
             
-            int snapshotIndex = frame / LSConstValue.SaveLSWorldFrameCount;
-            Log.Debug($"jump replay start {room.AuthorityFrame} {frame} {snapshotIndex}");
-            if (snapshotIndex != room.AuthorityFrame / LSConstValue.SaveLSWorldFrameCount || frame < room.AuthorityFrame)
+            Log.Debug($"try jump replay to {frame}");
+            if (RollbackReplay(room, frame))
             {
-                room.LSWorld.Dispose();
-                // 回滚
-                byte[] memoryBuffer = room.Replay.Snapshots[snapshotIndex];
-                LSWorld lsWorld = MemoryPackHelper.Deserialize(typeof(LSWorld), memoryBuffer, 0, memoryBuffer.Length) as LSWorld;
-                room.LSWorld = lsWorld;
-                room.AuthorityFrame = snapshotIndex * LSConstValue.SaveLSWorldFrameCount;
-                RunLSRollbackSystem(room);
+                room.AuthorityFrame = room.LSWorld.Frame;
+                room.FixedTimeCounter.Reset(TimeInfo.Instance.ServerFrameTime() - frame * LSConstValue.UpdateInterval, 0);
+                Log.Debug($"jump replay to {frame} success");
             }
-            
-            room.FixedTimeCounter.Reset(TimeInfo.Instance.ServerFrameTime() - frame * LSConstValue.UpdateInterval, 0);
-
-            Log.Debug($"jump replay finish {frame}");
+            else
+            {
+                Log.Debug($"jump replay to {frame} failed");
+            }
         }
     }
 }

@@ -20,29 +20,19 @@ namespace ET.Client
                 return;
             }
             
-            Fiber fiber = self.Fiber();
             long timeNow = TimeInfo.Instance.ServerNow();
-
-            int i = 0;
-            while (true)
+            while (timeNow >= room.FixedTimeCounter.FrameTime(room.AuthorityFrame + 1))
             {
                 if (room.AuthorityFrame + 1 >= room.Replay.FrameMessages.Count)
                     break;
-                if (timeNow < room.FixedTimeCounter.FrameTime(room.AuthorityFrame + 1))
-                    break;
-
+                ++room.PredictionFrame;
                 ++room.AuthorityFrame;
-
                 Room2C_FrameMessage frameMessage = room.Replay.FrameMessages[room.AuthorityFrame];
-
                 room.Update(frameMessage);
-                room.SpeedMultiply = ++i;
 
                 long timeNow2 = TimeInfo.Instance.ServerNow();
-                if (timeNow2 - timeNow > 5)
-                {
+                if (timeNow2 - timeNow > 20)
                     break;
-                }
             }
         }
 

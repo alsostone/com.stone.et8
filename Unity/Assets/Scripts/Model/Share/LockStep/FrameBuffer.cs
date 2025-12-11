@@ -6,46 +6,41 @@ namespace ET
 {
     public class FrameBuffer: Object
     {
-        public int MaxFrame { get; private set; }
+        private int maxFrame;
         private readonly List<Room2C_FrameMessage> frameMessages;
         private readonly List<MemoryBuffer> snapshots;
 
         public FrameBuffer(int frame = 0, int capacity = LSConstValue.FrameCountPerSecond * 60)
         {
-            this.MaxFrame = frame + LSConstValue.FrameCountPerSecond * 30;
+            maxFrame = capacity / 10 * 2;   // 80%历史+20%空闲
+            
             this.frameMessages = new List<Room2C_FrameMessage>(capacity);
-            this.snapshots = new List<MemoryBuffer>(capacity);
-
-            for (int i = 0; i < this.snapshots.Capacity; ++i)
-            {
+            for (int i = 0; i < capacity; ++i) {
                 this.frameMessages.Add(Room2C_FrameMessage.Create());
-                MemoryBuffer memoryBuffer = new(204800);
+            }
+            
+#if ENABLE_FRAME_SNAPSHOT
+            this.snapshots = new List<MemoryBuffer>(capacity);
+            for (int i = 0; i < capacity; ++i)
+            {
+                MemoryBuffer memoryBuffer = new(102400);
                 memoryBuffer.SetLength(0);
                 memoryBuffer.Seek(0, SeekOrigin.Begin);
                 this.snapshots.Add(memoryBuffer);
             }
-        }
-
-        public bool CheckFrame(int frame)
-        {
-            if (frame < 0)
-            {
-                return false;
-            }
-
-            if (frame > this.MaxFrame)
-            {
-                return false;
-            }
-
-            return true;
+#endif
         }
 
         private void EnsureFrame(int frame)
         {
-            if (!CheckFrame(frame))
+            int minFrame = maxFrame - this.frameMessages.Capacity;
+            if (frame < minFrame)
             {
-                throw new Exception($"frame out: {frame}, maxframe: {this.MaxFrame}");
+                throw new Exception($"frame out: {frame}, minframe: {minFrame}");
+            }
+            if (frame > maxFrame)
+            {
+                throw new Exception($"frame out: {frame}, maxframe: {maxFrame}");
             }
         }
         
@@ -58,22 +53,19 @@ namespace ET
 
         public void MoveForward(int frame)
         {
-            if (this.MaxFrame - frame > LSConstValue.FrameCountPerSecond) // 至少留出1秒的空间
-            {
-                return;
-            }
-            
-            ++this.MaxFrame;
-            
-            Room2C_FrameMessage frameMessage = this.GetFrameMessage(this.MaxFrame);
+            EnsureFrame(frame);
+            ++maxFrame;
+            Room2C_FrameMessage frameMessage = this.GetFrameMessage(maxFrame);
             frameMessage.Commands.Clear();
         }
-
+        
+#if ENABLE_FRAME_SNAPSHOT
         public MemoryBuffer Snapshot(int frame)
         {
             EnsureFrame(frame);
             MemoryBuffer memoryBuffer = this.snapshots[frame % this.snapshots.Capacity];
             return memoryBuffer;
         }
+#endif
     }
 }

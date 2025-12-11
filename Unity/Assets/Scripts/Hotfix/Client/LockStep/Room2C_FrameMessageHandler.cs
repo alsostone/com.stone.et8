@@ -10,17 +10,23 @@ namespace ET.Client
             using Room2C_FrameMessage _ = message;  // 让消息回到池中
             
             Room room = root.GetComponent<Room>();
-            if (room.LockStepMode <= LockStepMode.Local)
-                return; // 防御 非联网模式不处理这个消息
+            if (room.LockStepMode <= LockStepMode.Local) {
+                Log.Error("frame message error. in non-networked mode");
+                return;
+            }
+            if (message.FrameIndex != room.AuthorityFrame + 1) {
+                Log.Error($"frame message error. out of order frame {message.FrameIndex} != {room.AuthorityFrame} + 1");
+            }
             
             ++room.AuthorityFrame;
             FrameBuffer frameBuffer = room.FrameBuffer;
             
+#if ENABLE_FRAME_SNAPSHOT
             // 服务端返回的消息比预测的还早
             if (room.AuthorityFrame > room.PredictionFrame)
             {
-                Room2C_FrameMessage authorityFrameMessage = frameBuffer.GetFrameMessage(room.AuthorityFrame);
-                message.CopyTo(authorityFrameMessage);
+                Room2C_FrameMessage frameMessage = frameBuffer.GetFrameMessage(room.AuthorityFrame);
+                message.CopyTo(frameMessage);
             }
             else
             {
@@ -38,15 +44,19 @@ namespace ET.Client
                     message.CopyTo(predictionFrameMessage);
 
                     Log.Debug($"roll back start {room.AuthorityFrame}");
-                    LSClientHelper.Rollback(room, room.AuthorityFrame);
+                    LSClientHelper.Rollback(room, room.AuthorityFrame, room.PredictionFrame);
                     Log.Debug($"roll back finish {room.PredictionFrame}");
                 }
                 else // 对比成功
                 {
                     room.Record(room.AuthorityFrame);
-                    room.SendHash(room.AuthorityFrame);
                 }
+                room.SendHash(room.AuthorityFrame);
             }
+#else
+            Room2C_FrameMessage frameMessage = frameBuffer.GetFrameMessage(room.AuthorityFrame);
+            message.CopyTo(frameMessage);
+#endif
             await ETTask.CompletedTask;
         }
     }

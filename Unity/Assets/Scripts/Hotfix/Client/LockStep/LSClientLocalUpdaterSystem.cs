@@ -22,16 +22,16 @@ namespace ET.Client
             
             long timeNow = TimeInfo.Instance.ServerNow();
             
-            while (timeNow >= room.FixedTimeCounter.FrameTime(room.PredictionFrame + 1))
+            while (timeNow >= room.FixedTimeCounter.FrameTime(room.AuthorityFrame + 1))
             {
                 ++room.PredictionFrame;
                 ++room.AuthorityFrame;
-                Room2C_FrameMessage frameMessage = self.GetFrameMessage(room.PredictionFrame);
+                Room2C_FrameMessage frameMessage = self.GetFrameMessage(room.AuthorityFrame);
                 
                 room.Update(frameMessage);
                 
                 long timeNow2 = TimeInfo.Instance.ServerNow();
-                if (timeNow2 - timeNow > 5)
+                if (timeNow2 - timeNow > 20)
                     break;
             }
         }
