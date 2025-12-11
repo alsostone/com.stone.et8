@@ -93,8 +93,8 @@ namespace ET
 			lsUnit.AddComponent<DeathComponent, bool>(false);
 			lsUnit.AddComponent<BuffComponent>();
 			lsUnit.AddComponent<BeHitComponent>();
-			lsUnit.AddComponent<SkillComponent, int[], int[]>(row.NormalSkills, row.ActiveSkills);
 	        lsUnit.AddComponent<MoveFlowFieldComponent>();
+			lsUnit.AddComponent<SkillComponent, int[], int[]>(row.NormalSkills, row.ActiveSkills);
 			
 			EventSystem.Instance.Publish(lsWorld, new LSUnitCreate() {LSUnit = lsUnit});
             return lsUnit;
@@ -109,7 +109,7 @@ namespace ET
 	        lsUnit.AddComponent<TransformComponent, TSVector, TSQuaternion>(position, TSQuaternion.Euler(0, angle, 0));
 	        lsUnit.AddComponent<TypeComponent, EUnitType>(EUnitType.Soldier);
 	        lsUnit.AddComponent<TeamComponent, TeamType>(teamType);
-	        lsUnit.AddComponent<FlagComponent>();
+	        FlagComponent flagComponent = lsUnit.AddComponent<FlagComponent>();
 	        
 	        PropComponent propComponent = lsUnit.AddComponent<PropComponent, int>(row.Radius);
 	        foreach (var prop in row.Props) {
@@ -121,9 +121,14 @@ namespace ET
 	        lsUnit.AddComponent<DeathComponent, bool>(true);
 	        lsUnit.AddComponent<BuffComponent>();
 	        lsUnit.AddComponent<BeHitComponent>();
-	        lsUnit.AddComponent<SkillComponent, int[], int[]>(row.Skills, null);
 	        lsUnit.AddComponent<MoveFlowFieldComponent>();
 	        
+	        if (row.Skills != null && row.Skills.Length > 0) {
+		        lsUnit.AddComponent<SkillComponent, int[], int[]>(row.Skills, null);
+	        } else {
+		        // 小兵支持不配置技能 如塔防玩法中的怪只冲击基地
+		        flagComponent.AddRestrict((int)FlagRestrict.NotAIAlert);
+	        }
 	        AIWorldComponent aiWorldComponent = lsWorld.GetComponent<AIWorldComponent>();
 	        Node node = aiWorldComponent.GenAINode(row.AiName);
 	        if (node != null) {

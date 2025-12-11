@@ -49,8 +49,9 @@ namespace ET
             }
             
             // 创建基地 (测试用)
+            if (lsStageComponent.TbRow.BaseCampTower > 0)
                 LSUnitFactory.CreateBuilding(lsWorld, lsStageComponent.TbRow.BaseCampTower, TSVector.zero, 0, TeamType.TeamA);
-            if (matchInfo.UnitInfos.Count > 1)
+            if (lsStageComponent.TbRow.BaseCampSoldier > 0 && matchInfo.UnitInfos.Count > 1)
                 LSUnitFactory.CreateBuilding(lsWorld, lsStageComponent.TbRow.BaseCampSoldier, new TSVector(32, 0, 32), 0, TeamType.TeamB);
             
             // 创建我方士兵 (测试用)

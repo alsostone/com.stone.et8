@@ -46,6 +46,9 @@ namespace ET
         {self.LSRoom()?.ProcessLog.LogFunction(71, self.LSParent().Id);
             if (self.FlowFieldStatus == FlowFieldStatus.Moving)
             {
+                TransformComponent transformComponent = self.LSOwner().GetComponent<TransformComponent>();
+                transformComponent.RVOMove(TSVector2.zero);
+                
                 LSGridMapComponent gridMapComponent = self.LSWorld().GetComponent<LSGridMapComponent>();
                 gridMapComponent.RemoveFlowFieldReference(self.FlowFieldIndex);
                 if (self.MovementMode == MovementMode.Move) {
@@ -57,14 +60,7 @@ namespace ET
         
         private static void SetArrived(this MoveFlowFieldComponent self)
         {self.LSRoom()?.ProcessLog.LogFunction(70, self.LSParent().Id);
-            if (self.FlowFieldStatus == FlowFieldStatus.Moving)
-            {
-                LSGridMapComponent gridMapComponent = self.LSWorld().GetComponent<LSGridMapComponent>();
-                gridMapComponent.RemoveFlowFieldReference(self.FlowFieldIndex);
-                if (self.MovementMode == MovementMode.Move) {
-                    self.LSOwner().GetComponent<FlagComponent>().RemoveRestrict((int)FlagRestrict.NotAIAlert);
-                }
-            }
+            self.Stop();
             self.FlowFieldStatus = FlowFieldStatus.Arrived;
         }
         

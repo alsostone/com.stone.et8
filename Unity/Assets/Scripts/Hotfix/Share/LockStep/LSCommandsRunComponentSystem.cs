@@ -32,6 +32,7 @@ namespace ET
                     {
                         self.IsRightDownMove = false;
                         self.GetBindUnitComponent<MovePathFindingComponent>()?.Stop();
+                        self.GetBindUnitComponent<MoveFlowFieldComponent>()?.Stop();
                         self.MoveAxis = LSCommand.ParseCommandFloat2(command);
                         break;
                     }
