@@ -49,6 +49,7 @@ namespace ET
                     skill.StepRunning();
                 }
             }
+            self.TryCastCdSkills();
         }
 
         public static bool HasRunningSkill(this SkillComponent self)
@@ -97,6 +98,25 @@ namespace ET
                     return skill;
             }
             return null;
+        }
+
+        private static bool TryCastCdSkills(this SkillComponent self)
+        {
+            self.LSRoom()?.ProcessLog.LogIgnore();
+            if (self.LSOwner().DeadMark > 0) { return false; }
+            if (self.CheckRestrict(ESkillType.CountDown)) { return false; }
+            if (!self.TypeSkillsMap.TryGetValue(ESkillType.CountDown, out List<long> skillIds)) { return false; }
+            
+            for (int i = skillIds.Count - 1; i >= 0; i--)
+            {
+                Skill skill = self.GetChild<Skill>(skillIds[i]);
+                if (skill.TryCast())
+                {
+                    if (skill.IsRunning)
+                        self.mRunningSkills.Add(skill.Id);
+                }
+            }
+            return true;
         }
 
         public static bool TryCastSkill(this SkillComponent self, ESkillType type)

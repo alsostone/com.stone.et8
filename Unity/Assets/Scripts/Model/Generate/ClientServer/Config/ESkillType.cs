@@ -39,5 +39,10 @@ namespace ET
         /// </summary>
         Counter = 4,
 
+        /// <summary>
+        /// CD技能
+        /// </summary>
+        CountDown = 5,
+
     }
 }

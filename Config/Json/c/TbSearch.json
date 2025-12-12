@@ -80,7 +80,7 @@
     "shape": 4,
     "shape_param": [
       80000,
-      10000
+      5000
     ],
     "team": 4,
     "type": 9,
@@ -249,7 +249,7 @@
     "shape": 5,
     "shape_param": [
       0,
-      10000
+      5000
     ],
     "team": 4,
     "type": 9,
