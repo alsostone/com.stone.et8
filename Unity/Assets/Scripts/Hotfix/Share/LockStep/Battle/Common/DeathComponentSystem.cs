@@ -41,6 +41,7 @@ namespace ET
 
         private static void DoDeathReal(this DeathComponent self)
         {self.LSRoom()?.ProcessLog.LogFunction(60, self.LSParent().Id);
+            LSUnit lsOwner = self.LSOwner();
             // 死亡经验分配
             //ExpGetHelper.ExpGetDead(attacker, entity);
 
@@ -56,8 +57,9 @@ namespace ET
 
             if (self.IsDeadRelease)
             {
-                EventSystem.Instance.Publish(self.LSWorld(), new LSUnitRemove() { Id = self.LSOwner().Id });
-                self.LSOwner().Dispose();
+                LSWorld lsWorld = self.LSWorld();
+                lsOwner.Dispose();
+                EventSystem.Instance.Publish(lsWorld, new LSUnitRemove() { Id = lsOwner.Id });
             }
         }
     }

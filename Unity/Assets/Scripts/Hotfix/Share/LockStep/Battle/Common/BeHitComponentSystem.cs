@@ -102,7 +102,8 @@ namespace ET
 
         private static void DeductHp(this BeHitComponent self, LSUnit attacker, FP value)
         {self.LSRoom()?.ProcessLog.LogFunction(55, self.LSParent().Id, attacker.Id, value.V);
-            PropComponent component = self.LSOwner().GetComponent<PropComponent>();
+            LSUnit lsOwner = self.LSOwner();
+            PropComponent component = lsOwner.GetComponent<PropComponent>();
             FP hp = component.Get(NumericType.Hp);
             if (hp <= FP.EN1) { return; }
 
@@ -112,11 +113,12 @@ namespace ET
             // 血量值小于等于0时，没有死亡组件直接移除 有则只标记死亡即可
             if (current <= FP.EN1)
             {
-                self.LSOwner().DeadMark = 1;
-                if (self.LSOwner().GetComponent<DeathComponent>() != null)
+                lsOwner.DeadMark = 1;
+                if (lsOwner.GetComponent<DeathComponent>() != null)
                 {
-                    EventSystem.Instance.Publish(self.LSWorld(), new LSUnitRemove() { Id = self.LSOwner().Id });
-                    self.LSOwner().Dispose();
+                    LSWorld lsWorld = self.LSWorld();
+                    lsOwner.Dispose();
+                    EventSystem.Instance.Publish(lsWorld, new LSUnitRemove() { Id = lsOwner.Id });
                 }
             }
         }
