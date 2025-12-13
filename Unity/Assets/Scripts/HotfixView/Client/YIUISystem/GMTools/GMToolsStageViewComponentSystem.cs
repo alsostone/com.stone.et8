@@ -139,7 +139,7 @@ namespace ET.Client
             
             Fiber fiber = self.Fiber();
             LockStepMatchInfo matchInfo = LockStepMatchInfo.Create();
-            matchInfo.StageId = array[0];
+            matchInfo.StageId = array[^1];
             matchInfo.ActorId = new ActorId(fiber.Process, fiber.Id, self.InstanceId);
             matchInfo.MatchTime = TimeInfo.Instance.ServerFrameTime();
             matchInfo.Seed = (int)TimeInfo.Instance.ServerFrameTime();

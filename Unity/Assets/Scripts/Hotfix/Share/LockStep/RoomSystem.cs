@@ -1,4 +1,4 @@
-using System.Diagnostics;
+using System;
 using System.IO;
 using TrueSync;
 
@@ -54,23 +54,26 @@ namespace ET
             if (lsStageComponent.TbRow.BaseCampSoldier > 0 && matchInfo.UnitInfos.Count > 1)
                 LSUnitFactory.CreateBuilding(lsWorld, lsStageComponent.TbRow.BaseCampSoldier, new TSVector(32, 0, 32), 0, TeamType.TeamB);
             
-            // 创建我方士兵 (测试用)
-            int rows = 5;
-            int columns = 8;
-            FP spacing = FP.Half * 4;
-            FP width = (columns - 1) * spacing;
-            FP depth = (rows - 1) * spacing;
-            
-            TSVector start = new TSVector(-10, 0, 0) - TSVector.right * (width * FP.Half) + TSVector.forward * (depth * FP.Half);
-            for (int row = 0; row < rows; ++row)
-            for (int col = 0; col < columns; ++col)
+            // 创建初始单位 后期可改为读取配置文件
+            if (!string.IsNullOrEmpty(lsStageComponent.TbRow.InitData))
             {
-                TSVector position = start + TSVector.right * (col * spacing) - TSVector.forward * (row * spacing);
-                LSUnitFactory.CreateSoldier(lsWorld, 40011, position, 0, TeamType.TeamA);
+                string[] array = lsStageComponent.TbRow.InitData.Split(";");
+                int rowCount = Int32.Parse(array[0]);
+                int colCount = Int32.Parse(array[1]);
+                FP spacing = (FP)Int32.Parse(array[2]) / LSConstValue.PropValueScale;
+                int idMonster = Int32.Parse(array[3]);
+                TeamType team = (TeamType)Int32.Parse(array[4]);
+                
+                FP width = (colCount - 1) * spacing;
+                FP depth = (rowCount - 1) * spacing;
+                TSVector start = TSVector.left * (width * FP.Half) + TSVector.forward * (depth * FP.Half);
+                for (int row = 0; row < rowCount; ++row)
+                for (int col = 0; col < colCount; ++col) {
+                    TSVector position = start + TSVector.right * (col * spacing) - TSVector.forward * (row * spacing);
+                    LSUnitFactory.CreateSoldier(lsWorld, idMonster, position, 0, team);
+                }
             }
-            
-            // LSUnitFactory.CreateBuilding(lsWorld, 30041, new TSVector(19, 0, 1.5f * 5 + 5), TSQuaternion.identity, TeamType.TeamA);
-            
+   
             lsWorld.AddComponent<LSGameOverComponent, TbStageRow>(lsStageComponent.TbRow);
             self.ProcessLog.LogFrameEnd();
         }

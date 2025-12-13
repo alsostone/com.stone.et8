@@ -1,9 +1,10 @@
 [
   {
     "Id": 10010001,
-    "shape": 1,
+    "shape": 2,
     "shape_param": [
-      0
+      0,
+      90
     ],
     "team": 4,
     "type": 9,
@@ -25,10 +26,9 @@
   },
   {
     "Id": 10010201,
-    "shape": 2,
+    "shape": 1,
     "shape_param": [
-      50000,
-      45
+      0
     ],
     "team": 4,
     "type": 9,

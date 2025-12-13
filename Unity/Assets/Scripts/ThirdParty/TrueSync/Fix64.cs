@@ -374,7 +374,7 @@ namespace TrueSync {
             var yl = y.V;
 
             if (yl == 0) {
-                return MAX_VALUE;
+                return MaxValue;
                 //throw new DivideByZeroException();
             }
 

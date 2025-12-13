@@ -127,7 +127,7 @@ namespace ET
                     FP distance = dir.sqrMagnitude;
                     if (range2 * range2 >= distance)
                     {
-                        FP angle2 = TSVector.Angle(forward, dir.normalized);
+                        FP angle2 = TSVector.Angle(forward, dir);
                         if (angle2 <= halfAngle) {
                             results.Add(new SearchUnit() { Target = target, SqrDistance = distance });
                         }
