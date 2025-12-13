@@ -11,7 +11,7 @@ namespace ET
     {
         [EntitySystem]
         private static void Awake(this TrackComponent self, int speed, int controlFactor, int controlHeight, FP distance)
-        {
+        {self.LSRoom()?.ProcessLog.LogFunction(170, self.LSParent().Id, speed, controlFactor, controlHeight, distance.V);
             self.HorSpeed = (FP)speed / LSConstValue.PropValueScale;
             self.TowardType = ETrackTowardType.Direction;
             
@@ -35,7 +35,7 @@ namespace ET
         
         [EntitySystem]
         private static void Awake(this TrackComponent self, int speed, int controlFactor, int controlHeight, LSUnit target)
-        {
+        {self.LSRoom()?.ProcessLog.LogFunction(169, self.LSParent().Id, speed, controlFactor, controlHeight, target.Id);
             self.Target = target.Id;
             
             self.HorSpeed = (FP)speed / LSConstValue.PropValueScale;
@@ -61,7 +61,7 @@ namespace ET
 
         [EntitySystem]
         private static void Awake(this TrackComponent self, int speed, int controlFactor, int controlHeight, TSVector targetPosition)
-        {
+        {self.LSRoom()?.ProcessLog.LogFunction(168, self.LSParent().Id, speed, controlFactor, controlHeight, targetPosition.x.V, targetPosition.y.V, targetPosition.z.V);
             self.HorSpeed = (FP)speed / LSConstValue.PropValueScale;
             self.TowardType = ETrackTowardType.Position;
             

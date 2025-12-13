@@ -52,7 +52,7 @@ namespace ET
         }
 
         public static void IncrLayerCount(this Buff self)
-        {
+        {self.LSRoom()?.ProcessLog.LogFunction(165, self.LSParent().Id);
             self.LayerCount++;
             if (self.TbBuffRow.EnterEffect > 0) {
                 LSUnit lsOwner = self.LSOwner();
@@ -62,7 +62,7 @@ namespace ET
         }
         
         public static int DecrLayerCount(this Buff self)
-        {
+        {self.LSRoom()?.ProcessLog.LogFunction(164, self.LSParent().Id);
             self.LayerCount--;
             if (self.TbBuffRow.EnterEffect > 0 && self.LayerCount >= 0) {
                 LSUnit lsOwner = self.LSOwner();

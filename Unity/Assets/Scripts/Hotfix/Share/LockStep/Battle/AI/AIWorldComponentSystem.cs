@@ -48,14 +48,14 @@ namespace ET
         }
         
         private static void GenAINodeFactory(this AIWorldComponent self)
-        {
+        {self.LSRoom()?.ProcessLog.LogFunction(157, self.LSParent().Id);
             self.NodeFactory = new Dictionary<string, Func<Node>>();
             self.NodeFactory.Add("AIAutoAttack", AIAutoAttack.Gen);
             self.NodeFactory.Add("AIAutoAttackCenter", AIAutoAttackCenter.Gen);
         }
         
         public static Node GenAINode(this AIWorldComponent self, string aiName)
-        {
+        {self.LSRoom()?.ProcessLog.LogFunction(156, self.LSParent().Id);
             if (self.NodeFactory.TryGetValue(aiName, out Func<Node> func))
             {
                 return func();

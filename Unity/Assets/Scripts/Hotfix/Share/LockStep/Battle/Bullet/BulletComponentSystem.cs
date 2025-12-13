@@ -11,7 +11,7 @@ namespace ET
     {
         [EntitySystem]
         private static void Awake(this BulletComponent self, int bulletId, LSUnit caster, List<SearchUnit> targets)
-        {
+        {self.LSRoom()?.ProcessLog.LogFunction(167, self.LSParent().Id, bulletId, caster.Id);
             self.BulletId = bulletId;
             self.OverFrame = self.LSWorld().Frame + self.TbBulletRow.Life.Convert2Frame();
             self.Caster = caster.Id;
@@ -37,7 +37,7 @@ namespace ET
 
         [EntitySystem]
         private static void Awake(this BulletComponent self, int bulletId, LSUnit caster)
-        {
+        {self.LSRoom()?.ProcessLog.LogFunction(166, self.LSParent().Id, bulletId, caster.Id);
             self.BulletId = bulletId;
             self.OverFrame = self.LSWorld().Frame + self.TbBulletRow.Life.Convert2Frame();
             self.Caster = caster.Id;

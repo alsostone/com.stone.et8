@@ -45,7 +45,6 @@
 {"ID":44,"FileName":"BulletComponentSystem.cs","FuncName":"Awake","ArgTypes":"BulletComponent,int,LSUnit,LSUnit","ArgNames":"self,bulletId,caster,target","ValidArgNames":"Owner,bulletId,caster.Id,target.Id","ValidArgCount":4,"Comments":null}
 {"ID":45,"FileName":"TrackComponentSystem.cs","FuncName":"Tick","ArgTypes":"TrackComponent","ArgNames":"self","ValidArgNames":"Owner","ValidArgCount":1,"Comments":null}
 {"ID":46,"FileName":"TrackComponentSystem.cs","FuncName":"LSUpdate","ArgTypes":"TrackComponent","ArgNames":"self","ValidArgNames":"Owner","ValidArgCount":1,"Comments":null}
-{"ID":47,"FileName":"TrackComponentSystem.cs","FuncName":"Awake","ArgTypes":"TrackComponent,int,LSUnit,TSVector","ArgNames":"self,trackId,target,targetPosition","ValidArgNames":"Owner,trackId,target.Id,(FP)targetPosition.X, (FP)targetPosition.Y,(FP)targetPosition.Z","ValidArgCount":6,"Comments":null}
 {"ID":48,"FileName":"CardBagComponentSystem.cs","FuncName":"RemoveItem","ArgTypes":"CardBagComponent,long","ArgNames":"self,itemId","ValidArgNames":"Owner","ValidArgCount":1,"Comments":null}
 {"ID":49,"FileName":"CardBagComponentSystem.cs","FuncName":"AddItem","ArgTypes":"CardBagComponent,LSRandomDropItem","ArgNames":"self,dropItem","ValidArgNames":"Owner","ValidArgCount":1,"Comments":null}
 {"ID":50,"FileName":"CardBagComponentSystem.cs","FuncName":"Awake","ArgTypes":"CardBagComponent,List<LSRandomDropItem>","ArgNames":"self,items","ValidArgNames":"Owner","ValidArgCount":1,"Comments":null}
@@ -63,8 +62,8 @@
 {"ID":62,"FileName":"DeathComponentSystem.cs","FuncName":"Awake","ArgTypes":"DeathComponent,bool","ArgNames":"self,isDeadRelease","ValidArgNames":"Owner,isDeadRelease","ValidArgCount":2,"Comments":null}
 {"ID":63,"FileName":"FlagComponentSystem.cs","FuncName":"RemoveBoolFlag","ArgTypes":"FlagComponent,FlagLabel,int","ArgNames":"self,label,count","ValidArgNames":"Owner,count","ValidArgCount":2,"Comments":null}
 {"ID":64,"FileName":"FlagComponentSystem.cs","FuncName":"AddBoolFlag","ArgTypes":"FlagComponent,FlagLabel,int","ArgNames":"self,label,count","ValidArgNames":"Owner,count","ValidArgCount":2,"Comments":null}
-{"ID":65,"FileName":"FlagComponentSystem.cs","FuncName":"RemoveRestrict","ArgTypes":"FlagComponent,int","ArgNames":"self,mask","ValidArgNames":"Owner,mask","ValidArgCount":2,"Comments":null}
-{"ID":66,"FileName":"FlagComponentSystem.cs","FuncName":"AddRestrict","ArgTypes":"FlagComponent,int","ArgNames":"self,mask","ValidArgNames":"Owner,mask","ValidArgCount":2,"Comments":null}
+{"ID":65,"FileName":"FlagComponentSystem.cs","FuncName":"RemoveRestrict","ArgTypes":"FlagComponent,int,int","ArgNames":"self,mask,count","ValidArgNames":"Owner,mask,count","ValidArgCount":3,"Comments":null}
+{"ID":66,"FileName":"FlagComponentSystem.cs","FuncName":"AddRestrict","ArgTypes":"FlagComponent,int,int","ArgNames":"self,mask,count","ValidArgNames":"Owner,mask,count","ValidArgCount":3,"Comments":null}
 {"ID":67,"FileName":"FlagComponentSystem.cs","FuncName":"Awake","ArgTypes":"FlagComponent,int","ArgNames":"self,mask","ValidArgNames":"Owner,mask","ValidArgCount":2,"Comments":null}
 {"ID":68,"FileName":"MoveFlowFieldComponentSystem.cs","FuncName":"MoveStart","ArgTypes":"MoveFlowFieldComponent,int,TSVector,Mov","ArgNames":"self,flowFieldIndex,destination,e","ValidArgNames":"Owner,flowFieldIndex,(FP)destination.X, (FP)destination.Y,(FP)destination.Z","ValidArgCount":5,"Comments":null}
 {"ID":69,"FileName":"MoveFlowFieldComponentSystem.cs","FuncName":"TryMoveStart","ArgTypes":"MoveFlowFieldComponent,int,TSVector,Mov","ArgNames":"self,flowFieldIndex,destination,e","ValidArgNames":"Owner,flowFieldIndex,(FP)destination.X, (FP)destination.Y,(FP)destination.Z","ValidArgCount":5,"Comments":null}
@@ -154,10 +153,19 @@
 {"ID":153,"FileName":"CardSelectComponentSystem.cs","FuncName":"Awake","ArgTypes":"CardSelectComponent","ArgNames":"self","ValidArgNames":"Owner","ValidArgCount":1,"Comments":null}
 {"ID":154,"FileName":"FlagComponentSystem.cs","FuncName":"Awake","ArgTypes":"FlagComponent","ArgNames":"self","ValidArgNames":"Owner","ValidArgCount":1,"Comments":null}
 {"ID":155,"FileName":"SelectionComponentSystem.cs","FuncName":"Awake","ArgTypes":"SelectionComponent","ArgNames":"self","ValidArgNames":"Owner","ValidArgCount":1,"Comments":null}
+{"ID":156,"FileName":"AIWorldComponentSystem.cs","FuncName":"GenAINode","ArgTypes":"AIWorldComponent,string","ArgNames":"self,aiName","ValidArgNames":"Owner","ValidArgCount":1,"Comments":null}
+{"ID":157,"FileName":"AIWorldComponentSystem.cs","FuncName":"GenAINodeFactory","ArgTypes":"AIWorldComponent","ArgNames":"self","ValidArgNames":"Owner","ValidArgCount":1,"Comments":null}
 {"ID":158,"FileName":"PlacementComponentSystem.cs","FuncName":"PutToPosition","ArgTypes":"PlacementComponent,TSVector","ArgNames":"self,position","ValidArgNames":"Owner,(FP)position.X, (FP)position.Y,(FP)position.Z","ValidArgCount":4,"Comments":null}
 {"ID":159,"FileName":"PlacementComponentSystem.cs","FuncName":"RemoveRVO2Obstacle","ArgTypes":"PlacementComponent","ArgNames":"self","ValidArgNames":"Owner","ValidArgCount":1,"Comments":null}
 {"ID":160,"FileName":"PlacementComponentSystem.cs","FuncName":"AddRVO2Obstacle","ArgTypes":"PlacementComponent","ArgNames":"self","ValidArgNames":"Owner","ValidArgCount":1,"Comments":null}
 {"ID":161,"FileName":"PlacementComponentSystem.cs","FuncName":"SetRVO2AgentPosition","ArgTypes":"PlacementComponent,TSVector","ArgNames":"self,position","ValidArgNames":"Owner,(FP)position.X, (FP)position.Y,(FP)position.Z","ValidArgCount":4,"Comments":null}
 {"ID":162,"FileName":"PlacementComponentSystem.cs","FuncName":"RemoveRVO2Agent","ArgTypes":"PlacementComponent","ArgNames":"self","ValidArgNames":"Owner","ValidArgCount":1,"Comments":null}
 {"ID":163,"FileName":"PlacementComponentSystem.cs","FuncName":"AddRVO2Agent","ArgTypes":"PlacementComponent","ArgNames":"self","ValidArgNames":"Owner","ValidArgCount":1,"Comments":null}
+{"ID":164,"FileName":"BuffSystem.cs","FuncName":"DecrLayerCount","ArgTypes":"Buff","ArgNames":"self","ValidArgNames":"Owner","ValidArgCount":1,"Comments":null}
+{"ID":165,"FileName":"BuffSystem.cs","FuncName":"IncrLayerCount","ArgTypes":"Buff","ArgNames":"self","ValidArgNames":"Owner","ValidArgCount":1,"Comments":null}
+{"ID":166,"FileName":"BulletComponentSystem.cs","FuncName":"Awake","ArgTypes":"BulletComponent,int,LSUnit","ArgNames":"self,bulletId,caster","ValidArgNames":"Owner,bulletId,caster.Id","ValidArgCount":3,"Comments":null}
+{"ID":167,"FileName":"BulletComponentSystem.cs","FuncName":"Awake","ArgTypes":"BulletComponent,int,LSUnit,List<SearchUnit>","ArgNames":"self,bulletId,caster,targets","ValidArgNames":"Owner,bulletId,caster.Id","ValidArgCount":3,"Comments":null}
+{"ID":168,"FileName":"TrackComponentSystem.cs","FuncName":"Awake","ArgTypes":"TrackComponent,int,int,int,TSVector","ArgNames":"self,speed,controlFactor,controlHeight,targetPosition","ValidArgNames":"Owner,speed,controlFactor,controlHeight,(FP)targetPosition.X, (FP)targetPosition.Y,(FP)targetPosition.Z","ValidArgCount":7,"Comments":null}
+{"ID":169,"FileName":"TrackComponentSystem.cs","FuncName":"Awake","ArgTypes":"TrackComponent,int,int,int,LSUnit","ArgNames":"self,speed,controlFactor,controlHeight,target","ValidArgNames":"Owner,speed,controlFactor,controlHeight,target.Id","ValidArgCount":5,"Comments":null}
+{"ID":170,"FileName":"TrackComponentSystem.cs","FuncName":"Awake","ArgTypes":"TrackComponent,int,int,int,FP","ArgNames":"self,speed,controlFactor,controlHeight,distance","ValidArgNames":"Owner,speed,controlFactor,controlHeight,(FP)distance","ValidArgCount":5,"Comments":null}
 ]
