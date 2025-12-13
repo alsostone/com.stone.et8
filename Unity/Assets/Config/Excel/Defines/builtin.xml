@@ -181,6 +181,7 @@
         <var name="NotActive" alias="禁止主动技能" value="4"/>
         <var name="NotAIAlert" alias="禁止AI警戒" value="8"/>
         <var name="NotRotate" alias="禁止旋转" value="16"/>
+        <var name="NotProduct" alias="禁止生产" value="32"/>
     </enum>
 
     <enum name="FlagLabel" comment="普通标签" unique="FALSE">

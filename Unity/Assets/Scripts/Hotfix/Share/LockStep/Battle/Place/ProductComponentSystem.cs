@@ -20,7 +20,7 @@ namespace ET
         [LSEntitySystem]
         private static void LSUpdate(this ProductComponent self)
         {self.LSRoom()?.ProcessLog.LogFunction(100, self.LSParent().Id);
-            if (self.LSOwner().EnabledRef >= 0)
+            if (!self.LSOwner().GetComponent<FlagComponent>().HasRestrict(FlagRestrict.NotProduct))
             {
                 if (self.LSWorld().Frame >= self.ProductFrame)
                 {

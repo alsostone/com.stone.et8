@@ -27,7 +27,7 @@ namespace ET
                 if (workComponent.WorkerCount == workComponent.WorkerLimit)
                     continue;
                 
-                if (workComponent.LSOwner().EnabledRef < 0) {
+                if (workComponent.LSOwner().GetComponent<FlagComponent>().HasRestrict(FlagRestrict.NotProduct)) {
                     freeCount += workComponent.WorkerCount;
                     workComponent.WorkerCount = 0;
                     continue;

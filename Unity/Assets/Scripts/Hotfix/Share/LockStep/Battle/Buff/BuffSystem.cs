@@ -1,5 +1,6 @@
 namespace ET
 {
+    [LSEntitySystemOf(typeof(Buff))]
     [EntitySystemOf(typeof(Buff))]
     [FriendOf(typeof(Buff))]
     public static partial class BuffSystem
@@ -28,27 +29,30 @@ namespace ET
         {self.LSRoom()?.ProcessLog.LogFunction(40, self.LSParent().Id);
             LSUnit lsOwner = self.LSOwner();
             LSUnit lsCaster = self.LSUnit(self.Caster);
-            if (self.TbBuffRow.EnterEffect > 0) {
+            if (self.TbBuffRow.EnterEffect > 0 && self.LayerCount >= 0) {
                 EffectExecutor.ReverseExecute(self.TbBuffRow.EnterEffect, lsCaster, lsOwner, self.LayerCount);
             }
             if (self.TbBuffRow.FinishEffect > 0) {
                 EffectExecutor.Execute(self.TbBuffRow.FinishEffect, lsCaster, lsOwner, lsOwner, self.LayerCount);
             }
         }
-        
-        public static void ResetEndFrame(this Buff self)
-        {self.LSRoom()?.ProcessLog.LogFunction(39, self.LSParent().Id);
-            self.EndFrame = self.LSWorld().Frame + self.TbBuffRow.Duration.Convert2Frame();
-        }
 
-        public static void TryExecuteInterval(this Buff self)
+        [LSEntitySystem]
+        private static void LSUpdate(this Buff self)
         {self.LSRoom()?.ProcessLog.LogFunction(38, self.LSParent().Id);
+            // BUFF的到期由BuffComponent处理
+            // BUFF DOT
             if (self.TbBuffRow.IntervalEffect > 0 && self.LSWorld().Frame >= self.IntervalFrame) {
                 LSUnit lsOwner = self.LSOwner();
                 LSUnit lsCaster = self.LSUnit(self.Caster);
                 EffectExecutor.Execute(self.TbBuffRow.IntervalEffect, lsCaster, lsOwner, lsOwner, self.LayerCount);
                 self.IntervalFrame = self.LSWorld().Frame + self.TbBuffRow.Interval.Convert2Frame();
             }
+        }
+        
+        public static void ResetEndFrame(this Buff self)
+        {self.LSRoom()?.ProcessLog.LogFunction(39, self.LSParent().Id);
+            self.EndFrame = self.LSWorld().Frame + self.TbBuffRow.Duration.Convert2Frame();
         }
 
         public static void IncrLayerCount(this Buff self)

@@ -42,5 +42,10 @@ namespace ET
         /// </summary>
         NotRotate = 16,
 
+        /// <summary>
+        /// 禁止生产
+        /// </summary>
+        NotProduct = 32,
+
     }
 }

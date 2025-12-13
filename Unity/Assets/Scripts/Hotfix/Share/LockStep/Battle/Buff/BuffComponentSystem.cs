@@ -44,10 +44,6 @@ namespace ET
                     self.IdBuffMap.Remove(buff.BuffId);
                     buff.Dispose();
                 }
-                else if(self.LSOwner().EnabledRef >= 0)
-                {
-                    buff.TryExecuteInterval();
-                }
             }
             buffs.Clear();
             ObjectPool.Instance.Recycle(buffs);

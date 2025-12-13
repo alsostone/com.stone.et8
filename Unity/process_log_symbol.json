@@ -36,7 +36,7 @@
 {"ID":35,"FileName":"BuffComponentSystem.cs","FuncName":"AddBuffs","ArgTypes":"BuffComponent,int[],LSUnit","ArgNames":"self,buffIds,owner","ValidArgNames":"Owner,owner.Id","ValidArgCount":2,"Comments":null}
 {"ID":36,"FileName":"BuffComponentSystem.cs","FuncName":"LSUpdate","ArgTypes":"BuffComponent","ArgNames":"self","ValidArgNames":"Owner","ValidArgCount":1,"Comments":null}
 {"ID":37,"FileName":"BuffComponentSystem.cs","FuncName":"Destroy","ArgTypes":"BuffComponent","ArgNames":"self","ValidArgNames":"Owner","ValidArgCount":1,"Comments":null}
-{"ID":38,"FileName":"BuffSystem.cs","FuncName":"TryExecuteInterval","ArgTypes":"Buff","ArgNames":"self","ValidArgNames":"Owner","ValidArgCount":1,"Comments":null}
+{"ID":38,"FileName":"BuffSystem.cs","FuncName":"LSUpdate","ArgTypes":"Buff","ArgNames":"self","ValidArgNames":"Owner","ValidArgCount":1,"Comments":null}
 {"ID":39,"FileName":"BuffSystem.cs","FuncName":"ResetEndFrame","ArgTypes":"Buff","ArgNames":"self","ValidArgNames":"Owner","ValidArgCount":1,"Comments":null}
 {"ID":40,"FileName":"BuffSystem.cs","FuncName":"Destroy","ArgTypes":"Buff","ArgNames":"self","ValidArgNames":"Owner","ValidArgCount":1,"Comments":null}
 {"ID":41,"FileName":"BuffSystem.cs","FuncName":"Awake","ArgTypes":"Buff,int,LSUnit","ArgNames":"self,BuffId,caster","ValidArgNames":"Owner,BuffId,caster.Id","ValidArgCount":3,"Comments":null}
