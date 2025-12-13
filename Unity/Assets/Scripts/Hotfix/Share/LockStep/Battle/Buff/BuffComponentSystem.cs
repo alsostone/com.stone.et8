@@ -68,7 +68,7 @@ namespace ET
                 // 若buffId已存在，则增加层数，且重新计时
                 var buff = self.GetChild<Buff>(eid);
                 if (buff.TbBuffRow.MaxLayer > 0 && buff.TbBuffRow.MaxLayer > buff.LayerCount)
-                    buff.LayerCount++;
+                    buff.IncrLayerCount();
                 buff.ResetEndFrame();
             }
             else
@@ -89,9 +89,7 @@ namespace ET
                 if (removeLayer)
                 {
                     // 若为移除层数，则减少层数，且重新计时
-                    buff.LayerCount--;
-                    if (buff.LayerCount > 0)
-                    {
+                    if (buff.DecrLayerCount() > 0) {
                         buff.ResetEndFrame();
                         return;
                     }

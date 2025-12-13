@@ -8,7 +8,7 @@ namespace ET
     [FriendOf(typeof(TeamComponent))]
     public class SummonRandom : IEffectExecutor
     {
-        public void Run(int[] param, LSUnit owner, LSUnit target, LSUnit carrier = null)
+        public void Run(int[] param, int count, LSUnit owner, LSUnit target, LSUnit carrier = null)
         {
             TeamType team = target.GetComponent<TeamComponent>().Type;
             var targetTransform = target.GetComponent<TransformComponent>();

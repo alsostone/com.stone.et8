@@ -3,7 +3,7 @@
 	[EffectExecutor(EffectActionType.AddBulletDirection)]
 	public class AddBulletDirection : IEffectExecutor
 	{
-		public void Run(int[] param, LSUnit owner, LSUnit target, LSUnit carrier = null)
+		public void Run(int[] param, int count, LSUnit owner, LSUnit target, LSUnit carrier = null)
 		{
 			if (param.Length < 3) { return; }
 

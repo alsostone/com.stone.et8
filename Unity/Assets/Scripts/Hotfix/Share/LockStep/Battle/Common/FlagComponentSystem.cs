@@ -22,7 +22,7 @@ namespace ET
             self.AddRestrict(mask);
         }
 
-        public static void AddRestrict(this FlagComponent self, int mask)
+        public static void AddRestrict(this FlagComponent self, int mask, int count = 1)
         {self.LSRoom()?.ProcessLog.LogFunction(66, self.LSParent().Id, mask);
             foreach (FlagRestrict flagRestrict in Enum.GetValues(typeof(FlagRestrict)))
             {
@@ -30,17 +30,17 @@ namespace ET
                 {
                     if (self.RestrictRefrence.TryGetValue(flagRestrict, out var refCount))
                     {
-                        self.RestrictRefrence[flagRestrict] = refCount + 1;
+                        self.RestrictRefrence[flagRestrict] = refCount + count;
                     }
                     else
                     {
-                        self.RestrictRefrence.Add(flagRestrict, 1);
+                        self.RestrictRefrence.Add(flagRestrict, count);
                     }
                 }
             }
         }
         
-        public static void RemoveRestrict(this FlagComponent self, int mask)
+        public static void RemoveRestrict(this FlagComponent self, int mask, int count = 1)
         {self.LSRoom()?.ProcessLog.LogFunction(65, self.LSParent().Id, mask);
             foreach (FlagRestrict flagRestrict in Enum.GetValues(typeof(FlagRestrict)))
             {
@@ -48,11 +48,11 @@ namespace ET
                 {
                     if (self.RestrictRefrence.TryGetValue(flagRestrict, out var refCount))
                     {
-                        self.RestrictRefrence[flagRestrict] = refCount - 1;
+                        self.RestrictRefrence[flagRestrict] = refCount - count;
                     }
                     else
                     {
-                        self.RestrictRefrence.Add(flagRestrict, -1);
+                        self.RestrictRefrence.Add(flagRestrict, -count);
                     }
                 }
             }

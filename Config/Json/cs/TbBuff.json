@@ -40,7 +40,7 @@
     "can_dead_clear": true,
     "can_replace": true,
     "overlap_type": 0,
-    "duration": 1000,
+    "duration": 3000,
     "delay": 0,
     "interval": 0,
     "max_layer": 3,

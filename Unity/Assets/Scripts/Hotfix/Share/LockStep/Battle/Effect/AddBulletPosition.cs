@@ -5,7 +5,7 @@ namespace ET
 	[EffectExecutor(EffectActionType.AddBulletPosition)]
 	public class AddBulletPosition : IEffectExecutor
 	{
-		public void Run(int[] param, LSUnit owner, LSUnit target, LSUnit carrier = null)
+		public void Run(int[] param, int count, LSUnit owner, LSUnit target, LSUnit carrier = null)
 		{
 			var ownerTransform = owner.GetComponent<TransformComponent>();
 			var position = TSVector.zero;

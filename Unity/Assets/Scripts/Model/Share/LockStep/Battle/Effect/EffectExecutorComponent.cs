@@ -24,20 +24,20 @@ namespace ET
             }
         }
 
-        public void Run(EffectActionType type, int[] param, LSUnit owner, LSUnit target, LSUnit carrier = null)
+        public void Run(EffectActionType type, int[] param, int count, LSUnit owner, LSUnit target, LSUnit carrier = null)
         {
             if (target == null || target.DeadMark > 0) return;
             if (effectExecutors.TryGetValue(type, out IEffectExecutor effectExecutor)) {
-                effectExecutor.Run(param, owner, target, carrier);
+                effectExecutor.Run(param, count, owner, target, carrier);
             }
         }
         
-        public void Run(TbEffectRow resEffect, LSUnit owner, LSUnit target, LSUnit carrier = null)
+        public void Run(TbEffectRow resEffect, int count, LSUnit owner, LSUnit target, LSUnit carrier = null)
         {
             if (target == null || target.DeadMark > 0) return;
 
             if (effectExecutors.TryGetValue(resEffect.ActionType, out IEffectExecutor effectExecutor)) {
-                effectExecutor.Run(resEffect.ActionParam, owner, target, carrier);
+                effectExecutor.Run(resEffect.ActionParam, count, owner, target, carrier);
             }
             if (resEffect.Fx > 0) {
                 EventSystem.Instance.Publish(target.LSWorld(), new LSUnitFx() { Id = target.Id, FxId = resEffect.Fx });
