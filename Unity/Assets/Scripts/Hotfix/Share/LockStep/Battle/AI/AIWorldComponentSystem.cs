@@ -52,6 +52,7 @@ namespace ET
             self.NodeFactory = new Dictionary<string, Func<Node>>();
             self.NodeFactory.Add("AIAutoAttack", AIAutoAttack.Gen);
             self.NodeFactory.Add("AIAutoAttackCenter", AIAutoAttackCenter.Gen);
+            self.NodeFactory.Add("AIMoveToCenter", AIMoveToCenter.Gen);
         }
         
         public static Node GenAINode(this AIWorldComponent self, string aiName)

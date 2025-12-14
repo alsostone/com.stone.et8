@@ -14,6 +14,7 @@ namespace ST.GridBuilder
     public partial class GridData
     {
         [MemoryPackIgnore] private Queue<CellData> flowFieldVisit = new Queue<CellData>();
+        [MemoryPackIgnore] private List<IndexV2> flowFieldDestinations = new List<IndexV2>();
 
         public FieldV2 GetFieldVector(FlowFieldNode[] flowField, FieldV2 position)
         {
@@ -92,17 +93,22 @@ namespace ST.GridBuilder
 
         public void ResetDijkstraData(FlowFieldNode[] flowField, FieldV2 destination)
         {
+            IndexV2 v2 = ConvertToIndex(destination);
+            flowFieldDestinations.Clear();
+            visited.Clear();
+            GetNotContentNeighbors(v2.x, v2.z, flowFieldDestinations);
+
             Array.Fill(flowField, new FlowFieldNode { distance = int.MaxValue, direction = new FieldV2(0, 0)});
             flowFieldVisit.Clear();
             visited.Clear();
             
-            IndexV2 indexV2 = ConvertToIndex(new FieldV2(destination.x, destination.z));
-            indexV2 = GetValidDest(indexV2);
-            
-            int index = indexV2.x + indexV2.z * xLength;
-            flowField[index].distance = 0;
-            flowFieldVisit.Enqueue(cells[index]);
-            visited.Add(cells[index]);
+            foreach (IndexV2 indexV2 in flowFieldDestinations)
+            {
+                int index = indexV2.x + indexV2.z * xLength;
+                flowField[index].distance = 0;
+                flowFieldVisit.Enqueue(cells[index]);
+                visited.Add(cells[index]);
+            }
         }
 
         public void ResetDijkstraData(FlowFieldNode[] flowField, List<FieldV2> destinations)
@@ -113,7 +119,7 @@ namespace ST.GridBuilder
             
             foreach (FieldV2 dest in destinations)
             {
-                IndexV2 indexV2 = ConvertToIndex(new FieldV2(dest.x, dest.z));
+                IndexV2 indexV2 = ConvertToIndex(dest);
                 indexV2 = GetValidDest(indexV2);
                 
                 int index = indexV2.x + indexV2.z * xLength;
@@ -197,5 +203,29 @@ namespace ST.GridBuilder
             }
         }
         
+        private void GetNotContentNeighbors(int x, int z, List<IndexV2> results)
+        {
+            CellData current = GetCell(x, z);
+            visited.Add(current);
+            
+            if (current.contentIds.Count > 0) {
+                foreach (var (dx, dz) in Directions)
+                {
+                    int nx = x + dx;
+                    int nz = z + dz;
+                    CellData neighbor = GetCell(nx, nz);
+                    if (neighbor == null)
+                        continue;
+                    if (visited.Contains(neighbor))
+                        continue;
+                    if (neighbor.contentIds.Count > 0 && neighbor.contentIds[0] != current.contentIds[0])
+                        continue;
+                    GetNotContentNeighbors(nx, nz, results);
+                }
+            }
+            else {
+                results.Add(new IndexV2(x, z));
+            }
+        }
     }
 }

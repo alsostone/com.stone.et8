@@ -50,8 +50,7 @@
       ]
     ],
     "skills": [
-      40000001,
-      40000101
+      40000001
     ],
     "ai_name": "AIAutoAttack",
     "random_bag_id": 0
@@ -90,10 +89,9 @@
       ]
     ],
     "skills": [
-      40000001,
       40000101
     ],
-    "ai_name": "AIAutoAttackCenter",
+    "ai_name": "AIMoveToCenter",
     "random_bag_id": 0
   },
   {
@@ -130,10 +128,9 @@
       ]
     ],
     "skills": [
-      40000001,
       40000101
     ],
-    "ai_name": "AIAutoAttackCenter",
+    "ai_name": "AIMoveToCenter",
     "random_bag_id": 0
   },
   {
@@ -170,10 +167,9 @@
       ]
     ],
     "skills": [
-      40000001,
       40000101
     ],
-    "ai_name": "AIAutoAttackCenter",
+    "ai_name": "AIMoveToCenter",
     "random_bag_id": 0
   },
   {
@@ -210,10 +206,9 @@
       ]
     ],
     "skills": [
-      40000001,
       40000101
     ],
-    "ai_name": "AIAutoAttackCenter",
+    "ai_name": "AIMoveToCenter",
     "random_bag_id": 0
   },
   {
@@ -250,10 +245,9 @@
       ]
     ],
     "skills": [
-      40000001,
       40000101
     ],
-    "ai_name": "AIAutoAttackCenter",
+    "ai_name": "AIMoveToCenter",
     "random_bag_id": 0
   },
   {
@@ -290,10 +284,9 @@
       ]
     ],
     "skills": [
-      40000001,
       40000101
     ],
-    "ai_name": "AIAutoAttackCenter",
+    "ai_name": "AIMoveToCenter",
     "random_bag_id": 0
   },
   {
@@ -330,10 +323,9 @@
       ]
     ],
     "skills": [
-      40000001,
       40000101
     ],
-    "ai_name": "AIAutoAttackCenter",
+    "ai_name": "AIMoveToCenter",
     "random_bag_id": 0
   },
   {
@@ -370,10 +362,9 @@
       ]
     ],
     "skills": [
-      40000001,
       40000101
     ],
-    "ai_name": "AIAutoAttackCenter",
+    "ai_name": "AIMoveToCenter",
     "random_bag_id": 0
   },
   {
@@ -410,10 +401,9 @@
       ]
     ],
     "skills": [
-      40000001,
       40000101
     ],
-    "ai_name": "AIAutoAttackCenter",
+    "ai_name": "AIMoveToCenter",
     "random_bag_id": 0
   }
 ]
