@@ -113,8 +113,10 @@ namespace ET
             // 血量值小于等于0时，没有死亡组件直接移除 有则只标记死亡即可
             if (current <= FP.EN1)
             {
-                lsOwner.DeadMark = 1;
-                if (lsOwner.GetComponent<DeathComponent>() != null)
+                DeathComponent deathComponent = lsOwner.GetComponent<DeathComponent>();
+                if (deathComponent != null)
+                    deathComponent.DoDeath();
+                else
                 {
                     LSWorld lsWorld = self.LSWorld();
                     lsOwner.Dispose();

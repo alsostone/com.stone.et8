@@ -160,6 +160,7 @@
         <var name="SubProperty" alias="降低属性" value="10" comment="降低子属性的值"/>
         <var name="SummonSoldier" alias="召唤士兵" value="11"/>
         <var name="SummonRandom" alias="随机召唤" value="12"/>
+        <var name="KillSelf" alias="杀死自己" value="13"/>
         <var name="Research" alias="重新索敌" value="15" comment="以0索敌，执行1效果组"/>
         <var name="ConditionBranch" alias="条件分支" value="16" comment="判定条件0，通过执行1效果组，否则执行2效果组"/>
         <var name="AddBulletTarget" alias="跟随目标子弹" value="17" comment="跟随目标直到命中"/>

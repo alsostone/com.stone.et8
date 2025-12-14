@@ -62,5 +62,10 @@ namespace ET
                 EventSystem.Instance.Publish(lsWorld, new LSUnitRemove() { Id = lsOwner.Id });
             }
         }
+
+        public static void DoDeath(this DeathComponent self)
+        {
+            self.LSOwner().DeadMark = 1;
+        }
     }
 }

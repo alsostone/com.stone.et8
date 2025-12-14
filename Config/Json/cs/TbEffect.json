@@ -355,15 +355,26 @@
   },
   {
     "Id": 400001010,
-    "name": "死亡自爆",
+    "name": "自爆伤害他人",
     "group_id": 40000101,
     "success_conds": [],
     "failure_conds": [],
     "fx": 0,
     "action_type": 4,
     "action_param": [
-      30000
+      0,
+      10000
     ]
+  },
+  {
+    "Id": 400001011,
+    "name": "自爆杀死自己",
+    "group_id": 40000101,
+    "success_conds": [],
+    "failure_conds": [],
+    "fx": 0,
+    "action_type": 13,
+    "action_param": []
   },
   {
     "Id": 400100010,

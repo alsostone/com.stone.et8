@@ -72,6 +72,11 @@ namespace ET
         SummonRandom = 12,
 
         /// <summary>
+        /// 杀死自己
+        /// </summary>
+        KillSelf = 13,
+
+        /// <summary>
         /// 以0索敌，执行1效果组
         /// </summary>
         Research = 15,

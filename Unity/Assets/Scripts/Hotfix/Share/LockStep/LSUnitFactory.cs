@@ -77,6 +77,7 @@ namespace ET
 	        TbHeroRow row = TbHero.Instance.Get(skinRow.HeroId);
 	        LSUnitComponent lsUnitComponent = lsWorld.GetComponent<LSUnitComponent>();
 	        LSUnit lsUnit = lsUnitComponent.AddChild<LSUnit>();
+	        lsUnit.TableId = tableId;
 
 	        lsUnit.AddComponent<TransformComponent, TSVector, TSQuaternion>(position, rotation);
 	        lsUnit.AddComponent<TypeComponent, EUnitType>(EUnitType.Hero);
@@ -105,6 +106,7 @@ namespace ET
 	        TbSoldierRow row = TbSoldier.Instance.Get(tableId);
 	        LSUnitComponent lsUnitComponent = lsWorld.GetComponent<LSUnitComponent>();
 	        LSUnit lsUnit = lsUnitComponent.AddChild<LSUnit>();
+	        lsUnit.TableId = tableId;
 
 	        lsUnit.AddComponent<TransformComponent, TSVector, TSQuaternion>(position, TSQuaternion.Euler(0, angle, 0));
 	        lsUnit.AddComponent<TypeComponent, EUnitType>(EUnitType.Soldier);
@@ -156,6 +158,8 @@ namespace ET
 
 	        LSUnitComponent lsUnitComponent = lsWorld.GetComponent<LSUnitComponent>();
 	        LSUnit lsUnit = lsUnitComponent.AddChild<LSUnit>();
+	        lsUnit.TableId = tableId;
+	        
 	        placementData.id = lsUnit.Id;
 	        placementData.x = index.x;
 	        placementData.z = index.z;
@@ -199,6 +203,8 @@ namespace ET
 	        
 	        LSUnitComponent lsUnitComponent = lsWorld.GetComponent<LSUnitComponent>();
 	        LSUnit lsUnit = lsUnitComponent.AddChild<LSUnit>();
+	        lsUnit.TableId = tableId;
+	        
 	        placementData.id = lsUnit.Id;
 	        placementData.x = index.x;
 	        placementData.z = index.z;
@@ -234,6 +240,7 @@ namespace ET
         {
 	        LSUnitComponent lsUnitComponent = lsWorld.GetComponent<LSUnitComponent>();
 	        LSUnit lsUnit = lsUnitComponent.AddChild<LSUnit>();
+	        lsUnit.TableId = tableId;
 
 	        lsUnit.AddComponent<TransformComponent, TSVector, TSQuaternion>(position, TSQuaternion.Euler(0, angle, 0));
 	        lsUnit.AddComponent<TypeComponent, EUnitType>(EUnitType.Item);
@@ -249,6 +256,7 @@ namespace ET
         {
 	        LSUnitComponent lsUnitComponent = lsWorld.GetComponent<LSUnitComponent>();
 	        LSUnit lsUnit = lsUnitComponent.AddChild<LSUnit>();
+	        lsUnit.TableId = bulletId;
 
 	        TransformComponent targetTransform = target.GetComponent<TransformComponent>();
 	        TSQuaternion rotation = TSQuaternion.FromToRotation(TSVector.up, targetTransform.Upwards) * TSQuaternion.Euler(0, angle, 0);
@@ -275,6 +283,7 @@ namespace ET
         {
 	        LSUnitComponent lsUnitComponent = lsWorld.GetComponent<LSUnitComponent>();
 	        LSUnit lsUnit = lsUnitComponent.AddChild<LSUnit>();
+	        lsUnit.TableId = bulletId;
 			
 	        lsUnit.AddComponent<TransformComponent, TSVector, TSQuaternion>(position, TSQuaternion.identity);
 	        lsUnit.AddComponent<TypeComponent, EUnitType>(EUnitType.Bullet);
@@ -292,6 +301,7 @@ namespace ET
         {
 	        LSUnitComponent lsUnitComponent = lsWorld.GetComponent<LSUnitComponent>();
 	        LSUnit lsUnit = lsUnitComponent.AddChild<LSUnit>();
+	        lsUnit.TableId = bulletId;
 			
 	        lsUnit.AddComponent<TransformComponent, TSVector, TSQuaternion>(position, TSQuaternion.identity);
 	        lsUnit.AddComponent<TypeComponent, EUnitType>(EUnitType.Bullet);
