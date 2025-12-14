@@ -15,6 +15,7 @@ namespace ET
             self.BulletId = bulletId;
             self.OverFrame = self.LSWorld().Frame + self.TbBulletRow.Life.Convert2Frame();
             self.Caster = caster.Id;
+            self.TowardType = ETrackTowardType.Direction;
             self.SearchUnits = new List<SearchUnitPackable>();
             foreach (SearchUnit searchUnit in targets)
             {
@@ -32,6 +33,7 @@ namespace ET
             self.BulletId = bulletId;
             self.OverFrame = self.LSWorld().Frame + self.TbBulletRow.Life.Convert2Frame();
             self.Caster = caster.Id;
+            self.TowardType = ETrackTowardType.Target;
             self.Target = target.Id;
         }
 
@@ -41,6 +43,7 @@ namespace ET
             self.BulletId = bulletId;
             self.OverFrame = self.LSWorld().Frame + self.TbBulletRow.Life.Convert2Frame();
             self.Caster = caster.Id;
+            self.TowardType = ETrackTowardType.Position;
         }
 
         [LSEntitySystem]
@@ -88,7 +91,7 @@ namespace ET
             if (reach) {
                 LSUnit caster = self.LSUnit(self.Caster);
                 
-                if (self.SearchUnits != null && self.SearchUnits.Count > 0)
+                if (self.TowardType == ETrackTowardType.Direction && self.SearchUnits != null)
                 {
                     for (int index = self.HitSearchIndex; index < self.SearchUnits.Count; index++)
                     {
@@ -97,12 +100,12 @@ namespace ET
                         EffectExecutor.Execute(self.TbBulletRow.EffectGroupId, caster, target, lsOwner);
                     }
                 }
-                else if (self.Target != 0)
+                else if (self.TowardType == ETrackTowardType.Target && self.Target != 0)
                 {
                     LSUnit target = self.LSUnit(self.Target);
                     EffectExecutor.Execute(self.TbBulletRow.EffectGroupId, caster, target, lsOwner);
                 }
-                else
+                else if (self.TowardType == ETrackTowardType.Position)
                 {
                     // 没有目标的子弹(固定位置型)用于范围伤害，必须接重新索敌效果，所以谁作为Target都可以，它不会被用到
                     EffectExecutor.Execute(self.TbBulletRow.EffectGroupId, caster, caster, lsOwner);

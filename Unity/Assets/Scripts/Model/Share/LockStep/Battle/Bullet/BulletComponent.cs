@@ -11,6 +11,7 @@ namespace ET
         public int BulletId;
         public long Caster;
         public int OverFrame;
+        public ETrackTowardType TowardType;
         
         public long Target;
         public List<SearchUnitPackable> SearchUnits;
