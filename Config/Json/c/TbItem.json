@@ -1,30 +1,35 @@
 [
   {
     "Id": 5001,
+    "desc": "恢复血量",
     "model": 50010001,
     "effect_group_id": 50010001,
     "search_target": 50010001
   },
   {
     "Id": 5002,
+    "desc": "恢复蓝量",
     "model": 50020001,
     "effect_group_id": 50020001,
     "search_target": 50020001
   },
   {
     "Id": 5003,
+    "desc": "普通攻击目标数量增加1",
     "model": 50020001,
     "effect_group_id": 50030001,
     "search_target": 50030001
   },
   {
     "Id": 5004,
+    "desc": "攻击力增加100%",
     "model": 50020001,
     "effect_group_id": 50040001,
     "search_target": 50030001
   },
   {
     "Id": 5005,
+    "desc": "攻击速度增加100%",
     "model": 50020001,
     "effect_group_id": 50050001,
     "search_target": 50030001

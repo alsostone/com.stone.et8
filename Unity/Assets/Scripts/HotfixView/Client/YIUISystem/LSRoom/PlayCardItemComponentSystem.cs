@@ -52,18 +52,21 @@ namespace ET.Client
             
             switch (self.ItemData.Type)
             {
-                case EUnitType.Block:
-                    self.u_DataName.SetValue($"Block{self.ItemData.TableId}");
+                case EUnitType.Block: {
+                    TbBlockRow blockRow = TbBlock.Instance.Get(self.ItemData.TableId);
+                    self.u_DataName.SetValue(blockRow.Desc);
                     break;
-                case EUnitType.Building:
-                {
+                }
+                case EUnitType.Building: {
                     TbBuildingRow buildingRow = TbBuilding.Instance.Get(self.ItemData.TableId);
                     self.u_DataName.SetValue(buildingRow.Desc);
                     break;
                 }
-                case EUnitType.Item:
-                    self.u_DataName.SetValue($"Item{self.ItemData.TableId}");
+                case EUnitType.Item: {
+                    TbItemRow itemRow = TbItem.Instance.Get(self.ItemData.TableId);
+                    self.u_DataName.SetValue(itemRow.Desc);
                     break;
+                }
             }
             
             self.u_ComCardRoot.localPosition = Vector3.zero;
@@ -90,12 +93,14 @@ namespace ET.Client
             self.IsHighlight = highlight;
             if (highlight) {
                 self.u_ComCardRoot.DOLocalMoveY(30, 0.25f);
+                self.u_ComCardRoot.DOScale(Vector3.one * 1.2f, 0.25f);
                 self.UIBase.OwnerRectTransform.SetAsLastSibling();
                 // 在此处可以发送选中该卡牌的指令给服务器，用来增加氛围感
                 // ...
             }
             else {
                 self.u_ComCardRoot.DOLocalMoveY(0, 0.25f);
+                self.u_ComCardRoot.DOScale(Vector3.one, 0.25f);
                 self.UIBase.OwnerRectTransform.SetSiblingIndex(self.SiblingIndex);
             }
         }

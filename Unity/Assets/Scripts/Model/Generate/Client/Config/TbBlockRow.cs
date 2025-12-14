@@ -17,6 +17,7 @@ namespace ET
         public TbBlockRow(ByteBuf _buf)
         {
             Id = _buf.ReadInt();
+            Desc = _buf.ReadString();
             Model = _buf.ReadInt();
             Model_Ref = null;
             PlacedLayer = _buf.ReadInt();
@@ -36,6 +37,11 @@ namespace ET
         /// ID
         /// </summary>
         public readonly int Id;
+
+        /// <summary>
+        /// 说明
+        /// </summary>
+        public readonly string Desc;
 
         /// <summary>
         /// 模型
@@ -71,6 +77,7 @@ namespace ET
         public  void ResolveRef()
         {
             
+            
             Model_Ref = TbResource.Instance.GetOrDefault(Model);
             
             
@@ -82,6 +89,7 @@ namespace ET
         {
             return "{ "
             + "Id:" + Id + ","
+            + "desc:" + Desc + ","
             + "model:" + Model + ","
             + "placedLayer:" + PlacedLayer + ","
             + "shape:" + Luban.StringUtil.CollectionToString(Shape) + ","

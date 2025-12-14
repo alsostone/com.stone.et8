@@ -1,6 +1,7 @@
 [
   {
     "Id": 2001,
+    "desc": "横一字型",
     "model": 20010001,
     "placed_layer": 3,
     "shape": [
@@ -44,6 +45,7 @@
   },
   {
     "Id": 2002,
+    "desc": "竖一字型",
     "model": 20020001,
     "placed_layer": 3,
     "shape": [
@@ -87,6 +89,7 @@
   },
   {
     "Id": 2003,
+    "desc": "T字形",
     "model": 20030001,
     "placed_layer": 3,
     "shape": [

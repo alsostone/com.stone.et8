@@ -234,9 +234,10 @@ namespace ET.Client
         {
             LSViewCardBagComponent viewCardBagComponent = self.Room().GetLookPlayerComponent<LSViewCardBagComponent>();
             
+            float halfCellWidth = 90;   // 从PlayCardItem预制体中获取卡牌宽度
             float width = self.u_ComCardsRoot.rect.width;
-            float itemWidth = Math.Min(180, width / viewCardBagComponent.Items.Count);
-            
+            float itemWidth = Math.Min(halfCellWidth * 2, width / viewCardBagComponent.Items.Count);
+
             int indexOld = 0;
             while (indexOld < self.CardsView.ItemRenderers.Count)
             {
@@ -246,7 +247,7 @@ namespace ET.Client
                     self.CardsView.RemoveItemRenderer(indexOld);
                 } else {
                     renderer.UIBase.OwnerRectTransform.SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, itemWidth);
-                    renderer.SetPosition(new Vector3(itemWidth * indexOld, 0));
+                    renderer.SetPosition(new Vector3(halfCellWidth + itemWidth * indexOld, 0));
                     renderer.ResetSiblingIndex(indexOld);
                     ++indexOld;
                 }
@@ -256,7 +257,7 @@ namespace ET.Client
                 var bagItem = viewCardBagComponent.Items[indexNew];
                 PlayCardItemComponent renderer = self.CardsView.CreateItemRenderer();
                 renderer.UIBase.OwnerRectTransform.SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, itemWidth);
-                renderer.SetData(bagItem, new Vector3(itemWidth * indexNew, 0));
+                renderer.SetData(bagItem, new Vector3(halfCellWidth + itemWidth * indexNew, 0));
                 renderer.ResetSiblingIndex(indexNew);
             }
         }
