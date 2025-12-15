@@ -2,9 +2,9 @@ using System.Collections.Generic;
 
 namespace ET
 {
-    public static class AttachPointNameMapping
+    public static class AttachPointSettings
     {
-        public static readonly Dictionary<string, AttachPoint> Mapping = new Dictionary<string, AttachPoint>()
+        public static readonly Dictionary<string, AttachPoint> NameMapping = new Dictionary<string, AttachPoint>()
         {
             {"headslot", AttachPoint.Head},
             {"chestslot", AttachPoint.Chest},

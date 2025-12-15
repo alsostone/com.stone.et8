@@ -47,7 +47,7 @@ namespace ET
 
         private void FindMatchName(GameObject gameObj)
         {
-            if (AttachPointNameMapping.Mapping.TryGetValue(gameObj.name, out var attachPoint)) {
+            if (AttachPointSettings.NameMapping.TryGetValue(gameObj.name, out var attachPoint)) {
                 if (AttachPointMapping.ContainsKey(attachPoint)) {
                     Debug.LogError($"AttachPointCollector FindMatchName duplicate attach point name: {gameObj.name} in {gameObj.transform.parent.name}");
                 }
