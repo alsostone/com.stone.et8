@@ -115,7 +115,7 @@ namespace ET
             {
                 DeathComponent deathComponent = lsOwner.GetComponent<DeathComponent>();
                 if (deathComponent != null)
-                    deathComponent.DoDeath();
+                    self.LSOwner().DeadMark = 1; // deathComponent.DoDeath()不能调用 会环形依赖
                 else
                 {
                     LSWorld lsWorld = self.LSWorld();

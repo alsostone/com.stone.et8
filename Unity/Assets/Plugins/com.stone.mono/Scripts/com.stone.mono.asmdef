@@ -1,7 +1,9 @@
 {
     "name": "com.stone.mono",
     "rootNamespace": "",
-    "references": [],
+    "references": [
+        "GUID:1aa3e8589868c80499255710874679c0"
+    ],
     "includePlatforms": [],
     "excludePlatforms": [],
     "allowUnsafeCode": false,

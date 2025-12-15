@@ -26,7 +26,7 @@ namespace ET.Server
                 Room2C_CheckHashFail room2CCheckHashFail = Room2C_CheckHashFail.Create();
                 room2CCheckHashFail.Frame = message.Frame;
                 room2CCheckHashFail.LSProcessBytes = ms.ToArray();
-#if ENABLE_FRAME_SNAPSHOT
+#if !DISABLE_FRAME_SNAPSHOT
                 room2CCheckHashFail.LSWorldBytes = room.FrameBuffer.Snapshot(message.Frame).ToArray();
 #endif
                 MessageLocationSenderOneType gateSession = room.Root().GetComponent<MessageLocationSenderComponent>().Get(LocationType.GateSession);

@@ -21,7 +21,7 @@ namespace ET.Client
             ++room.AuthorityFrame;
             FrameBuffer frameBuffer = room.FrameBuffer;
             
-#if ENABLE_FRAME_SNAPSHOT
+#if !DISABLE_FRAME_SNAPSHOT
             // 服务端返回的消息比预测的还早
             if (room.AuthorityFrame > room.PredictionFrame)
             {
@@ -49,7 +49,7 @@ namespace ET.Client
                 }
                 else // 对比成功
                 {
-                    room.Record(room.AuthorityFrame);
+                    room.Record();
                 }
                 room.SendHash(room.AuthorityFrame);
             }

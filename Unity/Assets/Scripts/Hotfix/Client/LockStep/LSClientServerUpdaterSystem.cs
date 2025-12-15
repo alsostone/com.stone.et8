@@ -27,7 +27,7 @@ namespace ET.Client
                     break;
                 ++room.PredictionFrame;
                 
-#if ENABLE_FRAME_SNAPSHOT
+#if !DISABLE_FRAME_SNAPSHOT
                 // 每秒发送一次时间对齐消息 根据网络延迟调整时间间隔 尽量确保客户端处于：服务器绝对时间+网络延迟的时刻
                 // 以此保证公平性 玩家不会因为网络问题而处于落后状态 但快照消耗较大，适合战场数据量较少的游戏
                 if (room.PredictionFrame % LSConstValue.FrameCountPerSecond == 0)

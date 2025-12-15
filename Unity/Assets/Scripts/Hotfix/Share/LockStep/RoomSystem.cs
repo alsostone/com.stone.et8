@@ -149,14 +149,14 @@ namespace ET
             
             if (self.LockStepMode >= LockStepMode.Local)
             {
-#if ENABLE_FRAME_SNAPSHOT
+#if !DISABLE_FRAME_SNAPSHOT
                 self.SaveLSWorld();
 #endif
                 self.Record();
             }
         }
         
-#if ENABLE_FRAME_SNAPSHOT
+#if !DISABLE_FRAME_SNAPSHOT
         public static LSWorld GetLSWorld(this Room self, int frame)
         {
             MemoryBuffer memoryBuffer = self.FrameBuffer.Snapshot(frame);
@@ -168,8 +168,8 @@ namespace ET
 #endif
         public static byte[] GetLSWorldBytes(this Room self)
         {
-#if ENABLE_FRAME_SNAPSHOT
-            MemoryBuffer buffer = room.FrameBuffer.Snapshot(self.LSWorld.Frame);
+#if !DISABLE_FRAME_SNAPSHOT
+            MemoryBuffer buffer = self.FrameBuffer.Snapshot(self.LSWorld.Frame);
             buffer.Seek(0, SeekOrigin.Begin);
             return buffer.ToArray();
 #else
@@ -183,7 +183,7 @@ namespace ET
 #endif
         }
         
-#if ENABLE_FRAME_SNAPSHOT
+#if !DISABLE_FRAME_SNAPSHOT
         private static void SaveLSWorld(this Room self)
         {
             MemoryBuffer memoryBuffer = self.FrameBuffer.Snapshot(self.LSWorld.Frame);
@@ -205,7 +205,7 @@ namespace ET
             frameMessage.CopyTo(saveFrameMessage);
             self.Replay.FrameMessages.Add(saveFrameMessage);
             
-#if ENABLE_FRAME_SNAPSHOT
+#if !DISABLE_FRAME_SNAPSHOT
             if (self.LSWorld.Frame % LSConstValue.SaveLSWorldFrameCount == 0) {
                 self.Replay.Snapshots.Add(self.GetLSWorldBytes());
             }

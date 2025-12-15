@@ -19,7 +19,7 @@ namespace ET
                 this.frameMessages.Add(Room2C_FrameMessage.Create());
             }
             
-#if ENABLE_FRAME_SNAPSHOT
+#if !DISABLE_FRAME_SNAPSHOT
             this.snapshots = new List<MemoryBuffer>(capacity);
             for (int i = 0; i < capacity; ++i)
             {
@@ -59,7 +59,7 @@ namespace ET
             frameMessage.Commands.Clear();
         }
         
-#if ENABLE_FRAME_SNAPSHOT
+#if !DISABLE_FRAME_SNAPSHOT
         public MemoryBuffer Snapshot(int frame)
         {
             EnsureFrame(frame);

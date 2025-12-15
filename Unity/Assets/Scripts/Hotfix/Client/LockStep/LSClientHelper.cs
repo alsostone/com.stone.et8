@@ -30,7 +30,7 @@ namespace ET.Client
             }
         }
         
-#if ENABLE_FRAME_SNAPSHOT
+#if !DISABLE_FRAME_SNAPSHOT
         // 回滚
         public static void Rollback(Room room, int authorityFrame, int predictionFrame)
         {

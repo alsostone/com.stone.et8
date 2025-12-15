@@ -31,6 +31,10 @@
     </PropertyGroup>
 
     <ItemGroup>
+        <Compile Include="..\..\Unity\Assets\Scripts\ThirdParty\Const\**\*.cs">
+            <Link>Const/%(RecursiveDir)%(FileName)%(Extension)</Link>
+        </Compile>
+        
         <Compile Include="..\..\Unity\Assets\Scripts\ThirdParty\RVO2\**\*.cs">
             <Link>RVO2/%(RecursiveDir)%(FileName)%(Extension)</Link>
         </Compile>
