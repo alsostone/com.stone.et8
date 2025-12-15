@@ -421,7 +421,7 @@
     "action_type": 2,
     "action_param": [
       1,
-      5000
+      100000
     ]
   },
   {
@@ -434,7 +434,7 @@
     "action_type": 2,
     "action_param": [
       2,
-      5000
+      100000
     ]
   },
   {

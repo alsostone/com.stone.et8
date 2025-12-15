@@ -26,19 +26,25 @@ public class FloatingTextSpawner : MonoBehaviour
     
     public void FloatingHealNumber(float value, Vector3 position)
     {
-        DamageNumber.Spawn(position, value);
+        HealNumber.Spawn(position, value);
     }
     
     public void FloatingExpNumber(float value, Vector3 position, Transform target)
     {
-        var number = DamageNumber.Spawn(position, value);
+        var number = ExpNumber.Spawn(position, value);
         number.enableFollowing = true;
         number.followedTarget = target;
     }
     
-    public void FloatingTextNumber(int value, Vector3 position)
+    public void FloatingTextNumber(int type, Vector3 position)
     {
-        var number = DamageNumber.Spawn(position);
-        number.leftText = this.texts[Math.Clamp(value, 0, this.texts.Count - 1)];
+        var number = TextNumber.Spawn(position);
+        number.leftText = this.texts[Math.Clamp(type, 0, this.texts.Count - 1)];
+    }
+    
+    public void FloatingTextNumber(int type, float value, Vector3 position)
+    {
+        var number = TextNumber.Spawn(position, -value);
+        number.leftText = this.texts[Math.Clamp(type, 0, this.texts.Count - 1)];
     }
 }

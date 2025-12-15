@@ -67,12 +67,22 @@ namespace ET
 		    
 		    // 初始卡组 可以通过配置表来
 		    var cards = ObjectPool.Instance.Fetch<List<LSRandomDropItem>>();
-		    cards.Add(new LSRandomDropItem(EUnitType.Building, 30021, 1));
-		    cards.Add(new LSRandomDropItem(EUnitType.Block, 2003, 2));
+		    cards.Add(new LSRandomDropItem(EUnitType.Block, 2001, 1));
+		    cards.Add(new LSRandomDropItem(EUnitType.Block, 2002, 1));
+		    cards.Add(new LSRandomDropItem(EUnitType.Block, 2003, 1));
 		    cards.Add(new LSRandomDropItem(EUnitType.Item, 5001, 1));
 		    cards.Add(new LSRandomDropItem(EUnitType.Item, 5003, 1));
 		    cards.Add(new LSRandomDropItem(EUnitType.Item, 5004, 1));
 		    cards.Add(new LSRandomDropItem(EUnitType.Item, 5005, 1));
+		    cards.Add(new LSRandomDropItem(EUnitType.Building, 30011, 1));
+		    cards.Add(new LSRandomDropItem(EUnitType.Building, 30021, 1));
+		    cards.Add(new LSRandomDropItem(EUnitType.Building, 30031, 1));
+		    cards.Add(new LSRandomDropItem(EUnitType.Building, 30041, 1));
+		    cards.Add(new LSRandomDropItem(EUnitType.Building, 30051, 1));
+		    cards.Add(new LSRandomDropItem(EUnitType.Building, 30061, 1));
+		    cards.Add(new LSRandomDropItem(EUnitType.Building, 30071, 1));
+		    cards.Add(new LSRandomDropItem(EUnitType.Building, 30081, 1));
+		    
 		    lsUnit.AddComponent<CardBagComponent, List<LSRandomDropItem>>(cards);
 		    cards.Clear();
 		    ObjectPool.Instance.Recycle(cards);
@@ -107,7 +117,7 @@ namespace ET
 			lsUnit.AddComponent<DeathComponent, bool>(false);
 			lsUnit.AddComponent<BuffComponent>();
 			lsUnit.AddComponent<BeHitComponent>();
-	        lsUnit.AddComponent<MoveFlowFieldComponent>();
+			lsUnit.AddComponent<MoveFlowFieldComponent>();
 			lsUnit.AddComponent<SkillComponent, int[], int[]>(row.NormalSkills, row.ActiveSkills);
 			
 			EventSystem.Instance.Publish(lsWorld, new LSUnitCreate() {LSUnit = lsUnit});

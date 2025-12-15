@@ -20,6 +20,7 @@ namespace ET.Client
             switch (args.Type)
             {
                 case FloatingType.Damage:
+                case FloatingType.Critical:
                     FloatingTextSpawner.instance.FloatingDamageNumber(args.Value.AsFloat(), position);
                     break;
                 case FloatingType.Heal:
@@ -28,9 +29,12 @@ namespace ET.Client
                 case FloatingType.Exp:
                     FloatingTextSpawner.instance.FloatingExpNumber(args.Value.AsFloat(), position, transformComponent.Transform);
                     break;
+                case FloatingType.Miss:
+                    FloatingTextSpawner.instance.FloatingTextNumber(FloatingType.Miss - FloatingType.Dodge, position);
+                    break;
                 default:
-                    var value = (int)args.Value - (int)FloatingType.Dodge;
-                    FloatingTextSpawner.instance.FloatingTextNumber(value, position);
+                    var type = args.Type - FloatingType.Dodge;
+                    FloatingTextSpawner.instance.FloatingTextNumber(type, args.Value.AsFloat(), position);
                     break;
             }
             await ETTask.CompletedTask;
