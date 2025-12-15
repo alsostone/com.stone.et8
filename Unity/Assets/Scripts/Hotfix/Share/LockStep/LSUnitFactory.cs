@@ -19,13 +19,14 @@ namespace ET
 		    return lsUnit;
 	    }
 
-	    public static LSUnit CreateTeam(LSWorld lsWorld, TeamType teamType)
+	    public static LSUnit CreateTeamPlayer(LSWorld lsWorld, TeamType teamType)
 	    {
 		    LSUnitComponent lsUnitComponent = lsWorld.GetComponent<LSUnitComponent>();
 		    LSUnit lsUnit = lsUnitComponent.AddChildWithId<LSUnit>(LSConstValue.GlobalIdOffset - 1 - (int)teamType);
 		    
 		    lsUnit.AddComponent<TypeComponent, EUnitType>(EUnitType.Team);
 		    lsUnit.AddComponent<TeamComponent, TeamType>(teamType);
+		    
 		    lsUnit.AddComponent<WorkQueueComponent>();
 		    
 		    PropComponent propComponent = lsUnit.AddComponent<PropComponent, int>(0);
@@ -36,6 +37,18 @@ namespace ET
 		    propComponent.Set(NumericType.Gold, 50, false);
 		    propComponent.Set(NumericType.Wood, 50, false);
 		    propComponent.Set(NumericType.Population, 10, false);
+		    
+		    return lsUnit;
+	    }
+	    
+	    public static LSUnit CreateTeamMonster(LSWorld lsWorld, TeamType teamType)
+	    {
+		    LSUnitComponent lsUnitComponent = lsWorld.GetComponent<LSUnitComponent>();
+		    LSUnit lsUnit = lsUnitComponent.AddChildWithId<LSUnit>(LSConstValue.GlobalIdOffset - 1 - (int)teamType);
+		    
+		    lsUnit.AddComponent<TypeComponent, EUnitType>(EUnitType.Team);
+		    lsUnit.AddComponent<TeamComponent, TeamType>(teamType);
+		    lsUnit.AddComponent<PropComponent, int>(0);
 		    
 		    return lsUnit;
 	    }

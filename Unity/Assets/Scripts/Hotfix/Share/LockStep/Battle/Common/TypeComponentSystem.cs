@@ -10,5 +10,9 @@ namespace ET
             self.Type = type;
         }
         
+        public static bool IsType(this TypeComponent self, EUnitType type)
+        {
+            return (self.Type & type) != 0;
+        }
     }
 }

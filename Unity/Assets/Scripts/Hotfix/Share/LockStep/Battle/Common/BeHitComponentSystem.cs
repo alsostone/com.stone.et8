@@ -132,13 +132,16 @@ namespace ET
             }
         }
 
-        internal static void GetCounterAttack(this BeHitComponent self, TSVector center, FP range, List<SearchUnit> results)
+        internal static void GetCounterAttack(this BeHitComponent self, TbSearchRow res, TSVector center, FP range, List<SearchUnit> results)
         {
             for (var i = self.Attackers.Count - 1; i >= 0; i--)
             {
                 var target = self.LSUnit(self.Attackers[i]);
                 if (target == null || target.DeadMark > 0) {
                     self.Attackers.RemoveAt(i);
+                    continue;
+                }
+                if (!target.GetComponent<TypeComponent>().IsType(res.Type)) {
                     continue;
                 }
                 FP range2 = range + target.GetComponent<PropComponent>().Radius;

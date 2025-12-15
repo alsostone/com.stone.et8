@@ -168,11 +168,11 @@
         <var name="AddBulletDirection" alias="固定朝向子弹" value="19" comment="朝指定的方向发射子弹"/>
     </enum>
 
-    <enum name="TeamType" comment="队伍类型" unique="TRUE">
+    <enum name="TeamType" comment="队伍类型" unique="TRUE" flags="TRUE">
         <var name="None" alias="" value="0"/>
         <var name="TeamA" alias="队伍A" value="1"/>
         <var name="TeamB" alias="队伍B" value="2"/>
-        <var name="Max" alias="MAX" value="3"/>
+        <var name="TeamNeutral" alias="中立" value="4"/>
     </enum>
 
     <enum name="FlagRestrict" comment="禁止标签" unique="TRUE" flags="TRUE">

@@ -23,7 +23,7 @@ namespace ET
             
             TeamComponent teamComponent = self.LSOwner().GetComponent<TeamComponent>();
             LSTargetsComponent lsTargetsComponent = self.LSWorld().GetComponent<LSTargetsComponent>();
-            if (lsTargetsComponent.GetAliveCount(teamComponent.GetEnemyTeam()) > 0)
+            if (lsTargetsComponent.GetAliveCount(teamComponent.GetOppositeTeam()) > 0)
                 return;
             
             // 波次结束且敌方单位全部死亡则给于抽卡一次

@@ -12,6 +12,7 @@ namespace ET
     /// <summary>
     /// 队伍类型
     /// </summary>
+    [System.Flags]
     public enum TeamType
     {
         None = 0,
@@ -27,9 +28,9 @@ namespace ET
         TeamB = 2,
 
         /// <summary>
-        /// MAX
+        /// 中立
         /// </summary>
-        Max = 3,
+        TeamNeutral = 4,
 
     }
 }

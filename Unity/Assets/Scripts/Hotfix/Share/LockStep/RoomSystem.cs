@@ -32,13 +32,13 @@ namespace ET
             lsWorld.AddComponent<LSUnitComponent>();
 
             LSUnitFactory.CreateGlobal(lsWorld);
-            for (TeamType teamType = TeamType.None; teamType < TeamType.Max; ++teamType) {
-                LSUnitFactory.CreateTeam(lsWorld, teamType);
-            }
+            LSUnitFactory.CreateTeamPlayer(lsWorld, TeamType.TeamA);
+            LSUnitFactory.CreateTeamMonster(lsWorld, TeamType.TeamB);
+            LSUnitFactory.CreateTeamMonster(lsWorld, TeamType.TeamNeutral);
             
             for (int i = 0; i < matchInfo.UnitInfos.Count; ++i) {
                 LockStepUnitInfo unitInfo = matchInfo.UnitInfos[i];
-                TeamType teamType = (TeamType)(i + 1);
+                TeamType teamType = (TeamType)(1 << i);
                 
                 LSUnit lsHero = null;
                 if (unitInfo.HeroSkinId > 0) {

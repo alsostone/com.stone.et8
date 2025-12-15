@@ -1,3 +1,5 @@
+using System.Collections.Generic;
+
 namespace ET
 {
     [EntitySystemOf(typeof(TeamComponent))]
@@ -10,22 +12,51 @@ namespace ET
             self.Type = type;
         }
         
-        public static TeamType GetFriendTeam(this TeamComponent self)
+        public static TeamType GetOwnerTeam(this TeamComponent self)
         {
             return self.Type;
         }
         
-        public static TeamType GetEnemyTeam(this TeamComponent self)
+        public static TeamType GetOppositeTeam(this TeamComponent self)
         {
-            if (self.Type == TeamType.TeamA)
+            return self.Type == TeamType.TeamA ? TeamType.TeamB : TeamType.TeamA;
+        }
+        
+        public static IList<TeamType> GetFriendTeams(this TeamComponent self)
+        {
+            var teams = ObjectPool.Instance.Fetch<List<TeamType>>();
+            teams.Add(self.Type);
+            return teams;
+        }
+        
+        public static IList<TeamType> GetEnemyTeams(this TeamComponent self)
+        {
+            var teams = ObjectPool.Instance.Fetch<List<TeamType>>();
+            switch (self.Type)
             {
-                return TeamType.TeamB;
+                case TeamType.TeamNeutral:
+                    teams.Add(TeamType.TeamA);
+                    teams.Add(TeamType.TeamB);
+                    break;
+                case TeamType.TeamA:
+                    teams.Add(TeamType.TeamB);
+                    teams.Add(TeamType.TeamNeutral);
+                    break;
+                case TeamType.TeamB:
+                    teams.Add(TeamType.TeamA);
+                    teams.Add(TeamType.TeamNeutral);
+                    break;
             }
-            if (self.Type == TeamType.TeamB)
-            {
-                return TeamType.TeamA;
-            }
-            return TeamType.None;
+            return teams;
+        }
+        
+        public static IList<TeamType> GetAllTeams(this TeamComponent self)
+        {
+            var teams = ObjectPool.Instance.Fetch<List<TeamType>>();
+            teams.Add(TeamType.TeamA);
+            teams.Add(TeamType.TeamB);
+            teams.Add(TeamType.TeamNeutral);
+            return teams;
         }
     }
 }

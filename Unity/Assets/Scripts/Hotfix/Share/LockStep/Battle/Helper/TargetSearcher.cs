@@ -38,12 +38,12 @@ namespace ET
                     results.Add(new SearchUnit() { Target = owner.LSUnit(LSConstValue.GlobalIdOffset)});
                     return 0;
                 case ESearchTargetTeam.FriendTeam: {
-                    TeamType team = owner.GetComponent<TeamComponent>()?.GetFriendTeam() ?? TeamType.None;
+                    TeamType team = owner.GetComponent<TeamComponent>().GetOwnerTeam();
                     results.Add(new SearchUnit() { Target = owner.LSTeamUnit(team) });
                     return 0;
                 }
                 case ESearchTargetTeam.EnemyTeam: {
-                    TeamType team = owner.GetComponent<TeamComponent>()?.GetEnemyTeam() ?? TeamType.None;
+                    TeamType team = owner.GetComponent<TeamComponent>().GetOppositeTeam();
                     results.Add(new SearchUnit() { Target = owner.LSTeamUnit(team) });
                     return 0;
                 }
@@ -54,18 +54,33 @@ namespace ET
             
             switch (res.Team) {
                 case ESearchTargetTeam.All: {
-                    lsTargetsComponent.GetAllAttackTargets(results);
+                    IList<TeamType> teams = owner.GetComponent<TeamComponent>().GetAllTeams();
+                    foreach (TeamType team in teams) {
+                        lsTargetsComponent.GetAttackTargetsWithShape(team, res, center, forward, up, range, results);
+                    }
+                    teams.Clear();
+                    ObjectPool.Instance.Recycle(teams);
                     break;
                 }
                 case ESearchTargetTeam.Friend: {
-                    TeamType team = owner.GetComponent<TeamComponent>().GetFriendTeam();
-                    lsTargetsComponent.GetAttackTargetsWithShape(team, res, center, forward, up, range, results);
+                    IList<TeamType> teams = owner.GetComponent<TeamComponent>().GetFriendTeams();
+                    foreach (TeamType team in teams) {
+                        lsTargetsComponent.GetAttackTargetsWithShape(team, res, center, forward, up, range, results);
+                    }
+                    teams.Clear();
+                    ObjectPool.Instance.Recycle(teams);
                     break;
                 }
                 case ESearchTargetTeam.FriendExcludeSelf: {
-                    TeamType team = owner.GetComponent<TeamComponent>().GetFriendTeam();
-                    lsTargetsComponent.GetAttackTargetsWithShape(team, res, center, forward, up, range, results);
-                    for (int i = 0; i < results.Count; i++) {   // 排除自己的情形少 不要把判断放到获取目标的方法里去
+                    IList<TeamType> teams = owner.GetComponent<TeamComponent>().GetFriendTeams();
+                    foreach (TeamType team in teams) {
+                        lsTargetsComponent.GetAttackTargetsWithShape(team, res, center, forward, up, range, results);
+                    }
+                    teams.Clear();
+                    ObjectPool.Instance.Recycle(teams);
+                    
+                    // 排除自己的情形少 不要把判断放到获取目标的方法里去
+                    for (int i = 0; i < results.Count; i++) {
                         if (results[i].Target == owner) {
                             results.RemoveAt(i);
                         }
@@ -73,19 +88,22 @@ namespace ET
                     break;
                 }
                 case ESearchTargetTeam.Enemy: {
-                    TeamType team = owner.GetComponent<TeamComponent>().GetEnemyTeam();
-                    lsTargetsComponent.GetAttackTargetsWithShape(team, res, center, forward, up, range, results);
+                    IList<TeamType> teams = owner.GetComponent<TeamComponent>().GetEnemyTeams();
+                    foreach (TeamType team in teams) {
+                        lsTargetsComponent.GetAttackTargetsWithShape(team, res, center, forward, up, range, results);
+                    }
+                    teams.Clear();
+                    ObjectPool.Instance.Recycle(teams);
                     break;
                 }
                 case ESearchTargetTeam.Counter: {
-                    owner.GetComponent<BeHitComponent>()?.GetCounterAttack(center, range, results);
+                    owner.GetComponent<BeHitComponent>()?.GetCounterAttack(res, center, range, results);
                     break;
                 }
                 default: throw new ArgumentOutOfRangeException();
             }
             
             // 形状过滤不放在此处 获取目标时考虑形状更高效
-            FilterWithType(res.Type, results);
             FilterWithTableId(res.TableId, results);
 
             // 配置规则：数量未配置或<=0认为不限制数量

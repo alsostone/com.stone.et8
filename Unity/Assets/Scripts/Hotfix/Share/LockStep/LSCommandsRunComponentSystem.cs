@@ -139,13 +139,13 @@ namespace ET
             {
                 case CommandGMType.Victory:
                 {
-                    TeamType team = self.LSOwner().GetComponent<TeamComponent>().GetFriendTeam();
+                    TeamType team = self.LSOwner().GetComponent<TeamComponent>().GetOwnerTeam();
                     self.LSWorld().GetComponent<LSGameOverComponent>().SetGameOver(team);
                     break;
                 }
                 case CommandGMType.Failure:
                 {
-                    TeamType team = self.LSOwner().GetComponent<TeamComponent>().GetEnemyTeam();
+                    TeamType team = self.LSOwner().GetComponent<TeamComponent>().GetOppositeTeam();
                     self.LSWorld().GetComponent<LSGameOverComponent>().SetGameOver(team);
                     break;
                 }

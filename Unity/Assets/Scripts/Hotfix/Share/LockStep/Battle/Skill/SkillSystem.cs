@@ -151,7 +151,7 @@ namespace ET
                     if (tbRow.ConsumeParam.Length < 2)
                         return true;
 
-                    TeamType team = self.LSOwner().GetComponent<TeamComponent>()?.GetFriendTeam() ?? TeamType.None;
+                    TeamType team = self.LSOwner().GetComponent<TeamComponent>().GetOwnerTeam();
                     PropComponent propComponent = self.LSTeamUnit(team).GetComponent<PropComponent>();
                     
                     for (int i = 0; i < tbRow.ConsumeParam.Length; i += 2)
