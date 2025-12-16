@@ -25,7 +25,7 @@ namespace ET.Client
                 self.mousePosition = Input.mousePosition;
                 self.OnTouchBegin(Input.mousePosition);
             }
-            else if (self.isMouseDraging)
+            if (self.isMouseDraging)
             {
                 if (Input.GetMouseButtonUp(0))
                 {
