@@ -31,8 +31,8 @@ namespace ET
                     case OperateCommandType.Move:
                     {
                         self.IsRightDownMove = false;
-                        self.GetBindUnitComponent<MovePathFindingComponent>()?.Stop();
-                        self.GetBindUnitComponent<MoveFlowFieldComponent>()?.Stop();
+                        self.GetPlayerBindComponent<MovePathFindingComponent>()?.Stop();
+                        self.GetPlayerBindComponent<MoveFlowFieldComponent>()?.Stop();
                         self.MoveAxis = LSCommand.ParseCommandFloat2(command);
                         break;
                     }
@@ -103,7 +103,7 @@ namespace ET
             
             // 非右键点击移动时执行普通移动
             if (!self.IsRightDownMove) {
-                self.GetBindUnitComponent<TransformComponent>()?.Move(self.MoveAxis);
+                self.GetPlayerBindComponent<TransformComponent>()?.Move(self.MoveAxis);
             }
         }
 
@@ -119,13 +119,13 @@ namespace ET
                     self.LSOwner().GetComponent<CardSelectComponent>().TrySelectCard((int)button.Item2);
                     break;
                 case CommandButtonType.Attack:
-                    self.GetBindUnitComponent<SkillComponent>()?.TryCastSkill(ESkillType.Normal);
+                    self.GetPlayerBindComponent<SkillComponent>()?.TryCastSkill(ESkillType.Normal);
                     break;
                 case CommandButtonType.Skill1:
-                    self.GetBindUnitComponent<SkillComponent>()?.TryCastSkill(ESkillType.Active, 0);
+                    self.GetPlayerBindComponent<SkillComponent>()?.TryCastSkill(ESkillType.Active, 0);
                     break;
                 case CommandButtonType.Skill2:
-                    self.GetBindUnitComponent<SkillComponent>()?.TryCastSkill(ESkillType.Active, 1);
+                    self.GetPlayerBindComponent<SkillComponent>()?.TryCastSkill(ESkillType.Active, 1);
                     break;
                 default: break;
             }
@@ -159,7 +159,7 @@ namespace ET
         }
 #endif
         
-        private static T GetBindUnitComponent<T>(this LSCommandsRunComponent self) where T : LSEntity
+        private static T GetPlayerBindComponent<T>(this LSCommandsRunComponent self) where T : LSEntity
         {
             PlayerComponent lsPlayerComponent = self.LSOwner().GetComponent<PlayerComponent>();
             if (lsPlayerComponent.BindEntityId == 0)

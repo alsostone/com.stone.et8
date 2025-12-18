@@ -26,14 +26,14 @@ namespace ET.Client
 			{
 				if (Input.GetKeyDown(KeyCode.Tab))
 				{
-					self.LookSeatIndex = (self.LookSeatIndex + 1) % room.PlayerIds.Count;
-					self.LookUnitView = self.GetBindUnitView(self.LookSeatIndex);
+					LSLookComponent lookComponent = room.GetComponent<LSLookComponent>();
+					lookComponent.SetLookSeatIndex(lookComponent.GetLookSeatIndex() + 1);
+					self.LookUnitView = room.GetLookHeroView();
 				}
 			}
 			else if (self.LookUnitView == null)
 			{
-				int seatIndex = room.GetLookSeatIndex();
-				self.LookUnitView = self.GetBindUnitView(seatIndex);
+				self.LookUnitView = room.GetLookHeroView();
 			}
 			
 			if (!self.IsDragging && self.LookUnitView != null && self.IsFlowTarget)
@@ -44,22 +44,9 @@ namespace ET.Client
 			self.Transform.position = self.LookPosition + new Vector3(0, 20, -2.5f);
 		}
 		
-		private static LSUnitView GetBindUnitView(this LSCameraComponent self, int seatIndex)
-		{
-			Room room = self.Room();
-			LSUnitViewComponent lsUnitViewComponent = room.GetComponent<LSUnitViewComponent>();
-			LSUnitView lsPlayer = lsUnitViewComponent.GetChild<LSUnitView>(room.PlayerIds[seatIndex]);
-			
-			LSViewPlayerComponent lsViewPlayerComponent = lsPlayer.GetComponent<LSViewPlayerComponent>();
-			if (lsViewPlayerComponent.BindViewId == 0)
-				return null;
-			
-			return lsUnitViewComponent.GetChild<LSUnitView>(lsViewPlayerComponent.BindViewId);
-		}
-		
 		private static void OnDragScrolling(this LSCameraComponent self)
 		{
-			LSUnitView lsPlayer = self.LSUnitView(self.Room().LookPlayerId);
+			LSUnitView lsPlayer = self.Room().GetLookPlayerView();
 			if (lsPlayer.GetComponent<LSViewSelectionComponent>().HasSelectedUnit())
 			{
 				// 有选中单位时禁止拖拽摄像机移动

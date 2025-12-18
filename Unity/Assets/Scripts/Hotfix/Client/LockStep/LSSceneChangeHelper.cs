@@ -12,11 +12,11 @@ namespace ET.Client
 
             Room room = root.AddComponentWithId<Room>(matchInfo.ActorId.InstanceId);
             room.StageId = matchInfo.StageId;
+            room.LockStepMode = lockStepMode;
             room.Replay.MatchInfo = matchInfo;
             
             LSWorld lsWorld = new LSWorld(SceneType.LockStepClient);
             room.InitNewWorld(lsWorld, matchInfo);
-            room.InitLockStep(lockStepMode, ownerPlayerId, lookPlayerId);
 
             // 等待表现层订阅的事件完成
             TbStageRow row = TbStage.Instance.Get(matchInfo.StageId);
@@ -36,7 +36,7 @@ namespace ET.Client
             room.Start(startTime);
             
             // 这个事件中可以订阅取消loading
-            EventSystem.Instance.Publish(root, new LSSceneInitFinish());
+            EventSystem.Instance.Publish(root, new LSSceneInitFinish() { OwnerId = ownerPlayerId, LookId = lookPlayerId });
         }
         
         // 场景切换协程
@@ -46,11 +46,11 @@ namespace ET.Client
 
             Room room = root.AddComponent<Room>();
             room.StageId = replay.MatchInfo.StageId;
+            room.LockStepMode = LockStepMode.ObserverFile;
             room.Replay = replay;
             
             LSWorld lsWorld = new LSWorld(SceneType.LockStepClient);
             room.InitNewWorld(lsWorld, replay.MatchInfo);
-            room.InitLockStep(LockStepMode.ObserverFile, ownerPlayerId, lookPlayerId);
             
             // 等待表现层订阅的事件完成
             TbStageRow row = TbStage.Instance.Get(replay.MatchInfo.StageId);
@@ -59,7 +59,7 @@ namespace ET.Client
             room.Start(TimeInfo.Instance.ServerFrameTime());
             
             // 这个事件中可以订阅取消loading
-            EventSystem.Instance.Publish(root, new LSSceneInitFinish());
+            EventSystem.Instance.Publish(root, new LSSceneInitFinish() { OwnerId = ownerPlayerId, LookId = lookPlayerId });
         }
         
         // 场景切换协程
@@ -69,13 +69,13 @@ namespace ET.Client
             
             Room room = root.AddComponentWithId<Room>(message.MatchInfo.ActorId.InstanceId);
             room.StageId = message.MatchInfo.StageId;
+            room.LockStepMode = LockStepMode.Server;
             
             room.Replay.MatchInfo = message.MatchInfo;
             room.Replay.LSWorldBytes = message.LSWorldBytes;
             
             LSWorld lsWorld = MemoryPackHelper.Deserialize(typeof(LSWorld), message.LSWorldBytes, 0, message.LSWorldBytes.Length) as LSWorld;
             room.InitExsitWorld(lsWorld, message.MatchInfo);
-            room.InitLockStep(LockStepMode.Server, ownerPlayerId, lookPlayerId);
 
             // 等待表现层订阅的事件完成
             TbStageRow row = TbStage.Instance.Get(message.MatchInfo.StageId);
@@ -84,7 +84,7 @@ namespace ET.Client
             room.Start(message.StartTime);
             
             // 这个事件中可以订阅取消loading
-            EventSystem.Instance.Publish(root, new LSSceneInitFinish());
+            EventSystem.Instance.Publish(root, new LSSceneInitFinish() { OwnerId = ownerPlayerId, LookId = lookPlayerId });
         }
     }
 }

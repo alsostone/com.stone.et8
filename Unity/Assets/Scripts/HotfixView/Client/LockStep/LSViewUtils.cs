@@ -28,12 +28,47 @@ namespace ET.Client
             }
         }
 
+        public static int GetLookSeatIndex(this Entity self)
+        {
+            LSLookComponent lookComponent = self.Room().GetComponent<LSLookComponent>();
+            return lookComponent.GetLookSeatIndex();
+        }
+        
+        public static long GetLookPlayerId(this Entity self)
+        {
+            LSLookComponent lookComponent = self.Room().GetComponent<LSLookComponent>();
+            return lookComponent.LookPlayerId;
+        }
+        
         public static T GetLookPlayerComponent<T>(this Room self) where T : Entity
         {
+            LSLookComponent lookComponent = self.GetComponent<LSLookComponent>();
             LSUnitViewComponent lsUnitViewComponent = self.GetComponent<LSUnitViewComponent>();
-            LSUnitView lsPlayer = lsUnitViewComponent.GetChild<LSUnitView>(self.LookPlayerId);
+            LSUnitView lsPlayer = lsUnitViewComponent.GetChild<LSUnitView>(lookComponent.LookPlayerId);
             return lsPlayer.GetComponent<T>();
         }
         
+        public static LSUnitView GetLookPlayerView(this Room self)
+        {
+            LSLookComponent lookComponent = self.GetComponent<LSLookComponent>();
+            LSUnitViewComponent lsUnitViewComponent = self.GetComponent<LSUnitViewComponent>();
+            return lsUnitViewComponent.GetChild<LSUnitView>(lookComponent.LookPlayerId);
+        }
+
+        public static LSUnitView GetLookHeroView(this Room self)
+        {
+            LSUnitViewComponent lsUnitViewComponent = self.GetComponent<LSUnitViewComponent>();
+            if (lsUnitViewComponent == null)	// 被初始化调用时 还没有LSUnitViewComponent
+                return null;
+			
+            LSLookComponent lookComponent = self.GetComponent<LSLookComponent>();
+            LSUnitView lsPlayer = lsUnitViewComponent.GetChild<LSUnitView>(lookComponent.LookPlayerId);
+            LSViewPlayerComponent lsViewPlayerComponent = lsPlayer.GetComponent<LSViewPlayerComponent>();
+            if (lsViewPlayerComponent.BindHeroId == 0)
+                return null;
+			
+            return lsUnitViewComponent.GetChild<LSUnitView>(lsViewPlayerComponent.BindHeroId);
+        }
+ 
     }
 }

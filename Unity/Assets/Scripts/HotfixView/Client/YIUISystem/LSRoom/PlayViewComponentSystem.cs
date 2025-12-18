@@ -65,7 +65,7 @@ namespace ET.Client
         private static async ETTask YIUIEvent(this PlayViewComponent self, UICardDragStartEvent message)
         {
             await ETTask.CompletedTask;
-            if (message.PlayerId == self.Room().LookPlayerId)
+            if (message.PlayerId == self.GetLookPlayerId())
             {
                 TweenerCore<float, float, FloatOptions> t = DOTween.To(() => self.u_ComAlphaGroup.alpha, x => self.u_ComAlphaGroup.alpha = x, 0.3f, 0.2f);
                 t.SetTarget(self.u_ComAlphaGroup);
@@ -76,7 +76,7 @@ namespace ET.Client
         private static async ETTask YIUIEvent(this PlayViewComponent self, UICardDragEndEvent message)
         {
             await ETTask.CompletedTask;
-            if (message.PlayerId == self.Room().LookPlayerId)
+            if (message.PlayerId == self.GetLookPlayerId())
             {
                 TweenerCore<float, float, FloatOptions> t = DOTween.To(() => self.u_ComAlphaGroup.alpha, x => self.u_ComAlphaGroup.alpha = x, 1.0f, 0.2f);
                 t.SetTarget(self.u_ComAlphaGroup);
@@ -89,7 +89,7 @@ namespace ET.Client
         private static async ETTask YIUIEvent(this PlayViewComponent self, UIArrowDragStartEvent message)
         {
             await ETTask.CompletedTask;
-            if (message.PlayerId == self.Room().LookPlayerId)
+            if (message.PlayerId == self.GetLookPlayerId())
             {
                 PlayCardItemComponent itemRenderer = null;
                 foreach (PlayCardItemComponent renderer in self.CardsView.ItemRenderers)
@@ -111,7 +111,7 @@ namespace ET.Client
         private static async ETTask YIUIEvent(this PlayViewComponent self, UIArrowDragEvent message)
         {
             await ETTask.CompletedTask;
-            if (self.IsArrowDragging && message.PlayerId == self.Room().LookPlayerId)
+            if (self.IsArrowDragging && message.PlayerId == self.GetLookPlayerId())
             {
                 LSCameraComponent cameraComponent = self.Room().GetComponent<LSCameraComponent>();
                 Vector3 screenPos = cameraComponent.Camera.WorldToScreenPoint(message.Position);
@@ -129,7 +129,7 @@ namespace ET.Client
         private static async ETTask YIUIEvent(this PlayViewComponent self, UIArrowDragEndEvent message)
         {
             await ETTask.CompletedTask;
-            if (self.IsArrowDragging && message.PlayerId == self.Room().LookPlayerId)
+            if (self.IsArrowDragging && message.PlayerId == self.GetLookPlayerId())
             {
                 self.IsArrowDragging = false;
                 self.u_ComArrowIndicator.localScale = Vector3.zero;
@@ -142,7 +142,7 @@ namespace ET.Client
         private static async ETTask YIUIEvent(this PlayViewComponent self, UISelectDragStartEvent message)
         {
             await ETTask.CompletedTask;
-            if (message.PlayerId == self.Room().LookPlayerId)
+            if (message.PlayerId == self.GetLookPlayerId())
             {
                 LSCameraComponent cameraComponent = self.Room().GetComponent<LSCameraComponent>();
                 Vector3 screenPos = cameraComponent.Camera.WorldToScreenPoint(message.Position);
@@ -155,7 +155,7 @@ namespace ET.Client
         private static async ETTask YIUIEvent(this PlayViewComponent self, UISelectDragEvent message)
         {
             await ETTask.CompletedTask;
-            if (message.PlayerId == self.Room().LookPlayerId)
+            if (message.PlayerId == self.GetLookPlayerId())
             {
                 LSCameraComponent cameraComponent = self.Room().GetComponent<LSCameraComponent>();
                 Vector3 screenPos = cameraComponent.Camera.WorldToScreenPoint(message.Position);
@@ -175,7 +175,7 @@ namespace ET.Client
         private static async ETTask YIUIEvent(this PlayViewComponent self, UISelectDragEndEvent message)
         {
             await ETTask.CompletedTask;
-            if (message.PlayerId == self.Room().LookPlayerId)
+            if (message.PlayerId == self.GetLookPlayerId())
             {
                 self.u_ComSelectIndicator.localScale = Vector3.zero;
             }
@@ -186,7 +186,7 @@ namespace ET.Client
         private static async ETTask YIUIEvent(this PlayViewComponent self, OnCardViewResetEvent message)
         {
             await ETTask.CompletedTask;
-            if (message.PlayerId == self.Room().LookPlayerId)
+            if (message.PlayerId == self.GetLookPlayerId())
                 self.ResetBagCards();
         }
         
@@ -194,7 +194,7 @@ namespace ET.Client
         private static async ETTask YIUIEvent(this PlayViewComponent self, OnCardSelectResetEvent message)
         {
             await ETTask.CompletedTask;
-            if (message.PlayerId == self.Room().LookPlayerId)
+            if (message.PlayerId == self.GetLookPlayerId())
                 self.ResetSelectCards();
         }
 

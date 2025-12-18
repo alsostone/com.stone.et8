@@ -9,6 +9,7 @@ namespace ET.Client
         {
             Room room = clientScene.GetComponent<Room>();
             
+            LSLookComponent lookComponent = room.AddComponent<LSLookComponent, long, long>(args.OwnerId, args.LookId);
             room.AddComponent<LSSettingsComponent>();
             room.AddComponent<LSCameraComponent>();
             room.AddComponent<LSViewGameOverComponent>();
@@ -25,7 +26,7 @@ namespace ET.Client
                 }
                 case LockStepMode.Local:
                 {
-                    room.AddComponent<LSCommandsComponent, byte>((byte)room.GetOwnerSeatIndex());
+                    room.AddComponent<LSCommandsComponent, byte>((byte)lookComponent.GetOwnerSeatIndex());
                     room.AddComponent<LSOperaComponent>();
                     room.AddComponent<LSOperaDragComponent>();
                     room.AddComponent<LSClientLocalUpdater>();
@@ -33,7 +34,7 @@ namespace ET.Client
                 }
                 case LockStepMode.Server:
                 {
-                    room.AddComponent<LSCommandsComponent, byte>((byte)room.GetOwnerSeatIndex());
+                    room.AddComponent<LSCommandsComponent, byte>((byte)lookComponent.GetOwnerSeatIndex());
                     room.AddComponent<LSOperaComponent>();
                     room.AddComponent<LSOperaDragComponent>();
                     room.AddComponent<LSClientServerUpdater>();

@@ -7,5 +7,7 @@
     
     public struct LSSceneInitFinish
     {
+        public long OwnerId;
+        public long LookId;
     }
 }

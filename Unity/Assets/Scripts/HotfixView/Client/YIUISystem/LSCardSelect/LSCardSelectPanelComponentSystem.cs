@@ -49,7 +49,7 @@ namespace ET.Client
         private static async ETTask YIUIEvent(this LSCardSelectPanelComponent self, OnCardSelectResetEvent message)
         {
             await ETTask.CompletedTask;
-            if (!self.IsClickDone && message.PlayerId == self.Room().LookPlayerId)
+            if (!self.IsClickDone && message.PlayerId == self.GetLookPlayerId())
                 self.ResetCardsView();
         }
 

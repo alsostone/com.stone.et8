@@ -168,7 +168,7 @@ namespace ET.Client
                 if (self.RaycastTarget(touchPosition, out GameObject target))
                 {
                     // 有选中单位时禁止悬停检测
-                    LSUnitView lsPlayer = self.LSUnitView(self.Room().LookPlayerId);
+                    LSUnitView lsPlayer = self.Room().GetLookPlayerView();
                     if (!lsPlayer.GetComponent<LSViewSelectionComponent>().HasSelectedUnit())
                     {
                         hover = target.GetComponent<LSUnitViewBehaviour>()?.LSUnitView;

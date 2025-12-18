@@ -30,7 +30,7 @@ namespace ET.Client
         private static async ETTask YIUIEvent(this PlayCardItemComponent self, UICardDragEndEvent message)
         {
             await ETTask.CompletedTask;
-            if (message.PlayerId == self.Room().LookPlayerId) {
+            if (message.PlayerId == self.GetLookPlayerId()) {
                 self.SetHighlight(self.IsCliickEnter);
             }
         }

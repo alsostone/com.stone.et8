@@ -8,7 +8,7 @@ namespace ET.Client
         [EntitySystem]
         private static void Awake(this LSViewPlayerComponent self, long bindViewId)
         {
-            self.BindViewId = bindViewId;
+            self.BindHeroId = bindViewId;
         }
     }
 }
