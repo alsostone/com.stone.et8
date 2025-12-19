@@ -58,7 +58,7 @@ namespace ET
 
                 // 设置位置到TransformComponent
                 TSVector putPosition = lsGridMapComponent.GetPutPosition(self.PlacementData);
-                lsOwner.GetComponent<TransformComponent>().SetPosition(putPosition);
+                lsOwner.GetComponent<TransformComponent>().SetPosition(putPosition, true);
                 
                 // 更新RVO实体的位置 障碍物特殊，需要重新创建
                 switch (self.PlacementData.placementType) {

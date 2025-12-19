@@ -40,7 +40,7 @@ namespace ET
                 LSUnit lsUnit = self.LSUnit(agent.id);
                 TransformComponent transformComponent = lsUnit.GetComponent<TransformComponent>();
                 transformComponent.RVO2Velocity = agent.velocity;
-                transformComponent.Position = new TSVector(agent.position.x, transformComponent.Position.y, agent.position.y);
+                transformComponent.SetPosition(new TSVector(agent.position.x, transformComponent.Position.y, agent.position.y));
             }
         }
 

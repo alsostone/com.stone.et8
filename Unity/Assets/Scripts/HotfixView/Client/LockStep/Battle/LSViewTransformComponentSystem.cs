@@ -28,33 +28,42 @@ namespace ET.Client
         {
             if (!self.Enabled) { return; }
             
-            LSUnit unit = self.LSViewOwner().GetUnit();
-            
-            TransformComponent transformComponent = unit.GetComponent<TransformComponent>();
-            self.Position = transformComponent.Position.ToVector();
-            
             Vector3 postion = self.Transform.position;
             self.Transform.position = Vector3.SmoothDamp(postion, self.Position, ref self.CurrentVelocity, .125f);
             
             // 为使得表现平滑，旋转不敏感的单位 表现层自己计算旋转
-            // 如子弹 与逻辑旋转不严格一致并不会带来严重问题，平滑更重要
+            // 如子弹 与逻辑旋转不严格一致并不会带来问题，平滑更重要
             if (self.IsUesViewRotation)
             {
                 Vector3 dir = postion - self.Transform.position;
-                if (dir.sqrMagnitude > 0.0001f)
-                {
-                    self.Transform.forward = postion - self.Transform.position;
+                if (dir.sqrMagnitude > 0.0001f) {
+                    self.Transform.forward = dir;
                 }
             }
             else
             {
-                Quaternion rotationTo = transformComponent.Rotation.ToQuaternion();
                 Quaternion rotation = self.Transform.rotation;
-                float angle = Mathf.Abs(Quaternion.Angle(rotation, rotationTo));
+                float angle = Mathf.Abs(Quaternion.Angle(rotation, self.Rotation));
                 if (angle > 0.1f) {
                     float time = 1.0f / 720 * angle;
-                    self.Transform.rotation = Quaternion.Lerp(rotation, rotationTo, Time.deltaTime / time);
+                    self.Transform.rotation = Quaternion.Lerp(rotation, self.Rotation, Time.deltaTime / time);
                 }
+            }
+        }
+        
+        public static void SetPosition(this LSViewTransformComponent self, Vector3 position, bool immediate = false)
+        {
+            self.Position = position;
+            if (immediate) {
+                self.Transform.position = position;
+            }
+        }
+        
+        public static void SetRotation(this LSViewTransformComponent self, Quaternion rotation, bool immediate = false)
+        {
+            self.Rotation = rotation;
+            if (immediate) {
+                self.Transform.rotation = rotation;
             }
         }
         
@@ -62,10 +71,10 @@ namespace ET.Client
         {
             if (!self.Enabled) { return; }
             
-            LSUnit unit = self.LSViewOwner().GetUnit();
-            TransformComponent transformComponent = unit.GetComponent<TransformComponent>();
-            self.Transform.position = transformComponent.Position.ToVector();
-            self.Transform.rotation = transformComponent.Rotation.ToQuaternion();
+            LSUnit lsUnit = self.LSViewOwner().GetUnit();
+            TransformComponent transformComponent = lsUnit.GetComponent<TransformComponent>();
+            self.SetPosition(transformComponent.Position.ToVector(), true);
+            self.SetRotation(transformComponent.Rotation.ToQuaternion(), true);
         }
         
         public static void SetTransformEnabled(this LSViewTransformComponent self, bool enabled)

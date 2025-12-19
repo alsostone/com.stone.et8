@@ -29,8 +29,6 @@ namespace ET
                 self.Duration = distance / self.HorSpeed;
                 self.IsUesBezier = true;
             }
-            
-            self.Tick();
         }
         
         [EntitySystem]
@@ -55,8 +53,6 @@ namespace ET
                 self.Duration = dir.magnitude / self.HorSpeed;
                 self.IsUesBezier = true;
             }
-            
-            self.Tick();
         }
 
         [EntitySystem]
@@ -79,7 +75,6 @@ namespace ET
                 self.Duration = dir.magnitude / self.HorSpeed;
                 self.IsUesBezier = true;
             }
-            self.Tick();
         }
         
         [LSEntitySystem]
@@ -105,24 +100,19 @@ namespace ET
             TSVector position = ownerTransform.Position;
             if (self.IsUesBezier)
             {
-                ownerTransform.Position = TSBezier.GetPoint(self.CasterPosition, self.ControlPosition, self.TargetPosition, self.ElapsedTime / self.Duration);
-                ownerTransform.Forward = ownerTransform.Position - position;
+                ownerTransform.SetPosition(TSBezier.GetPoint(self.CasterPosition, self.ControlPosition, self.TargetPosition, self.ElapsedTime / self.Duration));
                 self.IsReached = self.ElapsedTime >= self.Duration;
             }
             else
             {
                 TSVector dir = self.TargetPosition - position;
                 FP distanceThisFrame = self.HorSpeed * deltaTime;
-                if (dir.sqrMagnitude <= distanceThisFrame * distanceThisFrame)
-                {
-                    ownerTransform.Position = self.TargetPosition;
+                if (dir.sqrMagnitude <= distanceThisFrame * distanceThisFrame) {
+                    ownerTransform.SetPosition(self.TargetPosition);
                     self.IsReached = true;
+                } else {
+                    ownerTransform.SetPosition(position + dir.normalized * distanceThisFrame);
                 }
-                else
-                {
-                    ownerTransform.Position += dir.normalized * distanceThisFrame;
-                }
-                ownerTransform.Forward = dir;
             }
         }
     }

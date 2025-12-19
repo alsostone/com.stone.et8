@@ -8,6 +8,8 @@ namespace ET.Client
 	{
 		public Transform Transform { get; set; }
 		public AttachPointCollector AttachPointCollector;
+
+		public Quaternion Rotation;
 		public Vector3 Position;
 		public Vector3 CurrentVelocity;
 		public bool IsUesViewRotation;

@@ -38,17 +38,13 @@ namespace ET
                 return;
             }
             
-            self.Forward = new TSVector(forward.x, 0, forward.y);
+            self.SetForward(new TSVector(forward.x, 0, forward.y));
             self.SetMoving(true);
             
             PropComponent propComponent = self.LSOwner().GetComponent<PropComponent>();
-            TSVector2 v2 = forward.normalized * propComponent.Get(NumericType.Speed) * LSConstValue.UpdateInterval / LSConstValue.Milliseconds;
-            if (v2.LengthSquared() > FP.EN4)
-            {
-                self.Position += new TSVector(v2.x, 0, v2.y);
-                LSRVO2Component rvo2Component = self.LSWorld().GetComponent<LSRVO2Component>();
-                rvo2Component.SetAgentPosition(self.LSOwner(), new TSVector2(self.Position.x, self.Position.z));
-            }
+            self.RVO2PrefVelocity = forward.normalized * propComponent.Get(NumericType.Speed);
+            LSRVO2Component rvo2Component = self.LSWorld().GetComponent<LSRVO2Component>();
+            rvo2Component.setAgentPrefVelocity(self.LSOwner(), self.RVO2PrefVelocity);
         }
         
         public static void RVOMove(this TransformComponent self, TSVector2 forward)
@@ -63,7 +59,7 @@ namespace ET
                 return;
             }
             
-            self.Forward = new TSVector(forward.x, 0, forward.y);
+            self.SetForward(new TSVector(forward.x, 0, forward.y));
             self.SetMoving(true);
             
             PropComponent propComponent = self.LSOwner().GetComponent<PropComponent>();
@@ -88,9 +84,28 @@ namespace ET
             }
         }
 
-        public static void SetPosition(this TransformComponent self, TSVector position)
+        public static void SetPosition(this TransformComponent self, TSVector position, bool immediate = false)
         {self.LSRoom()?.ProcessLog.LogFunction(89, self.LSParent().Id, position.x.V, position.y.V, position.z.V);
+            if (self.Position == position)
+                return;
             self.Position = position;
+            EventSystem.Instance.Publish(self.LSWorld(), new LSUnitPosition() { Id = self.LSOwner().Id, Position = position, Immediate = immediate });
+        }
+
+        public static void SetRotation(this TransformComponent self, TSQuaternion rotation, bool immediate = false)
+        {
+            self.Rotation = rotation;
+            self.Upwards = rotation * TSVector.up;
+            EventSystem.Instance.Publish(self.LSWorld(), new LSUnitRotation() { Id = self.LSOwner().Id, Rotation = rotation, Immediate = immediate });
+        }
+        
+        public static void SetForward(this TransformComponent self, TSVector forward, bool immediate = false)
+        {
+            if (forward.sqrMagnitude < FP.Epsilon)
+                return;
+            self.Rotation = TSQuaternion.LookRotation(forward.normalized, TSVector.up);
+            self.Upwards = self.Rotation * TSVector.up;
+            EventSystem.Instance.Publish(self.LSWorld(), new LSUnitRotation() { Id = self.LSOwner().Id, Rotation = self.Rotation, Immediate = immediate });
         }
         
         public static TSVector GetAttachPoint(this TransformComponent self, AttachPoint attachPoint)
@@ -119,13 +134,8 @@ namespace ET
             if (flagComponent.HasRestrict(FlagRestrict.NotRotate)) {
                 return;
             }
-            
             TSVector position = lsTarget.GetComponent<TransformComponent>().Position;
-            position.y = self.Position.y;
-            TSVector dir = position - self.Position;
-            if (dir.sqrMagnitude > FP.EN4) {
-                self.Forward = dir;
-            }
+            self.SetForward((position - self.Position).IgnoreY());
         }
     }
 }

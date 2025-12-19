@@ -11,6 +11,20 @@ namespace ET
     {
         public long Id;
     }
+    
+    public struct LSUnitPosition
+    {
+        public long Id;
+        public TSVector Position;
+        public bool Immediate;
+    }
+    
+    public struct LSUnitRotation
+    {
+        public long Id;
+        public TSQuaternion Rotation;
+        public bool Immediate;
+    }
 
     public struct LSUnitMoving
     {
