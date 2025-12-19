@@ -103,8 +103,7 @@ namespace ET
         {
             if (forward.sqrMagnitude < FP.Epsilon)
                 return;
-            self.Rotation = TSQuaternion.LookRotation(forward.normalized, TSVector.up);
-            self.Upwards = self.Rotation * TSVector.up;
+            self.Rotation = TSQuaternion.LookRotation(forward.normalized, self.Upwards);
             EventSystem.Instance.Publish(self.LSWorld(), new LSUnitRotation() { Id = self.LSOwner().Id, Rotation = self.Rotation, Immediate = immediate });
         }
         

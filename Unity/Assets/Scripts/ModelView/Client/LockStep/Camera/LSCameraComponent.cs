@@ -40,8 +40,12 @@ namespace ET.Client
 
 		public int LookSeatIndex;
 		
-		public bool IsFlowTarget = false;
 		public Vector3 LookPosition;
+		
+		public float FlowDistance = 20f;
+		public bool IsFollowTarget = false;
+		
+		public float ZoomSpeed = 2.5f;
 		
 		public Vector3 DragMousePosition;
 		public bool IsDragging = false;

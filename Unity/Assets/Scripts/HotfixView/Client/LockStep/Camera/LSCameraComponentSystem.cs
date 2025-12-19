@@ -18,7 +18,8 @@ namespace ET.Client
 		private static void LateUpdate(this LSCameraComponent self)
 		{
 			self.OnDragScrolling();
-			self.OnLookAtTarget();
+			self.OnZoomScrolling();
+			self.OnSwitchFollowTarget();
 			
 			// 摄像机每帧更新位置
 			Room room = self.Room();
@@ -36,12 +37,12 @@ namespace ET.Client
 				self.LookUnitView = room.GetLookHeroView();
 			}
 			
-			if (!self.IsDragging && self.LookUnitView != null && self.IsFlowTarget)
+			if (!self.IsDragging && self.LookUnitView != null && self.IsFollowTarget)
 			{
 				self.LookPosition = self.LookUnitView.GetComponent<LSViewTransformComponent>().Transform.position;
 			}
 			
-			self.Transform.position = self.LookPosition + new Vector3(0, 20, -2.5f);
+			self.Transform.position = self.LookPosition - self.Transform.forward * self.FlowDistance;
 		}
 		
 		private static void OnDragScrolling(this LSCameraComponent self)
@@ -83,13 +84,34 @@ namespace ET.Client
 			}
 		}
 		
-		private static void OnLookAtTarget(this LSCameraComponent self)
+		private static void OnZoomScrolling(this LSCameraComponent self)
+		{
+			float scroll = Input.GetAxis("Mouse ScrollWheel");
+			if (scroll != 0)
+			{
+				self.FlowDistance -= scroll * self.ZoomSpeed;
+				self.FlowDistance = Mathf.Clamp(self.FlowDistance, 5, 30);
+			}
+		}
+
+		private static void OnSwitchFollowTarget(this LSCameraComponent self)
 		{
 			if (Input.GetKeyDown(KeyCode.F))
 			{
-				self.IsFlowTarget = !self.IsFlowTarget;
+				self.IsFollowTarget = !self.IsFollowTarget;
 			}
 		}
 		
+		public static Vector2 ConvertRelativeDirection(this LSCameraComponent self, Vector2 direction)
+		{
+			if (self.Transform == null)
+				return Vector3.zero;
+            
+			Vector2 forward = self.Transform.forward.GetXZ().normalized;
+			Vector2 right = self.Transform.right.GetXZ().normalized;
+
+			direction = forward * direction.y + right * direction.x;
+			return direction.normalized;
+		}
 	}
 }

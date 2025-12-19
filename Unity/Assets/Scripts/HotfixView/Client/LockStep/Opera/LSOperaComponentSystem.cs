@@ -16,7 +16,9 @@ namespace ET.Client
         {
             Room room = self.Room();
 
-            Vector2 axis = new Vector2(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical")).normalized;
+            Vector2 axis = new Vector2(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"));
+            LSCameraComponent cameraComponent = room.GetComponent<LSCameraComponent>();
+            axis = cameraComponent.ConvertRelativeDirection(axis);
             if (axis != self.Axis)
             {
                 var cmd = LSCommand.GenCommandFloat2(0, OperateCommandType.Move, axis.x, axis.y);
