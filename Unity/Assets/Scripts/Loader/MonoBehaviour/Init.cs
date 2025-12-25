@@ -13,6 +13,7 @@ namespace ET
 		
 		private async ETTask StartAsync()
 		{
+			Application.targetFrameRate = 60;
 			DontDestroyOnLoad(gameObject);
 			
 			AppDomain.CurrentDomain.UnhandledException += (sender, e) =>
