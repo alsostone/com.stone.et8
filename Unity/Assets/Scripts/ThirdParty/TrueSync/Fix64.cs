@@ -818,14 +818,14 @@ namespace TrueSync {
             return value.V >> FRACTIONAL_PLACES;
         }
 
-        public static implicit operator FP(float value) {
+        public static explicit operator FP(float value) {
             FP result;
             result.V = (long)(value * ONE);
             return result;
             //return new FP((long)(value * ONE));
         }
 
-        public static explicit operator float(FP value) {
+        public static implicit operator float(FP value) {
             return (float)value.V / ONE;
         }
 
