@@ -144,7 +144,7 @@ namespace ST.GridBuilder
             return pos;
         }
         
-        public Vector3 GetLevelPosition(int x, int z, int level, float height = 0)
+        public Vector3 GetLevelPosition(int x, int z, int level, float height = 0.01f)
         {
             float x1 = gridData.cellSize * (x + 0.5f);
             float y1 = gridData.cellSize * level + height;

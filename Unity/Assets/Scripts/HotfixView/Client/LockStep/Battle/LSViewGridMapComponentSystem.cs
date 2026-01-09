@@ -48,7 +48,7 @@ namespace ET.Client
             return self.GridMap.ConvertToIndex(position);
         }
 
-        public static Vector3 GetLevelPosition(this LSViewGridMapComponent self, int x, int z, int level, float height = 0)
+        public static Vector3 GetLevelPosition(this LSViewGridMapComponent self, int x, int z, int level, float height = 0.01f)
         {
             return self.GridMap.GetLevelPosition(x, z, level, height);
         }

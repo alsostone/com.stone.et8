@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace ET.Client
 {
@@ -11,7 +10,8 @@ namespace ET.Client
 		private static void Awake(this LSCameraComponent self)
 		{
 			self.Camera = Camera.main;
-			self.Camera.transform.rotation = Quaternion.Euler(new Vector3(80, 0, 0));
+			self.Transform.rotation = Quaternion.Euler(new Vector3(70, 0, 0));
+			self.Transform.position = self.LookPosition - self.Transform.forward * self.FlowDistance;
 		}
 		
 		[EntitySystem]
@@ -42,7 +42,8 @@ namespace ET.Client
 				self.LookPosition = self.LookUnitView.GetComponent<LSViewTransformComponent>().Transform.position;
 			}
 			
-			self.Transform.position = self.LookPosition - self.Transform.forward * self.FlowDistance;
+			Vector3 position = self.LookPosition - self.Transform.forward * self.FlowDistance;
+			self.Transform.position = Vector3.SmoothDamp(self.Transform.position, position, ref self.CurrentVelocity, 0.1f);
 		}
 		
 		private static void OnDragScrolling(this LSCameraComponent self)

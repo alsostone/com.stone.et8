@@ -41,6 +41,7 @@ namespace ET.Client
 		public int LookSeatIndex;
 		
 		public Vector3 LookPosition;
+		public Vector3 CurrentVelocity;
 		
 		public float FlowDistance = 20f;
 		public bool IsFollowTarget = false;
