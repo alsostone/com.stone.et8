@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using TrueSync;
 
 namespace ET
 {
@@ -28,7 +29,7 @@ namespace ET
         [LSEntitySystem]
         private static void LSUpdate(this BuffComponent self)
         {self.LSRoom()?.ProcessLog.LogFunction(36, self.LSParent().Id);
-            int frame = self.LSWorld().Frame;
+            FP elapsedTime = self.LSWorld().ElapsedTime;
             
             List<long> buffs = ObjectPool.Instance.Fetch<List<long>>();
             buffs.AddRange(self.IdBuffMap.Values);
@@ -39,7 +40,7 @@ namespace ET
                     continue;
                 }
                 
-                if (frame > buff.EndFrame)
+                if (elapsedTime >= buff.EndTime)
                 {
                     self.IdBuffMap.Remove(buff.BuffId);
                     buff.Dispose();

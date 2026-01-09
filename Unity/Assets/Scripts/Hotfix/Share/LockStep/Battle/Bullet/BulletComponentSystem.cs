@@ -13,7 +13,7 @@ namespace ET
         private static void Awake(this BulletComponent self, int bulletId, LSUnit caster, List<SearchUnit> targets)
         {self.LSRoom()?.ProcessLog.LogFunction(167, self.LSParent().Id, bulletId, caster.Id);
             self.BulletId = bulletId;
-            self.OverFrame = self.LSWorld().Frame + self.TbBulletRow.Life.Convert2Frame();
+            self.EndTime = self.LSWorld().ElapsedTime + self.TbBulletRow.Life * FP.EN3;
             self.Caster = caster.Id;
             self.TowardType = ETrackTowardType.Direction;
             self.SearchUnits = new List<SearchUnitPackable>();
@@ -31,7 +31,7 @@ namespace ET
         private static void Awake(this BulletComponent self, int bulletId, LSUnit caster, LSUnit target)
         {self.LSRoom()?.ProcessLog.LogFunction(44, self.LSParent().Id, bulletId, caster.Id, target.Id);
             self.BulletId = bulletId;
-            self.OverFrame = self.LSWorld().Frame + self.TbBulletRow.Life.Convert2Frame();
+            self.EndTime = self.LSWorld().ElapsedTime + self.TbBulletRow.Life * FP.EN3;
             self.Caster = caster.Id;
             self.TowardType = ETrackTowardType.Target;
             self.Target = target.Id;
@@ -41,7 +41,7 @@ namespace ET
         private static void Awake(this BulletComponent self, int bulletId, LSUnit caster)
         {self.LSRoom()?.ProcessLog.LogFunction(166, self.LSParent().Id, bulletId, caster.Id);
             self.BulletId = bulletId;
-            self.OverFrame = self.LSWorld().Frame + self.TbBulletRow.Life.Convert2Frame();
+            self.EndTime = self.LSWorld().ElapsedTime + self.TbBulletRow.Life * FP.EN3;
             self.Caster = caster.Id;
             self.TowardType = ETrackTowardType.Position;
         }
@@ -49,7 +49,7 @@ namespace ET
         [LSEntitySystem]
         private static void LSUpdate(this BulletComponent self)
         {self.LSRoom()?.ProcessLog.LogFunction(43, self.LSParent().Id);
-            if (self.LSWorld().Frame > self.OverFrame)
+            if (self.LSWorld().ElapsedTime >= self.EndTime)
             {
                 self.OnReachTarget(false);
                 return;

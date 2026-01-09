@@ -86,8 +86,7 @@ namespace ET
         private static void Tick(this TrackComponent self)
         {self.LSRoom()?.ProcessLog.LogFunction(45, self.LSParent().Id);
             if (self.IsReached) { return; }
-            FP deltaTime = (FP)LSConstValue.UpdateInterval / LSConstValue.Milliseconds;
-            self.ElapsedTime += deltaTime;
+            self.ElapsedTime += self.LSWorld().DeltaTime;
             
             if (self.TowardType == ETrackTowardType.Target)
             {
@@ -106,7 +105,7 @@ namespace ET
             else
             {
                 TSVector dir = self.TargetPosition - position;
-                FP distanceThisFrame = self.HorSpeed * deltaTime;
+                FP distanceThisFrame = self.HorSpeed * self.LSWorld().DeltaTime;
                 if (dir.sqrMagnitude <= distanceThisFrame * distanceThisFrame) {
                     ownerTransform.SetPosition(self.TargetPosition);
                     self.IsReached = true;

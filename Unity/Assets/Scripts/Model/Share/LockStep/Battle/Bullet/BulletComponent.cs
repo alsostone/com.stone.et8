@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using MemoryPack;
 using MongoDB.Bson.Serialization.Attributes;
+using TrueSync;
 
 namespace ET
 {
@@ -10,7 +11,7 @@ namespace ET
     {
         public int BulletId;
         public long Caster;
-        public int OverFrame;
+        public FP EndTime;
         public ETrackTowardType TowardType;
         
         public long Target;

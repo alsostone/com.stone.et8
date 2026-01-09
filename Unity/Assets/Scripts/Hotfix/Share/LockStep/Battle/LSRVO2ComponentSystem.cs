@@ -13,7 +13,6 @@ namespace ET
         private static void Awake(this LSRVO2Component self)
         {self.LSRoom()?.ProcessLog.LogFunction(25, self.LSParent().Id);
             self.RVO2Simulator = new Simulator();
-            self.RVO2Simulator.setTimeStep((FP)LSConstValue.UpdateInterval / LSConstValue.Milliseconds);
         }
         
         [EntitySystem]
@@ -28,13 +27,12 @@ namespace ET
         private static void Deserialize(this LSRVO2Component self)
         {
             self.RVO2Simulator = new Simulator();
-            self.RVO2Simulator.setTimeStep((FP)LSConstValue.UpdateInterval / LSConstValue.Milliseconds);
         }
         
         [LSEntitySystem]
         private static void LSUpdate(this LSRVO2Component self)
         {self.LSRoom()?.ProcessLog.LogFunction(24, self.LSParent().Id);
-            self.RVO2Simulator.doStep();
+            self.RVO2Simulator.doStep(self.LSWorld().DeltaTime);
             foreach (Agent agent in self.RVO2Simulator.GetAllAgents())
             {
                 LSUnit lsUnit = self.LSUnit(agent.id);

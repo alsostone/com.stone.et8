@@ -1,3 +1,5 @@
+using TrueSync;
+
 namespace ET
 {
     [LSEntitySystemOf(typeof(Buff))]
@@ -10,8 +12,7 @@ namespace ET
         {self.LSRoom()?.ProcessLog.LogFunction(41, self.LSParent().Id, BuffId, caster.Id);
             self.BuffId = BuffId;
             self.Caster = caster.Id;
-            self.StartFrame = self.LSWorld().Frame;
-            self.EndFrame = self.StartFrame + self.TbBuffRow.Duration.Convert2Frame();
+            self.EndTime = self.LSWorld().ElapsedTime + self.TbBuffRow.Duration * FP.EN3;
             self.LayerCount = 1;
             
             LSUnit lsOwner = self.LSOwner();
@@ -20,7 +21,7 @@ namespace ET
             }
             if (self.TbBuffRow.IntervalEffect > 0) {
                 EffectExecutor.Execute(self.TbBuffRow.IntervalEffect, caster, lsOwner, lsOwner, self.LayerCount);
-                self.IntervalFrame = self.StartFrame + self.TbBuffRow.Interval.Convert2Frame();
+                self.IntervalTime = self.LSWorld().ElapsedTime + self.TbBuffRow.Interval * FP.EN3;
             }
         }
 
@@ -42,17 +43,17 @@ namespace ET
         {self.LSRoom()?.ProcessLog.LogFunction(38, self.LSParent().Id);
             // BUFF的到期由BuffComponent处理
             // BUFF DOT
-            if (self.TbBuffRow.IntervalEffect > 0 && self.LSWorld().Frame >= self.IntervalFrame) {
+            if (self.TbBuffRow.IntervalEffect > 0 && self.LSWorld().ElapsedTime >= self.IntervalTime) {
                 LSUnit lsOwner = self.LSOwner();
                 LSUnit lsCaster = self.LSUnit(self.Caster);
                 EffectExecutor.Execute(self.TbBuffRow.IntervalEffect, lsCaster, lsOwner, lsOwner, self.LayerCount);
-                self.IntervalFrame = self.LSWorld().Frame + self.TbBuffRow.Interval.Convert2Frame();
+                self.IntervalTime += self.TbBuffRow.Interval * FP.EN3;
             }
         }
         
         public static void ResetEndFrame(this Buff self)
         {self.LSRoom()?.ProcessLog.LogFunction(39, self.LSParent().Id);
-            self.EndFrame = self.LSWorld().Frame + self.TbBuffRow.Duration.Convert2Frame();
+            self.EndTime = self.LSWorld().ElapsedTime + self.TbBuffRow.Duration * FP.EN3;
         }
 
         public static void IncrLayerCount(this Buff self)

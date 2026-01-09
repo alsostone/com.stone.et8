@@ -1,5 +1,6 @@
 ﻿using MemoryPack;
 using ST.GridBuilder;
+using TrueSync;
 
 namespace ET
 {
@@ -7,7 +8,7 @@ namespace ET
     [MemoryPackable]
     public partial class BuildComponent : LSEntity, IAwake<int>, ILSUpdate, ISerializeToEntity
     {
-        public int BuildFrame;
-        public int DurationFrame;
+        public FP StartTime;
+        public FP DurationTime;
     }
 }

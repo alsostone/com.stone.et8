@@ -15,8 +15,8 @@ namespace ET
             self.SearchUnits = new List<SearchUnitPackable>();
             self.SkillId = skillId;
             self.IsOnlyOnce = isOnlyOnce;
-            self.CastFrame = int.MinValue;
-            self.DurationFrame = (self.TbSkillRow.DurationPre + self.TbSkillRow.Duration + self.TbSkillRow.DurationAfter).Convert2Frame();
+            self.StartTime = FP.MinValue;
+            self.DurationTime = (self.TbSkillRow.DurationPre + self.TbSkillRow.Duration + self.TbSkillRow.DurationAfter) * FP.EN3;
         }
 
         [EntitySystem]
@@ -29,9 +29,9 @@ namespace ET
             // 普通攻击的CD由攻速计算
             if (self.TbSkillRow.SkillType == ESkillType.Normal) {
                 var atkSpeed = self.LSOwner().GetComponent<PropComponent>().Get(NumericType.AtkSpeed);
-                return self.CastFrame + ((int)(LSConstValue.Milliseconds / atkSpeed)).Convert2Frame() > self.LSWorld().Frame;
+                return self.StartTime + FP.One / atkSpeed > self.LSWorld().ElapsedTime;
             }
-            return self.CastFrame + self.TbSkillRow.CdTime.Convert2Frame() > self.LSWorld().Frame;
+            return self.StartTime + self.TbSkillRow.CdTime * FP.EN3 > self.LSWorld().ElapsedTime;
         }
         
         private static bool CheckReady(this Skill self)
@@ -81,12 +81,12 @@ namespace ET
             }
 
             self.IsRunning = true;
-            self.CastFrame = self.LSWorld().Frame;
+            self.StartTime = self.LSWorld().ElapsedTime;
             self.StepRunning();
             
             // 持续时间大于0时，说明技能有动作
             // 释放有动作的技能时 禁止普攻&移动
-            if (self.DurationFrame > 0) {
+            if (self.DurationTime > 0) {
                 var flagComponent = self.LSOwner().GetComponent<FlagComponent>();
                 flagComponent.AddRestrict((int)(FlagRestrict.NotAttack | FlagRestrict.NotActive | FlagRestrict.NotMove));
                 
@@ -105,7 +105,7 @@ namespace ET
             self.CurrentPoint = 0;
             self.SearchUnits.Clear();
             
-            if (self.DurationFrame > 0) {
+            if (self.DurationTime > 0) {
                 var flagComponent = self.LSOwner().GetComponent<FlagComponent>();
                 flagComponent.RemoveRestrict((int)(FlagRestrict.NotAttack | FlagRestrict.NotActive | FlagRestrict.NotMove));
             }
@@ -181,7 +181,7 @@ namespace ET
             self.CurrentPoint = 0;
             self.SearchUnits.Clear();
 
-            if (self.DurationFrame > 0) {
+            if (self.DurationTime > 0) {
                 var flagComponent = self.LSOwner().GetComponent<FlagComponent>();
                 flagComponent.RemoveRestrict((int)(FlagRestrict.NotAttack | FlagRestrict.NotActive | FlagRestrict.NotMove));
             }
@@ -193,13 +193,13 @@ namespace ET
 
         public static void StepRunning(this Skill self)
         {self.LSRoom()?.ProcessLog.LogFunction(126, self.LSParent().Id);
-            if (self.CastFrame + self.DurationFrame > self.LSWorld().Frame)
+            if (self.StartTime + self.DurationTime > self.LSWorld().ElapsedTime)
             {
                 // 到达效果触发点后触发效果
                 for (var index = self.CurrentPoint; index < self.TbSkillRow.TriggerArray.Length; index++)
                 {
-                    var frame = self.TbSkillRow.TriggerArray[index].Convert2Frame();
-                    if (self.LSWorld().Frame - self.CastFrame >= frame)
+                    FP time = self.StartTime + self.TbSkillRow.TriggerArray[index] * FP.EN3;
+                    if (self.LSWorld().ElapsedTime >= time)
                     {
                         self.CurrentPoint = index + 1;
                         

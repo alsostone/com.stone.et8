@@ -20,8 +20,8 @@ namespace ET
         public bool IsOnlyOnce;
         public bool IsRunning { get; set; }
         
-        public int CastFrame;
-        public int DurationFrame;
+        public FP StartTime;
+        public FP DurationTime;
         public int CurrentPoint;
         
         public List<SearchUnitPackable> SearchUnits;

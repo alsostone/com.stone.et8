@@ -46,9 +46,15 @@ namespace ET
         
         public int Frame { get; set; }
         public int EndFrame { get; set; } = -1;
+        
+        public FP DeltaTime { get; private set; }
+        public FP ElapsedTime { get; private set; }
+        public FP TimeScale { get; set; } = 1; // 用于加速/减速游戏 必须保证所有客户端一致
 
         public void Update()
         {
+            DeltaTime = FP.One / LSConstValue.FrameCountPerSecond * TimeScale;
+            ElapsedTime += DeltaTime;
             this.updater.Update();
         }
 

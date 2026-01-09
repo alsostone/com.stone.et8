@@ -37,7 +37,7 @@ namespace ET
         [LSEntitySystem]
         private static void LSUpdate(this AIWorldComponent self)
         {self.LSRoom()?.ProcessLog.LogFunction(30, self.LSParent().Id);
-            self.BehaveWorld.Update(LSConstValue.UpdateInterval * FP.EN3);
+            self.BehaveWorld.Update(self.LSWorld().DeltaTime);
             
             for (int i = self.NeedStartUnits.Count - 1; i >= 0; i--)
             {

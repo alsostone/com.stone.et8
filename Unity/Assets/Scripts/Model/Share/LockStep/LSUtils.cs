@@ -62,11 +62,6 @@ namespace ET
             return entity.LSWorld().Random;
         }
         
-        public static int Convert2Frame(this int milliseconds)
-        {
-            return (milliseconds / LSConstValue.UpdateInterval);
-        }
-        
         public static void Shuffle<T>(this IList<T> list, TSRandom random)
         {
             int n = list.Count;

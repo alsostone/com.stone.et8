@@ -1,3 +1,5 @@
+using TrueSync;
+
 namespace ET
 {
     [LSEntitySystemOf(typeof(ProductComponent))]
@@ -13,8 +15,8 @@ namespace ET
             Skill skill = skillComponent.AddSkill(productSkillId);
 
             self.ProductSkillId = productSkillId;
-            self.ProductFrame = self.LSWorld().Frame + skill.TbSkillRow.FirstCdTime.Convert2Frame();
-            self.IntervalFrame = skill.TbSkillRow.CdTime.Convert2Frame();
+            self.StartTime = self.LSWorld().ElapsedTime + skill.TbSkillRow.FirstCdTime * FP.EN3;
+            self.IntervalTime = skill.TbSkillRow.CdTime * FP.EN3;
         }
 
         [LSEntitySystem]
@@ -22,11 +24,11 @@ namespace ET
         {self.LSRoom()?.ProcessLog.LogFunction(100, self.LSParent().Id);
             if (!self.LSOwner().GetComponent<FlagComponent>().HasRestrict(FlagRestrict.NotProduct))
             {
-                if (self.LSWorld().Frame >= self.ProductFrame)
+                if (self.LSWorld().ElapsedTime >= self.StartTime)
                 {
                     SkillComponent skillComponent = self.LSOwner().GetComponent<SkillComponent>();
                     skillComponent.TryCastSkill(self.ProductSkillId);
-                    self.ProductFrame = self.LSWorld().Frame + self.IntervalFrame;
+                    self.StartTime = self.LSWorld().ElapsedTime + self.IntervalTime;
                 }
             }
         }

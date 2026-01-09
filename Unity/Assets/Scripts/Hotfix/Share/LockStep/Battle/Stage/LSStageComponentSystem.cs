@@ -16,8 +16,8 @@ namespace ET
             self.CurrentWaveCount = 0;
             self.CurrentMonsterCount = 0;
             
-            self.NextWaveFrame = self.LSWorld().Frame + self.TbRow.Delay.Convert2Frame();
-            self.NextMonsterFrame = int.MaxValue;
+            self.NextWaveTime = self.LSWorld().ElapsedTime + self.TbRow.Delay * FP.EN3;
+            self.NextMonsterTime = FP.MaxValue;
         }
         
         [LSEntitySystem]
@@ -28,25 +28,25 @@ namespace ET
             
             // 波次根据配置的间隔递增
             LSWorld lsWorld = self.LSWorld();
-            if (lsWorld.Frame >= self.NextWaveFrame)
+            if (lsWorld.ElapsedTime >= self.NextWaveTime)
             {
                 self.CurrentWaveCount++;
                 self.CurrentMonsterCount = 0;
-                self.NextWaveFrame = lsWorld.Frame + self.TbRow.WaveInterval.Convert2Frame();
-                self.NextMonsterFrame = lsWorld.Frame;
+                self.NextWaveTime += self.TbRow.WaveInterval * FP.EN3;
+                self.NextMonsterTime = lsWorld.ElapsedTime;
             }
             if (self.CurrentWaveCount == 0) {
                 return;
             }
 
             // 波次开始后根据配置的刷怪数量刷怪
-            if (lsWorld.Frame >= self.NextMonsterFrame)
+            if (lsWorld.ElapsedTime >= self.NextMonsterTime)
             {
                 int index = Math.Min(self.TbRow.RandomSets.Length, self.CurrentWaveCount);
                 int randomSet = self.TbRow.RandomSets[index - 1];
                 
                 self.CurrentMonsterCount++;
-                self.NextMonsterFrame = lsWorld.Frame + self.TbRow.RandomInterval.Convert2Frame();
+                self.NextMonsterTime += self.TbRow.RandomInterval * FP.EN3;
                 
                 var results = ObjectPool.Instance.Fetch<List<LSRandomDropItem>>();
                 RandomDropHelper.RandomSet(self.GetRandom(), randomSet, 1, results);
@@ -69,7 +69,7 @@ namespace ET
                 index = Math.Min(self.TbRow.RandomCounts.Length, self.CurrentWaveCount);
                 int limit = self.TbRow.RandomCounts[index - 1];
                 if (self.CurrentMonsterCount >= limit) {
-                    self.NextMonsterFrame = int.MaxValue;
+                    self.NextMonsterTime = FP.MaxValue;
                 }
             }
         }
@@ -86,7 +86,7 @@ namespace ET
         {self.LSRoom()?.ProcessLog.LogFunction(137, self.LSParent().Id);
             if (self.TbRow.Count >= self.CurrentWaveCount)
                 return false;
-            if (self.NextMonsterFrame != int.MaxValue)
+            if (self.NextMonsterTime != FP.MaxValue)
                 return false;
             return true;
         }
@@ -95,7 +95,7 @@ namespace ET
         {self.LSRoom()?.ProcessLog.LogFunction(136, self.LSParent().Id, wave);
             if (self.CurrentWaveCount != wave)
                 return false;
-            if (self.NextMonsterFrame != int.MaxValue)
+            if (self.NextMonsterTime != FP.MaxValue)
                 return false;
             return true;
         }

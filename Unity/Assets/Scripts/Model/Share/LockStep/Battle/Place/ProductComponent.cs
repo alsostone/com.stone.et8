@@ -1,4 +1,5 @@
 ﻿using MemoryPack;
+using TrueSync;
 
 namespace ET
 {
@@ -7,7 +8,7 @@ namespace ET
     public partial class ProductComponent : LSEntity, IAwake<int>, ILSUpdate, ISerializeToEntity
     {
         public int ProductSkillId;
-        public int ProductFrame;
-        public int IntervalFrame;
+        public FP StartTime;
+        public FP IntervalTime;
     }
 }

@@ -1,5 +1,6 @@
 ﻿using MemoryPack;
 using MongoDB.Bson.Serialization.Attributes;
+using TrueSync;
 
 namespace ET
 {
@@ -11,8 +12,8 @@ namespace ET
 		public int CurrentWaveCount;
 		public int CurrentMonsterCount;
 		
-		public int NextWaveFrame;
-		public int NextMonsterFrame;
+		public FP NextWaveTime;
+		public FP NextMonsterTime;
 		
 		[BsonIgnore]
 		[MemoryPackIgnore]

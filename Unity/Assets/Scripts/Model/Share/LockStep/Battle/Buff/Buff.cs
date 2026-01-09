@@ -1,5 +1,6 @@
 ﻿using MemoryPack;
 using MongoDB.Bson.Serialization.Attributes;
+using TrueSync;
 
 namespace ET
 {
@@ -11,9 +12,8 @@ namespace ET
         public int LayerCount;
         
         public long Caster;
-        public int StartFrame;
-        public int IntervalFrame;
-        public int EndFrame;
+        public FP IntervalTime;
+        public FP EndTime;
         
         [BsonIgnore]
         [MemoryPackIgnore]

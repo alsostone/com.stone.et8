@@ -44,7 +44,6 @@ namespace RVO
         internal PoolLinkedList<long, Agent> agents_;
         internal PoolLinkedList<(long, int), Obstacle> obstacles_;
         internal KdTree kdTree_;
-        internal FP timeStep_;
         
         private bool agentDirty_ = false;
         private bool obstacleDirty_ = false;
@@ -200,7 +199,7 @@ namespace RVO
          *
          * <returns>The global time after the simulation step.</returns>
          */
-        public void doStep()
+        public void doStep(FP timeStep)
         {
             if (agentDirty_)
             {
@@ -218,8 +217,8 @@ namespace RVO
             foreach (Agent agent in agents_)
             {
                 agent.computeNeighbors(kdTree_);
-                agent.computeNewVelocity(timeStep_);
-                agent.update(timeStep_);
+                agent.computeNewVelocity(timeStep);
+                agent.update(timeStep);
             }
         }
 
@@ -341,16 +340,6 @@ namespace RVO
         }
 
         /**
-         * <summary>Returns the time step of the simulation.</summary>
-         *
-         * <returns>The present time step of the simulation.</returns>
-         */
-        public FP getTimeStep()
-        {
-            return timeStep_;
-        }
-
-        /**
          * <summary>Performs a visibility query between the two specified points
          * with respect to the obstacles.</summary>
          *
@@ -406,17 +395,6 @@ namespace RVO
         }
 
         /**
-         * <summary>Sets the time step of the simulation.</summary>
-         *
-         * <param name="timeStep">The time step of the simulation. Must be
-         * positive.</param>
-         */
-        public void setTimeStep(FP timeStep)
-        {
-            timeStep_ = timeStep;
-        }
-
-        /**
          * <summary>Constructs and initializes a simulation.</summary>
          */
         public Simulator()
@@ -424,7 +402,6 @@ namespace RVO
             agents_ = new PoolLinkedList<long, Agent>();
             kdTree_ = new KdTree();
             obstacles_ = new PoolLinkedList<(long, int), Obstacle>();
-            timeStep_ = FP.EN1;
         }
     }
 }
