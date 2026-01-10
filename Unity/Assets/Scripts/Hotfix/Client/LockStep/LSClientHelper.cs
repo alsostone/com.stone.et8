@@ -1,4 +1,5 @@
 using System.IO;
+using TrueSync;
 
 namespace ET.Client
 {
@@ -127,7 +128,7 @@ namespace ET.Client
             if (RollbackReplay(room, frame))
             {
                 room.AuthorityFrame = room.LSWorld.Frame;
-                room.FixedTimeCounter.Reset(TimeInfo.Instance.ServerFrameTime() - frame * LSConstValue.UpdateInterval, 0);
+                room.FixedTimeCounter.Reset(TimeInfo.Instance.ServerFrameTime() - (frame * LSConstValue.UpdateInterval).AsLong(), 0);
                 Log.Debug($"jump replay to {frame} success");
             }
             else

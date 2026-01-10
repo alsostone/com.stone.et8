@@ -1,5 +1,6 @@
 using System;
 using System.IO;
+using TrueSync;
 
 namespace ET.Client
 {
@@ -43,9 +44,9 @@ namespace ET.Client
 #else
                 // 以最新接收的权威帧为基准 调整时间间隔 若预测帧过多则增大间隔以降低预测帧数
                 // 网络延迟越高画面越滞后 但由于预测的帧数少且只有小范围回滚（移动）性能有保障 网络差公平性低也较符合预期
-                int interval = LSConstValue.UpdateInterval;
+                FP interval = LSConstValue.UpdateInterval;
                 interval += room.PredictionFrame - room.AuthorityFrame;
-                room.FixedTimeCounter.ChangeInterval(Math.Clamp(interval, 40, 66), room.PredictionFrame);
+                room.FixedTimeCounter.ChangeInterval(TSMath.Clamp(interval, 40, 66), room.PredictionFrame);
                 
                 int toFrame = Math.Min(room.AuthorityFrame, room.PredictionFrame);
                 for (int frame = room.LSWorld.Frame + 1; frame <= toFrame; ++frame)

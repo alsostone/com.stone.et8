@@ -1,4 +1,5 @@
 using System;
+using TrueSync;
 
 namespace ET.Client
 {
@@ -49,7 +50,7 @@ namespace ET.Client
                 lsReplayUpdater.ReplaySpeed *= 2;
             }
 
-            int updateInterval = LSConstValue.UpdateInterval / lsReplayUpdater.ReplaySpeed;
+            FP updateInterval = LSConstValue.UpdateInterval / lsReplayUpdater.ReplaySpeed;
             room.FixedTimeCounter.ChangeInterval(updateInterval, room.AuthorityFrame);
         }
     }

@@ -1,10 +1,14 @@
+using TrueSync;
+
 namespace ET
 {
     public static class LSConstValue
     {
         public const int MatchCount = 1;
         public const int FrameCountPerSecond = 20;
-        public const int UpdateInterval = 1000 / FrameCountPerSecond;
+        
+        [StaticField]
+        public static FP UpdateInterval { get; } = (FP)1000 / FrameCountPerSecond; // 每帧间隔 毫秒
         
         public const long GlobalIdOffset = long.MaxValue; // 约定特殊实体的ID 全局物体-0，中立队伍全局-1 队伍A全局-2 队伍B全局-3...
         public const long RVO2ComponentId = long.MaxValue - 1000; // 作用为：设置其Update执行时机在其他所有组件Update的后边

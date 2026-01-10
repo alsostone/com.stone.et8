@@ -1,4 +1,5 @@
 using System;
+using TrueSync;
 
 namespace ET.Client
 {
@@ -13,9 +14,9 @@ namespace ET.Client
             if (room.LockStepMode <= LockStepMode.Local)
                 return; // 防御 非联网模式不处理这个消息
             
-            int diff = message.DiffTime - LSConstValue.UpdateInterval;  // 额外慢一帧 以确保客户端快于服务器一帧
-            int interval = (1000 + diff) * LSConstValue.UpdateInterval / 1000;
-            room.FixedTimeCounter.ChangeInterval(Math.Clamp(interval, 40, 66), room.PredictionFrame);
+            FP diff = (message.DiffTime - LSConstValue.UpdateInterval) / 1000;  // 额外慢一帧 以确保客户端快于服务器一帧
+            FP interval = LSConstValue.UpdateInterval * (1 + diff);
+            room.FixedTimeCounter.ChangeInterval(TSMath.Clamp(interval, 40, 66), room.PredictionFrame);
             await ETTask.CompletedTask;
         }
     }
