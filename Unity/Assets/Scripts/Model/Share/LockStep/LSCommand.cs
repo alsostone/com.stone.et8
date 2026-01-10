@@ -20,6 +20,7 @@ namespace ET
         PlacementNew,          // 放置开始
         Button,         // 按钮指令
         Online,         // 上下线指令 服务器生成该指令
+        TimeScale,      // 时间缩放指令 联网战斗由服务器生成该指令
 #if ENABLE_DEBUG
         Gm,             // GM指令 正式服中丢弃该指令
 #endif

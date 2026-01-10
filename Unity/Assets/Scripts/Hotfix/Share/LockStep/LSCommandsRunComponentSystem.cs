@@ -90,6 +90,12 @@ namespace ET
                         self.RunCommandButton(command);
                         break;
                     }
+                    case OperateCommandType.TimeScale:
+                    {
+                        long scale = LSCommand.ParseCommandLong(command);
+                        self.LSWorld().TimeScale = FP.FromRaw(scale);
+                        break;
+                    }
 #if ENABLE_DEBUG
                     case OperateCommandType.Gm:
                     {

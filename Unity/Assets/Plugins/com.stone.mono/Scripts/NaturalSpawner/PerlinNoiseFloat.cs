@@ -48,7 +48,7 @@ namespace ST.Mono
                 {
                     float xCoord = (x + offset.x) / scale.x;
                     float yCoord = (y + offset.y) / scale.y;
-                    noiseValues[x, y] = PerlinNoiseFixed.OctavePerlinNoise(xCoord, yCoord, octaves, persistence, lacunarity);
+                    noiseValues[x, y] = PerlinNoiseFixed.OctavePerlinNoise(xCoord, yCoord, octaves, persistence, lacunarity).AsFloat();
                 }
             }
         }

@@ -818,14 +818,14 @@ namespace TrueSync {
             return value.V >> FRACTIONAL_PLACES;
         }
 
-        public static explicit operator FP(float value) {
+        public static implicit operator FP(float value) {
             FP result;
             result.V = (long)(value * ONE);
             return result;
             //return new FP((long)(value * ONE));
         }
 
-        public static implicit operator float(FP value) {
+        public static explicit operator float(FP value) {
             return (float)value.V / ONE;
         }
 
@@ -840,24 +840,28 @@ namespace TrueSync {
             return (double)value.V / ONE;
         }
 
-        public static explicit operator FP(decimal value) {
+        public static implicit operator FP(decimal value) {
             FP result;
             result.V = (long)(value * ONE);
             return result;
             //return new FP((long)(value * ONE));
         }
 
+        public static explicit operator decimal(FP value) {
+            return (decimal)value.V / ONE;
+        }
+        
         public static implicit operator FP(int value) {
             FP result;
             result.V = value * ONE;
             return result;
             //return new FP(value * ONE);
         }
-
-        public static explicit operator decimal(FP value) {
-            return (decimal)value.V / ONE;
+        
+        public static explicit operator int(FP value) {
+            return (int)(value.V >> FRACTIONAL_PLACES);
         }
-
+        
         public float AsFloat() {
             return (float) this;
         }

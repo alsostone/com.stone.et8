@@ -4,9 +4,10 @@ namespace ET
 {
     // 客户端挂在Room 服务器挂在RoomPlayer
     [ComponentOf]
-    public class LSCommandsComponent: Entity, IAwake<byte>
+    public class LSCommandsComponent: Entity, IAwake<byte, bool>
     {
         public byte SeatIndex { get; set; }
+        public bool IsLocalMode { get; set; }
         
         public List<Queue<LSCommandData>> FramesCommandsMove { get; set; }
         public List<List<LSCommandData>> FramesCommandsDrag { get; set; }

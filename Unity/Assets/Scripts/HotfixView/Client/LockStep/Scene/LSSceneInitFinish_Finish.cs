@@ -26,7 +26,7 @@ namespace ET.Client
                 }
                 case LockStepMode.Local:
                 {
-                    room.AddComponent<LSCommandsComponent, byte>((byte)lookComponent.GetOwnerSeatIndex());
+                    room.AddComponent<LSCommandsComponent, byte, bool>((byte)lookComponent.GetOwnerSeatIndex(), true);
                     room.AddComponent<LSOperaComponent>();
                     room.AddComponent<LSOperaDragComponent>();
                     room.AddComponent<LSClientLocalUpdater>();
@@ -34,7 +34,7 @@ namespace ET.Client
                 }
                 case LockStepMode.Server:
                 {
-                    room.AddComponent<LSCommandsComponent, byte>((byte)lookComponent.GetOwnerSeatIndex());
+                    room.AddComponent<LSCommandsComponent, byte, bool>((byte)lookComponent.GetOwnerSeatIndex(), false);
                     room.AddComponent<LSOperaComponent>();
                     room.AddComponent<LSOperaDragComponent>();
                     room.AddComponent<LSClientServerUpdater>();

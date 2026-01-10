@@ -15,7 +15,7 @@ namespace ET.Server
             {
                 long id = self.PlayerIds[index];
                 RoomPlayer roomPlayer = self.AddChildWithId<RoomPlayer>(id);
-                roomPlayer.AddComponent<LSCommandsComponent, byte>((byte)index);
+                roomPlayer.AddComponent<LSCommandsComponent, byte, bool>((byte)index, false);
             }
         }
         

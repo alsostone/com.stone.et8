@@ -7,9 +7,10 @@ namespace ET
     public static partial class LSCommandsComponentSystem
     {
         [EntitySystem]
-        private static void Awake(this LSCommandsComponent self, byte seatIndex)
+        private static void Awake(this LSCommandsComponent self, byte seatIndex, bool isLocalMode)
         {
             self.SeatIndex = seatIndex;
+            self.IsLocalMode = isLocalMode;
             
             // 按帧号缓存指令的意义
             // 客户端会动态调整自己的Tick频率，尽可能保证服务器收到指令时，服务器还没有Tick到客户端发送指令时的客户端帧号
@@ -113,6 +114,21 @@ namespace ET
                             commands.RemoveAt(i);
                     }
                     commands.Add(command);
+                    break;
+                }
+                case OperateCommandType.TimeScale:
+                {
+                    // 时间缩放指令时 本地模式下(单机)保留该指令 联网模式下该指令必须由服务器生成，客户端上报的该指令无效
+                    if (self.IsLocalMode)
+                    {
+                        var commands = self.FramesCommandsNormal[index];
+                        for (int i = commands.Count - 1; i >= 0; i--) {
+                            OperateCommandType cmdType = LSCommand.ParseCommandType(commands[i]);
+                            if (cmdType == OperateCommandType.TimeScale)
+                                commands.RemoveAt(i);
+                        }
+                        commands.Add(command);
+                    }
                     break;
                 }
 #if ENABLE_DEBUG
