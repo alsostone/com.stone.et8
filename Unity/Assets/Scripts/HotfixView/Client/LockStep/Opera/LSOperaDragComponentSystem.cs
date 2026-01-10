@@ -190,7 +190,7 @@ namespace ET.Client
                 }
                 if (lsUnitView != null)
                 {
-                    lsUnitView.GetComponent<ViewEffectComponent>()?.PlayFx(ConstValue.FxMouseHoverResId, AttachPoint.None).Coroutine();
+                    lsUnitView.GetComponent<ViewEffectComponent>()?.PlayFx(ConstValue.FxMouseHoverResId, AttachPoint.None);
                     lsUnitView.GetComponent<ViewIndicatorComponent>()?.ShowRangeIndicator();
                 }
                 self.HoverUnitView = lsUnitView;

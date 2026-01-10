@@ -74,7 +74,7 @@ namespace ET.Client
             var viewEffectComponent = view.GetComponent<ViewEffectComponent>();
             if (viewEffectComponent == null)
                 return;
-            await viewEffectComponent.PlayFx(args.FxId);
+            await viewEffectComponent.PlayFxAsync(args.FxId);
         }
     }
 }

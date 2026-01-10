@@ -27,7 +27,7 @@ namespace ET.Client
                 if (!self.SelectedIdSet.Remove(selectId))
                 {
                     LSUnitView lsUnitView = lsUnitViewComponent.GetChild<LSUnitView>(selectId);
-                    lsUnitView?.GetComponent<ViewEffectComponent>()?.PlayFx(ConstValue.FxMouseSelectedResId, AttachPoint.None).Coroutine();
+                    lsUnitView?.GetComponent<ViewEffectComponent>()?.PlayFx(ConstValue.FxMouseSelectedResId, AttachPoint.None);
                 }
             }
             foreach (long unselectId in self.SelectedIdSet)

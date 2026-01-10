@@ -20,12 +20,12 @@ namespace ET.Client
             self.LSViewOwner().GetComponent<ViewEffectComponent>()?.StopFx(self.RangeIndicator);
         }
         
-        public static async ETTask ShowRangeIndicator(this ViewIndicatorComponent self)
+        public static void ShowRangeIndicator(this ViewIndicatorComponent self)
         {
             ViewEffectComponent viewEffectComponent = self.LSViewOwner().GetComponent<ViewEffectComponent>();
             if (viewEffectComponent == null) return;
             
-            GameObject go = await viewEffectComponent.PlayFx(self.RangeIndicator, AttachPoint.None);
+            GameObject go = viewEffectComponent.PlayFx(self.RangeIndicator, AttachPoint.None);
             go.transform.localScale = Vector3.one * (self.AttackRange * 2);
         }
         

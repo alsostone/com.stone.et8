@@ -30,7 +30,7 @@ namespace ET.Client
             return ++self.idGenerator;
         }
         
-        public static async ETTask<GameObject> PlayFx(this ViewEffectComponent self, int fxId)
+        public static async ETTask<GameObject> PlayFxAsync(this ViewEffectComponent self, int fxId)
         {
             ViewEffect view = null;
             if (self.SkillEffectViews.TryGetValue(fxId, out var @ref)) {
@@ -57,7 +57,7 @@ namespace ET.Client
             return go;
         }
         
-        public static async ETTask<GameObject> PlayFx(this ViewEffectComponent self, int fxResource, AttachPoint attachPoint)
+        public static GameObject PlayFx(this ViewEffectComponent self, int fxResource, AttachPoint attachPoint)
         {
             ViewEffect view = null;
             if (self.EffectViews.TryGetValue(fxResource, out var @ref)) {
@@ -74,7 +74,7 @@ namespace ET.Client
             Transform attachTransform = viewTransformComponent.GetAttachTransform(attachPoint);
 
             ResourcesPoolComponent poolComponent = self.Room().GetComponent<ResourcesPoolComponent>();
-            GameObject go = await poolComponent.FetchAsync(fxResource, attachTransform);
+            GameObject go = poolComponent.Fetch(fxResource, attachTransform);
             go.transform.localPosition = new Vector3(0, 0.01f, 0);  // 防止被地面遮挡
             if (!self.EffectViews.ContainsKey(fxResource))  // 异步加载可能导致开始的TryGetValue未命中，这里再检查一次
             {
