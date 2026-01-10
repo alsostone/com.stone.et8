@@ -144,8 +144,7 @@ namespace ST.GridBuilder
                     }
 
                     int index = nx + nz * xLength;
-                    CellData neighbour = cells[nx + nz * xLength];
-                    if (neighbour.IsFill) {
+                    if (IsFill(index)) {
                         continue;
                     }
 
@@ -158,6 +157,7 @@ namespace ST.GridBuilder
                         };
                     }
 
+                    CellData neighbour = cells[index];
                     if (!visited.Contains(neighbour))
                     {
                         flowFieldVisit.Enqueue(neighbour);
@@ -165,7 +165,7 @@ namespace ST.GridBuilder
                     }
                 }
                 
-                foreach (var (dx, dz) in DiagonalDirections) {
+                foreach ((int dx, int dz) in DiagonalDirections) {
                     int nx = current.index.x + dx;
                     int nz = current.index.z + dz;
                     if (nx < 0 || nx >= xLength || nz < 0 || nz >= zLength) {
@@ -173,15 +173,12 @@ namespace ST.GridBuilder
                     }
 
                     int index = nx + nz * xLength;
-                    CellData neighbour = cells[nx + nz * xLength];
-                    if (neighbour.IsFill) {
+                    if (IsFill(index)) {
                         continue;
                     }
                     
                     // 若果斜对角方向有障碍物，则不允许斜线通过
-                    CellData side1 = cells[current.index.x + nz * xLength];
-                    CellData side2 = cells[nx + current.index.z * xLength];
-                    if (side1.IsFill || side2.IsFill) {
+                    if (IsFill(current.index.x, nz) || IsFill(nx, current.index.z)) {
                         continue;
                     }
 
@@ -193,7 +190,8 @@ namespace ST.GridBuilder
                             direction = new FieldV2(current.index.x - nx, current.index.z - nz)
                         };
                     }
-
+                    
+                    CellData neighbour = cells[nx + nz * xLength];
                     if (!visited.Contains(neighbour))
                     {
                         flowFieldVisit.Enqueue(neighbour);
@@ -205,20 +203,24 @@ namespace ST.GridBuilder
         
         private void GetNotContentNeighbors(int x, int z, List<IndexV2> results)
         {
-            CellData current = GetCell(x, z);
-            visited.Add(current);
+            int currentIndex = x + z * xLength;
+            visited.Add(cells[currentIndex]);
             
-            if (current.contentIds.Count > 0) {
+            indexContentsMapping.TryGetValue(currentIndex, out var currentContents);
+            if (currentContents != null && currentContents.Count > 0) {
                 foreach (var (dx, dz) in Directions)
                 {
                     int nx = x + dx;
                     int nz = z + dz;
-                    CellData neighbor = GetCell(nx, nz);
-                    if (neighbor == null)
+                    if (nx < 0 || nx >= xLength || nz < 0 || nz >= zLength)
                         continue;
-                    if (visited.Contains(neighbor))
+                    
+                    int neighborIndex = nx + nz * xLength;
+                    if (visited.Contains(cells[neighborIndex]))
                         continue;
-                    if (neighbor.contentIds.Count > 0 && neighbor.contentIds[0] != current.contentIds[0])
+                    
+                    indexContentsMapping.TryGetValue(neighborIndex, out var neighborContents);
+                    if (neighborContents != null && neighborContents.Count > 0 && neighborContents[0] != currentContents[0])
                         continue;
                     GetNotContentNeighbors(nx, nz, results);
                 }

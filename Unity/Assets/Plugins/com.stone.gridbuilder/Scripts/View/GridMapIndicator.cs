@@ -79,9 +79,7 @@ namespace ST.GridBuilder
                     }
                     
                     Color color = new Color(1f, 0.0f, 0.0f, alpha);
-                    CellData cellData = gridData.GetCell(x1, z1);
-                    if (cellData == null || !cellData.CanPut(placementData) || 
-                        !gridData.CanPutLevel(indicatorLevel, placementData) || indicatorLevel != targetLevel)
+                    if (gridData.CalcPutLevel(x1, z1, placementData) == -1 || !gridData.CanPutLevel(indicatorLevel, placementData) || indicatorLevel != targetLevel)
                     {
                         // keep red
                     } else {

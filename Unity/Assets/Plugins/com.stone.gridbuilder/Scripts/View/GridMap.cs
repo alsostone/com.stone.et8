@@ -134,9 +134,8 @@ namespace ST.GridBuilder
         
         public Vector3 GetPutPosition(PlacementData placementData)
         {
-            CellData cellData = gridData.GetCell(placementData.x, placementData.z);
-            int level = cellData?.contentIds.IndexOf(placementData.id) ?? 0 ;
-
+            int level = gridData.GetPointLevelCount(placementData.x, placementData.z, placementData);
+            
             float x = gridData.cellSize * (placementData.x + 0.5f);
             float y = gridData.cellSize * level;
             float z = gridData.cellSize * (placementData.z + 0.5f);
@@ -204,8 +203,7 @@ namespace ST.GridBuilder
             for (int x = 0; x < xLength + 1; x++)
             for (int z = 0; z < zLength; ++z)
             {
-                if ((x - 1 < 0 || gridDataDraw.cells[x - 1 + z * xLength].IsFill)
-                    && (x >= xLength || gridDataDraw.cells[x + z * xLength].IsFill)) {
+                if ((x - 1 < 0 || gridDataDraw.IsFill(x - 1, z)) && (x >= xLength || gridDataDraw.IsFill(x, z))) {
                     continue;
                 }
                 Vector3 start = GetPosition(x, z);
@@ -215,8 +213,7 @@ namespace ST.GridBuilder
                 {
                     Vector3 end = GetPosition(x, z);
                     drawPoints.Add(end);
-                    if ((x - 1 >= 0 && !gridDataDraw.cells[x - 1 + z * xLength].IsFill)
-                        || (x < xLength && !gridDataDraw.cells[x + z * xLength].IsFill)) {
+                    if ((x - 1 >= 0 && !gridDataDraw.IsFill(x - 1, z)) || (x < xLength && !gridDataDraw.IsFill(x, z))) {
                         continue;
                     }
                     Gizmos.DrawLine(start, end);
@@ -234,16 +231,14 @@ namespace ST.GridBuilder
             for (int z = 0; z < zLength + 1; z++)
             for (int x = 0; x < xLength; ++x)
             {
-                if ((z - 1 < 0 || gridDataDraw.cells[x + (z - 1) * xLength].IsFill)
-                    && (z >= zLength || gridDataDraw.cells[x + z * xLength].IsFill)) {
+                if ((z - 1 < 0 || gridDataDraw.IsFill(x, z - 1)) && (z >= zLength || gridDataDraw.IsFill(x, z))) {
                     continue;
                 }
                 Vector3 start = GetPosition(x, z);
                 
                 for (; x < xLength; ++x)
                 {
-                    if ((z - 1 >= 0 && !gridDataDraw.cells[x + (z - 1) * xLength].IsFill)
-                        || (z < zLength && !gridDataDraw.cells[x + z * xLength].IsFill)) {
+                    if ((z - 1 >= 0 && !gridDataDraw.IsFill(x, z - 1)) || (z < zLength && !gridDataDraw.IsFill(x, z))) {
                         continue;
                     }
                     Vector3 end = GetPosition(x, z);

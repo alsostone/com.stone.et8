@@ -51,6 +51,9 @@ namespace ST.GridBuilder
         [MemoryPackInclude] public CellData[] cells;
         [MemoryPackInclude] private int currentGuid = 0;
         
+        // 注意：Unity的序列化系统不支持Dictionary 所以不会持久化到场景或预制体中
+        [MemoryPackInclude] public Dictionary<int, List<(long, PlacedLayer)>> indexContentsMapping = new (32);
+
         [MemoryPackIgnore] private HashSet<CellData> visited = new HashSet<CellData>(64);
         private static readonly (int x, int z)[] OrthogonalDirections = 
         {
@@ -68,6 +71,8 @@ namespace ST.GridBuilder
         public void ResetCells()
         {
             currentGuid = 0;
+            indexContentsMapping.Clear();
+            
             if (cells == null || xLength * zLength != cells.Length)
             {
                 cells = new CellData[xLength * zLength];
@@ -85,8 +90,6 @@ namespace ST.GridBuilder
                 {
                     CellData cellData = cells[x + z * xLength];
                     cellData.isObstacle = false;
-                    cellData.contentIds.Clear();
-                    cellData.contentTypes.Clear();
                 }
             }
         }
@@ -107,10 +110,78 @@ namespace ST.GridBuilder
         {
             return x >= 0 && z >= 0 && x < xLength && z < zLength;
         }
+        
+        public List<(long, PlacedLayer)> GetContents(int x, int z)
+        {
+            if (x < 0 || z < 0 || x >= xLength || z >= zLength)
+                return null;
+            
+            int index = x + z * xLength;
+            if (indexContentsMapping.TryGetValue(index, out var contents))
+                return contents;
+            
+            return null;
+        }
+
+        public bool IsFill(int x, int z)
+        {
+            if (x < 0 || z < 0 || x >= xLength || z >= zLength)
+                return true;
+            
+            int index = x + z * xLength;
+            if (cells[index].isObstacle)
+                return true;
+            
+            if (indexContentsMapping.TryGetValue(index, out var contents))
+            {
+                return contents.Count > 0;
+            }
+            return false;
+        }
+        
+        public bool IsFill(int index)
+        {
+            if (index < 0 || index >= cells.Length)
+                return true;
+
+            if (cells[index].isObstacle)
+                return true;
+
+            if (indexContentsMapping.TryGetValue(index, out var contents))
+            {
+                return contents.Count > 0;
+            }
+            
+            return false;
+        }
 
         public long GetNextGuid()
         {
             return ++currentGuid;
+        }
+
+        public int CalcPutLevel(int x, int z, PlacementData placementData)
+        {
+            CellData data = GetCell(x, z);
+            if (data == null || data.isObstacle)
+            {
+                return -1;
+            }
+
+            var contents = GetContents(x, z);
+            if (contents != null && contents.Count > 0)
+            {
+                if (contents[^1].Item1 == placementData.id)
+                    return contents.Count - 1;
+                if ((placementData.placedLayer & contents[^1].Item2) == 0)
+                    return -1;
+                return contents.Count;
+            }
+
+            if ((placementData.placedLayer & PlacedLayer.Map) == 0)
+                return -1;
+            
+            return 0;
         }
 
         public bool CanTake(PlacementData placementData)
@@ -127,13 +198,13 @@ namespace ST.GridBuilder
                         return false;
                     }
 
-                    CellData data = cells[x2 + z2 * xLength];
-                    if (data.contentIds.Count == 0)
+                    var contents = GetContents(x2, z2);
+                    if (contents == null || contents.Count == 0)
                     {
                         return false;
                     }
 
-                    if (data.contentIds[^1] != placementData.id)
+                    if (contents[^1].Item1 != placementData.id)
                     {
                         return false;
                     }
@@ -151,16 +222,23 @@ namespace ST.GridBuilder
                 {
                     int x2 = placementData.x + x1 - PlacementData.xOffset;
                     int z2 = placementData.z + z1 - PlacementData.zOffset;
-                    CellData cellData = cells[x2 + z2 * xLength];
-                    cellData.contentIds.RemoveAt(cellData.contentIds.Count - 1);
-                    cellData.contentTypes.RemoveAt(cellData.contentTypes.Count - 1);
+                    
+                    int index = x2 + z2 * xLength;
+                    if (indexContentsMapping.TryGetValue(index, out var contents))
+                    {
+                        contents.RemoveAt(contents.Count - 1);
+                        if (contents.Count == 0)
+                        {
+                            indexContentsMapping.Remove(index);
+                        }
+                    }
                 }
             }
         }
-
+        
         public bool CanPut(int x, int z, PlacementData placementData)
         {
-            int level = -1;
+            int putLevel = -1;
             for (int x1 = 0; x1 < PlacementData.width; x1++)
             for (int z1 = 0; z1 < PlacementData.height; z1++)
             {
@@ -168,28 +246,22 @@ namespace ST.GridBuilder
                 {
                     int x2 = x + x1 - PlacementData.xOffset;
                     int z2 = z + z1 - PlacementData.zOffset;
-                    CellData data = GetCell(x2, z2);
-                    if (data == null || !data.CanPut(placementData))
-                    {
-                        return false;
-                    }
-
-                    int count = data.contentIds.Count;
-                    if (data.contentIds.IndexOf(placementData.id) != -1)
-                    {
-                        count -= 1;
-                    }
-
-                    if (!CanPutLevel(count, placementData))
-                    {
-                        return false;
-                    }
-
+                    
+                    int level = CalcPutLevel(x2, z2, placementData);
                     if (level == -1)
                     {
-                        level = count;
+                        return false;
                     }
-                    else if (count != level)
+                    if (!CanPutLevel(level, placementData))
+                    {
+                        return false;
+                    }
+
+                    if (putLevel == -1)
+                    {
+                        putLevel = level;
+                    }
+                    else if (level != putLevel)
                     {
                         return false;
                     }
@@ -207,9 +279,14 @@ namespace ST.GridBuilder
                 {
                     int x2 = x + x1 - PlacementData.xOffset;
                     int z2 = z + z1 - PlacementData.zOffset;
-                    CellData cellData = cells[x2 + z2 * xLength];
-                    cellData.contentIds.Add(placementData.id);
-                    cellData.contentTypes.Add(placementData.placementType);
+                    
+                    int index = x2 + z2 * xLength;
+                    if (!indexContentsMapping.TryGetValue(index, out var contents))
+                    {
+                        contents = new List<(long, PlacedLayer)>();
+                        indexContentsMapping[index] = contents;
+                    }
+                    contents.Add((placementData.id, placementData.placementType));
                 }
             }
 
@@ -263,13 +340,16 @@ namespace ST.GridBuilder
             if (!IsInside(x, z)) return 0;
 
             int blockLevel = 0;
-            CellData data = cells[x + z * xLength];
-            for (int i = 0; i < data.contentTypes.Count; i++)
+            int index = x + z * xLength;
+            if (indexContentsMapping.TryGetValue(index, out var contents))
             {
-                PlacedLayer placedLayer = data.contentTypes[i];
-                if (data.contentIds[i] != placementData.id && (placedLayer & PlacedLayer.Block) == PlacedLayer.Block)
+                for (int i = 0; i < contents.Count; i++)
                 {
-                    blockLevel++;
+                    (long contentId, PlacedLayer placedLayer) = contents[i];
+                    if (contentId != placementData.id && (placedLayer & PlacedLayer.Block) == PlacedLayer.Block)
+                    {
+                        blockLevel++;
+                    }
                 }
             }
 
@@ -289,8 +369,7 @@ namespace ST.GridBuilder
             dest.x = Math.Clamp(dest.x, 0, xLength - 1);
             dest.z = Math.Clamp(dest.z, 0, zLength - 1);
             
-            CellData cellData = GetCell(dest.x, dest.z);
-            if (!cellData.IsFill)
+            if (!IsFill(dest.x, dest.z))
                 return dest;
             
             int round = 1;
@@ -301,11 +380,8 @@ namespace ST.GridBuilder
                 {
                     int nx = dest.x + dx;
                     int nz = dest.z + dz;
-                    if (!IsInside(nx, nz))
-                        continue;
-                    
-                    CellData cell = GetCell(nx, nz);
-                    if (!cell.IsFill) {
+
+                    if (!IsFill(nx, nz)) {
                         return new IndexV2(nx, nz);
                     }
                 }

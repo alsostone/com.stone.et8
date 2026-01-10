@@ -14,13 +14,13 @@ namespace ST.GridBuilder
 
             IndexV2 startIndex = GetValidDest(ConvertToIndex(start));
             CellData startCell = GetCell(startIndex.x, startIndex.z);
-            if (startCell == null || startCell.IsFill) {
+            if (startCell == null || IsFill(startIndex.x, startIndex.z)) {
                 return false;
             }
             
             IndexV2 toIndexV2 = GetValidDest(ConvertToIndex(to));
             CellData toCell = GetCell(toIndexV2.x, toIndexV2.z);
-            if (toCell == null || toCell.IsFill) {
+            if (toCell == null || IsFill(toIndexV2.x, toIndexV2.z)) {
                 return false;
             }
             return Pathfinding(startCell, toCell, results);
@@ -50,8 +50,9 @@ namespace ST.GridBuilder
                         continue;
                     }
 
-                    CellData neighbour = cells[nx + nz * xLength];
-                    if (neighbour.IsFill || visited.Contains(neighbour)) {
+                    int index = nx + nz * xLength;
+                    CellData neighbour = cells[index];
+                    if (IsFill(index) || visited.Contains(neighbour)) {
                         continue;
                     }
 
