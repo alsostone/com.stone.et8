@@ -70,6 +70,7 @@ namespace ST.GridBuilder
                         }
                         indicators[(x1, z1)] = indicator;
                         indicator.DoAdd(this, gridMap.GetLevelPosition(x1, z1, indicatorLevel));
+                        indicator.transform.rotation = gridMap.GetGridRotation() * Quaternion.Euler(90, 0, 0);
                     }
                     keepIndicators.Add(indicator);
                     
