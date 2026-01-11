@@ -5,5 +5,9 @@ namespace ET
         public TeamType WinTeam;
     }
     
+    public struct LSTimeScaleChanged
+    {
+    }
+    
 }
 

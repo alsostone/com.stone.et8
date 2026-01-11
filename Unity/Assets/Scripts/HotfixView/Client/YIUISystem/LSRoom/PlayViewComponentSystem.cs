@@ -4,6 +4,7 @@ using YIUIFramework;
 using DG.Tweening;
 using DG.Tweening.Core;
 using DG.Tweening.Plugins.Options;
+using TrueSync;
 using UnityEngine.UI;
 
 namespace ET.Client
@@ -54,6 +55,7 @@ namespace ET.Client
         [EntitySystem]
         private static async ETTask<bool> YIUIOpen(this PlayViewComponent self)
         {
+            self.u_DataLocalMode.SetValue(self.Room().LockStepMode == LockStepMode.Local);
             self.ResetSelectCards();
             self.ResetBagCards();
             await ETTask.CompletedTask;
@@ -302,6 +304,24 @@ namespace ET.Client
                     yiuiRootComponent.OpenPanelAsync<LSCardSelectPanelComponent>().Coroutine();
                 }
             }
+        }
+        
+        private static void OnEventSetScale2Action(this PlayViewComponent self)
+        {
+            var command = LSCommand.GenCommandLong(0, OperateCommandType.TimeScale, FP.Two.V);
+            self.Room().SendCommandMeesage(command);
+        }
+        
+        private static void OnEventSetScale1Action(this PlayViewComponent self)
+        {
+            var command = LSCommand.GenCommandLong(0, OperateCommandType.TimeScale, FP.One.V);
+            self.Room().SendCommandMeesage(command);
+        }
+        
+        private static void OnEventSetPauseAction(this PlayViewComponent self)
+        {
+            var command = LSCommand.GenCommandLong(0, OperateCommandType.TimeScale, 0);
+            self.Room().SendCommandMeesage(command);
         }
         #endregion YIUIEvent结束
     }

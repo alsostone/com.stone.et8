@@ -52,14 +52,15 @@ namespace ET.Client
 
         private static void CreateHeroView(LSUnitViewComponent viewComponent, LSUnit lsUnit)
         {
+            Room room = viewComponent.Room();
             HeroComponent heroComponent = lsUnit.GetComponent<HeroComponent>();
             GlobalComponent globalComponent = viewComponent.Root().GetComponent<GlobalComponent>();
-            GameObject unitGo = viewComponent.Room().GetComponent<ResourcesPoolComponent>().Fetch(heroComponent.TbSkinRow.Model, globalComponent.Unit, true);
+            GameObject unitGo = room.GetComponent<ResourcesPoolComponent>().Fetch(heroComponent.TbSkinRow.Model, globalComponent.Unit, true);
             
             LSUnitView lsUnitView = viewComponent.AddChildWithId<LSUnitView, GameObject>(lsUnit.Id, unitGo);
             Animation animation = unitGo.GetComponent<Animation>();
             if (animation) {
-                lsUnitView.AddComponent<LSAnimationComponent, Animation>(animation);
+                lsUnitView.AddComponent<LSAnimationComponent, Animation, float>(animation, room.TimeScale);
             }
             
             AttachPointCollector collector = unitGo.GetComponent<AttachPointCollector>();
@@ -89,14 +90,15 @@ namespace ET.Client
 
         private static void CreateBuildingView(LSUnitViewComponent viewComponent, LSUnit lsUnit)
         {
+            Room room = viewComponent.Room();
             BuildingComponent buildingComponent = lsUnit.GetComponent<BuildingComponent>();
             GlobalComponent globalComponent = viewComponent.Root().GetComponent<GlobalComponent>();
-            GameObject unitGo = viewComponent.Room().GetComponent<ResourcesPoolComponent>().Fetch(buildingComponent.TbRow.Model, globalComponent.Unit, true);
+            GameObject unitGo = room.GetComponent<ResourcesPoolComponent>().Fetch(buildingComponent.TbRow.Model, globalComponent.Unit, true);
 
             LSUnitView lsUnitView = viewComponent.AddChildWithId<LSUnitView, GameObject>(lsUnit.Id, unitGo);
             Animation animation = unitGo.GetComponent<Animation>();
             if (animation) {
-                lsUnitView.AddComponent<LSAnimationComponent, Animation>(animation);
+                lsUnitView.AddComponent<LSAnimationComponent, Animation, float>(animation, room.TimeScale);
             }
             
             AttachPointCollector collector = unitGo.GetComponent<AttachPointCollector>();
@@ -119,6 +121,7 @@ namespace ET.Client
 
         private static void CreateSoldierView(LSUnitViewComponent viewComponent, LSUnit lsUnit)
         {
+            Room room = viewComponent.Room();
             SoldierComponent soldierComponent = lsUnit.GetComponent<SoldierComponent>();
             GlobalComponent globalComponent = viewComponent.Root().GetComponent<GlobalComponent>();
             GameObject unitGo = viewComponent.Room().GetComponent<ResourcesPoolComponent>().Fetch(soldierComponent.TbRow.Model, globalComponent.Unit, true);
@@ -126,7 +129,7 @@ namespace ET.Client
             LSUnitView lsUnitView = viewComponent.AddChildWithId<LSUnitView, GameObject>(lsUnit.Id, unitGo);
             Animation animation = unitGo.GetComponent<Animation>();
             if (animation) {
-                lsUnitView.AddComponent<LSAnimationComponent, Animation>(animation);
+                lsUnitView.AddComponent<LSAnimationComponent, Animation, float>(animation, room.TimeScale);
             }
             
             AttachPointCollector collector = unitGo.GetComponent<AttachPointCollector>();

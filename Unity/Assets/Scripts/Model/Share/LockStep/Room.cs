@@ -52,6 +52,7 @@ namespace ET
         
         public bool IsRollback { get; set ; }
         
-        public int SpeedMultiply { get; set; }
+        public int SpeedMultiply { get; set; } = 1;
+        public float TimeScale => LSWorld.TimeScale.AsFloat() * SpeedMultiply;
     }
 }

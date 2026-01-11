@@ -29,12 +29,19 @@ namespace ET.Client
         public UnityEngine.RectTransform u_ComSelectIndicator;
         public YIUIFramework.UIDataValueString u_DataPredictFrame;
         public YIUIFramework.UIDataValueString u_DataSelectCount;
+        public YIUIFramework.UIDataValueBool u_DataLocalMode;
         public UIEventP0 u_EventSaveReplay;
         public UIEventHandleP0 u_EventSaveReplayHandle;
         public UIEventP1<string> u_EventSaveName;
         public UIEventHandleP1<string> u_EventSaveNameHandle;
         public UIEventP0 u_EventSelectCard;
         public UIEventHandleP0 u_EventSelectCardHandle;
+        public UIEventP0 u_EventSetPause;
+        public UIEventHandleP0 u_EventSetPauseHandle;
+        public UIEventP0 u_EventSetScale1;
+        public UIEventHandleP0 u_EventSetScale1Handle;
+        public UIEventP0 u_EventSetScale2;
+        public UIEventHandleP0 u_EventSetScale2Handle;
 
     }
 }

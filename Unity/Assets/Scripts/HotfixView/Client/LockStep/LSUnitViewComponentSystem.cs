@@ -1,5 +1,4 @@
-﻿
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 
 namespace ET.Client
 {
@@ -31,15 +30,18 @@ namespace ET.Client
         {
             Room room = self.Room();
             LSUnitComponent lsUnitComponent = room.LSWorld.GetComponent<LSUnitComponent>();
+            float timeScale = room.TimeScale;
 
             // 1. 销毁表现层没有实体的LSUnitView
             List<LSUnitView> removeViews = ObjectPool.Instance.Fetch<List<LSUnitView>>();
             foreach (var pair in self.Children)
             {
-                var lsUnit = lsUnitComponent.GetChild<LSUnit>(pair.Value.Id);
-                if (lsUnit == null)
-                {
-                    removeViews.Add(pair.Value as LSUnitView);
+                LSUnitView lsUnitView = pair.Value as LSUnitView;
+                var lsUnit = lsUnitComponent.GetChild<LSUnit>(lsUnitView.Id);
+                if (lsUnit == null) {
+                    removeViews.Add(lsUnitView);
+                } else {
+                    lsUnitView.GetComponent<LSAnimationComponent>()?.ResetTimeScale(timeScale);
                 }
             }
             foreach (LSUnitView removeView in removeViews)
@@ -60,5 +62,13 @@ namespace ET.Client
             }
         }
 
+        public static void ResetTimeScale(this LSUnitViewComponent self, float timeScale)
+        {
+            foreach (var pair in self.Children)
+            {
+                LSUnitView lsUnitView = pair.Value as LSUnitView;
+                lsUnitView.GetComponent<LSAnimationComponent>()?.ResetTimeScale(timeScale);
+            }
+        }
     }
 }

@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 
 namespace ET.Client
 {
@@ -24,9 +25,11 @@ namespace ET.Client
 		}
 		
 		[EntitySystem]
-		private static void Awake(this LSAnimationComponent self, Animation animation)
+		private static void Awake(this LSAnimationComponent self, Animation animation, float timeScale)
 		{
 			self.Animation = animation;
+			self.MontionSpeed = timeScale;
+			self.PlayAnimtation(AnimationNames.Idle);
 		}
 		
 		public static void PlayAnimtation(this LSAnimationComponent self, string name, bool force = false)
@@ -34,6 +37,7 @@ namespace ET.Client
 			// 利用此方式规避快由不同功能切同一动作带来的抖动问题
 			if (force || self.AnimationName != name)
 			{
+				self.Animation[name].speed = self.MontionSpeed;
 				self.Animation.CrossFade(name, 0.2f);
 				self.AnimationName = name;
 			}
@@ -51,6 +55,7 @@ namespace ET.Client
 			}
 			self.mAnimationStack.Add(name);
             
+			self.Animation[name].speed = self.MontionSpeed;
 			self.Animation.CrossFade(name, 0.2f);
 			self.AnimationName = name;
 		}
@@ -80,6 +85,15 @@ namespace ET.Client
 						self.PlayAnimtation(name);
 					}
 				}
+			}
+		}
+		
+		public static void ResetTimeScale(this LSAnimationComponent self, float timeScale)
+		{
+			if (Math.Abs(self.MontionSpeed - timeScale) > float.Epsilon)
+			{
+				self.MontionSpeed = timeScale;
+				self.Animation[self.AnimationName].speed = timeScale;
 			}
 		}
 		
