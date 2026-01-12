@@ -45,6 +45,7 @@
 {"ID":44,"FileName":"BulletComponentSystem.cs","FuncName":"Awake","ArgTypes":"BulletComponent,int,LSUnit,LSUnit","ArgNames":"self,bulletId,caster,target","ValidArgNames":"Owner,bulletId,caster.Id,target.Id","ValidArgCount":4,"Comments":null}
 {"ID":45,"FileName":"TrackComponentSystem.cs","FuncName":"Tick","ArgTypes":"TrackComponent","ArgNames":"self","ValidArgNames":"Owner","ValidArgCount":1,"Comments":null}
 {"ID":46,"FileName":"TrackComponentSystem.cs","FuncName":"LSUpdate","ArgTypes":"TrackComponent","ArgNames":"self","ValidArgNames":"Owner","ValidArgCount":1,"Comments":null}
+{"ID":47,"FileName":"DeathComponentSystem.cs","FuncName":"DoDeath","ArgTypes":"DeathComponent","ArgNames":"self","ValidArgNames":"Owner","ValidArgCount":1,"Comments":null}
 {"ID":48,"FileName":"CardBagComponentSystem.cs","FuncName":"RemoveItem","ArgTypes":"CardBagComponent,long","ArgNames":"self,itemId","ValidArgNames":"Owner","ValidArgCount":1,"Comments":null}
 {"ID":49,"FileName":"CardBagComponentSystem.cs","FuncName":"AddItem","ArgTypes":"CardBagComponent,LSRandomDropItem","ArgNames":"self,dropItem","ValidArgNames":"Owner","ValidArgCount":1,"Comments":null}
 {"ID":50,"FileName":"CardBagComponentSystem.cs","FuncName":"Awake","ArgTypes":"CardBagComponent,List<LSRandomDropItem>","ArgNames":"self,items","ValidArgNames":"Owner","ValidArgCount":1,"Comments":null}
@@ -86,7 +87,7 @@
 {"ID":86,"FileName":"TransformComponentSystem.cs","FuncName":"TransformPoint","ArgTypes":"TransformComponent,TSVector","ArgNames":"self,position","ValidArgNames":"Owner,(FP)position.X, (FP)position.Y,(FP)position.Z","ValidArgCount":4,"Comments":null}
 {"ID":87,"FileName":"TransformComponentSystem.cs","FuncName":"TransformVector","ArgTypes":"TransformComponent,TSVector","ArgNames":"self,position","ValidArgNames":"Owner,(FP)position.X, (FP)position.Y,(FP)position.Z","ValidArgCount":4,"Comments":null}
 {"ID":88,"FileName":"TransformComponentSystem.cs","FuncName":"TransformDirection","ArgTypes":"TransformComponent,TSVector","ArgNames":"self,position","ValidArgNames":"Owner,(FP)position.X, (FP)position.Y,(FP)position.Z","ValidArgCount":4,"Comments":null}
-{"ID":89,"FileName":"TransformComponentSystem.cs","FuncName":"SetPosition","ArgTypes":"TransformComponent,TSVector","ArgNames":"self,position","ValidArgNames":"Owner,(FP)position.X, (FP)position.Y,(FP)position.Z","ValidArgCount":4,"Comments":null}
+{"ID":89,"FileName":"TransformComponentSystem.cs","FuncName":"SetPosition","ArgTypes":"TransformComponent,TSVector,bool","ArgNames":"self,position,immediate","ValidArgNames":"Owner,(FP)position.X, (FP)position.Y,(FP)position.Z,immediate","ValidArgCount":5,"Comments":null}
 {"ID":90,"FileName":"TransformComponentSystem.cs","FuncName":"SetMoving","ArgTypes":"TransformComponent,bool","ArgNames":"self,moving","ValidArgNames":"Owner,moving","ValidArgCount":2,"Comments":null}
 {"ID":91,"FileName":"TransformComponentSystem.cs","FuncName":"RVOMove","ArgTypes":"TransformComponent,TSVector2","ArgNames":"self,forward","ValidArgNames":"Owner,(FP)forward.X,(FP)forward.Y","ValidArgCount":3,"Comments":null}
 {"ID":92,"FileName":"TransformComponentSystem.cs","FuncName":"Move","ArgTypes":"TransformComponent,TSVector2","ArgNames":"self,forward","ValidArgNames":"Owner,(FP)forward.X,(FP)forward.Y","ValidArgCount":3,"Comments":null}
@@ -94,7 +95,7 @@
 {"ID":94,"FileName":"TransformComponentSystem.cs","FuncName":"Awake","ArgTypes":"TransformComponent,TSVector,TSQuaternion","ArgNames":"self,position,rotation","ValidArgNames":"Owner,(FP)position.X, (FP)position.Y,(FP)position.Z","ValidArgCount":4,"Comments":null}
 {"ID":95,"FileName":"TypeComponentSystem.cs","FuncName":"Awake","ArgTypes":"TypeComponent,EUnitType","ArgNames":"self,type","ValidArgNames":"Owner","ValidArgCount":1,"Comments":null}
 {"ID":96,"FileName":"BuildComponentSystem.cs","FuncName":"LSUpdate","ArgTypes":"BuildComponent","ArgNames":"self","ValidArgNames":"Owner","ValidArgCount":1,"Comments":null}
-{"ID":97,"FileName":"BuildComponentSystem.cs","FuncName":"Awake","ArgTypes":"BuildComponent,int","ArgNames":"self,durationFrame","ValidArgNames":"Owner,durationFrame","ValidArgCount":2,"Comments":null}
+{"ID":97,"FileName":"BuildComponentSystem.cs","FuncName":"Awake","ArgTypes":"BuildComponent,int","ArgNames":"self,duration","ValidArgNames":"Owner,duration","ValidArgCount":2,"Comments":null}
 {"ID":98,"FileName":"PlacementComponentSystem.cs","FuncName":"Destroy","ArgTypes":"PlacementComponent","ArgNames":"self","ValidArgNames":"Owner","ValidArgCount":1,"Comments":null}
 {"ID":99,"FileName":"PlacementComponentSystem.cs","FuncName":"Awake","ArgTypes":"PlacementComponent,PlacementData","ArgNames":"self,placementData","ValidArgNames":"Owner","ValidArgCount":1,"Comments":null}
 {"ID":100,"FileName":"ProductComponentSystem.cs","FuncName":"LSUpdate","ArgTypes":"ProductComponent","ArgNames":"self","ValidArgNames":"Owner","ValidArgCount":1,"Comments":null}
@@ -168,4 +169,6 @@
 {"ID":168,"FileName":"TrackComponentSystem.cs","FuncName":"Awake","ArgTypes":"TrackComponent,int,int,int,TSVector","ArgNames":"self,speed,controlFactor,controlHeight,targetPosition","ValidArgNames":"Owner,speed,controlFactor,controlHeight,(FP)targetPosition.X, (FP)targetPosition.Y,(FP)targetPosition.Z","ValidArgCount":7,"Comments":null}
 {"ID":169,"FileName":"TrackComponentSystem.cs","FuncName":"Awake","ArgTypes":"TrackComponent,int,int,int,LSUnit","ArgNames":"self,speed,controlFactor,controlHeight,target","ValidArgNames":"Owner,speed,controlFactor,controlHeight,target.Id","ValidArgCount":5,"Comments":null}
 {"ID":170,"FileName":"TrackComponentSystem.cs","FuncName":"Awake","ArgTypes":"TrackComponent,int,int,int,FP","ArgNames":"self,speed,controlFactor,controlHeight,distance","ValidArgNames":"Owner,speed,controlFactor,controlHeight,(FP)distance","ValidArgCount":5,"Comments":null}
+{"ID":171,"FileName":"TransformComponentSystem.cs","FuncName":"SetForward","ArgTypes":"TransformComponent,TSVector,bool","ArgNames":"self,forward,immediate","ValidArgNames":"Owner,(FP)forward.X, (FP)forward.Y,(FP)forward.Z,immediate","ValidArgCount":5,"Comments":null}
+{"ID":172,"FileName":"TransformComponentSystem.cs","FuncName":"SetRotation","ArgTypes":"TransformComponent,TSQuaternion,bool","ArgNames":"self,rotation,immediate","ValidArgNames":"Owner,immediate","ValidArgCount":2,"Comments":null}
 ]

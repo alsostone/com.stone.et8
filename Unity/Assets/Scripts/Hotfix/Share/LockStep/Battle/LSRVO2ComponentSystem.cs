@@ -38,7 +38,13 @@ namespace ET
                 LSUnit lsUnit = self.LSUnit(agent.id);
                 TransformComponent transformComponent = lsUnit.GetComponent<TransformComponent>();
                 transformComponent.RVO2Velocity = agent.velocity;
-                transformComponent.SetPosition(new TSVector(agent.position.x, transformComponent.Position.y, agent.position.y));
+                
+                // 不能直接调用TransformComponent的SetPosition，会形成循环依赖
+                TSVector position = new TSVector(agent.position.x, transformComponent.Position.y, agent.position.y);
+                if (transformComponent.Position != position) {
+                    transformComponent.Position = position;
+                    EventSystem.Instance.Publish(self.LSWorld(), new LSUnitPosition() { Id = lsUnit.Id, Position = position, Immediate = false });
+                }
             }
         }
 

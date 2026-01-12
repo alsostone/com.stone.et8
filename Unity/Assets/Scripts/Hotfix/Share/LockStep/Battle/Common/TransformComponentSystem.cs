@@ -85,7 +85,7 @@ namespace ET
         }
 
         public static void SetPosition(this TransformComponent self, TSVector position, bool immediate = false)
-        {self.LSRoom()?.ProcessLog.LogFunction(89, self.LSParent().Id, position.x.V, position.y.V, position.z.V);
+        {self.LSRoom()?.ProcessLog.LogFunction(89, self.LSParent().Id, position.x.V, position.y.V, position.z.V, immediate ? 1 : 0);
             if (self.Position == position)
                 return;
             self.Position = position;
@@ -93,14 +93,14 @@ namespace ET
         }
 
         public static void SetRotation(this TransformComponent self, TSQuaternion rotation, bool immediate = false)
-        {
+        {self.LSRoom()?.ProcessLog.LogFunction(172, self.LSParent().Id, immediate ? 1 : 0);
             self.Rotation = rotation;
             self.Upwards = rotation * TSVector.up;
             EventSystem.Instance.Publish(self.LSWorld(), new LSUnitRotation() { Id = self.LSOwner().Id, Rotation = rotation, Immediate = immediate });
         }
         
         public static void SetForward(this TransformComponent self, TSVector forward, bool immediate = false)
-        {
+        {self.LSRoom()?.ProcessLog.LogFunction(171, self.LSParent().Id, forward.x.V, forward.y.V, forward.z.V, immediate ? 1 : 0);
             if (forward.sqrMagnitude < FP.Epsilon)
                 return;
             self.Rotation = TSQuaternion.LookRotation(forward.normalized, self.Upwards);

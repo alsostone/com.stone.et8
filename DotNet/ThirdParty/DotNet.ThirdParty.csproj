@@ -31,8 +31,8 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <Compile Include="..\..\Unity\Assets\Scripts\ThirdParty\Const\**\*.cs">
-            <Link>Const/%(RecursiveDir)%(FileName)%(Extension)</Link>
+        <Compile Include="..\..\Unity\Assets\Scripts\ThirdParty\Mono\**\*.cs">
+            <Link>Mono/%(RecursiveDir)%(FileName)%(Extension)</Link>
         </Compile>
         
         <Compile Include="..\..\Unity\Assets\Scripts\ThirdParty\RVO2\**\*.cs">

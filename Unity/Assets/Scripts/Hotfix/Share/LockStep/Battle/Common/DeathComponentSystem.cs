@@ -64,7 +64,7 @@ namespace ET
         }
 
         public static void DoDeath(this DeathComponent self)
-        {
+        {self.LSRoom()?.ProcessLog.LogFunction(47, self.LSParent().Id);
             self.LSOwner().DeadMark = 1;
         }
     }
