@@ -104,7 +104,7 @@ namespace ET.Client
         
         public static void SaveReplay(Room room, string path)
         {
-            if (room.LockStepMode >= LockStepMode.Local) {
+            if (room.LockStepMode < LockStepMode.Local) {
                 return;
             }
             

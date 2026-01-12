@@ -40,13 +40,8 @@ namespace ET.Client
             self.u_ComArrowBody = self.UIBase.ComponentTable.FindComponent<UnityEngine.RectTransform>("u_ComArrowBody");
             self.u_ComArrowBodyView = self.UIBase.ComponentTable.FindComponent<UnityEngine.RectTransform>("u_ComArrowBodyView");
             self.u_ComSelectIndicator = self.UIBase.ComponentTable.FindComponent<UnityEngine.RectTransform>("u_ComSelectIndicator");
-            self.u_DataPredictFrame = self.UIBase.DataTable.FindDataValue<YIUIFramework.UIDataValueString>("u_DataPredictFrame");
             self.u_DataSelectCount = self.UIBase.DataTable.FindDataValue<YIUIFramework.UIDataValueString>("u_DataSelectCount");
             self.u_DataLocalMode = self.UIBase.DataTable.FindDataValue<YIUIFramework.UIDataValueBool>("u_DataLocalMode");
-            self.u_EventSaveReplay = self.UIBase.EventTable.FindEvent<UIEventP0>("u_EventSaveReplay");
-            self.u_EventSaveReplayHandle = self.u_EventSaveReplay.Add(self.OnEventSaveReplayAction);
-            self.u_EventSaveName = self.UIBase.EventTable.FindEvent<UIEventP1<string>>("u_EventSaveName");
-            self.u_EventSaveNameHandle = self.u_EventSaveName.Add(self.OnEventSaveNameAction);
             self.u_EventSelectCard = self.UIBase.EventTable.FindEvent<UIEventP0>("u_EventSelectCard");
             self.u_EventSelectCardHandle = self.u_EventSelectCard.Add(self.OnEventSelectCardAction);
             self.u_EventSetPause = self.UIBase.EventTable.FindEvent<UIEventP0>("u_EventSetPause");

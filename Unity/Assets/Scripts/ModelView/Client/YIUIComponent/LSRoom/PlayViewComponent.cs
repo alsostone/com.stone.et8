@@ -15,9 +15,6 @@ namespace ET.Client
             IYIUIEvent<UIArrowDragStartEvent>, IYIUIEvent<UIArrowDragEvent>, IYIUIEvent<UIArrowDragEndEvent>,
             IYIUIEvent<UISelectDragStartEvent>, IYIUIEvent<UISelectDragEvent>, IYIUIEvent<UISelectDragEndEvent>
     {
-        public string SaveName;
-        public int PredictFrame = 0;
-
         public List<List<LSRandomDropItem>> CachedCards;
         public YIUIListView<PlayCardItemComponent> CardsView;
         

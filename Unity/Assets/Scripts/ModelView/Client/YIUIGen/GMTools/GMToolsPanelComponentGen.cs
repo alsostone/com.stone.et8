@@ -42,6 +42,8 @@ namespace ET.Client
         public UIEventHandleP0 u_EventSetLoseHandle;
         public UIEventP0 u_EventCardSelect;
         public UIEventHandleP0 u_EventCardSelectHandle;
+        public UIEventP0 u_EventSaveReplay;
+        public UIEventHandleP0 u_EventSaveReplayHandle;
 
     }
 }

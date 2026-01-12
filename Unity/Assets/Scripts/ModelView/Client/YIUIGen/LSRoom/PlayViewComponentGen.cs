@@ -27,13 +27,8 @@ namespace ET.Client
         public UnityEngine.RectTransform u_ComArrowBody;
         public UnityEngine.RectTransform u_ComArrowBodyView;
         public UnityEngine.RectTransform u_ComSelectIndicator;
-        public YIUIFramework.UIDataValueString u_DataPredictFrame;
         public YIUIFramework.UIDataValueString u_DataSelectCount;
         public YIUIFramework.UIDataValueBool u_DataLocalMode;
-        public UIEventP0 u_EventSaveReplay;
-        public UIEventHandleP0 u_EventSaveReplayHandle;
-        public UIEventP1<string> u_EventSaveName;
-        public UIEventHandleP1<string> u_EventSaveNameHandle;
         public UIEventP0 u_EventSelectCard;
         public UIEventHandleP0 u_EventSelectCardHandle;
         public UIEventP0 u_EventSetPause;

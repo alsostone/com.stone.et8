@@ -49,6 +49,8 @@ namespace ET.Client
             self.u_EventSetLoseHandle = self.u_EventSetLose.Add(self.OnEventSetLoseAction);
             self.u_EventCardSelect = self.UIBase.EventTable.FindEvent<UIEventP0>("u_EventCardSelect");
             self.u_EventCardSelectHandle = self.u_EventCardSelect.Add(self.OnEventCardSelectAction);
+            self.u_EventSaveReplay = self.UIBase.EventTable.FindEvent<UIEventP0>("u_EventSaveReplay");
+            self.u_EventSaveReplayHandle = self.u_EventSaveReplay.Add(self.OnEventSaveReplayAction);
 
         }
     }

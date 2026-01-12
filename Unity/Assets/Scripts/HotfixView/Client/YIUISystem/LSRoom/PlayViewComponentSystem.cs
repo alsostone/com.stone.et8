@@ -39,13 +39,6 @@ namespace ET.Client
         [EntitySystem]
         private static void Update(this PlayViewComponent self)
         {
-            Room room = self.Room();
-            if (self.PredictFrame != room.PredictionFrame)
-            {
-                self.PredictFrame = room.PredictionFrame;
-                self.u_DataPredictFrame.SetValue(room.PredictionFrame.ToString());
-            }
-
             if (self.IsArrowDragging)
             {
                 self.ExecuteArrowBodyAnimationStep();
@@ -283,16 +276,6 @@ namespace ET.Client
         }
 
         #region YIUIEvent开始
-        
-        private static void OnEventSaveNameAction(this PlayViewComponent self, string p1)
-        {
-            self.SaveName = p1;
-        }
-        
-        private static void OnEventSaveReplayAction(this PlayViewComponent self)
-        {
-            LSClientHelper.SaveReplay(self.Room(), self.SaveName);
-        }
         
         private static void OnEventSelectCardAction(this PlayViewComponent self)
         {
