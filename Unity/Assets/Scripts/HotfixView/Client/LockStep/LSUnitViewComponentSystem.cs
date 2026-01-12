@@ -30,7 +30,7 @@ namespace ET.Client
         {
             Room room = self.Room();
             LSUnitComponent lsUnitComponent = room.LSWorld.GetComponent<LSUnitComponent>();
-            float timeScale = room.TimeScale;
+            float speed = room.TimeScale;
 
             // 1. 销毁表现层没有实体的LSUnitView
             List<LSUnitView> removeViews = ObjectPool.Instance.Fetch<List<LSUnitView>>();
@@ -41,7 +41,7 @@ namespace ET.Client
                 if (lsUnit == null) {
                     removeViews.Add(lsUnitView);
                 } else {
-                    lsUnitView.GetComponent<LSAnimationComponent>()?.ResetTimeScale(timeScale);
+                    lsUnitView.GetComponent<LSAnimationComponent>()?.SetSpeed(speed);
                 }
             }
             foreach (LSUnitView removeView in removeViews)
@@ -62,12 +62,12 @@ namespace ET.Client
             }
         }
 
-        public static void ResetTimeScale(this LSUnitViewComponent self, float timeScale)
+        public static void SetSpeed(this LSUnitViewComponent self, float speed)
         {
             foreach (var pair in self.Children)
             {
                 LSUnitView lsUnitView = pair.Value as LSUnitView;
-                lsUnitView.GetComponent<LSAnimationComponent>()?.ResetTimeScale(timeScale);
+                lsUnitView.GetComponent<LSAnimationComponent>()?.SetSpeed(speed);
             }
         }
     }

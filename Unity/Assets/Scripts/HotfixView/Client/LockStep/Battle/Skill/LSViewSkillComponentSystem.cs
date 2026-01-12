@@ -8,40 +8,6 @@ namespace ET.Client
     [FriendOf(typeof(LSViewSkillComponent))]
     public static partial class LSViewSkillComponentSystem
     {
-        [Invoke(TimerInvokeType.SkillAniPreTimer)]
-        [FriendOf(typeof(LSViewSkillComponent))]
-        public class SkillAniPreTimer : ATimer<LSViewSkillComponent>
-        {
-            protected override void Run(LSViewSkillComponent self)
-            {
-                var animationComponent = self.LSViewOwner().GetComponent<LSAnimationComponent>();
-                animationComponent?.RemoveAnimation(self.TbSkillRow.AniNamePre, 1);
-                self.PlayAnimation();
-            }
-        }
-        [Invoke(TimerInvokeType.SkillAniTimer)]
-        [FriendOf(typeof(LSViewSkillComponent))]
-        public class SkillAniTimer : ATimer<LSViewSkillComponent>
-        {
-            protected override void Run(LSViewSkillComponent self)
-            {
-                var animationComponent = self.LSViewOwner().GetComponent<LSAnimationComponent>();
-                animationComponent?.RemoveAnimation(self.TbSkillRow.AniName, 1);
-                self.PlayAnimationAfter();
-            }
-        }
-        [Invoke(TimerInvokeType.SkillAniAfterTimer)]
-        [FriendOf(typeof(LSViewSkillComponent))]
-        public class SkillAniAfterTimer : ATimer<LSViewSkillComponent>
-        {
-            protected override void Run(LSViewSkillComponent self)
-            {
-                var animationComponent = self.LSViewOwner().GetComponent<LSAnimationComponent>();
-                animationComponent?.RemoveAnimation(self.TbSkillRow.AniNameAfter, 1);
-                self.TbSkillRow = null;
-            }
-        }
-        
         [EntitySystem]
         private static void Awake(this LSViewSkillComponent self)
         {
@@ -56,10 +22,10 @@ namespace ET.Client
         [EntitySystem]
         private static void Destroy(this LSViewSkillComponent self)
         {
-            var timerComponent = self.Root().GetComponent<TimerComponent>();
-            timerComponent.Remove(ref self.AniPreTimer);
-            timerComponent.Remove(ref self.AniTimer);
-            timerComponent.Remove(ref self.AniAfterTimer);
+            LSViewTimerComponent timerComponent = self.Room().GetComponent<LSViewTimerComponent>();
+            timerComponent.RemoveTimer(ref self.AniPreTimer);
+            timerComponent.RemoveTimer(ref self.AniTimer);
+            timerComponent.RemoveTimer(ref self.AniAfterTimer);
         }
 
         public static void OnCastSkill(this LSViewSkillComponent self, int skillId)
@@ -78,8 +44,8 @@ namespace ET.Client
                 self.IsSkillRunning = true;
                 var animationComponent = self.LSViewOwner().GetComponent<LSAnimationComponent>();
                 animationComponent?.AddAnimation(self.TbSkillRow.AniNamePre, true);
-                var tillTime = TimeInfo.Instance.ServerFrameTime() + self.TbSkillRow.DurationPre;
-                self.AniPreTimer = self.Root().GetComponent<TimerComponent>().NewOnceTimer(tillTime, TimerInvokeType.SkillAniPreTimer, self);
+                LSViewTimerComponent timerComponent = self.Room().GetComponent<LSViewTimerComponent>();
+                self.AniPreTimer = timerComponent.AddTimer(self.TbSkillRow.DurationPre - 200, TimerInvokeType.SkillAniPreTimer, self);
             }
             else
             {
@@ -87,15 +53,15 @@ namespace ET.Client
             }
         }
         
-        private static void PlayAnimation(this LSViewSkillComponent self)
+        public static void PlayAnimation(this LSViewSkillComponent self)
         {
             if (self.TbSkillRow.AniName.Length > 0)
             {
                 self.IsSkillRunning = true;
                 var animationComponent = self.LSViewOwner().GetComponent<LSAnimationComponent>();
                 animationComponent?.AddAnimation(self.TbSkillRow.AniName, true);
-                var tillTime = TimeInfo.Instance.ServerFrameTime() + self.TbSkillRow.Duration;
-                self.AniTimer = self.Root().GetComponent<TimerComponent>().NewOnceTimer(tillTime, TimerInvokeType.SkillAniTimer, self);
+                LSViewTimerComponent timerComponent = self.Room().GetComponent<LSViewTimerComponent>();
+                self.AniTimer = timerComponent.AddTimer(self.TbSkillRow.Duration - 200, TimerInvokeType.SkillAniTimer, self);
             }
             else
             {
@@ -103,15 +69,15 @@ namespace ET.Client
             }
         }
         
-        private static void PlayAnimationAfter(this LSViewSkillComponent self)
+        public static void PlayAnimationAfter(this LSViewSkillComponent self)
         {
             if (self.TbSkillRow.AniNameAfter.Length > 0)
             {
                 self.IsSkillRunning = true;
                 var animationComponent = self.LSViewOwner().GetComponent<LSAnimationComponent>();
                 animationComponent?.AddAnimation(self.TbSkillRow.AniNameAfter, true);
-                var tillTime = TimeInfo.Instance.ServerFrameTime() + self.TbSkillRow.DurationAfter;
-                self.AniAfterTimer = self.Root().GetComponent<TimerComponent>().NewOnceTimer(tillTime, TimerInvokeType.SkillAniAfterTimer, self);
+                LSViewTimerComponent timerComponent = self.Room().GetComponent<LSViewTimerComponent>();
+                self.AniAfterTimer = timerComponent.AddTimer(self.TbSkillRow.DurationAfter - 200, TimerInvokeType.SkillAniAfterTimer, self);
             }
             else
             {
@@ -121,4 +87,41 @@ namespace ET.Client
         }
 
     }
+    
+    [Invoke(TimerInvokeType.SkillAniPreTimer)]
+    [FriendOf(typeof(LSViewSkillComponent))]
+    public class SkillAniPreTimer : ATimer<LSViewSkillComponent>
+    {
+        protected override void Run(LSViewSkillComponent self)
+        {
+            var animationComponent = self.LSViewOwner().GetComponent<LSAnimationComponent>();
+            animationComponent?.RemoveAnimation(self.TbSkillRow.AniNamePre, 1);
+            self.PlayAnimation();
+        }
+    }
+    
+    [Invoke(TimerInvokeType.SkillAniTimer)]
+    [FriendOf(typeof(LSViewSkillComponent))]
+    public class SkillAniTimer : ATimer<LSViewSkillComponent>
+    {
+        protected override void Run(LSViewSkillComponent self)
+        {
+            var animationComponent = self.LSViewOwner().GetComponent<LSAnimationComponent>();
+            animationComponent?.RemoveAnimation(self.TbSkillRow.AniName, 1);
+            self.PlayAnimationAfter();
+        }
+    }
+    
+    [Invoke(TimerInvokeType.SkillAniAfterTimer)]
+    [FriendOf(typeof(LSViewSkillComponent))]
+    public class SkillAniAfterTimer : ATimer<LSViewSkillComponent>
+    {
+        protected override void Run(LSViewSkillComponent self)
+        {
+            var animationComponent = self.LSViewOwner().GetComponent<LSAnimationComponent>();
+            animationComponent?.RemoveAnimation(self.TbSkillRow.AniNameAfter, 1);
+            self.TbSkillRow = null;
+        }
+    }
+
 }
