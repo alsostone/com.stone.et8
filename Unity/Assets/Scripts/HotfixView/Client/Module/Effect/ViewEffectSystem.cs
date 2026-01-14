@@ -26,7 +26,7 @@ namespace ET.Client
                 return;
             }
             
-            self.DurationTime -= Time.deltaTime;
+            self.DurationTime -= Time.deltaTime * self.Speed;
             if (self.DurationTime <= 0) {
                 if (self.IsLoop) {
                     self.Reset();
