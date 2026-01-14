@@ -87,13 +87,13 @@ namespace ET.Client
         
         private static void OnEventSaveReplayAction(this GMToolsPanelComponent self)
         {
-            var path = $"{Application.persistentDataPath}/observer_bin";
+            var path = $"{Application.persistentDataPath}/{LSConstValue.ObserverFolderName}";
             if (!System.IO.Directory.Exists(path))
                 System.IO.Directory.CreateDirectory(path);
         
             Room room = self.Root().GetComponent<Room>();
             var filename = new System.Text.StringBuilder();
-            filename.Append(path).Append("/observer_bin");
+            filename.Append(path).Append("/observer_bin_");
             filename.Append(room.Id);
             filename.Append(".bin");
             LSClientHelper.SaveReplay(room, filename.ToString());

@@ -25,6 +25,8 @@ namespace ET
         public const string ProcessFolderNameSvr = "process_log_server";
         public const string LSWroldFolderName = "frame_lsworld";
         public const string LSWroldFolderNameSvr = "frame_lsworld_server";
+        public const string ObserverFolderName = "observer_bin";
+        public const string ObserverFolderNameSvr = "observer_bin_server";
     }
     
     public struct LSRandomDropItem
