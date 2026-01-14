@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 
 namespace ET.Client
 {
@@ -8,8 +9,9 @@ namespace ET.Client
     public static partial class ViewEffectComponentSystem
     {
         [EntitySystem]
-        private static void Awake(this ViewEffectComponent self)
+        private static void Awake(this ViewEffectComponent self, float speed)
         {
+            self.Speed = speed;
             self.idGenerator = 0;
         }
 
@@ -28,6 +30,20 @@ namespace ET.Client
         private static long GetId(this ViewEffectComponent self)
         {
             return ++self.idGenerator;
+        }
+        
+        public static void SetSpeed(this ViewEffectComponent self, float speed)
+        {
+            if (Math.Abs(self.Speed - speed) > float.Epsilon) {
+                self.Speed = speed;
+                foreach (var @ref in self.SkillEffectViews)
+                {
+                    ViewEffect view = @ref.Value;
+                    if (view != null) {
+                        view.SetSpeed(speed);
+                    }
+                }
+            }
         }
         
         public static async ETTask<GameObject> PlayFxAsync(this ViewEffectComponent self, int fxId)
@@ -52,7 +68,7 @@ namespace ET.Client
             ResourcesPoolComponent poolComponent = self.Room().GetComponent<ResourcesPoolComponent>();
             GameObject go = await poolComponent.FetchAsync(fxRow.Resource, attachTransform);
             go.transform.localPosition = new Vector3(0, 0.01f, 0);  // 防止被地面遮挡
-            view = self.AddChildWithId<ViewEffect, GameObject>(self.GetId(), go);
+            view = self.AddChildWithId<ViewEffect, GameObject, bool, float>(self.GetId(), go, false, self.Speed);
             self.SkillEffectViews.Add(fxId, view);
             return go;
         }
@@ -78,7 +94,7 @@ namespace ET.Client
             go.transform.localPosition = new Vector3(0, 0.01f, 0);  // 防止被地面遮挡
             if (!self.EffectViews.ContainsKey(fxResource))  // 异步加载可能导致开始的TryGetValue未命中，这里再检查一次
             {
-                view = self.AddChildWithId<ViewEffect, GameObject>(self.GetId(), go);
+                view = self.AddChildWithId<ViewEffect, GameObject, bool, float>(self.GetId(), go, false, self.Speed);
                 self.EffectViews.Add(fxResource, view);
             }
             return go;

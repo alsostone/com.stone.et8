@@ -42,6 +42,7 @@ namespace ET.Client
                     removeViews.Add(lsUnitView);
                 } else {
                     lsUnitView.GetComponent<LSAnimationComponent>()?.SetSpeed(speed);
+                    lsUnitView.GetComponent<ViewEffectComponent>()?.SetSpeed(speed);
                 }
             }
             foreach (LSUnitView removeView in removeViews)
@@ -68,6 +69,7 @@ namespace ET.Client
             {
                 LSUnitView lsUnitView = pair.Value as LSUnitView;
                 lsUnitView.GetComponent<LSAnimationComponent>()?.SetSpeed(speed);
+                lsUnitView.GetComponent<ViewEffectComponent>()?.SetSpeed(speed);
             }
         }
     }

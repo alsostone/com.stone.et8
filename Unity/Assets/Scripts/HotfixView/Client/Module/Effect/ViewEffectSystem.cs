@@ -8,11 +8,11 @@ namespace ET.Client
     public static partial class ViewEffectSystem
     {
         [EntitySystem]
-        private static void Awake(this ViewEffect self, GameObject go)
+        private static void Awake(this ViewEffect self, GameObject go, bool loop, float speed)
         {
             self.GameObject = go;
-            self.IsLoop = false;
-            self.Speed = 1;
+            self.IsLoop = loop;
+            self.Speed = speed;
             self.DurationTime = -1;
             
             self.Mono = go.GetComponent<EffectMono>();
@@ -48,6 +48,14 @@ namespace ET.Client
             if (self.Mono) {
                 self.DurationTime = self.Mono.DurationTime;
                 self.Mono.Play(self.Speed);
+            }
+        }
+        
+        public static void SetSpeed(this ViewEffect self, float speed)
+        {
+            self.Speed = speed;
+            if (self.Mono) {
+                self.Mono.SetSpeed(speed);
             }
         }
     }

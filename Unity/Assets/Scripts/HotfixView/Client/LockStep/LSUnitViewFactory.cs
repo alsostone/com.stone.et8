@@ -66,7 +66,7 @@ namespace ET.Client
             AttachPointCollector collector = unitGo.GetComponent<AttachPointCollector>();
             lsUnitView.AddComponent<LSViewTransformComponent, Transform, AttachPointCollector, bool>(unitGo.transform, collector, false);
             lsUnitView.AddComponent<LSViewSkillComponent>();
-            lsUnitView.AddComponent<ViewEffectComponent>();
+            lsUnitView.AddComponent<ViewEffectComponent, float>(room.TimeScale);
 
             var propComponent = lsUnit.GetComponent<PropComponent>();
             float hp = propComponent.Get(NumericType.Hp).AsFloat();
@@ -76,16 +76,17 @@ namespace ET.Client
 
         private static void CreateBlockView(LSUnitViewComponent viewComponent, LSUnit lsUnit)
         {
+            Room room = viewComponent.Room();
             BlockComponent blockComponent = lsUnit.GetComponent<BlockComponent>();
             GlobalComponent globalComponent = viewComponent.Root().GetComponent<GlobalComponent>();
-            GameObject unitGo = viewComponent.Room().GetComponent<ResourcesPoolComponent>().Fetch(blockComponent.TbRow.Model, globalComponent.Unit, true);
+            GameObject unitGo = room.GetComponent<ResourcesPoolComponent>().Fetch(blockComponent.TbRow.Model, globalComponent.Unit, true);
 
             LSUnitView lsUnitView = viewComponent.AddChildWithId<LSUnitView, GameObject>(lsUnit.Id, unitGo);
             
             AttachPointCollector collector = unitGo.GetComponent<AttachPointCollector>();
             lsUnitView.AddComponent<LSViewTransformComponent, Transform, AttachPointCollector, bool>(unitGo.transform, collector, false);
             lsUnitView.AddComponent<LSViewPlacementComponent>();
-            lsUnitView.AddComponent<ViewEffectComponent>();
+            lsUnitView.AddComponent<ViewEffectComponent, float>(room.TimeScale);
         }
 
         private static void CreateBuildingView(LSUnitViewComponent viewComponent, LSUnit lsUnit)
@@ -105,7 +106,7 @@ namespace ET.Client
             lsUnitView.AddComponent<LSViewTransformComponent, Transform, AttachPointCollector, bool>(unitGo.transform, collector, false);
             lsUnitView.AddComponent<LSViewPlacementComponent>();
             lsUnitView.AddComponent<LSViewSkillComponent>();
-            lsUnitView.AddComponent<ViewEffectComponent>();
+            lsUnitView.AddComponent<ViewEffectComponent, float>(room.TimeScale);
             
             var propComponent = lsUnit.GetComponent<PropComponent>();
             if (buildingComponent.TbRow.RangeIndicator > 0) {
@@ -135,7 +136,7 @@ namespace ET.Client
             AttachPointCollector collector = unitGo.GetComponent<AttachPointCollector>();
             lsUnitView.AddComponent<LSViewTransformComponent, Transform, AttachPointCollector, bool>(unitGo.transform, collector, false);
             lsUnitView.AddComponent<LSViewSkillComponent>();
-            lsUnitView.AddComponent<ViewEffectComponent>();
+            lsUnitView.AddComponent<ViewEffectComponent, float>(room.TimeScale);
 
             var propComponent = lsUnit.GetComponent<PropComponent>();
             float hp = propComponent.Get(NumericType.Hp).AsFloat();
