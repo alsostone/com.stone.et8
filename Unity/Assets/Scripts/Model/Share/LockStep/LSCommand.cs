@@ -12,6 +12,7 @@ namespace ET
         Move,           // 移动
         MoveTo,         // 移动到指定位置
         TouchDownTarget,    // 触摸按下
+        TouchDownPosition,  // 触摸按下
         TouchDragStart,      // 拖拽开始
         TouchDrag,           // 拖拽
         TouchDragEnd,        // 拖拽结束

@@ -90,6 +90,7 @@ namespace ET
                 }
                 case OperateCommandType.TouchDrag:
                 case OperateCommandType.TouchDownTarget:
+                case OperateCommandType.TouchDownPosition:
                 case OperateCommandType.PlacementDrag:
                 case OperateCommandType.PlacementNew:
                 {
