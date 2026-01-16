@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 namespace ET.Client
 {
@@ -14,16 +15,24 @@ namespace ET.Client
         [EntitySystem]
         private static void Update(this LSOperaDragComponent self)
         {
+            if (Input.GetKeyDown(KeyCode.Escape)) {
+                self.OnEscape();
+            }
+            if (Input.GetKeyDown(KeyCode.R)) {
+                self.RotatePlacementObject(1);
+            }
+            
 #if UNITY_STANDALONE || UNITY_EDITOR
             self.HandleMouseMoveTo();
             
             if (Input.GetMouseButtonDown(0))
             {
-                if (UnityEngine.EventSystems.EventSystem.current.IsPointerOverGameObject())
-                    return;
-                self.isMouseDraging = true;
-                self.mousePosition = Input.mousePosition;
-                self.OnTouchBegin(Input.mousePosition);
+                if (!UnityEngine.EventSystems.EventSystem.current.IsPointerOverGameObject(PointerInputModule.kMouseLeftId))
+                {
+                    self.isMouseDraging = true;
+                    self.mousePosition = Input.mousePosition;
+                    self.OnTouchBegin(Input.mousePosition);
+                }
             }
             if (self.isMouseDraging)
             {
@@ -48,30 +57,26 @@ namespace ET.Client
                 var touch = Input.GetTouch(i);
                 if (self.dragFingerId == -1 && touch.phase == TouchPhase.Began)
                 {
-                    if (UnityEngine.EventSystems.EventSystem.current.IsPointerOverGameObject(touch.fingerId))
-                        continue;
-                    self.dragFingerId = touch.fingerId;
-                    self.OnTouchBegin(touch.position);
+                    if (!UnityEngine.EventSystems.EventSystem.current.IsPointerOverGameObject(touch.fingerId))
+                    {
+                        self.dragFingerId = touch.fingerId;
+                        self.OnTouchBegin(touch.position);
+                    }
                 }
-                else if (touch.fingerId == self.dragFingerId && touch.phase == TouchPhase.Moved)
+                if (touch.fingerId == self.dragFingerId)
                 {
-                    self.OnTouchMove(touch.position);
-                }
-                else if (touch.fingerId == self.dragFingerId && touch.phase == TouchPhase.Ended)
-                {
-                    self.OnTouchEnd(touch.position);
-                    self.dragFingerId = -1;
+                    if (touch.phase == TouchPhase.Moved)
+                    {
+                        self.OnTouchMove(touch.position);
+                    }
+                    else if (touch.phase == TouchPhase.Ended)
+                    {
+                        self.OnTouchEnd(touch.position);
+                        self.dragFingerId = -1;
+                    }
                 }
             }
 #endif
-            if (Input.GetKeyDown(KeyCode.Escape))
-            {
-                self.OnEscape();
-            }
-            if (Input.GetKeyDown(KeyCode.R))
-            {
-                self.RotatePlacementObject(1);
-            }
         }
 
         [EntitySystem]
@@ -89,17 +94,17 @@ namespace ET.Client
             if (Input.GetKeyDown(KeyCode.Escape)) {
                 self.isKeyADown = false;
             }
-            if (Input.GetMouseButtonDown(1))
+            if (!UnityEngine.EventSystems.EventSystem.current.IsPointerOverGameObject(PointerInputModule.kMouseRightId))
             {
-                MovementMode movementMode = self.isKeyADown ? MovementMode.AttackMove : MovementMode.Move;
-                self.isKeyADown = false;
-                
-                if (UnityEngine.EventSystems.EventSystem.current.IsPointerOverGameObject())
-                    return;
-                if (self.RaycastTerrain(Input.mousePosition, out Vector3 pos))
+                if (Input.GetMouseButtonDown(1))
                 {
-                    var command = LSCommand.GenCommandMoveTo(0, movementMode, pos.x, pos.z);
-                    self.Room().SendCommandMeesage(command);
+                    MovementMode movementMode = self.isKeyADown ? MovementMode.AttackMove : MovementMode.Move;
+                    self.isKeyADown = false;
+                    if (self.RaycastTerrain(Input.mousePosition, out Vector3 pos))
+                    {
+                        var command = LSCommand.GenCommandMoveTo(0, movementMode, pos.x, pos.z);
+                        self.Room().SendCommandMeesage(command);
+                    }
                 }
             }
         }
@@ -137,7 +142,7 @@ namespace ET.Client
                 // 若选框大小未达到一定范围 则选中的单位是当前点击位置的单位
                 if (self.RaycastTarget(touchPosition, out GameObject target)) {
                     LSUnitView lsUnitView = target.GetComponent<LSUnitViewBehaviour>()?.LSUnitView;
-                    var command = LSCommand.GenCommandLong(0, OperateCommandType.TouchDown, lsUnitView?.Id ?? 0);
+                    var command = LSCommand.GenCommandLong(0, OperateCommandType.TouchDownTarget, lsUnitView?.Id ?? 0);
                     self.Room().SendCommandMeesage(command);
                     
                     self.SetHoverTarget(lsUnitView);
@@ -163,7 +168,7 @@ namespace ET.Client
             }
             else
             {
-                // 非拖拽状态下的才进行悬停检测 特别是在拖拽状态下要保持保持现状
+                // 非拖拽状态下的才进行悬停检测 特别是在拖拽状态下要保持现状
                 LSUnitView hover = null;
                 if (self.RaycastTarget(touchPosition, out GameObject target))
                 {
@@ -258,7 +263,7 @@ namespace ET.Client
 
             return false;
         }
-
+        
         private static bool RaycastTarget(this LSOperaDragComponent self, Vector3 position, out GameObject target)
         {
             target = null;

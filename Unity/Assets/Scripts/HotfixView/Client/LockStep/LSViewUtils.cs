@@ -61,6 +61,21 @@ namespace ET.Client
             LSUnitViewComponent lsUnitViewComponent = self.GetComponent<LSUnitViewComponent>();
             return lsUnitViewComponent.GetChild<LSUnitView>(lookComponent.LookPlayerId);
         }
+        
+        public static LSUnitView GetLookCampView(this Room self)
+        {
+            LSUnitViewComponent lsUnitViewComponent = self.GetComponent<LSUnitViewComponent>();
+            if (lsUnitViewComponent == null)	// 被初始化调用时 还没有LSUnitViewComponent
+                return null;
+			
+            LSLookComponent lookComponent = self.GetComponent<LSLookComponent>();
+            LSUnitView lsPlayer = lsUnitViewComponent.GetChild<LSUnitView>(lookComponent.LookPlayerId);
+            LSViewPlayerComponent lsViewPlayerComponent = lsPlayer.GetComponent<LSViewPlayerComponent>();
+            if (lsViewPlayerComponent.BindCampId == 0)
+                return null;
+			
+            return lsUnitViewComponent.GetChild<LSUnitView>(lsViewPlayerComponent.BindCampId);
+        }
 
         public static LSUnitView GetLookHeroView(this Room self)
         {

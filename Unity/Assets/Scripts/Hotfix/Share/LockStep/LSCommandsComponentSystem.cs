@@ -89,7 +89,7 @@ namespace ET
                     break;
                 }
                 case OperateCommandType.TouchDrag:
-                case OperateCommandType.TouchDown:
+                case OperateCommandType.TouchDownTarget:
                 case OperateCommandType.PlacementDrag:
                 case OperateCommandType.PlacementNew:
                 {

@@ -54,14 +54,14 @@ namespace ET
 	    }
 	    
 	    // 把玩家和英雄拆分的意义：RTS类型的游戏中没有主控单位, 有主控单位时依靠绑定逻辑
-	    public static LSUnit CreatePlayer(LSWorld lsWorld, long playerId, TeamType teamType, long bindId = 0)
+	    public static LSUnit CreatePlayer(LSWorld lsWorld, long playerId, TeamType teamType, long bindCampId, long bindHeroId)
 	    {
 		    LSUnitComponent lsUnitComponent = lsWorld.GetComponent<LSUnitComponent>();
 		    LSUnit lsUnit = lsUnitComponent.AddChildWithId<LSUnit>(playerId);
 		    
 		    lsUnit.AddComponent<TypeComponent, EUnitType>(EUnitType.Player);
 		    lsUnit.AddComponent<TeamComponent, TeamType>(teamType);
-		    lsUnit.AddComponent<PlayerComponent, long>(bindId);
+		    lsUnit.AddComponent<PlayerComponent, long, long>(bindCampId, bindHeroId);
 		    lsUnit.AddComponent<LSGridBuilderComponent>();
 		    lsUnit.AddComponent<SelectionComponent>();
 		    

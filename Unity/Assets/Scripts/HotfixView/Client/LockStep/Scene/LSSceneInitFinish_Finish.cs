@@ -11,11 +11,11 @@ namespace ET.Client
             
             LSLookComponent lookComponent = room.AddComponent<LSLookComponent, long, long>(args.OwnerId, args.LookId);
             room.AddComponent<LSSettingsComponent>();
-            room.AddComponent<LSCameraComponent>();
             room.AddComponent<LSViewTimerComponent>();
             room.AddComponent<LSViewGameOverComponent>();
             room.AddComponent<LSViewGridMapComponent>();
             room.AddComponent<LSUnitViewComponent>();
+            room.AddComponent<LSCameraComponent>();
 
             switch (room.LockStepMode)
             {

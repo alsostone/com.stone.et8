@@ -9,6 +9,10 @@ namespace ET.Client
 		[EntitySystem]
 		private static void Awake(this LSCameraComponent self)
 		{
+			self.LookUnitView = self.Room().GetLookCampView();
+			if (self.LookUnitView != null)
+				self.LookPosition = self.LookUnitView.GetComponent<LSViewTransformComponent>().Transform.position;
+			
 			self.Camera = Camera.main;
 			self.Transform.rotation = Quaternion.Euler(new Vector3(70, 0, 0));
 			self.Transform.position = self.LookPosition - self.Transform.forward * self.FlowDistance;
@@ -21,22 +25,15 @@ namespace ET.Client
 			self.OnZoomScrolling();
 			self.OnSwitchFollowTarget();
 			
-			// 摄像机每帧更新位置
 			Room room = self.Room();
-			if (room.LockStepMode < LockStepMode.Local)
+			if (room.LockStepMode < LockStepMode.Local && Input.GetKeyDown(KeyCode.Tab))
 			{
-				if (Input.GetKeyDown(KeyCode.Tab))
-				{
-					LSLookComponent lookComponent = room.GetComponent<LSLookComponent>();
-					lookComponent.SetLookSeatIndex(lookComponent.GetLookSeatIndex() + 1);
-					self.LookUnitView = room.GetLookHeroView();
-				}
+				LSLookComponent lookComponent = room.GetComponent<LSLookComponent>();
+				lookComponent.SetLookSeatIndex(lookComponent.GetLookSeatIndex() + 1);
+				self.LookUnitView = room.GetLookCampView();
 			}
-			else if (self.LookUnitView == null)
-			{
-				self.LookUnitView = room.GetLookHeroView();
-			}
-			
+
+			// 跟随英雄单位时，摄像机每帧更新位置
 			if (!self.IsDragging && self.LookUnitView != null && self.IsFollowTarget)
 			{
 				self.LookPosition = self.LookUnitView.GetComponent<LSViewTransformComponent>().Transform.position;
@@ -100,6 +97,18 @@ namespace ET.Client
 			if (Input.GetKeyDown(KeyCode.F))
 			{
 				self.IsFollowTarget = !self.IsFollowTarget;
+				if (self.IsFollowTarget) {
+					LSUnitView lsView = self.Room().GetLookHeroView();
+					if (lsView != null) self.LookUnitView = lsView;
+				} else {
+					self.LookUnitView = self.Room().GetLookCampView();
+				}
+				
+				// 切换跟随目标时 立即更新位置 防止摄像机弹性跟随带来眩晕感
+				if (self.LookUnitView != null) {
+					self.LookPosition = self.LookUnitView.GetComponent<LSViewTransformComponent>().Transform.position;
+					self.Transform.position = self.LookPosition - self.Transform.forward * self.FlowDistance;
+				}
 			}
 		}
 		

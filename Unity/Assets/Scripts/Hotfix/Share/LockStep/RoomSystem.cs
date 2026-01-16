@@ -36,6 +36,13 @@ namespace ET
             LSUnitFactory.CreateTeamMonster(lsWorld, TeamType.TeamB);
             LSUnitFactory.CreateTeamMonster(lsWorld, TeamType.TeamNeutral);
             
+            // 创建基地 (测试用)
+            LSUnit teamACamp = null;
+            if (lsStageComponent.TbRow.BaseCampTower > 0)
+                teamACamp = LSUnitFactory.CreateBuilding(lsWorld, lsStageComponent.TbRow.BaseCampTower, TSVector.zero, 0, TeamType.TeamA);
+            if (lsStageComponent.TbRow.BaseCampSoldier > 0 && matchInfo.UnitInfos.Count > 1)
+                LSUnitFactory.CreateBuilding(lsWorld, lsStageComponent.TbRow.BaseCampSoldier, new TSVector(32, 0, 32), 0, TeamType.TeamB);
+
             for (int i = 0; i < matchInfo.UnitInfos.Count; ++i) {
                 LockStepUnitInfo unitInfo = matchInfo.UnitInfos[i];
                 TeamType teamType = (TeamType)(1 << i);
@@ -44,15 +51,9 @@ namespace ET
                 if (unitInfo.HeroSkinId > 0) {
                     lsHero = LSUnitFactory.CreateHero(lsWorld, unitInfo.HeroSkinId, unitInfo.Position, unitInfo.Rotation, teamType);
                 }
-                LSUnitFactory.CreatePlayer(lsWorld, unitInfo.PlayerId, teamType, lsHero?.Id ?? 0);
+                LSUnitFactory.CreatePlayer(lsWorld, unitInfo.PlayerId, teamType, teamACamp?.Id ?? 0, lsHero?.Id ?? 0);
                 self.PlayerIds.Add(unitInfo.PlayerId);
             }
-            
-            // 创建基地 (测试用)
-            if (lsStageComponent.TbRow.BaseCampTower > 0)
-                LSUnitFactory.CreateBuilding(lsWorld, lsStageComponent.TbRow.BaseCampTower, TSVector.zero, 0, TeamType.TeamA);
-            if (lsStageComponent.TbRow.BaseCampSoldier > 0 && matchInfo.UnitInfos.Count > 1)
-                LSUnitFactory.CreateBuilding(lsWorld, lsStageComponent.TbRow.BaseCampSoldier, new TSVector(32, 0, 32), 0, TeamType.TeamB);
             
             // 创建初始单位 后期可改为读取配置文件
             if (!string.IsNullOrEmpty(lsStageComponent.TbRow.InitData))

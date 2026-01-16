@@ -6,9 +6,10 @@ namespace ET.Client
     public static partial class LSViewPlayerComponentSystem
     {
         [EntitySystem]
-        private static void Awake(this LSViewPlayerComponent self, long bindViewId)
+        private static void Awake(this LSViewPlayerComponent self, long bindCampId, long bindHeroId)
         {
-            self.BindHeroId = bindViewId;
+            self.BindCampId = bindCampId;
+            self.BindHeroId = bindHeroId;
         }
     }
 }

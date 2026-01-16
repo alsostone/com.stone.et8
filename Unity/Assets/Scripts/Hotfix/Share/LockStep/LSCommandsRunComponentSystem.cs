@@ -31,8 +31,8 @@ namespace ET
                     case OperateCommandType.Move:
                     {
                         self.IsRightDownMove = false;
-                        self.GetPlayerBindComponent<MovePathFindingComponent>()?.Stop();
-                        self.GetPlayerBindComponent<MoveFlowFieldComponent>()?.Stop();
+                        self.GetPlayerBindHeroComponent<MovePathFindingComponent>()?.Stop();
+                        self.GetPlayerBindHeroComponent<MoveFlowFieldComponent>()?.Stop();
                         self.MoveAxis = LSCommand.ParseCommandFloat2(command);
                         break;
                     }
@@ -43,7 +43,7 @@ namespace ET
                         self.LSOwner().GetComponent<SelectionComponent>().MoveToPosition(movement.Item2, movement.Item1);
                         break;
                     }
-                    case OperateCommandType.TouchDown:
+                    case OperateCommandType.TouchDownTarget:
                     {
                         long targetId = LSCommand.ParseCommandLong(command);
                         self.LSOwner().GetComponent<LSGridBuilderComponent>().RunCommandTouchDown(targetId);
@@ -108,7 +108,7 @@ namespace ET
             
             // 非右键点击移动时执行普通移动
             if (!self.IsRightDownMove) {
-                self.GetPlayerBindComponent<TransformComponent>()?.Move(self.MoveAxis);
+                self.GetPlayerBindHeroComponent<TransformComponent>()?.Move(self.MoveAxis);
             }
         }
 
@@ -124,13 +124,13 @@ namespace ET
                     self.LSOwner().GetComponent<CardSelectComponent>().TrySelectCard((int)button.Item2);
                     break;
                 case CommandButtonType.Attack:
-                    self.GetPlayerBindComponent<SkillComponent>()?.TryCastSkill(ESkillType.Normal);
+                    self.GetPlayerBindHeroComponent<SkillComponent>()?.TryCastSkill(ESkillType.Normal);
                     break;
                 case CommandButtonType.Skill1:
-                    self.GetPlayerBindComponent<SkillComponent>()?.TryCastSkill(ESkillType.Active, 0);
+                    self.GetPlayerBindHeroComponent<SkillComponent>()?.TryCastSkill(ESkillType.Active, 0);
                     break;
                 case CommandButtonType.Skill2:
-                    self.GetPlayerBindComponent<SkillComponent>()?.TryCastSkill(ESkillType.Active, 1);
+                    self.GetPlayerBindHeroComponent<SkillComponent>()?.TryCastSkill(ESkillType.Active, 1);
                     break;
                 default: break;
             }
@@ -171,16 +171,26 @@ namespace ET
         }
 #endif
         
-        private static T GetPlayerBindComponent<T>(this LSCommandsRunComponent self) where T : LSEntity
+        private static T GetPlayerBindCampComponent<T>(this LSCommandsRunComponent self) where T : LSEntity
         {
             PlayerComponent lsPlayerComponent = self.LSOwner().GetComponent<PlayerComponent>();
-            if (lsPlayerComponent.BindEntityId == 0)
+            if (lsPlayerComponent.BindCampId == 0)
                 return null;
             
             LSUnitComponent unitComponent = self.LSWorld().GetComponent<LSUnitComponent>();
-            LSUnit lsUnit = unitComponent.GetChild<LSUnit>(lsPlayerComponent.BindEntityId);
+            LSUnit lsUnit = unitComponent.GetChild<LSUnit>(lsPlayerComponent.BindCampId);
             return lsUnit?.GetComponent<T>();
         }
 
+        private static T GetPlayerBindHeroComponent<T>(this LSCommandsRunComponent self) where T : LSEntity
+        {
+            PlayerComponent lsPlayerComponent = self.LSOwner().GetComponent<PlayerComponent>();
+            if (lsPlayerComponent.BindHeroId == 0)
+                return null;
+            
+            LSUnitComponent unitComponent = self.LSWorld().GetComponent<LSUnitComponent>();
+            LSUnit lsUnit = unitComponent.GetChild<LSUnit>(lsPlayerComponent.BindHeroId);
+            return lsUnit?.GetComponent<T>();
+        }
     }
 }
