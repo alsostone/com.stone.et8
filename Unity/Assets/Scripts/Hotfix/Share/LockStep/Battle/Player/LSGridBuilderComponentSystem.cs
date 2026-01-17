@@ -25,8 +25,12 @@ namespace ET
 
         public static void RunCommandTouchDragStart(this LSGridBuilderComponent self, TSVector2 position)
         {self.LSRoom()?.ProcessLog.LogFunction(109, self.LSParent().Id, position.x.V, position.y.V);
+            LSUnit lsOwner = self.LSOwner();
+            SelectionComponent selectionComponent = lsOwner.GetComponent<SelectionComponent>();
+            selectionComponent.ClearSelection();
+            
             self.DragStartPosition = new TSVector(position.x, 0, position.y);
-            EventSystem.Instance.Publish(self.LSWorld(), new LSTouchDragStart() { Id = self.LSOwner().Id, Position = position });
+            EventSystem.Instance.Publish(self.LSWorld(), new LSTouchDragStart() { Id = lsOwner.Id, Position = position });
         }
 
         public static void RunCommandTouchDrag(this LSGridBuilderComponent self, TSVector2 position)
@@ -74,16 +78,15 @@ namespace ET
             }
             if (self.PlacementTargetId == 0 && self.PlacementItemId == 0)
             {
+                SelectionComponent selectionComponent = lsOwner.GetComponent<SelectionComponent>();
                 if (TSVector.SqrDistance(self.DragStartPosition, positionV3) > FP.EN2)
                 {
-                    SelectionComponent selectionComponent = lsOwner.GetComponent<SelectionComponent>();
                     TSBounds bounds = new TSBounds();
                     bounds.SetMinMax(TSVector.Min(self.DragStartPosition, positionV3), TSVector.Max(self.DragStartPosition, positionV3));
                     selectionComponent.SelectUnitsInBounds(bounds);
                 }
                 else
                 {
-                    SelectionComponent selectionComponent = lsOwner.GetComponent<SelectionComponent>();
                     selectionComponent.SelectSingleUnit(self.TouchDownTargetId);
                 }
             }

@@ -37,5 +37,21 @@ namespace ET.Client
             await ETTask.CompletedTask;
         }
     }
+    
+    [Event(SceneType.LockStepClient)]
+    public class LSOprationModeChangedEvent: AEvent<LSWorld, LSOprationModeChanged>
+    {
+        protected override async ETTask Run(LSWorld lsWorld, LSOprationModeChanged args)
+        {
+            var room = lsWorld.GetParent<Room>();
+            if (room.IsRollback)
+                return; // 不响应回滚过程中的消息。原因：1.RollbackSystem还未执行，单位可能不存在；2.回滚相关的所有恢复操作都应由RollbackSystem处理。
+            
+            LSOperaDragComponent operaDragComponent = room.GetComponent<LSOperaDragComponent>();
+            operaDragComponent.ResetOprationMode(args.Mode);
+            
+            await ETTask.CompletedTask;
+        }
+    }
 
 }

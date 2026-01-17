@@ -9,5 +9,10 @@ namespace ET
     {
     }
     
+    public struct LSOprationModeChanged
+    {
+        public OperationMode Mode;
+    }
+    
 }
 

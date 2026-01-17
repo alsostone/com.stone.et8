@@ -26,6 +26,13 @@ namespace ET.Client
                 self.Axis = axis;
             }
             
+            if (Input.GetKeyDown(KeyCode.Tab))
+            {
+                int mode = (int)self.Room().LSWorld.OperationMode;
+                mode = (mode + 1) % 3;
+                var cmd = LSCommand.GenCommandButton(0, CommandButtonType.OpreationMode, mode);
+                room.SendCommandMeesage(cmd);
+            }
             if (Input.GetKeyDown(KeyCode.J))
             {
                 var cmd = LSCommand.GenCommandButton(0, CommandButtonType.Attack);
@@ -33,12 +40,12 @@ namespace ET.Client
             }
             if (Input.GetKeyDown(KeyCode.K))
             {
-                var cmd = LSCommand.GenCommandButton(0, CommandButtonType.Skill1);
+                var cmd = LSCommand.GenCommandButton(0, CommandButtonType.Skill, 0);
                 room.SendCommandMeesage(cmd);
             }
             if (Input.GetKeyDown(KeyCode.L))
             {
-                var cmd = LSCommand.GenCommandButton(0, CommandButtonType.Skill2);
+                var cmd = LSCommand.GenCommandButton(0, CommandButtonType.Skill, 1);
                 room.SendCommandMeesage(cmd);
             }
             if (Input.GetKeyDown(KeyCode.Space))

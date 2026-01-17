@@ -52,20 +52,42 @@ namespace ET
                     case OperateCommandType.TouchDragStart:
                     {
                         TSVector2 pos = LSCommand.ParseCommandFloat2(command);
-                        self.LSOwner().GetComponent<LSGridBuilderComponent>().RunCommandTouchDragStart(pos);
-                        self.LSOwner().GetComponent<SelectionComponent>().ClearSelection();
+                        switch (self.LSWorld().OperationMode)
+                        {
+                            case OperationMode.Dragging:
+                                self.LSOwner().GetComponent<LSGridBuilderComponent>().RunCommandTouchDragStart(pos);
+                                break;
+                            case OperationMode.Shooting:
+                            {
+                                TSVector targetPosition = LSCommand.ParseCommandFloat2(command).ToXZ();
+                                TransformComponent transformComponent = self.GetPlayerBindCampComponent<TransformComponent>();
+                                TSVector position = transformComponent.GetAttachPoint(AttachPoint.Head);
+                                LSUnitFactory.CreateBulletToPosition(self.LSWorld(), 30000002, position, transformComponent.LSOwner(), targetPosition);
+                                break;
+                            }
+                        }
                         break;
                     }
                     case OperateCommandType.TouchDrag:
                     {
                         TSVector2 pos = LSCommand.ParseCommandFloat2(command);
-                        self.LSOwner().GetComponent<LSGridBuilderComponent>().RunCommandTouchDrag(pos);
+                        switch (self.LSWorld().OperationMode)
+                        {
+                            case OperationMode.Dragging:
+                                self.LSOwner().GetComponent<LSGridBuilderComponent>().RunCommandTouchDrag(pos);
+                                break;
+                        }
                         break;
                     }
                     case OperateCommandType.TouchDragEnd:
                     {
                         TSVector2 pos = LSCommand.ParseCommandFloat2(command);
-                        self.LSOwner().GetComponent<LSGridBuilderComponent>().RunCommandTouchDragEnd(pos);
+                        switch (self.LSWorld().OperationMode)
+                        {
+                            case OperationMode.Dragging:
+                                self.LSOwner().GetComponent<LSGridBuilderComponent>().RunCommandTouchDragEnd(pos);
+                                break;
+                        }
                         break;
                     }
                     case OperateCommandType.TouchDragCancel:
@@ -123,14 +145,15 @@ namespace ET
                 case CommandButtonType.CardSelect:
                     self.LSOwner().GetComponent<CardSelectComponent>().TrySelectCard((int)button.Item2);
                     break;
+                case CommandButtonType.OpreationMode:
+                    self.LSWorld().OperationMode = (OperationMode)button.Item2;
+                    EventSystem.Instance.Publish(self.LSWorld(), new LSOprationModeChanged() { Mode = (OperationMode)button.Item2 });
+                    break;
                 case CommandButtonType.Attack:
                     self.GetPlayerBindHeroComponent<SkillComponent>()?.TryCastSkill(ESkillType.Normal);
                     break;
-                case CommandButtonType.Skill1:
-                    self.GetPlayerBindHeroComponent<SkillComponent>()?.TryCastSkill(ESkillType.Active, 0);
-                    break;
-                case CommandButtonType.Skill2:
-                    self.GetPlayerBindHeroComponent<SkillComponent>()?.TryCastSkill(ESkillType.Active, 1);
+                case CommandButtonType.Skill:
+                    self.GetPlayerBindHeroComponent<SkillComponent>()?.TryCastSkill(ESkillType.Active, (int)button.Item2);
                     break;
                 default: break;
             }

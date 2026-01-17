@@ -102,6 +102,29 @@
     "action_param": []
   },
   {
+    "Id": 300000020,
+    "name": "大本营自动子弹 爆炸索敌",
+    "group_id": 300000020,
+    "success_conds": [],
+    "failure_conds": [],
+    "fx": 0,
+    "action_type": 15,
+    "action_param": [
+      97040001,
+      300000021
+    ]
+  },
+  {
+    "Id": 300000021,
+    "name": "大本营自动子弹 爆炸伤害",
+    "group_id": 300000021,
+    "success_conds": [],
+    "failure_conds": [],
+    "fx": 0,
+    "action_type": 4,
+    "action_param": []
+  },
+  {
     "Id": 300100010,
     "name": "TowerCircle",
     "group_id": 30010001,

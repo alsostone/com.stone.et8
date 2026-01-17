@@ -48,4 +48,11 @@ namespace ET
         Move,
         AttackMove
     }
+    
+    public enum OperationMode
+    {
+        None,
+        Dragging,
+        Shooting
+    }
 }

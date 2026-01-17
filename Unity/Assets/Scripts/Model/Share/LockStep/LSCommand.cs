@@ -12,7 +12,6 @@ namespace ET
         Move,           // 移动
         MoveTo,         // 移动到指定位置
         TouchDownTarget,    // 触摸按下
-        TouchDownPosition,  // 触摸按下
         TouchDragStart,      // 拖拽开始
         TouchDrag,           // 拖拽
         TouchDragEnd,        // 拖拽结束
@@ -31,12 +30,11 @@ namespace ET
     {
         PlacementRotate,    // 放置旋转
         CardSelect,         // 选牌
+        OpreationMode,     // 操作模式切换
+        ShootingMode,    // 射击模式切换
         Jump,       // 跳跃
         Attack,     // 攻击
-        Skill1,     // 技能1
-        Skill2,     // 技能2
-        Skill3,     // 技能3
-        Skill4,     // 技能4
+        Skill,     // 技能
     }
     
 #if ENABLE_DEBUG

@@ -12,7 +12,7 @@
   },
   {
     "Id": 30000001,
-    "name": "防御塔子弹",
+    "name": "大本营自动子弹",
     "hor_speed": 100000,
     "control_factor": -2000,
     "control_height": 40000,
@@ -22,13 +22,13 @@
     "finish_effect_id": 0
   },
   {
-    "Id": 30010001,
-    "name": "防御塔子弹",
-    "hor_speed": 60000,
-    "control_factor": 2000,
-    "control_height": 40000,
+    "Id": 30000002,
+    "name": "大本营手动子弹",
+    "hor_speed": 80000,
+    "control_factor": 0,
+    "control_height": 0,
     "life": 10000,
-    "effect_group_id": 300100011,
+    "effect_group_id": 300000020,
     "resource_id": 80010001,
     "finish_effect_id": 0
   },

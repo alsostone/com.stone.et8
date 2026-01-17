@@ -77,6 +77,11 @@ namespace ET
         {
             return new TSVector(vector.x, FP.Zero, vector.z);
         }
+        
+        public static TSVector ToXZ(this TSVector2 vector)
+        {
+            return new TSVector(vector.x, FP.Zero, vector.y);
+        }
 
     }
 }

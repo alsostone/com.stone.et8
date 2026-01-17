@@ -3,6 +3,7 @@ using UnityEngine.EventSystems;
 
 namespace ET.Client
 {
+    [LSEntitySystemOf(typeof(LSOperaDragComponent))]
     [EntitySystemOf(typeof(LSOperaDragComponent))]
     [FriendOf(typeof(LSOperaDragComponent))]
     public static partial class LSOperaDragComponentSystem
@@ -10,6 +11,15 @@ namespace ET.Client
         [EntitySystem]
         private static void Awake(this LSOperaDragComponent self)
         {
+            self.lineShooting = GameObject.Find("RaycastShooting").GetComponent<LineRenderer>();
+            self.lineShooting.positionCount = 2;
+            self.ResetOprationMode(self.Room().LSWorld.OperationMode);
+        }
+        
+        [LSEntitySystem]
+        private static void LSRollback(this LSOperaDragComponent self)
+        {
+            self.ResetOprationMode(self.Room().LSWorld.OperationMode);
         }
         
         [EntitySystem]
@@ -131,55 +141,127 @@ namespace ET.Client
                 }
             }
         }
+        
+        public static void ResetOprationMode(this LSOperaDragComponent self, OperationMode operationMode)
+        {
+            if (self.operationMode == operationMode) {
+                return;
+            }
+            switch (self.operationMode)
+            {
+                case OperationMode.Dragging:
+                {
+                    self.isDragging = false;
+                    self.isOutsideDraging = false;
+                    self.isItemClicked = false;
+                    self.longTouchPreesToken?.Cancel();
+                    self.longTouchPreesToken = null;
+                    break;
+                }
+                case OperationMode.Shooting:
+                {
+                    self.isDragging = false;
+                    self.lineShooting.enabled = false;
+                    break;
+                }
+            }
+
+            self.operationMode = operationMode;
+            switch (self.operationMode)
+            {
+                case OperationMode.Shooting:
+                {
+                    self.lineShooting.enabled = true;
+                    break;
+                }
+            }
+        }
 
         public static void OnTouchBegin(this LSOperaDragComponent self, Vector3 touchPosition)
         {
-            if (!self.isItemClicked)
+            switch (self.operationMode)
             {
-                self.longTouchPreesToken?.Cancel();
-                self.longTouchPreesToken = null;
-                
-                // 若选框大小未达到一定范围 则选中的单位是当前点击位置的单位
-                if (self.RaycastTarget(touchPosition, out GameObject target)) {
-                    LSUnitView lsUnitView = target.GetComponent<LSUnitViewBehaviour>()?.LSUnitView;
-                    var command = LSCommand.GenCommandLong(0, OperateCommandType.TouchDownTarget, lsUnitView?.Id ?? 0);
-                    self.Room().SendCommandMeesage(command);
+                case OperationMode.Dragging:
+                {
+                    if (!self.isItemClicked)
+                    {
+                        self.longTouchPreesToken?.Cancel();
+                        self.longTouchPreesToken = null;
                     
-                    self.SetHoverTarget(lsUnitView);
-                    self.ScanTouchLongPress(touchPosition).Coroutine();
+                        // 若选框大小未达到一定范围 则选中的单位是当前点击位置的单位
+                        if (self.RaycastTarget(touchPosition, out GameObject target)) {
+                            LSUnitView lsUnitView = target.GetComponent<LSUnitViewBehaviour>()?.LSUnitView;
+                            var command = LSCommand.GenCommandLong(0, OperateCommandType.TouchDownTarget, lsUnitView?.Id ?? 0);
+                            self.Room().SendCommandMeesage(command);
+                        
+                            self.SetHoverTarget(lsUnitView);
+                            self.ScanTouchLongPress(touchPosition).Coroutine();
+                        }
+                    }
+                    if (self.RaycastTerrain(touchPosition, out Vector3 pos))
+                    {
+                        var command = LSCommand.GenCommandFloat2(0, OperateCommandType.TouchDragStart, pos.x, pos.z);
+                        self.Room().SendCommandMeesage(command);
+                        self.isDragging = true;
+                    }
+                    break;
                 }
-            }
-            if (self.RaycastTerrain(touchPosition, out Vector3 pos))
-            {
-                var command = LSCommand.GenCommandFloat2(0, OperateCommandType.TouchDragStart, pos.x, pos.z);
-                self.Room().SendCommandMeesage(command);
-                self.isDraging = true;
+                case OperationMode.Shooting:
+                {
+                    if (self.RaycastShoting(touchPosition, out Vector3 _, out Vector3 to))
+                    {
+                        var command = LSCommand.GenCommandFloat2(0, OperateCommandType.TouchDragStart, to.x, to.z);
+                        self.Room().SendCommandMeesage(command);
+                        self.isDragging = true;
+                    }
+                    break;
+                }
             }
         }
 
         public static void OnTouchMove(this LSOperaDragComponent self, Vector3 touchPosition)
         {
-            if (self.isDraging)
+            switch (self.operationMode)
             {
-                if (self.RaycastTerrain(touchPosition, out Vector3 pos)) {
-                    var command = LSCommand.GenCommandFloat2(0, OperateCommandType.TouchDrag, pos.x, pos.z);
-                    self.Room().SendCommandMeesage(command);
-                }
-            }
-            else
-            {
-                // 非拖拽状态下的才进行悬停检测 特别是在拖拽状态下要保持现状
-                LSUnitView hover = null;
-                if (self.RaycastTarget(touchPosition, out GameObject target))
+                case OperationMode.Dragging:
                 {
-                    // 有选中单位时禁止悬停检测
-                    LSUnitView lsPlayer = self.Room().GetLookPlayerView();
-                    if (!lsPlayer.GetComponent<LSViewSelectionComponent>().HasSelectedUnit())
+                    if (self.isDragging)
                     {
-                        hover = target.GetComponent<LSUnitViewBehaviour>()?.LSUnitView;
+                        if (self.RaycastTerrain(touchPosition, out Vector3 pos))
+                        {
+                            var command = LSCommand.GenCommandFloat2(0, OperateCommandType.TouchDrag, pos.x, pos.z);
+                            self.Room().SendCommandMeesage(command);
+                        }
                     }
+                    else
+                    {
+                        // 非拖拽状态下的才进行悬停检测 特别是在拖拽状态下要保持现状
+                        LSUnitView hover = null;
+                        if (self.RaycastTarget(touchPosition, out GameObject target))
+                        {
+                            // 有选中单位时禁止悬停检测
+                            LSUnitView lsPlayer = self.Room().GetLookPlayerView();
+                            if (!lsPlayer.GetComponent<LSViewSelectionComponent>().HasSelectedUnit())
+                            {
+                                hover = target.GetComponent<LSUnitViewBehaviour>()?.LSUnitView;
+                            }
+                        }
+
+                        self.SetHoverTarget(hover);
+                    }
+                    break;
                 }
-                self.SetHoverTarget(hover);
+                case OperationMode.Shooting:
+                {
+                    if (self.RaycastShoting(touchPosition, out Vector3 from, out Vector3 to))
+                    {
+                        var command = LSCommand.GenCommandFloat2(0, OperateCommandType.TouchDrag, to.x, to.z);
+                        self.Room().SendCommandMeesage(command);
+                        self.lineShooting.SetPosition(0, from);
+                        self.lineShooting.SetPosition(1, to);
+                    }
+                    break;
+                }
             }
         }
         
@@ -204,23 +286,38 @@ namespace ET.Client
 
         public static void OnTouchEnd(this LSOperaDragComponent self, Vector3 touchPosition)
         {
-            if (self.isDraging)
+            if (!self.isDragging) return;
+            self.isDragging = false;
+            
+            switch (self.operationMode)
             {
-                if (self.RaycastTerrain(touchPosition, out Vector3 pos))
+                case OperationMode.Dragging:
                 {
-                    var command = LSCommand.GenCommandFloat2(0, OperateCommandType.TouchDragEnd, pos.x, pos.z);
-                    self.Room().SendCommandMeesage(command);
+                    if (self.RaycastTerrain(touchPosition, out Vector3 pos))
+                    {
+                        var command = LSCommand.GenCommandFloat2(0, OperateCommandType.TouchDragEnd, pos.x, pos.z);
+                        self.Room().SendCommandMeesage(command);
+                    }
+                    else
+                    {
+                        var command = LSCommand.GenCommandLong(0, OperateCommandType.TouchDragCancel, 0);
+                        self.Room().SendCommandMeesage(command);
+                    }
+                    self.isOutsideDraging = false;
+                    self.isItemClicked = false;
+                    self.longTouchPreesToken?.Cancel();
+                    self.longTouchPreesToken = null;
+                    break;
                 }
-                else
+                case OperationMode.Shooting:
                 {
-                    var command = LSCommand.GenCommandLong(0, OperateCommandType.TouchDragCancel, 0);
-                    self.Room().SendCommandMeesage(command);
+                    if (self.RaycastShoting(touchPosition, out Vector3 _, out Vector3 to))
+                    {
+                        var command = LSCommand.GenCommandFloat2(0, OperateCommandType.TouchDragEnd, to.x, to.z);
+                        self.Room().SendCommandMeesage(command);
+                    }
+                    break;
                 }
-                self.isDraging = false;
-                self.isOutsideDraging = false;
-                self.isItemClicked = false;
-                self.longTouchPreesToken?.Cancel();
-                self.longTouchPreesToken = null;
             }
         }
         
@@ -243,7 +340,7 @@ namespace ET.Client
         
         private static void OnEscape(this LSOperaDragComponent self)
         {
-            self.isDraging = false;
+            self.isDragging = false;
             self.isOutsideDraging = false;
             self.isItemClicked = false;
             var command = LSCommand.GenCommandLong(0, OperateCommandType.Escape, 0);
@@ -264,6 +361,29 @@ namespace ET.Client
             return false;
         }
         
+        private static bool RaycastShoting(this LSOperaDragComponent self, Vector3 position, out Vector3 from, out Vector3 to)
+        {
+            from = to = default;
+            LSUnitView lsView = self.Room().GetLookCampView();
+            if (lsView != null)
+            {
+                LSCameraComponent cameraComponent = self.Room().GetComponent<LSCameraComponent>();
+                Ray ray = cameraComponent.Camera.ScreenPointToRay(position);
+                if (Physics.Raycast(ray, out RaycastHit hit, self.raycastDistance, self.terrainMask2))
+                {
+                    // 二次射线检测 避免地形、障碍等遮挡情形
+                    LSViewTransformComponent viewTransformComponent = lsView.GetComponent<LSViewTransformComponent>();
+                    from = viewTransformComponent.GetAttachPoint(AttachPoint.Head);
+                    Ray ray2 = new Ray(from, hit.point - from);
+                    if (Physics.Raycast(ray2, out RaycastHit hit2, self.raycastDistance, self.terrainMask2)) {
+                        to = hit2.point;
+                        return true;
+                    }
+                }
+            }
+            return false;
+        }
+        
         private static bool RaycastTarget(this LSOperaDragComponent self, Vector3 position, out GameObject target)
         {
             target = null;
@@ -279,7 +399,7 @@ namespace ET.Client
 
         public static bool IsOperaAllDone(this LSOperaDragComponent self)
         {
-            return !self.isDraging && !self.isItemClicked;
+            return !self.isDragging && !self.isItemClicked;
         }
     }
 }
