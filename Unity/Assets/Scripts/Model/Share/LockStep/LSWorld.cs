@@ -44,7 +44,7 @@ namespace ET
         [MemoryPackIgnore]
         public SceneType SceneType { get; set; } = SceneType.LockStepClient;
         
-        public OperationMode OperationMode { get; set; } = OperationMode.Shooting;
+        public OperationMode OperationMode { get; set; } = OperationMode.Dragging;
         
         public int Frame { get; set; }
         public int EndFrame { get; set; } = -1;
