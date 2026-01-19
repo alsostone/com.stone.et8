@@ -34,7 +34,7 @@ namespace ST.Collision
             return FP.Half * (UpperBound - LowerBound);
         }
 
-        public FP GetSurfaceArea()
+        public readonly FP GetSurfaceArea()
         {
             FP x_size = UpperBound.x - LowerBound.x;
             FP y_size = UpperBound.y - LowerBound.y;

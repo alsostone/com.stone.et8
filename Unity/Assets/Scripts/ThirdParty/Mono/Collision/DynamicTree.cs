@@ -7,6 +7,8 @@ namespace ST.Collision
 {
     public class DynamicTree<T>
     {
+        public const int NULL_NODE = -1;
+        
         private TreeNode[] _treeNodes;
         private int _nodeCount;
         private int _nodeCapacity;
@@ -20,7 +22,7 @@ namespace ST.Collision
 
         public DynamicTree(int capacity)
         {
-            _root = Settings.NULL_NODE;
+            _root = NULL_NODE;
             _nodeCapacity = capacity;
             _nodeCount = 0;
 
@@ -33,7 +35,7 @@ namespace ST.Collision
                 _treeNodes[i].Height = -1;
             }
 
-            _treeNodes[_nodeCapacity - 1].Next = Settings.NULL_NODE;
+            _treeNodes[_nodeCapacity - 1].Next = NULL_NODE;
             _treeNodes[_nodeCapacity - 1].Height = -1;
             _freeList = 0;
         }
@@ -44,7 +46,7 @@ namespace ST.Collision
         private int AllocateNode()
         {
             // Expand the node pool as needed.
-            if (_freeList == Settings.NULL_NODE)
+            if (_freeList == NULL_NODE)
             {
                 Debug.Assert(_nodeCount == _nodeCapacity);
 
@@ -64,7 +66,7 @@ namespace ST.Collision
                     _treeNodes[i].Height = -1;
                 }
 
-                _treeNodes[_nodeCapacity - 1].Next = Settings.NULL_NODE;
+                _treeNodes[_nodeCapacity - 1].Next = NULL_NODE;
                 _treeNodes[_nodeCapacity - 1].Height = -1;
                 _freeList = _nodeCount;
             }
@@ -72,10 +74,10 @@ namespace ST.Collision
             // Peel a node off the free list.
             int nodeId = _freeList;
             _freeList = _treeNodes[nodeId].Next;
-            ref var newNode = ref _treeNodes[nodeId];
-            newNode.Parent = Settings.NULL_NODE;
-            newNode.Child1 = Settings.NULL_NODE;
-            newNode.Child2 = Settings.NULL_NODE;
+            ref TreeNode newNode = ref _treeNodes[nodeId];
+            newNode.Parent = NULL_NODE;
+            newNode.Child1 = NULL_NODE;
+            newNode.Child2 = NULL_NODE;
             newNode.Height = 0;
             newNode.Next = 0;
             newNode.UserData = default;
@@ -92,8 +94,8 @@ namespace ST.Collision
         {
             Debug.Assert(0 <= nodeId && nodeId < _nodeCapacity);
             Debug.Assert(0 < _nodeCount);
-
-            ref var freeNode = ref _treeNodes[nodeId];
+            ref TreeNode freeNode = ref _treeNodes[nodeId];
+            
             freeNode.Next = _freeList;
             freeNode.Height = -1;
             _freeList = nodeId;
@@ -104,10 +106,10 @@ namespace ST.Collision
         public int CreateProxy(in AABB aabb, T userData)
         {
             int proxyId = AllocateNode();
-            ref var proxyNode = ref _treeNodes[proxyId];
+            ref TreeNode proxyNode = ref _treeNodes[proxyId];
             
             // Fatten the aabb.
-            var r = new TSVector(Settings.AABB_EXTENSION, Settings.AABB_EXTENSION, Settings.AABB_EXTENSION);
+            TSVector r = new TSVector(Settings.AABB_EXTENSION, Settings.AABB_EXTENSION, Settings.AABB_EXTENSION);
             proxyNode.AABB.LowerBound = aabb.LowerBound - r;
             proxyNode.AABB.UpperBound = aabb.UpperBound + r;
             proxyNode.UserData = userData;
@@ -142,8 +144,8 @@ namespace ST.Collision
             Debug.Assert(_treeNodes[proxyId].IsLeaf);
 
             // Extend AABB
-            var r = new TSVector(Settings.AABB_EXTENSION, Settings.AABB_EXTENSION, Settings.AABB_EXTENSION);
-            var fatAABB = new AABB
+            TSVector r = new TSVector(Settings.AABB_EXTENSION, Settings.AABB_EXTENSION, Settings.AABB_EXTENSION);
+            AABB fatAABB = new AABB
             {
                 LowerBound = aabb.LowerBound - r,
                 UpperBound = aabb.UpperBound + r
@@ -167,14 +169,14 @@ namespace ST.Collision
             else
                 fatAABB.UpperBound.z += d.z;
 
-            ref var proxyNode = ref _treeNodes[proxyId];
-            ref var treeAABB = ref proxyNode.AABB;
+            ref TreeNode proxyNode = ref _treeNodes[proxyId];
+            ref AABB treeAABB = ref proxyNode.AABB;
             if (treeAABB.Contains(aabb))
             {
                 // The tree AABB still contains the object, but it might be too large.
                 // Perhaps the object was moving fast but has since gone to sleep.
                 // The huge AABB is larger than the new fat AABB.
-                var hugeAABB = new AABB
+                AABB hugeAABB = new AABB
                 {
                     LowerBound = fatAABB.LowerBound - 4 * r,
                     UpperBound = fatAABB.UpperBound + 4 * r
@@ -226,7 +228,7 @@ namespace ST.Collision
             {
                 int nodeId = _queryStack.Pop();
 
-                if (nodeId == Settings.NULL_NODE)
+                if (nodeId == NULL_NODE)
                     continue;
 
                 if (_treeNodes[nodeId].AABB.Intersects(aabb))
@@ -259,7 +261,7 @@ namespace ST.Collision
         private IEnumerable<(TreeNode, int)> EnumerateNodes(int startPoint, int currentDepth)
         {
             Debug.Assert(0 <= startPoint && startPoint < _nodeCapacity);
-            Debug.Assert(startPoint != Settings.NULL_NODE);
+            Debug.Assert(startPoint != NULL_NODE);
 
             TreeNode treeNode = _treeNodes[startPoint];
 
@@ -269,7 +271,7 @@ namespace ST.Collision
             {
                 int child1 = treeNode.Child1;
 
-                if (child1 != Settings.NULL_NODE)
+                if (child1 != NULL_NODE)
                 {
                     foreach ((TreeNode, int) child1Node in EnumerateNodes(child1, currentDepth + 1))
                     {
@@ -279,7 +281,7 @@ namespace ST.Collision
 
                 int child2 = treeNode.Child2;
 
-                if (child2 != Settings.NULL_NODE)
+                if (child2 != NULL_NODE)
                 {
                     foreach ((TreeNode, int) child2Node in EnumerateNodes(child2, currentDepth + 1))
                     {
@@ -299,7 +301,7 @@ namespace ST.Collision
 
             int freeCount = 0;
             int freeIndex = _freeList;
-            while (freeIndex != Settings.NULL_NODE)
+            while (freeIndex != NULL_NODE)
             {
                 Debug.Assert(0 <= freeIndex && freeIndex < _nodeCapacity);
                 freeIndex = _treeNodes[freeIndex].Next;
@@ -315,7 +317,7 @@ namespace ST.Collision
         /// Compute the height of the binary tree in O(N) time. Should not be
         /// called often.
         /// </summary>
-        public int GetHeight() => _root == Settings.NULL_NODE ? 0 : _treeNodes[_root].Height;
+        public int GetHeight() => _root == NULL_NODE ? 0 : _treeNodes[_root].Height;
 
         /// <summary>
         /// Get the maximum balance of an node in the tree. The balance is the difference
@@ -326,7 +328,7 @@ namespace ST.Collision
             int maxBalance = 0;
             for (int i = 0; i < _nodeCapacity; i++)
             {
-                ref readonly var node = ref _treeNodes[i];
+                ref readonly TreeNode node = ref _treeNodes[i];
                 if (node.Height <= 1)
                     continue;
 
@@ -346,7 +348,7 @@ namespace ST.Collision
         /// </summary>
         public FP GetSurfaceAreaRatio()
         {
-            if (_root == Settings.NULL_NODE)
+            if (_root == NULL_NODE)
                 return FP.Zero;
 
             FP rootArea = _treeNodes[_root].AABB.GetSurfaceArea();
@@ -354,7 +356,7 @@ namespace ST.Collision
             FP totalArea = FP.Zero;
             for (int i = 0; i < _nodeCapacity; i++)
             {
-                ref readonly var node = ref _treeNodes[i];
+                ref readonly TreeNode node = ref _treeNodes[i];
                 if (node.Height < 0)
                     continue;
 
@@ -375,7 +377,7 @@ namespace ST.Collision
             // Build array of leaves. Free the rest.
             for (int i = 0; i < _nodeCapacity; i++)
             {
-                ref var nodeI = ref _treeNodes[i];
+                ref TreeNode nodeI = ref _treeNodes[i];
                 
                 // free node in pool, ignore
                 if (nodeI.Height < 0)
@@ -383,7 +385,7 @@ namespace ST.Collision
 
                 if (nodeI.IsLeaf)
                 {
-                    nodeI.Parent = Settings.NULL_NODE;
+                    nodeI.Parent = NULL_NODE;
                     nodes[count] = i;
                     ++count;
                 }
@@ -404,7 +406,7 @@ namespace ST.Collision
                     for (int j = i + 1; j < count; ++j)
                     {
                         AABB aabbj = _treeNodes[nodes[j]].AABB;
-                        AABB.Combine(aabbi, aabbj, out var b);
+                        AABB.Combine(aabbi, aabbj, out AABB b);
                         
                         FP cost = b.GetSurfaceArea();
                         if (cost < minCost)
@@ -418,17 +420,17 @@ namespace ST.Collision
 
                 int index1 = nodes[iMin];
                 int index2 = nodes[jMin];
-                ref var child1 = ref _treeNodes[index1];
-                ref var child2 = ref _treeNodes[index2];
+                ref TreeNode child1 = ref _treeNodes[index1];
+                ref TreeNode child2 = ref _treeNodes[index2];
 
                 int parentIndex = AllocateNode();
-                ref var parent = ref _treeNodes[parentIndex];
+                ref TreeNode parent = ref _treeNodes[parentIndex];
                 parent.Child1 = index1;
                 parent.Child2 = index2;
                 parent.Height = 1 + Math.Max(child1.Height, child2.Height);
                 
                 parent.AABB.Combine(child1.AABB, child2.AABB);
-                parent.Parent = Settings.NULL_NODE;
+                parent.Parent = NULL_NODE;
 
                 child1.Parent = parentIndex;
                 child2.Parent = parentIndex;
@@ -459,10 +461,10 @@ namespace ST.Collision
 
         private void InsertLeaf(int leaf)
         {
-            if (_root == Settings.NULL_NODE)
+            if (_root == NULL_NODE)
             {
                 _root = leaf;
-                _treeNodes[_root].Parent = Settings.NULL_NODE;
+                _treeNodes[_root].Parent = NULL_NODE;
                 return;
             }
 
@@ -471,13 +473,13 @@ namespace ST.Collision
             int index = _root;
             while (!_treeNodes[index].IsLeaf)
             {
-                ref var indexNode = ref _treeNodes[index];
+                ref TreeNode indexNode = ref _treeNodes[index];
                 int child1 = indexNode.Child1;
                 int child2 = indexNode.Child2;
 
                 FP area = indexNode.AABB.GetSurfaceArea();
                 
-                AABB.Combine(indexNode.AABB, leafAABB, out var combinedAABB);
+                AABB.Combine(indexNode.AABB, leafAABB, out AABB combinedAABB);
                 FP combinedArea = combinedAABB.GetSurfaceArea();
 
                 // Cost of creating a new parent for this node and the new leaf
@@ -490,12 +492,12 @@ namespace ST.Collision
                 FP cost1;
                 if (_treeNodes[child1].IsLeaf)
                 {
-                    AABB.Combine(leafAABB, _treeNodes[child1].AABB, out var aabb);
+                    AABB.Combine(leafAABB, _treeNodes[child1].AABB, out AABB aabb);
                     cost1 = aabb.GetSurfaceArea() + inheritanceCost;
                 }
                 else
                 {
-                    AABB.Combine(leafAABB, _treeNodes[child1].AABB, out var aabb);
+                    AABB.Combine(leafAABB, _treeNodes[child1].AABB, out AABB aabb);
                     FP oldArea = _treeNodes[child1].AABB.GetSurfaceArea();
                     FP newArea = aabb.GetSurfaceArea();
                     cost1 = (newArea - oldArea) + inheritanceCost;
@@ -505,12 +507,12 @@ namespace ST.Collision
                 FP cost2;
                 if (_treeNodes[child2].IsLeaf)
                 {
-                    AABB.Combine(leafAABB, _treeNodes[child2].AABB, out var aabb);
+                    AABB.Combine(leafAABB, _treeNodes[child2].AABB, out AABB aabb);
                     cost2 = aabb.GetSurfaceArea() + inheritanceCost;
                 }
                 else
                 {
-                    AABB.Combine(leafAABB, _treeNodes[child2].AABB, out var aabb);
+                    AABB.Combine(leafAABB, _treeNodes[child2].AABB, out AABB aabb);
                     FP oldArea = _treeNodes[child2].AABB.GetSurfaceArea();
                     FP newArea = aabb.GetSurfaceArea();
                     cost2 = newArea - oldArea + inheritanceCost;
@@ -530,19 +532,19 @@ namespace ST.Collision
             int sibling = index;
 
             // Create a new parent.
-            ref readonly var oldNode = ref _treeNodes[sibling];
+            ref readonly TreeNode oldNode = ref _treeNodes[sibling];
             int oldParent = oldNode.Parent;
             int newParent = AllocateNode();
-            ref var newParentNode = ref _treeNodes[newParent];
+            ref TreeNode newParentNode = ref _treeNodes[newParent];
             newParentNode.Parent = oldParent;
             newParentNode.UserData = default;
 
             newParentNode.AABB.Combine(leafAABB, oldNode.AABB);
             newParentNode.Height = oldNode.Height + 1;
 
-            if (oldParent != Settings.NULL_NODE)
+            if (oldParent != NULL_NODE)
             {
-                ref var oldParentNode = ref _treeNodes[oldParent];
+                ref TreeNode oldParentNode = ref _treeNodes[oldParent];
 
                 // The sibling was not the root.
                 if (oldParentNode.Child1 == sibling)
@@ -571,15 +573,15 @@ namespace ST.Collision
 
             // Walk back up the tree fixing heights and AABBs
             index = _treeNodes[leaf].Parent;
-            while (index != Settings.NULL_NODE)
+            while (index != NULL_NODE)
             {
                 index = Balance(index);
-                ref var indexNode = ref _treeNodes[index];
-                Debug.Assert(indexNode.Child1 != Settings.NULL_NODE);
-                Debug.Assert(indexNode.Child2 != Settings.NULL_NODE);
+                ref TreeNode indexNode = ref _treeNodes[index];
+                Debug.Assert(indexNode.Child1 != NULL_NODE);
+                Debug.Assert(indexNode.Child2 != NULL_NODE);
                 
-                ref var child1 = ref _treeNodes[indexNode.Child1];
-                ref var child2 = ref _treeNodes[indexNode.Child2];
+                ref TreeNode child1 = ref _treeNodes[indexNode.Child1];
+                ref TreeNode child2 = ref _treeNodes[indexNode.Child2];
                 
                 indexNode.Height = 1 + Math.Max(child1.Height, child2.Height);
                 indexNode.AABB.Combine(child1.AABB, child2.AABB);
@@ -594,19 +596,19 @@ namespace ST.Collision
         {
             if (leaf == _root)
             {
-                _root = Settings.NULL_NODE;
+                _root = NULL_NODE;
                 return;
             }
 
             int parent = _treeNodes[leaf].Parent;
-            ref var parentNode = ref _treeNodes[parent];
+            ref TreeNode parentNode = ref _treeNodes[parent];
             int grandParent = parentNode.Parent;
 
             int sibling = parentNode.Child1 == leaf ? parentNode.Child2 : parentNode.Child1;
 
-            if (grandParent != Settings.NULL_NODE)
+            if (grandParent != NULL_NODE)
             {
-                ref var grandParentNode = ref _treeNodes[grandParent];
+                ref TreeNode grandParentNode = ref _treeNodes[grandParent];
                 
                 // Destroy parent and connect sibling to grandParent.
                 if (grandParentNode.Child1 == parent)
@@ -619,13 +621,13 @@ namespace ST.Collision
 
                 // Adjust ancestor bounds.
                 int index = grandParent;
-                while (index != Settings.NULL_NODE)
+                while (index != NULL_NODE)
                 {
                     index = Balance(index);
 
-                    ref var indexNode = ref _treeNodes[index];
-                    ref var child1 = ref _treeNodes[indexNode.Child1];
-                    ref var child2 = ref _treeNodes[indexNode.Child2];
+                    ref TreeNode indexNode = ref _treeNodes[index];
+                    ref TreeNode child1 = ref _treeNodes[indexNode.Child1];
+                    ref TreeNode child2 = ref _treeNodes[indexNode.Child2];
                     
                     indexNode.AABB.Combine(child1.AABB, child2.AABB);
                     indexNode.Height = 1 + Math.Max(child1.Height, child2.Height);
@@ -636,7 +638,7 @@ namespace ST.Collision
             else
             {
                 _root = sibling;
-                _treeNodes[sibling].Parent = Settings.NULL_NODE;
+                _treeNodes[sibling].Parent = NULL_NODE;
                 FreeNode(parent);
             }
 
@@ -645,9 +647,9 @@ namespace ST.Collision
 
         private int Balance(int iA)
         {
-            Debug.Assert(iA != Settings.NULL_NODE);
+            Debug.Assert(iA != NULL_NODE);
 
-            ref var A = ref _treeNodes[iA];
+            ref TreeNode A = ref _treeNodes[iA];
             if (A.IsLeaf || A.Height < 2)
                 return iA;
 
@@ -656,8 +658,8 @@ namespace ST.Collision
 
             Debug.Assert(0 <= iB && iB < _nodeCapacity);
             Debug.Assert(0 <= iC && iC < _nodeCapacity);
-            ref var B = ref _treeNodes[iB];
-            ref var C = ref _treeNodes[iC];
+            ref TreeNode B = ref _treeNodes[iB];
+            ref TreeNode C = ref _treeNodes[iC];
 
             int balance = C.Height - B.Height;
 
@@ -669,8 +671,8 @@ namespace ST.Collision
 
                 Debug.Assert(0 <= iF && iF < _nodeCapacity);
                 Debug.Assert(0 <= iG && iG < _nodeCapacity);
-                ref var F = ref _treeNodes[iF];
-                ref var G = ref _treeNodes[iG];
+                ref TreeNode F = ref _treeNodes[iF];
+                ref TreeNode G = ref _treeNodes[iG];
 
                 // Swap A and C
                 C.Child1 = iA;
@@ -678,9 +680,9 @@ namespace ST.Collision
                 A.Parent = iC;
 
                 // A's old parent should point to C
-                if (C.Parent != Settings.NULL_NODE)
+                if (C.Parent != NULL_NODE)
                 {
-                    ref var cParentNode = ref _treeNodes[C.Parent];
+                    ref TreeNode cParentNode = ref _treeNodes[C.Parent];
                     if (cParentNode.Child1 == iA)
                     {
                         cParentNode.Child1 = iC;
@@ -731,8 +733,8 @@ namespace ST.Collision
 
                 Debug.Assert(0 <= iD && iD < _nodeCapacity);
                 Debug.Assert(0 <= iE && iE < _nodeCapacity);
-                ref var D = ref _treeNodes[iD];
-                ref var E = ref _treeNodes[iE];
+                ref TreeNode D = ref _treeNodes[iD];
+                ref TreeNode E = ref _treeNodes[iE];
 
                 // Swap A and B
                 B.Child1 = iA;
@@ -740,9 +742,9 @@ namespace ST.Collision
                 A.Parent = iB;
 
                 // A's old parent should point to B
-                if (B.Parent != Settings.NULL_NODE)
+                if (B.Parent != NULL_NODE)
                 {
-                    ref var bParentNode = ref _treeNodes[B.Parent];
+                    ref TreeNode bParentNode = ref _treeNodes[B.Parent];
                     if (bParentNode.Child1 == iA)
                     {
                         bParentNode.Child1 = iB;
@@ -797,7 +799,7 @@ namespace ST.Collision
         private int ComputeHeight(int nodeId)
         {
             Debug.Assert(0 <= nodeId && nodeId < _nodeCapacity);
-            ref readonly var node = ref _treeNodes[nodeId];
+            ref readonly TreeNode node = ref _treeNodes[nodeId];
             
             if (node.IsLeaf)
                 return 0;
@@ -809,21 +811,20 @@ namespace ST.Collision
 
         private void ValidateStructure(int index)
         {
-            if (index == Settings.NULL_NODE)
+            if (index == NULL_NODE)
                 return;
 
             if (index == _root)
-                Debug.Assert(_treeNodes[index].Parent == Settings.NULL_NODE);
-
-            ref readonly var node = ref _treeNodes[index];
+                Debug.Assert(_treeNodes[index].Parent == NULL_NODE);
+            ref readonly TreeNode node = ref _treeNodes[index];
             
             int child1 = node.Child1;
             int child2 = node.Child2;
 
             if (node.IsLeaf)
             {
-                Debug.Assert(child1 == Settings.NULL_NODE);
-                Debug.Assert(child2 == Settings.NULL_NODE);
+                Debug.Assert(child1 == NULL_NODE);
+                Debug.Assert(child2 == NULL_NODE);
                 Debug.Assert(node.Height == 0);
                 return;
             }
@@ -840,18 +841,17 @@ namespace ST.Collision
 
         private void ValidateMetrics(int index)
         {
-            if (index == Settings.NULL_NODE)
+            if (index == NULL_NODE)
                 return;
-
-            ref readonly var node = ref _treeNodes[index];
+            ref readonly TreeNode node = ref _treeNodes[index];
             
             int child1 = node.Child1;
             int child2 = node.Child2;
 
             if (node.IsLeaf)
             {
-                Debug.Assert(child1 == Settings.NULL_NODE);
-                Debug.Assert(child2 == Settings.NULL_NODE);
+                Debug.Assert(child1 == NULL_NODE);
+                Debug.Assert(child2 == NULL_NODE);
                 Debug.Assert(node.Height == 0);
                 return;
             }
@@ -864,7 +864,7 @@ namespace ST.Collision
             int height = 1 + Math.Max(height1, height2);
             Debug.Assert(node.Height == height);
 
-            AABB.Combine(_treeNodes[child1].AABB, _treeNodes[child2].AABB, out var aabb);
+            AABB.Combine(_treeNodes[child1].AABB, _treeNodes[child2].AABB, out AABB aabb);
             Debug.Assert(aabb.LowerBound == node.AABB.LowerBound);
             Debug.Assert(aabb.UpperBound == node.AABB.UpperBound);
 
@@ -874,7 +874,7 @@ namespace ST.Collision
 
         public struct TreeNode
         {
-            public bool IsLeaf => Child1 == Settings.NULL_NODE;
+            public bool IsLeaf => Child1 == NULL_NODE;
 
             public int Child1;
             public int Child2;
