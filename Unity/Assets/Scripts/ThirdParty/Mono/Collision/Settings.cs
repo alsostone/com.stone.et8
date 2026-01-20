@@ -1,6 +1,6 @@
 using TrueSync;
 
-namespace ST.Collision
+namespace ST.Mono
 {
     public static class Settings
     {

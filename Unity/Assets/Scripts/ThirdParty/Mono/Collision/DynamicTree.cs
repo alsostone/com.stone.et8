@@ -3,7 +3,7 @@ using System.Diagnostics;
 using System.Collections.Generic;
 using TrueSync;
 
-namespace ST.Collision
+namespace ST.Mono
 {
     public class DynamicTree<T>
     {
@@ -246,12 +246,14 @@ namespace ST.Collision
             }
         }
         
-        
         /// <summary>
         /// Enumerate all nodes, both leaf and internal, and return both the nodes themselves and their depth in the tree.
         /// </summary>
         public IEnumerable<(TreeNode, int)> EnumerateNodes()
         {
+            if (_root == NULL_NODE)
+                yield break;
+            
             foreach ((TreeNode, int) node in EnumerateNodes(_root, 0))
             {
                 yield return node;
@@ -264,13 +266,11 @@ namespace ST.Collision
             Debug.Assert(startPoint != NULL_NODE);
 
             TreeNode treeNode = _treeNodes[startPoint];
-
             yield return (treeNode, currentDepth);
 
             if (!treeNode.IsLeaf)
             {
                 int child1 = treeNode.Child1;
-
                 if (child1 != NULL_NODE)
                 {
                     foreach ((TreeNode, int) child1Node in EnumerateNodes(child1, currentDepth + 1))
@@ -280,7 +280,6 @@ namespace ST.Collision
                 }
 
                 int child2 = treeNode.Child2;
-
                 if (child2 != NULL_NODE)
                 {
                     foreach ((TreeNode, int) child2Node in EnumerateNodes(child2, currentDepth + 1))
@@ -474,8 +473,8 @@ namespace ST.Collision
             while (!_treeNodes[index].IsLeaf)
             {
                 ref TreeNode indexNode = ref _treeNodes[index];
-                int child1 = indexNode.Child1;
-                int child2 = indexNode.Child2;
+                ref TreeNode child1 = ref _treeNodes[indexNode.Child1];
+                ref TreeNode child2 = ref _treeNodes[indexNode.Child2];
 
                 FP area = indexNode.AABB.GetSurfaceArea();
                 
@@ -490,30 +489,30 @@ namespace ST.Collision
 
                 // Cost of descending into child1
                 FP cost1;
-                if (_treeNodes[child1].IsLeaf)
+                if (child1.IsLeaf)
                 {
-                    AABB.Combine(leafAABB, _treeNodes[child1].AABB, out AABB aabb);
+                    AABB.Combine(leafAABB, child1.AABB, out AABB aabb);
                     cost1 = aabb.GetSurfaceArea() + inheritanceCost;
                 }
                 else
                 {
-                    AABB.Combine(leafAABB, _treeNodes[child1].AABB, out AABB aabb);
-                    FP oldArea = _treeNodes[child1].AABB.GetSurfaceArea();
+                    AABB.Combine(leafAABB, child1.AABB, out AABB aabb);
+                    FP oldArea = child1.AABB.GetSurfaceArea();
                     FP newArea = aabb.GetSurfaceArea();
                     cost1 = (newArea - oldArea) + inheritanceCost;
                 }
 
                 // Cost of descending into child2
                 FP cost2;
-                if (_treeNodes[child2].IsLeaf)
+                if (child2.IsLeaf)
                 {
-                    AABB.Combine(leafAABB, _treeNodes[child2].AABB, out AABB aabb);
+                    AABB.Combine(leafAABB, child2.AABB, out AABB aabb);
                     cost2 = aabb.GetSurfaceArea() + inheritanceCost;
                 }
                 else
                 {
-                    AABB.Combine(leafAABB, _treeNodes[child2].AABB, out AABB aabb);
-                    FP oldArea = _treeNodes[child2].AABB.GetSurfaceArea();
+                    AABB.Combine(leafAABB, child2.AABB, out AABB aabb);
+                    FP oldArea = child2.AABB.GetSurfaceArea();
                     FP newArea = aabb.GetSurfaceArea();
                     cost2 = newArea - oldArea + inheritanceCost;
                 }
@@ -524,9 +523,9 @@ namespace ST.Collision
 
                 // Descend
                 if (cost1 < cost2)
-                    index = child1;
+                    index = indexNode.Child1;
                 else
-                    index = child2;
+                    index = indexNode.Child2;
             }
 
             int sibling = index;

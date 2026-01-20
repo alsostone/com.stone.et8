@@ -1,12 +1,16 @@
 using System.Runtime.CompilerServices;
 using TrueSync;
 
-namespace ST.Collision
+namespace ST.Mono
 {
     public struct AABB
     {
         public TSVector LowerBound;
         public TSVector UpperBound;
+        
+        public TSVector Size => UpperBound - LowerBound;
+        public TSVector Center => FP.Half * (LowerBound + UpperBound);
+        public TSVector Extents => FP.Half * (UpperBound - LowerBound);
 
         public AABB(TSVector lowerBound, TSVector upperBound)
         {
@@ -14,26 +18,6 @@ namespace ST.Collision
             this.UpperBound = upperBound;
         }
         
-        /// <summary>
-        ///     Get the center of the AABB.
-        /// </summary>
-        /// <returns></returns>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public TSVector GetCenter()
-        {
-            return FP.Half * (LowerBound + UpperBound);
-        }
-
-        /// <summary>
-        ///     Get the extents of the AABB (half-widths).
-        /// </summary>
-        /// <returns></returns>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public TSVector GetExtents()
-        {
-            return FP.Half * (UpperBound - LowerBound);
-        }
-
         public readonly FP GetSurfaceArea()
         {
             FP x_size = UpperBound.x - LowerBound.x;
