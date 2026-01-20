@@ -23,16 +23,18 @@ namespace ET
             if (lsUnit.DeadMark == 1)
             {
                 // 血量归零触发死亡技能
-                SkillComponent skillComponent = self.LSOwner().GetComponent<SkillComponent>();
-                skillComponent.ForceAllDone();
-                skillComponent.TryCastSkill(ESkillType.Dead);
+                SkillComponent skillComponent = lsUnit.GetComponent<SkillComponent>();
+                if (skillComponent != null) {
+                    skillComponent.ForceAllDone();
+                    skillComponent.TryCastSkill(ESkillType.Dead);
+                }
                 lsUnit.DeadMark = 2;
             }
 
             if (lsUnit.DeadMark == 2)
             {
-                SkillComponent skillComponent = self.LSOwner().GetComponent<SkillComponent>();
-                if (skillComponent.HasRunningSkill())
+                SkillComponent skillComponent = lsUnit.GetComponent<SkillComponent>();
+                if (skillComponent != null && skillComponent.HasRunningSkill())
                     return;
                 self.DoDeathReal();
                 lsUnit.DeadMark = 3;

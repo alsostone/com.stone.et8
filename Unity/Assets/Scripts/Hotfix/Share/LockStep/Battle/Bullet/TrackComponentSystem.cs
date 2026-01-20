@@ -99,8 +99,12 @@ namespace ET
             TSVector position = ownerTransform.Position;
             if (self.IsUesBezier)
             {
-                ownerTransform.SetPosition(TSBezier.GetPoint(self.CasterPosition, self.ControlPosition, self.TargetPosition, self.ElapsedTime / self.Duration));
-                self.IsReached = self.ElapsedTime >= self.Duration;
+                if (self.ElapsedTime >= self.Duration) {
+                    ownerTransform.SetPosition(self.TargetPosition);
+                    self.IsReached = true;
+                } else {
+                    ownerTransform.SetPosition(TSBezier.GetPoint(self.CasterPosition, self.ControlPosition, self.TargetPosition, self.ElapsedTime / self.Duration));
+                }
             }
             else
             {
