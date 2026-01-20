@@ -23,7 +23,7 @@ namespace ET
             this.snapshots = new List<MemoryBuffer>(capacity);
             for (int i = 0; i < capacity; ++i)
             {
-                MemoryBuffer memoryBuffer = new(204800);
+                MemoryBuffer memoryBuffer = new(307200);
                 memoryBuffer.SetLength(0);
                 memoryBuffer.Seek(0, SeekOrigin.Begin);
                 this.snapshots.Add(memoryBuffer);

@@ -9,9 +9,8 @@ namespace ET
     public static partial class MovePathFindingComponentSystem
     {
         [EntitySystem]
-        private static void Awake(this MovePathFindingComponent self, bool isUseRVO)
-        {self.LSRoom()?.ProcessLog.LogFunction(77, self.LSParent().Id, isUseRVO ? 1 : 0);
-            self.IsUseRVO = isUseRVO;
+        private static void Awake(this MovePathFindingComponent self)
+        {self.LSRoom()?.ProcessLog.LogFunction(77, self.LSParent().Id);
             self.PathPoints = new List<TSVector>();
         }
         
@@ -32,11 +31,7 @@ namespace ET
                 }
                 
                 // 放在后面是因为RVO移动不能立即改变位置，需要等下一帧才能获取到最新位置
-                if (self.IsUseRVO) {
-                    transformComponent.RVOMove(new TSVector2(targetDir.x, targetDir.z));
-                } else {
-                    transformComponent.Move(new TSVector2(targetDir.x, targetDir.z));
-                }
+                transformComponent.RVOMove(new TSVector2(targetDir.x, targetDir.z));
             }
         }
         

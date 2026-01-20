@@ -130,7 +130,7 @@ namespace ET
             
             // 非右键点击移动时执行普通移动
             if (!self.IsRightDownMove) {
-                self.GetPlayerBindHeroComponent<TransformComponent>()?.Move(self.MoveAxis);
+                self.GetPlayerBindHeroComponent<TransformComponent>()?.RVOMove(self.MoveAxis);
             }
         }
 

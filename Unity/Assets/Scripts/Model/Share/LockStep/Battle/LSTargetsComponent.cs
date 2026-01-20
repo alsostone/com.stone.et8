@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using MemoryPack;
 using MongoDB.Bson.Serialization.Attributes;
+using ST.Mono;
 
 namespace ET
 {
@@ -8,9 +9,8 @@ namespace ET
 	[MemoryPackable]
 	public partial class LSTargetsComponent: LSEntity, IAwake, ISerializeToEntity
 	{
-		[MemoryPackIgnore]
 		[BsonIgnore]
-		public Dictionary<TeamType, List<EntityRef<LSUnit>>> TeamLSUnitsMap = new Dictionary<TeamType, List<EntityRef<LSUnit>>>();
+		public Dictionary<TeamType, DynamicTree<long>> TeamLSUnitsMap = new ();
 		
 	}
 }

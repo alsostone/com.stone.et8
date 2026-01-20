@@ -105,6 +105,7 @@ namespace ET
 	        lsUnit.AddComponent<TransformComponent, TSVector, TSQuaternion>(position, rotation);
 	        lsUnit.AddComponent<TypeComponent, EUnitType>(EUnitType.Hero);
 	        lsUnit.AddComponent<TeamComponent, TeamType>(teamType);
+	        lsUnit.AddComponent<TargetableComponent>();
 	        lsUnit.AddComponent<FlagComponent>();
 	        
 	        PropComponent propComponent = lsUnit.AddComponent<PropComponent, int>(row.Radius);
@@ -134,6 +135,7 @@ namespace ET
 	        lsUnit.AddComponent<TransformComponent, TSVector, TSQuaternion>(position, TSQuaternion.Euler(0, angle, 0));
 	        lsUnit.AddComponent<TypeComponent, EUnitType>(EUnitType.Soldier);
 	        lsUnit.AddComponent<TeamComponent, TeamType>(teamType);
+	        lsUnit.AddComponent<TargetableComponent>();
 	        FlagComponent flagComponent = lsUnit.AddComponent<FlagComponent>();
 	        
 	        PropComponent propComponent = lsUnit.AddComponent<PropComponent, int>(row.Radius);
@@ -191,6 +193,7 @@ namespace ET
 	        lsUnit.AddComponent<TransformComponent, TSVector, TSQuaternion>(pos, TSQuaternion.Euler(0, angle, 0));
 	        lsUnit.AddComponent<TypeComponent, EUnitType>(EUnitType.Block);
 	        lsUnit.AddComponent<TeamComponent, TeamType>(teamType);
+	        lsUnit.AddComponent<TargetableComponent>();
 	        lsUnit.AddComponent<FlagComponent, int>((int)FlagRestrict.NotRotate);
 
 	        PropComponent propComponent = lsUnit.AddComponent<PropComponent, int>(5000);
@@ -236,6 +239,7 @@ namespace ET
 	        lsUnit.AddComponent<TransformComponent, TSVector, TSQuaternion>(pos, TSQuaternion.Euler(0, angle, 0));
 	        lsUnit.AddComponent<TypeComponent, EUnitType>(EUnitType.Building);
 	        lsUnit.AddComponent<TeamComponent, TeamType>(teamType);
+	        lsUnit.AddComponent<TargetableComponent>();
 	        lsUnit.AddComponent<FlagComponent, int>((int)FlagRestrict.NotRotate);
 
 	        PropComponent propComponent = lsUnit.AddComponent<PropComponent, int>(row.Radius);

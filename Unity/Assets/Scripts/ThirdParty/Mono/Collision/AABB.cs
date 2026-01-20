@@ -1,9 +1,11 @@
 using System.Runtime.CompilerServices;
+using MemoryPack;
 using TrueSync;
 
 namespace ST.Mono
 {
-    public struct AABB
+    [MemoryPackable]
+    public partial struct AABB
     {
         public TSVector LowerBound;
         public TSVector UpperBound;

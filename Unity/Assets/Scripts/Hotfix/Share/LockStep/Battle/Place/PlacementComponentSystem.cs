@@ -60,6 +60,11 @@ namespace ET
                 TSVector putPosition = lsGridMapComponent.GetPutPosition(self.PlacementData);
                 lsOwner.GetComponent<TransformComponent>().SetPosition(putPosition, true);
                 
+                // 位置改变时更新目标搜索树
+                TargetableComponent targetableComponent = lsOwner.GetComponent<TargetableComponent>();
+                if (targetableComponent != null)
+                    targetableComponent.IsDirty = true;
+                
                 // 更新RVO实体的位置 障碍物特殊，需要重新创建
                 switch (self.PlacementData.placementType) {
                     case PlacedLayer.Block:

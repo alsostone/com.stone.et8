@@ -44,6 +44,11 @@ namespace ET
                 if (transformComponent.Position != position) {
                     transformComponent.Position = position;
                     EventSystem.Instance.Publish(self.LSWorld(), new LSUnitPosition() { Id = lsUnit.Id, Position = position, Immediate = false });
+                    
+                    // 位置改变时更新目标搜索树
+                    TargetableComponent targetableComponent = lsUnit.GetComponent<TargetableComponent>();
+                    if (targetableComponent != null)
+                        targetableComponent.IsDirty = true;
                 }
             }
         }

@@ -24,7 +24,6 @@
 {"ID":23,"FileName":"LSRVO2ComponentSystem.cs","FuncName":"AddDynamicAgent","ArgTypes":"LSRVO2Component,LSUnit","ArgNames":"self,lsUnit","ValidArgNames":"Owner,lsUnit.Id","ValidArgCount":2,"Comments":null}
 {"ID":24,"FileName":"LSRVO2ComponentSystem.cs","FuncName":"LSUpdate","ArgTypes":"LSRVO2Component","ArgNames":"self","ValidArgNames":"Owner","ValidArgCount":1,"Comments":null}
 {"ID":25,"FileName":"LSRVO2ComponentSystem.cs","FuncName":"Awake","ArgTypes":"LSRVO2Component","ArgNames":"self","ValidArgNames":"Owner","ValidArgCount":1,"Comments":null}
-{"ID":26,"FileName":"LSTargetsComponentSystem.cs","FuncName":"AddTarget","ArgTypes":"LSTargetsComponent,TeamType,LSUnit","ArgNames":"self,teamType,lsUnit","ValidArgNames":"Owner,lsUnit.Id","ValidArgCount":2,"Comments":null}
 {"ID":27,"FileName":"AIRootComponentSystem.cs","FuncName":"Destroy","ArgTypes":"AIRootComponent","ArgNames":"self","ValidArgNames":"Owner","ValidArgCount":1,"Comments":null}
 {"ID":28,"FileName":"AIRootComponentSystem.cs","FuncName":"Start","ArgTypes":"AIRootComponent","ArgNames":"self","ValidArgNames":"Owner","ValidArgCount":1,"Comments":null}
 {"ID":29,"FileName":"AIRootComponentSystem.cs","FuncName":"Awake","ArgTypes":"AIRootComponent,Node","ArgNames":"self,node","ValidArgNames":"Owner","ValidArgCount":1,"Comments":null}
@@ -75,7 +74,7 @@
 {"ID":74,"FileName":"MovePathFindingComponentSystem.cs","FuncName":"Stop","ArgTypes":"MovePathFindingComponent","ArgNames":"self","ValidArgNames":"Owner","ValidArgCount":1,"Comments":null}
 {"ID":75,"FileName":"MovePathFindingComponentSystem.cs","FuncName":"SetDestination","ArgTypes":"MovePathFindingComponent,TSVector,MovementMode","ArgNames":"self,position,movementMode","ValidArgNames":"Owner,(FP)position.X, (FP)position.Y,(FP)position.Z","ValidArgCount":4,"Comments":null}
 {"ID":76,"FileName":"MovePathFindingComponentSystem.cs","FuncName":"LSUpdate","ArgTypes":"MovePathFindingComponent","ArgNames":"self","ValidArgNames":"Owner","ValidArgCount":1,"Comments":null}
-{"ID":77,"FileName":"MovePathFindingComponentSystem.cs","FuncName":"Awake","ArgTypes":"MovePathFindingComponent,bool","ArgNames":"self,isUseRVO","ValidArgNames":"Owner,isUseRVO","ValidArgCount":2,"Comments":null}
+{"ID":77,"FileName":"MovePathFindingComponentSystem.cs","FuncName":"Awake","ArgTypes":"MovePathFindingComponent","ArgNames":"self","ValidArgNames":"Owner","ValidArgCount":1,"Comments":null}
 {"ID":78,"FileName":"PropComponentSystem.cs","FuncName":"Update","ArgTypes":"PropComponent,NumericType,bool","ArgNames":"self,numericType,isPublicEvent","ValidArgNames":"Owner,isPublicEvent","ValidArgCount":2,"Comments":null}
 {"ID":79,"FileName":"PropComponentSystem.cs","FuncName":"Contains","ArgTypes":"PropComponent,NumericType","ArgNames":"self,key","ValidArgNames":"Owner","ValidArgCount":1,"Comments":null}
 {"ID":80,"FileName":"PropComponentSystem.cs","FuncName":"Add","ArgTypes":"PropComponent,NumericType,FP,bool","ArgNames":"self,numericType,value,isPublicEvent","ValidArgNames":"Owner,(FP)value,isPublicEvent","ValidArgCount":3,"Comments":null}
@@ -90,7 +89,6 @@
 {"ID":89,"FileName":"TransformComponentSystem.cs","FuncName":"SetPosition","ArgTypes":"TransformComponent,TSVector,bool","ArgNames":"self,position,immediate","ValidArgNames":"Owner,(FP)position.X, (FP)position.Y,(FP)position.Z,immediate","ValidArgCount":5,"Comments":null}
 {"ID":90,"FileName":"TransformComponentSystem.cs","FuncName":"SetMoving","ArgTypes":"TransformComponent,bool","ArgNames":"self,moving","ValidArgNames":"Owner,moving","ValidArgCount":2,"Comments":null}
 {"ID":91,"FileName":"TransformComponentSystem.cs","FuncName":"RVOMove","ArgTypes":"TransformComponent,TSVector2","ArgNames":"self,forward","ValidArgNames":"Owner,(FP)forward.X,(FP)forward.Y","ValidArgCount":3,"Comments":null}
-{"ID":92,"FileName":"TransformComponentSystem.cs","FuncName":"Move","ArgTypes":"TransformComponent,TSVector2","ArgNames":"self,forward","ValidArgNames":"Owner,(FP)forward.X,(FP)forward.Y","ValidArgCount":3,"Comments":null}
 {"ID":93,"FileName":"TransformComponentSystem.cs","FuncName":"LSUpdate","ArgTypes":"TransformComponent","ArgNames":"self","ValidArgNames":"Owner","ValidArgCount":1,"Comments":null}
 {"ID":94,"FileName":"TransformComponentSystem.cs","FuncName":"Awake","ArgTypes":"TransformComponent,TSVector,TSQuaternion","ArgNames":"self,position,rotation","ValidArgNames":"Owner,(FP)position.X, (FP)position.Y,(FP)position.Z","ValidArgCount":4,"Comments":null}
 {"ID":95,"FileName":"TypeComponentSystem.cs","FuncName":"Awake","ArgTypes":"TypeComponent,EUnitType","ArgNames":"self,type","ValidArgNames":"Owner","ValidArgCount":1,"Comments":null}
@@ -143,7 +141,7 @@
 {"ID":142,"FileName":"HeroComponentSystem.cs","FuncName":"Destroy","ArgTypes":"HeroComponent","ArgNames":"self","ValidArgNames":"Owner","ValidArgCount":1,"Comments":null}
 {"ID":143,"FileName":"HeroComponentSystem.cs","FuncName":"Awake","ArgTypes":"HeroComponent,int,int","ArgNames":"self,tableId,skinId","ValidArgNames":"Owner,tableId,skinId","ValidArgCount":3,"Comments":null}
 {"ID":144,"FileName":"ItemComponentSystem.cs","FuncName":"Awake","ArgTypes":"ItemComponent,int","ArgNames":"self,tableId","ValidArgNames":"Owner,tableId","ValidArgCount":2,"Comments":null}
-{"ID":145,"FileName":"PlayerComponentSystem.cs","FuncName":"Awake","ArgTypes":"PlayerComponent,long","ArgNames":"self,bindId","ValidArgNames":"Owner","ValidArgCount":1,"Comments":null}
+{"ID":145,"FileName":"PlayerComponentSystem.cs","FuncName":"Awake","ArgTypes":"PlayerComponent,long,long","ArgNames":"self,bindCampId,bindHeroId","ValidArgNames":"Owner","ValidArgCount":1,"Comments":null}
 {"ID":146,"FileName":"SoldierComponentSystem.cs","FuncName":"Destroy","ArgTypes":"SoldierComponent","ArgNames":"self","ValidArgNames":"Owner","ValidArgCount":1,"Comments":null}
 {"ID":147,"FileName":"SoldierComponentSystem.cs","FuncName":"Awake","ArgTypes":"SoldierComponent,int","ArgNames":"self,tableId","ValidArgNames":"Owner,tableId","ValidArgCount":2,"Comments":null}
 {"ID":148,"FileName":"WorkComponentSystem.cs","FuncName":"AddToQueue","ArgTypes":"WorkComponent","ArgNames":"self","ValidArgNames":"Owner","ValidArgCount":1,"Comments":null}
@@ -171,4 +169,7 @@
 {"ID":170,"FileName":"TrackComponentSystem.cs","FuncName":"Awake","ArgTypes":"TrackComponent,int,int,int,FP","ArgNames":"self,speed,controlFactor,controlHeight,distance","ValidArgNames":"Owner,speed,controlFactor,controlHeight,(FP)distance","ValidArgCount":5,"Comments":null}
 {"ID":171,"FileName":"TransformComponentSystem.cs","FuncName":"SetForward","ArgTypes":"TransformComponent,TSVector,bool","ArgNames":"self,forward,immediate","ValidArgNames":"Owner,(FP)forward.X, (FP)forward.Y,(FP)forward.Z,immediate","ValidArgCount":5,"Comments":null}
 {"ID":172,"FileName":"TransformComponentSystem.cs","FuncName":"SetRotation","ArgTypes":"TransformComponent,TSQuaternion,bool","ArgNames":"self,rotation,immediate","ValidArgNames":"Owner,immediate","ValidArgCount":2,"Comments":null}
+{"ID":173,"FileName":"TargetableComponentSystem.cs","FuncName":"LSUpdate","ArgTypes":"TargetableComponent","ArgNames":"self","ValidArgNames":"Owner","ValidArgCount":1,"Comments":null}
+{"ID":174,"FileName":"TargetableComponentSystem.cs","FuncName":"Destroy","ArgTypes":"TargetableComponent","ArgNames":"self","ValidArgNames":"Owner","ValidArgCount":1,"Comments":null}
+{"ID":175,"FileName":"TargetableComponentSystem.cs","FuncName":"Awake","ArgTypes":"TargetableComponent","ArgNames":"self","ValidArgNames":"Owner","ValidArgCount":1,"Comments":null}
 ]

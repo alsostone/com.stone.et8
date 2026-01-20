@@ -1,30 +1,36 @@
 using System;
 using System.Diagnostics;
 using System.Collections.Generic;
+using MemoryPack;
 using TrueSync;
 
 namespace ST.Mono
 {
-    public class DynamicTree<T>
+    [MemoryPackable]
+    public partial class DynamicTree<T>
     {
         public const int NULL_NODE = -1;
         
-        private TreeNode[] _treeNodes;
-        private int _nodeCount;
-        private int _nodeCapacity;
+        [MemoryPackInclude] public int NodeCount;
+        
+        [MemoryPackInclude] private TreeNode[] _treeNodes;
+        [MemoryPackInclude] private int _nodeCapacity;
 
-        private int _root;
-        private int _freeList;
+        [MemoryPackInclude] private int _root;
+        [MemoryPackInclude] private int _freeList;
 
-        private readonly Stack<int> _queryStack = new Stack<int>(256);
+        private readonly Stack<int> _queryStack = new Stack<int>(128);
 
-        public DynamicTree() : this(Settings.DEFAULT_CAPACITY) { }
+        [MemoryPackConstructor]
+        private DynamicTree()
+        {
+        }
 
         public DynamicTree(int capacity)
         {
             _root = NULL_NODE;
             _nodeCapacity = capacity;
-            _nodeCount = 0;
+            NodeCount = 0;
 
             _treeNodes = new TreeNode[_nodeCapacity];
 
@@ -48,7 +54,7 @@ namespace ST.Mono
             // Expand the node pool as needed.
             if (_freeList == NULL_NODE)
             {
-                Debug.Assert(_nodeCount == _nodeCapacity);
+                Debug.Assert(NodeCount == _nodeCapacity);
 
                 // The free list is empty. Rebuild a bigger pool.
                 TreeNode[] oldNodes = _treeNodes;
@@ -60,7 +66,7 @@ namespace ST.Mono
                     _treeNodes[i] = oldNodes[i];
 
                 // Build a linked list for the free list.
-                for (int i = _nodeCount; i < _nodeCapacity - 1; i++)
+                for (int i = NodeCount; i < _nodeCapacity - 1; i++)
                 {
                     _treeNodes[i].Next = i + 1;
                     _treeNodes[i].Height = -1;
@@ -68,7 +74,7 @@ namespace ST.Mono
 
                 _treeNodes[_nodeCapacity - 1].Next = NULL_NODE;
                 _treeNodes[_nodeCapacity - 1].Height = -1;
-                _freeList = _nodeCount;
+                _freeList = NodeCount;
             }
 
             // Peel a node off the free list.
@@ -82,7 +88,7 @@ namespace ST.Mono
             newNode.Next = 0;
             newNode.UserData = default;
 
-            ++_nodeCount;
+            ++NodeCount;
 
             return nodeId;
         }
@@ -93,13 +99,13 @@ namespace ST.Mono
         private void FreeNode(int nodeId)
         {
             Debug.Assert(0 <= nodeId && nodeId < _nodeCapacity);
-            Debug.Assert(0 < _nodeCount);
+            Debug.Assert(0 < NodeCount);
             ref TreeNode freeNode = ref _treeNodes[nodeId];
             
             freeNode.Next = _freeList;
             freeNode.Height = -1;
             _freeList = nodeId;
-            --_nodeCount;
+            --NodeCount;
         }
 
         /// Create a proxy. Provide a tight fitting AABB and a userData pointer.
@@ -309,7 +315,7 @@ namespace ST.Mono
 
             Debug.Assert(GetHeight() == ComputeHeight());
 
-            Debug.Assert(_nodeCount + freeCount == _nodeCapacity);
+            Debug.Assert(NodeCount + freeCount == _nodeCapacity);
         }
 
         /// <summary>
@@ -370,7 +376,7 @@ namespace ST.Mono
         /// </summary>
         public void RebuildBottomUp()
         {
-            int[] nodes = new int[_nodeCount];
+            int[] nodes = new int[NodeCount];
             int count = 0;
 
             // Build array of leaves. Free the rest.

@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using ST.Mono;
 using TrueSync;
 
 namespace ET
@@ -14,14 +15,14 @@ namespace ET
 
         }
 
-        public static void AddTarget(this LSTargetsComponent self, TeamType teamType, LSUnit lsUnit)
-        {self.LSRoom()?.ProcessLog.LogFunction(26, self.LSParent().Id, lsUnit.Id);
-            if (!self.TeamLSUnitsMap.TryGetValue(teamType, out List<EntityRef<LSUnit>> lsUnits))
+        public static DynamicTree<long> GetTargetsTree(this LSTargetsComponent self, TeamType teamType)
+        {self.LSRoom()?.ProcessLog.LogFunction(26, self.LSParent().Id);
+            if (!self.TeamLSUnitsMap.TryGetValue(teamType, out var targets))
             {
-                lsUnits = new List<EntityRef<LSUnit>>();
-                self.TeamLSUnitsMap[teamType] = lsUnits;
+                targets = new DynamicTree<long>(32);
+                self.TeamLSUnitsMap[teamType] = targets;
             }
-            lsUnits.Add(lsUnit);
+            return targets;
         }
         
         public static void GetAttackTargetsWithShape(this LSTargetsComponent self, TeamType teamFlag, TbSearchRow res, TSVector center, TSVector forward, TSVector up, FP range, List<SearchUnit> results)
@@ -74,18 +75,19 @@ namespace ET
         {
             if (self.TeamLSUnitsMap.TryGetValue(teamFlag, out var targets))
             {
-                for(int i = targets.Count - 1; i >= 0; i--)
+                TSVector extents = new TSVector(range, range, range) * FP.Half;
+                AABB searchAABB = new AABB(center - extents, center + extents);
+                foreach(var node in targets.Query(searchAABB))
                 {
-                    LSUnit target = targets[i];
+                    LSUnit target = self.LSUnit(node.UserData);
                     if (target == null || target.DeadMark > 0) {
-                        targets.RemoveAt(i);
                         continue;
                     }
                     if (!target.GetComponent<TypeComponent>().IsType(res.Type)) {
                         continue;
                     }
                     FP range2 = range + target.GetComponent<PropComponent>().Radius;
-                    TSVector dir = (target.GetComponent<TransformComponent>().Position - center).IgnoreY();
+                    TSVector dir = target.GetComponent<TransformComponent>().Position - center;
                     FP distance = dir.sqrMagnitude;
                     if (range2 * range2 >= distance) {
                         results.Add(new SearchUnit() { Target = target, SqrDistance = distance });
@@ -98,18 +100,19 @@ namespace ET
         {
             if (self.TeamLSUnitsMap.TryGetValue(teamFlag, out var targets))
             {
-                for(int i = targets.Count - 1; i >= 0; i--)
+                TSVector extents = new TSVector(range, range, range) * FP.Half;
+                AABB searchAABB = new AABB(center - extents, center + extents);
+                foreach(var node in targets.Query(searchAABB))
                 {
-                    LSUnit target = targets[i];
+                    LSUnit target = self.LSUnit(node.UserData);
                     if (target == null || target.DeadMark > 0) {
-                        targets.RemoveAt(i);
                         continue;
                     }
                     if (!target.GetComponent<TypeComponent>().IsType(res.Type)) {
                         continue;
                     }
                     FP range2 = range + target.GetComponent<PropComponent>().Radius;
-                    TSVector dir = (target.GetComponent<TransformComponent>().Position - center).IgnoreY();
+                    TSVector dir = target.GetComponent<TransformComponent>().Position - center;
                     FP distance = dir.sqrMagnitude;
                     if (range2 * range2 >= distance)
                     {
@@ -126,17 +129,18 @@ namespace ET
         {
             if (self.TeamLSUnitsMap.TryGetValue(teamFlag, out var targets))
             {
-                for(int i = targets.Count - 1; i >= 0; i--)
+                TSVector extents = new TSVector(halfWidth, FP.Half, halfHeight);
+                AABB searchAABB = new AABB(center - extents, center + extents);
+                foreach(var node in targets.Query(searchAABB))
                 {
-                    LSUnit target = targets[i];
+                    LSUnit target = self.LSUnit(node.UserData);
                     if (target == null || target.DeadMark > 0) {
-                        targets.RemoveAt(i);
                         continue;
                     }
                     if (!target.GetComponent<TypeComponent>().IsType(res.Type)) {
                         continue;
                     }
-                    TSVector dir = (target.GetComponent<TransformComponent>().Position - center).IgnoreY();
+                    TSVector dir = target.GetComponent<TransformComponent>().Position - center;
                     if (FP.Abs(dir.x) <= halfWidth && FP.Abs(dir.z) <= halfHeight) {
                         results.Add(new SearchUnit() { Target = target, SqrDistance = dir.sqrMagnitude});
                     }
@@ -148,22 +152,21 @@ namespace ET
         {
             if (self.TeamLSUnitsMap.TryGetValue(teamFlag, out var targets))
             {
-                FP halfWidth2 = halfHeight;
-                FP halfHeight2 = halfWidth;
-                for(int i = targets.Count - 1; i >= 0; i--)
+                TSVector extents = new TSVector(TSMath.Max(halfWidth, halfHeight), FP.Half, TSMath.Max(halfHeight, halfWidth));
+                AABB searchAABB = new AABB(center - extents, center + extents);
+                foreach(var node in targets.Query(searchAABB))
                 {
-                    LSUnit target = targets[i];
+                    LSUnit target = self.LSUnit(node.UserData);
                     if (target == null || target.DeadMark > 0) {
-                        targets.RemoveAt(i);
                         continue;
                     }
                     if (!target.GetComponent<TypeComponent>().IsType(res.Type)) {
                         continue;
                     }
-                    TSVector dir = (target.GetComponent<TransformComponent>().Position - center).IgnoreY();
+                    TSVector dir = target.GetComponent<TransformComponent>().Position - center;
                     TSVector absDir = TSVector.Abs(dir);
                     if ((absDir.x <= halfWidth && absDir.z <= halfHeight) ||
-                        (absDir.x <= halfWidth2 && absDir.z <= halfHeight2)) {
+                        (absDir.x <= halfHeight && absDir.z <= halfWidth)) {
                         results.Add(new SearchUnit() { Target = target, SqrDistance = dir.sqrMagnitude });
                     }
                 }
@@ -175,17 +178,23 @@ namespace ET
             if (self.TeamLSUnitsMap.TryGetValue(teamFlag, out var targets))
             {
                 TSVector right = TSVector.Cross(up, forward).normalized;
-                for(int i = targets.Count - 1; i >= 0; i--)
+                TSVector p0 = center - right * halfWidth;
+                TSVector p1 = center + right * halfWidth;
+                TSVector p2 = center - right * halfWidth + forward * height;
+                TSVector p3 = center + right * halfWidth + forward * height;
+                TSVector min = TSVector.Min(TSVector.Min(p0, p1), TSVector.Min(p2, p3));
+                TSVector max = TSVector.Max(TSVector.Max(p0, p1), TSVector.Max(p2, p3));
+                AABB searchAABB = new AABB(new TSVector(min.x, -FP.One, min.z), new TSVector(max.x, FP.One, max.z) );
+                foreach(var node in targets.Query(searchAABB))
                 {
-                    LSUnit target = targets[i];
+                    LSUnit target = self.LSUnit(node.UserData);
                     if (target == null || target.DeadMark > 0) {
-                        targets.RemoveAt(i);
                         continue;
                     }
                     if (!target.GetComponent<TypeComponent>().IsType(res.Type)) {
                         continue;
                     }
-                    TSVector dir = (target.GetComponent<TransformComponent>().Position - center).IgnoreY();
+                    TSVector dir = target.GetComponent<TransformComponent>().Position - center;
                     FP forwardDist = TSVector.Dot(forward, dir);
                     FP rightDist = TSVector.Dot(right, dir);
                     if (FP.Abs(rightDist) <= halfWidth && forwardDist >= 0 && forwardDist <= height) {
@@ -198,7 +207,7 @@ namespace ET
         public static int GetAliveCount(this LSTargetsComponent self, TeamType teamFlag)
         {
             if (self.TeamLSUnitsMap.TryGetValue(teamFlag, out var targets))
-                return targets.Count;
+                return targets.NodeCount;
             return 0;
         }
 
@@ -206,11 +215,11 @@ namespace ET
         {
             if (self.TeamLSUnitsMap.TryGetValue(teamFlag, out var targets))
             {
-                for(int i = targets.Count - 1; i >= 0; i--)
+                AABB searchAABB = new AABB(bounds.min, bounds.max);
+                foreach(var node in targets.Query(searchAABB))
                 {
-                    LSUnit target = targets[i];
+                    LSUnit target = self.LSUnit(node.UserData);
                     if (target == null || target.DeadMark > 0) {
-                        targets.RemoveAt(i);
                         continue;
                     }
                     if (!target.GetComponent<TypeComponent>().IsType(type))

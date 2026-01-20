@@ -12,9 +12,6 @@ namespace ET
         private static void Awake(this BeHitComponent self)
         {self.LSRoom()?.ProcessLog.LogFunction(59, self.LSParent().Id);
             self.Attackers = new List<long>();
-            LSTargetsComponent component = self.LSWorld().GetComponent<LSTargetsComponent>();
-            TeamType teamType = self.LSOwner().GetComponent<TeamComponent>().Type;
-            component.AddTarget(teamType, self.LSOwner());
         }
         
         [EntitySystem]
@@ -22,15 +19,7 @@ namespace ET
         {self.LSRoom()?.ProcessLog.LogFunction(58, self.LSParent().Id);
             self.Attackers.Clear();
         }
-        
-        [EntitySystem]
-        private static void Deserialize(this BeHitComponent self)
-        {
-            LSTargetsComponent component = self.LSWorld().GetComponent<LSTargetsComponent>();
-            TeamType teamType = self.LSOwner().GetComponent<TeamComponent>().Type;
-            component.AddTarget(teamType, self.LSOwner());
-        }
-        
+
         public static void BeHealing(this BeHitComponent self, LSUnit attacker, FP value)
         {self.LSRoom()?.ProcessLog.LogFunction(57, self.LSParent().Id, attacker.Id, value.V);
             if (self.LSOwner().DeadMark > 0) { return; }

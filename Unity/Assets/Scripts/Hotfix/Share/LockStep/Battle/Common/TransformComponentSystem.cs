@@ -1,3 +1,4 @@
+using ST.Mono;
 using TrueSync;
 
 namespace ET
@@ -24,27 +25,6 @@ namespace ET
             else if (self.IsMovingPrevious) {
                 self.SetMoving(false);
             }
-        }
-        
-        public static void Move(this TransformComponent self, TSVector2 forward)
-        {self.LSRoom()?.ProcessLog.LogFunction(92, self.LSParent().Id, forward.x.V, forward.y.V);
-            if (forward.sqrMagnitude < FP.EN4) {
-                self.SetMoving(false);
-                return;
-            }
-            FlagComponent flagComponent = self.LSOwner().GetComponent<FlagComponent>();
-            if (flagComponent.HasRestrict(FlagRestrict.NotMove)) {
-                self.SetMoving(false);
-                return;
-            }
-            
-            self.SetForward(new TSVector(forward.x, 0, forward.y));
-            self.SetMoving(true);
-            
-            PropComponent propComponent = self.LSOwner().GetComponent<PropComponent>();
-            self.RVO2PrefVelocity = forward.normalized * propComponent.Get(NumericType.Speed);
-            LSRVO2Component rvo2Component = self.LSWorld().GetComponent<LSRVO2Component>();
-            rvo2Component.setAgentPrefVelocity(self.LSOwner(), self.RVO2PrefVelocity);
         }
         
         public static void RVOMove(this TransformComponent self, TSVector2 forward)
@@ -109,7 +89,14 @@ namespace ET
         
         public static TSVector GetAttachPoint(this TransformComponent self, AttachPoint attachPoint)
         {
-            return self.Position + self.Rotation * new TSVector(0, FP.Ratio(15, 10), 0);
+            switch (attachPoint)
+            {
+                case AttachPoint.Head:
+                    return self.Position + self.Rotation * new TSVector(0, FP.One, 0);
+                case AttachPoint.Chest:
+                    return self.Position + self.Rotation * new TSVector(0, FP.Half, 0);
+            }
+            return self.Position;
         }
         
         public static TSVector TransformDirection(this TransformComponent self, TSVector position)
@@ -135,6 +122,13 @@ namespace ET
             }
             TSVector position = lsTarget.GetComponent<TransformComponent>().Position;
             self.SetForward((position - self.Position).IgnoreY());
+        }
+
+        public static AABB GetAABB(this TransformComponent self)
+        {
+            // 定义碰撞盒为0.5 没必要考虑旋转和缩放 若有大体积单位可以乘一个系数
+            TSVector extent = TSVector.one * FP.Ratio(25, 100);
+            return new AABB(self.Position - extent, self.Position + extent);
         }
     }
 }
