@@ -20,21 +20,26 @@ namespace ET
         private static void LSUpdate(this DeathComponent self)
         {self.LSRoom()?.ProcessLog.LogFunction(61, self.LSParent().Id);
             LSUnit lsUnit = self.LSOwner();
+            if (lsUnit.DeadMark == 3)
+                return;
+            
+            SkillComponent skillComponent = lsUnit.GetComponent<SkillComponent>();
             if (lsUnit.DeadMark == 1)
             {
-                // 血量归零触发死亡技能
-                SkillComponent skillComponent = lsUnit.GetComponent<SkillComponent>();
-                if (skillComponent != null) {
+                if (skillComponent == null) {
+                    self.DoDeathReal();
+                    lsUnit.DeadMark = 3;
+                }
+                else
+                {
                     skillComponent.ForceAllDone();
                     skillComponent.TryCastSkill(ESkillType.Dead);
+                    lsUnit.DeadMark = 2;
                 }
-                lsUnit.DeadMark = 2;
             }
-
-            if (lsUnit.DeadMark == 2)
+            else if (lsUnit.DeadMark == 2)
             {
-                SkillComponent skillComponent = lsUnit.GetComponent<SkillComponent>();
-                if (skillComponent != null && skillComponent.HasRunningSkill())
+                if (skillComponent.HasRunningSkill())
                     return;
                 self.DoDeathReal();
                 lsUnit.DeadMark = 3;
