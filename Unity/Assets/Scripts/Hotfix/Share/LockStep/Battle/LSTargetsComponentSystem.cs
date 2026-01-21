@@ -75,7 +75,7 @@ namespace ET
         {
             if (self.TeamLSUnitsMap.TryGetValue(teamFlag, out var targets))
             {
-                TSVector extents = new TSVector(range, range, range) * FP.Half;
+                TSVector extents = new TSVector(range, range, range);
                 AABB searchAABB = new AABB(center - extents, center + extents);
                 foreach(var node in targets.Query(searchAABB))
                 {
@@ -100,7 +100,7 @@ namespace ET
         {
             if (self.TeamLSUnitsMap.TryGetValue(teamFlag, out var targets))
             {
-                TSVector extents = new TSVector(range, range, range) * FP.Half;
+                TSVector extents = new TSVector(range, range, range);
                 AABB searchAABB = new AABB(center - extents, center + extents);
                 foreach(var node in targets.Query(searchAABB))
                 {
