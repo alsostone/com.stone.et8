@@ -19,6 +19,13 @@ namespace ET
             self.PreviousPosition = transformComponent.Position;
         }
         
+        // [EntitySystem]
+        // private static void Deserialize(this TargetableComponent self)
+        // {
+        //     // 若在此重新注册 会提高序列化性能且降低内存占用 但需重新维护与ProxyId的映射
+        //     // 故依旧采用全量序列化的方式来保持逻辑简洁
+        // }
+        
         [EntitySystem]
         private static void Destroy(this TargetableComponent self)
         {self.LSRoom()?.ProcessLog.LogFunction(174, self.LSParent().Id);

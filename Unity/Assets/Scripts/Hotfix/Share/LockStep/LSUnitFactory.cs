@@ -281,6 +281,7 @@ namespace ET
         // 创建固定朝向型子弹（波浪型）
         public static LSUnit CreateBulletToDirection(LSWorld lsWorld, int bulletId, int angle, int searchId, LSUnit caster, LSUnit target)
         {
+	        TbBulletRow row = TbBullet.Instance.Get(bulletId);
 	        LSUnitComponent lsUnitComponent = lsWorld.GetComponent<LSUnitComponent>();
 	        LSUnit lsUnit = lsUnitComponent.AddChild<LSUnit>();
 	        lsUnit.TableId = bulletId;
@@ -295,12 +296,11 @@ namespace ET
 	        List<SearchUnit> targets = ObjectPool.Instance.Fetch<List<SearchUnit>>();
 	        FP range = TargetSearcher.Search(searchId, target, thisTransform.Position, thisTransform.Forward, thisTransform.Upwards, targets);
 	        targets.Sort((x, y) => x.SqrDistance.CompareTo(y.SqrDistance));
-	        BulletComponent bulletComponent = lsUnit.AddComponent<BulletComponent, int, LSUnit, List<SearchUnit>>(bulletId, caster, targets);
+	        lsUnit.AddComponent<TrackComponent, int, int, int, FP>(row.HorSpeed, row.ControlFactor, row.ControlHeight, range);
+	        lsUnit.AddComponent<BulletComponent, int, LSUnit, List<SearchUnit>>(bulletId, caster, targets);
 	        targets.Clear();
 	        ObjectPool.Instance.Recycle(targets);
 
-	        TbBulletRow row = bulletComponent.TbBulletRow;
-	        lsUnit.AddComponent<TrackComponent, int, int, int, FP>(row.HorSpeed, row.ControlFactor, row.ControlHeight, range);
 	        EventSystem.Instance.Publish(lsWorld, new LSUnitCreate() { LSUnit = lsUnit });
 	        return lsUnit;
         }
@@ -308,6 +308,7 @@ namespace ET
         // 创建跟随目标单位的子弹
         public static LSUnit CreateBulletFollowTarget(LSWorld lsWorld, int bulletId, TSVector position, LSUnit caster, LSUnit target)
         {
+	        TbBulletRow row = TbBullet.Instance.Get(bulletId);
 	        LSUnitComponent lsUnitComponent = lsWorld.GetComponent<LSUnitComponent>();
 	        LSUnit lsUnit = lsUnitComponent.AddChild<LSUnit>();
 	        lsUnit.TableId = bulletId;
@@ -315,10 +316,10 @@ namespace ET
 	        lsUnit.AddComponent<TransformComponent, TSVector, TSQuaternion>(position, TSQuaternion.identity);
 	        lsUnit.AddComponent<TypeComponent, EUnitType>(EUnitType.Bullet);
 	        lsUnit.AddComponent<TeamComponent, TeamType>(caster.GetComponent<TeamComponent>().Type);
-	        BulletComponent bulletComponent = lsUnit.AddComponent<BulletComponent, int, LSUnit, LSUnit>(bulletId, caster, target);
-
-	        TbBulletRow row = bulletComponent.TbBulletRow;
+	        
 	        lsUnit.AddComponent<TrackComponent, int, int, int, LSUnit>(row.HorSpeed, row.ControlFactor, row.ControlHeight, target);
+	        lsUnit.AddComponent<BulletComponent, int, LSUnit, LSUnit>(bulletId, caster, target);
+
 	        EventSystem.Instance.Publish(lsWorld, new LSUnitCreate() { LSUnit = lsUnit });
 	        return lsUnit;
         }
@@ -326,6 +327,7 @@ namespace ET
         // 创建飞向固定位置的子弹
         public static LSUnit CreateBulletToPosition(LSWorld lsWorld, int bulletId, TSVector position, LSUnit caster, TSVector targetPosition)
         {
+	        TbBulletRow row = TbBullet.Instance.Get(bulletId);
 	        LSUnitComponent lsUnitComponent = lsWorld.GetComponent<LSUnitComponent>();
 	        LSUnit lsUnit = lsUnitComponent.AddChild<LSUnit>();
 	        lsUnit.TableId = bulletId;
@@ -333,10 +335,10 @@ namespace ET
 	        lsUnit.AddComponent<TransformComponent, TSVector, TSQuaternion>(position, TSQuaternion.identity);
 	        lsUnit.AddComponent<TypeComponent, EUnitType>(EUnitType.Bullet);
 	        lsUnit.AddComponent<TeamComponent, TeamType>(caster.GetComponent<TeamComponent>().Type);
-	        BulletComponent bulletComponent = lsUnit.AddComponent<BulletComponent, int, LSUnit>(bulletId, caster);
-
-	        TbBulletRow row = bulletComponent.TbBulletRow;
+	        
 	        lsUnit.AddComponent<TrackComponent, int, int, int, TSVector>(row.HorSpeed, row.ControlFactor, row.ControlHeight, targetPosition);
+	        lsUnit.AddComponent<BulletComponent, int, LSUnit>(bulletId, caster);
+
 	        EventSystem.Instance.Publish(lsWorld, new LSUnitCreate() { LSUnit = lsUnit });
 	        return lsUnit;
         }

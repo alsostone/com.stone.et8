@@ -92,9 +92,9 @@ namespace ET
             switch (attachPoint)
             {
                 case AttachPoint.Head:
-                    return self.Position + self.Rotation * new TSVector(0, FP.One, 0);
+                    return self.Position + self.Rotation * new TSVector(0, FP.One + FP.Half, 0);
                 case AttachPoint.Chest:
-                    return self.Position + self.Rotation * new TSVector(0, FP.Half, 0);
+                    return self.Position + self.Rotation * new TSVector(0, FP.One, 0);
             }
             return self.Position;
         }
