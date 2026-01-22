@@ -17,7 +17,7 @@ namespace ET
         None = 0,
 
         /// <summary>
-        /// 固定朝向
+        /// 固定朝向 用飞行距离模拟碰撞
         /// </summary>
         Direction = 1,
 
@@ -30,6 +30,11 @@ namespace ET
         /// 跟随目标
         /// </summary>
         Target = 3,
+
+        /// <summary>
+        /// 固定朝向 实时碰撞检测
+        /// </summary>
+        Direction2 = 4,
 
     }
 }

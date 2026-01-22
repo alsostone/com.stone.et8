@@ -278,25 +278,23 @@ namespace ET
 	        return lsUnit;
         }
         
-        // 创建固定朝向型子弹（波浪型）
-        public static LSUnit CreateBulletToDirection(LSWorld lsWorld, int bulletId, int angle, int searchId, LSUnit caster, LSUnit target)
+        // 创建固定朝向型子弹（波浪型）非碰撞检测（一次直线索敌，再根据距离判定命中，性能高）
+        public static LSUnit CreateBulletToDirection(LSWorld lsWorld, int bulletId, int searchId, TSVector position, TSQuaternion rotation, LSUnit caster)
         {
 	        TbBulletRow row = TbBullet.Instance.Get(bulletId);
 	        LSUnitComponent lsUnitComponent = lsWorld.GetComponent<LSUnitComponent>();
 	        LSUnit lsUnit = lsUnitComponent.AddChild<LSUnit>();
 	        lsUnit.TableId = bulletId;
 
-	        TransformComponent targetTransform = target.GetComponent<TransformComponent>();
-	        TSQuaternion rotation = TSQuaternion.FromToRotation(TSVector.up, targetTransform.Upwards) * TSQuaternion.Euler(0, angle, 0);
-	        TransformComponent thisTransform = lsUnit.AddComponent<TransformComponent, TSVector, TSQuaternion>(targetTransform.Position, rotation);
+	        TransformComponent thisTransform = lsUnit.AddComponent<TransformComponent, TSVector, TSQuaternion>(position, rotation);
 	        lsUnit.AddComponent<TypeComponent, EUnitType>(EUnitType.Bullet);
-	        lsUnit.AddComponent<TeamComponent, TeamType>(target.GetComponent<TeamComponent>().Type);
+	        lsUnit.AddComponent<TeamComponent, TeamType>(caster.GetComponent<TeamComponent>().Type);
 	        
 	        // 创建子弹时把目标搜索出来 子弹决定命中时机（通过距离判定，非碰撞检测）
 	        List<SearchUnit> targets = ObjectPool.Instance.Fetch<List<SearchUnit>>();
-	        FP range = TargetSearcher.Search(searchId, target, thisTransform.Position, thisTransform.Forward, thisTransform.Upwards, targets);
+	        FP distance = TargetSearcher.Search(searchId, caster, thisTransform.Position, thisTransform.Forward, thisTransform.Upwards, targets);
 	        targets.Sort((x, y) => x.SqrDistance.CompareTo(y.SqrDistance));
-	        lsUnit.AddComponent<TrackComponent, int, int, int, FP>(row.HorSpeed, row.ControlFactor, row.ControlHeight, range);
+	        lsUnit.AddComponent<TrackComponent, int, int, int, FP>(row.HorSpeed, row.ControlFactor, row.ControlHeight, distance);
 	        lsUnit.AddComponent<BulletComponent, int, LSUnit, List<SearchUnit>>(bulletId, caster, targets);
 	        targets.Clear();
 	        ObjectPool.Instance.Recycle(targets);
@@ -305,6 +303,47 @@ namespace ET
 	        return lsUnit;
         }
         
+        // 创建固定朝向型子弹（波浪型）碰撞检测版本
+        public static LSUnit CreateBulletToDirection2(LSWorld lsWorld, int bulletId, int searchID, TSVector position, LSUnit caster, TSVector targetPosition)
+        {
+	        TbBulletRow row = TbBullet.Instance.Get(bulletId);
+	        LSUnitComponent lsUnitComponent = lsWorld.GetComponent<LSUnitComponent>();
+	        LSUnit lsUnit = lsUnitComponent.AddChild<LSUnit>();
+	        lsUnit.TableId = bulletId;
+
+	        TSQuaternion rotation = TSQuaternion.LookRotation(targetPosition - position, caster.GetComponent<TransformComponent>().Upwards);
+	        lsUnit.AddComponent<TransformComponent, TSVector, TSQuaternion>(position, rotation);
+	        lsUnit.AddComponent<TypeComponent, EUnitType>(EUnitType.Bullet);
+	        lsUnit.AddComponent<TeamComponent, TeamType>(caster.GetComponent<TeamComponent>().Type);
+	        
+	        lsUnit.AddComponent<TrackComponent, int, int, int, TSVector>(row.HorSpeed, row.ControlFactor, row.ControlHeight, targetPosition);
+	        lsUnit.AddComponent<CollisionComponent, int, int>(searchID, 2);
+	        lsUnit.AddComponent<BulletComponent, ETrackTowardType, int, LSUnit>(ETrackTowardType.Direction2, bulletId, caster);
+
+	        EventSystem.Instance.Publish(lsWorld, new LSUnitCreate() { LSUnit = lsUnit });
+	        return lsUnit;
+        }
+        
+        // 创建固定朝向型子弹（波浪型）碰撞检测版本
+        public static LSUnit CreateBulletToDirection2(LSWorld lsWorld, int bulletId, int searchID, TSVector position, TSQuaternion rotation, LSUnit caster, FP distance)
+        {
+	        TbBulletRow row = TbBullet.Instance.Get(bulletId);
+	        LSUnitComponent lsUnitComponent = lsWorld.GetComponent<LSUnitComponent>();
+	        LSUnit lsUnit = lsUnitComponent.AddChild<LSUnit>();
+	        lsUnit.TableId = bulletId;
+
+	        lsUnit.AddComponent<TransformComponent, TSVector, TSQuaternion>(position, rotation);
+	        lsUnit.AddComponent<TypeComponent, EUnitType>(EUnitType.Bullet);
+	        lsUnit.AddComponent<TeamComponent, TeamType>(caster.GetComponent<TeamComponent>().Type);
+	        
+	        lsUnit.AddComponent<TrackComponent, int, int, int, FP>(row.HorSpeed, row.ControlFactor, row.ControlHeight, distance);
+	        lsUnit.AddComponent<CollisionComponent, int, int>(searchID, 2);
+	        lsUnit.AddComponent<BulletComponent, ETrackTowardType, int, LSUnit>(ETrackTowardType.Direction2, bulletId, caster);
+
+	        EventSystem.Instance.Publish(lsWorld, new LSUnitCreate() { LSUnit = lsUnit });
+	        return lsUnit;
+        }
+
         // 创建跟随目标单位的子弹
         public static LSUnit CreateBulletFollowTarget(LSWorld lsWorld, int bulletId, TSVector position, LSUnit caster, LSUnit target)
         {
@@ -337,7 +376,7 @@ namespace ET
 	        lsUnit.AddComponent<TeamComponent, TeamType>(caster.GetComponent<TeamComponent>().Type);
 	        
 	        lsUnit.AddComponent<TrackComponent, int, int, int, TSVector>(row.HorSpeed, row.ControlFactor, row.ControlHeight, targetPosition);
-	        lsUnit.AddComponent<BulletComponent, int, LSUnit>(bulletId, caster);
+	        lsUnit.AddComponent<BulletComponent, ETrackTowardType, int, LSUnit>(ETrackTowardType.Position, bulletId, caster);
 
 	        EventSystem.Instance.Publish(lsWorld, new LSUnitCreate() { LSUnit = lsUnit });
 	        return lsUnit;

@@ -97,9 +97,14 @@ namespace ET
         AddBulletPosition = 18,
 
         /// <summary>
-        /// 朝指定的方向发射子弹
+        /// 朝指定的方向发射子弹。一次直线索敌再根据距离判定命中 适用于飞行速度快的子弹
         /// </summary>
         AddBulletDirection = 19,
+
+        /// <summary>
+        /// 朝指定的方向发射子弹。实时碰撞检测，适用于飞行速度慢的子弹
+        /// </summary>
+        AddBulletDirection2 = 20,
 
     }
 }

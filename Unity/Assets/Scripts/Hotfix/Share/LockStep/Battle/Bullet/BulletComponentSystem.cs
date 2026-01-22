@@ -38,12 +38,12 @@ namespace ET
         }
 
         [EntitySystem]
-        private static void Awake(this BulletComponent self, int bulletId, LSUnit caster)
+        private static void Awake(this BulletComponent self, ETrackTowardType towardType , int bulletId, LSUnit caster)
         {self.LSRoom()?.ProcessLog.LogFunction(166, self.LSParent().Id, bulletId, caster.Id);
             self.BulletId = bulletId;
             self.EndTime = self.LSWorld().ElapsedTime + self.TbBulletRow.Life * FP.EN3;
             self.Caster = caster.Id;
-            self.TowardType = ETrackTowardType.Position;
+            self.TowardType = towardType;
         }
 
         [LSEntitySystem]
@@ -78,11 +78,6 @@ namespace ET
                     self.HitSearchIndex++;
                 }
             }
-        }
-        
-        [EntitySystem]
-        private static void Destroy(this BulletComponent self)
-        {
         }
         
         private static void OnReachTarget(this BulletComponent self, bool reach)

@@ -7,7 +7,7 @@ namespace ET
 {
     [ComponentOf(typeof(LSUnit))]
     [MemoryPackable]
-    public partial class BulletComponent : LSEntity, IAwake<int, LSUnit, List<SearchUnit>>, IAwake<int, LSUnit, LSUnit>, IAwake<int, LSUnit>, ILSUpdate, IDestroy, ISerializeToEntity
+    public partial class BulletComponent : LSEntity, IAwake<int, LSUnit, List<SearchUnit>>, IAwake<int, LSUnit, LSUnit>, IAwake<ETrackTowardType, int, LSUnit>, ILSUpdate, ISerializeToEntity
     {
         public int BulletId;
         public long Caster;
