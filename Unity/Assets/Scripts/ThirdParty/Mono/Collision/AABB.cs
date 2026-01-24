@@ -72,7 +72,67 @@ namespace ST.Mono
                     && LowerBound.y <= aabb.UpperBound.y && UpperBound.y >= aabb.LowerBound.y 
                     && LowerBound.z <= aabb.UpperBound.z && UpperBound.z >= aabb.LowerBound.z;
         }
-        
+
+        // tmin为负表示起点在盒子内
+        public bool RayCast(TSVector p1, TSVector p2, out FP tmin)
+        {
+            tmin = FP.MinValue;
+            FP tmax = FP.MaxValue;
+            TSVector dir = p2 - p1;
+            
+            if (FP.Abs(dir.x) < FP.Epsilon) {
+                if (p1.x < LowerBound.x || p1.x > UpperBound.x) {
+                    return false;
+                }
+            } else {
+                FP ood = FP.One / dir.x;
+                FP t1 = (LowerBound.x - p1.x) * ood;
+                FP t2 = (UpperBound.x - p1.x) * ood;
+                
+                if (t1 > t2) (t1, t2) = (t2, t1);
+                if (t1 > tmin) tmin = t1;
+                if (t2 < tmax) tmax = t2;
+
+                if (tmin > tmax)
+                    return false;
+            }
+            
+            if (FP.Abs(dir.y) < FP.Epsilon) {
+                if (p1.y < LowerBound.y || p1.y > UpperBound.y) {
+                    return false;
+                }
+            } else {
+                FP ood = FP.One / dir.y;
+                FP t1 = (LowerBound.y - p1.y) * ood;
+                FP t2 = (UpperBound.y - p1.y) * ood;
+                
+                if (t1 > t2) (t1, t2) = (t2, t1);
+                if (t1 > tmin) tmin = t1;
+                if (t2 < tmax) tmax = t2;
+
+                if (tmin > tmax)
+                    return false;
+            }
+            
+            if (FP.Abs(dir.z) < FP.Epsilon) {
+                if (p1.z < LowerBound.z || p1.z > UpperBound.z) {
+                    return false;
+                }
+            } else {
+                FP ood = FP.One / dir.z;
+                FP t1 = (LowerBound.z - p1.z) * ood;
+                FP t2 = (UpperBound.z - p1.z) * ood;
+                
+                if (t1 > t2) (t1, t2) = (t2, t1);
+                if (t1 > tmin) tmin = t1;
+                if (t2 < tmax) tmax = t2;
+
+                if (tmin > tmax)
+                    return false;
+            }
+
+            return true;
+        }
 
     }
 }
