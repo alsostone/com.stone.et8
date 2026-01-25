@@ -77,14 +77,14 @@ namespace ET
             {
                 TSVector extents = new TSVector(range, range, range);
                 AABB searchAABB = new AABB(center - extents, center + extents);
-                foreach(var node in targets.Query(searchAABB))
+                targets.Query(searchAABB, node =>
                 {
                     LSUnit target = self.LSUnit(node.UserData);
                     if (target == null || target.DeadMark > 0) {
-                        continue;
+                        return;
                     }
                     if (!target.GetComponent<TypeComponent>().IsType(res.Type)) {
-                        continue;
+                        return;
                     }
                     FP range2 = range + target.GetComponent<PropComponent>().Radius;
                     TSVector dir = target.GetComponent<TransformComponent>().Position - center;
@@ -92,7 +92,7 @@ namespace ET
                     if (range2 * range2 >= distance) {
                         results.Add(new SearchUnit() { Target = target, SqrDistance = distance });
                     }
-                }
+                });
             }
         }
         
@@ -102,14 +102,14 @@ namespace ET
             {
                 TSVector extents = new TSVector(range, range, range);
                 AABB searchAABB = new AABB(center - extents, center + extents);
-                foreach(var node in targets.Query(searchAABB))
+                targets.Query(searchAABB, node =>
                 {
                     LSUnit target = self.LSUnit(node.UserData);
                     if (target == null || target.DeadMark > 0) {
-                        continue;
+                        return;
                     }
                     if (!target.GetComponent<TypeComponent>().IsType(res.Type)) {
-                        continue;
+                        return;
                     }
                     FP range2 = range + target.GetComponent<PropComponent>().Radius;
                     TSVector dir = target.GetComponent<TransformComponent>().Position - center;
@@ -121,7 +121,7 @@ namespace ET
                             results.Add(new SearchUnit() { Target = target, SqrDistance = distance });
                         }
                     }
-                }
+                });
             }
         }
         
@@ -131,20 +131,20 @@ namespace ET
             {
                 TSVector extents = new TSVector(halfWidth, FP.Half, halfHeight);
                 AABB searchAABB = new AABB(center - extents, center + extents);
-                foreach(var node in targets.Query(searchAABB))
+                targets.Query(searchAABB, node =>
                 {
                     LSUnit target = self.LSUnit(node.UserData);
                     if (target == null || target.DeadMark > 0) {
-                        continue;
+                        return;
                     }
                     if (!target.GetComponent<TypeComponent>().IsType(res.Type)) {
-                        continue;
+                        return;
                     }
                     TSVector dir = target.GetComponent<TransformComponent>().Position - center;
                     if (FP.Abs(dir.x) <= halfWidth && FP.Abs(dir.z) <= halfHeight) {
                         results.Add(new SearchUnit() { Target = target, SqrDistance = dir.sqrMagnitude});
                     }
-                }
+                });
             }
         }
         
@@ -154,14 +154,14 @@ namespace ET
             {
                 TSVector extents = new TSVector(TSMath.Max(halfWidth, halfHeight), FP.Half, TSMath.Max(halfHeight, halfWidth));
                 AABB searchAABB = new AABB(center - extents, center + extents);
-                foreach(var node in targets.Query(searchAABB))
+                targets.Query(searchAABB, node =>
                 {
                     LSUnit target = self.LSUnit(node.UserData);
                     if (target == null || target.DeadMark > 0) {
-                        continue;
+                        return;
                     }
                     if (!target.GetComponent<TypeComponent>().IsType(res.Type)) {
-                        continue;
+                        return;
                     }
                     TSVector dir = target.GetComponent<TransformComponent>().Position - center;
                     TSVector absDir = TSVector.Abs(dir);
@@ -169,7 +169,7 @@ namespace ET
                         (absDir.x <= halfHeight && absDir.z <= halfWidth)) {
                         results.Add(new SearchUnit() { Target = target, SqrDistance = dir.sqrMagnitude });
                     }
-                }
+                });
             }
         }
         
@@ -185,14 +185,14 @@ namespace ET
                 TSVector min = TSVector.Min(TSVector.Min(p0, p1), TSVector.Min(p2, p3));
                 TSVector max = TSVector.Max(TSVector.Max(p0, p1), TSVector.Max(p2, p3));
                 AABB searchAABB = new AABB(new TSVector(min.x, -FP.One, min.z), new TSVector(max.x, FP.One, max.z) );
-                foreach(var node in targets.Query(searchAABB))
+                targets.Query(searchAABB, node =>
                 {
                     LSUnit target = self.LSUnit(node.UserData);
                     if (target == null || target.DeadMark > 0) {
-                        continue;
+                        return;
                     }
                     if (!target.GetComponent<TypeComponent>().IsType(res.Type)) {
-                        continue;
+                        return;
                     }
                     TSVector dir = target.GetComponent<TransformComponent>().Position - center;
                     FP forwardDist = TSVector.Dot(forward, dir);
@@ -200,7 +200,7 @@ namespace ET
                     if (FP.Abs(rightDist) <= halfWidth && forwardDist >= 0 && forwardDist <= height) {
                         results.Add(new SearchUnit() { Target = target, SqrDistance = dir.sqrMagnitude });
                     }
-                }
+                });
             }
         }
 
@@ -216,21 +216,22 @@ namespace ET
             if (self.TeamLSUnitsMap.TryGetValue(teamFlag, out var targets))
             {
                 AABB searchAABB = new AABB(bounds.min, bounds.max);
-                foreach(var node in targets.Query(searchAABB))
+                targets.Query(searchAABB, node =>
                 {
                     LSUnit target = self.LSUnit(node.UserData);
                     if (target == null || target.DeadMark > 0) {
-                        continue;
+                        return;
                     }
-                    if (!target.GetComponent<TypeComponent>().IsType(type))
-                        continue;
+                    if (!target.GetComponent<TypeComponent>().IsType(type)) {
+                        return;
+                    }
                     TSVector point = target.GetComponent<TransformComponent>().Position;
                     TSVector min = bounds.min;
                     TSVector max = bounds.max;
                     if (min.x <= point.x && max.x >= point.x && min.z <= point.z && max.z >= point.z) {
                         results.Add(target.Id);
                     }
-                }
+                });
             }
         }
         

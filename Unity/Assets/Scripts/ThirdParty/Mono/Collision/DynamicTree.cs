@@ -20,6 +20,7 @@ namespace ST.Mono
         [MemoryPackInclude] private int _freeList;
 
         private readonly Stack<int> _queryStack = new Stack<int>(128);
+        private readonly Stack<(int, int)> _queryStackAll = new Stack<(int, int)>(128);
 
         [MemoryPackConstructor]
         private DynamicTree()
@@ -225,29 +226,32 @@ namespace ST.Mono
         /// <summary>
         /// Enumerate over all leaf nodes which are fully or partially within the given bounds.
         /// </summary>
-        public IEnumerable<TreeNode> Query(AABB aabb)
+        public void Query(AABB aabb, Action<TreeNode> callback)
         {
+            if (_root == NULL_NODE)
+                return;
+
             _queryStack.Clear();
             _queryStack.Push(_root);
 
             while (_queryStack.Count > 0)
             {
                 int nodeId = _queryStack.Pop();
-
-                if (nodeId == NULL_NODE)
+                ref TreeNode node = ref _treeNodes[nodeId];
+                if (!node.AABB.Intersects(aabb))
                     continue;
-
-                if (_treeNodes[nodeId].AABB.Intersects(aabb))
+                
+                if (node.IsLeaf)
                 {
-                    if (_treeNodes[nodeId].IsLeaf)
-                    {
-                        yield return _treeNodes[nodeId];
-                    }
-                    else
-                    {
-                        _queryStack.Push(_treeNodes[nodeId].Child1);
-                        _queryStack.Push(_treeNodes[nodeId].Child2);
-                    }
+                    callback(node);
+                }
+                else
+                {
+                    int child1 = node.Child1;
+                    int child2 = node.Child2;
+                    
+                    if (child1 != NULL_NODE) _queryStack.Push(child1);
+                    if (child2 != NULL_NODE) _queryStack.Push(child2);
                 }
             }
         }
@@ -255,47 +259,80 @@ namespace ST.Mono
         /// <summary>
         /// Enumerate all nodes, both leaf and internal, and return both the nodes themselves and their depth in the tree.
         /// </summary>
-        public IEnumerable<(TreeNode, int)> EnumerateNodes()
+        public void QueryAll(Action<TreeNode, int> callback)
         {
             if (_root == NULL_NODE)
-                yield break;
+                return;
+    
+            _queryStackAll.Clear();
+            _queryStackAll.Push((_root, 0));
+    
+            while (_queryStackAll.Count > 0)
+            {
+                (int nodeId, int depth) = _queryStackAll.Pop();
+                ref TreeNode node = ref _treeNodes[nodeId];
+                callback(node, depth);
+                
+                if (!node.IsLeaf)
+                {
+                    int child1 = node.Child1;
+                    int child2 = node.Child2;
             
-            foreach ((TreeNode, int) node in EnumerateNodes(_root, 0))
-            {
-                yield return node;
-            }
-        }
-
-        private IEnumerable<(TreeNode, int)> EnumerateNodes(int startPoint, int currentDepth)
-        {
-            Debug.Assert(0 <= startPoint && startPoint < _nodeCapacity);
-            Debug.Assert(startPoint != NULL_NODE);
-
-            TreeNode treeNode = _treeNodes[startPoint];
-            yield return (treeNode, currentDepth);
-
-            if (!treeNode.IsLeaf)
-            {
-                int child1 = treeNode.Child1;
-                if (child1 != NULL_NODE)
-                {
-                    foreach ((TreeNode, int) child1Node in EnumerateNodes(child1, currentDepth + 1))
-                    {
-                        yield return child1Node;
-                    }
-                }
-
-                int child2 = treeNode.Child2;
-                if (child2 != NULL_NODE)
-                {
-                    foreach ((TreeNode, int) child2Node in EnumerateNodes(child2, currentDepth + 1))
-                    {
-                        yield return child2Node;
-                    }
+                    if (child1 != NULL_NODE) _queryStackAll.Push((child1, depth + 1));
+                    if (child2 != NULL_NODE) _queryStackAll.Push((child2, depth + 1));
                 }
             }
         }
         
+        public void RayCast(in TSVector p1, in TSVector p2, Func<TSVector, TSVector, TreeNode, FP> callback)
+        {
+            if (_root == NULL_NODE)
+                return;
+            
+            AABB segmentAABB = new AABB
+            {
+                LowerBound = TSVector.Min(p1, p2),
+                UpperBound = TSVector.Max(p1, p2)
+            };
+
+            _queryStack.Clear();
+            _queryStack.Push(_root);
+
+            while (_queryStack.Count > 0)
+            {
+                int nodeId = _queryStack.Pop();
+                ref TreeNode node = ref _treeNodes[nodeId];
+                if (!node.AABB.Intersects(segmentAABB))
+                    continue;
+                
+                // SAT快速排除
+                if (!node.AABB.RayCast(p1, p2, out FP tmin) || tmin > FP.One)
+                    continue;
+                
+                if (node.IsLeaf)
+                {
+                    FP value = callback(p1, p2, node);
+                    if (value.Equals(FP.Zero))
+                        return;
+
+                    // 有更近的碰撞点，更新AABB范围
+                    if (value > FP.Zero) {
+                        TSVector t = p1 + value * (p2 - p1);
+                        segmentAABB.LowerBound = TSVector.Min(p1, t);
+                        segmentAABB.UpperBound = TSVector.Max(p1, t);
+                    }
+                }
+                else
+                {
+                    int child1 = node.Child1;
+                    int child2 = node.Child2;
+                    
+                    if (child1 != NULL_NODE) _queryStack.Push(child1);
+                    if (child2 != NULL_NODE) _queryStack.Push(child2);
+                }
+            }
+        }
+
         /// <summary>
         /// Validate this tree. For testing.
         /// </summary>
