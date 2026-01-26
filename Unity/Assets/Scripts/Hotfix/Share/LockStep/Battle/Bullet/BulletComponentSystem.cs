@@ -63,20 +63,15 @@ namespace ET
                 return;
             }
             
-            // 若指定的是目标组，说明是固定朝向型子弹（波浪型）
-            if (self.SearchUnits != null && self.SearchUnits.Count > 0)
+            // 固定朝向型子弹（波浪型）需要在飞行过程中检测命中目标
+            switch (self.TowardType)
             {
-                FP sqrDistance = trackComponent.ElapsedDistance * trackComponent.ElapsedDistance;
-                LSUnit caster = self.LSUnit(self.Caster);
-                
-                for (int index = self.HitSearchIndex; index < self.SearchUnits.Count; index++) {
-                    SearchUnitPackable searchUnitPackable = self.SearchUnits[index];
-                    LSUnit target = self.LSUnit(searchUnitPackable.Target);
-                    if (searchUnitPackable.SqrDistance > sqrDistance)
-                        break;
-                    EffectExecutor.Execute(self.TbBulletRow.EffectGroupId, caster, target, self.LSOwner());
-                    self.HitSearchIndex++;
-                }
+                case ETrackTowardType.Direction:
+                    self.TryCollisionTargets(false);
+                    break;
+                case ETrackTowardType.Direction2:
+                    self.TryCollisionTargets2(false);
+                    break;
             }
         }
         
@@ -84,31 +79,86 @@ namespace ET
         {self.LSRoom()?.ProcessLog.LogFunction(42, self.LSParent().Id, reach ? 1 : 0);
             LSUnit lsOwner = self.LSOwner();
             if (reach) {
-                LSUnit caster = self.LSUnit(self.Caster);
-                
-                if (self.TowardType == ETrackTowardType.Direction && self.SearchUnits != null)
+                switch (self.TowardType)
                 {
-                    for (int index = self.HitSearchIndex; index < self.SearchUnits.Count; index++)
+                    case ETrackTowardType.Direction:
+                        self.TryCollisionTargets(true);
+                        break;
+                    case ETrackTowardType.Direction2:
+                        self.TryCollisionTargets2(true);
+                        break;
+                    case ETrackTowardType.Target:
                     {
-                        SearchUnitPackable searchUnitPackable = self.SearchUnits[index];
-                        LSUnit target = self.LSUnit(searchUnitPackable.Target);
-                        EffectExecutor.Execute(self.TbBulletRow.EffectGroupId, caster, target, lsOwner);
+                        if (self.Target != 0) {
+                            LSUnit lsCaster = self.LSUnit(self.Caster);
+                            LSUnit target = self.LSUnit(self.Target);
+                            EffectExecutor.Execute(self.TbBulletRow.EffectGroupId, lsCaster, target, lsOwner);
+                        }
+                        break;
                     }
-                }
-                else if (self.TowardType == ETrackTowardType.Target && self.Target != 0)
-                {
-                    LSUnit target = self.LSUnit(self.Target);
-                    EffectExecutor.Execute(self.TbBulletRow.EffectGroupId, caster, target, lsOwner);
-                }
-                else if (self.TowardType == ETrackTowardType.Position)
-                {
-                    // 没有目标的子弹(固定位置型)用于范围伤害，必须接重新索敌效果，所以谁作为Target都可以，它不会被用到
-                    EffectExecutor.Execute(self.TbBulletRow.EffectGroupId, caster, caster, lsOwner);
+                    case ETrackTowardType.Position:
+                    {
+                        // 没有目标的子弹(固定位置型)用于范围伤害，必须接重新索敌效果，所以谁作为Target都可以，它不会被用到
+                        LSUnit lsCaster = self.LSUnit(self.Caster);
+                        EffectExecutor.Execute(self.TbBulletRow.EffectGroupId, lsCaster, lsCaster, lsOwner);
+                        break;
+                    }
                 }
             }
             LSWorld lsWorld = self.LSWorld();
             lsOwner.Dispose();
             EventSystem.Instance.Publish(lsWorld, new LSUnitRemove() { Id = lsOwner.Id });
         }
+
+        private static void TryCollisionTargets(this BulletComponent self, bool reach)
+        {
+            if (self.SearchUnits == null || self.SearchUnits.Count == 0)
+                return;
+            
+            LSUnit lsOwner = self.LSOwner();
+            LSUnit lsCaster = self.LSUnit(self.Caster);
+            if (reach)
+            {
+                for (int index = self.HitSearchIndex; index < self.SearchUnits.Count; index++) {
+                    SearchUnitPackable searchUnitPackable = self.SearchUnits[index];
+                    LSUnit target = self.LSUnit(searchUnitPackable.Target);
+                    EffectExecutor.Execute(self.TbBulletRow.EffectGroupId, lsCaster, target, lsOwner);
+                }
+            }
+            else
+            {
+                TrackComponent trackComponent = lsOwner.GetComponent<TrackComponent>();
+                FP sqrDistance = trackComponent.ElapsedDistance * trackComponent.ElapsedDistance;
+                
+                for (int index = self.HitSearchIndex; index < self.SearchUnits.Count; index++) {
+                    SearchUnitPackable searchUnitPackable = self.SearchUnits[index];
+                    LSUnit target = self.LSUnit(searchUnitPackable.Target);
+                    if (searchUnitPackable.SqrDistance > sqrDistance)
+                        break;
+                    EffectExecutor.Execute(self.TbBulletRow.EffectGroupId, lsCaster, target, lsOwner);
+                    self.HitSearchIndex++;
+                }
+            }
+        }
+
+        private static void TryCollisionTargets2(this BulletComponent self, bool reach)
+        {
+            LSUnit lsOwner = self.LSOwner();
+            List<SearchUnit> targets = ObjectPool.Instance.Fetch<List<SearchUnit>>();
+            CollisionComponent collisionComponent = lsOwner.GetComponent<CollisionComponent>();
+            collisionComponent.GetCollisionTargets(targets, reach);
+            if (targets.Count > 0)
+            {
+                LSUnit lsCaster = self.LSUnit(self.Caster);
+                foreach (SearchUnit searchUnit in targets)
+                {
+                    LSUnit target = searchUnit.Target;
+                    EffectExecutor.Execute(self.TbBulletRow.EffectGroupId, lsCaster, target, lsOwner);
+                }
+            }
+            targets.Clear();
+            ObjectPool.Instance.Recycle(targets);
+        }
+        
     }
 }

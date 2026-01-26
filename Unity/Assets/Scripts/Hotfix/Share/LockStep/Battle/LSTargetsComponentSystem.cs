@@ -204,6 +204,27 @@ namespace ET
             }
         }
 
+        public static void GetAttackTargetsWithSegment(this LSTargetsComponent self, TeamType teamFlag, EUnitType type, TSVector p1, TSVector p2, List<SearchUnit> results)
+        {
+            if (self.TeamLSUnitsMap.TryGetValue(teamFlag, out var targets))
+            {
+                targets.RayCast(p1, p2, (p11, p22, node) =>
+                {
+                    LSUnit target = self.LSUnit(node.UserData);
+                    if (target == null || target.DeadMark > 0) {
+                        return FP.One;
+                    }
+                    if (!target.GetComponent<TypeComponent>().IsType(type)) {
+                        return FP.One;
+                    }
+                    // 没有复杂碰撞体时，不需要精确碰撞检测，AABB被命中就认为命中
+                    TSVector dir = target.GetComponent<TransformComponent>().Position - p1;
+                    results.Add(new SearchUnit() { Target = target, SqrDistance = dir.sqrMagnitude});
+                    return FP.One;
+                });
+            }
+        }
+
         public static int GetAliveCount(this LSTargetsComponent self, TeamType teamFlag)
         {
             if (self.TeamLSUnitsMap.TryGetValue(teamFlag, out var targets))

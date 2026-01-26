@@ -21,12 +21,22 @@
   },
   {
     "Id": 30000002,
-    "name": "大本营手动子弹",
+    "name": "大本营手动子弹1",
     "hor_speed": 150000,
     "control_factor": 0,
     "control_height": 0,
     "life": 10000,
     "effect_group_id": 300000020,
+    "finish_effect_id": 0
+  },
+  {
+    "Id": 30000003,
+    "name": "大本营手动子弹2",
+    "hor_speed": 100000,
+    "control_factor": 5000,
+    "control_height": 80000,
+    "life": 10000,
+    "effect_group_id": 300000030,
     "finish_effect_id": 0
   },
   {

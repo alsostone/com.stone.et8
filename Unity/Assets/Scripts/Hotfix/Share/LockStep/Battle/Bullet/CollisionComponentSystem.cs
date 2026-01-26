@@ -1,15 +1,14 @@
+using System.Collections.Generic;
 
 namespace ET
 {
-    [LSEntitySystemOf(typeof(CollisionComponent))]
     [EntitySystemOf(typeof(CollisionComponent))]
     [FriendOf(typeof(CollisionComponent))]
     public static partial class CollisionComponentSystem
     {
         [EntitySystem]
-        private static void Awake(this CollisionComponent self, int searchId, int interval)
+        private static void Awake(this CollisionComponent self, int interval)
         {
-            self.SearchID = searchId;
             self.TestingInterval = interval;
             self.TestingFrame = self.LSWorld().Frame + interval;
             
@@ -18,26 +17,42 @@ namespace ET
             self.PreviousPosition = transformComponent.Position;
         }
         
-        [LSEntitySystem]
-        private static void LSUpdate(this CollisionComponent self)
+        [EntitySystem]
+        private static void Destroy(this CollisionComponent self)
+        {
+            self.HitSet.Clear();
+        }
+        
+        public static void GetCollisionTargets(this CollisionComponent self, List<SearchUnit> targets, bool force = false)
         {
             int frame = self.LSWorld().Frame;
-            if (frame < self.TestingFrame)
+            if (!force && frame < self.TestingFrame)
                 return;
             self.TestingFrame = frame + self.TestingInterval;
             
-            LSUnit lsUnit = self.LSOwner();
+            LSUnit lsOwner = self.LSOwner();
+            TeamComponent teamComponent = lsOwner.GetComponent<TeamComponent>();
+            TransformComponent transformComponent = lsOwner.GetComponent<TransformComponent>();
+            LSTargetsComponent lsTargetsComponent = self.LSWorld().GetComponent<LSTargetsComponent>();
             
+            IList<TeamType> teams = teamComponent.GetEnemyTeams();
+            foreach (TeamType team in teams) {
+                lsTargetsComponent.GetAttackTargetsWithSegment(team, (EUnitType)(-1), self.PreviousPosition, transformComponent.Position, targets);     
+            }
+            teams.Clear();
+            ObjectPool.Instance.Recycle(teams);
             
-            // // 创建子弹时把目标搜索出来 子弹决定命中时机（通过距离判定，非碰撞检测）
-            // List<SearchUnit> targets = ObjectPool.Instance.Fetch<List<SearchUnit>>();
-            // FP range = TargetSearcher.Search(searchId, target, thisTransform.Position, thisTransform.Forward, thisTransform.Upwards, targets);
-            // targets.Sort((x, y) => x.SqrDistance.CompareTo(y.SqrDistance));
-            // lsUnit.AddComponent<TrackComponent, int, int, int, FP>(row.HorSpeed, row.ControlFactor, row.ControlHeight, range);
-            // lsUnit.AddComponent<BulletComponent, int, LSUnit, List<SearchUnit>>(bulletId, caster, targets);
-            // targets.Clear();
-            // ObjectPool.Instance.Recycle(targets);
-
+            // 剔除已命中过的目标
+            if (targets.Count > 0) {
+                for (int i = targets.Count - 1; i >= 0; i--) {
+                    LSUnit target = targets[i].Target;
+                    if (self.HitSet.Contains(target.Id))
+                        targets.RemoveAt(i);
+                    else
+                        self.HitSet.Add(target.Id);
+                }
+            }
+            self.PreviousPosition = transformComponent.Position;
         }
         
     }

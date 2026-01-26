@@ -248,38 +248,23 @@
     "priority": 0
   },
   {
+    "Id": 97040003,
+    "shape": 1,
+    "shape_param": [
+      30000
+    ],
+    "team": 4,
+    "type": 9,
+    "table_id": [],
+    "count": 0,
+    "add_count_prop": 0,
+    "priority": 0
+  },
+  {
     "Id": 97050001,
     "shape": 5,
     "shape_param": [
       0,
-      5000
-    ],
-    "team": 4,
-    "type": 9,
-    "table_id": [],
-    "count": 0,
-    "add_count_prop": 0,
-    "priority": 0
-  },
-  {
-    "Id": 97050002,
-    "shape": 1,
-    "shape_param": [
-      2500
-    ],
-    "team": 4,
-    "type": 9,
-    "table_id": [],
-    "count": 0,
-    "add_count_prop": 0,
-    "priority": 0
-  },
-  {
-    "Id": 97050003,
-    "shape": 3,
-    "shape_param": [
-      5000,
-      5000,
       5000
     ],
     "team": 4,

@@ -304,7 +304,7 @@ namespace ET
         }
         
         // 创建固定朝向型子弹（波浪型）碰撞检测版本
-        public static LSUnit CreateBulletToDirection2(LSWorld lsWorld, int bulletId, int searchID, TSVector position, LSUnit caster, TSVector targetPosition)
+        public static LSUnit CreateBulletToDirection2(LSWorld lsWorld, int bulletId, TSVector position, LSUnit caster, TSVector targetPosition)
         {
 	        TbBulletRow row = TbBullet.Instance.Get(bulletId);
 	        LSUnitComponent lsUnitComponent = lsWorld.GetComponent<LSUnitComponent>();
@@ -317,7 +317,7 @@ namespace ET
 	        lsUnit.AddComponent<TeamComponent, TeamType>(caster.GetComponent<TeamComponent>().Type);
 	        
 	        lsUnit.AddComponent<TrackComponent, int, int, int, TSVector>(row.HorSpeed, row.ControlFactor, row.ControlHeight, targetPosition);
-	        lsUnit.AddComponent<CollisionComponent, int, int>(searchID, 2);
+	        lsUnit.AddComponent<CollisionComponent, int>(2);
 	        lsUnit.AddComponent<BulletComponent, ETrackTowardType, int, LSUnit>(ETrackTowardType.Direction2, bulletId, caster);
 
 	        EventSystem.Instance.Publish(lsWorld, new LSUnitCreate() { LSUnit = lsUnit });
@@ -325,7 +325,7 @@ namespace ET
         }
         
         // 创建固定朝向型子弹（波浪型）碰撞检测版本
-        public static LSUnit CreateBulletToDirection2(LSWorld lsWorld, int bulletId, int searchID, TSVector position, TSQuaternion rotation, LSUnit caster, FP distance)
+        public static LSUnit CreateBulletToDirection2(LSWorld lsWorld, int bulletId, TSVector position, TSQuaternion rotation, LSUnit caster, FP distance)
         {
 	        TbBulletRow row = TbBullet.Instance.Get(bulletId);
 	        LSUnitComponent lsUnitComponent = lsWorld.GetComponent<LSUnitComponent>();
@@ -337,7 +337,7 @@ namespace ET
 	        lsUnit.AddComponent<TeamComponent, TeamType>(caster.GetComponent<TeamComponent>().Type);
 	        
 	        lsUnit.AddComponent<TrackComponent, int, int, int, FP>(row.HorSpeed, row.ControlFactor, row.ControlHeight, distance);
-	        lsUnit.AddComponent<CollisionComponent, int, int>(searchID, 2);
+	        lsUnit.AddComponent<CollisionComponent, int>(2);
 	        lsUnit.AddComponent<BulletComponent, ETrackTowardType, int, LSUnit>(ETrackTowardType.Direction2, bulletId, caster);
 
 	        EventSystem.Instance.Publish(lsWorld, new LSUnitCreate() { LSUnit = lsUnit });
