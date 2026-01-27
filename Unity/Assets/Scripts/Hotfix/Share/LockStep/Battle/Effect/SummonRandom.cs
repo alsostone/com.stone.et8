@@ -10,27 +10,28 @@ namespace ET
     {
         public void Run(int[] param, int count, LSUnit owner, LSUnit target, LSUnit carrier = null)
         {
-            TeamType team = target.GetComponent<TeamComponent>().Type;
             var targetTransform = target.GetComponent<TransformComponent>();
             var position = TSVector.zero;
             if (param.Length >= 4) {
                 position = new TSVector(param[1], param[2], param[3]) * FP.EN4;
-            }else if (param.Length >= 3) {
+            } else if (param.Length >= 3) {
                 position = new TSVector(param[1], param[2], 0) * FP.EN4;
-            }else if (param.Length >= 2) {
+            } else if (param.Length >= 2) {
                 position = new TSVector(param[1], 0, 0) * FP.EN4;
             }
-            position = position.Rotation(targetTransform.Rotation.eulerAngles.y);
+            FP angle = targetTransform.Rotation.eulerAngles.y;
+            position = position.Rotation(angle);
             
             // 通过 随机包/随机集 获得要召唤的单位
+            TeamComponent teamComponent = owner.GetComponent<TeamComponent>();
+            LSUnit lsOwnerOwner = target.LSUnit(teamComponent.OwnerId);
             var results = ObjectPool.Instance.Fetch<List<LSRandomDropItem>>();
             RandomDropHelper.Random(target.GetRandom(), param[0], results);
             foreach (var item in results)
             {
                 for (var i = 0; i < item.Count; i++)
                 {
-                    FP angle = targetTransform.Rotation.eulerAngles.y;
-                    LSUnitFactory.SummonUnit(target.LSWorld(), item.Type, item.TableId, targetTransform.Position + position, angle.AsInt(), team);
+                    LSUnitFactory.SummonUnit(lsOwnerOwner, item.Type, item.TableId, targetTransform.Position + position, angle.AsInt(), teamComponent.Type);
                 }
             }
             results.Clear();

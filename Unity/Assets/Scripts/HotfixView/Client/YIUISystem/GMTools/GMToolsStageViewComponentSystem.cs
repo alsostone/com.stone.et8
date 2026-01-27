@@ -147,8 +147,9 @@ namespace ET.Client
             long playerId = LSConstValue.PlayerIdOffset;
             LockStepUnitInfo lockStepUnitInfo = LockStepUnitInfo.Create();
             lockStepUnitInfo.PlayerId = playerId++;
+            lockStepUnitInfo.CampId = 30001; // 操作的营地ID 如果为0则是没有控制营地单位
             lockStepUnitInfo.HeroSkinId = 100201; // 操作的英雄ID 如果为0则是没有控制英雄单位
-            lockStepUnitInfo.Position = new TSVector(0, 0, -5);
+            lockStepUnitInfo.Position = TSVector.zero;
             lockStepUnitInfo.Rotation = TSQuaternion.identity;
             matchInfo.UnitInfos.Add(lockStepUnitInfo);
             

@@ -49,6 +49,7 @@ message LockStepUnitInfo
 	int32 HeroSkinId = 2;
 	TrueSync.TSVector Position = 3;
 	TrueSync.TSQuaternion Rotation = 4;
+	int32 CampId = 5;
 }
 
 message LockStepMatchInfo

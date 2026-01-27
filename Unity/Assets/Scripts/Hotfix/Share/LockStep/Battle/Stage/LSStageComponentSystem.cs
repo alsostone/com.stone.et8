@@ -48,6 +48,7 @@ namespace ET
                 self.CurrentMonsterCount++;
                 self.NextMonsterTime += self.TbRow.RandomInterval * FP.EN3;
                 
+                LSUnit lsGlobal = self.LSUnit(LSConstValue.GlobalIdOffset);
                 var results = ObjectPool.Instance.Fetch<List<LSRandomDropItem>>();
                 RandomDropHelper.RandomSet(self.GetRandom(), randomSet, 1, results);
                 foreach (var item in results)
@@ -59,7 +60,7 @@ namespace ET
                         TSQuaternion rotation = TSQuaternion.LookRotation(position, TSVector.up);
                         
                         FP angle = rotation.eulerAngles.y;
-                        LSUnitFactory.SummonUnit(lsWorld, item.Type, item.TableId, position, angle.AsInt(), TeamType.TeamB);
+                        LSUnitFactory.SummonUnit(lsGlobal, item.Type, item.TableId, position, angle.AsInt(), TeamType.TeamB);
                     }
                 }
                 results.Clear();

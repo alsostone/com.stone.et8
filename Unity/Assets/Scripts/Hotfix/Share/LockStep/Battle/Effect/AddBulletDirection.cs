@@ -16,7 +16,7 @@ namespace ET
 			
 			position = targetTransform.TransformPoint(position);
 			rotation = TSQuaternion.FromToRotation(TSVector.up, targetTransform.Upwards) * rotation;
-			LSUnitFactory.CreateBulletToDirection(owner.LSWorld(), param[0], param[5], position, rotation, owner);
+			LSUnitFactory.CreateBulletToDirection(owner, param[0], param[5], position, rotation);
 		}
 	}
 }

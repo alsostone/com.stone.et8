@@ -5,10 +5,14 @@ namespace ET
     public static partial class PlayerComponentSystem
     {
         [EntitySystem]
-        private static void Awake(this PlayerComponent self, long bindCampId, long bindHeroId)
-        {self.LSRoom()?.ProcessLog.LogFunction(145, self.LSParent().Id);
-            self.BindCampId = bindCampId;
-            self.BindHeroId = bindHeroId;
+        private static void Awake(this PlayerComponent self)
+        {
+        }
+        
+        public static void SetBindEntities(this PlayerComponent self, long campId, long heroId)
+        {
+            self.BindCampId = campId;
+            self.BindHeroId = heroId;
         }
     }
 }

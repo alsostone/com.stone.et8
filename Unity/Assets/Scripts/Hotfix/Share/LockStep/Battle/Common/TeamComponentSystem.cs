@@ -7,9 +7,10 @@ namespace ET
     public static partial class TeamComponentSystem
     {
         [EntitySystem]
-        private static void Awake(this TeamComponent self, TeamType type)
+        private static void Awake(this TeamComponent self, TeamType type, long ownerId)
         {self.LSRoom()?.ProcessLog.LogFunction(84, self.LSParent().Id);
             self.Type = type;
+            self.OwnerId = ownerId;
         }
         
         public static TeamType GetOwnerTeam(this TeamComponent self)

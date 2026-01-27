@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using TrueSync;
 
@@ -21,6 +22,7 @@ namespace ET.Server
                 return;
             }
             
+            Random random = new Random((int)DateTime.Now.Ticks);
             LockStepMatchInfo matchInfo = LockStepMatchInfo.Create();
             matchInfo.StageId = room.StageId;
             matchInfo.ActorId = root.GetActorId();
@@ -30,8 +32,9 @@ namespace ET.Server
             {
                 LockStepUnitInfo lockStepUnitInfo = LockStepUnitInfo.Create();
                 lockStepUnitInfo.PlayerId = playerId;
+                lockStepUnitInfo.CampId = 30001; // 操作的营地ID 如果为0则是没有控制营地单位
                 lockStepUnitInfo.HeroSkinId = 100201; // 操作的英雄ID 如果为0则是没有控制英雄单位
-                lockStepUnitInfo.Position = new TSVector(0, 0, -5);
+                lockStepUnitInfo.Position = new TSVector(random.Next(-40, 40), 0, random.Next(-40, 40));
                 lockStepUnitInfo.Rotation = TSQuaternion.identity;
                 matchInfo.UnitInfos.Add(lockStepUnitInfo);
             }

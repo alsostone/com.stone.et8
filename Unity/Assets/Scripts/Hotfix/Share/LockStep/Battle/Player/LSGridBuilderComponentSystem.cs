@@ -63,10 +63,10 @@ namespace ET
                     TeamType teamType = lsOwner.GetComponent<TeamComponent>().Type;
                     bool isOk = false;
                     if (item.Type == EUnitType.Block) {
-                        isOk = null != LSUnitFactory.CreateBlock(lsWorld, item.TableId, positionV3, self.PlacementRotation * 90, teamType);
+                        isOk = null != LSUnitFactory.CreateBlock(lsOwner, item.TableId, positionV3, self.PlacementRotation * 90, teamType);
                     }
                     else if (item.Type == EUnitType.Building) {
-                        isOk = null != LSUnitFactory.CreateBuilding(lsWorld, item.TableId, positionV3, self.PlacementRotation * 90, teamType);
+                        isOk = null != LSUnitFactory.CreateBuilding(lsOwner, item.TableId, positionV3, self.PlacementRotation * 90, teamType);
                     }
                     else if (item.Type == EUnitType.Item) {
                         isOk = ItemExecutor.TryExecute(lsOwner, positionV3, item.TableId);

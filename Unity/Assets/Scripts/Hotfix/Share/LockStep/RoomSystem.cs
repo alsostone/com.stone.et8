@@ -31,27 +31,25 @@ namespace ET
             lsWorld.AddComponent<AIWorldComponent>();
             lsWorld.AddComponent<LSUnitComponent>();
 
-            LSUnitFactory.CreateGlobal(lsWorld);
+            LSUnit lsGlobal = LSUnitFactory.CreateGlobal(lsWorld);
             LSUnitFactory.CreateTeamPlayer(lsWorld, TeamType.TeamA);
             LSUnitFactory.CreateTeamMonster(lsWorld, TeamType.TeamB);
             LSUnitFactory.CreateTeamMonster(lsWorld, TeamType.TeamNeutral);
             
-            // 创建基地 (测试用)
-            LSUnit teamACamp = null;
-            if (lsStageComponent.TbRow.BaseCampTower > 0)
-                teamACamp = LSUnitFactory.CreateBuilding(lsWorld, lsStageComponent.TbRow.BaseCampTower, TSVector.zero, 0, TeamType.TeamA);
-            if (lsStageComponent.TbRow.BaseCampSoldier > 0 && matchInfo.UnitInfos.Count > 1)
-                LSUnitFactory.CreateBuilding(lsWorld, lsStageComponent.TbRow.BaseCampSoldier, new TSVector(32, 0, 32), 0, TeamType.TeamB);
-
             for (int i = 0; i < matchInfo.UnitInfos.Count; ++i) {
                 LockStepUnitInfo unitInfo = matchInfo.UnitInfos[i];
                 TeamType teamType = (TeamType)(1 << i);
+                LSUnit lsPlayer = LSUnitFactory.CreatePlayer(lsWorld, unitInfo.PlayerId, teamType);
                 
+                LSUnit lsCamp = null;
                 LSUnit lsHero = null;
-                if (unitInfo.HeroSkinId > 0) {
-                    lsHero = LSUnitFactory.CreateHero(lsWorld, unitInfo.HeroSkinId, unitInfo.Position, unitInfo.Rotation, teamType);
+                if (unitInfo.CampId > 0) {
+                    lsCamp = LSUnitFactory.CreateBuilding(lsPlayer, unitInfo.CampId, unitInfo.Position, 0, teamType);
                 }
-                LSUnitFactory.CreatePlayer(lsWorld, unitInfo.PlayerId, teamType, teamACamp?.Id ?? 0, lsHero?.Id ?? 0);
+                if (unitInfo.HeroSkinId > 0) {
+                    lsHero = LSUnitFactory.CreateHero(lsPlayer, unitInfo.HeroSkinId, unitInfo.Position + new TSVector(0, 0, -3), unitInfo.Rotation, teamType);
+                }
+                lsPlayer.GetComponent<PlayerComponent>().SetBindEntities(lsCamp?.Id ?? 0, lsHero?.Id ?? 0);
                 self.PlayerIds.Add(unitInfo.PlayerId);
             }
             
@@ -71,7 +69,7 @@ namespace ET
                 for (int row = 0; row < rowCount; ++row)
                 for (int col = 0; col < colCount; ++col) {
                     TSVector position = start + TSVector.right * (col * spacing) - TSVector.forward * (row * spacing);
-                    LSUnitFactory.CreateSoldier(lsWorld, idMonster, position, 0, team);
+                    LSUnitFactory.CreateSoldier(lsGlobal, idMonster, position, 0, team);
                 }
             }
    

@@ -223,6 +223,9 @@ namespace ET
         [MemoryPackOrder(3)]
         public TrueSync.TSQuaternion Rotation { get; set; }
 
+        [MemoryPackOrder(4)]
+        public int CampId { get; set; }
+
         public override void Dispose()
         {
             if (!this.IsFromPool)
@@ -234,6 +237,7 @@ namespace ET
             this.HeroSkinId = default;
             this.Position = default;
             this.Rotation = default;
+            this.CampId = default;
 
             ObjectPool.Instance.Recycle(this);
         }

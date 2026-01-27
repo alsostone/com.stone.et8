@@ -62,8 +62,9 @@ namespace ET
                                 TSVector targetPosition = LSCommand.ParseCommandFloat2(command).ToXZ();
                                 TransformComponent transformComponent = self.GetPlayerBindCampComponent<TransformComponent>();
                                 TSVector position = transformComponent.GetAttachPoint(AttachPoint.Head);
-                                //LSUnitFactory.CreateBulletToDirection2(self.LSWorld(), 30000002, position, transformComponent.LSOwner(), targetPosition);
-                                LSUnitFactory.CreateBulletToPosition(self.LSWorld(), 30000003, position, transformComponent.LSOwner(), targetPosition);
+                                LSUnit lsCamp = transformComponent.LSOwner();
+                                //LSUnitFactory.CreateBulletToDirection2(lsCamp, 30000002, position, transformComponent.LSOwner(), targetPosition);
+                                LSUnitFactory.CreateBulletToPosition(lsCamp, 30000003, position, targetPosition);
                                 break;
                             }
                         }
