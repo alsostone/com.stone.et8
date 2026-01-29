@@ -10,18 +10,31 @@ namespace ET
     public static partial class SkillSystem
     {
         [EntitySystem]
-        private static void Awake(this Skill self, int skillId, bool isOnlyOnce)
-        {self.LSRoom()?.ProcessLog.LogFunction(133, self.LSParent().Id, skillId, isOnlyOnce ? 1 : 0);
+        private static void Awake(this Skill self, int skillId, bool isRemoveOnDone)
+        {self.LSRoom()?.ProcessLog.LogFunction(133, self.LSParent().Id, skillId, isRemoveOnDone ? 1 : 0);
             self.SearchUnits = new List<SearchUnitPackable>();
             self.SkillId = skillId;
-            self.IsOnlyOnce = isOnlyOnce;
+            self.IsRemoveOnDone = isRemoveOnDone;
             self.StartTime = FP.MinValue;
             self.DurationTime = (self.TbSkillRow.DurationPre + self.TbSkillRow.Duration + self.TbSkillRow.DurationAfter) * FP.EN3;
         }
 
-        [EntitySystem]
-        private static void Destroy(this Skill self)
+        public static void RemoveSelf(this Skill self, bool forceRemove = false)
         {
+            if (self.IsRunning)
+            {
+                self.IsRemoveOnDone = true;
+                if (forceRemove) {
+                    self.ForceDone();
+                }
+            }
+            else
+            {
+                // 未在释放中的技能加入到移除列表（可能正在遍历所以不能直接Dispose）
+                SkillComponent skillComponent = self.Parent as SkillComponent;
+                skillComponent.RemovedSkills ??= ObjectPool.Instance.Fetch<List<long>>();
+                skillComponent.RemovedSkills.Add(self.Id);
+            }
         }
         
         public static bool IsInCd(this Skill self)
@@ -110,8 +123,8 @@ namespace ET
                 flagComponent.RemoveRestrict((int)(FlagRestrict.NotAttack | FlagRestrict.NotActive | FlagRestrict.NotMove));
             }
             
-            if (self.IsOnlyOnce) {
-                self.Dispose();
+            if (self.IsRemoveOnDone) {
+                self.RemoveSelf();
             }
         }
 
@@ -165,7 +178,7 @@ namespace ET
                     for (int i = 0; i < tbRow.ConsumeParam.Length; i += 2)
                     {
                         NumericType type = (NumericType)tbRow.ConsumeParam[i];
-                        FP value = (FP)tbRow.ConsumeParam[i + 1] / LSConstValue.PropValueScale;;
+                        FP value = (FP)tbRow.ConsumeParam[i + 1] / LSConstValue.PropValueScale;
                         propComponent.Add(type, -value);
                     }
                     break;
@@ -186,8 +199,8 @@ namespace ET
                 flagComponent.RemoveRestrict((int)(FlagRestrict.NotAttack | FlagRestrict.NotActive | FlagRestrict.NotMove));
             }
             
-            if (self.IsOnlyOnce) {
-                self.Dispose();
+            if (self.IsRemoveOnDone) {
+                self.RemoveSelf();
             }
         }
 
