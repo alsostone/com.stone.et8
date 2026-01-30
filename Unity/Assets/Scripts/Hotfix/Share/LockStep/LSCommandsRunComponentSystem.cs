@@ -116,7 +116,8 @@ namespace ET
                     }
                     case OperateCommandType.TimeScale:
                     {
-                        self.RunCommandTimeScale(command);
+                        FP scale = FP.FromRaw(LSCommand.ParseCommandLong(command));
+                        self.LSWorld().SetTimeScale(scale);
                         break;
                     }
 #if ENABLE_DEBUG
@@ -159,13 +160,6 @@ namespace ET
                     break;
                 default: break;
             }
-        }
-        
-        private static void RunCommandTimeScale(this LSCommandsRunComponent self, LSCommandData command)
-        {
-            long scale = LSCommand.ParseCommandLong(command);
-            self.LSWorld().TimeScale = FP.FromRaw(scale);
-            EventSystem.Instance.Publish(self.LSWorld(), new LSTimeScaleChanged());
         }
         
 #if ENABLE_DEBUG

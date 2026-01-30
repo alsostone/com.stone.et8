@@ -32,8 +32,15 @@ namespace ET
         [LSEntitySystem]
         private static void LSUpdate(this LSRVO2Component self)
         {self.LSRoom()?.ProcessLog.LogFunction(24, self.LSParent().Id);
+            if (self.LSWorld().DeltaTime <= FP.Zero)
+                return;
             self.RVO2Simulator.doStep(self.LSWorld().DeltaTime);
-            foreach (Agent agent in self.RVO2Simulator.GetAllAgents())
+            self.RefreshAgentsPosition(self.RVO2Simulator.GetAllAgents());
+        }
+        
+        private static void RefreshAgentsPosition(this LSRVO2Component self, PoolLinkedList<long, Agent> agents)
+        {
+            foreach (Agent agent in agents)
             {
                 LSUnit lsUnit = self.LSUnit(agent.id);
                 TransformComponent transformComponent = lsUnit.GetComponent<TransformComponent>();

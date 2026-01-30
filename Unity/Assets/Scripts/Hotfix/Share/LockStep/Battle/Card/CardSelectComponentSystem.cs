@@ -40,6 +40,8 @@ namespace ET
             var results = ObjectPool.Instance.Fetch<List<LSRandomDropItem>>();
             RandomDropHelper.RandomSet(self.GetRandom(), randomSet, 3, results);
             self.CardsQueue.Add(results);
+            if (lsStageComponent.TbRow.FightMode == FightMode.PVE)
+                self.LSWorld().SetTimePause(true);
             
             EventSystem.Instance.Publish(self.LSWorld(), new LSCardSelectAdd() { Id = self.LSOwner().Id, Cards = results });
         }
@@ -49,8 +51,11 @@ namespace ET
             if (self.CardsQueue.Count <= 0)
                 return;
             
+            LSStageComponent lsStageComponent = self.LSWorld().GetComponent<LSStageComponent>();
             var items = self.CardsQueue[0];
             self.CardsQueue.RemoveAt(0);
+            if (lsStageComponent.TbRow.FightMode == FightMode.PVE)
+                self.LSWorld().SetTimePause(false);
             
             index = Math.Min(items.Count - 1, index);
             CardBagComponent bagComponent = self.LSOwner().GetComponent<CardBagComponent>();

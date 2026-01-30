@@ -52,12 +52,34 @@ namespace ET
         public FP DeltaTime { get; private set; }
         public FP ElapsedTime { get; private set; }
         public FP TimeScale { get; set; } = 1; // 用于加速/减速游戏 必须保证所有客户端一致
+        public int TimePauseRef { get; set; } = 0; // 用于暂停游戏 当大于0时游戏暂停
 
         public void Update()
         {
-            DeltaTime = FP.One / LSConstValue.FrameCountPerSecond * TimeScale;
-            ElapsedTime += DeltaTime;
+            // 时间暂停时不增加时间 但是仍然Update逻辑
+            if (TimePauseRef == 0) {
+                DeltaTime = FP.One / LSConstValue.FrameCountPerSecond * TimeScale;
+                ElapsedTime += DeltaTime;
+            } else {
+                DeltaTime = FP.Zero;
+            }
             this.updater.Update();
+        }
+        
+        public void SetTimePause(bool isPause)
+        {
+            if (isPause) {
+                TimePauseRef++;
+            } else {
+                TimePauseRef--;
+            }
+            EventSystem.Instance.Publish(this, new LSTimeScaleChanged());
+        }
+        
+        public void SetTimeScale(FP scale)
+        {
+            TimeScale = scale;
+            EventSystem.Instance.Publish(this, new LSTimeScaleChanged());
         }
 
         public void RegisterSystem(LSEntity component)
