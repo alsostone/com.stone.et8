@@ -8,7 +8,7 @@ namespace ET
     {
         [EntitySystem]
         private static void Awake(this CollisionComponent self, int interval)
-        {
+        {self.LSRoom()?.ProcessLog.LogFunction(177, self.LSParent().Id, interval);
             self.TestingInterval = interval;
             self.TestingFrame = self.LSWorld().Frame + interval;
             
@@ -19,7 +19,7 @@ namespace ET
         
         [EntitySystem]
         private static void Destroy(this CollisionComponent self)
-        {
+        {self.LSRoom()?.ProcessLog.LogFunction(176, self.LSParent().Id);
             self.HitSet.Clear();
         }
         

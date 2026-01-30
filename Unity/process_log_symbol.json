@@ -24,6 +24,7 @@
 {"ID":23,"FileName":"LSRVO2ComponentSystem.cs","FuncName":"AddDynamicAgent","ArgTypes":"LSRVO2Component,LSUnit","ArgNames":"self,lsUnit","ValidArgNames":"Owner,lsUnit.Id","ValidArgCount":2,"Comments":null}
 {"ID":24,"FileName":"LSRVO2ComponentSystem.cs","FuncName":"LSUpdate","ArgTypes":"LSRVO2Component","ArgNames":"self","ValidArgNames":"Owner","ValidArgCount":1,"Comments":null}
 {"ID":25,"FileName":"LSRVO2ComponentSystem.cs","FuncName":"Awake","ArgTypes":"LSRVO2Component","ArgNames":"self","ValidArgNames":"Owner","ValidArgCount":1,"Comments":null}
+{"ID":26,"FileName":"BulletComponentSystem.cs","FuncName":"TryCollisionTargets2","ArgTypes":"BulletComponent,bool","ArgNames":"self,reach","ValidArgNames":"Owner,reach","ValidArgCount":2,"Comments":null}
 {"ID":27,"FileName":"AIRootComponentSystem.cs","FuncName":"Destroy","ArgTypes":"AIRootComponent","ArgNames":"self","ValidArgNames":"Owner","ValidArgCount":1,"Comments":null}
 {"ID":28,"FileName":"AIRootComponentSystem.cs","FuncName":"Start","ArgTypes":"AIRootComponent","ArgNames":"self","ValidArgNames":"Owner","ValidArgCount":1,"Comments":null}
 {"ID":29,"FileName":"AIRootComponentSystem.cs","FuncName":"Awake","ArgTypes":"AIRootComponent,Node","ArgNames":"self,node","ValidArgNames":"Owner","ValidArgCount":1,"Comments":null}
@@ -81,7 +82,7 @@
 {"ID":81,"FileName":"PropComponentSystem.cs","FuncName":"Set","ArgTypes":"PropComponent,NumericType,FP,bool","ArgNames":"self,numericType,value,isPublicEvent","ValidArgNames":"Owner,(FP)value,isPublicEvent","ValidArgCount":3,"Comments":null}
 {"ID":82,"FileName":"PropComponentSystem.cs","FuncName":"AddRealProp","ArgTypes":"PropComponent,NumericType,FP","ArgNames":"self,numericType,value","ValidArgNames":"Owner,(FP)value","ValidArgCount":2,"Comments":null}
 {"ID":83,"FileName":"PropComponentSystem.cs","FuncName":"Awake","ArgTypes":"PropComponent,int","ArgNames":"self,radius","ValidArgNames":"Owner,radius","ValidArgCount":2,"Comments":null}
-{"ID":84,"FileName":"TeamComponentSystem.cs","FuncName":"Awake","ArgTypes":"TeamComponent,TeamType","ArgNames":"self,type","ValidArgNames":"Owner","ValidArgCount":1,"Comments":null}
+{"ID":84,"FileName":"TeamComponentSystem.cs","FuncName":"Awake","ArgTypes":"TeamComponent,TeamType,long","ArgNames":"self,type,ownerId","ValidArgNames":"Owner","ValidArgCount":1,"Comments":null}
 {"ID":85,"FileName":"TransformComponentSystem.cs","FuncName":"LookAt","ArgTypes":"TransformComponent,LSUnit","ArgNames":"self,lsTarget","ValidArgNames":"Owner,lsTarget.Id","ValidArgCount":2,"Comments":null}
 {"ID":86,"FileName":"TransformComponentSystem.cs","FuncName":"TransformPoint","ArgTypes":"TransformComponent,TSVector","ArgNames":"self,position","ValidArgNames":"Owner,(FP)position.X, (FP)position.Y,(FP)position.Z","ValidArgCount":4,"Comments":null}
 {"ID":87,"FileName":"TransformComponentSystem.cs","FuncName":"TransformVector","ArgTypes":"TransformComponent,TSVector","ArgNames":"self,position","ValidArgNames":"Owner,(FP)position.X, (FP)position.Y,(FP)position.Z","ValidArgCount":4,"Comments":null}
@@ -89,6 +90,7 @@
 {"ID":89,"FileName":"TransformComponentSystem.cs","FuncName":"SetPosition","ArgTypes":"TransformComponent,TSVector,bool","ArgNames":"self,position,immediate","ValidArgNames":"Owner,(FP)position.X, (FP)position.Y,(FP)position.Z,immediate","ValidArgCount":5,"Comments":null}
 {"ID":90,"FileName":"TransformComponentSystem.cs","FuncName":"SetMoving","ArgTypes":"TransformComponent,bool","ArgNames":"self,moving","ValidArgNames":"Owner,moving","ValidArgCount":2,"Comments":null}
 {"ID":91,"FileName":"TransformComponentSystem.cs","FuncName":"RVOMove","ArgTypes":"TransformComponent,TSVector2","ArgNames":"self,forward","ValidArgNames":"Owner,(FP)forward.X,(FP)forward.Y","ValidArgCount":3,"Comments":null}
+{"ID":92,"FileName":"BulletComponentSystem.cs","FuncName":"TryCollisionTargets","ArgTypes":"BulletComponent,bool","ArgNames":"self,reach","ValidArgNames":"Owner,reach","ValidArgCount":2,"Comments":null}
 {"ID":93,"FileName":"TransformComponentSystem.cs","FuncName":"LSUpdate","ArgTypes":"TransformComponent","ArgNames":"self","ValidArgNames":"Owner","ValidArgCount":1,"Comments":null}
 {"ID":94,"FileName":"TransformComponentSystem.cs","FuncName":"Awake","ArgTypes":"TransformComponent,TSVector,TSQuaternion","ArgNames":"self,position,rotation","ValidArgNames":"Owner,(FP)position.X, (FP)position.Y,(FP)position.Z","ValidArgCount":4,"Comments":null}
 {"ID":95,"FileName":"TypeComponentSystem.cs","FuncName":"Awake","ArgTypes":"TypeComponent,EUnitType","ArgNames":"self,type","ValidArgNames":"Owner","ValidArgCount":1,"Comments":null}
@@ -113,12 +115,12 @@
 {"ID":114,"FileName":"SelectionComponentSystem.cs","FuncName":"SelectSingleUnit","ArgTypes":"SelectionComponent,long","ArgNames":"self,targetId","ValidArgNames":"Owner","ValidArgCount":1,"Comments":null}
 {"ID":115,"FileName":"SelectionComponentSystem.cs","FuncName":"SelectUnitsInBounds","ArgTypes":"SelectionComponent,TSBounds","ArgNames":"self,bounds","ValidArgNames":"Owner","ValidArgCount":1,"Comments":null}
 {"ID":116,"FileName":"SkillComponentSystem.cs","FuncName":"CheckRestrict","ArgTypes":"SkillComponent,ESkillType","ArgNames":"self,type","ValidArgNames":"Owner","ValidArgCount":1,"Comments":null}
-{"ID":117,"FileName":"SkillComponentSystem.cs","FuncName":"CastAttachSkill","ArgTypes":"SkillComponent,int","ArgNames":"self,id","ValidArgNames":"Owner,id","ValidArgCount":2,"Comments":null}
-{"ID":118,"FileName":"SkillComponentSystem.cs","FuncName":"TryCastSkill","ArgTypes":"SkillComponent,int","ArgNames":"self,id","ValidArgNames":"Owner,id","ValidArgCount":2,"Comments":null}
+{"ID":117,"FileName":"SkillComponentSystem.cs","FuncName":"CastAttachSkill","ArgTypes":"SkillComponent,int","ArgNames":"self,skillId","ValidArgNames":"Owner,skillId","ValidArgCount":2,"Comments":null}
+{"ID":118,"FileName":"SkillComponentSystem.cs","FuncName":"TryCastSkill","ArgTypes":"SkillComponent,int","ArgNames":"self,skillId","ValidArgNames":"Owner,skillId","ValidArgCount":2,"Comments":null}
 {"ID":119,"FileName":"SkillComponentSystem.cs","FuncName":"TryCastSkill","ArgTypes":"SkillComponent,ESkillType,int","ArgNames":"self,type,index","ValidArgNames":"Owner,index","ValidArgCount":2,"Comments":null}
 {"ID":120,"FileName":"SkillComponentSystem.cs","FuncName":"TryCastSkill","ArgTypes":"SkillComponent,ESkillType","ArgNames":"self,type","ValidArgNames":"Owner","ValidArgCount":1,"Comments":null}
 {"ID":121,"FileName":"SkillComponentSystem.cs","FuncName":"ForceAllDone","ArgTypes":"SkillComponent","ArgNames":"self","ValidArgNames":"Owner","ValidArgCount":1,"Comments":null}
-{"ID":122,"FileName":"SkillComponentSystem.cs","FuncName":"AddSkill","ArgTypes":"SkillComponent,int,bool","ArgNames":"self,skillId,isOnlyOnce","ValidArgNames":"Owner,skillId,isOnlyOnce","ValidArgCount":3,"Comments":null}
+{"ID":122,"FileName":"SkillComponentSystem.cs","FuncName":"AddSkill","ArgTypes":"SkillComponent,int,bool","ArgNames":"self,skillId,isRemoveOnDone","ValidArgNames":"Owner,skillId,isRemoveOnDone","ValidArgCount":3,"Comments":null}
 {"ID":123,"FileName":"SkillComponentSystem.cs","FuncName":"LSUpdate","ArgTypes":"SkillComponent","ArgNames":"self","ValidArgNames":"Owner","ValidArgCount":1,"Comments":null}
 {"ID":124,"FileName":"SkillComponentSystem.cs","FuncName":"Destroy","ArgTypes":"SkillComponent","ArgNames":"self","ValidArgNames":"Owner","ValidArgCount":1,"Comments":null}
 {"ID":125,"FileName":"SkillComponentSystem.cs","FuncName":"Awake","ArgTypes":"SkillComponent,int[],int[]","ArgNames":"self,normalIds,activeIds","ValidArgNames":"Owner","ValidArgCount":1,"Comments":null}
@@ -129,7 +131,7 @@
 {"ID":130,"FileName":"SkillSystem.cs","FuncName":"TryCast","ArgTypes":"Skill","ArgNames":"self","ValidArgNames":"Owner","ValidArgCount":1,"Comments":null}
 {"ID":131,"FileName":"SkillSystem.cs","FuncName":"SearchTargets","ArgTypes":"Skill","ArgNames":"self","ValidArgNames":"Owner","ValidArgCount":1,"Comments":null}
 {"ID":132,"FileName":"SkillSystem.cs","FuncName":"CheckReady","ArgTypes":"Skill","ArgNames":"self","ValidArgNames":"Owner","ValidArgCount":1,"Comments":null}
-{"ID":133,"FileName":"SkillSystem.cs","FuncName":"Awake","ArgTypes":"Skill,int,bool","ArgNames":"self,skillId,isOnlyOnce","ValidArgNames":"Owner,skillId,isOnlyOnce","ValidArgCount":3,"Comments":null}
+{"ID":133,"FileName":"SkillSystem.cs","FuncName":"Awake","ArgTypes":"Skill,int,bool","ArgNames":"self,skillId,isRemoveOnDone","ValidArgNames":"Owner,skillId,isRemoveOnDone","ValidArgCount":3,"Comments":null}
 {"ID":134,"FileName":"LSGameOverComponentSystem.cs","FuncName":"SetGameOver","ArgTypes":"LSGameOverComponent,TeamType","ArgNames":"self,winTeam","ValidArgNames":"Owner","ValidArgCount":1,"Comments":null}
 {"ID":135,"FileName":"LSGameOverComponentSystem.cs","FuncName":"LSUpdate","ArgTypes":"LSGameOverComponent","ArgNames":"self","ValidArgNames":"Owner","ValidArgCount":1,"Comments":null}
 {"ID":136,"FileName":"LSStageComponentSystem.cs","FuncName":"CheckWaveDone","ArgTypes":"LSStageComponent,int","ArgNames":"self,wave","ValidArgNames":"Owner,wave","ValidArgCount":2,"Comments":null}
@@ -141,7 +143,6 @@
 {"ID":142,"FileName":"HeroComponentSystem.cs","FuncName":"Destroy","ArgTypes":"HeroComponent","ArgNames":"self","ValidArgNames":"Owner","ValidArgCount":1,"Comments":null}
 {"ID":143,"FileName":"HeroComponentSystem.cs","FuncName":"Awake","ArgTypes":"HeroComponent,int,int","ArgNames":"self,tableId,skinId","ValidArgNames":"Owner,tableId,skinId","ValidArgCount":3,"Comments":null}
 {"ID":144,"FileName":"ItemComponentSystem.cs","FuncName":"Awake","ArgTypes":"ItemComponent,int","ArgNames":"self,tableId","ValidArgNames":"Owner,tableId","ValidArgCount":2,"Comments":null}
-{"ID":145,"FileName":"PlayerComponentSystem.cs","FuncName":"Awake","ArgTypes":"PlayerComponent,long,long","ArgNames":"self,bindCampId,bindHeroId","ValidArgNames":"Owner","ValidArgCount":1,"Comments":null}
 {"ID":146,"FileName":"SoldierComponentSystem.cs","FuncName":"Destroy","ArgTypes":"SoldierComponent","ArgNames":"self","ValidArgNames":"Owner","ValidArgCount":1,"Comments":null}
 {"ID":147,"FileName":"SoldierComponentSystem.cs","FuncName":"Awake","ArgTypes":"SoldierComponent,int","ArgNames":"self,tableId","ValidArgNames":"Owner,tableId","ValidArgCount":2,"Comments":null}
 {"ID":148,"FileName":"WorkComponentSystem.cs","FuncName":"AddToQueue","ArgTypes":"WorkComponent","ArgNames":"self","ValidArgNames":"Owner","ValidArgCount":1,"Comments":null}
@@ -162,7 +163,7 @@
 {"ID":163,"FileName":"PlacementComponentSystem.cs","FuncName":"AddRVO2Agent","ArgTypes":"PlacementComponent","ArgNames":"self","ValidArgNames":"Owner","ValidArgCount":1,"Comments":null}
 {"ID":164,"FileName":"BuffSystem.cs","FuncName":"DecrLayerCount","ArgTypes":"Buff","ArgNames":"self","ValidArgNames":"Owner","ValidArgCount":1,"Comments":null}
 {"ID":165,"FileName":"BuffSystem.cs","FuncName":"IncrLayerCount","ArgTypes":"Buff","ArgNames":"self","ValidArgNames":"Owner","ValidArgCount":1,"Comments":null}
-{"ID":166,"FileName":"BulletComponentSystem.cs","FuncName":"Awake","ArgTypes":"BulletComponent,int,LSUnit","ArgNames":"self,bulletId,caster","ValidArgNames":"Owner,bulletId,caster.Id","ValidArgCount":3,"Comments":null}
+{"ID":166,"FileName":"BulletComponentSystem.cs","FuncName":"Awake","ArgTypes":"BulletComponent,ETrackTowardType,int,LSUnit","ArgNames":"self,towardType,bulletId,caster","ValidArgNames":"Owner,bulletId,caster.Id","ValidArgCount":3,"Comments":null}
 {"ID":167,"FileName":"BulletComponentSystem.cs","FuncName":"Awake","ArgTypes":"BulletComponent,int,LSUnit,List<SearchUnit>","ArgNames":"self,bulletId,caster,targets","ValidArgNames":"Owner,bulletId,caster.Id","ValidArgCount":3,"Comments":null}
 {"ID":168,"FileName":"TrackComponentSystem.cs","FuncName":"Awake","ArgTypes":"TrackComponent,int,int,int,TSVector","ArgNames":"self,speed,controlFactor,controlHeight,targetPosition","ValidArgNames":"Owner,speed,controlFactor,controlHeight,(FP)targetPosition.X, (FP)targetPosition.Y,(FP)targetPosition.Z","ValidArgCount":7,"Comments":null}
 {"ID":169,"FileName":"TrackComponentSystem.cs","FuncName":"Awake","ArgTypes":"TrackComponent,int,int,int,LSUnit","ArgNames":"self,speed,controlFactor,controlHeight,target","ValidArgNames":"Owner,speed,controlFactor,controlHeight,target.Id","ValidArgCount":5,"Comments":null}
@@ -172,4 +173,9 @@
 {"ID":173,"FileName":"TargetableComponentSystem.cs","FuncName":"LSUpdate","ArgTypes":"TargetableComponent","ArgNames":"self","ValidArgNames":"Owner","ValidArgCount":1,"Comments":null}
 {"ID":174,"FileName":"TargetableComponentSystem.cs","FuncName":"Destroy","ArgTypes":"TargetableComponent","ArgNames":"self","ValidArgNames":"Owner","ValidArgCount":1,"Comments":null}
 {"ID":175,"FileName":"TargetableComponentSystem.cs","FuncName":"Awake","ArgTypes":"TargetableComponent","ArgNames":"self","ValidArgNames":"Owner","ValidArgCount":1,"Comments":null}
+{"ID":176,"FileName":"CollisionComponentSystem.cs","FuncName":"Destroy","ArgTypes":"CollisionComponent","ArgNames":"self","ValidArgNames":"Owner","ValidArgCount":1,"Comments":null}
+{"ID":177,"FileName":"CollisionComponentSystem.cs","FuncName":"Awake","ArgTypes":"CollisionComponent,int","ArgNames":"self,interval","ValidArgNames":"Owner,interval","ValidArgCount":2,"Comments":null}
+{"ID":178,"FileName":"SkillComponentSystem.cs","FuncName":"RemoveSkill","ArgTypes":"SkillComponent,int,bool","ArgNames":"self,skillId,force","ValidArgNames":"Owner,skillId,force","ValidArgCount":3,"Comments":null}
+{"ID":179,"FileName":"SkillSystem.cs","FuncName":"RemoveSelf","ArgTypes":"Skill,bool","ArgNames":"self,forceRemove","ValidArgNames":"Owner,forceRemove","ValidArgCount":2,"Comments":null}
+{"ID":180,"FileName":"PlayerComponentSystem.cs","FuncName":"SetBindEntities","ArgTypes":"PlayerComponent,long,long","ArgNames":"self,campId,heroId","ValidArgNames":"Owner","ValidArgCount":1,"Comments":null}
 ]

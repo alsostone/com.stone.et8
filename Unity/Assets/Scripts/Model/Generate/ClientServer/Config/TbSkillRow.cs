@@ -17,7 +17,6 @@ namespace ET
         public TbSkillRow(ByteBuf _buf)
         {
             Id = _buf.ReadInt();
-            LevelLimit = _buf.ReadInt();
             FirstCdTime = _buf.ReadInt();
             CdTime = _buf.ReadInt();
             Probability = _buf.ReadInt();
@@ -51,11 +50,6 @@ namespace ET
         /// ID
         /// </summary>
         public readonly int Id;
-
-        /// <summary>
-        /// 解锁等级
-        /// </summary>
-        public readonly int LevelLimit;
 
         /// <summary>
         /// 初始冷却时间
@@ -179,7 +173,6 @@ namespace ET
             
             
             
-            
             SearchTarget_Ref = TbSearch.Instance.GetOrDefault(SearchTarget);
         }
 
@@ -187,7 +180,6 @@ namespace ET
         {
             return "{ "
             + "Id:" + Id + ","
-            + "levelLimit:" + LevelLimit + ","
             + "firstCdTime:" + FirstCdTime + ","
             + "cdTime:" + CdTime + ","
             + "probability:" + Probability + ","

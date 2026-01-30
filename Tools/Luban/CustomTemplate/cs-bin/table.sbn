@@ -122,6 +122,8 @@ using System.Collections.Generic;
             {{~end~}}
             }
         {{~end~}}
+
+            PostInit();
         }
 
         public List<{{declaring_type_name value_type}}> DataList => _dataList;

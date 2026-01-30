@@ -111,7 +111,7 @@ namespace ET
         }
 
         private static void TryCollisionTargets(this BulletComponent self, bool reach)
-        {
+        {self.LSRoom()?.ProcessLog.LogFunction(92, self.LSParent().Id, reach ? 1 : 0);
             if (self.SearchUnits == null || self.SearchUnits.Count == 0)
                 return;
             
@@ -142,7 +142,7 @@ namespace ET
         }
 
         private static void TryCollisionTargets2(this BulletComponent self, bool reach)
-        {
+        {self.LSRoom()?.ProcessLog.LogFunction(26, self.LSParent().Id, reach ? 1 : 0);
             LSUnit lsOwner = self.LSOwner();
             List<SearchUnit> targets = ObjectPool.Instance.Fetch<List<SearchUnit>>();
             CollisionComponent collisionComponent = lsOwner.GetComponent<CollisionComponent>();

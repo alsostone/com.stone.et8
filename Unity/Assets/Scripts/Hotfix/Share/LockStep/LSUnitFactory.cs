@@ -61,6 +61,8 @@ namespace ET
 		    
 		    lsUnit.AddComponent<TypeComponent, EUnitType>(EUnitType.Player);
 		    lsUnit.AddComponent<TeamComponent, TeamType, long>(teamType, 0);
+		    lsUnit.AddComponent<PropComponent, int>(0);
+		    
 		    lsUnit.AddComponent<PlayerComponent>();
 		    lsUnit.AddComponent<LSGridBuilderComponent>();
 		    lsUnit.AddComponent<SelectionComponent>();

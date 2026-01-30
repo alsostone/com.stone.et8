@@ -98,7 +98,7 @@ namespace ET
         }
 
         public static void RemoveSkill(this SkillComponent self, int skillId, bool force = false)
-        {
+        {self.LSRoom()?.ProcessLog.LogFunction(178, self.LSParent().Id, skillId, force ? 1 : 0);
             if (self.IdSkillMap.TryGetValue(skillId, out long instanceId))
             {
                 Skill skill = self.GetChild<Skill>(instanceId);

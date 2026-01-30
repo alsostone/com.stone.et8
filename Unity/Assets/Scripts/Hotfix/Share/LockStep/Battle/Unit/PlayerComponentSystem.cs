@@ -10,7 +10,7 @@ namespace ET
         }
         
         public static void SetBindEntities(this PlayerComponent self, long campId, long heroId)
-        {
+        {self.LSRoom()?.ProcessLog.LogFunction(180, self.LSParent().Id);
             self.BindCampId = campId;
             self.BindHeroId = heroId;
         }

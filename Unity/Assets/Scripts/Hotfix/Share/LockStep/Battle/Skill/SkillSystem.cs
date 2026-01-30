@@ -20,7 +20,7 @@ namespace ET
         }
 
         public static void RemoveSelf(this Skill self, bool forceRemove = false)
-        {
+        {self.LSRoom()?.ProcessLog.LogFunction(179, self.LSParent().Id, forceRemove ? 1 : 0);
             if (self.IsRunning)
             {
                 self.IsRemoveOnDone = true;

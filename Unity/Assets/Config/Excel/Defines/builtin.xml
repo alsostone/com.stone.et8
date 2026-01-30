@@ -243,6 +243,7 @@
         <var name="Global" alias="全局" value="8"/>
         <var name="FriendTeam" alias="友方全局" value="9"/>
         <var name="EnemyTeam" alias="敌方全局" value="10"/>
+        <var name="OwnerPlayer" alias="所属玩家" value="11"/>
     </enum>
 
 </module>

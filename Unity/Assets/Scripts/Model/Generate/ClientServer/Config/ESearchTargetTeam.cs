@@ -61,5 +61,10 @@ namespace ET
         /// </summary>
         EnemyTeam = 10,
 
+        /// <summary>
+        /// 所属玩家
+        /// </summary>
+        OwnerPlayer = 11,
+
     }
 }

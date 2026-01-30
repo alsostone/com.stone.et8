@@ -135,6 +135,19 @@
     "action_param": []
   },
   {
+    "Id": 300010010,
+    "name": "大本营 生产金币1个",
+    "group_id": 30001001,
+    "success_conds": [],
+    "failure_conds": [],
+    "fx": 0,
+    "action_type": 9,
+    "action_param": [
+      100,
+      10000
+    ]
+  },
+  {
     "Id": 300100010,
     "name": "TowerCircle",
     "group_id": 30010001,
@@ -146,14 +159,14 @@
   },
   {
     "Id": 300200010,
-    "name": "TowerFlower4 增加金币1个",
+    "name": "TowerFlower4 生产金币1个",
     "group_id": 30020001,
     "success_conds": [],
     "failure_conds": [],
     "fx": 0,
-    "action_type": 2,
+    "action_type": 9,
     "action_param": [
-      980,
+      100,
       10000
     ]
   },

@@ -47,6 +47,12 @@ namespace ET
                     results.Add(new SearchUnit() { Target = owner.LSTeamUnit(team) });
                     return 0;
                 }
+                case ESearchTargetTeam.OwnerPlayer:
+                {
+                    long playerId = owner.GetComponent<TeamComponent>().OwnerId;
+                    results.Add(new SearchUnit() { Target = owner.LSUnit(playerId) });
+                    return 0;
+                }
             }
             
             LSTargetsComponent lsTargetsComponent = owner.LSWorld().GetComponent<LSTargetsComponent>();
