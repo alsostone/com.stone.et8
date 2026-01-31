@@ -5,6 +5,39 @@
     "fight_mode": 1,
     "scene_name": "Map1",
     "init_data": "",
+    "init_create_cards": [
+      {
+        "x": -5,
+        "z": 0,
+        "type": 2,
+        "id": 2001,
+        "team": 1
+      },
+      {
+        "x": 5,
+        "z": 0,
+        "type": 2,
+        "id": 2001,
+        "team": 1
+      }
+    ],
+    "init_cards": [
+      {
+        "type": 2,
+        "id": 2001,
+        "count": 1
+      },
+      {
+        "type": 2,
+        "id": 2002,
+        "count": 1
+      },
+      {
+        "type": 2,
+        "id": 2003,
+        "count": 1
+      }
+    ],
     "count": 4,
     "delay": 2000,
     "wave_interval": 40000,
@@ -33,6 +66,49 @@
     "fight_mode": 1,
     "scene_name": "Map1",
     "init_data": "",
+    "init_create_cards": [
+      {
+        "x": -5,
+        "z": 0,
+        "type": 2,
+        "id": 2001,
+        "team": 1
+      },
+      {
+        "x": 5,
+        "z": 0,
+        "type": 2,
+        "id": 2001,
+        "team": 1
+      }
+    ],
+    "init_cards": [
+      {
+        "type": 16,
+        "id": 5001,
+        "count": 1
+      },
+      {
+        "type": 16,
+        "id": 5002,
+        "count": 1
+      },
+      {
+        "type": 16,
+        "id": 5003,
+        "count": 1
+      },
+      {
+        "type": 16,
+        "id": 5004,
+        "count": 1
+      },
+      {
+        "type": 16,
+        "id": 5005,
+        "count": 1
+      }
+    ],
     "count": 6,
     "delay": 2000,
     "wave_interval": 40000,
@@ -65,6 +141,49 @@
     "fight_mode": 1,
     "scene_name": "Map2",
     "init_data": "",
+    "init_create_cards": [
+      {
+        "x": -5,
+        "z": 0,
+        "type": 2,
+        "id": 2001,
+        "team": 1
+      },
+      {
+        "x": 5,
+        "z": 0,
+        "type": 2,
+        "id": 2001,
+        "team": 1
+      }
+    ],
+    "init_cards": [
+      {
+        "type": 4,
+        "id": 30011,
+        "count": 1
+      },
+      {
+        "type": 4,
+        "id": 30021,
+        "count": 1
+      },
+      {
+        "type": 4,
+        "id": 30031,
+        "count": 1
+      },
+      {
+        "type": 4,
+        "id": 30041,
+        "count": 1
+      },
+      {
+        "type": 4,
+        "id": 30051,
+        "count": 1
+      }
+    ],
     "count": 10,
     "delay": 2000,
     "wave_interval": 40000,
@@ -97,6 +216,39 @@
     "fight_mode": 1,
     "scene_name": "Map2",
     "init_data": "",
+    "init_create_cards": [
+      {
+        "x": -5,
+        "z": 0,
+        "type": 2,
+        "id": 2001,
+        "team": 1
+      },
+      {
+        "x": 5,
+        "z": 0,
+        "type": 2,
+        "id": 2001,
+        "team": 1
+      }
+    ],
+    "init_cards": [
+      {
+        "type": 4,
+        "id": 30061,
+        "count": 1
+      },
+      {
+        "type": 4,
+        "id": 30071,
+        "count": 1
+      },
+      {
+        "type": 4,
+        "id": 30081,
+        "count": 1
+      }
+    ],
     "count": 0,
     "delay": 2000,
     "wave_interval": 40000,
@@ -120,6 +272,39 @@
     "fight_mode": 2,
     "scene_name": "Map2",
     "init_data": "",
+    "init_create_cards": [
+      {
+        "x": -5,
+        "z": 0,
+        "type": 2,
+        "id": 2001,
+        "team": 1
+      },
+      {
+        "x": 5,
+        "z": 0,
+        "type": 2,
+        "id": 2001,
+        "team": 1
+      }
+    ],
+    "init_cards": [
+      {
+        "type": 4,
+        "id": 30011,
+        "count": 1
+      },
+      {
+        "type": 4,
+        "id": 30021,
+        "count": 1
+      },
+      {
+        "type": 4,
+        "id": 30031,
+        "count": 1
+      }
+    ],
     "count": 0,
     "delay": 2000,
     "wave_interval": 40000,
@@ -143,6 +328,24 @@
     "fight_mode": 1,
     "scene_name": "Map1",
     "init_data": "9;9;20000;40001;2",
+    "init_create_cards": [],
+    "init_cards": [
+      {
+        "type": 4,
+        "id": 30011,
+        "count": 1
+      },
+      {
+        "type": 4,
+        "id": 30021,
+        "count": 1
+      },
+      {
+        "type": 4,
+        "id": 30031,
+        "count": 1
+      }
+    ],
     "count": 0,
     "delay": 0,
     "wave_interval": 0,
@@ -157,6 +360,24 @@
     "fight_mode": 1,
     "scene_name": "Map1",
     "init_data": "9;9;20000;40002;1",
+    "init_create_cards": [],
+    "init_cards": [
+      {
+        "type": 4,
+        "id": 30011,
+        "count": 1
+      },
+      {
+        "type": 4,
+        "id": 30021,
+        "count": 1
+      },
+      {
+        "type": 4,
+        "id": 30031,
+        "count": 1
+      }
+    ],
     "count": 0,
     "delay": 0,
     "wave_interval": 0,

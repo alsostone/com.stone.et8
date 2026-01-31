@@ -29,7 +29,7 @@ namespace ET
             lsWorld.AddComponent<LSGridMapComponent, string>($"Map/{lsStageComponent.TbRow.SceneName}.bytes");
             lsWorld.AddComponent<LSTargetsComponent>();
             lsWorld.AddComponent<AIWorldComponent>();
-            lsWorld.AddComponent<LSUnitComponent>();
+            LSUnitComponent lsUnitComponent = lsWorld.AddComponent<LSUnitComponent>();
 
             LSUnit lsGlobal = LSUnitFactory.CreateGlobal(lsWorld);
             LSUnitFactory.CreateTeamPlayer(lsWorld, TeamType.TeamA);
@@ -39,7 +39,16 @@ namespace ET
             for (int i = 0; i < matchInfo.UnitInfos.Count; ++i) {
                 LockStepUnitInfo unitInfo = matchInfo.UnitInfos[i];
                 TeamType teamType = (TeamType)(1 << i);
+                
                 LSUnit lsPlayer = LSUnitFactory.CreatePlayer(lsWorld, unitInfo.PlayerId, teamType);
+                LSUnit lsTeam = lsUnitComponent.GetChild<LSUnit>(LSConstValue.GlobalIdOffset - 1 - (int)teamType);
+                lsTeam.GetComponent<ContainerComponent>().AddContent(lsPlayer.Id);
+                
+                // 添加玩家初始背包卡牌
+                CardBagComponent bagComponent = lsPlayer.GetComponent<CardBagComponent>();
+                foreach (var itemData in lsStageComponent.TbRow.InitCards) {
+                    bagComponent.AddItem(new LSRandomDropItem(itemData.Type, itemData.Id, itemData.Count));
+                }
                 
                 LSUnit lsCamp = null;
                 LSUnit lsHero = null;
@@ -50,7 +59,19 @@ namespace ET
                     lsHero = LSUnitFactory.CreateHero(lsPlayer, unitInfo.HeroSkinId, unitInfo.Position + new TSVector(0, 0, -3), unitInfo.Rotation, teamType);
                 }
                 lsPlayer.GetComponent<PlayerComponent>().SetBindEntities(lsCamp?.Id ?? 0, lsHero?.Id ?? 0);
+                
                 self.PlayerIds.Add(unitInfo.PlayerId);
+            }
+            
+            // 添加需要建造的卡牌
+            foreach (ItemPosition itemPosition in lsStageComponent.TbRow.InitCreateCards)
+            {
+                LSUnit lsTeam = lsUnitComponent.GetChild<LSUnit>(LSConstValue.GlobalIdOffset - 1 - (int)itemPosition.Team);
+                long instanceId = lsTeam.GetComponent<ContainerComponent>().GetFirstContent();
+                LSUnit lsPlayer = lsUnitComponent.GetChild<LSUnit>(instanceId);
+                
+                TSVector position = new TSVector(itemPosition.X, 0, itemPosition.Z);
+                LSUnitFactory.SummonUnit(lsPlayer, itemPosition.Type, itemPosition.Id, position, 0, itemPosition.Team);
             }
             
             // 创建初始单位 后期可改为读取配置文件

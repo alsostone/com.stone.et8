@@ -26,17 +26,10 @@ namespace ET
 		    
 		    lsUnit.AddComponent<TypeComponent, EUnitType>(EUnitType.Team);
 		    lsUnit.AddComponent<TeamComponent, TeamType, long>(teamType, 0);
+		    lsUnit.AddComponent<PropComponent, int>(0);
+		    lsUnit.AddComponent<ContainerComponent>();
 		    
 		    lsUnit.AddComponent<WorkQueueComponent>();
-		    
-		    PropComponent propComponent = lsUnit.AddComponent<PropComponent, int>(0);
-		    propComponent.Set(NumericType.MaxGoldBase, 100, false);
-		    propComponent.Set(NumericType.MaxWoodBase, 100, false);
-		    propComponent.Set(NumericType.MaxPopulationBase, 20, false);
-		    
-		    propComponent.Set(NumericType.Gold, 50, false);
-		    propComponent.Set(NumericType.Wood, 50, false);
-		    propComponent.Set(NumericType.Population, 10, false);
 		    
 		    return lsUnit;
 	    }
@@ -49,6 +42,7 @@ namespace ET
 		    lsUnit.AddComponent<TypeComponent, EUnitType>(EUnitType.Team);
 		    lsUnit.AddComponent<TeamComponent, TeamType, long>(teamType, 0);
 		    lsUnit.AddComponent<PropComponent, int>(0);
+		    lsUnit.AddComponent<ContainerComponent>();
 		    
 		    return lsUnit;
 	    }
@@ -64,32 +58,11 @@ namespace ET
 		    lsUnit.AddComponent<PropComponent, int>(0);
 		    
 		    lsUnit.AddComponent<PlayerComponent>();
+		    lsUnit.AddComponent<CardBagComponent>();
+		    lsUnit.AddComponent<CardSelectComponent>();
+		    
 		    lsUnit.AddComponent<LSGridBuilderComponent>();
 		    lsUnit.AddComponent<SelectionComponent>();
-		    
-		    // 初始卡组 可以通过配置表来
-		    var cards = ObjectPool.Instance.Fetch<List<LSRandomDropItem>>();
-		    cards.Add(new LSRandomDropItem(EUnitType.Block, 2001, 1));
-		    cards.Add(new LSRandomDropItem(EUnitType.Block, 2002, 1));
-		    cards.Add(new LSRandomDropItem(EUnitType.Block, 2003, 1));
-		    cards.Add(new LSRandomDropItem(EUnitType.Item, 5001, 1));
-		    cards.Add(new LSRandomDropItem(EUnitType.Item, 5003, 1));
-		    cards.Add(new LSRandomDropItem(EUnitType.Item, 5004, 1));
-		    cards.Add(new LSRandomDropItem(EUnitType.Item, 5005, 1));
-		    cards.Add(new LSRandomDropItem(EUnitType.Building, 30011, 1));
-		    cards.Add(new LSRandomDropItem(EUnitType.Building, 30021, 1));
-		    cards.Add(new LSRandomDropItem(EUnitType.Building, 30031, 1));
-		    cards.Add(new LSRandomDropItem(EUnitType.Building, 30041, 1));
-		    cards.Add(new LSRandomDropItem(EUnitType.Building, 30051, 1));
-		    cards.Add(new LSRandomDropItem(EUnitType.Building, 30061, 1));
-		    cards.Add(new LSRandomDropItem(EUnitType.Building, 30071, 1));
-		    cards.Add(new LSRandomDropItem(EUnitType.Building, 30081, 1));
-		    
-		    lsUnit.AddComponent<CardBagComponent, List<LSRandomDropItem>>(cards);
-		    cards.Clear();
-		    ObjectPool.Instance.Recycle(cards);
-		    
-		    lsUnit.AddComponent<CardSelectComponent>();
 		    lsUnit.AddComponent<LSCommandsRunComponent>();
 			
 		    EventSystem.Instance.Publish(lsWorld, new LSUnitCreate() {LSUnit = lsUnit});
@@ -403,6 +376,9 @@ namespace ET
         {
 	        switch (type)
 	        {
+		        case EUnitType.Block:
+			        CreateBlock(lsOwner, tableId, position, angle, teamType);
+			        break;
 		        case EUnitType.Building:
 			        CreateBuilding(lsOwner, tableId, position, angle, teamType);
 			        break;

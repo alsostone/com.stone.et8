@@ -21,6 +21,8 @@ namespace ET
             FightMode = (FightMode)_buf.ReadInt();
             SceneName = _buf.ReadString();
             InitData = _buf.ReadString();
+            {int __n0 = System.Math.Min(_buf.ReadSize(), _buf.Size);InitCreateCards = new ItemPosition[__n0];for(var __index0 = 0 ; __index0 < __n0 ; __index0++) { ItemPosition __e0;__e0 = ItemPosition.DeserializeItemPosition(_buf); InitCreateCards[__index0] = __e0;}}
+            {int __n0 = System.Math.Min(_buf.ReadSize(), _buf.Size);InitCards = new ItemCount[__n0];for(var __index0 = 0 ; __index0 < __n0 ; __index0++) { ItemCount __e0;__e0 = ItemCount.DeserializeItemCount(_buf); InitCards[__index0] = __e0;}}
             Count = _buf.ReadInt();
             Delay = _buf.ReadInt();
             WaveInterval = _buf.ReadInt();
@@ -61,6 +63,16 @@ namespace ET
         /// 初始单位配置数据
         /// </summary>
         public readonly string InitData;
+
+        /// <summary>
+        /// 初始建造卡牌
+        /// </summary>
+        public readonly ItemPosition[] InitCreateCards;
+
+        /// <summary>
+        /// 初始持有卡牌
+        /// </summary>
+        public readonly ItemCount[] InitCards;
 
         /// <summary>
         /// 波次数量
@@ -108,6 +120,8 @@ namespace ET
             
             
             
+            foreach (var _e in InitCreateCards) { _e?.ResolveRef(); }
+            foreach (var _e in InitCards) { _e?.ResolveRef(); }
             
             
             
@@ -125,6 +139,8 @@ namespace ET
             + "fightMode:" + FightMode + ","
             + "sceneName:" + SceneName + ","
             + "initData:" + InitData + ","
+            + "initCreateCards:" + Luban.StringUtil.CollectionToString(InitCreateCards) + ","
+            + "initCards:" + Luban.StringUtil.CollectionToString(InitCards) + ","
             + "count:" + Count + ","
             + "delay:" + Delay + ","
             + "waveInterval:" + WaveInterval + ","

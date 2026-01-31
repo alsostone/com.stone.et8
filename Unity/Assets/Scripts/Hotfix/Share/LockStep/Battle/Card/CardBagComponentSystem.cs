@@ -8,12 +8,9 @@ namespace ET
     public static partial class CardBagComponentSystem
     {
         [EntitySystem]
-        private static void Awake(this CardBagComponent self, List<LSRandomDropItem> items)
+        private static void Awake(this CardBagComponent self)
         {self.LSRoom()?.ProcessLog.LogFunction(50, self.LSParent().Id);
             self.Items = new List<CardBagItem>();
-            foreach (LSRandomDropItem item in items) {
-                self.AddItem(item);
-            }
         }
         
         [EntitySystem]
