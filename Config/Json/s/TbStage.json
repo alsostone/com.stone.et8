@@ -352,7 +352,11 @@
     "random_interval": 0,
     "random_counts": [],
     "random_sets": [],
-    "random_cards": []
+    "random_cards": [
+      80001,
+      80002,
+      80003
+    ]
   },
   {
     "Id": 9002,
@@ -384,6 +388,10 @@
     "random_interval": 0,
     "random_counts": [],
     "random_sets": [],
-    "random_cards": []
+    "random_cards": [
+      80001,
+      80002,
+      80003
+    ]
   }
 ]

@@ -167,7 +167,7 @@
         <var name="AddBulletPosition" alias="目标位置子弹" value="18" comment="朝指定位置发射子弹"/>
         <var name="AddBulletDirection" alias="固定朝向子弹" value="19" comment="朝指定的方向发射子弹。一次直线索敌再根据距离判定命中 适用于飞行速度快的子弹"/>
         <var name="AddBulletDirection2" alias="固定朝向子弹2" value="20" comment="朝指定的方向发射子弹。实时碰撞检测，适用于飞行速度慢的子弹"/>
-        <var name="AddPropertyWithHeight" alias="高度增加属性" value="21" comment="高度加持属性，配置为每高1层增加子属性的值"/>
+        <var name="AddHeightBuff" alias="添加高度Buff" value="21" comment="以高度为层数添加BUFF，可同时添加多个BUFF"/>
     </enum>
 
     <enum name="TeamType" comment="队伍类型" unique="TRUE" flags="TRUE">

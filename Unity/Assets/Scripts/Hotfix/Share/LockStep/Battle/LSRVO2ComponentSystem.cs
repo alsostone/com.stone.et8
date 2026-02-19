@@ -39,7 +39,7 @@ namespace ET
         }
         
         private static void RefreshAgentsPosition(this LSRVO2Component self, PoolLinkedList<long, Agent> agents)
-        {
+        {self.LSRoom()?.ProcessLog.LogFunction(181, self.LSParent().Id);
             foreach (Agent agent in agents)
             {
                 LSUnit lsUnit = self.LSUnit(agent.id);

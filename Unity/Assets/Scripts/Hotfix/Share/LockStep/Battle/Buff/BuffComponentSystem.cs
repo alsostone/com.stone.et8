@@ -40,7 +40,7 @@ namespace ET
                     continue;
                 }
                 
-                if (elapsedTime >= buff.EndTime)
+                if (buff.EndTime > FP.Zero && elapsedTime >= buff.EndTime)
                 {
                     self.IdBuffMap.Remove(buff.BuffId);
                     buff.Dispose();
@@ -54,27 +54,52 @@ namespace ET
         {self.LSRoom()?.ProcessLog.LogFunction(35, self.LSParent().Id, owner.Id);
             foreach (int buffId in buffIds)
             {
-                self.AddBuff(buffId, owner);
+                self.AddBuff(buffId, owner, 1);
             }
         }
         
-        public static void AddBuff(this BuffComponent self, int buffId, LSUnit owner)
-        {self.LSRoom()?.ProcessLog.LogFunction(34, self.LSParent().Id, buffId, owner.Id);
-            if (self.IdBuffMap.TryGetValue(buffId, out long eid))
+        public static void AddBuff(this BuffComponent self, int buffId, LSUnit owner, int layerCount)
+        {self.LSRoom()?.ProcessLog.LogFunction(34, self.LSParent().Id, buffId, owner.Id, layerCount);
+            TbBuffRow row = TbBuff.Instance.Get(buffId);
+            switch (row.OverlapType)
             {
-                // 若buffId已存在，则增加层数，且重新计时
-                var buff = self.GetChild<Buff>(eid);
-                if (buff.TbBuffRow.MaxLayer > 0 && buff.TbBuffRow.MaxLayer > buff.LayerCount)
-                    buff.IncrLayerCount();
-                buff.ResetEndFrame();
+                case ESkillBuffOverlapType.Unique:
+                {
+                    if (self.IdBuffMap.TryGetValue(buffId, out long eid)) {
+                        self.IdBuffMap.Remove(buffId);
+                        self.RemoveChild(eid);
+                    }
+                    Buff buff = self.AddChild<Buff, int, int, LSUnit>(buffId, layerCount, owner);
+                    self.IdBuffMap.Add(buffId, buff.Id);
+                    break;
+                }
+                case ESkillBuffOverlapType.Concentrated:
+                case ESkillBuffOverlapType.Dispersive:
+                {
+                    if (self.IdBuffMap.TryGetValue(buffId, out long eid))
+                    {
+                        // 若buffId已存在，则增加层数，且重新计时
+                        var buff = self.GetChild<Buff>(eid);
+                        if (buff.TbBuffRow.MaxLayer > 0)
+                            buff.IncrLayerCount(layerCount);
+                        buff.ResetEndFrame();
+                    }
+                    else
+                    {
+                        // 若buffId不存在，则添加新的buff
+                        Buff buff = self.AddChild<Buff, int, int, LSUnit>(buffId, layerCount, owner);
+                        self.IdBuffMap.Add(buffId, buff.Id);
+                    }
+                    break;
+                }
             }
-            else
+        }
+        
+        public static void RemoveBuffs(this BuffComponent self, int[] buffIds, bool removeLayer = false)
+        {self.LSRoom()?.ProcessLog.LogFunction(182, self.LSParent().Id, removeLayer ? 1 : 0);
+            foreach (int buffId in buffIds)
             {
-                // 若buffId不存在，则添加新的buff
-                var buff = self.AddChild<Buff, int, LSUnit>(buffId, owner);
-                buff.LayerCount = 1;
-                buff.ResetEndFrame();
-                self.IdBuffMap.Add(buffId, buff.Id);
+                self.RemoveBuff(buffId, removeLayer);
             }
         }
         

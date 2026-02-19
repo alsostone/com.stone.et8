@@ -8,13 +8,13 @@ namespace ET
     public static partial class BuffSystem
     {
         [EntitySystem]
-        private static void Awake(this Buff self, int BuffId, LSUnit caster)
-        {self.LSRoom()?.ProcessLog.LogFunction(41, self.LSParent().Id, BuffId, caster.Id);
+        private static void Awake(this Buff self, int BuffId, int layerCount, LSUnit caster)
+        {self.LSRoom()?.ProcessLog.LogFunction(41, self.LSParent().Id, BuffId, layerCount, caster.Id);
             self.BuffId = BuffId;
+            self.LayerCount = layerCount;
             self.Caster = caster.Id;
-            self.EndTime = self.LSWorld().ElapsedTime + self.TbBuffRow.Duration * FP.EN3;
-            self.LayerCount = 1;
-            
+            self.EndTime = self.TbBuffRow.Duration > 0 ? self.LSWorld().ElapsedTime + self.TbBuffRow.Duration * FP.EN3 : -1;
+
             LSUnit lsOwner = self.LSOwner();
             if (self.TbBuffRow.EnterEffect > 0) {
                 EffectExecutor.Execute(self.TbBuffRow.EnterEffect, caster, lsOwner, lsOwner, self.LayerCount);
@@ -53,16 +53,20 @@ namespace ET
         
         public static void ResetEndFrame(this Buff self)
         {self.LSRoom()?.ProcessLog.LogFunction(39, self.LSParent().Id);
-            self.EndTime = self.LSWorld().ElapsedTime + self.TbBuffRow.Duration * FP.EN3;
+            if (self.TbBuffRow.Duration > 0)
+                self.EndTime = self.LSWorld().ElapsedTime + self.TbBuffRow.Duration * FP.EN3;
         }
 
-        public static void IncrLayerCount(this Buff self)
-        {self.LSRoom()?.ProcessLog.LogFunction(165, self.LSParent().Id);
-            self.LayerCount++;
+        public static void IncrLayerCount(this Buff self, int layerCount)
+        {self.LSRoom()?.ProcessLog.LogFunction(165, self.LSParent().Id, layerCount);
+            if (self.TbBuffRow.MaxLayer > 0 && self.LayerCount + layerCount > self.TbBuffRow.MaxLayer) {
+                layerCount = self.TbBuffRow.MaxLayer - self.LayerCount;
+            }
+            self.LayerCount += layerCount;
             if (self.TbBuffRow.EnterEffect > 0) {
                 LSUnit lsOwner = self.LSOwner();
                 LSUnit lsCaster = self.LSUnit(self.Caster);
-                EffectExecutor.Execute(self.TbBuffRow.EnterEffect, lsCaster, lsOwner, lsOwner);
+                EffectExecutor.Execute(self.TbBuffRow.EnterEffect, lsCaster, lsOwner, lsOwner, layerCount);
             }
         }
         

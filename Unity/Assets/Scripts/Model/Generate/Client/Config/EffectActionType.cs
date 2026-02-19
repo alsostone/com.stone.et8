@@ -107,9 +107,9 @@ namespace ET
         AddBulletDirection2 = 20,
 
         /// <summary>
-        /// 高度加持属性，配置为每高1层增加子属性的值
+        /// 以高度为层数添加BUFF，可同时添加多个BUFF
         /// </summary>
-        AddPropertyWithHeight = 21,
+        AddHeightBuff = 21,
 
     }
 }

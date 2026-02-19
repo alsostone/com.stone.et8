@@ -162,25 +162,37 @@
   },
   {
     "Id": 300090010,
-    "name": "建筑通用 高度加成攻速",
+    "name": "建筑通用 添加BUFF",
     "group_id": 30009001,
     "success_conds": [],
     "failure_conds": [],
     "fx": 0,
     "action_type": 21,
     "action_param": [
+      30009001
+    ]
+  },
+  {
+    "Id": 300090011,
+    "name": "建筑通用 高度加成攻速",
+    "group_id": 300090011,
+    "success_conds": [],
+    "failure_conds": [],
+    "fx": 0,
+    "action_type": 9,
+    "action_param": [
       10073,
       5000
     ]
   },
   {
-    "Id": 300090011,
+    "Id": 300090012,
     "name": "建筑通用 高度加成攻击力",
-    "group_id": 30009001,
+    "group_id": 300090011,
     "success_conds": [],
     "failure_conds": [],
     "fx": 0,
-    "action_type": 21,
+    "action_type": 9,
     "action_param": [
       10031,
       10000

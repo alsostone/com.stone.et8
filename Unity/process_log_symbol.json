@@ -32,14 +32,14 @@
 {"ID":31,"FileName":"AIWorldComponentSystem.cs","FuncName":"Destroy","ArgTypes":"AIWorldComponent","ArgNames":"self","ValidArgNames":"Owner","ValidArgCount":1,"Comments":null}
 {"ID":32,"FileName":"AIWorldComponentSystem.cs","FuncName":"Awake","ArgTypes":"AIWorldComponent","ArgNames":"self","ValidArgNames":"Owner","ValidArgCount":1,"Comments":null}
 {"ID":33,"FileName":"BuffComponentSystem.cs","FuncName":"RemoveBuff","ArgTypes":"BuffComponent,int,bool","ArgNames":"self,buffId,removeLayer","ValidArgNames":"Owner,buffId,removeLayer","ValidArgCount":3,"Comments":null}
-{"ID":34,"FileName":"BuffComponentSystem.cs","FuncName":"AddBuff","ArgTypes":"BuffComponent,int,LSUnit","ArgNames":"self,buffId,owner","ValidArgNames":"Owner,buffId,owner.Id","ValidArgCount":3,"Comments":null}
+{"ID":34,"FileName":"BuffComponentSystem.cs","FuncName":"AddBuff","ArgTypes":"BuffComponent,int,LSUnit,int","ArgNames":"self,buffId,owner,layerCount","ValidArgNames":"Owner,buffId,owner.Id,layerCount","ValidArgCount":4,"Comments":null}
 {"ID":35,"FileName":"BuffComponentSystem.cs","FuncName":"AddBuffs","ArgTypes":"BuffComponent,int[],LSUnit","ArgNames":"self,buffIds,owner","ValidArgNames":"Owner,owner.Id","ValidArgCount":2,"Comments":null}
 {"ID":36,"FileName":"BuffComponentSystem.cs","FuncName":"LSUpdate","ArgTypes":"BuffComponent","ArgNames":"self","ValidArgNames":"Owner","ValidArgCount":1,"Comments":null}
 {"ID":37,"FileName":"BuffComponentSystem.cs","FuncName":"Destroy","ArgTypes":"BuffComponent","ArgNames":"self","ValidArgNames":"Owner","ValidArgCount":1,"Comments":null}
 {"ID":38,"FileName":"BuffSystem.cs","FuncName":"LSUpdate","ArgTypes":"Buff","ArgNames":"self","ValidArgNames":"Owner","ValidArgCount":1,"Comments":null}
 {"ID":39,"FileName":"BuffSystem.cs","FuncName":"ResetEndFrame","ArgTypes":"Buff","ArgNames":"self","ValidArgNames":"Owner","ValidArgCount":1,"Comments":null}
 {"ID":40,"FileName":"BuffSystem.cs","FuncName":"Destroy","ArgTypes":"Buff","ArgNames":"self","ValidArgNames":"Owner","ValidArgCount":1,"Comments":null}
-{"ID":41,"FileName":"BuffSystem.cs","FuncName":"Awake","ArgTypes":"Buff,int,LSUnit","ArgNames":"self,BuffId,caster","ValidArgNames":"Owner,BuffId,caster.Id","ValidArgCount":3,"Comments":null}
+{"ID":41,"FileName":"BuffSystem.cs","FuncName":"Awake","ArgTypes":"Buff,int,int,LSUnit","ArgNames":"self,BuffId,layerCount,caster","ValidArgNames":"Owner,BuffId,layerCount,caster.Id","ValidArgCount":4,"Comments":null}
 {"ID":42,"FileName":"BulletComponentSystem.cs","FuncName":"OnReachTarget","ArgTypes":"BulletComponent,bool","ArgNames":"self,reach","ValidArgNames":"Owner,reach","ValidArgCount":2,"Comments":null}
 {"ID":43,"FileName":"BulletComponentSystem.cs","FuncName":"LSUpdate","ArgTypes":"BulletComponent","ArgNames":"self","ValidArgNames":"Owner","ValidArgCount":1,"Comments":null}
 {"ID":44,"FileName":"BulletComponentSystem.cs","FuncName":"Awake","ArgTypes":"BulletComponent,int,LSUnit,LSUnit","ArgNames":"self,bulletId,caster,target","ValidArgNames":"Owner,bulletId,caster.Id,target.Id","ValidArgCount":4,"Comments":null}
@@ -48,7 +48,7 @@
 {"ID":47,"FileName":"DeathComponentSystem.cs","FuncName":"DoDeath","ArgTypes":"DeathComponent","ArgNames":"self","ValidArgNames":"Owner","ValidArgCount":1,"Comments":null}
 {"ID":48,"FileName":"CardBagComponentSystem.cs","FuncName":"RemoveItem","ArgTypes":"CardBagComponent,long","ArgNames":"self,itemId","ValidArgNames":"Owner","ValidArgCount":1,"Comments":null}
 {"ID":49,"FileName":"CardBagComponentSystem.cs","FuncName":"AddItem","ArgTypes":"CardBagComponent,LSRandomDropItem","ArgNames":"self,dropItem","ValidArgNames":"Owner","ValidArgCount":1,"Comments":null}
-{"ID":50,"FileName":"CardBagComponentSystem.cs","FuncName":"Awake","ArgTypes":"CardBagComponent,List<LSRandomDropItem>","ArgNames":"self,items","ValidArgNames":"Owner","ValidArgCount":1,"Comments":null}
+{"ID":50,"FileName":"CardBagComponentSystem.cs","FuncName":"Awake","ArgTypes":"CardBagComponent","ArgNames":"self","ValidArgNames":"Owner","ValidArgCount":1,"Comments":null}
 {"ID":51,"FileName":"CardSelectComponentSystem.cs","FuncName":"TrySelectCard","ArgTypes":"CardSelectComponent,int","ArgNames":"self,index","ValidArgNames":"Owner,index","ValidArgCount":2,"Comments":null}
 {"ID":52,"FileName":"CardSelectComponentSystem.cs","FuncName":"RandomCards","ArgTypes":"CardSelectComponent,int","ArgNames":"self,currentSelectCount","ValidArgNames":"Owner,currentSelectCount","ValidArgCount":2,"Comments":null}
 {"ID":53,"FileName":"CardSelectComponentSystem.cs","FuncName":"LSUpdate","ArgTypes":"CardSelectComponent","ArgNames":"self","ValidArgNames":"Owner","ValidArgCount":1,"Comments":null}
@@ -162,7 +162,7 @@
 {"ID":162,"FileName":"PlacementComponentSystem.cs","FuncName":"RemoveRVO2Agent","ArgTypes":"PlacementComponent","ArgNames":"self","ValidArgNames":"Owner","ValidArgCount":1,"Comments":null}
 {"ID":163,"FileName":"PlacementComponentSystem.cs","FuncName":"AddRVO2Agent","ArgTypes":"PlacementComponent","ArgNames":"self","ValidArgNames":"Owner","ValidArgCount":1,"Comments":null}
 {"ID":164,"FileName":"BuffSystem.cs","FuncName":"DecrLayerCount","ArgTypes":"Buff","ArgNames":"self","ValidArgNames":"Owner","ValidArgCount":1,"Comments":null}
-{"ID":165,"FileName":"BuffSystem.cs","FuncName":"IncrLayerCount","ArgTypes":"Buff","ArgNames":"self","ValidArgNames":"Owner","ValidArgCount":1,"Comments":null}
+{"ID":165,"FileName":"BuffSystem.cs","FuncName":"IncrLayerCount","ArgTypes":"Buff,int","ArgNames":"self,layerCount","ValidArgNames":"Owner,layerCount","ValidArgCount":2,"Comments":null}
 {"ID":166,"FileName":"BulletComponentSystem.cs","FuncName":"Awake","ArgTypes":"BulletComponent,ETrackTowardType,int,LSUnit","ArgNames":"self,towardType,bulletId,caster","ValidArgNames":"Owner,bulletId,caster.Id","ValidArgCount":3,"Comments":null}
 {"ID":167,"FileName":"BulletComponentSystem.cs","FuncName":"Awake","ArgTypes":"BulletComponent,int,LSUnit,List<SearchUnit>","ArgNames":"self,bulletId,caster,targets","ValidArgNames":"Owner,bulletId,caster.Id","ValidArgCount":3,"Comments":null}
 {"ID":168,"FileName":"TrackComponentSystem.cs","FuncName":"Awake","ArgTypes":"TrackComponent,int,int,int,TSVector","ArgNames":"self,speed,controlFactor,controlHeight,targetPosition","ValidArgNames":"Owner,speed,controlFactor,controlHeight,(FP)targetPosition.X, (FP)targetPosition.Y,(FP)targetPosition.Z","ValidArgCount":7,"Comments":null}
@@ -178,4 +178,9 @@
 {"ID":178,"FileName":"SkillComponentSystem.cs","FuncName":"RemoveSkill","ArgTypes":"SkillComponent,int,bool","ArgNames":"self,skillId,force","ValidArgNames":"Owner,skillId,force","ValidArgCount":3,"Comments":null}
 {"ID":179,"FileName":"SkillSystem.cs","FuncName":"RemoveSelf","ArgTypes":"Skill,bool","ArgNames":"self,forceRemove","ValidArgNames":"Owner,forceRemove","ValidArgCount":2,"Comments":null}
 {"ID":180,"FileName":"PlayerComponentSystem.cs","FuncName":"SetBindEntities","ArgTypes":"PlayerComponent,long,long","ArgNames":"self,campId,heroId","ValidArgNames":"Owner","ValidArgCount":1,"Comments":null}
+{"ID":181,"FileName":"LSRVO2ComponentSystem.cs","FuncName":"RefreshAgentsPosition","ArgTypes":"LSRVO2Component,PoolLinkedList<long, Agent>","ArgNames":"self,agents","ValidArgNames":"Owner","ValidArgCount":1,"Comments":null}
+{"ID":182,"FileName":"BuffComponentSystem.cs","FuncName":"RemoveBuffs","ArgTypes":"BuffComponent,int[],bool","ArgNames":"self,buffIds,removeLayer","ValidArgNames":"Owner,removeLayer","ValidArgCount":2,"Comments":null}
+{"ID":183,"FileName":"ContainerComponentSystem.cs","FuncName":"RemoveContent","ArgTypes":"ContainerComponent,long","ArgNames":"self,instanceId","ValidArgNames":"Owner","ValidArgCount":1,"Comments":null}
+{"ID":184,"FileName":"ContainerComponentSystem.cs","FuncName":"AddContent","ArgTypes":"ContainerComponent,long","ArgNames":"self,instanceId","ValidArgNames":"Owner","ValidArgCount":1,"Comments":null}
+{"ID":185,"FileName":"ContainerComponentSystem.cs","FuncName":"Awake","ArgTypes":"ContainerComponent","ArgNames":"self","ValidArgNames":"Owner","ValidArgCount":1,"Comments":null}
 ]

@@ -58,6 +58,7 @@ namespace ET
                     EffectExecutorComponent.Instance.Run(EffectActionType.AddRestrict, tbEffectRow.ActionParam, count, owner, target);
                     break;
                 case EffectActionType.AddBuff:
+                case EffectActionType.AddHeightBuff:
                     EffectExecutorComponent.Instance.Run(EffectActionType.RemoveBuff, tbEffectRow.ActionParam, count, owner, target);
                     break;
             }
