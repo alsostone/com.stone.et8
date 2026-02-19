@@ -28,9 +28,9 @@ namespace ET
         NotAttack = 2,
 
         /// <summary>
-        /// 禁止主动技能
+        /// 禁止手动技能
         /// </summary>
-        NotActive = 4,
+        NotManual = 4,
 
         /// <summary>
         /// 禁止AI警戒

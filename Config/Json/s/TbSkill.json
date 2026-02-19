@@ -72,6 +72,28 @@
     "search_target": 10010201
   },
   {
+    "Id": 20010001,
+    "first_cd_time": 0,
+    "cd_time": 0,
+    "probability": 10000,
+    "skill_type": 6,
+    "consume_type": 0,
+    "consume_param": [],
+    "effect_id": 0,
+    "ani_name_pre": "",
+    "ani_name": "",
+    "ani_name_after": "",
+    "duration_pre": 0,
+    "duration": 0,
+    "duration_after": 0,
+    "trigger_array": [],
+    "effect_group_id": 20010001,
+    "release_condition_type": 0,
+    "condition_id_array": [],
+    "search_real_time": false,
+    "search_target": 20010001
+  },
+  {
     "Id": 30000001,
     "first_cd_time": 0,
     "cd_time": 0,

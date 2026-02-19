@@ -101,7 +101,7 @@ namespace ET
             // 释放有动作的技能时 禁止普攻&移动
             if (self.DurationTime > 0) {
                 var flagComponent = self.LSOwner().GetComponent<FlagComponent>();
-                flagComponent.AddRestrict((int)(FlagRestrict.NotAttack | FlagRestrict.NotActive | FlagRestrict.NotMove));
+                flagComponent.AddRestrict((int)(FlagRestrict.NotAttack | FlagRestrict.NotManual | FlagRestrict.NotMove));
                 
                 // 通知表现层播放动作
                 EventSystem.Instance.Publish(self.LSWorld(), new LSUnitCasting() { Id = self.LSOwner().Id, SkillId = self.SkillId });
@@ -120,7 +120,7 @@ namespace ET
             
             if (self.DurationTime > 0) {
                 var flagComponent = self.LSOwner().GetComponent<FlagComponent>();
-                flagComponent.RemoveRestrict((int)(FlagRestrict.NotAttack | FlagRestrict.NotActive | FlagRestrict.NotMove));
+                flagComponent.RemoveRestrict((int)(FlagRestrict.NotAttack | FlagRestrict.NotManual | FlagRestrict.NotMove));
             }
             
             if (self.IsRemoveOnDone) {
@@ -196,7 +196,7 @@ namespace ET
 
             if (self.DurationTime > 0) {
                 var flagComponent = self.LSOwner().GetComponent<FlagComponent>();
-                flagComponent.RemoveRestrict((int)(FlagRestrict.NotAttack | FlagRestrict.NotActive | FlagRestrict.NotMove));
+                flagComponent.RemoveRestrict((int)(FlagRestrict.NotAttack | FlagRestrict.NotManual | FlagRestrict.NotMove));
             }
             
             if (self.IsRemoveOnDone) {

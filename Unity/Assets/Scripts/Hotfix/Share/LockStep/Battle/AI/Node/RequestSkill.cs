@@ -16,20 +16,20 @@ namespace ET
             {
                 case Request.START:
                 {
-                    if (skillComponent.TryCastSkill(ESkillType.Active))
+                    if (skillComponent.TryCastSkill(ESkillType.Manual))
                         return Result.PROGRESS;
                     break;
                 }
                 case Request.UPDATE:
                 {
-                    Skill skill = skillComponent.GetRunningSkill(ESkillType.Active);
+                    Skill skill = skillComponent.GetRunningSkill(ESkillType.Manual);
                     if (skill != null && skill.IsRunning)
                         return skill.IsRunning ? Result.PROGRESS : Result.SUCCESS;
                     break;
                 }
                 case Request.CANCEL:
                 {
-                    Skill skill = skillComponent.GetRunningSkill(ESkillType.Active);
+                    Skill skill = skillComponent.GetRunningSkill(ESkillType.Manual);
                     skill?.ForceDone();
                     break;
                 }

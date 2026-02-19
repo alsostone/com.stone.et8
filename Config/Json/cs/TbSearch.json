@@ -51,6 +51,19 @@
     "priority": 1
   },
   {
+    "Id": 20010001,
+    "shape": 1,
+    "shape_param": [
+      1000
+    ],
+    "team": 3,
+    "type": 4,
+    "table_id": [],
+    "count": 0,
+    "add_count_prop": 0,
+    "priority": 0
+  },
+  {
     "Id": 30000001,
     "shape": 1,
     "shape_param": [],

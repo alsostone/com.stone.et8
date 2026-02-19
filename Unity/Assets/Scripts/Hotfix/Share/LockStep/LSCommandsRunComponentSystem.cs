@@ -156,7 +156,7 @@ namespace ET
                     self.GetPlayerBindHeroComponent<SkillComponent>()?.TryCastSkill(ESkillType.Normal);
                     break;
                 case CommandButtonType.Skill:
-                    self.GetPlayerBindHeroComponent<SkillComponent>()?.TryCastSkill(ESkillType.Active, (int)button.Item2);
+                    self.GetPlayerBindHeroComponent<SkillComponent>()?.TryCastSkill(ESkillType.Manual, (int)button.Item2);
                     break;
                 default: break;
             }

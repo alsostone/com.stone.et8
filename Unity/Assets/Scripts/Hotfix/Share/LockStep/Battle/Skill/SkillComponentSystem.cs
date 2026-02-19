@@ -216,7 +216,7 @@ namespace ET
         {self.LSRoom()?.ProcessLog.LogFunction(117, self.LSParent().Id, skillId);
             if (self.LSOwner().DeadMark > 0) { return false; }
             // if (!Enable) { return false; }
-            if (self.CheckRestrict(ESkillType.Active)) { return false; }
+            if (self.CheckRestrict(ESkillType.Manual)) { return false; }
 
             Skill skill = self.AddSkill(skillId, true);
             if (skill == null) { return false; }
@@ -240,8 +240,8 @@ namespace ET
             {
                 case ESkillType.Normal:
                     return flagComponent.HasRestrict(FlagRestrict.NotAttack);
-                case ESkillType.Active:
-                    return flagComponent.HasRestrict(FlagRestrict.NotActive);
+                case ESkillType.Manual:
+                    return flagComponent.HasRestrict(FlagRestrict.NotManual);
                 default:
                     return false;
             }

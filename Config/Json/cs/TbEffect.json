@@ -77,6 +77,19 @@
     ]
   },
   {
+    "Id": 200100010,
+    "name": "横一字型 攻速加成50%",
+    "group_id": 20010001,
+    "success_conds": [],
+    "failure_conds": [],
+    "fx": 0,
+    "action_type": 9,
+    "action_param": [
+      10073,
+      5000
+    ]
+  },
+  {
     "Id": 300000010,
     "name": "大本营子弹",
     "group_id": 30000001,

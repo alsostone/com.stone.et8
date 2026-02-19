@@ -25,9 +25,9 @@ namespace ET
         Normal = 1,
 
         /// <summary>
-        /// 主动技能
+        /// 手动技能
         /// </summary>
-        Active = 2,
+        Manual = 2,
 
         /// <summary>
         /// 死亡技能
@@ -43,6 +43,11 @@ namespace ET
         /// CD技能
         /// </summary>
         CountDown = 5,
+
+        /// <summary>
+        /// 激活技能
+        /// </summary>
+        Active = 6,
 
     }
 }

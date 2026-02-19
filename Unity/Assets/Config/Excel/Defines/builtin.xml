@@ -180,7 +180,7 @@
         <var name="None" alias="" value="0"/>
         <var name="NotMove" alias="禁止移动" value="1"/>
         <var name="NotAttack" alias="禁止普通技能" value="2"/>
-        <var name="NotActive" alias="禁止主动技能" value="4"/>
+        <var name="NotManual" alias="禁止手动技能" value="4"/>
         <var name="NotAIAlert" alias="禁止AI警戒" value="8"/>
         <var name="NotRotate" alias="禁止旋转" value="16"/>
         <var name="NotProduct" alias="禁止生产" value="32"/>
