@@ -180,11 +180,11 @@ namespace ET
 	        }
 	        EnsureRuntimeProp(propComponent);
 
-	        lsUnit.AddComponent<PlacementComponent, PlacementData>(placementData);
 	        lsUnit.AddComponent<BlockComponent, int>(tableId);
 	        lsUnit.AddComponent<DeathComponent, bool>(true);
 	        lsUnit.AddComponent<BuffComponent>();
 	        lsUnit.AddComponent<BeHitComponent>();
+	        lsUnit.AddComponent<PlacementComponent, PlacementData>(placementData);
 	        
 	        EventSystem.Instance.Publish(lsWorld, new LSUnitCreate() {LSUnit = lsUnit});
 	        return lsUnit;
@@ -227,12 +227,12 @@ namespace ET
 	        }
 	        EnsureRuntimeProp(propComponent);
 
-	        lsUnit.AddComponent<PlacementComponent, PlacementData>(placementData);
 	        lsUnit.AddComponent<BuildingComponent, int>(tableId);
 	        lsUnit.AddComponent<DeathComponent, bool>(true);
 	        lsUnit.AddComponent<BuffComponent>();
 	        lsUnit.AddComponent<BeHitComponent>();
 	        lsUnit.AddComponent<SkillComponent, int[], int[]>(row.Skills, null);
+	        lsUnit.AddComponent<PlacementComponent, PlacementData>(placementData);
 	        if (row.ProductSkill > 0) {
 		        lsUnit.AddComponent<ProductComponent, int>(row.ProductSkill);
 	        }

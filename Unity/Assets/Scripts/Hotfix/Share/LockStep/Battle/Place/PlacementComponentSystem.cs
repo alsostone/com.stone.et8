@@ -18,6 +18,7 @@ namespace ET
                 case PlacedLayer.Block: self.AddRVO2Obstacle(); break;
                 case PlacedLayer.Building: self.AddRVO2Agent(); break;
             }
+            self.LSOwner().GetComponent<SkillComponent>()?.TryCastSkill(ESkillType.Placement);
         }
 
         [EntitySystem]
@@ -75,6 +76,7 @@ namespace ET
                         self.SetRVO2AgentPosition(putPosition);
                         break;
                 }
+                lsOwner.GetComponent<SkillComponent>()?.TryCastSkill(ESkillType.Placement);
             }
         }
 

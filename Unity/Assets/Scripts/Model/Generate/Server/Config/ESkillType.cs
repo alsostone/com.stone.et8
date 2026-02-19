@@ -45,9 +45,9 @@ namespace ET
         CountDown = 5,
 
         /// <summary>
-        /// 激活技能
+        /// 放置技能
         /// </summary>
-        Active = 6,
+        Placement = 6,
 
     }
 }

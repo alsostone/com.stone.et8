@@ -106,5 +106,10 @@ namespace ET
         /// </summary>
         AddBulletDirection2 = 20,
 
+        /// <summary>
+        /// 高度加持属性，配置为每高1层增加子属性的值
+        /// </summary>
+        AddPropertyWithHeight = 21,
+
     }
 }

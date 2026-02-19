@@ -161,6 +161,32 @@
     ]
   },
   {
+    "Id": 300090010,
+    "name": "建筑通用 高度加成攻速",
+    "group_id": 30009001,
+    "success_conds": [],
+    "failure_conds": [],
+    "fx": 0,
+    "action_type": 21,
+    "action_param": [
+      10073,
+      5000
+    ]
+  },
+  {
+    "Id": 300090011,
+    "name": "建筑通用 高度加成攻击力",
+    "group_id": 30009001,
+    "success_conds": [],
+    "failure_conds": [],
+    "fx": 0,
+    "action_type": 21,
+    "action_param": [
+      10031,
+      10000
+    ]
+  },
+  {
     "Id": 300100010,
     "name": "TowerCircle",
     "group_id": 30010001,
