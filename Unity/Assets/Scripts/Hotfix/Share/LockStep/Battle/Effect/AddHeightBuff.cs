@@ -5,11 +5,12 @@
 	{
 		public void Run(int[] param, int count, LSUnit owner, LSUnit target, LSUnit carrier = null)
 		{
-			BuffComponent buffComponent = target.GetComponent<BuffComponent>();
 			TransformComponent transformComponent = target.GetComponent<TransformComponent>();
 			int layerCount = transformComponent.Position.y.AsInt();
-			foreach (int buffId in param)
-			{
+			if (layerCount <= 0) { return; }
+			
+			BuffComponent buffComponent = target.GetComponent<BuffComponent>();
+			foreach (int buffId in param) {
 				buffComponent.AddBuff(buffId, owner, layerCount);
 			}
 		}
