@@ -18,7 +18,8 @@ namespace ET
                 case PlacedLayer.Block: self.AddRVO2Obstacle(); break;
                 case PlacedLayer.Building: self.AddRVO2Agent(); break;
             }
-            self.LSOwner().GetComponent<SkillComponent>()?.TryCastSkill(ESkillType.Placement);
+            // 放置时尝试触发一次技能，延迟触发是因为要在所有组件Awake完成后再触发，避免技能内访问组件时出现空引用
+            self.LSOwner().GetComponent<SkillComponent>()?.DelayCastSkill(ESkillType.Placement);
         }
 
         [EntitySystem]

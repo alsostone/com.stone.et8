@@ -15,6 +15,7 @@ namespace ET
         [BsonDictionaryOptions(DictionaryRepresentation.ArrayOfArrays)]
         public Dictionary<ESkillType, List<long>> TypeSkillsMap;
 
+        public List<ESkillType> DelayedCastTypes;
         public List<long> RunningSkills;
         public List<long> RemovedSkills { get; set; }
     }

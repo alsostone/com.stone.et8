@@ -30,11 +30,32 @@ namespace ET
         {self.LSRoom()?.ProcessLog.LogFunction(124, self.LSParent().Id);
             self.IdSkillMap.Clear();
             self.TypeSkillsMap.Clear();
+            self.RunningSkills.Clear();
+            if (self.DelayedCastTypes != null) {
+                self.DelayedCastTypes.Clear();
+                ObjectPool.Instance.Recycle(self.DelayedCastTypes);
+                self.DelayedCastTypes = null;
+            }
+            if (self.RemovedSkills != null) {
+                self.RemovedSkills.Clear();
+                ObjectPool.Instance.Recycle(self.RemovedSkills);
+                self.RemovedSkills = null;
+            }
         }
 
         [EntitySystem]
         private static void LSUpdate(this SkillComponent self)
         {self.LSRoom()?.ProcessLog.LogFunction(123, self.LSParent().Id);
+            if (self.DelayedCastTypes != null)
+            {
+                for (int i = 0; i < self.DelayedCastTypes.Count; i++)
+                {
+                    self.TryCastSkill(self.DelayedCastTypes[i]);
+                }
+                self.DelayedCastTypes.Clear();
+                ObjectPool.Instance.Recycle(self.DelayedCastTypes);
+                self.DelayedCastTypes = null;
+            }
             if (self.RemovedSkills != null)
             {
                 for (int i = 0; i < self.RemovedSkills.Count; i++)
@@ -146,6 +167,12 @@ namespace ET
                 }
             }
             return true;
+        }
+
+        public static void DelayCastSkill(this SkillComponent self, ESkillType type)
+        {
+            self.DelayedCastTypes ??= ObjectPool.Instance.Fetch<List<ESkillType>>();
+            self.DelayedCastTypes.Add(type);
         }
 
         public static bool TryCastSkill(this SkillComponent self, ESkillType type)
