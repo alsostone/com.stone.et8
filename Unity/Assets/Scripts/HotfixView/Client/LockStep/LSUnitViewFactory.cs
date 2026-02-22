@@ -25,6 +25,9 @@ namespace ET.Client
                 case EUnitType.Soldier:
                     CreateSoldierView(viewComponent, lsUnit);
                     break;
+                case EUnitType.Trap:
+                    CreateTrapView(viewComponent, lsUnit);
+                    break;
                 case EUnitType.Item:
                     CreateItemView(viewComponent, lsUnit);
                     break;
@@ -142,6 +145,25 @@ namespace ET.Client
             float hp = propComponent.Get(NumericType.Hp).AsFloat();
             float hpMax = propComponent.Get(NumericType.MaxHp).AsFloat();
             lsUnitView.AddComponent<LSViewHudComponent, Vector3, float, float>(Vector3.zero, hp, hpMax);
+        }
+        
+        private static void CreateTrapView(LSUnitViewComponent viewComponent, LSUnit lsUnit)
+        {
+            Room room = viewComponent.Room();
+            TbTrapRow row = TbTrap.Instance.Get(lsUnit.TableId);
+            GlobalComponent globalComponent = viewComponent.Root().GetComponent<GlobalComponent>();
+            GameObject unitGo = viewComponent.Room().GetComponent<ResourcesPoolComponent>().Fetch(row.Model, globalComponent.Unit, true);
+
+            LSUnitView lsUnitView = viewComponent.AddChildWithId<LSUnitView, GameObject>(lsUnit.Id, unitGo);
+            Animation animation = unitGo.GetComponent<Animation>();
+            if (animation) {
+                lsUnitView.AddComponent<LSAnimationComponent, Animation, float>(animation, room.TimeScale);
+            }
+            
+            AttachPointCollector collector = unitGo.GetComponent<AttachPointCollector>();
+            lsUnitView.AddComponent<LSViewTransformComponent, Transform, AttachPointCollector, bool>(unitGo.transform, collector, false);
+            lsUnitView.AddComponent<LSViewSkillComponent>();
+            lsUnitView.AddComponent<ViewEffectComponent, float>(room.TimeScale);
         }
 
         private static void CreateItemView(LSUnitViewComponent viewComponent, LSUnit lsUnit)

@@ -222,6 +222,7 @@
         <var name="Global" alias="全局" value="64"/>
         <var name="Team" alias="队伍" value="128"/>
         <var name="Player" alias="玩家" value="256"/>
+        <var name="Trap" alias="陷阱" value="512"/>
     </enum>
     
     <enum name="ESearchTargetShape" comment="索敌形状" unique="TRUE">

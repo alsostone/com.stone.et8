@@ -62,5 +62,10 @@ namespace ET
         /// </summary>
         Player = 256,
 
+        /// <summary>
+        /// 陷阱
+        /// </summary>
+        Trap = 512,
+
     }
 }

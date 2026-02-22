@@ -143,6 +143,31 @@ namespace ET
 	        return lsUnit;
         }
         
+        public static LSUnit CreateTrap(LSUnit lsOwner, int tableId, TSVector position, int angle, TeamType teamType)
+        {
+	        LSWorld lsWorld = lsOwner.LSWorld();
+	        TbTrapRow row = TbTrap.Instance.Get(tableId);
+	        LSUnitComponent lsUnitComponent = lsWorld.GetComponent<LSUnitComponent>();
+	        LSUnit lsUnit = lsUnitComponent.AddChild<LSUnit>();
+	        lsUnit.TableId = tableId;
+
+	        lsUnit.AddComponent<TransformComponent, TSVector, TSQuaternion>(position, TSQuaternion.Euler(0, angle, 0));
+	        lsUnit.AddComponent<TypeComponent, EUnitType>(EUnitType.Trap);
+	        lsUnit.AddComponent<TeamComponent, TeamType, long>(teamType, lsOwner.Id);
+
+	        PropComponent propComponent = lsUnit.AddComponent<PropComponent, int>(0);
+	        foreach (var prop in row.Props) {
+		        propComponent.Set(prop.Key, (FP)prop.Value / LSConstValue.PropValueScale, false);
+	        }
+	        EnsureRuntimeProp(propComponent);
+
+	        if (row.Skills != null && row.Skills.Length > 0) {
+		        lsUnit.AddComponent<SkillComponent, int[], int[]>(row.Skills, null);
+	        }
+	        EventSystem.Instance.Publish(lsWorld, new LSUnitCreate() {LSUnit = lsUnit});
+	        return lsUnit;
+        }
+        
         public static LSUnit CreateBlock(LSUnit lsOwner, int tableId, TSVector position, int angle, TeamType teamType)
         {
 	        LSWorld lsWorld = lsOwner.LSWorld();
@@ -387,6 +412,9 @@ namespace ET
 			        break;
 		        case EUnitType.Item:
 			        CreateItem(lsOwner, tableId, position, angle, teamType);
+			        break;
+		        case EUnitType.Trap:
+			        CreateTrap(lsOwner, tableId, position, angle, teamType);
 			        break;
 		        default: break;
 	        }
