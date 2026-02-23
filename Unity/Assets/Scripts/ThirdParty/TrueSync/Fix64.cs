@@ -751,11 +751,11 @@ namespace TrueSync {
         public static FP Atan2(FP y, FP x) {
             var yl = y.V;
             var xl = x.V;
-            if (xl == 0) {
-                if (yl > 0) {
+            if (x.FloatEqual(0, EN6)) {
+                if (y.FloatGreaterEqual(0, EN6)) {
                     return PiOver2;
                 }
-                if (yl == 0) {
+                if (y.FloatEqual(0, EN6)) {
                     return Zero;
                 }
                 return -PiOver2;
@@ -1050,14 +1050,14 @@ namespace TrueSync {
             return false;
         }
         
-        public bool FloatLessEqual(FP value)
+        public bool FloatLessEqual(FP value, FP epsilon)
         {
-            return (this - Epsilon) <= value;
+            return (this - epsilon) <= value;
         }
         
-        public bool FloatGreaterEqual(FP value)
+        public bool FloatGreaterEqual(FP value, FP epsilon)
         {
-            return (this + Epsilon) >= value;
+            return (this + epsilon) >= value;
         }
         
         public bool FloatEqual(FP value, FP epsilon)
