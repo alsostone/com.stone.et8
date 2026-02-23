@@ -62,9 +62,9 @@ namespace ET
         SubProperty = 10,
 
         /// <summary>
-        /// 召唤士兵
+        /// 召唤单位
         /// </summary>
-        SummonSoldier = 11,
+        SummonUnit = 11,
 
         /// <summary>
         /// 随机召唤

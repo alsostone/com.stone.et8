@@ -158,7 +158,7 @@
         <var name="RemoveRestrict" alias="移除限制" value="8"/>
         <var name="AddProperty" alias="增加属性" value="9" comment="增加子属性的值"/>
         <var name="SubProperty" alias="降低属性" value="10" comment="降低子属性的值"/>
-        <var name="SummonSoldier" alias="召唤士兵" value="11"/>
+        <var name="SummonUnit" alias="召唤单位" value="11"/>
         <var name="SummonRandom" alias="随机召唤" value="12"/>
         <var name="KillSelf" alias="杀死自己" value="13"/>
         <var name="Research" alias="重新索敌" value="15" comment="以0索敌，执行1效果组"/>

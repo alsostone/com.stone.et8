@@ -2,7 +2,7 @@
 
 namespace ET
 {
-    [EffectExecutor(EffectActionType.SummonSoldier)]
+    [EffectExecutor(EffectActionType.SummonUnit)]
     [FriendOf(typeof(TeamComponent))]
     public class SummonSoldier : IEffectExecutor
     {
@@ -10,19 +10,19 @@ namespace ET
         {
             var targetTransform = target.GetComponent<TransformComponent>();
             var position = TSVector.zero;
-            if (param.Length >= 4) {
-                position = new TSVector(param[1], param[2], param[3]) * FP.EN4;
+            if (param.Length >= 5) {
+                position = new TSVector(param[2], param[3], param[4]) * FP.EN4;
+            } else if (param.Length >= 4) {
+                position = new TSVector(param[2], param[3], 0) * FP.EN4;
             } else if (param.Length >= 3) {
-                position = new TSVector(param[1], param[2], 0) * FP.EN4;
-            } else if (param.Length >= 2) {
-                position = new TSVector(param[1], 0, 0) * FP.EN4;
+                position = new TSVector(param[2], 0, 0) * FP.EN4;
             }
-            FP angle = targetTransform.Rotation.eulerAngles.y;
+            FP angle = targetTransform.Rotation.eulerAngles.y - 90;
             position = position.Rotation(angle);
             
             TeamComponent teamComponent = owner.GetComponent<TeamComponent>();
             LSUnit lsOwnerOwner = target.LSUnit(teamComponent.OwnerId);
-            LSUnitFactory.CreateSoldier(lsOwnerOwner, param[0], targetTransform.Position + position, angle.AsInt(), teamComponent.Type);
+            LSUnitFactory.SummonUnit(lsOwnerOwner, (EUnitType)param[0], param[1], targetTransform.Position + position, angle.AsInt(), teamComponent.Type);
         }
     }
 }

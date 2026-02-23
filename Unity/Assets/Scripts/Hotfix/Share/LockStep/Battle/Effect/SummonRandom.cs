@@ -19,7 +19,7 @@ namespace ET
             } else if (param.Length >= 2) {
                 position = new TSVector(param[1], 0, 0) * FP.EN4;
             }
-            FP angle = targetTransform.Rotation.eulerAngles.y;
+            FP angle = targetTransform.Rotation.eulerAngles.y - 90;
             position = position.Rotation(angle);
             
             // 通过 随机包/随机集 获得要召唤的单位

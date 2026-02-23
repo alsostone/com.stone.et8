@@ -45,7 +45,7 @@ namespace ET.Client
             }
             if (Input.GetKeyDown(KeyCode.L))
             {
-                var cmd = LSCommand.GenCommandButton(0, CommandButtonType.Skill, 1);
+                var cmd = LSCommand.GenCommandButton(0, CommandButtonType.Skill, 2);
                 room.SendCommandMeesage(cmd);
             }
             if (Input.GetKeyDown(KeyCode.Space))
