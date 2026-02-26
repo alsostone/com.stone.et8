@@ -17,6 +17,7 @@ namespace ET
         public TbItemRow(ByteBuf _buf)
         {
             Id = _buf.ReadInt();
+            {int n0 = System.Math.Min(_buf.ReadSize(), _buf.Size);PricePlacement = new System.Collections.Generic.Dictionary<NumericType, int>(n0 * 3 / 2);for(var i0 = 0 ; i0 < n0 ; i0++) { NumericType _k0;  _k0 = (NumericType)_buf.ReadInt(); int _v0;  _v0 = _buf.ReadInt();     PricePlacement.Add(_k0, _v0);}}
             EffectGroupId = _buf.ReadInt();
             SearchTarget = _buf.ReadInt();
             SearchTarget_Ref = null;
@@ -33,6 +34,11 @@ namespace ET
         /// ID
         /// </summary>
         public readonly int Id;
+
+        /// <summary>
+        /// 放置消耗类型
+        /// </summary>
+        public readonly System.Collections.Generic.Dictionary<NumericType, int> PricePlacement;
 
         /// <summary>
         /// 效果组ID
@@ -54,6 +60,7 @@ namespace ET
         {
             
             
+            
             SearchTarget_Ref = TbSearch.Instance.GetOrDefault(SearchTarget);
         }
 
@@ -61,6 +68,7 @@ namespace ET
         {
             return "{ "
             + "Id:" + Id + ","
+            + "pricePlacement:" + Luban.StringUtil.CollectionToString(PricePlacement) + ","
             + "effectGroupId:" + EffectGroupId + ","
             + "searchTarget:" + SearchTarget + ","
             + "}";

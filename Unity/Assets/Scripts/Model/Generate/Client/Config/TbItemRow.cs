@@ -20,6 +20,7 @@ namespace ET
             Desc = _buf.ReadString();
             Model = _buf.ReadInt();
             Model_Ref = null;
+            {int n0 = System.Math.Min(_buf.ReadSize(), _buf.Size);PricePlacement = new System.Collections.Generic.Dictionary<NumericType, int>(n0 * 3 / 2);for(var i0 = 0 ; i0 < n0 ; i0++) { NumericType _k0;  _k0 = (NumericType)_buf.ReadInt(); int _v0;  _v0 = _buf.ReadInt();     PricePlacement.Add(_k0, _v0);}}
             EffectGroupId = _buf.ReadInt();
             SearchTarget = _buf.ReadInt();
             SearchTarget_Ref = null;
@@ -50,6 +51,11 @@ namespace ET
         public TbResourceRow Model_Ref { get; private set; }
 
         /// <summary>
+        /// 放置消耗类型
+        /// </summary>
+        public readonly System.Collections.Generic.Dictionary<NumericType, int> PricePlacement;
+
+        /// <summary>
         /// 效果组ID
         /// </summary>
         public readonly int EffectGroupId;
@@ -71,6 +77,7 @@ namespace ET
             
             Model_Ref = TbResource.Instance.GetOrDefault(Model);
             
+            
             SearchTarget_Ref = TbSearch.Instance.GetOrDefault(SearchTarget);
         }
 
@@ -80,6 +87,7 @@ namespace ET
             + "Id:" + Id + ","
             + "desc:" + Desc + ","
             + "model:" + Model + ","
+            + "pricePlacement:" + Luban.StringUtil.CollectionToString(PricePlacement) + ","
             + "effectGroupId:" + EffectGroupId + ","
             + "searchTarget:" + SearchTarget + ","
             + "}";

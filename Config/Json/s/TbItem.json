@@ -1,26 +1,31 @@
 [
   {
     "Id": 5001,
+    "price_placement": [],
     "effect_group_id": 50010001,
     "search_target": 50010001
   },
   {
     "Id": 5002,
+    "price_placement": [],
     "effect_group_id": 50020001,
     "search_target": 50020001
   },
   {
     "Id": 5003,
+    "price_placement": [],
     "effect_group_id": 50030001,
     "search_target": 50030001
   },
   {
     "Id": 5004,
+    "price_placement": [],
     "effect_group_id": 50040001,
     "search_target": 50030001
   },
   {
     "Id": 5005,
+    "price_placement": [],
     "effect_group_id": 50050001,
     "search_target": 50030001
   }

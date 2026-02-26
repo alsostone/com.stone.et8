@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using ST.GridBuilder;
 using TrueSync;
 
@@ -42,7 +43,8 @@ namespace ET
         {self.LSRoom()?.ProcessLog.LogFunction(107, self.LSParent().Id, position.x.V, position.y.V);
             LSWorld lsWorld = self.LSWorld();
             LSUnit lsOwner = self.LSOwner();
-
+            TeamType teamPlacer = lsOwner.GetComponent<TeamComponent>().Type;
+            
             TSVector positionV3 = new(position.x, 0, position.y);
             if (self.PlacementTargetId > 0)
             {
@@ -60,18 +62,35 @@ namespace ET
                 var item = bagComponent.GetItem(self.PlacementItemId);
                 if (item != null)
                 {
-                    TeamType teamType = lsOwner.GetComponent<TeamComponent>().Type;
                     bool isOk = false;
-                    if (item.Type == EUnitType.Block) {
-                        isOk = null != LSUnitFactory.CreateBlock(lsOwner, item.TableId, positionV3, self.PlacementRotation * 90, teamType);
-                    }
-                    else if (item.Type == EUnitType.Building) {
-                        isOk = null != LSUnitFactory.CreateBuilding(lsOwner, item.TableId, positionV3, self.PlacementRotation * 90, teamType);
-                    }
-                    else if (item.Type == EUnitType.Item) {
-                        isOk = ItemExecutor.TryExecute(lsOwner, positionV3, item.TableId);
+                    Dictionary<NumericType, int> consumes = null;
+                    PropComponent propComponent = lsOwner.GetComponent<PropComponent>();
+                    switch (item.Type)
+                    {
+                        case EUnitType.Block: {
+                            TbBlockRow blockRow = TbBlock.Instance.Get(item.TableId);
+                            consumes = blockRow.PricePlacement;
+                            if (propComponent.CheckConsumeEnough(consumes))
+                                isOk = null != LSUnitFactory.CreateBlock(lsOwner, item.TableId, positionV3, self.PlacementRotation * 90, teamPlacer);
+                            break;
+                        }
+                        case EUnitType.Building: {
+                            TbBuildingRow buildingRow = TbBuilding.Instance.Get(item.TableId);
+                            consumes = buildingRow.PricePlacement;
+                            if (propComponent.CheckConsumeEnough(consumes))
+                                isOk = null != LSUnitFactory.CreateBuilding(lsOwner, item.TableId, positionV3, self.PlacementRotation * 90, teamPlacer);
+                            break;
+                        }
+                        case EUnitType.Item: {
+                            TbItemRow itemRow = TbItem.Instance.Get(item.TableId);
+                            consumes = itemRow.PricePlacement;
+                            if (propComponent.CheckConsumeEnough(consumes))
+                                isOk = ItemExecutor.TryExecute(lsOwner, positionV3, item.TableId);
+                            break;
+                        }
                     }
                     if (isOk) {
+                        propComponent.ExecuteConsume(consumes);
                         bagComponent.RemoveItem(self.PlacementItemId);
                     }
                 }

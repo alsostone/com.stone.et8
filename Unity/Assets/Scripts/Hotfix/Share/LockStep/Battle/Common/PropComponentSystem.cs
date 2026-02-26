@@ -92,6 +92,28 @@ namespace ET
             FP result = ((self.Get(bas) + self.Get(add)) * (1 + self.Get(pct)) + self.Get(finalAdd)) * (1 + self.Get(finalPct));
             self.Set((NumericType)final, result, isPublicEvent);
         }
+        
+        public static bool CheckConsumeEnough(this PropComponent self, Dictionary<NumericType, int> consumes)
+        {
+            if (consumes == null || consumes.Count == 0)
+                return true;
+            foreach (var consume in consumes)
+            {
+                if (self.Get(consume.Key) < consume.Value)
+                    return false;
+            }
+            return true;
+        }
+
+        public static void ExecuteConsume(this PropComponent self, Dictionary<NumericType, int> consumes)
+        {
+            if (consumes == null || consumes.Count == 0)
+                return;
+            foreach (var consume in consumes)
+            {
+                self.Add(consume.Key, -consume.Value);
+            }
+        }
     }
     
 }

@@ -31,6 +31,7 @@
       false
     ],
     "can_be_attack": true,
+    "price_placement": [],
     "props": [
       [
         10011,
@@ -101,6 +102,7 @@
       false
     ],
     "can_be_attack": true,
+    "price_placement": [],
     "props": [
       [
         10011,
@@ -171,6 +173,7 @@
       false
     ],
     "can_be_attack": false,
+    "price_placement": [],
     "props": [
       [
         10031,
@@ -224,6 +227,7 @@
       false
     ],
     "can_be_attack": false,
+    "price_placement": [],
     "props": [
       [
         10071,
@@ -269,6 +273,7 @@
       false
     ],
     "can_be_attack": false,
+    "price_placement": [],
     "props": [
       [
         10081,
@@ -318,6 +323,7 @@
       false
     ],
     "can_be_attack": false,
+    "price_placement": [],
     "props": [
       [
         10031,
@@ -371,6 +377,7 @@
       false
     ],
     "can_be_attack": false,
+    "price_placement": [],
     "props": [
       [
         10031,
@@ -424,6 +431,7 @@
       false
     ],
     "can_be_attack": false,
+    "price_placement": [],
     "props": [
       [
         10031,
@@ -477,6 +485,7 @@
       false
     ],
     "can_be_attack": false,
+    "price_placement": [],
     "props": [
       [
         10031,
@@ -530,6 +539,7 @@
       false
     ],
     "can_be_attack": false,
+    "price_placement": [],
     "props": [
       [
         10031,
