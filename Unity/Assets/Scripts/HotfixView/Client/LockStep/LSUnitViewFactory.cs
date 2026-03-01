@@ -45,6 +45,7 @@ namespace ET.Client
         {
             ET.PlayerComponent playerComponent = lsUnit.GetComponent<ET.PlayerComponent>();
             LSUnitView lsUnitView = viewComponent.AddChildWithId<LSUnitView, GameObject>(lsUnit.Id, null);
+            lsUnitView.AddComponent<LSViewPropComponent, LSUnit>(lsUnit);
             lsUnitView.AddComponent<LSViewPlayerComponent, long, long>(playerComponent.BindCampId, playerComponent.BindHeroId);
             lsUnitView.AddComponent<LSViewGridBuilderComponent>();
             lsUnitView.AddComponent<LSViewSelectionComponent>();
